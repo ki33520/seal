@@ -1,0 +1,31 @@
+.alert-layer {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    .alert {
+        padding: .5rem 1rem;
+        color: #F1F1F1;
+        background: rgba(0, 0, 0, .75);
+        box-sizing: border-box;
+        border-radius: .25rem;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(0) scale(0.85);
+        transition: opacity .3s linear, transform .3s linear,visibility .3s linear, height .5s linear;
+    }
+    &.active {
+        visibility: visible;
+        .alert {
+            visibility: visible;
+            opacity: .85;
+            transform: translateY(-0.25rem) scale(1);
+        }
+    }
+}

@@ -4,7 +4,7 @@ webpackJsonp([0],{
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(190);
+	module.exports = __webpack_require__(335);
 
 
 /***/ },
@@ -24,9 +24,13 @@ webpackJsonp([0],{
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(190);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	function bootstrap() {
 	    var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-	    _react2["default"].render(_react2["default"].createElement(_sharedCommonErrorErrorJsx2["default"], { initialState: initialState }), document.getElementById('error'));
+	    _reactDom2["default"].render(_react2["default"].createElement(_sharedCommonErrorErrorJsx2["default"], { initialState: initialState }), document.getElementById('error'));
 	}
 
 	if (typeof window.addEventListener) {
@@ -109,7 +113,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 190:
+/***/ 335:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

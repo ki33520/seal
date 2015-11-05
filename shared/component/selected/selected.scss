@@ -1,0 +1,186 @@
+@import "../core/mixin.scss";
+.selected {
+    .dropdown-status .status {
+        &>.selected-label {
+            display: inline-block;
+            border-radius: .15rem;
+            border: .05rem solid #DDD;
+            background: #E8E8E8;
+            margin: .15rem .25rem .15rem 0;
+            padding: .15rem .25rem;
+        }
+    }
+    .selected-items {
+        overflow-x: hidden;
+        overflow-y: auto;
+        li {
+            line-height: 1rem;
+            padding: .25rem 0;
+            clear: both;
+            overflow: hidden;
+            width: 100%;
+            box-sizing: border-box;
+            padding: .25rem .5rem;
+            .selected-item {
+                float: left;
+                display: inline-block;
+                @include text-overflow;
+                width: 80%;
+            }
+            &.checked .iconfont {
+                color: rgba(14, 144, 210, 1);
+            }
+            .iconfont {
+                float: right;
+                font-size: .65rem;
+                padding-left: .25rem;
+                box-sizing: border-box;
+                width: 20%;
+                color: #AAA;
+            }
+            &.selected-group-header {
+                border-bottom: 1px solid #E5E5E5;
+                border-top: 1px solid #E5E5E5;
+                background: #F8F8F8
+            }
+        }
+    }
+    &>.dropdown-content {
+        &::before,
+        &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            border-style: dashed dashed solid;
+            border-color: transparent;
+            border-image: none;
+            border-width: 0 .4rem .4rem;
+            border-bottom-color: #555;
+            position: absolute;
+            top: -0.4rem;
+            left: 0.3rem;
+            width: 0;
+            height: 0;
+        }
+        &::after {
+            border-bottom-color: #FFF;
+            bottom: -0.25rem;
+        }
+        &.active {
+            margin-top: 0.5rem;
+            overflow:visible;
+            border: 1px solid #CCC;
+            box-shadow: 0 .1rem .2rem 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .08);
+        }
+    }
+    .filter-input {
+        position: relative;
+        padding: .5rem;
+        input {
+            margin: 0;
+            padding: .25rem 1rem .25rem .25rem;
+            outline: 0 none;
+            width: 100%;
+            box-sizing: border-box;
+            line-height: .8rem;
+            border: .05rem solid #CCC;
+            border-radius: .1rem;
+            color: #888;
+            &::focus {
+                border-color: rgba(14, 144, 210, 1);
+            }
+        }
+        .iconfont {
+            position: absolute;
+            display: block;
+            width: 1rem;
+            height: 1rem;
+            color: #888;
+            line-height: 1rem;
+            top: .75rem;
+            right: .55rem;
+            font-size: .65rem;
+        }
+    }
+}
+
+.selected-slide {
+    &.dropdown {
+        position:static;
+        &>button{
+            .dropdown-status{
+                @include text-overflow;
+            }
+        }
+        .dropdown-content {
+            background: #FFF;
+            display:block;
+            opacity: 0.5;
+            bottom:-100%;
+            left:0;
+            right:0;
+            position:fixed;
+            box-shadow: 0 .1rem .2rem .2rem rgba(34, 36, 38, .12), 0 .1rem .2rem 0 rgba(34, 36, 38, .08);
+            transition: all .2s ease-in-out;
+            padding:.6rem 0;
+            &.active {
+                overflow:visible;
+                transition: all .2s ease-in-out;
+                opacity: 1;
+                bottom: 0;
+            }
+            &:before,&:after{
+                display:none;
+            }
+            .slider {
+                overflow: hidden;
+                padding: 1.5rem 0 2rem 0;
+            }
+            .slides {
+                padding:.2rem;
+                .slider:first-child {
+                    transform: rotateX(0deg);
+                }
+                .slide {
+                    display: block;
+                    font-size: 0;
+                    overflow: hidden;
+                    clear: both;
+                    &.prev {
+                        transform: rotateX(0deg);
+                    }
+                    &.active {
+                        & + .slide {
+                            transform: rotateX(0deg);
+                        }
+                        &>span {
+                            color: #333;
+                            transform: rotateX(0deg);
+                        }
+                        &.pseudo-slide>span {
+                            transition-duration: 0s;
+                        }
+                        border-top:.05rem solid #DDD;
+                        border-bottom:.05rem solid #DDD;
+                        background:#F8F8F8;
+                    }
+                    &>span {
+                        display: block;
+                        text-align: center;
+                        width: 100%;
+                        color: #AAA;
+                        float: left;
+                        font-size: .7rem;
+                        line-height: 1.6rem;
+                    }
+                    &>span.iconfont{
+                        display:none;
+                    }
+                    &.pseudo-slide>span {
+                        transition-duration: 0s;
+                    }
+                }
+            }
+        }
+    }
+}

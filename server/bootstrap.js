@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 app.use(session({
-    name: "isomorphic-boilerplate.sid",
-    secret: "isomorphic-boilerplate",
+    name: "seal.sid",
+    secret: "seal20151111",
     resave: true,
     saveUninitialized: true,
     cookie: {

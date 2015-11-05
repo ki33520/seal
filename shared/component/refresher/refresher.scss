@@ -1,0 +1,24 @@
+.refresher{
+    display:none;
+    font-size:.7rem;
+    text-align:center;
+    padding:.25rem 0;
+    &.refresher-active{
+        display:block;
+        animation:refresher-moveUp .5s ease-in-out;
+    }
+    &>span{
+        margin-right:.25rem;
+    }
+}
+
+@keyframes refresher-moveUp{
+    from{
+        transform:translateY(-1rem);
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}

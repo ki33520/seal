@@ -1,0 +1,54 @@
+.header {
+    background: #FFF;
+    position: relative;
+    height: 2rem;
+    h1 {
+        position: absolute;
+        top: 0;
+        left: 2rem;
+        right: 2rem;
+        color: #FFF;
+        height: 2rem;
+        line-height: 2rem;
+        font-size: .9rem;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+    &>a {
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        text-decoration: none;
+        color: #FFF;
+        text-align: center;
+        font-size: .9rem;
+    }
+    &>span {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        a {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            line-height: 2rem;
+            text-decoration: none;
+            text-align: center;
+            color: #FFF;
+            font-size: .9rem;
+        }
+    }
+    h1,
+    span>a,
+    &>a {
+        color: #555;
+        font-size: .7rem;
+    }
+    border-bottom:1px solid #999;
+    h1 {
+        font-size: .8rem;
+    }
+}

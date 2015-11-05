@@ -18,5 +18,15 @@
             "css": "scss"
         },
         "libBundle": "react"
+    },
+    "gooddetail": {
+        "html": ["./view/gooddetail.html"],
+        "path": "./client/gooddetail/",
+        "entyJs": "./client/gooddetail/gooddetail.jsx",
+        "sourceCompiler": {
+            "js": "react",
+            "css": "scss"
+        },
+        "libBundle": "react"
     }
 }
