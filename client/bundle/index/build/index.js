@@ -3,63 +3,77 @@ webpackJsonp([2],{
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(424);
-	module.exports = __webpack_require__(429);
+	__webpack_require__(278);
+	module.exports = __webpack_require__(283);
 
 
 /***/ },
 
-/***/ 360:
+/***/ 216:
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(361), __esModule: true };
+	module.exports = { "default": __webpack_require__(217), __esModule: true };
 
 /***/ },
 
-/***/ 361:
+/***/ 217:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(362);
+	__webpack_require__(218);
 	module.exports = __webpack_require__(16).Object.assign;
 
 /***/ },
 
-/***/ 362:
+/***/ 218:
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.3.1 Object.assign(target, source)
 	var $def = __webpack_require__(14);
-	$def($def.S, 'Object', {assign: __webpack_require__(363)});
+
+	$def($def.S + $def.F, 'Object', {assign: __webpack_require__(219)});
 
 /***/ },
 
-/***/ 363:
+/***/ 219:
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.1 Object.assign(target, source, ...)
-	var toObject = __webpack_require__(364)
-	  , IObject  = __webpack_require__(10)
-	  , enumKeys = __webpack_require__(365);
-	/* eslint-disable no-unused-vars */
-	module.exports = Object.assign || function assign(target, source){
-	/* eslint-enable no-unused-vars */
-	  var T = toObject(target)
-	    , l = arguments.length
-	    , i = 1;
-	  while(l > i){
-	    var S      = IObject(arguments[i++])
-	      , keys   = enumKeys(S)
+	var $        = __webpack_require__(7)
+	  , toObject = __webpack_require__(220)
+	  , IObject  = __webpack_require__(10);
+
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = __webpack_require__(17)(function(){
+	  var a = Object.assign
+	    , A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , $$    = arguments
+	    , $$len = $$.length
+	    , index = 1
+	    , getKeys    = $.getKeys
+	    , getSymbols = $.getSymbols
+	    , isEnum     = $.isEnum;
+	  while($$len > index){
+	    var S      = IObject($$[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
 	      , length = keys.length
 	      , j      = 0
 	      , key;
-	    while(length > j)T[key = keys[j++]] = S[key];
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
 	  }
 	  return T;
-	};
+	} : Object.assign;
 
 /***/ },
 
-/***/ 364:
+/***/ 220:
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.1.13 ToObject(argument)
@@ -70,64 +84,40 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 365:
-/***/ function(module, exports, __webpack_require__) {
-
-	// all enumerable object keys, includes symbols
-	var $ = __webpack_require__(7);
-	module.exports = function(it){
-	  var keys       = $.getKeys(it)
-	    , getSymbols = $.getSymbols;
-	  if(getSymbols){
-	    var symbols = getSymbols(it)
-	      , isEnum  = $.isEnum
-	      , i       = 0
-	      , key;
-	    while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))keys.push(key);
-	  }
-	  return keys;
-	};
-
-/***/ },
-
-/***/ 367:
+/***/ 222:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _Object$assign = __webpack_require__(360)["default"];
+	var _Object$assign = __webpack_require__(216)["default"];
 
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.apiRequest = apiRequest;
 
-	var _reqwest = __webpack_require__(368);
+	var _reqwest = __webpack_require__(223);
 
 	var _reqwest2 = _interopRequireDefault(_reqwest);
 
-	var util = {
-	    apiRequest: function apiRequest(url, param) {
-	        var options = arguments.length <= 2 || arguments[2] === undefined ? {
-	            method: "get",
-	            type: "json"
-	        } : arguments[2];
+	function apiRequest(url, param) {
+	    var options = arguments.length <= 2 || arguments[2] === undefined ? {
+	        method: "GET",
+	        type: "json"
+	    } : arguments[2];
 
-	        options = _Object$assign({}, options, {
-	            url: url,
-	            data: param
-	        });
-	        return (0, _reqwest2["default"])(options);
-	    }
-	};
-
-	exports["default"] = util;
-	module.exports = exports["default"];
+	    options = _Object$assign({}, options, {
+	        url: url,
+	        data: param
+	    });
+	    return (0, _reqwest2["default"])(options);
+	}
 
 /***/ },
 
-/***/ 372:
+/***/ 227:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -138,13 +128,13 @@ webpackJsonp([2],{
 	    value: true
 	});
 
-	var _redux = __webpack_require__(348);
+	var _redux = __webpack_require__(204);
 
-	var _reduxThunk = __webpack_require__(373);
+	var _reduxThunk = __webpack_require__(228);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(374);
+	var _reduxLogger = __webpack_require__(229);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
@@ -157,7 +147,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 373:
+/***/ 228:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -180,7 +170,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 374:
+/***/ 229:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -301,32 +291,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 377:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _Object$assign = __webpack_require__(360)["default"];
-
-	exports["default"] = _Object$assign || function (target) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    var source = arguments[i];
-
-	    for (var key in source) {
-	      if (Object.prototype.hasOwnProperty.call(source, key)) {
-	        target[key] = source[key];
-	      }
-	    }
-	  }
-
-	  return target;
-	};
-
-	exports.__esModule = true;
-
-/***/ },
-
-/***/ 380:
+/***/ 235:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -381,16 +346,16 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 424:
+/***/ 278:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
-	var _sharedIndexAppJsx = __webpack_require__(425);
+	var _sharedChunkIndexAppJsx = __webpack_require__(279);
 
-	var _sharedIndexAppJsx2 = _interopRequireDefault(_sharedIndexAppJsx);
+	var _sharedChunkIndexAppJsx2 = _interopRequireDefault(_sharedChunkIndexAppJsx);
 
 	var _react = __webpack_require__(33);
 
@@ -402,7 +367,7 @@ webpackJsonp([2],{
 
 	function bootstrap() {
 	    var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-	    _reactDom2["default"].render(_react2["default"].createElement(_sharedIndexAppJsx2["default"], { initialState: initialState }), document.getElementById('weather'));
+	    _reactDom2["default"].render(_react2["default"].createElement(_sharedChunkIndexAppJsx2["default"], { initialState: initialState }), document.getElementById('weather'));
 	}
 
 	if (typeof window.addEventListener) {
@@ -413,7 +378,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 425:
+/***/ 279:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -436,17 +401,17 @@ webpackJsonp([2],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(341);
+	var _reactRedux = __webpack_require__(197);
 
-	var _reducerEs6 = __webpack_require__(426);
+	var _reducerEs6 = __webpack_require__(280);
 
 	var _reducerEs62 = _interopRequireDefault(_reducerEs6);
 
-	var _libStoreCreatorEs6 = __webpack_require__(372);
+	var _libStoreCreatorEs6 = __webpack_require__(227);
 
 	var _libStoreCreatorEs62 = _interopRequireDefault(_libStoreCreatorEs6);
 
-	var _componentJsx = __webpack_require__(428);
+	var _componentJsx = __webpack_require__(282);
 
 	var _componentJsx2 = _interopRequireDefault(_componentJsx);
 
@@ -496,22 +461,20 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 426:
+/***/ 280:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _extends = __webpack_require__(377)["default"];
-
-	var _Object$assign = __webpack_require__(360)["default"];
+	var _Object$assign = __webpack_require__(216)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _actionEs6 = __webpack_require__(427);
+	var _actionEs6 = __webpack_require__(281);
 
-	var _redux = __webpack_require__(348);
+	var _redux = __webpack_require__(204);
 
 	function weatherByCityName(state, action) {
 	    if (state === undefined) state = {};
@@ -521,7 +484,7 @@ webpackJsonp([2],{
 	            var name = action.name,
 	                value = action.value;
 
-	            var weather = _extends({}, state.weather);
+	            var weather = _Object$assign({}, state.weather);
 	            weather[name] = value;
 	            return _Object$assign({}, state, {
 	                weather: weather
@@ -553,7 +516,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 427:
+/***/ 281:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -563,7 +526,7 @@ webpackJsonp([2],{
 	exports.changeField = changeField;
 	exports.fetchWeather = fetchWeather;
 
-	var _libUtilEs6 = __webpack_require__(367);
+	var _libUtilEs6 = __webpack_require__(222);
 
 	var CHANGE_FIELD = "CHANGE_FIELD";
 	exports.CHANGE_FIELD = CHANGE_FIELD;
@@ -608,7 +571,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 428:
+/***/ 282:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -631,11 +594,11 @@ webpackJsonp([2],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(380);
+	var _classnames = __webpack_require__(235);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _actionEs6 = __webpack_require__(427);
+	var _actionEs6 = __webpack_require__(281);
 
 	var Weather = (function (_Component) {
 	    _inherits(Weather, _Component);
@@ -816,7 +779,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 429:
+/***/ 283:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

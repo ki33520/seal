@@ -4,7 +4,7 @@ webpackJsonp([0],{
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(335);
+	module.exports = __webpack_require__(191);
 
 
 /***/ },
@@ -16,9 +16,9 @@ webpackJsonp([0],{
 
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
-	var _sharedCommonErrorErrorJsx = __webpack_require__(3);
+	var _sharedChunkCommonErrorErrorJsx = __webpack_require__(3);
 
-	var _sharedCommonErrorErrorJsx2 = _interopRequireDefault(_sharedCommonErrorErrorJsx);
+	var _sharedChunkCommonErrorErrorJsx2 = _interopRequireDefault(_sharedChunkCommonErrorErrorJsx);
 
 	var _react = __webpack_require__(33);
 
@@ -30,7 +30,7 @@ webpackJsonp([0],{
 
 	function bootstrap() {
 	    var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-	    _reactDom2["default"].render(_react2["default"].createElement(_sharedCommonErrorErrorJsx2["default"], { initialState: initialState }), document.getElementById('error'));
+	    _reactDom2["default"].render(_react2["default"].createElement(_sharedChunkCommonErrorErrorJsx2["default"], { initialState: initialState }), document.getElementById('error'));
 	}
 
 	if (typeof window.addEventListener) {
@@ -113,7 +113,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 335:
+/***/ 191:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
