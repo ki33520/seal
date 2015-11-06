@@ -1,9 +1,24 @@
 'use strict'
 import rAF from "./requestAnimationFrame";
-import {bindEvent,unbindEvent} from "./util.es6";
 
 let dom = {
-      offset: function(element) {
+      bindEvent(el,event,listener){
+        if(el.addEventListener){
+            el.addEventListener(event,listener,false);
+        }else if(el.attachEvent){
+            el.attachEvent("on${event}",(e)=>{
+                listener.call(el,e||window.event);
+            });
+        }
+      },
+      unbindEvent(el,event,listener){
+        if(el.removeEventListener){
+            el.removeEventListener(event,listener);
+        }else if(el.detachEvent){
+            el.detachEvent("on${event}",listener);
+        }
+      },
+      offset(element) {
         if (!element) {
           return null;
         } 
@@ -113,10 +128,10 @@ let dom = {
           return 0.5 * (Math.pow((pos - 2), 5) + 2);
       }
       function abort(){
-          unbindEvent(scrollTarget,"touchstart",cancelScroll);
+          dom.unbindEvent(scrollTarget,"touchstart",cancelScroll);
           // scrollInProgress = false;
       }
-      bindEvent(scrollTarget,"touchstart",cancelScroll);
+      dom.bindEvent(scrollTarget,"touchstart",cancelScroll);
 
       var start,t,y;
       rAF(function render(){

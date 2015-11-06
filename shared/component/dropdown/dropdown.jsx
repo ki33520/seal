@@ -4,7 +4,6 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import Icon from "../core/icon.jsx";
 import dom from "../../lib/dom.es6";
-import util from "../../lib/util.es6";
 
 class Dropdown extends Component{
     constructor(props){
@@ -33,12 +32,12 @@ class Dropdown extends Component{
         })
     }
     bindOuterEvent(){
-        util.bindEvent(document,"click",this.handleOuterClick.bind(this));
-        util.bindEvent(document,"keyup",this.handleKeyup.bind(this));
+        dom.bindEvent(document,"click",this.handleOuterClick.bind(this));
+        dom.bindEvent(document,"keyup",this.handleKeyup.bind(this));
     }
     unbindOuterEvent(){
-        util.unbindEvent(document,"click",this.handleOuterClick.bind(this));
-        util.unbindEvent(document,"keyup",this.handleKeyup.bind(this));
+        dom.unbindEvent(document,"click",this.handleOuterClick.bind(this));
+        dom.unbindEvent(document,"keyup",this.handleKeyup.bind(this));
     }
     handleKeyup(e){
         e && e.keyCode === 27 && this.setDropdownState(false);

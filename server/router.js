@@ -6,7 +6,7 @@ var router = express.Router();
 require("babel-core/register")({
     optional:["runtime"],
     // presets: ["react","es2015"],
-    extensions: [".es6", ".es", ".jsx"]
+    extensions: [".es6", ".es", ".jsx","js"]
 });
 
 router.get("/", require("./controller/main.js").index);

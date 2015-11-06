@@ -11,7 +11,8 @@ class Properties extends Component{
             if(property.propertyValues.length === 0){
                 return null;
             }
-            var propertyValues = property.propertyValues.map((propertyValue,j)=>{
+            var propertyValues = [];
+            property.propertyValues.map((propertyValue,j)=>{
                 const active = property.selectedValue !== null && property.selectedValue.value === propertyValue.value;
                 const propertyClasses = classNames("property-value",{
                     active,
@@ -21,15 +22,14 @@ class Properties extends Component{
                 && (stock !== null && active);
                 // console.log('popoverActive',selectedProperty,active,popoverActive)
                 // console.log(property.selectedValue,propertyValue)
-                const propertyValueComponent = (
+                propertyValues.push((
                     <div className={propertyClasses} 
                     key={"property-value-"+ j}
                     onClick={onPropertyChange.bind(this,property,propertyValue)}
                     ><Popover 
                     active={popoverActive}
-                    >还剩<b>{stock}</b>件</Popover>{propertyValue}</div>
-                );
-                return propertyValueComponent;
+                    >还剩<b>{stock}</b>件</Popover>{propertyValue.value}</div>
+                ));
             })
             return (
                 <div className="property" key={"property-"+ i}>

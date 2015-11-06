@@ -197,6 +197,14 @@ class GoodDetail extends Component{
         const {good,selectedItem,buyed} = this.state;
 
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
+        var slides = good.slides.map((slide,i)=>{
+            const key = "slide-" + i;
+            return (
+                <Slide key={key}>
+                <a href="javascript:void(null)"><img src={slide} /></a>
+                </Slide>
+            );
+        });
 
         const upperClasses = classNames("good-detail-upper",{
             visible:this.state.upperVisble
@@ -208,6 +216,7 @@ class GoodDetail extends Component{
             <div className="good-detail-content">
             <Header title="商品详情"/>
             <div className={upperClasses}>
+                <Slider effect="roll" autoPlay={true} speed={200}>{slides}</Slider>
                 <div className="good-title">{good.title}</div>
                 <div className="good-prices">
                     <div className="sale-price">{good.salePrice}</div>
@@ -220,6 +229,11 @@ class GoodDetail extends Component{
                 <div className="divider-title">
                     <span>促销</span>
                 </div>
+                <Promotions promotions={good.marketing}/>
+                <Properties properties={good.properties}
+                stock={good.stock}
+                selectedProperty={this.state.selectedProperty}
+                onPropertyChange={this.onPropertyChange.bind(this)} />
                 <div className="divider-title">
                     <span>数量</span>
                 </div>

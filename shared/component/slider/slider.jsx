@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 
@@ -20,10 +21,8 @@ class Slider extends Component{
         this.slides = null;
     }
     componentDidMount(){
-        if(this.isMounted){
-            this.initialize();
-            this.props.autoPlay && this.slideToNext();
-        }
+        this.initialize();
+        this.props.autoPlay && this.slideToNext();
     }
     initialize(){
         const {oriention} = this.props;
@@ -32,7 +31,7 @@ class Slider extends Component{
             activeIndex = this.props.defaultActiveIndex;
         }
         // const slideNode = React.findDOMNode(this).querySelector(".slides").firstChild;
-        const slideNode = React.findDOMNode(this);
+        const slideNode = ReactDOM.findDOMNode(this);
         const slideNodeWidth = slideNode.offsetWidth;
         const slideNodeHeight = slideNode.querySelector(".slides").firstChild.offsetHeight
         const slidesWidth = slideNodeWidth * this.slides.length;

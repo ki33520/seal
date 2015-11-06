@@ -7,14 +7,17 @@ class Promotions extends Component{
     render(){
         var promotions = [],promotionBriefs = [];
         if(this.props.promotions !== null){
+            var i = 0;
             for(let k in this.props.promotions){
+                i++;
+                const key = "promotion-" + i;
                 promotions.push((
-                    <div className="promotion">
+                    <div className="promotion" key={key}>
                         <span className="promotion-title">{k}</span>
                         <span className="promotion-desc">{this.props.promotions[k]}</span>
                     </div>
                 ))
-                promotionBriefs.push((<span>{k}</span>));
+                promotionBriefs.push((<span key={key}>{k}</span>));
             }
         }
         return (
@@ -22,7 +25,7 @@ class Promotions extends Component{
                 <Dropdown showStatus={false} 
                 foldIcon="up-open" unfoldIcon="right-open">
                 <div className="promotions-brief">{promotionBriefs}</div>
-                <div className="promotions">{promotions}</div>
+                <div className="promotions"></div>
                 </Dropdown>
             </div>
         )

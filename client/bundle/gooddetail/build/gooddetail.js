@@ -261,6 +261,8 @@ webpackJsonp([1],[
 
 	var _reducerEs62 = _interopRequireDefault(_reducerEs6);
 
+	var _redux = __webpack_require__(204);
+
 	var _libStoreCreatorEs6 = __webpack_require__(227);
 
 	var _libStoreCreatorEs62 = _interopRequireDefault(_libStoreCreatorEs6);
@@ -281,6 +283,18 @@ webpackJsonp([1],[
 
 	var GoodDetailConnected = (0, _reactRedux.connect)(selector)(_componentJsx2["default"]);
 
+	function configureStore(initialState) {
+	    var store = (0, _libStoreCreatorEs62["default"])(_reducerEs62["default"], initialState);
+	    if (false) {
+	        // Enable Webpack hot module replacement for reducers
+	        module.hot.accept("./reducer.es6", function () {
+	            var nextReducer = require('./reducer.es6');
+	            store.replaceReducer(nextReducer);
+	        });
+	    }
+	    return store;
+	}
+
 	var GoodDetailApp = (function (_Component) {
 	    _inherits(GoodDetailApp, _Component);
 
@@ -297,14 +311,15 @@ webpackJsonp([1],[
 	            var good = _props$initialState.good;
 	            var cartCount = _props$initialState.cartCount;
 
-	            var store = (0, _libStoreCreatorEs62["default"])(_reducerEs62["default"], {
+	            var initialState = {
 	                goodById: {
 	                    good: good
 	                },
 	                cartByUser: {
 	                    cartCount: cartCount
 	                }
-	            });
+	            };
+	            var store = configureStore(initialState);
 	            return _react2["default"].createElement(
 	                _reactRedux.Provider,
 	                { store: store },
@@ -1177,6 +1192,18 @@ webpackJsonp([1],[
 	            var buyed = _state3.buyed;
 
 	            var detail = good.detail.replace(/jpg_.webp/g, 'jpg');
+	            var slides = good.slides.map(function (slide, i) {
+	                var key = "slide-" + i;
+	                return _react2["default"].createElement(
+	                    _componentSliderSlideJsx2["default"],
+	                    { key: key },
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "javascript:void(null)" },
+	                        _react2["default"].createElement("img", { src: slide })
+	                    )
+	                );
+	            });
 
 	            var upperClasses = (0, _classnames2["default"])("good-detail-upper", {
 	                visible: this.state.upperVisble
@@ -1191,6 +1218,11 @@ webpackJsonp([1],[
 	                _react2["default"].createElement(
 	                    "div",
 	                    { className: upperClasses },
+	                    _react2["default"].createElement(
+	                        _componentSliderSliderJsx2["default"],
+	                        { effect: "roll", autoPlay: true, speed: 200 },
+	                        slides
+	                    ),
 	                    _react2["default"].createElement(
 	                        "div",
 	                        { className: "good-title" },
@@ -1243,6 +1275,11 @@ webpackJsonp([1],[
 	                            "促销"
 	                        )
 	                    ),
+	                    _react2["default"].createElement(_partialPromotionsJsx2["default"], { promotions: good.marketing }),
+	                    _react2["default"].createElement(_partialPropertiesJsx2["default"], { properties: good.properties,
+	                        stock: good.stock,
+	                        selectedProperty: this.state.selectedProperty,
+	                        onPropertyChange: this.onPropertyChange.bind(this) }),
 	                    _react2["default"].createElement(
 	                        "div",
 	                        { className: "divider-title" },
@@ -1449,9 +1486,23 @@ webpackJsonp([1],[
 
 	var _requestAnimationFrame2 = _interopRequireDefault(_requestAnimationFrame);
 
-	var _utilEs6 = __webpack_require__(222);
-
 	var dom = {
+	  bindEvent: function bindEvent(el, event, listener) {
+	    if (el.addEventListener) {
+	      el.addEventListener(event, listener, false);
+	    } else if (el.attachEvent) {
+	      el.attachEvent("on${event}", function (e) {
+	        listener.call(el, e || window.event);
+	      });
+	    }
+	  },
+	  unbindEvent: function unbindEvent(el, event, listener) {
+	    if (el.removeEventListener) {
+	      el.removeEventListener(event, listener);
+	    } else if (el.detachEvent) {
+	      el.detachEvent("on${event}", listener);
+	    }
+	  },
 	  offset: function offset(element) {
 	    if (!element) {
 	      return null;
@@ -1559,10 +1610,10 @@ webpackJsonp([1],[
 	      return 0.5 * (Math.pow(pos - 2, 5) + 2);
 	    }
 	    function abort() {
-	      (0, _utilEs6.unbindEvent)(scrollTarget, "touchstart", cancelScroll);
+	      dom.unbindEvent(scrollTarget, "touchstart", cancelScroll);
 	      // scrollInProgress = false;
 	    }
-	    (0, _utilEs6.bindEvent)(scrollTarget, "touchstart", cancelScroll);
+	    dom.bindEvent(scrollTarget, "touchstart", cancelScroll);
 
 	    var start, t, y;
 	    (0, _requestAnimationFrame2["default"])(function render() {
@@ -1694,6 +1745,10 @@ webpackJsonp([1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(190);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _classnames = __webpack_require__(235);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
@@ -1725,10 +1780,8 @@ webpackJsonp([1],[
 	    _createClass(Slider, [{
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
-	            if (this.isMounted) {
-	                this.initialize();
-	                this.props.autoPlay && this.slideToNext();
-	            }
+	            this.initialize();
+	            this.props.autoPlay && this.slideToNext();
 	        }
 	    }, {
 	        key: "initialize",
@@ -1740,7 +1793,7 @@ webpackJsonp([1],[
 	                activeIndex = this.props.defaultActiveIndex;
 	            }
 	            // const slideNode = React.findDOMNode(this).querySelector(".slides").firstChild;
-	            var slideNode = _react2["default"].findDOMNode(this);
+	            var slideNode = _reactDom2["default"].findDOMNode(this);
 	            var slideNodeWidth = slideNode.offsetWidth;
 	            var slideNodeHeight = slideNode.querySelector(".slides").firstChild.offsetHeight;
 	            var slidesWidth = slideNodeWidth * this.slides.length;
@@ -3345,10 +3398,13 @@ webpackJsonp([1],[
 	            var promotions = [],
 	                promotionBriefs = [];
 	            if (this.props.promotions !== null) {
+	                var i = 0;
 	                for (var k in this.props.promotions) {
+	                    i++;
+	                    var key = "promotion-" + i;
 	                    promotions.push(_react2["default"].createElement(
 	                        "div",
-	                        { className: "promotion" },
+	                        { className: "promotion", key: key },
 	                        _react2["default"].createElement(
 	                            "span",
 	                            { className: "promotion-title" },
@@ -3362,7 +3418,7 @@ webpackJsonp([1],[
 	                    ));
 	                    promotionBriefs.push(_react2["default"].createElement(
 	                        "span",
-	                        null,
+	                        { key: key },
 	                        k
 	                    ));
 	                }
@@ -3379,11 +3435,7 @@ webpackJsonp([1],[
 	                        { className: "promotions-brief" },
 	                        promotionBriefs
 	                    ),
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "promotions" },
-	                        promotions
-	                    )
+	                    _react2["default"].createElement("div", { className: "promotions" })
 	                )
 	            );
 	        }
@@ -3431,10 +3483,6 @@ webpackJsonp([1],[
 
 	var _libDomEs62 = _interopRequireDefault(_libDomEs6);
 
-	var _libUtilEs6 = __webpack_require__(222);
-
-	var _libUtilEs62 = _interopRequireDefault(_libUtilEs6);
-
 	var Dropdown = (function (_Component) {
 	    _inherits(Dropdown, _Component);
 
@@ -3477,14 +3525,14 @@ webpackJsonp([1],[
 	    }, {
 	        key: "bindOuterEvent",
 	        value: function bindOuterEvent() {
-	            _libUtilEs62["default"].bindEvent(document, "click", this.handleOuterClick.bind(this));
-	            _libUtilEs62["default"].bindEvent(document, "keyup", this.handleKeyup.bind(this));
+	            _libDomEs62["default"].bindEvent(document, "click", this.handleOuterClick.bind(this));
+	            _libDomEs62["default"].bindEvent(document, "keyup", this.handleKeyup.bind(this));
 	        }
 	    }, {
 	        key: "unbindOuterEvent",
 	        value: function unbindOuterEvent() {
-	            _libUtilEs62["default"].unbindEvent(document, "click", this.handleOuterClick.bind(this));
-	            _libUtilEs62["default"].unbindEvent(document, "keyup", this.handleKeyup.bind(this));
+	            _libDomEs62["default"].unbindEvent(document, "click", this.handleOuterClick.bind(this));
+	            _libDomEs62["default"].unbindEvent(document, "keyup", this.handleKeyup.bind(this));
 	        }
 	    }, {
 	        key: "handleKeyup",
@@ -3637,7 +3685,8 @@ webpackJsonp([1],[
 	                if (property.propertyValues.length === 0) {
 	                    return null;
 	                }
-	                var propertyValues = property.propertyValues.map(function (propertyValue, j) {
+	                var propertyValues = [];
+	                property.propertyValues.map(function (propertyValue, j) {
 	                    var active = property.selectedValue !== null && property.selectedValue.value === propertyValue.value;
 	                    var propertyClasses = (0, _classnames2["default"])("property-value", {
 	                        active: active,
@@ -3646,7 +3695,7 @@ webpackJsonp([1],[
 	                    var popoverActive = selectedProperty !== null && selectedProperty.propertyName === property.propertyName && (stock !== null && active);
 	                    // console.log('popoverActive',selectedProperty,active,popoverActive)
 	                    // console.log(property.selectedValue,propertyValue)
-	                    var propertyValueComponent = _react2["default"].createElement(
+	                    propertyValues.push(_react2["default"].createElement(
 	                        "div",
 	                        { className: propertyClasses,
 	                            key: "property-value-" + j,
@@ -3665,9 +3714,8 @@ webpackJsonp([1],[
 	                            ),
 	                            "件"
 	                        ),
-	                        propertyValue
-	                    );
-	                    return propertyValueComponent;
+	                        propertyValue.value
+	                    ));
 	                });
 	                return _react2["default"].createElement(
 	                    "div",
