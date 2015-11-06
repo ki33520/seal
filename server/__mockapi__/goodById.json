@@ -1,0 +1,45 @@
+{
+  "msg": "查询商品详情页成功",
+  "code": "success",
+  "time": 1446711268924,
+  "object": {
+    "mallName": "川西坝子",
+    "totalRemainingStock": 995,
+    "salePrice": 0.01,
+    "mallId": "fc6804de504c954c015050b9f0d0002f",
+    "specList": null,
+    "discount": 0.0,
+    "standardPrice": 100.0,
+    "title": "北京火锅",
+    "categoryName": "",
+    "canBuy": true,
+    "props": {
+      "镜片大小": "蓝"
+    },
+    "marketing": {
+      "满金额减金额": "火锅专场"
+    },
+    "brandId": "fc6804de506b41b601506e7daa6c0022",
+    "subtitle": "北京火锅",
+    "imageUrl": "null/order/d/t/3/144539734267363.jpg",
+    "msOrTm": 0,
+    "id": "S38300000000250",
+    "detail": "<h3 style=\"color: blue;\">\n\t11111111111111</h3>\n",
+    "mainImageUrl": "null/order/d/t/3/144539734267363.jpg",
+    "items": [
+      {
+        "soldQty": 0.0,
+        "salePrice": 0.01,
+        "standardPrice": 100.0,
+        "id": "S38300000000250",
+        "remainingStock": 0,
+        "stock": 995,
+        "props": {
+          "镜片大小": "蓝"
+        }
+      }
+    ],
+    "categoryId": "",
+    "status": 1
+  }
+}

@@ -1,8 +1,8 @@
-@import "../../asset/common.scss";
+@import "../../common/common.scss";
 $gray-color:#555;
 $pink-color:#DB454C;
 
-@import "../../../shared/common/header/header.scss";
+@import "../../common/header.scss";
 
 .header {
     position:fixed;

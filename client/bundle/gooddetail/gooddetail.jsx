@@ -1,11 +1,11 @@
 'use strict';
-import ErrorContent from "../../shared/common/error/error.jsx";
+import GoodDetail from "../../../shared/chunk/gooddetail/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<ErrorContent initialState={initialState} />,document.getElementById('error'));
+        ReactDOM.render(<GoodDetail initialState={initialState} />,document.getElementById('good-detail'));
 }
 
 if(typeof window.addEventListener){

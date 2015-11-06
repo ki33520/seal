@@ -1,5 +1,5 @@
 'use strict';
-import {apiRequest} from "../lib/util.es6";
+import {apiRequest} from "../../lib/util.es6";
 
 export const REQUEST_GOOD = "REQUEST_GOOD";
 export const RECEIVE_GOOD = "RECEIVE_GOOD";

@@ -1,7 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import Dropdown from "../../component/dropdown/dropdown.jsx";
+import Dropdown from "../../../component/dropdown/dropdown.jsx";
 
 class Promotions extends Component{
     render(){

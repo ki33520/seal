@@ -1,11 +1,11 @@
 'use strict';
-import WeatherApp from "../../shared/index/app.jsx";
+import ErrorContent from "../../../shared/chunk/common/error/error.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<WeatherApp initialState={initialState} />,document.getElementById('weather'));
+        ReactDOM.render(<ErrorContent initialState={initialState} />,document.getElementById('error'));
 }
 
 if(typeof window.addEventListener){

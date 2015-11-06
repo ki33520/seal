@@ -1,21 +1,18 @@
 'use strict';
 
-var React = require("react");
 var _ = require("lodash");
-var ReactDOMServer = require("react-dom/server");
-var util = require("../../shared/lib/util.es6");
-var config = require("../lib/config");
+var util = require("../lib/util");
 var bluebird = require("bluebird");
-var GoodDetailApp = React.createFactory(require("../../shared/gooddetail/app.jsx"));
+var GoodDetailApp = util.getSharedComponent("gooddetail");
 
 var goodDetail = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
 
     bluebird.props({
-        goodById: util.apiRequest(config.api.goodById.url, {
+        goodById: util.fetchAPI("goodById", {
             productId: id
-        })
+        },true)
     }).then(function(ret) {
         if (ret.goodById.code === "success") {
             var good = ret.goodById.object;
@@ -64,7 +61,7 @@ var goodDetail = function(req, res, next) {
                 good: good,
                 cartCount: cartCount
             };
-            var markup = ReactDOMServer.renderToString(GoodDetailApp({initialState:initialState}));
+            var markup = util.getMarkupByComponent(GoodDetailApp({initialState:initialState}));
 
             res.render('gooddetail', {
                 markup: markup,

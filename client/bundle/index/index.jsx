@@ -1,11 +1,11 @@
 'use strict';
-import GoodDetail from "../../shared/gooddetail/app.jsx";
+import WeatherApp from "../../../shared/chunk/index/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<GoodDetail initialState={initialState} />,document.getElementById('good-detail'));
+        ReactDOM.render(<WeatherApp initialState={initialState} />,document.getElementById('weather'));
 }
 
 if(typeof window.addEventListener){
