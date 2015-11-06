@@ -13,7 +13,7 @@ describe("index component", function() {
                 dispatch:()=>{},
                 handleChange:expect.createSpy(),
                 handleQuery:expect.createSpy(),
-                weatherByCityName:require("./mock_data/index.json")
+                weatherByCityName:require("./initialstate/index.json")
             };
             renderer = ReactTestUtils.createRenderer();
             renderer.render(<Weather {...props}/>);
