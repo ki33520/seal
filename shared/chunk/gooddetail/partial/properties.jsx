@@ -2,7 +2,7 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import Popover from "../../../component/popover/popover.jsx";
+import Popover from "../../../component/popover.jsx";
 
 class Properties extends Component{
     render(){

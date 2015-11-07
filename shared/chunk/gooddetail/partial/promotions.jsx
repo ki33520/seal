@@ -25,7 +25,7 @@ class Promotions extends Component{
                 <Dropdown showStatus={false} 
                 foldIcon="up-open" unfoldIcon="right-open">
                 <div className="promotions-brief">{promotionBriefs}</div>
-                <div className="promotions"></div>
+                <div className="promotions">{promotions}</div>
                 </Dropdown>
             </div>
         )

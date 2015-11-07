@@ -21,7 +21,7 @@ gulp.task("nodemon", function() {
     }).on("restart", function() {
         setTimeout(function() {
             livereload.changed('/');
-        }, 500);
+        }, 100);
     }).on('exit', function() {
         console.log('nodemon exit');
     });

@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Icon from "./icon.jsx";
 import dom from "../lib/dom.es6";
@@ -43,7 +44,7 @@ class Dropdown extends Component{
         e && e.keyCode === 27 && this.setDropdownState(false);
     }
     handleOuterClick(e){
-        if(dom.hasNode(e.target,React.findDOMNode(this)) === true){
+        if(dom.hasNode(e.target,ReactDOM.findDOMNode(this)) === true){
             return false;
         }
         this.setDropdownState(false);

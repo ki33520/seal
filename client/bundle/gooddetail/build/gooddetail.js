@@ -3,7 +3,7 @@ webpackJsonp([1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(195);
-	module.exports = __webpack_require__(276);
+	module.exports = __webpack_require__(272);
 
 
 /***/ },
@@ -285,13 +285,6 @@ webpackJsonp([1],[
 
 	function configureStore(initialState) {
 	    var store = (0, _libStoreCreatorEs62["default"])(_reducerEs62["default"], initialState);
-	    if (false) {
-	        // Enable Webpack hot module replacement for reducers
-	        module.hot.accept("./reducer.es6", function () {
-	            var nextReducer = require('./reducer.es6');
-	            store.replaceReducer(nextReducer);
-	        });
-	    }
 	    return store;
 	}
 
@@ -947,31 +940,31 @@ webpackJsonp([1],[
 
 	var _componentSliderSlideJsx2 = _interopRequireDefault(_componentSliderSlideJsx);
 
-	var _componentNumberpickerNumberpickerJsx = __webpack_require__(266);
+	var _componentNumberpickerNumberpickerJsx = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../component/numberpicker/numberpicker.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _componentNumberpickerNumberpickerJsx2 = _interopRequireDefault(_componentNumberpickerNumberpickerJsx);
 
-	var _componentPullhookPullhookJsx = __webpack_require__(268);
+	var _componentPullhookPullhookJsx = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../component/pullhook/pullhook.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _componentPullhookPullhookJsx2 = _interopRequireDefault(_componentPullhookPullhookJsx);
 
-	var _componentAlertAlertJsx = __webpack_require__(269);
+	var _componentAlertAlertJsx = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../component/alert/alert.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _componentAlertAlertJsx2 = _interopRequireDefault(_componentAlertAlertJsx);
 
-	var _commonHeaderHeaderJsx = __webpack_require__(270);
+	var _commonHeaderHeaderJsx = __webpack_require__(266);
 
 	var _commonHeaderHeaderJsx2 = _interopRequireDefault(_commonHeaderHeaderJsx);
 
-	var _partialPromotionsJsx = __webpack_require__(271);
+	var _partialPromotionsJsx = __webpack_require__(267);
 
 	var _partialPromotionsJsx2 = _interopRequireDefault(_partialPromotionsJsx);
 
-	var _partialPropertiesJsx = __webpack_require__(273);
+	var _partialPropertiesJsx = __webpack_require__(270);
 
 	var _partialPropertiesJsx2 = _interopRequireDefault(_partialPropertiesJsx);
 
-	var _partialToolbarJsx = __webpack_require__(275);
+	var _partialToolbarJsx = __webpack_require__(271);
 
 	var _partialToolbarJsx2 = _interopRequireDefault(_partialToolbarJsx);
 
@@ -2920,388 +2913,6 @@ webpackJsonp([1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _coreIconJsx = __webpack_require__(267);
-
-	var _coreIconJsx2 = _interopRequireDefault(_coreIconJsx);
-
-	var NumberPicker = (function (_Component) {
-	    _inherits(NumberPicker, _Component);
-
-	    function NumberPicker(props) {
-	        _classCallCheck(this, NumberPicker);
-
-	        _get(Object.getPrototypeOf(NumberPicker.prototype), "constructor", this).call(this, props);
-	        this.state = {
-	            value: this.props.value
-	        };
-	    }
-
-	    _createClass(NumberPicker, [{
-	        key: "handleIncrease",
-	        value: function handleIncrease(e) {
-	            e && e.preventDefault();
-	            var value = this.state.value;
-	            // console.log(value)
-	            var _props = this.props;
-	            var maximum = _props.maximum;
-	            var step = _props.step;
-	            var onChange = _props.onChange;
-
-	            if (maximum !== null && value >= maximum) {
-	                return;
-	            }
-	            value += step;
-	            this.setState({
-	                value: value
-	            }, function () {
-	                onChange(value);
-	            });
-	        }
-	    }, {
-	        key: "handleDecrease",
-	        value: function handleDecrease(e) {
-	            e && e.preventDefault();
-	            var value = this.state.value;
-	            var _props2 = this.props;
-	            var minimum = _props2.minimum;
-	            var step = _props2.step;
-	            var onChange = _props2.onChange;
-
-	            // console.log(value,minimum)
-	            if (minimum !== null && value <= minimum) {
-	                return;
-	            }
-	            value -= step;
-	            this.setState({
-	                value: value
-	            }, function () {
-	                onChange(value);
-	            });
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var readonly = this.props.readonly;
-
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: "number-picker" },
-	                _react2["default"].createElement(
-	                    "div",
-	                    { onClick: this.handleDecrease.bind(this) },
-	                    _react2["default"].createElement(_coreIconJsx2["default"], { icon: "minus" })
-	                ),
-	                _react2["default"].createElement("input", { type: "text", readOnly: readonly, value: this.state.value }),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { onClick: this.handleIncrease.bind(this) },
-	                    _react2["default"].createElement(_coreIconJsx2["default"], { icon: "plus" })
-	                )
-	            );
-	        }
-	    }]);
-
-	    return NumberPicker;
-	})(_react.Component);
-
-	NumberPicker.defaultProps = {
-	    value: 0,
-	    readonly: true,
-	    minimum: 0,
-	    maximum: null,
-	    step: 1,
-	    onChange: function onChange() {}
-	};
-
-	exports["default"] = NumberPicker;
-	module.exports = exports["default"];
-
-/***/ },
-/* 267 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _defineProperty = __webpack_require__(231)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(235);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var Icon = (function (_Component) {
-	    _inherits(Icon, _Component);
-
-	    function Icon() {
-	        _classCallCheck(this, Icon);
-
-	        _get(Object.getPrototypeOf(Icon.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(Icon, [{
-	        key: "render",
-	        value: function render() {
-	            var icon = this.props.icon;
-
-	            var classes = (0, _classnames2["default"])(this.props.className, _defineProperty({
-	                "iconfont": true
-	            }, "icon-" + icon, true));
-	            return _react2["default"].createElement("span", { className: classes });
-	        }
-	    }]);
-
-	    return Icon;
-	})(_react.Component);
-
-	exports["default"] = Icon;
-	module.exports = exports["default"];
-
-/***/ },
-/* 268 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(235);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var PullHook = (function (_Component) {
-	    _inherits(PullHook, _Component);
-
-	    function PullHook(props) {
-	        _classCallCheck(this, PullHook);
-
-	        _get(Object.getPrototypeOf(PullHook.prototype), "constructor", this).call(this, props);
-	        this.state = {
-	            pullStatus: null
-	        };
-	    }
-
-	    _createClass(PullHook, [{
-	        key: "handleTouchStart",
-	        value: function handleTouchStart(e) {
-	            e && e.preventDefault();
-	            var _e$changedTouches$0 = e.changedTouches[0];
-	            var clientY = _e$changedTouches$0.clientY;
-	            var clientX = _e$changedTouches$0.clientX;
-
-	            this.startTouchX = clientX;
-	            this.startTouchY = clientY;
-	        }
-	    }, {
-	        key: "handleTouchEnd",
-	        value: function handleTouchEnd(e) {
-	            e && e.preventDefault();
-	            var touchOriention = this.judgeOriention(e.changedTouches[0]);
-	            var _props = this.props;
-	            var oriention = _props.oriention;
-	            var onPullEnd = _props.onPullEnd;
-
-	            if (oriention === touchOriention) {
-	                this.setState({
-	                    pullStatus: "pulling"
-	                });
-	                onPullEnd();
-	            }
-	        }
-	    }, {
-	        key: "handleTouchMove",
-	        value: function handleTouchMove(e) {
-	            e && e.preventDefault();
-	            var touchOriention = this.judgeOriention(e.changedTouches[0]);
-	            var _props2 = this.props;
-	            var oriention = _props2.oriention;
-	            var onPullMove = _props2.onPullMove;
-
-	            // console.log('oriention',touchOriention)
-	            if (oriention === touchOriention) {
-	                this.setState({
-	                    pullStatus: "pulled"
-	                });
-	                onPullMove();
-	            }
-	        }
-	    }, {
-	        key: "judgeOriention",
-	        value: function judgeOriention(touch) {
-	            var clientY = touch.clientY;
-	            var clientX = touch.clientX;
-
-	            var offsetX = clientX - this.startTouchX;
-	            var offsetY = clientY - this.startTouchY;
-	            var oriention;
-	            if (Math.abs(offsetX) > Math.abs(offsetY) && offsetX > 0) {
-	                oriention = "LEFT_TO_RIGHT";
-	            } else if (Math.abs(offsetX) > Math.abs(offsetY) && offsetX < 0) {
-	                oriention = "RIGHT_TO_LEFT";
-	            } else if (Math.abs(offsetX) < Math.abs(offsetY) && offsetY > 0) {
-	                oriention = "TOP_TO_BOTTOM";
-	            } else if (Math.abs(offsetX) < Math.abs(offsetY) && offsetY < 0) {
-	                oriention = "BOTTOM_TO_TOP";
-	            } else {
-	                oriention = null;
-	            }
-	            return oriention;
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var classes = (0, _classnames2["default"])(this.props.className, {
-	                "pull-move": this.state.pullStatus === "pulling",
-	                "pull-end": this.state.pullStatus === "pulled"
-	            });
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: classes,
-	                    onTouchStart: this.handleTouchStart.bind(this),
-	                    onTouchMove: this.handleTouchMove.bind(this),
-	                    onTouchEnd: this.handleTouchEnd.bind(this) },
-	                this.props.children
-	            );
-	        }
-	    }]);
-
-	    return PullHook;
-	})(_react.Component);
-
-	PullHook.defaultProps = {
-	    onPullMove: function onPullMove() {},
-	    onPullEnd: function onPullEnd() {}
-	};
-
-	exports["default"] = PullHook;
-	module.exports = exports["default"];
-
-/***/ },
-/* 269 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(235);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _libDomEs6 = __webpack_require__(236);
-
-	var _libDomEs62 = _interopRequireDefault(_libDomEs6);
-
-	var Alert = (function (_Component) {
-	    _inherits(Alert, _Component);
-
-	    function Alert() {
-	        _classCallCheck(this, Alert);
-
-	        _get(Object.getPrototypeOf(Alert.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(Alert, [{
-	        key: "render",
-	        value: function render() {
-	            var classes = (0, _classnames2["default"])("alert-layer", {
-	                "active": this.props.active
-	            });
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: classes },
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "alert" },
-	                    this.props.children
-	                )
-	            );
-	        }
-	    }]);
-
-	    return Alert;
-	})(_react.Component);
-
-	Alert.defaultProps = {
-	    autoHide: true,
-	    delay: 3000
-	};
-
-	exports["default"] = Alert;
-	module.exports = exports["default"];
-
-/***/ },
-/* 270 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
 	var Header = (function (_Component) {
 	    _inherits(Header, _Component);
 
@@ -3356,7 +2967,7 @@ webpackJsonp([1],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 271 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3379,9 +2990,9 @@ webpackJsonp([1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _componentDropdownDropdownJsx = __webpack_require__(272);
+	var _componentDropdownJsx = __webpack_require__(268);
 
-	var _componentDropdownDropdownJsx2 = _interopRequireDefault(_componentDropdownDropdownJsx);
+	var _componentDropdownJsx2 = _interopRequireDefault(_componentDropdownJsx);
 
 	var Promotions = (function (_Component) {
 	    _inherits(Promotions, _Component);
@@ -3427,7 +3038,7 @@ webpackJsonp([1],[
 	                "div",
 	                { className: "good-promotions" },
 	                _react2["default"].createElement(
-	                    _componentDropdownDropdownJsx2["default"],
+	                    _componentDropdownJsx2["default"],
 	                    { showStatus: false,
 	                        foldIcon: "up-open", unfoldIcon: "right-open" },
 	                    _react2["default"].createElement(
@@ -3448,7 +3059,7 @@ webpackJsonp([1],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 272 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3475,9 +3086,9 @@ webpackJsonp([1],[
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _coreIconJsx = __webpack_require__(267);
+	var _iconJsx = __webpack_require__(269);
 
-	var _coreIconJsx2 = _interopRequireDefault(_coreIconJsx);
+	var _iconJsx2 = _interopRequireDefault(_iconJsx);
 
 	var _libDomEs6 = __webpack_require__(236);
 
@@ -3562,7 +3173,7 @@ webpackJsonp([1],[
 	            var unfoldIcon = _props.unfoldIcon;
 	            var foldIcon = _props.foldIcon;
 
-	            var caret = _react2["default"].createElement(_coreIconJsx2["default"], {
+	            var caret = _react2["default"].createElement(_iconJsx2["default"], {
 	                icon: this.state.open ? foldIcon : unfoldIcon });
 	            if (showStatus === true) {
 	                var btnStyle = {
@@ -3631,7 +3242,64 @@ webpackJsonp([1],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 273 */
+/* 269 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
+
+	var _defineProperty = __webpack_require__(231)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(235);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var Icon = (function (_Component) {
+	    _inherits(Icon, _Component);
+
+	    function Icon() {
+	        _classCallCheck(this, Icon);
+
+	        _get(Object.getPrototypeOf(Icon.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Icon, [{
+	        key: "render",
+	        value: function render() {
+	            var icon = this.props.icon;
+
+	            var classes = (0, _classnames2["default"])(this.props.className, _defineProperty({
+	                "iconfont": true
+	            }, "icon-" + icon, true));
+	            return _react2["default"].createElement("span", { className: classes });
+	        }
+	    }]);
+
+	    return Icon;
+	})(_react.Component);
+
+	exports["default"] = Icon;
+	module.exports = exports["default"];
+
+/***/ },
+/* 270 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3658,7 +3326,7 @@ webpackJsonp([1],[
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _componentPopoverPopoverJsx = __webpack_require__(274);
+	var _componentPopoverPopoverJsx = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"../../../component/popover/popover.jsx\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 	var _componentPopoverPopoverJsx2 = _interopRequireDefault(_componentPopoverPopoverJsx);
 
@@ -3751,87 +3419,7 @@ webpackJsonp([1],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 274 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(235);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var Popover = (function (_Component) {
-	    _inherits(Popover, _Component);
-
-	    function Popover() {
-	        _classCallCheck(this, Popover);
-
-	        _get(Object.getPrototypeOf(Popover.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(Popover, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            var _props = this.props;
-	            var placement = _props.placement;
-	            var active = _props.active;
-
-	            if (active === false) {
-	                return;
-	            }
-	            var thisNode = _react2["default"].findDOMNode(this);
-	            var hostNode = thisNode.parentNode;
-	            var hostNodeWidth = hostNode.offsetWidth;
-	            var hostNodeHeight = hostNode.offsetHeight;
-	            if (placement === "top") {
-	                this.hostNode.style.top = hostNodeHeight;
-	            }
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var classes = (0, _classnames2["default"])("popover", {
-	                active: this.props.active
-	            });
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: classes },
-	                this.props.children
-	            );
-	        }
-	    }]);
-
-	    return Popover;
-	})(_react.Component);
-
-	Popover.defaultProps = {
-	    placement: "top",
-	    active: false
-	};
-
-	exports["default"] = Popover;
-	module.exports = exports["default"];
-
-/***/ },
-/* 275 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3950,7 +3538,7 @@ webpackJsonp([1],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 276 */
+/* 272 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

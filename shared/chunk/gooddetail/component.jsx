@@ -7,13 +7,14 @@ import dom from "../../lib/dom.es6";
 import {apiRequest} from "../../lib/util.es6";
 import Slider from "../../component/slider/slider.jsx";
 import Slide from "../../component/slider/slide.jsx";
-import NumberPicker from "../../component/numberpicker/numberpicker.jsx";
-import PullHook from "../../component/pullhook/pullhook.jsx";
-import Alert from "../../component/alert/alert.jsx";
-import Header from "../common/header/header.jsx";
+import NumberPicker from "../../component/numberpicker.jsx";
+import PullHook from "../../component/pullhook.jsx";
+import Alert from "../../component/alert.jsx";
+import Header from "../common/header.jsx";
 
 import Promotions from "./partial/promotions.jsx";
 import Properties from "./partial/properties.jsx";
+import Specification from "./partial/specification.jsx";
 import Toolbar from "./partial/toolbar.jsx";
 import {addCart,addFavorite} from "./action.es6";
 import {alert} from "../common/action.es6";
@@ -261,12 +262,7 @@ class GoodDetail extends Component{
                 oriention="TOP_TO_BOTTOM"
                 onPullEnd={this.handlePullDown.bind(this)}
                 >下拉返回详情顶部</PullHook>
-                <div className="good-specification">
-                    <div className="divider-title">
-                        <span>规格参数</span>
-                    </div>
-                    <div className="specification-content">{null}</div>
-                </div>
+                <Specification specList={good.specList}/>
                 <div className="divider-title">
                     <span>商品图片</span>
                 </div>

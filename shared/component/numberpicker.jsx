@@ -1,7 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import Icon from "../core/icon.jsx";
+import Icon from "./icon.jsx";
 
 class NumberPicker extends Component{
     constructor(props){
