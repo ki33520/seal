@@ -1,8 +1,11 @@
 @import "../../common/common.scss";
+@import "../../common/iconfont.scss";
 $gray-color:#555;
 $pink-color:#DB454C;
 
 @import "../../common/header.scss";
+@import "../../component/slider.scss";
+@import "../../component/dropdown.scss";
 
 .header {
     position:fixed;

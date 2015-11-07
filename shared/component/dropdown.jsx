@@ -2,8 +2,8 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import Icon from "../core/icon.jsx";
-import dom from "../../lib/dom.es6";
+import Icon from "./icon.jsx";
+import dom from "../lib/dom.es6";
 
 class Dropdown extends Component{
     constructor(props){
