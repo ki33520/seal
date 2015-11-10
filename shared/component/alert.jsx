@@ -1,7 +1,7 @@
 'use strict'
 import React,{Component} from "react";
 import classNames from "classnames";
-import dom from "../../lib/dom.es6";
+import dom from "../lib/dom.es6";
 
 class Alert extends Component{
     render(){

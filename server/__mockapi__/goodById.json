@@ -7,7 +7,12 @@
         "totalRemainingStock": 995,
         "salePrice": 0.01,
         "mallId": "fc6804de504c954c015050b9f0d0002f",
-        "specList": null,
+        "specList": {
+            "品牌":"卡文COVER",
+            "货号":"CS55701",
+            "材质":"羊绒皮面革",
+            "产地":"江苏"
+        },
         "discount": 0.0,
         "standardPrice": 100.0,
         "title": "卡文COVER 时尚都市女款春鞋CS55701",

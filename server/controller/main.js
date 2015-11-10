@@ -1,6 +1,6 @@
 'use strict'
 var util = require("../lib/util");
-var ErrorContent = util.getSharedComponent("common","error/error.jsx");
+var ErrorContent = util.getSharedComponent("common","error.jsx");
 var WeatherApp = util.getSharedComponent("index");
 var sharedUtil = require("../../shared/lib/util.es6");
 

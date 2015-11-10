@@ -3,7 +3,7 @@ webpackJsonp([1],[
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(195);
-	module.exports = __webpack_require__(276);
+	module.exports = __webpack_require__(277);
 
 
 /***/ },
@@ -285,13 +285,6 @@ webpackJsonp([1],[
 
 	function configureStore(initialState) {
 	    var store = (0, _libStoreCreatorEs62["default"])(_reducerEs62["default"], initialState);
-	    if (false) {
-	        // Enable Webpack hot module replacement for reducers
-	        module.hot.accept("./reducer.es6", function () {
-	            var nextReducer = require('./reducer.es6');
-	            store.replaceReducer(nextReducer);
-	        });
-	    }
 	    return store;
 	}
 
@@ -947,21 +940,21 @@ webpackJsonp([1],[
 
 	var _componentSliderSlideJsx2 = _interopRequireDefault(_componentSliderSlideJsx);
 
-	var _componentNumberpickerNumberpickerJsx = __webpack_require__(266);
+	var _componentNumberpickerJsx = __webpack_require__(266);
 
-	var _componentNumberpickerNumberpickerJsx2 = _interopRequireDefault(_componentNumberpickerNumberpickerJsx);
+	var _componentNumberpickerJsx2 = _interopRequireDefault(_componentNumberpickerJsx);
 
-	var _componentPullhookPullhookJsx = __webpack_require__(268);
+	var _componentPullhookJsx = __webpack_require__(268);
 
-	var _componentPullhookPullhookJsx2 = _interopRequireDefault(_componentPullhookPullhookJsx);
+	var _componentPullhookJsx2 = _interopRequireDefault(_componentPullhookJsx);
 
-	var _componentAlertAlertJsx = __webpack_require__(269);
+	var _componentAlertJsx = __webpack_require__(269);
 
-	var _componentAlertAlertJsx2 = _interopRequireDefault(_componentAlertAlertJsx);
+	var _componentAlertJsx2 = _interopRequireDefault(_componentAlertJsx);
 
-	var _commonHeaderHeaderJsx = __webpack_require__(270);
+	var _commonHeaderJsx = __webpack_require__(270);
 
-	var _commonHeaderHeaderJsx2 = _interopRequireDefault(_commonHeaderHeaderJsx);
+	var _commonHeaderJsx2 = _interopRequireDefault(_commonHeaderJsx);
 
 	var _partialPromotionsJsx = __webpack_require__(271);
 
@@ -971,7 +964,11 @@ webpackJsonp([1],[
 
 	var _partialPropertiesJsx2 = _interopRequireDefault(_partialPropertiesJsx);
 
-	var _partialToolbarJsx = __webpack_require__(275);
+	var _partialSpecificationJsx = __webpack_require__(275);
+
+	var _partialSpecificationJsx2 = _interopRequireDefault(_partialSpecificationJsx);
+
+	var _partialToolbarJsx = __webpack_require__(276);
 
 	var _partialToolbarJsx2 = _interopRequireDefault(_partialToolbarJsx);
 
@@ -1214,7 +1211,7 @@ webpackJsonp([1],[
 	            return _react2["default"].createElement(
 	                "div",
 	                { className: "good-detail-content" },
-	                _react2["default"].createElement(_commonHeaderHeaderJsx2["default"], { title: "商品详情" }),
+	                _react2["default"].createElement(_commonHeaderJsx2["default"], { title: "商品详情" }),
 	                _react2["default"].createElement(
 	                    "div",
 	                    { className: upperClasses },
@@ -1292,10 +1289,10 @@ webpackJsonp([1],[
 	                    _react2["default"].createElement(
 	                        "div",
 	                        { className: "good-buyed" },
-	                        _react2["default"].createElement(_componentNumberpickerNumberpickerJsx2["default"], { value: this.state.buyed, onChange: this.handleBuyedChanged.bind(this) })
+	                        _react2["default"].createElement(_componentNumberpickerJsx2["default"], { value: this.state.buyed, onChange: this.handleBuyedChanged.bind(this) })
 	                    ),
 	                    _react2["default"].createElement(
-	                        _componentPullhookPullhookJsx2["default"],
+	                        _componentPullhookJsx2["default"],
 	                        {
 	                            className: "pull-trigger",
 	                            oriention: "BOTTOM_TO_TOP",
@@ -1318,7 +1315,7 @@ webpackJsonp([1],[
 	                    "div",
 	                    { className: downClasses },
 	                    _react2["default"].createElement(
-	                        _componentPullhookPullhookJsx2["default"],
+	                        _componentPullhookJsx2["default"],
 	                        {
 	                            className: "pull-trigger",
 	                            oriention: "TOP_TO_BOTTOM",
@@ -1326,24 +1323,7 @@ webpackJsonp([1],[
 	                        },
 	                        "下拉返回详情顶部"
 	                    ),
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "good-specification" },
-	                        _react2["default"].createElement(
-	                            "div",
-	                            { className: "divider-title" },
-	                            _react2["default"].createElement(
-	                                "span",
-	                                null,
-	                                "规格参数"
-	                            )
-	                        ),
-	                        _react2["default"].createElement(
-	                            "div",
-	                            { className: "specification-content" },
-	                            null
-	                        )
-	                    ),
+	                    _react2["default"].createElement(_partialSpecificationJsx2["default"], { specList: good.specList }),
 	                    _react2["default"].createElement(
 	                        "div",
 	                        { className: "divider-title" },
@@ -2920,9 +2900,9 @@ webpackJsonp([1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _coreIconJsx = __webpack_require__(267);
+	var _iconJsx = __webpack_require__(267);
 
-	var _coreIconJsx2 = _interopRequireDefault(_coreIconJsx);
+	var _iconJsx2 = _interopRequireDefault(_iconJsx);
 
 	var NumberPicker = (function (_Component) {
 	    _inherits(NumberPicker, _Component);
@@ -2989,13 +2969,13 @@ webpackJsonp([1],[
 	                _react2["default"].createElement(
 	                    "div",
 	                    { onClick: this.handleDecrease.bind(this) },
-	                    _react2["default"].createElement(_coreIconJsx2["default"], { icon: "minus" })
+	                    _react2["default"].createElement(_iconJsx2["default"], { icon: "minus" })
 	                ),
 	                _react2["default"].createElement("input", { type: "text", readOnly: readonly, value: this.state.value }),
 	                _react2["default"].createElement(
 	                    "div",
 	                    { onClick: this.handleIncrease.bind(this) },
-	                    _react2["default"].createElement(_coreIconJsx2["default"], { icon: "plus" })
+	                    _react2["default"].createElement(_iconJsx2["default"], { icon: "plus" })
 	                )
 	            );
 	        }
@@ -3379,9 +3359,9 @@ webpackJsonp([1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _componentDropdownDropdownJsx = __webpack_require__(272);
+	var _componentDropdownJsx = __webpack_require__(272);
 
-	var _componentDropdownDropdownJsx2 = _interopRequireDefault(_componentDropdownDropdownJsx);
+	var _componentDropdownJsx2 = _interopRequireDefault(_componentDropdownJsx);
 
 	var Promotions = (function (_Component) {
 	    _inherits(Promotions, _Component);
@@ -3427,7 +3407,7 @@ webpackJsonp([1],[
 	                "div",
 	                { className: "good-promotions" },
 	                _react2["default"].createElement(
-	                    _componentDropdownDropdownJsx2["default"],
+	                    _componentDropdownJsx2["default"],
 	                    { showStatus: false,
 	                        foldIcon: "up-open", unfoldIcon: "right-open" },
 	                    _react2["default"].createElement(
@@ -3435,7 +3415,11 @@ webpackJsonp([1],[
 	                        { className: "promotions-brief" },
 	                        promotionBriefs
 	                    ),
-	                    _react2["default"].createElement("div", { className: "promotions" })
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "promotions" },
+	                        promotions
+	                    )
 	                )
 	            );
 	        }
@@ -3471,13 +3455,17 @@ webpackJsonp([1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactDom = __webpack_require__(190);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
 	var _classnames = __webpack_require__(235);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _coreIconJsx = __webpack_require__(267);
+	var _iconJsx = __webpack_require__(267);
 
-	var _coreIconJsx2 = _interopRequireDefault(_coreIconJsx);
+	var _iconJsx2 = _interopRequireDefault(_iconJsx);
 
 	var _libDomEs6 = __webpack_require__(236);
 
@@ -3542,7 +3530,7 @@ webpackJsonp([1],[
 	    }, {
 	        key: "handleOuterClick",
 	        value: function handleOuterClick(e) {
-	            if (_libDomEs62["default"].hasNode(e.target, _react2["default"].findDOMNode(this)) === true) {
+	            if (_libDomEs62["default"].hasNode(e.target, _reactDom2["default"].findDOMNode(this)) === true) {
 	                return false;
 	            }
 	            this.setDropdownState(false);
@@ -3562,7 +3550,7 @@ webpackJsonp([1],[
 	            var unfoldIcon = _props.unfoldIcon;
 	            var foldIcon = _props.foldIcon;
 
-	            var caret = _react2["default"].createElement(_coreIconJsx2["default"], {
+	            var caret = _react2["default"].createElement(_iconJsx2["default"], {
 	                icon: this.state.open ? foldIcon : unfoldIcon });
 	            if (showStatus === true) {
 	                var btnStyle = {
@@ -3658,9 +3646,9 @@ webpackJsonp([1],[
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _componentPopoverPopoverJsx = __webpack_require__(274);
+	var _componentPopoverJsx = __webpack_require__(274);
 
-	var _componentPopoverPopoverJsx2 = _interopRequireDefault(_componentPopoverPopoverJsx);
+	var _componentPopoverJsx2 = _interopRequireDefault(_componentPopoverJsx);
 
 	var Properties = (function (_Component) {
 	    _inherits(Properties, _Component);
@@ -3702,7 +3690,7 @@ webpackJsonp([1],[
 	                            onClick: onPropertyChange.bind(_this, property, propertyValue)
 	                        },
 	                        _react2["default"].createElement(
-	                            _componentPopoverPopoverJsx2["default"],
+	                            _componentPopoverJsx2["default"],
 	                            {
 	                                active: popoverActive
 	                            },
@@ -3854,6 +3842,96 @@ webpackJsonp([1],[
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var Specification = (function (_Component) {
+	    _inherits(Specification, _Component);
+
+	    function Specification() {
+	        _classCallCheck(this, Specification);
+
+	        _get(Object.getPrototypeOf(Specification.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Specification, [{
+	        key: "render",
+	        value: function render() {
+	            var specList = this.props.specList;
+
+	            var specification = null;
+	            if (specList !== null) {
+	                specification = [];
+	                var i = 0;
+	                for (var specName in specList) {
+	                    i++;
+	                    var key = "spec-" + i;
+	                    var specValue = specList[specName];
+	                    specification.push(_react2["default"].createElement(
+	                        "div",
+	                        { className: "specification-row", key: key },
+	                        _react2["default"].createElement(
+	                            "div",
+	                            { className: "specification-name" },
+	                            specName
+	                        ),
+	                        _react2["default"].createElement(
+	                            "div",
+	                            { className: "specification-value" },
+	                            specValue
+	                        )
+	                    ));
+	                }
+	            }
+
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "good-specification" },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "divider-title" },
+	                    _react2["default"].createElement(
+	                        "span",
+	                        null,
+	                        "规格参数"
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "specification-content" },
+	                    specification
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Specification;
+	})(_react.Component);
+
+	exports["default"] = Specification;
+	module.exports = exports["default"];
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
 	var _libDomEs6 = __webpack_require__(236);
 
 	var _libDomEs62 = _interopRequireDefault(_libDomEs6);
@@ -3950,7 +4028,7 @@ webpackJsonp([1],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 276 */
+/* 277 */
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin
