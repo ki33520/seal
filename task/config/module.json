@@ -1,32 +1,29 @@
 {
     "error": {
-        "html": ["./view/error.html"],
+        "html": ["error.html"],
         "path": "./client/bundle/error/",
-        "entyJs": "./client/bundle/error/error.jsx",
-        "sourceCompiler": {
-            "js": "react",
+        "compiler": {
+            "js": "babel",
             "css": "scss"
         },
-        "libBundle": "react"
+        "vendor": "react"
     },
     "index": {
-        "html": ["./view/index.html"],
+        "html": ["index.html"],
         "path": "./client/bundle/index/",
-        "entyJs": "./client/bundle/index/index.jsx",
-        "sourceCompiler": {
-            "js": "react",
+        "compiler": {
+            "js": "babel",
             "css": "scss"
         },
-        "libBundle": "react"
+        "vendor": "react"
     },
     "gooddetail": {
-        "html": ["./view/gooddetail.html"],
+        "html": ["gooddetail.html"],
         "path": "./client/bundle/gooddetail/",
-        "entyJs": "./client/bundle/gooddetail/gooddetail.jsx",
-        "sourceCompiler": {
-            "js": "react",
+        "compiler": {
+            "js": "babel",
             "css": "scss"
         },
-        "libBundle": "react"
+        "vendor": "react"
     }
 }

@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "client/bundle/" + ({"0":"error","1":"gooddetail","2":"index"}[chunkId]||chunkId) + "/build/" + chunkId + ".chunk.js";
+/******/ 			script.src = __webpack_require__.p + "./client/bundle/gooddetail/../" + ({"0":"error","1":"gooddetail","2":"index"}[chunkId]||chunkId) + "/build/" + chunkId + ".chunk.js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};
@@ -100,8 +100,9 @@
 
 	__webpack_require__(33);
 	__webpack_require__(204);
+	__webpack_require__(33);
 	__webpack_require__(197);
-	__webpack_require__(281);
+	__webpack_require__(286);
 	__webpack_require__(223);
 	module.exports = __webpack_require__(233);
 
@@ -34659,7 +34660,12 @@
 /* 278 */,
 /* 279 */,
 /* 280 */,
-/* 281 */
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/* @preserve
@@ -39519,10 +39525,10 @@
 
 	},{"./es5.js":14}]},{},[4])(4)
 	});                    ;if (typeof window !== 'undefined' && window !== null) {                               window.P = window.Promise;                                                     } else if (typeof self !== 'undefined' && self !== null) {                             self.P = self.Promise;                                                         }
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36), (function() { return this; }()), __webpack_require__(282).setImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36), (function() { return this; }()), __webpack_require__(287).setImmediate))
 
 /***/ },
-/* 282 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(setImmediate, clearImmediate) {var nextTick = __webpack_require__(36).nextTick;
@@ -39601,7 +39607,7 @@
 	exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
 	  delete immediateIds[id];
 	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(282).setImmediate, __webpack_require__(282).clearImmediate))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(287).setImmediate, __webpack_require__(287).clearImmediate))
 
 /***/ }
 /******/ ]);
