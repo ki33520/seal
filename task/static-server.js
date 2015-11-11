@@ -22,5 +22,5 @@ new WebpackDevServer(bundler, {
     if (err) {
         console.log(err);
     }
-    console.log('🌎HMR Listening at %d',hmrPort);
+    console.log('🌎 HMR Listening at %d',hmrPort);
 });
