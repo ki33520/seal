@@ -1,123 +1,15 @@
-webpackJsonp([2],{
+webpackJsonp([3],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(279);
-	module.exports = __webpack_require__(284);
+	__webpack_require__(285);
+	module.exports = __webpack_require__(290);
 
 
 /***/ },
 
-/***/ 216:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(217), __esModule: true };
-
-/***/ },
-
-/***/ 217:
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(218);
-	module.exports = __webpack_require__(16).Object.assign;
-
-/***/ },
-
-/***/ 218:
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.3.1 Object.assign(target, source)
-	var $def = __webpack_require__(14);
-
-	$def($def.S + $def.F, 'Object', {assign: __webpack_require__(219)});
-
-/***/ },
-
-/***/ 219:
-/***/ function(module, exports, __webpack_require__) {
-
-	// 19.1.2.1 Object.assign(target, source, ...)
-	var $        = __webpack_require__(7)
-	  , toObject = __webpack_require__(220)
-	  , IObject  = __webpack_require__(10);
-
-	// should work with symbols and should have deterministic property order (V8 bug)
-	module.exports = __webpack_require__(17)(function(){
-	  var a = Object.assign
-	    , A = {}
-	    , B = {}
-	    , S = Symbol()
-	    , K = 'abcdefghijklmnopqrst';
-	  A[S] = 7;
-	  K.split('').forEach(function(k){ B[k] = k; });
-	  return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
-	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
-	  var T     = toObject(target)
-	    , $$    = arguments
-	    , $$len = $$.length
-	    , index = 1
-	    , getKeys    = $.getKeys
-	    , getSymbols = $.getSymbols
-	    , isEnum     = $.isEnum;
-	  while($$len > index){
-	    var S      = IObject($$[index++])
-	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
-	      , length = keys.length
-	      , j      = 0
-	      , key;
-	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
-	  }
-	  return T;
-	} : Object.assign;
-
-/***/ },
-
-/***/ 220:
-/***/ function(module, exports, __webpack_require__) {
-
-	// 7.1.13 ToObject(argument)
-	var defined = __webpack_require__(12);
-	module.exports = function(it){
-	  return Object(defined(it));
-	};
-
-/***/ },
-
-/***/ 222:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _Object$assign = __webpack_require__(216)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.apiRequest = apiRequest;
-
-	var _reqwest = __webpack_require__(223);
-
-	var _reqwest2 = _interopRequireDefault(_reqwest);
-
-	function apiRequest(url, param) {
-	    var options = arguments.length <= 2 || arguments[2] === undefined ? {
-	        method: "GET",
-	        type: "json"
-	    } : arguments[2];
-
-	    options = _Object$assign({}, options, {
-	        url: url,
-	        data: param
-	    });
-	    return (0, _reqwest2["default"])(options);
-	}
-
-/***/ },
-
-/***/ 227:
+/***/ 209:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -128,13 +20,13 @@ webpackJsonp([2],{
 	    value: true
 	});
 
-	var _redux = __webpack_require__(204);
+	var _redux = __webpack_require__(197);
 
-	var _reduxThunk = __webpack_require__(228);
+	var _reduxThunk = __webpack_require__(210);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reduxLogger = __webpack_require__(229);
+	var _reduxLogger = __webpack_require__(211);
 
 	var _reduxLogger2 = _interopRequireDefault(_reduxLogger);
 
@@ -147,7 +39,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 228:
+/***/ 210:
 /***/ function(module, exports) {
 
 	'use strict';
@@ -170,7 +62,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 229:
+/***/ 211:
 /***/ function(module, exports) {
 
 	"use strict";
@@ -291,7 +183,115 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 235:
+/***/ 226:
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = { "default": __webpack_require__(227), __esModule: true };
+
+/***/ },
+
+/***/ 227:
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(228);
+	module.exports = __webpack_require__(16).Object.assign;
+
+/***/ },
+
+/***/ 228:
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.3.1 Object.assign(target, source)
+	var $def = __webpack_require__(14);
+
+	$def($def.S + $def.F, 'Object', {assign: __webpack_require__(229)});
+
+/***/ },
+
+/***/ 229:
+/***/ function(module, exports, __webpack_require__) {
+
+	// 19.1.2.1 Object.assign(target, source, ...)
+	var $        = __webpack_require__(7)
+	  , toObject = __webpack_require__(230)
+	  , IObject  = __webpack_require__(10);
+
+	// should work with symbols and should have deterministic property order (V8 bug)
+	module.exports = __webpack_require__(17)(function(){
+	  var a = Object.assign
+	    , A = {}
+	    , B = {}
+	    , S = Symbol()
+	    , K = 'abcdefghijklmnopqrst';
+	  A[S] = 7;
+	  K.split('').forEach(function(k){ B[k] = k; });
+	  return a({}, A)[S] != 7 || Object.keys(a({}, B)).join('') != K;
+	}) ? function assign(target, source){ // eslint-disable-line no-unused-vars
+	  var T     = toObject(target)
+	    , $$    = arguments
+	    , $$len = $$.length
+	    , index = 1
+	    , getKeys    = $.getKeys
+	    , getSymbols = $.getSymbols
+	    , isEnum     = $.isEnum;
+	  while($$len > index){
+	    var S      = IObject($$[index++])
+	      , keys   = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S)
+	      , length = keys.length
+	      , j      = 0
+	      , key;
+	    while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
+	  }
+	  return T;
+	} : Object.assign;
+
+/***/ },
+
+/***/ 230:
+/***/ function(module, exports, __webpack_require__) {
+
+	// 7.1.13 ToObject(argument)
+	var defined = __webpack_require__(12);
+	module.exports = function(it){
+	  return Object(defined(it));
+	};
+
+/***/ },
+
+/***/ 232:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _Object$assign = __webpack_require__(226)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.apiRequest = apiRequest;
+
+	var _reqwest = __webpack_require__(233);
+
+	var _reqwest2 = _interopRequireDefault(_reqwest);
+
+	function apiRequest(url, param) {
+	    var options = arguments.length <= 2 || arguments[2] === undefined ? {
+	        method: "GET",
+	        type: "json"
+	    } : arguments[2];
+
+	    options = _Object$assign({}, options, {
+	        url: url,
+	        data: param
+	    });
+	    return (0, _reqwest2["default"])(options);
+	}
+
+/***/ },
+
+/***/ 242:
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -346,14 +346,14 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 279:
+/***/ 285:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
-	var _sharedChunkIndexAppJsx = __webpack_require__(280);
+	var _sharedChunkIndexAppJsx = __webpack_require__(286);
 
 	var _sharedChunkIndexAppJsx2 = _interopRequireDefault(_sharedChunkIndexAppJsx);
 
@@ -361,7 +361,7 @@ webpackJsonp([2],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(190);
+	var _reactDom = __webpack_require__(214);
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -378,7 +378,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 280:
+/***/ 286:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -401,17 +401,17 @@ webpackJsonp([2],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactRedux = __webpack_require__(197);
+	var _reactRedux = __webpack_require__(190);
 
-	var _reducerEs6 = __webpack_require__(281);
+	var _reducerEs6 = __webpack_require__(287);
 
 	var _reducerEs62 = _interopRequireDefault(_reducerEs6);
 
-	var _libStoreCreatorEs6 = __webpack_require__(227);
+	var _libStoreCreatorEs6 = __webpack_require__(209);
 
 	var _libStoreCreatorEs62 = _interopRequireDefault(_libStoreCreatorEs6);
 
-	var _componentJsx = __webpack_require__(283);
+	var _componentJsx = __webpack_require__(289);
 
 	var _componentJsx2 = _interopRequireDefault(_componentJsx);
 
@@ -461,20 +461,20 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 281:
+/***/ 287:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _Object$assign = __webpack_require__(216)["default"];
+	var _Object$assign = __webpack_require__(226)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _actionEs6 = __webpack_require__(282);
+	var _actionEs6 = __webpack_require__(288);
 
-	var _redux = __webpack_require__(204);
+	var _redux = __webpack_require__(197);
 
 	function weatherByCityName(state, action) {
 	    if (state === undefined) state = {};
@@ -516,7 +516,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 282:
+/***/ 288:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -526,7 +526,7 @@ webpackJsonp([2],{
 	exports.changeField = changeField;
 	exports.fetchWeather = fetchWeather;
 
-	var _libUtilEs6 = __webpack_require__(222);
+	var _libUtilEs6 = __webpack_require__(232);
 
 	var CHANGE_FIELD = "CHANGE_FIELD";
 	exports.CHANGE_FIELD = CHANGE_FIELD;
@@ -571,7 +571,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 283:
+/***/ 289:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -594,11 +594,11 @@ webpackJsonp([2],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _classnames = __webpack_require__(235);
+	var _classnames = __webpack_require__(242);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _actionEs6 = __webpack_require__(282);
+	var _actionEs6 = __webpack_require__(288);
 
 	var Weather = (function (_Component) {
 	    _inherits(Weather, _Component);
@@ -779,7 +779,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 284:
+/***/ 290:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

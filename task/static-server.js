@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var browserSync = require("browser-sync");
-var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpackHotMiddleware = require("webpack-hot-middleware");
+// var webpackDevMiddleware = require("webpack-dev-middleware");
+// var webpackHotMiddleware = require("webpack-hot-middleware");
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.hot-update.js');
 var bundler = webpack(config);

@@ -1,0 +1,39 @@
+{
+    "code": "success",
+    "msg": "访问成功", 
+    "time": 1427188628187, 
+    "list": [{
+        "storeId": "333", 
+        "storeName": "广州保税仓", 
+        "amountPrice": 10.0, 
+        "discountPrice": 2.0, 
+        "qty": 3, 
+        "goods": [{
+            "id": 1, 
+            "cartId": 11, 
+            "marketingTitle": "满减", 
+            "marketingDetail": "满200减50", 
+            "imageUrl": "http://img.tepin.com/yourmart/product/1/r/f/144427179475554.jpg@200w_200h_4e",
+            "qty": 1, 
+            "props": {
+                "颜色": "红色",
+                "尺码": "S"
+            },
+            "standPrice": 100, 
+            "salePrice": 50 
+        }, {
+            "id": 1, 
+            "cartId": 11, 
+            "marketingTitle": "满减", 
+            "marketingDetail": "满200减50", 
+            "imageUrl": "http://img.tepin.com/yourmart/product/1/r/f/144427179475554.jpg@200w_200h_4e",
+            "qty": 1, 
+            "props": {
+                "颜色": "红色",
+                "尺码": "S"
+            },
+            "standPrice": 100, 
+            "salePrice": 50 
+        }]
+    }]
+}

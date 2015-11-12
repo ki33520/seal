@@ -25,5 +25,14 @@
             "css": "scss"
         },
         "vendor": "react"
+    },
+    "cart": {
+        "html": ["cart.html"],
+        "path": "./client/bundle/cart/",
+        "compiler": {
+            "js": "babel",
+            "css": "scss"
+        },
+        "vendor": "react"
     }
 }
