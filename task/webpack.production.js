@@ -6,7 +6,7 @@ var webpack = require('webpack'),
 // var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var node_modules_dir = path.resolve(__dirname, '../node_modules');
-var env = require('./environment.js')(path.join(__dirname, '../'));
+var env = require('./environment');
 
 /*build const*/
 var entry = {};
@@ -35,7 +35,7 @@ _.each(env.vendors, function(vendor) {
 
 /*add modules and vendors to entry point*/
 _.extend(entry, moduleEntries);
-console.log("entry",entry)
+// console.log("entry",entry)
 module.exports = {
     entry: entry,
     module: {
@@ -52,9 +52,9 @@ module.exports = {
             exclude: [node_modules_dir],
             loader: 'html'
         }, {
-            test: /\.scss/,
+            test: /\.styl/,
             exclude: [node_modules_dir],
-            loader: ExtractTextPlugin.extract('style', 'css!sass!autoprefixer')
+            loader: ExtractTextPlugin.extract('style', 'css!stylus!autoprefixer')
         }, {
             test: /\.css/,
             exclude: [node_modules_dir],

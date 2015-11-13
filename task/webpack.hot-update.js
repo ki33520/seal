@@ -4,7 +4,7 @@ var webpack = require('webpack'),
 
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var node_modules_dir = path.resolve(__dirname, '../node_modules');
-var env = require('./environment.js')(path.join(__dirname, '../'));
+var env = require('./environment');
 
 /*build const*/
 var entry = {};
@@ -13,8 +13,8 @@ var commonChunks = [];
 _.each(env.modules, function(moduleObj) {
     var moduleEntry = {};
     moduleEntry[moduleObj.name] = [
-        'webpack-dev-server/client?http://localhost:9527',
-        // "webpack-hot-middleware/client",
+        // 'webpack-dev-server/client?http://localhost:9527',
+        "webpack-hot-middleware/client",
         'webpack/hot/dev-server',
         moduleObj.entryJS,
         moduleObj.entryCSS
@@ -68,10 +68,10 @@ module.exports = {
             exclude: [node_modules_dir],
             loader: 'html'
         }, {
-            test: /\.scss/,
+            test: /\.styl/,
             exclude: [node_modules_dir],
             // loader: ExtractTextPlugin.extract('style', 'css!sass!autoprefixer')
-            loader: 'style!css!sass!autoprefixer'
+            loader: 'style!css!stylus!autoprefixer'
         }, {
             test: /\.css/,
             exclude: [node_modules_dir],
@@ -90,7 +90,7 @@ module.exports = {
         }]
     },
     devtool: "#source-map",
-    debug:true,
+    debug: true,
     resolve: {
         extensions: ["", ".webpack-loader.js", ".web-loader.js", ".loader.js", ".js", ".json", ".coffee"]
     },
@@ -101,8 +101,9 @@ module.exports = {
         publicPath: env.hmrPath
     },
     plugins: _.union([
+        new webpack.optimize.OccurenceOrderPlugin(true),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
         // new ExtractTextPlugin("[name].css")
-    ],commonChunks)
+    ], commonChunks)
 }

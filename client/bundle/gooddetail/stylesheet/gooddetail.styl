@@ -1,13 +1,12 @@
-@import "../../common/common.scss";
-@import "../../common/iconfont.scss";
-$gray-color:#555;
-$pink-color:#DB454C;
-
-@import "../../common/header.scss";
-@import "../../component/slider.scss";
-@import "../../component/dropdown.scss";
-@import "../../component/popover.scss";
-@import "../../component/numberpicker.scss";
+@import "../../common/common.styl"
+@import "../../common/iconfont.styl"
+@import "../../common/header.styl"
+@import "../../component/slider.styl"
+@import "../../component/dropdown.styl"
+@import "../../component/popover.styl"
+@import "../../component/numberpicker.styl"
+$gray-color = #555
+$pink-color = #DB454C
 
 .header {
     position:fixed;
@@ -18,7 +17,7 @@ $pink-color:#DB454C;
     box-sizing:border-box;
 }
 
-@mixin promotionLabel {
+.promotionLabel{
     background: $pink-color;
     border-radius: .15rem;
     margin: .15rem .25rem .15rem 0;
@@ -112,7 +111,7 @@ $pink-color:#DB454C;
             &>.promotions {
                 display: none;
                 .promotion-title {
-                    @include promotionLabel;
+                    @extend .promotionLabel;
                 }
                 .promotion-desc {
                     font-size: .65rem;
@@ -121,7 +120,7 @@ $pink-color:#DB454C;
             &>.promotions-brief {
                 display: block;
                 &>span {
-                    @include promotionLabel;
+                    @extend .promotionLabel;
                 }
             }
             &.active {
