@@ -4,9 +4,10 @@
   "description": "isomorphic webapp boilerplate",
   "main": "app.js",
   "scripts": {
+    "start":"node app.js",
     "test-client": "jest",
     "test": "mocha --reporter spec --bail --watch --check-leaks --compilers js:babel-core/register server/__test__/ client/__test__/",
-    "start": "LISTEN_PORT=9876 gulp start",
+    "develop": "LISTEN_PORT=9876 DEV_PORT=5000 gulp start",
     "start-static": "node task/static-server.js",
     "develop-static": "npm run static-build && gulp develop-webpack",
     "release-static": "npm run static-prod && gulp deploy-webpack",
