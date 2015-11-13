@@ -23,9 +23,10 @@ gulp.task("develop-webpack", function() {
         var sources = gulp.src(_.union(cssFiles, jsFiles), {
             read: false
         });
-        // console.log('jsFiles',injectTarget)
+        // console.log('jsFiles',cssFiles)
         gulp.src(injectTarget).pipe(inject(sources, {
             relative: true,
+            empty:true,
             transform: function(filepath) {
                 var vendorPattern = new RegExp(".+" + moduleObj.vendor),
                     buildPattern = new RegExp(".+" + env.buildFolder);
