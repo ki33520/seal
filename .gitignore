@@ -4,7 +4,9 @@ discards/
 .git/
 .settings/
 .project
-# /client/**/build/
+client/**/dist/
+client/**/build/
+vendor/
 # /client/**/stylesheet/
 # /client/**/*.jsx
 # /client/**/__tests__/
