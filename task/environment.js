@@ -34,7 +34,7 @@ var env = function(rootPath) {
     var vendorConfig = require(path.join(rootPath, 'task/config/vendor.json')),
         vendors = [];
     _.each(vendorConfig, function(vendorJS, vendorName) {
-        vendor = {
+        var vendor = {
             name: vendorName,
             entryJS: vendorJS,
             // entryCSS:vendorObj.css
