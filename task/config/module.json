@@ -34,5 +34,23 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "membercenter": {
+        "html": ["membercenter.html"],
+        "path": "./client/bundle/membercenter/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "aboutus": {
+        "html": ["aboutus.html"],
+        "path": "./client/bundle/aboutus/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }
