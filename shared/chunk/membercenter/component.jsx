@@ -31,9 +31,7 @@ class MemberInfo extends Component{
         });
         var tpl = (
             <div className={loginClasses}>
-                <Header title="用户中心">
-                    <span><a className="memberInfoSetting iconfont icon-setting">SET</a></span>
-                </Header>
+                <Header title="用户中心"/>
                 <div className="member-info">
                     <div className="userInfo">
                         <div className="headpic"><div className="img_wrap"><img src="" /></div></div>
@@ -59,7 +57,7 @@ class MemberInfo extends Component{
                 </div>
             </div>
         );
-        
+        //<span><a className="memberInfoSetting iconfont icon-setting" href="membersetting">SET</a></span>
         // <div><a href={links}>用户ID:{member.id}</a></div>
         //             <div>用户名:{member.username}</div>
         //             <div>用户昵称:{member.nickname}</div>

@@ -11,6 +11,7 @@ var router = require("./router.js");
 
 app.use('/client', express.static('client'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.use(methodOverride());
 
 app.use(session({

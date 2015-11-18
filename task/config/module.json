@@ -52,5 +52,14 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "collect": {
+        "html": ["collect.html"],
+        "path": "./client/bundle/collect/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }

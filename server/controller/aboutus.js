@@ -5,7 +5,7 @@ var util = require("../lib/util");
 var bluebird = require("bluebird");
 var AboutUs = util.getSharedComponent("aboutus");
 
-var memberCenter = function(req, res, next) {
+var aboutus = function(req, res, next) {
     var user = req.session.user;
 
     var initialState = {};
@@ -19,4 +19,4 @@ var memberCenter = function(req, res, next) {
     
 }
 
-module.exports = memberCenter;
+module.exports = aboutus;

@@ -15,6 +15,7 @@ router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/cart", require("./controller/cart").cart);
 router.get("/membercenter", require("./controller/membercenter"));
 router.get("/aboutus", require("./controller/aboutus"));
+router.get("/collect", require("./controller/collect"));
 router.all("*", require("./controller/main.js").notFoundHandler);
 router.use(require("./controller/main.js").errorHandler);
 
