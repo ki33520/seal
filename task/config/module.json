@@ -2,37 +2,29 @@
     "error": {
         "html": ["error.html"],
         "path": "./client/bundle/error/",
-        "compiler": {
-            "js": "babel",
-            "css": "stylus"
-        },
+        "entryJS":"error.jsx",
+        "entryCSS":"stylesheet/error.styl",
         "vendor": "react"
     },
     "index": {
         "html": ["index.html"],
         "path": "./client/bundle/index/",
-        "compiler": {
-            "js": "babel",
-            "css": "stylus"
-        },
+        "entryJS":"index.jsx",
+        "entryCSS":"stylesheet/index.styl",
         "vendor": "react"
     },
     "gooddetail": {
         "html": ["gooddetail.html"],
         "path": "./client/bundle/gooddetail/",
-        "compiler": {
-            "js": "babel",
-            "css": "stylus"
-        },
+        "entryJS":"gooddetail.jsx",
+        "entryCSS":"stylesheet/gooddetail.styl",
         "vendor": "react"
     },
     "cart": {
         "html": ["cart.html"],
         "path": "./client/bundle/cart/",
-        "compiler": {
-            "js": "babel",
-            "css": "stylus"
-        },
+        "entryJS":"cart.jsx",
+        "entryCSS":"stylesheet/cart.styl",
         "vendor": "react"
     }
 }

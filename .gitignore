@@ -6,7 +6,7 @@ discards/
 .project
 client/**/dist/
 client/**/build/
-vendor/
+client/__coverage__/
 # /client/**/stylesheet/
 # /client/**/*.jsx
 # /client/**/__tests__/
