@@ -6,7 +6,7 @@ import {RECEIVE_COLLECT,REQUEST_COLLECT} from "./action.es6";
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
 import {alertReducer} from "../common/reducer.es6";
 
-function getCollect(state={},action){
+function memberCollectByUser(state={},action){
     switch(action.type){
         case REQUEST_COLLECT:
             return Object.assign({},state,{
@@ -26,7 +26,7 @@ function getCollect(state={},action){
 }
 
 const rootReducer = combineReducers({
-    getCollect
+    memberCollectByUser
 });
 
 export default rootReducer;

@@ -3,19 +3,19 @@
 var _ = require("lodash");
 var util = require("../lib/util");
 var bluebird = require("bluebird");
-var CollectApp = util.getSharedComponent("collect");
+var CollectApp = util.getSharedComponent("membercollect");
 
 var collectlist = function(req, res, next) {
     var user = req.session.user;
     bluebird.props({
-        getCollect: util.fetchAPI("getCollect", {
+        memberCollectByUser: util.fetchAPI("memberCollectByUser", {
             memberId: "",
             pageIndex: 0,
             pageSize: 10
         },true)
     }).then(function(ret) {
-        if (ret.getCollect.code === "success") {
-            var collect = ret.getCollect.list;
+        if (ret.memberCollectByUser.code === "success") {
+            var collect = ret.memberCollectByUser.list;
 
             var initialState = {
                 collect: collect
@@ -23,7 +23,7 @@ var collectlist = function(req, res, next) {
             
             var markup = util.getMarkupByComponent(CollectApp({initialState:initialState}));
 
-            res.render('collect', {
+            res.render('membercollect', {
                 markup: markup,
                 initialState: initialState
             })

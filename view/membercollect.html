@@ -5,8 +5,8 @@
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="collect-container">
-    <div id="collect">{{ markup|safe }}</div>
+<div class="membercollect-container">
+    <div id="member-collect">{{ markup|safe }}</div>
 </div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
@@ -14,5 +14,6 @@
 <!-- inject:js -->
 <script src="/hmr/react.js"></script>
 <script src="/hmr/collect.js"></script>
+<script src="/hmr/membercollect.js"></script>
 <!-- endinject -->
 {% endblock %}

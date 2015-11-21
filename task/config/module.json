@@ -53,9 +53,27 @@
         },
         "vendor": "react"
     },
-    "collect": {
-        "html": ["collect.html"],
-        "path": "./client/bundle/collect/",
+    "membercollect": {
+        "html": ["membercollect.html"],
+        "path": "./client/bundle/membercollect/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "memberupdate": {
+        "html": ["memberupdate.html"],
+        "path": "./client/bundle/memberupdate/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "memberupdatebasic": {
+        "html": ["memberupdatebasic.html"],
+        "path": "./client/bundle/memberupdatebasic/",
         "compiler": {
             "js": "babel",
             "css": "stylus"

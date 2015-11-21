@@ -1,21 +1,21 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {RECEIVE_MEMBER,REQUEST_MEMBER} from "./action.es6";
+import {RECEIVE_COLLECT,REQUEST_COLLECT} from "./action.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
 import {alertReducer} from "../common/reducer.es6";
 
-function memberCenterByUser(state={},action){
+function memberInfoByUser(state={},action){
     switch(action.type){
-        case REQUEST_MEMBER:
+        case REQUEST_COLLECT:
             return Object.assign({},state,{
                 isFetching:true
             })
-        case RECEIVE_MEMBER:
+        case RECEIVE_COLLECT:
             return Object.assign({},state,{
                 isFetching:false,
-                member:action.res
+                collect:action.res
             })
         case SHOW_ALERT:
         case HIDE_ALERT:
@@ -26,7 +26,7 @@ function memberCenterByUser(state={},action){
 }
 
 const rootReducer = combineReducers({
-    memberCenterByUser
+    memberInfoByUser
 });
 
 export default rootReducer;

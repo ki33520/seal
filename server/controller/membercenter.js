@@ -14,13 +14,12 @@ var memberCenter = function(req, res, next) {
     }).then(function(ret){
         var login = ret.newLogin.code === "success" ?  true : false;
         bluebird.props({
-            memberInfo: util.fetchAPI("memberInfo", {
+            memberCenterByUser: util.fetchAPI("memberCenterByUser", {
                 memberId: ''
             },true)
         }).then(function(ret) {
-            if (ret.memberInfo.code === "success") {
-                var member = ret.memberInfo.object;
-
+            if (ret.memberCenterByUser.code === "success") {
+                var member = ret.memberCenterByUser.object;
                 var initialState = {
                     member: member,
                     login: login

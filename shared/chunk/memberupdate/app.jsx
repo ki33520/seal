@@ -4,39 +4,37 @@ import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
 import createStoreWithMiddleware from "../../lib/store-creator.es6";
-import CollectList from "./component.jsx";
+import MemberUpdate from "./component.jsx";
 
 function selector(state){
-    const {getCollect} = state;
+    const {memberInfoByUser} = state;
     return {
-        getCollect
+        memberInfoByUser
     };
 }
 
-let CollectListConnected = connect(selector)(CollectList);
+let MemberUpdateConnected = connect(selector)(MemberUpdate);
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
     return store
 }
 
-class CollectApp extends Component{
+class MemberupdateApp extends Component{
     render(){
-        const {collect} = this.props.initialState;
+        const {memberInfo} = this.props.initialState;
         const initialState = {
-            getCollect:{
-                collect
+            memberInfoByUser:{
+                memberInfo
             }
         };
-        console.log(this.props)
         var store = configureStore(initialState);
-        console.log(store.getState())
         return (
             <Provider store={store}>
-            <CollectListConnected />
+            <MemberUpdateConnected />
             </Provider>
         )
     }
 }
 
-export default CollectApp;
+export default MemberupdateApp;

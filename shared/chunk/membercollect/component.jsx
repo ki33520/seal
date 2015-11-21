@@ -13,14 +13,14 @@ import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 
 import Node from "./partial/node.jsx";
-import {addCart,addFavorite} from "./action.es6";
+import {fetchCollect} from "./action.es6";
 import {alert} from "../common/action.es6";
 
-class CollectList extends Component{
+class MembercollectList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            collect: props.getCollect.collect
+            collect: props.memberCollectByUser.collect
         }
     }
     render(){
@@ -35,4 +35,5 @@ class CollectList extends Component{
     }
 }
 
-export default CollectList;
+
+export default MembercollectList;

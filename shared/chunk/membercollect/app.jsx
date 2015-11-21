@@ -4,39 +4,37 @@ import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
 import createStoreWithMiddleware from "../../lib/store-creator.es6";
-import MemberCenter from "./component.jsx";
+import MembercollectList from "./component.jsx";
 
 function selector(state){
-    const {memberCenterByUser} = state;
+    const {memberCollectByUser} = state;
     return {
-        memberCenterByUser
+        memberCollectByUser
     };
 }
 
-let MemberCenterConnected = connect(selector)(MemberCenter);
+let MembercollectListConnected = connect(selector)(MembercollectList);
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
     return store
 }
 
-class MembercenterApp extends Component{
+class MembercollectApp extends Component{
     render(){
-        const {member,login} = this.props.initialState;
+        const {collect} = this.props.initialState;
         const initialState = {
-            memberCenterByUser:{
-                member,
-                login
+            memberCollectByUser:{
+                collect
             }
         };
-        
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-            <MemberCenterConnected />
+            <MembercollectListConnected />
             </Provider>
         )
     }
 }
 
-export default MembercenterApp;
+export default MembercollectApp;
