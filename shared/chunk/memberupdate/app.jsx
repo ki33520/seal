@@ -31,7 +31,7 @@ class MemberupdateApp extends Component{
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-            <MemberUpdateConnected />
+                <MemberUpdateConnected />
             </Provider>
         )
     }

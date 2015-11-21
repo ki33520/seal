@@ -1,33 +1,39 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 
-export const REQUEST_MEMBERINFO = "REQUEST_MEMBERINFO";
-export const RECEIVE_MEMBERINFO = "RECEIVE_MEMBERINFO";
+export const CHANGE_FIELD= "CHANGE_FIELD";
+export const START_CHANGE_PASSWORD = "START_CHANGE_PASSWORD";
+export const FINISH_CHANGE_PASSWORD = "FINISH_CHANGE_PASSWORD";
 
-function requestMemberInfo(param){
+export function changeField(name,value){
     return {
-        type:REQUEST_MEMBERINFO,
+        type:CHANGE_FIELD,
+        name,
+        value
+    }
+}
+
+function startChangeBasic(param){
+    return {
+        type:START_CHANGE_PASSWORD,
         param
     }
 }
 
-function receiveMemberInfo(param,res){
+function finishChangeBasic(param,res){
     return {
-        type:RECEIVE_MEMBERINFO,
-        receiveAt:Date.now(),
+        type:FINISH_CHANGE_PASSWORD,
+        res,
         param,
-        res
+        finishAt:Date.now()
     }
 }
 
-export default function fetchMemberInfo(url,param){
+export function changeBasic(param){
     return (dispatch)=>{
-        dispatch(requestMemberInfo(param));
-        return apiRequest(url,param,{
-            type:"jsonp",
-            jsonpcallback:"jsoncallback"
-        }).then((res)=>{
-            dispatch(receiveMemberInfo(param,res));
-        });
+        dispatch(startChangeBasic(param));
+        apiRequest("/updatebasic",param,{method:"POST"}).then((res)=>{
+            dispatch(finishChangeBasic(param,res));
+        })
     }
 }

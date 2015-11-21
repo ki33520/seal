@@ -1,40 +1,73 @@
 'use strict'
 
 import React,{Component} from "react";
-import _ from "lodash";
-import classNames from "classnames";
-import dom from "../../lib/dom.es6";
-import {apiRequest} from "../../lib/util.es6";
-import Slider from "../../component/slider/slider.jsx";
-import Slide from "../../component/slider/slide.jsx";
-import NumberPicker from "../../component/numberpicker.jsx";
-import PullHook from "../../component/pullhook.jsx";
-import Alert from "../../component/alert.jsx";
-import Header from "../common/header.jsx";
-
-import {fetchMemberInfo} from "./action.es6";
-import {alert} from "../common/action.es6";
+import Update from "./partial/update.jsx";
+import UpdateBasic from "./partial/updatebasic.jsx";
+// import UpdatePassword from "./partial/updatepassword.jsx";
+// import UpdateMemberCard from "./partial/updatemembercard.jsx";
+import {Router} from "director";
+import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
 
 class MemberUpdate extends Component{
     constructor(props){
         super(props);
         this.state = {
-            memberInfo: props.memberInfoByUser.memberInfo
+            memberInfo: props.memberInfoByUser.memberInfo,
+            currentRoute: "index"
         }
     }
+    componentDidMount(){
+        Router({
+            "/basic":()=>{
+                this.setState({
+                    currentRoute:"updatebasic"
+                });
+            },
+            // "/password":()=>{
+            //     this.setState({
+            //         currentRoute:"updatepassword"
+            //     });
+            // },
+            // "/membercard":()=>{
+            //     this.setState({
+            //         currentRoute:"updatemembercard"
+            //     });
+            // },
+            "/":()=>{
+                this.setState({
+                    currentRoute:"index"
+                });
+            }
+        }).init("/");
+    }
     render(){
-        const {memberInfo} = this.state;
-        var tpl = (
-            <div className="memberupdate-content">
-                <Header title="账户设置"/>
-                <ul className="list">
-                    <li><a href="/membercenter/update/basic">基本信息</a></li>
-                    <li><a href="/membercenter/update/password">修改登录密码</a></li>
-                    <li><a href="/membercenter/update/membercard">绑定会员卡</a></li>
-                </ul>
-            </div>
+        const {currentRoute} = this.state;
+        var currentView = null;
+        if(currentRoute === "index"){
+            currentView =  (
+                <Update {...this.props} key={currentRoute}/>
+            )
+        }
+        else if(currentRoute === "updatebasic"){
+            currentView =  (
+                <UpdateBasic {...this.props} key={currentRoute}/>
+            )
+        }
+        // else if(currentRoute === "updatepassword"){
+        //     currentView =  (
+        //         <UpdatePassword {...this.props} key={currentRoute}/>
+        //     )
+        // }else if(currentRoute === "updatemembercard"){
+        //     currentView =  (
+        //         <UpdateMemberCard {...this.props} key={currentRoute}/>
+        //     )
+        // }
+        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
+        return (
+            <TransitionGroup component="div" transitionName={transitionName} transitionLeave={false}>
+                {currentView}
+            </TransitionGroup>
         );
-        return tpl;
     }
 }
 
