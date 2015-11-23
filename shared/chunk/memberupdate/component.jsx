@@ -3,7 +3,7 @@
 import React,{Component} from "react";
 import Update from "./partial/update.jsx";
 import UpdateBasic from "./partial/updatebasic.jsx";
-// import UpdatePassword from "./partial/updatepassword.jsx";
+// import UpdatePassword from "./partial/updatebasic.jsx";
 // import UpdateMemberCard from "./partial/updatemembercard.jsx";
 import {Router} from "director";
 import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
@@ -12,7 +12,7 @@ class MemberUpdate extends Component{
     constructor(props){
         super(props);
         this.state = {
-            memberInfo: props.memberInfoByUser.memberInfo,
+            memberInfo: props.memberInfo,
             currentRoute: "index"
         }
     }
@@ -23,9 +23,9 @@ class MemberUpdate extends Component{
                     currentRoute:"updatebasic"
                 });
             },
-            // "/password":()=>{
+            // "/basic":()=>{
             //     this.setState({
-            //         currentRoute:"updatepassword"
+            //         currentRoute:"updatebasic"
             //     });
             // },
             // "/membercard":()=>{
@@ -53,7 +53,7 @@ class MemberUpdate extends Component{
                 <UpdateBasic {...this.props} key={currentRoute}/>
             )
         }
-        // else if(currentRoute === "updatepassword"){
+        // else if(currentRoute === "updatebasic"){
         //     currentView =  (
         //         <UpdatePassword {...this.props} key={currentRoute}/>
         //     )

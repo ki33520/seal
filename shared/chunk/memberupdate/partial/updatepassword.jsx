@@ -6,7 +6,7 @@ import Icon from "../../component/core/icon.jsx";
 
 import {changePassword,changeField} from "../action.es6";
 import {alert} from "../../common/action.es6";
-import Alert from "../../component/alert/alert.jsx";
+import Alert from "../../../component/alert.jsx";
 
 class ResetPassword extends Component{
     handleFieldChange(fieldName,e){

@@ -17,8 +17,8 @@ router.get("/membercenter", require("./controller/membercenter"));
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/membercenter/collect", require("./controller/membercollect"));
 router.get("/membercenter/update", require("./controller/memberupdate").update);
-router.post("/updatebasic", require("./controller/memberupdate").basic);
-router.post("/updatememberbasic", require("./controller/memberupdatebasic").update);
+router.post("/updatebasic", require("./controller/memberupdate").updateBasic);
+router.get("/updatememberbasic", require("./controller/memberupdatebasic").index);
 router.all("*", require("./controller/main.js").notFoundHandler);
 router.use(require("./controller/main.js").errorHandler);
 

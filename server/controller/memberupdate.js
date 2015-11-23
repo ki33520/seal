@@ -28,28 +28,23 @@ var update = function(req, res, next) {
     });
 }
 
-var basic = function(req, res, next) {
-    var cityName = req.body.cityname;
-    var nickName = req.body.nickName;
-    var gender = req.body.gender;
-    var birthdy = req.body.birthdy;
+var updateBasic = function(req, res, next) {
+    var nickname = req.body.nickname;
     bluebird.props({
         updateBasicByUser: util.fetchAPI("updateBasicByUser", {
             memberId: "",
-            nickName: nickName,
-            gender: gender,
-            birthdy: birthdy
+            nickname: nickname
         },true)
     }).then(function(ret) {
         if (ret.updateBasicByUser.code === "success") {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
-                basicFetched:true,
+                isChanged: true,
                 result:basicInfo
             })
         }else{
             res.json({
-                basicFetched:false,
+                isChanged:false,
                 errMsg:ret.msg
             })
         }
@@ -58,5 +53,5 @@ var basic = function(req, res, next) {
 
 module.exports = {
     update: update,
-    basic: basic
+    updateBasic: updateBasic
 };
