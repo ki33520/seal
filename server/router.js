@@ -23,6 +23,7 @@ router.post("/updatebasic", require("./controller/memberupdate").updateBasic);
 router.post("/updatepassword", require("./controller/memberupdate").updatePassword);
 router.post("/updatemembercard", require("./controller/memberupdate").updateMembercard);
 router.post("/updatemembercardverifycode", require("./controller/memberupdate").updateMemberCardVerifyCode);
+router.get("/help", require("./controller/help").index);
 
 router.all("*", require("./controller/main.js").notFoundHandler);
 router.use(require("./controller/main.js").errorHandler);

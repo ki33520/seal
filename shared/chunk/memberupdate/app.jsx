@@ -25,7 +25,6 @@ function configureStore(initialState){
 
 class MemberupdateApp extends Component{
     render(){
-        console.log(this.props)
         const {memberInfo} = this.props.initialState;
         const initialState = {
             memberInfo,
