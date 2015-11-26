@@ -1,28 +1,26 @@
-@import "./mixin";
-@import "./constant";
-
+@import "../core/mixin.styl";
 .selected {
     .dropdown-status .status {
         &>.selected-label {
             display: inline-block;
-            border-radius: (.15/$scale)rem;
-            border: (.05/$scale)rem solid #DDD;
+            border-radius: .15rem;
+            border: .05rem solid #DDD;
             background: #E8E8E8;
-            margin: (.15/$scale)rem (.25/$scale)rem (.15/$scale)rem 0;
-            padding: (.15/$scale)rem (.25/$scale)rem;
+            margin: .15rem .25rem .15rem 0;
+            padding: .15rem .25rem;
         }
     }
     .selected-items {
         overflow-x: hidden;
         overflow-y: auto;
         li {
-            line-height: (1/$scale)rem;
-            padding: (.25/$scale)rem 0;
+            line-height: 1rem;
+            padding: .25rem 0;
             clear: both;
             overflow: hidden;
             width: 100%;
             box-sizing: border-box;
-            padding: (.25/$scale)rem (.5/$scale)rem;
+            padding: .25rem .5rem;
             .selected-item {
                 float: left;
                 display: inline-block;
@@ -34,15 +32,15 @@
             }
             .iconfont {
                 float: right;
-                font-size: (.65/$scale)rem;
-                padding-left: (.25/$scale)rem;
+                font-size: .65rem;
+                padding-left: .25rem;
                 box-sizing: border-box;
                 width: 20%;
                 color: #AAA;
             }
             &.selected-group-header {
-                border-bottom: (0.05/$scale)rem solid #E5E5E5;
-                border-top: (0.05/$scale)rem solid #E5E5E5;
+                border-bottom: 1px solid #E5E5E5;
+                border-top: 1px solid #E5E5E5;
                 background: #F8F8F8
             }
         }
@@ -56,37 +54,37 @@
             border-style: dashed dashed solid;
             border-color: transparent;
             border-image: none;
-            border-width: 0 (.4/$scale)rem (.4/$scale)rem;
+            border-width: 0 .4rem .4rem;
             border-bottom-color: #555;
             position: absolute;
-            top: -(0.4/$scale)rem;
-            left: (0.3/$scale)rem;
+            top: -0.4rem;
+            left: 0.3rem;
             width: 0;
             height: 0;
         }
         &::after {
             border-bottom-color: #FFF;
-            bottom: -(0.25/$scale)rem;
+            bottom: -0.25rem;
         }
         &.active {
-            margin-top: (0.5/$scale)rem;
+            margin-top: 0.5rem;
             overflow:visible;
-            border: (0.05/$scale)rem solid #CCC;
-            box-shadow: 0 (.1/$scale)rem (.2/$scale)rem 0 rgba(34, 36, 38, .12), 0 (0.1/$scale)rem (0.5/$scale)rem 0 rgba(34, 36, 38, .08);
+            border: 1px solid #CCC;
+            box-shadow: 0 .1rem .2rem 0 rgba(34, 36, 38, .12), 0 2px 10px 0 rgba(34, 36, 38, .08);
         }
     }
     .filter-input {
         position: relative;
-        padding: (.5/$scale)rem;
+        padding: .5rem;
         input {
             margin: 0;
-            padding: (.25/$scale)rem (1/$scale)rem (.25/$scale)rem (.25/$scale)rem;
+            padding: .25rem 1rem .25rem .25rem;
             outline: 0 none;
             width: 100%;
             box-sizing: border-box;
-            line-height: (.8/$scale)rem;
-            border: (.05/$scale)rem solid #CCC;
-            border-radius: (.1/$scale)rem;
+            line-height: .8rem;
+            border: .05rem solid #CCC;
+            border-radius: .1rem;
             color: #888;
             &::focus {
                 border-color: rgba(14, 144, 210, 1);
@@ -95,13 +93,13 @@
         .iconfont {
             position: absolute;
             display: block;
-            width: (1/$scale)rem;
-            height: (1/$scale)rem;
+            width: 1rem;
+            height: 1rem;
             color: #888;
-            line-height: (1/$scale)rem;
-            top: (.75/$scale)rem;
-            right: (.55/$scale)rem;
-            font-size: (.65/$scale)rem;
+            line-height: 1rem;
+            top: .75rem;
+            right: .55rem;
+            font-size: .65rem;
         }
     }
 }
@@ -122,9 +120,9 @@
             left:0;
             right:0;
             position:fixed;
-            box-shadow: 0 (.1/$scale)rem (.2/$scale)rem (.2/$scale)rem rgba(34, 36, 38, .12), 0 (.1/$scale)rem (.2/$scale)rem 0 rgba(34, 36, 38, .08);
+            box-shadow: 0 .1rem .2rem .2rem rgba(34, 36, 38, .12), 0 .1rem .2rem 0 rgba(34, 36, 38, .08);
             transition: all .2s ease-in-out;
-            padding:(.6/$scale)rem 0;
+            padding:.6rem 0;
             &.active {
                 overflow:visible;
                 transition: all .2s ease-in-out;
@@ -136,7 +134,7 @@
             }
             .slider {
                 overflow: hidden;
-                padding: (1.5/$scale)rem 0 (2/$scale)rem 0;
+                padding: 1.5rem 0 2rem 0;
             }
             .slides {
                 padding:.2rem;
@@ -162,8 +160,8 @@
                         &.pseudo-slide>span {
                             transition-duration: 0s;
                         }
-                        border-top:(.05/$scale)rem solid #DDD;
-                        border-bottom:(.05/$scale)rem solid #DDD;
+                        border-top:.05rem solid #DDD;
+                        border-bottom:.05rem solid #DDD;
                         background:#F8F8F8;
                     }
                     &>span {
@@ -172,8 +170,8 @@
                         width: 100%;
                         color: #AAA;
                         float: left;
-                        font-size: (.7/$scale)rem;
-                        line-height: (1.6/$scale)rem;
+                        font-size: .7rem;
+                        line-height: 1.6rem;
                     }
                     &>span.iconfont{
                         display:none;

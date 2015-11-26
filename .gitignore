@@ -9,5 +9,5 @@ client/**/build/
 vendor/
 # /client/**/stylesheet/
 # /client/**/*.jsx
-/client/**/__coverage__/
+# /client/**/__tests__/
 # /server/**/__tests__/

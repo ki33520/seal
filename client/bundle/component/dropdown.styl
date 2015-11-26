@@ -1,25 +1,23 @@
-@import "./mixin";
-@import "./constant";
-
+@import "./mixin.styl";
 .dropdown {
     position: relative;
     display: inline-block;
-    font-size: (.7/$scale)rem;
+    font-size: .7rem;
     width:100%;
     button {
         outline: 0 none;
         background: #FFF;
-        padding: (.4/$scale)rem (.5/$scale)rem;
-        border: (.05/$scale)rem solid #E5E5E5;
-        border-radius: (.2/$scale)rem;
-        line-height: (1/$scale)rem;
+        padding: .4rem .5rem;
+        border: 1px solid #E5E5E5;
+        border-radius: .2rem;
+        line-height: 1rem;
         clear: both;
         overflow: hidden;
         width:100%;
         .iconfont {
             float: right;
-            font-size: (.65/$scale)rem;
-            padding-left: (.25/$scale)rem;
+            font-size: .65rem;
+            padding-left: .25rem;
             box-sizing: border-box;
             width: 20%;
             color:#888;
@@ -31,8 +29,8 @@
         }
     }
     &.active button {
-        border-radius: (.2/$scale)rem (.2/$scale)rem 0 0;
-        border: (0.05/$scale)rem solid #CCC;
+        border-radius: .2rem .2rem 0 0;
+        border: 1px solid #CCC;
     }
     &>.dropdown-content {
         position: absolute;
@@ -40,15 +38,15 @@
         background: #FFF;
         width: 100%;
         box-sizing: border-box;
-        border-radius: 0 0 (.2/$scale)rem (.2/$scale)rem;
+        border-radius: 0 0 .2rem .2rem;
         display: none;
         opacity: 0;
-        padding: 0 0 (.4/$scale)rem 0;
+        padding: 0 0 .4rem 0;
         text-align: left;
         &.active {
-            border: (0.05/$scale) solid #CCC;
+            border: 1px solid #CCC;
             border-top: 0 none;
-            margin-top: -(0.05/$scale)rem;
+            margin-top: -0.05rem;
             display: block;
             overflow:hidden;
             opacity: 1;
@@ -60,13 +58,13 @@
 .dropdown-headless{
     position: relative;
     display: inline-block;
-    font-size: (.7/$scale)rem;
+    font-size: .7rem;
     width:100%;
     &>.dropdown-content{
         position:static;
         opacity:1;
         display: block;
-        padding: 0 0 (.4/$scale)rem 0;
+        padding: 0 0 .4rem 0;
         text-align: left;
         width: 100%;
         &.active{
@@ -75,14 +73,14 @@
         }
     }
     .fixed-caret{
-        width:(1/$scale)rem;
-        height:(1/$scale)rem;
+        width:1rem;
+        height:1rem;
         right:0;
         top:0;
         position:absolute;
         .iconfont {
-            font-size: (.65/$scale)rem;
-            padding-left: (.25/$scale)rem;
+            font-size: .65rem;
+            padding-left: .25rem;
             box-sizing: border-box;
             color:#888;
         }

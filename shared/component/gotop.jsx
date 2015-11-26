@@ -3,7 +3,7 @@ import React,{Component} from "react";
 import util from "../lib/util.es6";
 import _ from "lodash";
 import classNames from "classnames";
-import dom,{smoothScroll} from "../lib/dom.es6";
+import {smoothScroll} from "../lib/dom.es6";
 
 class GoTop extends Component{
     constructor(props){
@@ -21,10 +21,10 @@ class GoTop extends Component{
         }
     }
     componentDidMount(){
-        dom.bindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
+        //util.bindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
     }
     componentWillUnmount(){
-        dom.unbindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
+        //util.unbindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
     }
     backToTop(){
         smoothScroll(window,0);

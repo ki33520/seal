@@ -1,22 +1,26 @@
 'use strict';
+export const SHOW_ALERT = "SHOW_ALERT";
+export const HIDE_ALERT = "HIDE_ALERT";
 
-import {
-    SHOW_ALERT,HIDE_ALERT
-} from "./action.es6";
+function showAlert(content){
+    return {
+        type:SHOW_ALERT,
+        content
+    }
+}
 
-export function alertReducer(state={},action){
-    switch(action.type){
-        case SHOW_ALERT:
-            return Object.assign({},state,{
-                alertActive:true,
-                alertContent:action.content
-            });
-        case HIDE_ALERT:
-            return Object.assign({},state,{
-                alertActive:false,
-                alertContent:action.content
-            });
-        default:
-            return state;
+function hideAlert(content) {
+    return {
+        type:HIDE_ALERT,
+        content
+    }
+}
+
+export function alert(content="",delay=3000){
+    return (dispatch)=>{
+        dispatch(showAlert(content));
+        setTimeout(()=>{
+            dispatch(hideAlert(content));
+        },delay)
     }
 }
