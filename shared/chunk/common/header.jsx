@@ -7,17 +7,15 @@ class Header extends Component{
         const {canBack,handleGoBack} = this.props;
         if(canBack === true){
             return (
-                <a href="javascript:void(null)" onClick={handleGoBack} className="iconfont icon-left-open"></a>
+                <a href="javascript:void(null)" onClick={handleGoBack} className="iconfont icon-left"></a>
             )
         }
         return null
     }
     render(){
-        const {title} = this.props;
         return (
             <header className="header">
                 {this.renderBackButton()}
-                <h1>{title}</h1>
                 {this.props.children}
             </header>
         );
