@@ -69,7 +69,7 @@ var errorHandler = function(err, req, res, next) {
 
 var notFoundHandler = function(req, res) {
     var initialState = {
-        msg: "page not found"
+        msg: "page not found13"
     };
     var markup = util.getMarkupByComponent(ErrorContent({
         initialState: initialState

@@ -1,0 +1,9 @@
+diff a/package.json b/package.json	(rejected hunks)
+@@ -7,6 +7,7 @@
+     "start": "node app.js",
+     "test-client": "jest",
+     "test": "mocha --reporter spec --bail --watch --check-leaks --compilers js:babel-core/register server/__test__/ client/__test__/",
++    "develop": "gulp start",
+     "start-static": "node task/static-server.js",
+     "develop-static": "npm run static-build && gulp develop-webpack",
+     "release-static": "npm run static-prod && gulp deploy-webpack",
