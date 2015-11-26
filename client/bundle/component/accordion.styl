@@ -1,26 +1,28 @@
+@import "./constant";
+
 .accordion {
-    border: .05rem solid #DEDEDE;
+    border: (.05/$scale)rem solid #DEDEDE;
     background: #FFF;
-    margin-bottom: 1rem;
+    margin-bottom: (1/$scale)rem;
     .accordion-item {
         line-height:0;
         font-size:0;
-        border-top:.05rem solid #DEDEDE;
+        border-top:(.05/$scale)rem solid #DEDEDE;
         &:first-child {
             border-top:0 none;
         }
         dt {
-            padding: .4rem .5rem;
-            line-height: 1.2rem;
+            padding:(.4/$scale)rem (.5/$scale)rem;
+            line-height:(1.2/$scale)rem;
             cursor: pointer;
-            font-size:.7rem;
+            font-size:(.7/$scale)rem;
             position:relative;
             &>.iconfont{
                 position:absolute;
                 right:3%;
                 top:50%;
-                font-size:.7rem;
-                margin-top:-0.4rem;
+                font-size:(.7/$scale)rem;
+                margin-top:-(0.4/$scale)rem;
                 line-height:1;
                 transform:rotate(0);
                 transition:transform .3s linear;
@@ -30,15 +32,15 @@
             display: none;
             overflow:hidden;
             .accordion-content {
-                font-size:.7rem;
-                line-height:1rem;
-                padding: .4rem .5rem;
+                font-size:(.7/$scale)rem;
+                line-height:(1/$scale)rem;
+                padding:(.4/$scale)rem (.5/$scale)rem;
             }
         }
         &.active {
             dt {
                 background: #F5F5F5;
-                box-shadow:.05rem .05rem .05rem #DEDEDE;
+                box-shadow:(.05/$scale)rem (.05/$scale)rem (.05/$scale)rem #DEDEDE;
                 &>.iconfont{
                     transform:rotate(90deg);
                 }

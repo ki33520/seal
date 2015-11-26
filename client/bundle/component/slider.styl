@@ -1,4 +1,6 @@
+@import "./constant";
 $pink-color = #e30083;
+
 .slider {
     height: 100%;
     width: 100%;
@@ -7,8 +9,8 @@ $pink-color = #e30083;
     line-height:0;
     .control-nav {
         position: absolute;
-        height: .5rem;
-        bottom: .5rem;
+        height: (.5/$scale)rem;
+        bottom: (.5/$scale)rem;
         left: 0;
         right: 0;
         z-index: 12;
@@ -17,12 +19,12 @@ $pink-color = #e30083;
         font-size: 0;
         &>span {
             display: inline-block;
-            width: .5rem;
-            height: .5rem;
+            width: (.5/$scale)rem;
+            height: (.5/$scale)rem;
             background: #333;
             opacity: .5;
             border-radius: 100%;
-            margin: 0 .25rem;
+            margin: 0 (.25/$scale)rem;
             &.active {
                 background: $pink-color;
             }
@@ -41,11 +43,11 @@ $pink-color = #e30083;
             display: flex;
             justify-content: center;
             &>span {
-                width: 1rem;
-                height: 1rem;
+                width: (1/$scale)rem;
+                height: (1/$scale)rem;
                 display: block;
                 align-self: center;
-                font-size: 1.2rem;
+                font-size: (1.2/$scale)rem;
             }
         }
         .direction-nav-prev {

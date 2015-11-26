@@ -1,28 +1,30 @@
+@import "./constant";
+
 .popover {
     position: absolute;
     color: #fff;
     background: rgba(0, 0, 0, .9);
-    line-height:1.1rem;
-    top: -1.4rem;
+    line-height:(1.1/$scale)rem;
+    top: -(1.4/$scale)rem;
     text-align: center;
-    font-size: .65rem;
-    border-radius: .2rem;
+    font-size: (.65/$scale)rem;
+    border-radius: (.2/$scale)rem;
     white-space: nowrap;
-    padding: 0 .25rem;
+    padding: 0 (.25/$scale)rem;
     left: 0;
     display:none;
     &.active{
         display:block;
     }
     &:after {
-        border: 4px solid transparent;
-        border-top: 4px solid #000;
+        border: (0.2/$scale)rem solid transparent;
+        border-top: (0.2/$scale)rem solid #000;
         opacity: .9;
         width: 0;
         height: 0;
         position: absolute;
-        bottom: -0.4rem;
-        left: .4rem;
+        bottom: -(0.4/$scale)rem;
+        left: (0.4/$scale)rem;
         content: '';
         margin-left: 0;
     }
