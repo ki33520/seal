@@ -1,60 +1,59 @@
-#Seal
+#Isomorphic Boilerplate
 
-海外购H5重构版
+isomorphic webapp boilerplate [中文文档](./README_zh.md)
 
-快速开发,基于express + react
+Quick start develop your isomorphic webapp with express and react
 ===
-- 运行`npm install`
-- 运行`npm run develop-webpack` 注入js和css至模板文件
-- 运行`npm run develop` 启动开发服务
+- run`npm install`
+- run`npm start` to get backend server start(eg:express)
+- run`npm run develop-webpack` to inject necessary files to the template file
+- run`npm run start-public` to get webpack HMR service start
 
-部署至生产环境
+Deploy to production environment
 ===
-- 运行`npm install --production`
-- 运行`npm install pm2 -g`(更多文档请见[pm2 文档](https://github.com/Unitech/PM2))
-- 运行`pm2 start app.js --name <项目名>` 部署至生产
+- run`npm install --production`
+- run`npm install pm2 -g`(more instructions in [pm2 documention](https://github.com/Unitech/PM2))
+- run`pm2 start app.js --name <Project Name>` to deploy
 
-目录结构
+Directory structure
 ===
 
 ```sh
 client/
-    |-- __tests__/  #前端单元测试
-    |-- asset/      #图片,字体等等资源
-    |-- bundle/
-        |-- common/     #公共的css和js
-        |-- component/  #组件的css
-        |-- index/      #index 页面入口js和css
-        |-- error/      #错误页面入口js和css
-        |-- .../        #更多的页面入口js和css,类似index
-    |-- vendor/     #第三方库文件
+    |-- __tests__/  #client unit tests
+    |-- asset/      #images,fonts,public css and so on
+    |-- error/      #error page's entry js and css
+    |-- vendor/     #third party libraries
+    |-- index/      #index page's entry js and css
+    |-- .../        #more your own page's entry js and css,like index page
 server/
-    |-- __tests__   #后端单元测试
-    |-- controller/ #express 路由目录
-    |-- lib/        #后端库(工具库等等)
-    |-- router.js   #后端路由定义文件
-    |-- bootstrap.js #初始化后端应用,加载中间件和设置应用
+    |-- __tests__   #server unit tests
+    |-- controller/ #express routes directory
+    |-- lib/        #server libraries,util and helper modules inside
+    |-- router.js   #server router,all the routes is defined here
+    |-- bootstrap.js #initialize application,load middlewares and setup
 shared/
-    |-- lib/        #共享库(后端和前端共用)
-    |-- chunk/
-        |-- common/     #通用组件(例如:错误组件)
-        |-- index/      #index页面所有组件
-        |-- .../        #更多的页面所有组件.类似index
+    |-- common/     #common web components,etc:error
+    |-- lib/        #shared libraries(client and server)
+    |-- index/      #index page's web components
+    |-- .../        #more your own page's web components,like index page
 task/
     |-- config/
-        |-- module.json #定义页面配合,以及css和js路径
-        |-- vendor.json #定义第三方库
-    |-- environment.js  #定义模块的环境变量
-    |-- develop-server.js       #webpack dev server 入口文件
-    |-- vendor-css.js   #编译第三方库的css
-    |-- webpack-inject.js #注入编译好的js和css至模板
-    |-- webpack.develop.js #为开发环境编译模块和第三方库
-    |-- webpack.production.js #为生产环境编译模块和第三方库
-    |-- webpack.hot-update.js #为热替换开发环境编译模块和第三方库
+        |-- module.json #define page's path and module config
+        |-- vendor.json #define third party libraries
+    |-- environment.js  #define module's env variables
+    |-- server.js       #webpack dev server entry file
+    |-- vendor-css.js   #third party library's css compile
+    |-- webpack-inject.js #inject compiled js and css into templates
+    |-- webpack.develop.js #compile modules and vendors for develop
+    |-- webpack.production.js #compile modules and vendors for production
+    |-- webpack.hot-update.js #compile modules and vendors for develop in HMR
 view/
-    |-- layout.html #全部布局文件
-    |-- index.html  #index页面模板
-    |-- *.html      #更多的页面模板
-app.js      #应用入口文件
-gulpfile.js #任务入口文件
+    |-- layout.html #global layout template
+    |-- index.html  #index page's template
+    |-- *.html      #more your own page's template
+app.js      #web application enrty file
+gulpfile.js #task entry file
 ```
+
+
