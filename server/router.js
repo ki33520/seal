@@ -12,6 +12,8 @@ require("babel-core/register")({
 router.get("/", require("./controller/main.js").index);
 router.post("/weather", require("./controller/main.js").weather);
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
+router.get("/goodlist/:keyword", require("./controller/goodlist"));
+
 router.get("/cart", require("./controller/cart").cart);
 router.all("*", require("./controller/main.js").notFoundHandler);
 router.use(require("./controller/main.js").errorHandler);

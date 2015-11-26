@@ -10,7 +10,7 @@ class Refresher extends React.Component{
         })
         return (
             <div className={classes}>
-                <span className="iconfont icon-spin5 animate-spin"></span>正在加载
+                <span className="iconfont icon-loading animate-spin"></span>正在加载
             </div>
         );
     }

@@ -26,5 +26,14 @@
         "entryJS":"cart.jsx",
         "entryCSS":"stylesheet/cart.styl",
         "vendor": "react"
+    },
+    "goodlist": {
+        "html": ["goodlist.html"],
+        "path": "./client/bundle/goodlist/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }
