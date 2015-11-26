@@ -3,8 +3,8 @@
 import React,{Component} from "react";
 import Update from "./partial/update.jsx";
 import UpdateBasic from "./partial/updatebasic.jsx";
-// import UpdatePassword from "./partial/updatebasic.jsx";
-// import UpdateMemberCard from "./partial/updatemembercard.jsx";
+import UpdatePassword from "./partial/updatepassword.jsx";
+import UpdateMemberCard from "./partial/updatemembercard.jsx";
 import {Router} from "director";
 import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
 
@@ -23,16 +23,16 @@ class MemberUpdate extends Component{
                     currentRoute:"updatebasic"
                 });
             },
-            // "/basic":()=>{
-            //     this.setState({
-            //         currentRoute:"updatebasic"
-            //     });
-            // },
-            // "/membercard":()=>{
-            //     this.setState({
-            //         currentRoute:"updatemembercard"
-            //     });
-            // },
+            "/password":()=>{
+                this.setState({
+                    currentRoute:"updatepassword"
+                });
+            },
+            "/membercard":()=>{
+                this.setState({
+                    currentRoute:"updatemembercard"
+                });
+            },
             "/":()=>{
                 this.setState({
                     currentRoute:"index"
@@ -47,21 +47,19 @@ class MemberUpdate extends Component{
             currentView =  (
                 <Update {...this.props} key={currentRoute}/>
             )
-        }
-        else if(currentRoute === "updatebasic"){
+        }else if(currentRoute === "updatebasic"){
             currentView =  (
                 <UpdateBasic {...this.props} key={currentRoute}/>
             )
+        }else if(currentRoute === "updatepassword"){
+            currentView =  (
+                <UpdatePassword {...this.props} key={currentRoute}/>
+            )
+        }else if(currentRoute === "updatemembercard"){
+            currentView =  (
+                <UpdateMemberCard {...this.props} key={currentRoute}/>
+            )
         }
-        // else if(currentRoute === "updatebasic"){
-        //     currentView =  (
-        //         <UpdatePassword {...this.props} key={currentRoute}/>
-        //     )
-        // }else if(currentRoute === "updatemembercard"){
-        //     currentView =  (
-        //         <UpdateMemberCard {...this.props} key={currentRoute}/>
-        //     )
-        // }
         const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
             <TransitionGroup component="div" transitionName={transitionName} transitionLeave={false}>

@@ -5,10 +5,6 @@ import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 import {apiRequest} from "../../lib/util.es6";
-import Slider from "../../component/slider/slider.jsx";
-import Slide from "../../component/slider/slide.jsx";
-import NumberPicker from "../../component/numberpicker.jsx";
-import PullHook from "../../component/pullhook.jsx";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 

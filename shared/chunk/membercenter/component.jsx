@@ -33,16 +33,18 @@ class MemberCenter extends Component{
             <div className={loginClasses}>
                 <Header title="用户中心"/>
                 <div className="member-info">
-                    <div className="userInfo">
-                        <div className="headpic"><div className="img_wrap"><img src="" /></div></div>
-                        <div className="mobile">{member.mobile}</div>
-                        <div className="QRcode"><img src="" /></div>
-                    </div>
-                    <div className="orderNav">
-                        <div className="navItem"><a href="/membercenter/order">待付款</a></div>
-                        <div className="navItem"><a href="/membercenter/order">待发货</a></div>
-                        <div className="navItem"><a href="/membercenter/order">待收货</a></div>
-                        <div className="navItem"><a href="/membercenter/order">待评价</a></div>
+                    <div className="bgWrap">
+                        <div className="userInfo">
+                            <div className="headpic"><div className="img_wrap"><img src="" /></div></div>
+                            <div className="mobile">{member.mobile}</div>
+                            <div className="QRcode"><img src="" /></div>
+                        </div>
+                        <div className="orderNav">
+                            <div className="navItem"><a href="/membercenter/order">待付款</a></div>
+                            <div className="navItem"><a href="/membercenter/order">待发货</a></div>
+                            <div className="navItem"><a href="/membercenter/order">待收货</a></div>
+                            <div className="navItem"><a href="/membercenter/order">待评价</a></div>
+                        </div>
                     </div>
                     <ul className="list">
                         <li><a href="/membercenter/order">全部订单</a></li>

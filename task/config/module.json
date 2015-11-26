@@ -71,9 +71,9 @@
         },
         "vendor": "react"
     },
-    "memberupdatebasic": {
-        "html": ["memberupdatebasic.html"],
-        "path": "./client/bundle/memberupdatebasic/",
+    "membercomment": {
+        "html": ["membercomment.html"],
+        "path": "./client/bundle/membercomment/",
         "compiler": {
             "js": "babel",
             "css": "stylus"

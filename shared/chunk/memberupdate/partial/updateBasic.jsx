@@ -29,7 +29,7 @@ class UpdateBasic extends Component{
         e && e.preventDefault();
         const {dispatch,basicByForm} = this.props;
         const {nickname,gender,birthdy} = basicByForm;
-        dispatch(changeBasic({
+        dispatch("/updatebasic",changeBasic({
             nickname,gender,birthdy
         }));
     }
@@ -59,6 +59,7 @@ class UpdateBasic extends Component{
         dispatch(changeField(fieldName,birthdy));
     }
     render(){
+        console.log(this.props)
         const {basicByForm} = this.props;
         const {nickname,gender,birthdy,alertContent,alertActive} = basicByForm;
         const {year,month,day} = this.state;
@@ -103,7 +104,7 @@ class UpdateBasic extends Component{
                             <option value="-1">请选择</option>
                             {
                                 _.map(["保密","男","女"],function(a,b){
-                                    return (<option value={b}>{a}</option>);
+                                    return (<option key={b} value={b}>{a}</option>);
                                 })
                             }
                         </select>

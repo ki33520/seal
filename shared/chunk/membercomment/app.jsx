@@ -4,37 +4,44 @@ import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
 import createStoreWithMiddleware from "../../lib/store-creator.es6";
-import MemberUpdateBasic from "./component.jsx";
+import CommentList from "./component.jsx";
 
 function selector(state){
-    const {memberInfoByUser} = state;
+    const {allComment,showComment,isFetching} = state.commentByUser;
     return {
-        memberInfoByUser
+        allComment,
+        showComment,
+        isFetching
     };
 }
 
-let MemberUpdateBasicConnected = connect(selector)(MemberUpdateBasic);
+let CommentListConnected = connect(selector)(CommentList);
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
     return store
 }
 
-class MemberupdatebasicApp extends Component{
+class CommentApp extends Component{
+    constructor(props){
+        super(props);
+    }
     render(){
-        const {memberInfo} = this.props.initialState;
+        const {allComment,showComment} = this.props.initialState;
         const initialState = {
-            memberInfoByUser:{
-                memberInfo
+            commentByUser:{
+                allComment,
+                showComment,
+                isFetching: false
             }
         };
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-            <MemberUpdateBasicConnected />
+            <CommentListConnected />
             </Provider>
         )
     }
 }
 
-export default MemberupdatebasicApp;
+export default CommentApp;

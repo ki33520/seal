@@ -7,10 +7,12 @@ import createStoreWithMiddleware from "../../lib/store-creator.es6";
 import MemberUpdate from "./component.jsx";
 
 function selector(state){
-    const {memberInfo,basicByForm} = state;
+    const {memberInfo,basicByForm,passwordByForm,membercardByForm} = state;
     return {
         memberInfo,
-        basicByForm
+        basicByForm,
+        passwordByForm,
+        membercardByForm
     };
 }
 
@@ -23,6 +25,7 @@ function configureStore(initialState){
 
 class MemberupdateApp extends Component{
     render(){
+        console.log(this.props)
         const {memberInfo} = this.props.initialState;
         const initialState = {
             memberInfo,

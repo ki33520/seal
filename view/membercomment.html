@@ -5,14 +5,14 @@
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="memberupdatebasic-container">
-    <div id="member-update-basic">{{ markup|safe }}</div>
+<div class="membercomment-container">
+    <div id="member-comment">{{ markup|safe }}</div>
 </div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
 <script src="/hmr/react.js"></script>
-<script src="/hmr/memberupdatebasic.js"></script>
+<script src="/hmr/membercomment.js"></script>
 <!-- endinject -->
 {% endblock %}
