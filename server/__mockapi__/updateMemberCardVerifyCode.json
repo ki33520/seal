@@ -1,0 +1,8 @@
+{
+    "code":"success",
+    "msg":"提交成功",
+    "time":1427188628187,
+    "object":{
+        "memberId": "12345"
+    }
+}

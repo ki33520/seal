@@ -1,0 +1,11 @@
+{
+    "code":"success",
+    "msg":"访问成功",
+    "time":1427188628187,
+    "object":{
+        "memberId": "12345",
+        "nickname": "jones1",
+        "gender": "2",
+        "birthdy": "1998-01-23"
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "code":"success",
+    "msg":"访问成功",
+    "time":1427188628187,
+    "object":{
+        "memberId": "12345",
+        "nickname": "jones",
+        "mobileNumber": "13112341234",
+        "email": "add@success.com",
+        "weixinOpenid": "wxid",
+        "registerTag": "registerTag",
+        "loginTag": "loginTag",
+        "gender": "1",
+        "birthdy": "1998-02-23",
+        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
+        "medrauId": "123"
+    }
+}

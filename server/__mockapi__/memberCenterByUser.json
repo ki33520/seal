@@ -1,0 +1,20 @@
+{
+    "code":"success",
+    "msg":"访问成功",
+    "time":1427188628187,
+    "object":{
+        "id":"xx",
+        "username":"xxx",
+        "nickname":"xxx",
+        "email":"xxx" ,
+        "mobile":"13112341234" ,
+        "status":"ENABLE",
+        "loginToken":"xx" ,
+        "balanceCash":"0.00",
+        "score":"600.0",
+        "balanceNonCash":"60.0",
+        "firstLoginTime":"2015-04-02 12:20:29",
+        "lastLoginTime":"2015-04-02 12:20:29",
+        "notPayOrderCount":0
+    }
+}
