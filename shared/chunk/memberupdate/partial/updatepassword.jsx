@@ -19,7 +19,7 @@ class UpdatePassword extends Component{
         e && e.preventDefault();
         const {dispatch,passwordByForm} = this.props;
         const {oldPassword,password,repeatPassword} = passwordByForm;
-        dispatch("/updatepassword",changePassword({
+        dispatch(changePassword("/updatepassword",{
             password,repeatPassword,oldPassword
         }));
     }

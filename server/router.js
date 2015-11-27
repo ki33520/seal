@@ -16,6 +16,20 @@ router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
 
+router.get("/aboutus", require("./controller/aboutus"));
+router.get("/help", require("./controller/help").index);
+
+router.get("/membercenter", require("./controller/membercenter"));
+router.get("/membercenter/collect", require("./controller/membercollect"));
+router.get("/membercenter/comment", require("./controller/membercomment").index);
+router.get("/membercenter/update", require("./controller/memberupdate").update);
+
+router.post("/updatebasic", require("./controller/memberupdate").updateBasic);
+router.post("/updatepassword", require("./controller/memberupdate").updatePassword);
+router.post("/updatemembercard", require("./controller/memberupdate").updateMembercard);
+router.post("/updatemembercardverifycode", require("./controller/memberupdate").updateMemberCardVerifyCode);
+
+
 
 router.get("/cart", require("./controller/cart").cart);
 router.all("*", require("./controller/main.js").notFoundHandler);
