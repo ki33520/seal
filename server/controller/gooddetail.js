@@ -8,7 +8,6 @@ var GoodDetailApp = util.getSharedComponent("gooddetail");
 var goodDetail = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
-
     bluebird.props({
         goodById: util.fetchAPI("goodById", {
             productId: id

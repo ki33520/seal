@@ -14,7 +14,6 @@ var goodList = function(req, res, next) {
             pageSize: 12
         }, true)
     }).then(function(resp) {
-        // resp = resp[0].body
         if (resp.goods.code === "success") {
             resp.goods.page.list.map(function(v) {
                 v.smallImageUrl = '/client/asset/' + v.smallImageUrl;
