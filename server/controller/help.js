@@ -7,10 +7,14 @@ var HelpApp = util.getSharedComponent("help");
 
 var index = function(req, res, next) {
     var user = req.session.user;
-    var initialState = {};
+    var initialState = {
+        helpInfo: {
+        	isFetched: true
+        }
+    };
     
     var markup = util.getMarkupByComponent(HelpApp({initialState:initialState}));
-
+    
     res.render('help', {
         markup: markup,
         initialState: initialState
