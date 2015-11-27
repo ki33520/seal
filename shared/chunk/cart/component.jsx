@@ -80,7 +80,7 @@ class Cart extends Component{
                         <i></i><span>省钱贴士：单笔订单税金50元以内，可以免税哦！</span>
                     </div>
                 </div>
-                <Footer />
+                <Footer activeIndex="3"/>
             </div>
         )
     }
