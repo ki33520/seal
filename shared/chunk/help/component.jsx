@@ -1,14 +1,11 @@
 'use strict'
 
 import React,{Component} from "react";
-import Update from "./partial/update.jsx";
-import UpdateBasic from "./partial/updatebasic.jsx";
-import UpdatePassword from "./partial/updatepassword.jsx";
-import UpdateMemberCard from "./partial/updatemembercard.jsx";
+import HelpIndex from "./partial/helpindex.jsx";
 import {Router} from "director";
 import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
 
-class MemberUpdate extends Component{
+class helpMain extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -18,21 +15,6 @@ class MemberUpdate extends Component{
     }
     componentDidMount(){
         Router({
-            "/basic":()=>{
-                this.setState({
-                    currentRoute:"updatebasic"
-                });
-            },
-            "/password":()=>{
-                this.setState({
-                    currentRoute:"updatepassword"
-                });
-            },
-            "/membercard":()=>{
-                this.setState({
-                    currentRoute:"updatemembercard"
-                });
-            },
             "/":()=>{
                 this.setState({
                     currentRoute:"index"
@@ -41,23 +23,12 @@ class MemberUpdate extends Component{
         }).init("/");
     }
     render(){
+        console.log(this.props)
         const {currentRoute} = this.state;
         var currentView = null;
         if(currentRoute === "index"){
             currentView =  (
-                <Update {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "updatebasic"){
-            currentView =  (
-                <UpdateBasic {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "updatepassword"){
-            currentView =  (
-                <UpdatePassword {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "updatemembercard"){
-            currentView =  (
-                <UpdateMemberCard {...this.props} key={currentRoute}/>
+                <HelpIndex {...this.props} key={currentRoute}/>
             )
         }
         const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
@@ -69,4 +40,4 @@ class MemberUpdate extends Component{
     }
 }
 
-export default MemberUpdate;
+export default helpMain;
