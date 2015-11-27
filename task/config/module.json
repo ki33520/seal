@@ -52,5 +52,15 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+     "trendy":{
+        "html": ["trendy.html"],
+        "path": "./client/bundle/trendy/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
+    
 }
