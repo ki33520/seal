@@ -8,7 +8,7 @@ class Footer extends Component{
     constructor(props){
         super(props);
         this.state = {
-            activeIndex: 3
+            activeIndex: this.props.activeIndex
         }
     }
 
@@ -45,7 +45,7 @@ class Footer extends Component{
 }
 
 Footer.defaultProps = {
-
+    activeIndex:0,
     handleClick:function(){
         //
     }
