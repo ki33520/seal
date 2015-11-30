@@ -115,5 +115,14 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "coupons":{
+        "html": ["coupons.html"],
+        "path": "./client/bundle/coupons/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }

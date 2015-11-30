@@ -24,7 +24,7 @@ gulp.task("nodemon", function() {
         stdout: false,
         // ignore: [".git","node_modules","client","shared","task"],
         watch: [
-            "server/controller", "server/lib", "server/*.js", "view",
+            "server/controller","server/mock", "server/lib", "server/*.js", "view",
             // "shared/chunk/**/*.jsx","shared/chunk/**/*.es6"
         ],
         ext: "js html json es6 jsx"

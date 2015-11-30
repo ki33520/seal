@@ -30,8 +30,10 @@ router.post("/updatemembercard", require("./controller/memberupdate").updateMemb
 router.post("/updatemembercardverifycode", require("./controller/memberupdate").updateMemberCardVerifyCode);
 
 
+router.get("/coupons", require("./controller/coupons"));
 
 router.get("/cart", require("./controller/cart").cart);
+router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", require("./controller/main.js").notFoundHandler);
 router.use(require("./controller/main.js").errorHandler);
 
