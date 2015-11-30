@@ -4,7 +4,7 @@ import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
 import createStoreWithMiddleware from "../../lib/store-creator.es6";
-import helpMain from "./component.jsx";
+import HelpList from "./component.jsx";
 
 function selector(state){
     const {helpInfo} = state;
@@ -13,7 +13,7 @@ function selector(state){
     };
 }
 
-let helpMainConnected = connect(selector)(helpMain);
+let HelpListConnected = connect(selector)(HelpList);
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
@@ -22,16 +22,14 @@ function configureStore(initialState){
 
 class HelpApp extends Component{
     render(){
-    	console.log(this.props)
         const {helpInfo} = this.props.initialState;
         const initialState = {
             helpInfo
         };
-
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-                <helpMainConnected />
+                <HelpListConnected />
             </Provider>
         )
     }

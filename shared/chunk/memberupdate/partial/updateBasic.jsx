@@ -29,7 +29,7 @@ class UpdateBasic extends Component{
         e && e.preventDefault();
         const {dispatch,basicByForm} = this.props;
         const {nickname,gender,birthdy} = basicByForm;
-        dispatch("/updatebasic",changeBasic({
+        dispatch(changeBasic("/updatebasic",{
             nickname,gender,birthdy
         }));
     }
@@ -59,7 +59,6 @@ class UpdateBasic extends Component{
         dispatch(changeField(fieldName,birthdy));
     }
     render(){
-        console.log(this.props)
         const {basicByForm} = this.props;
         const {nickname,gender,birthdy,alertContent,alertActive} = basicByForm;
         const {year,month,day} = this.state;
