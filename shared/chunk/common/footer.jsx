@@ -8,15 +8,31 @@ class Footer extends Component{
     constructor(props){
         super(props);
         this.state = {
-            activeIndex: this.props.activeIndex
+            activeIndex: props.activeIndex
         }
     }
 
-    handleChangeItem(index){
+    handleClick(index){
         this.setState({
             activeIndex:index
         });
-        this.props.handleClick();
+        switch(index){
+            case 1:
+                window.location.href='/classify';
+                break;
+            case 2:
+                window.location.href='/trendy';
+                break;
+            case 3:
+                window.location.href='/cart';
+                break;
+            case 4:
+                window.location.href='/membercenter';
+                break;
+            default:
+                window.location.href='/';
+                break;
+        }
     }
 
     render(){
@@ -31,7 +47,7 @@ class Footer extends Component{
             const hoverClass = classNames({
                 "nav-hover":i==it.state.activeIndex
             });
-            list.push(<li key={key} onClick={it.handleChangeItem.bind(it,i)}><a href="#"  className={hoverClass}><i></i>{item}</a></li>)
+            list.push(<li key={key} onClick={it.handleClick.bind(it,i)}><a href="#"  className={hoverClass}><i></i>{item}</a></li>)
         });
 
         return (
@@ -45,10 +61,7 @@ class Footer extends Component{
 }
 
 Footer.defaultProps = {
-    activeIndex:0,
-    handleClick:function(){
-        //
-    }
+    activeIndex:0
 }
 
 export default Footer;

@@ -1,38 +1,47 @@
+
 'use strict'
 import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
 import createStoreWithMiddleware from "../../lib/store-creator.es6";
-import HelpList from "./component.jsx";
+import Coupons from "./component.jsx";
 
 function selector(state){
-    const {helpInfo} = state;
+    const {pagination,isFetched,isFetching,title} = state.goodsByParam
     return {
-        helpInfo
+        pagination,
+        isFetched,
+        title,
+        isFetching
     };
 }
 
-let HelpListConnected = connect(selector)(HelpList);
+let CouponsConnected = connect(selector)(Coupons);
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
     return store
 }
 
-class HelpApp extends Component{
+class CouponsApp extends Component{
     render(){
-        const {helpInfo} = this.props.initialState;
+        const {isFetched,pagination,title} = this.props.initialState;
         const initialState = {
-            helpInfo
+            goodsByParam:{
+                isFetching:false,
+                isFetched,
+                title,
+                pagination
+            }
         };
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-                <HelpListConnected />
+            <CouponsConnected />
             </Provider>
         )
     }
 }
 
-export default HelpApp;
+export default CouponsApp;

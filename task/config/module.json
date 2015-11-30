@@ -53,7 +53,7 @@
         },
         "vendor": "react"
     },
-     "trendy":{
+    "trendy":{
         "html": ["trendy.html"],
         "path": "./client/bundle/trendy/",
         "compiler": {
@@ -61,6 +61,68 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "aboutus":{
+        "html": ["aboutus.html"],
+        "path": "./client/bundle/aboutus/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "help":{
+        "html": ["help.html"],
+        "path": "./client/bundle/help/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "membercenter":{
+        "html": ["membercenter.html"],
+        "path": "./client/bundle/membercenter/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "membercollect":{
+        "html": ["membercollect.html"],
+        "path": "./client/bundle/membercollect/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "membercomment":{
+        "html": ["membercomment.html"],
+        "path": "./client/bundle/membercomment/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "memberupdate":{
+        "html": ["memberupdate.html"],
+        "path": "./client/bundle/memberupdate/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "coupons":{
+        "html": ["coupons.html"],
+        "path": "./client/bundle/coupons/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
-    
 }
