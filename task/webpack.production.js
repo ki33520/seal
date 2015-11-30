@@ -79,6 +79,7 @@ module.exports = {
                 warnings: false
             }
         }),
+        new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin(moduleEntryPath + "[name]/" + env.distFolder + "[name]-[hash].css")
     ], commonChunks)
 }

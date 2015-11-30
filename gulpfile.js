@@ -1,6 +1,3 @@
-var gulp = require("gulp"),
-    nodemon = require("nodemon"),
-    // livereload = require('gulp-livereload'),
-    browserSync = require("browser-sync");
+'use strict';
 require("./task/webpack-inject.js");
 require("./task/develop-server");

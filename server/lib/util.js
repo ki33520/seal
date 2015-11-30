@@ -3,11 +3,10 @@ var React = require("react");
 var ReactDOMServer = require("react-dom/server");
 var sharedUtil = require("../../shared/lib/util.es6");
 var config = require("./config");
-var bluebird = require("bluebird");
-var path = require("path");
+var url = require("url");
 
 var util = {
-    getAuthGatewayUrl: function(req, authPath, needBack) {
+    getAuthGatewayUrl: function(req, authPath) {
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,

@@ -6,8 +6,8 @@ import Footer from "../common/footer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
 
 class Cart extends Component{
-    constructor(props){
-        super(props);
+    constructor(props,context){
+        super(props,context);
     }
     render(){
         return (
