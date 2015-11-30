@@ -24,16 +24,22 @@ class GoodItem extends Component{
     		"phone-price":activityType==2
     	});
         return (
-           <a href="#" className="clearfix">
-                <img src={smallImageUrl}/>
-                <div className={statusClass}></div>
-                <div className="right">
-                    <span className="name">{title}</span>
-                    <span className="country"><i><img src={icon} alt="" /></i>{name}</span>
-                    <span className="now-price">&yen;{salePrice}</span>
-                    <span className="old-price">&yen;{standardPrice}</span>
+            <a href="#" title="">
+            	<div className="clearfix">
+                	<div className={statusClass}></div>
+                	<div className={activityClass}></div>
+                    <img src={smallImageUrl} alt="" />
+                    <div className="country">
+                    	<i><img src={icon} alt="" /></i>
+                    	{name}
+                    </div>
+                    <p>{title}</p>
+                    <div>
+                        <span className="now-price">&yen;{salePrice}</span>
+                        <span className="old-price">&yen;{standardPrice}</span>
+                    </div>
                 </div>
-            </a>
+	        </a>
         )
     }
 }

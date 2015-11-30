@@ -11,7 +11,7 @@
         {
             "id":"1",
             "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
-            "smallImageUrl":"images/pic17.gif",
+            "smallImageUrl":"images/pic8.gif",
             "standardPrice":99.00,
             "salePrice":199.00,
             "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
@@ -21,7 +21,7 @@
         {
             "id":"2",
             "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
-            "smallImageUrl":"images/pic19.gif",
+            "smallImageUrl":"images/pic9.gif",
             "standardPrice":99.00,
             "salePrice":199.00,
             "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
@@ -31,42 +31,12 @@
         {
             "id":"3",
             "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
-            "smallImageUrl":"images/pic17.gif",
+            "smallImageUrl":"images/pic10.gif",
             "standardPrice":99.00,
             "salePrice":199.00,
             "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
             "activityType":1,
             "status":1
-        },
-        {
-            "id":"4",
-            "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
-            "smallImageUrl":"images/pic19.gif",
-            "standardPrice":99.00,
-            "salePrice":199.00,
-            "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
-            "activityType":1,
-            "status":0
-        },
-        {
-            "id":"5",
-            "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
-            "smallImageUrl":"images/pic17.gif",
-            "standardPrice":99.00,
-            "salePrice":199.00,
-            "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
-            "activityType":1,
-            "status":0
-        },
-        {
-            "id":"6",
-            "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
-            "smallImageUrl":"images/pic17.gif",
-            "standardPrice":99.00,
-            "salePrice":199.00,
-            "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
-            "activityType":1,
-            "status":0
         }
       ]
   }

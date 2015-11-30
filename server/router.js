@@ -15,7 +15,7 @@ router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
-
+router.get("/coupons", require("./controller/coupons"));
 
 router.get("/cart", require("./controller/cart").cart);
 router.all("*", require("./controller/main.js").notFoundHandler);
