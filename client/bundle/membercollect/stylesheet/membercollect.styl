@@ -4,14 +4,12 @@
 @import "../../common/member.styl"
 
 .collect-content{
-	font-size: .7rem;
 	color: $gray-color;
-	padding: 2rem 0 2.5rem 0;
 	.collect-list{
 		background-color: #fff;
 		>li{
-			padding: .6rem 0;
-			margin: 0 .6rem;
+			padding: .3rem 0;
+			margin: 0 .35rem;
 			border-bottom: 1px solid #d7d7d7;
 			display: flex;
 			&:last-child{
@@ -20,10 +18,12 @@
 			.col{
 			}
 			.col-left{
+				margin-top: .05rem;
 				margin-right: .6rem;
+				line-height: 0;
 				img{
-					width: 5rem;
-					height: 5rem;
+					width: 2.72rem;
+					height: 2.72rem;
 					border: 1px solid #e0e0e0;
 				}
 			}
@@ -31,21 +31,20 @@
 				flex: 1;
 				position: relative;
 				.title{
-					font-size: .7rem;
-					line-height: .9rem;
-					height: 1.8rem;
-					margin-bottom: .3rem;
+					line-height: .6rem;
+					height: 1.2rem;
+					margin-bottom: .15rem;
 					color: #555;
 				}
 				.origin{
 					display: flex;
-					font-size: .6rem;
-					line-height: 1rem;
+					font-size: .3rem;
+					line-height: .55rem;
 					color: #777;
 					img{
-						width: 1rem;
-						height: 1rem;
-						margin-right: .2rem;
+						width: .5rem;
+						height: .5rem;
+						margin-right: .1rem;
 					}
 				}
 				.price{
@@ -58,12 +57,12 @@
 					span{
 						flex: 1;
 						display: block;
-						color: #ed1949;
-						font-size: 1rem;
+						color: #ed1844;
+						font-size: .45rem;
 						font-weight: normal;
 						&:last-child{
-							color: #999;
-							font-size: .5rem;
+							color: #aaa;
+							font-size: .3rem;
 							text-align: right;
 							text-decoration: line-through;
 						}

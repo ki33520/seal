@@ -11,7 +11,7 @@ class HelpMain extends Component{
         return (
             <div className="help-content">
                 <Header>
-                    <h1>帮助与反馈</h1>
+                    <span className="title">帮助与反馈</span>
                 </Header>
                 <ul className="list">
                     <li><a href="#/normal">1.注册登陆常见问题</a></li>

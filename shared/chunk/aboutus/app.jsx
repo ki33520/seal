@@ -9,8 +9,10 @@ class AboutUs extends Component{
     render(){
         return (
             <div className="aboutus-content">
-                <Header title="关于我们" />
-                <img src="/client/asset/image/gywm.gif" />
+                <Header>
+                    <span className="title">关于我们</span>
+                </Header>
+                <img src="/client/asset/images/gywm.gif" />
                 <p>友阿海外购是湖南友阿云商网络有限公司旗下的跨境O2O电商平台，是友阿集团旗下的自营海外正品特卖网站；</p>
                 <p>友阿集团成立海外采购公司，深入货源产地直采，保证商品品质；重金批量采购，保证价格最具竞争力；自营备货，政府背书，7天无忧售后；和海关、保税区深入合作，电子化极速清关，下单后3-15个工作日送达。支持微信、支付宝、网银、信用卡等支付方式， 告别多币支付烦恼。</p>
                 <div className="m-entry">

@@ -23,7 +23,10 @@ class MembercollectList extends Component{
         const {collect} = this.state;
         var tpl = (
             <div className="collect-content">
-                <Header title="我的收藏"/>
+                <Header>
+                    <span className="title">我的收藏</span>
+                    <span className="btn-right"></span>
+                </Header>
                 <Node collect={collect} />
             </div>
         );

@@ -10,7 +10,9 @@ class Update extends Component{
         const {memberInfo} = this.props;
         return (
             <div className="update-content">
-                <Header title="账户设置"/>
+                <Header>
+                    <span className="title">账户设置</span>
+                </Header>
                 <ul className="userInfo">
                     <li>nickname: {memberInfo.nickname}</li>
                     <li>email: {memberInfo.email}</li>

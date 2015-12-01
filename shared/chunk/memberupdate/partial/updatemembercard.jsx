@@ -55,21 +55,20 @@ class UpdateMemberCard extends Component{
     render(){
         const {cardNo,mobileNumber,verifyCode,alertActive,alertContent} = this.props.membercardByForm;
         return (
-            <div className="formlist-content">
-                <Header title="绑定会员卡"/>
+            <div className="formlist-content membercard-form">
+                <Header>
+                    <span className="title">绑定会员卡</span>
+                </Header>
                 <ul className="setup-form">
                     <li>
-                        <span className="iconfont"></span>
                         <input type="text" placeholder="请输入友阿会员卡卡号" name="cardNo" value={cardNo} 
                         onChange={this.handleFieldChange.bind(this,"cardNo")}/>
                     </li>
                     <li>
-                        <span className="iconfont"></span>
                         <input type="text" placeholder="请输入会员卡绑定手机" name="mobileNumber" value={mobileNumber} 
                         onChange={this.handleFieldChange.bind(this,"mobileNumber")}/>
                     </li>
                     <li>
-                        <span className="iconfont"></span>
                         <div className="inner">
                             <input type="text" placeholder="请输入验证码" name="verifyCode" value={verifyCode} 
                             onChange={this.handleFieldChange.bind(this,"verifyCode")}/>

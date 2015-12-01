@@ -11,7 +11,7 @@ class Normal extends Component{
         return (
             <div className="help-content">
                 <Header>
-                    <h1>注册登陆常见问题</h1>
+                    <span className="title">注册登陆常见问题</span>
                 </Header>
             </div>
         );
