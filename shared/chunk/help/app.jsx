@@ -7,9 +7,10 @@ import createStoreWithMiddleware from "../../lib/store-creator.es6";
 import HelpList from "./component.jsx";
 
 function selector(state){
-    const {helpInfo} = state;
+    const {helpInfo,feedbackByForm} = state;
     return {
-        helpInfo
+        helpInfo,
+        feedbackByForm
     };
 }
 

@@ -18,6 +18,7 @@ router.get("/trendy", require("./controller/trendy"));
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
+router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
 router.get("/membercenter", require("./controller/membercenter"));
 router.get("/membercenter/collect", require("./controller/membercollect"));
