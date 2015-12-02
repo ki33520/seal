@@ -5,8 +5,10 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test-client": "jest",
-    "test": "mocha --reporter spec --bail --watch --check-leaks --compilers js:babel-core/register server/__test__/ client/__test__/",
+    "linter": "esw -w --ext .js,.jsx,.es6 .",
+    "test": "npm run backend-test && npm run frontend-test",
+    "frontend-test": "FRONTEND_TEST_PORT=8000 karma start ./task/karma.config.js",
+    "backend-test": "mocha --reporter list --bail --check-leaks --compilers es6:babel-core/register server/__tests__/",
     "develop": "gulp start",
     "start-static": "node task/static-server.js",
     "develop-static": "npm run static-build && gulp develop-webpack",
@@ -14,23 +16,6 @@
     "static-build": "webpack --config ./task/webpack.develop.js --display-error-details",
     "static-prod": "webpack --config ./task/webpack.production.js --display-error-details",
     "vendor-css": "gulp vendor-css"
-  },
-  "jest": {
-    "scriptPreprocessor": "<rootDir>/task/preprocessor.js",
-    "moduleFileExtensions": [
-      "js",
-      "jsx",
-      "json"
-    ],
-    "testDirectoryName": "__test__",
-    "testPathDirs": [
-      "<rootDir>/client"
-    ],
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/reflux",
-      "<rootDir>/node_modules/bluebird"
-    ]
   },
   "keywords": [
     "isomorphic boilerplate"
@@ -68,11 +53,14 @@
     "browser-sync": "^2.9.12",
     "css-loader": "^0.14.5",
     "del": "^1.2.0",
+    "eslint": "^1.10.2",
+    "eslint-watch": "^2.1.4",
     "expect": "^1.12.2",
     "extract-text-webpack-plugin": "^0.8.2",
     "faker": "^3.0.1",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
+    "gulp-eslint": "^1.1.1",
     "gulp-inject": "^3.0.0",
     "gulp-livereload": "^3.8.0",
     "gulp-minify-css": "^1.2.1",
