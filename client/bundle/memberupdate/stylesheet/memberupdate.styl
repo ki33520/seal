@@ -5,24 +5,18 @@
 @import "../../component/alert.styl"
 @import "../../common/member.styl"
 
-.memberupdate-container{
-    font-size: .7rem;
-    color: $gray-color;
-    padding: 2rem 0 2.5rem 0;
-}
 .update-content{
     .userInfo{
-        padding: 1rem;
+        padding: .3rem .5rem;
         li{
-            line-height: 2rem;
+            line-height: .8rem;
         }
     }
     .list{
         li{
-            margin-bottom: .1rem;
             border-bottom: 1px solid #d7d7d7;
             >a{
-                line-height: 2rem;
+                line-height: 1rem;
                 color: #333;
                 display: flex;
                 width: 100%;
@@ -32,13 +26,12 @@
                     content: "";
                     display: inline-block;
                     text-align: center;
-                    height: 1rem;
-                    width: 1rem;
+                    width: .5rem;
                 }
                 &::after{
                     flex: 1;
-                    content: "\e81e";
-                    font-family: "fontello";
+                    content: "\e603";
+                    font-family: "iconfont";
                     color: #666;
                     display: inline-block;
                     text-align: right;
@@ -47,75 +40,77 @@
                     width: 1rem;
                 }
             }
+            &:last-child{
+                border-bottom: none;
+            };
         }
     }
 }
 .basic-content{
+    header{
+        .btn-right{
+            a{
+                color: $purple-color;
+            }
+        }
+    }
     .form-item{
-        margin: .6rem 0;
+        margin: .3rem 0;
         .label-item{
             background-color: #fff;
-            height: 2rem;
+            height: 1.2rem;
             display: flex;
             align-items: center;
             label{
                 box-sizing: border-box;
-                min-width: 2rem;
+                min-width: 1.2rem;
                 text-align: left;
-                padding-left: .6rem;
-                font-size: .7rem;
+                padding-left: .3rem;
             }
             input{
                 border: none;
                 background: none;
-                margin-right: .6rem;
-                margin-left: .6rem;
-                font-family: "Helvetica Neue", Helvetica, 'microsoft yahei', sans-serif;
-                font-size: .7rem;
-                height: 1rem;
+                margin-right: .3rem;
+                margin-left: .3rem;
+                height: .6rem;
             }
             select{
                 border: none;
                 background: none;
                 margin-right: .6rem;
                 margin-left: .6rem;
-                font-family: "Helvetica Neue", Helvetica, 'microsoft yahei', sans-serif;
-                font-size: .7rem;
-                height: 1rem;
-                line-height: 1.1rem;
                 color: #999;
             }
         }
         .tips{
-            margin: .3rem 1rem 0 2rem;
-            padding-left: .6rem;
-            font-size: .5rem;
+            margin: .15rem .5rem 0 1.2rem;
+            padding-left: .3rem;
+            font-size: .3rem;
             color: #ee3763;
         }
     }
 }
 .formlist-content{
     .setup-form {
-        margin-top: .4rem;
+        margin-top: .3rem;
         display: block;
         &>li {
             background-color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: .3rem .4rem;
-            margin-bottom: .5rem;
+            padding: .2rem .4rem;
+            margin-bottom: .3rem;
             &:last-child {
                 border-bottom: 0 none;
             }
             &>.iconfont{
                 flex:1;
                 color:#999;
-                font-size:.7rem;
             }
             input{
                 border: 0 none;
-                line-height: 1.3rem;
+                line-height: 1rem;
             }
             &>input,
             &>.inner{
@@ -123,18 +118,43 @@
             }
             &>.inner{
             	display: flex;
+                align-items: center;
             	&>input{
             		flex: 6;
             	}
             	&>a{
-	            	font-size: .5rem;
 	                display: block;
 	                background: #f5f5f5;
 	                color: #333;
-	                line-height: 1.3rem;
-	                padding: .3rem .5rem;
+	                line-height: 1rem;
+	                padding: 0 .5rem;
 	            }
             }
+            &::before{
+                content: "";
+                width: .42rem;
+                height: .42rem;
+                margin: 0 .2rem .1rem .2rem;
+                background-size: 100% 100%;
+            }
+            &:nth-child(1){
+                &::before{
+                    background-image: url(/client/asset/images/org_lockX.png);
+                }
+            }
+            &:nth-child(2){
+                &::before{
+                    background-image: url(/client/asset/images/org_lockHook.png);
+                }
+            }
+            &:nth-child(3){
+                &::before{
+                    background-image: url(/client/asset/images/org_lockDot.png);
+                }
+            }
+        }
+        &.formlist-content{
+            color: #ff0;
         }
         
     }
@@ -145,11 +165,31 @@
         &>a {
             display: inline-block;
             padding: .3rem .5rem;
-            width: 60%;
-            line-height: 1.2rem;
+            width: 80%;
+            line-height: .6rem;
+            font-size: .4rem;
             background: $purple-color;
             border-radius: .3rem;
             color: #FFF;
+        }
+    }
+    &.membercard-form{
+        .setup-form >li {
+            &:nth-child(1){
+                &::before{
+                    background-image: url(/client/asset/images/org_membership.png);
+                }
+            }
+            &:nth-child(2){
+                &::before{
+                    background-image: url(/client/asset/images/org_mobile.png);
+                }
+            }
+            &:nth-child(3){
+                &::before{
+                    background-image: url(/client/asset/images/ord_yanzheng.png);
+                }
+            }
         }
     }
 }

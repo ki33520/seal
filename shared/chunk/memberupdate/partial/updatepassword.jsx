@@ -39,10 +39,11 @@ class UpdatePassword extends Component{
         const {oldPassword,password,repeatPassword,alertContent,alertActive} = this.props.passwordByForm;
         return (
             <div className="formlist-content">
-                <Header title="修改登录密码" />
+                <Header>
+                    <span className="title">修改登录密码</span>
+                </Header>
                 <ul className="setup-form">
                     <li>
-                        <span></span>
                         <input type="password" placeholder="请输入旧密码" name="oldPassword" value={oldPassword} 
                         onChange={this.handleFieldChange.bind(this,"oldPassword")}/>
                     </li>

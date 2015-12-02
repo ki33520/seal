@@ -86,8 +86,9 @@ class UpdateBasic extends Component{
         };
         return (
             <div className="basic-content">
-                <Header title="账户设置">
-                    <span onClick={this.handleChangeBasic.bind(this)}><a>保存</a></span>
+                <Header>
+                    <span className="title">基本信息</span>
+                    <span className="btn-right" onClick={this.handleChangeBasic.bind(this)}><a>保存</a></span>
                 </Header>
                 <div className="form-item">
                     <div className="label-item">

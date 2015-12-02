@@ -11,7 +11,7 @@ class Normal extends Component{
         return (
             <div className="help-content">
                 <Header>
-                    <h1>在线客服</h1>
+                    <span className="title">在线客服</span>
                 </Header>
             </div>
         );

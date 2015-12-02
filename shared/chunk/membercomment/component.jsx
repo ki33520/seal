@@ -39,9 +39,19 @@ class CommentList extends Component{
     }
     render(){
         var {allComment,showComment} = this.props;
-        console.log(allComment)
+        
         allComment = allComment.map((child,i)=>{
             const key = "comment-" + i;
+            var stars = [];
+            for(let i=0;i<5;i++){
+                let star;
+                if(i<child.stars){
+                    star = (<div className="iconfont icon-starA"></div>);
+                }else{
+                    star = (<div className="iconfont icon-starB"></div>);
+                }
+                stars.push(star)
+            };
             return (
                 <li id={child.goodId} key={key}>
                     <div className="product">
@@ -54,16 +64,27 @@ class CommentList extends Component{
                         </div>
                     </div>
                     <div className="stars-culm">
-                        <div className={"stars "+child.stars}>{child.stars}</div>
+                        <div className={"stars stars-"+child.stars}>
+                            {stars}
+                        </div>
                         <div className="date">{child.createAt}</div>
                     </div>
                     <div className="content">{child.content}</div>
                 </li>
             )
-            //<CouponRow comment={child} key={key}/>
         });
         showComment = showComment.map((child,i)=>{
             const key = "comment-" + i;
+            var stars = [];
+            for(let i=0;i<5;i++){
+                let star;
+                if(i<child.stars){
+                    star = (<div className="iconfont icon-starA"></div>);
+                }else{
+                    star = (<div className="iconfont icon-starB"></div>);
+                }
+                stars.push(star)
+            };
             return (
                 <li id={child.goodId} key={key}>
                     <div className="product">
@@ -76,24 +97,27 @@ class CommentList extends Component{
                         </div>
                     </div>
                     <div className="stars-culm">
-                        <div className={"stars "+child.stars}>{child.stars}</div>
+                        <div className={"stars stars-"+child.stars}>
+                            {stars}
+                        </div>
                         <div className="date">{child.createAt}</div>
                     </div>
                     <div className="content">{child.content}</div>
                 </li>
             )
-            //<LegueCouponRow comment={child} key={key}/>
         });
         return (
             <div className="comment-content">
             <div className="comment-header">
-                <Header title="我的评论"/>
+                <Header>
+                    <span className="title">我的评论</span>
+                </Header>
             </div>
-            <div className="comment-list">
-            <Tabs effect="slide">
-                <TabsItem title="全部评论"><ul className="comment-list">{allComment}</ul></TabsItem>
-                <TabsItem title="晒单"><ul className="comment-list">{showComment}</ul></TabsItem>
-            </Tabs>
+            <div className="tab-content">
+                <Tabs effect="slide">
+                    <TabsItem title="全部评论"><ul className="comment-list">{allComment}</ul></TabsItem>
+                    <TabsItem title="晒单"><ul className="comment-list">{showComment}</ul></TabsItem>
+                </Tabs>
             </div>
             <GoTop />
             </div>

@@ -5,7 +5,6 @@ import React,{Component} from "react";
 class Node extends Component{
     render(){
         const {collect} = this.props;
-        
         return (
             <ul className="collect-list">
                 {

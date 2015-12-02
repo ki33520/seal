@@ -26,36 +26,158 @@ class MemberCenter extends Component{
     render(){
         const {member,login} = this.state;
         const links = login ? '' : '/login';
-        const loginClasses = classNames("member-center-content",{
+        const loginClasses = classNames({
             login: login
         });
         var tpl = (
-            <div className={loginClasses}>
-                <Header title="用户中心"/>
-                <div className="member-info">
-                    <div className="bgWrap">
+            <div>
+                <div className="user">
+                    <header className={loginClasses}>
+                        <div className="top">
+                            <span>个人中心</span>
+                        </div>
+
+                        <div className="userBtns">
+                            <a href="login.html">注&nbsp;册</a>
+                            <a href="reg.html">登&nbsp;录</a>
+                        </div>
+
                         <div className="userInfo">
-                            <div className="headpic"><div className="img_wrap"><img src="" /></div></div>
-                            <div className="mobile">{member.mobile}</div>
-                            <div className="QRcode"><img src="" /></div>
+                            <div className="userInfo_con">
+                                <img src="client/asset/images/userPic.gif" />
+                                <a href="javascript:void(0);"><img src="client/asset/images/user_qr.png" /></a>
+                            </div>
+                            <span>15845213695</span>
                         </div>
-                        <div className="orderNav">
-                            <div className="navItem"><a href="/membercenter/order">待付款</a></div>
-                            <div className="navItem"><a href="/membercenter/order">待发货</a></div>
-                            <div className="navItem"><a href="/membercenter/order">待收货</a></div>
-                            <div className="navItem"><a href="/membercenter/order">待评价</a></div>
+                        <div className="userGoods">
+                            <a href="/membercenter/order" className="userGoods_1">
+                                <em></em>
+                                <span>待付款</span>
+                                <i>9</i>
+                            </a>
+                            <a href="/membercenter/order" className="userGoods_2">
+                                <em></em>
+                                <span>待发货</span>
+                                <i>99+</i>
+                            </a>
+                            <a href="/membercenter/order" className="userGoods_3">
+                                <em></em>
+                                <span>待收货</span>
+                                <i>99+</i>
+                            </a>
+                            <a href="/membercenter/order" className="userGoods_4">
+                                <em></em>
+                                <span>待评价</span>
+                                <i>99+</i>
+                            </a>
                         </div>
+                    </header>
+                    
+                    <div className="helpList">
+                        <a href="/membercenter/order">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_1.png" />
+                                    全部订单
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
                     </div>
-                    <ul className="list">
-                        <li><a href="/membercenter/order">全部订单</a></li>
-                        <li><a href="/membercenter/address">收货地址</a></li>
-                        <li><a href="/membercenter/collect">我的收藏</a></li>
-                        <li><a href="/membercenter/comment">我的评论</a></li>
-                        <li><a href="/membercenter/coupon">优惠券</a></li>
-                        <li><a href="/membercenter/update">账户设置</a></li>
-                        <li><a href="/aboutus">关于我们</a></li>
-                        <li><a href="/help">帮助反馈</a></li>
-                    </ul>
+
+                    <div className="helpList">
+                        <a href="/membercenter/address">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_2.png" />
+                                    收货地址
+                                    <em className="dot"></em>
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
+                        <a href="/membercenter/collect">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_3.png" />
+                                    我的收藏
+                                    <em className="dot"></em>
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
+                        <a href="/membercenter/comment">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_4.png" />
+                                    我的评论
+                                    <em className="dot"></em>
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
+                        <a href="/membercenter/coupon">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_5.png" />
+                                    优惠券
+                                    <em className="dot"></em>
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
+                        <a href="/membercenter/update">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_6.png" />
+                                    账户设置
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
+                    </div>
+                    
+                    <div className="helpList">
+                        <a href="/aboutus">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_7.png" />
+                                    关于我们
+                                    <em className="dot"></em>
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
+                    </div>
+                    
+                    <div className="helpList">
+                        <a href="/help">
+                            <dl>
+                                <dt>
+                                    <img src="client/asset/images/user_icon_8.png" />
+                                    帮助反馈
+                                </dt>
+                                <dd>
+                                    <i className="iconfont icon-right"></i>
+                                </dd>
+                            </dl>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         );
