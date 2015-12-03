@@ -1,5 +1,5 @@
 'use strict';
-import util from "../lib/util.es6";
+import util from "../../lib/util.es6";
 
 export const CHANGE_FIELD= "CHANGE_FIELD";
 export const REQUEST_PROVINCES = "REQUEST_PROVINCES";

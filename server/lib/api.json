@@ -1,5 +1,8 @@
 {
     "goodById": {
         "uri": "/WAP/product/detail.ya"
+    },
+    "loginTokenByCode": {
+        "uri": "/security/WAP/newLoginForWAP.bdo"
     }
 }

@@ -1,0 +1,18 @@
+$gray-color:#999;
+
+.receiver-form-row {
+    display: flex;
+    align-items: flex-start;
+    padding: .4rem 0;
+    .receiver-form-label {
+        color: $gray-color;
+        flex: 1;
+    }
+    .receiver-form-field {
+        flex: 6.5;
+        &>input[type="text"] {
+            border: 0 none;
+            margin: 0;
+        }
+    }
+}

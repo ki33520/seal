@@ -1,9 +1,9 @@
 'use strict';
 
 import React,{Component} from "react";
-import Header from "../../common/header/header.jsx";
-import Icon from "../../component/core/icon.jsx";
-import Checkbox from "../../component/form/checkbox.jsx";
+import Header from "../../common/header.jsx";
+import Icon from "../../../component/icon.jsx";
+import Checkbox from "../../../component/form/checkbox.jsx";
 
 class Receiver extends Component{
     handleCheck(receiver,checked){

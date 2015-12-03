@@ -2,12 +2,12 @@
 
 import React,{Component} from "react";
 import _ from "lodash";
-import Header from "../../common/header/header.jsx";
+import Header from "../../common/header.jsx";
 import CascadeArea from "../../common/cascadearea/cascadearea.jsx";
 
 import {fetchProvinces,fetchCities,fetchDistricts,saveReceiver,changeField} from "../action.es6";
 import {alert} from "../../common/action.es6";
-import Alert from "../../component/alert/alert.jsx";
+import Alert from "../../../component/alert.jsx";
 
 class AddReceiver extends Component{
     handleFieldChange(fieldName,e){

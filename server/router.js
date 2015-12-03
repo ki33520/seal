@@ -9,6 +9,11 @@ require("babel-core/register")({
     extensions: [".es6", ".es", ".jsx"]
 });
 
+var mainController = require("./controller/main");
+
+router.get("/logingateway",require("./controller/authorize").loginGateway);
+router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
+
 router.get("/", require("./controller/main.js").index);
 router.post("/weather", require("./controller/main.js").weather);
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
@@ -30,6 +35,9 @@ router.post("/updatepassword", require("./controller/memberupdate").updatePasswo
 router.post("/updatemembercard", require("./controller/memberupdate").updateMembercard);
 router.post("/updatemembercardverifycode", require("./controller/memberupdate").updateMemberCardVerifyCode);
 
+router.get("/receiver",mainController.requireAuthorize,require("./controller/receiver").receiver);
+router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
+router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 
 router.get("/coupons", require("./controller/coupons"));
 

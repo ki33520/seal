@@ -2,11 +2,10 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import Dropdown from "../dropdown/dropdown.jsx";
-import Icon from "../core/icon.jsx";
+import Dropdown from "../dropdown.jsx";
+import Icon from "../icon.jsx";
 import Slider from "../slider/slider.jsx";
 import Slide from "../slider/slide.jsx";
-import Timepicker from "../datetimepicker/timepicker.jsx";
 
 class SelectedSlide extends Component{
     constructor(props){

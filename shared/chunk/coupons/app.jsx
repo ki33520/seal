@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
-import createStoreWithMiddleware from "../../lib/store-creator.es6";
+import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Coupons from "./component.jsx";
 
 function selector(state){

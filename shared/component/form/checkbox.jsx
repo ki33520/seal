@@ -2,7 +2,7 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import Icon from "../core/icon.jsx";
+import Icon from "../icon.jsx";
 
 class Checkbox extends Component{
     constructor(props){
