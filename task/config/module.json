@@ -125,9 +125,9 @@
         },
         "vendor": "react"
     },
-    "receiver":{
-        "html": ["receiver.html"],
-        "path": "./client/bundle/receiver/",
+    "coupondetail":{
+        "html": ["coupondetail.html"],
+        "path": "./client/bundle/coupondetail/",
         "compiler": {
             "js": "babel",
             "css": "stylus"
