@@ -40,6 +40,8 @@ router.get("/cascadearea",mainController.requireAuthorize,require("./controller/
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 
 router.get("/coupon", require("./controller/coupon"));
+router.get("/coupondetail", require("./controller/coupondetail"));
+
 
 router.get("/cart", require("./controller/cart").cart);
 router.all("/mock/api/:api",require("./mock/api").all);
