@@ -8,7 +8,7 @@ class Node extends Component{
         return (
             <ul className="collect-list">
                 {
-                    collect.map((child,key) => {
+                    collect.list.map((child,key) => {
                         return (
                             <li id={child.goodId} key={key}>
                                 <div className="col col-left">

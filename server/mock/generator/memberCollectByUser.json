@@ -2,201 +2,68 @@
     "code":"success",
     "msg":"访问成功",
     "time":1427188628187,
-    "list":[{
-        "title": "丝纷1 测试商品 XS 白粉红",
-        "goodId": "123",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
-        "brandName": "丝芬"
-   },
-   {
-        "title": "丝纷2 测试商品 XS 白粉红",
-        "goodId": "456",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷3 测试商品 XS 白粉红",
-        "goodId": "789",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷1 测试商品 XS 白粉红",
-        "goodId": "123",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
-        "brandName": "丝芬"
-   },
-   {
-        "title": "丝纷2 测试商品 XS 白粉红",
-        "goodId": "456",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷3 测试商品 XS 白粉红",
-        "goodId": "789",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷1 测试商品 XS 白粉红",
-        "goodId": "123",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
-        "brandName": "丝芬"
-   },
-   {
-        "title": "丝纷2 测试商品 XS 白粉红",
-        "goodId": "456",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷3 测试商品 XS 白粉红",
-        "goodId": "789",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷1 测试商品 XS 白粉红",
-        "goodId": "123",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
-        "brandName": "丝芬"
-   },
-   {
-        "title": "丝纷2 测试商品 XS 白粉红",
-        "goodId": "456",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷3 测试商品 XS 白粉红",
-        "goodId": "789",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷1 测试商品 XS 白粉红",
-        "goodId": "123",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
-        "brandName": "丝芬"
-   },
-   {
-        "title": "丝纷2 测试商品 XS 白粉红",
-        "goodId": "456",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷3 测试商品 XS 白粉红",
-        "goodId": "789",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷1 测试商品 XS 白粉红",
-        "goodId": "123",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
-        "brandName": "丝芬"
-   },
-   {
-        "title": "丝纷2 测试商品 XS 白粉红",
-        "goodId": "456",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷3 测试商品 XS 白粉红",
-        "goodId": "789",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷1 测试商品 XS 白粉红",
-        "goodId": "123",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
-        "brandName": "丝芬"
-   },
-   {
-        "title": "丝纷2 测试商品 XS 白粉红",
-        "goodId": "456",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
-        "brandName": "丝芬"
-   },{
-        "title": "丝纷3 测试商品 XS 白粉红",
-        "goodId": "789",
-        "salesPrice": 599.00,
-        "standardPrice": 199.00,
-        "origin": "韩国",
-        "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
-        "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
-        "brandName": "丝芬"
-   }]
+    "page":{
+        "totalPage": 3,
+        "pageNo": 1,
+        "list":[{
+            "title": "丝纷1 测试商品 XS 白粉红",
+            "goodId": "123",
+            "salesPrice": 599.00,
+            "standardPrice": 199.00,
+            "origin": "韩国",
+            "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
+            "brandName": "丝芬"
+       },
+       {
+            "title": "丝纷2 测试商品 XS 白粉红",
+            "goodId": "456",
+            "salesPrice": 599.00,
+            "standardPrice": 199.00,
+            "origin": "韩国",
+            "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
+            "brandName": "丝芬"
+       },
+       {
+            "title": "丝纷3 测试商品 XS 白粉红",
+            "goodId": "789",
+            "salesPrice": 599.00,
+            "standardPrice": 199.00,
+            "origin": "韩国",
+            "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
+            "brandName": "丝芬"
+       },
+       {
+            "title": "丝纷1 测试商品 XS 白粉红",
+            "goodId": "123",
+            "salesPrice": 599.00,
+            "standardPrice": 199.00,
+            "origin": "韩国",
+            "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
+            "brandName": "丝芬"
+       },
+       {
+            "title": "丝纷2 测试商品 XS 白粉红",
+            "goodId": "456",
+            "salesPrice": 599.00,
+            "standardPrice": 199.00,
+            "origin": "韩国",
+            "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg",
+            "brandName": "丝芬"
+       },
+       {
+            "title": "丝纷3 测试商品 XS 白粉红",
+            "goodId": "789",
+            "salesPrice": 599.00,
+            "standardPrice": 199.00,
+            "origin": "韩国",
+            "originImageUrl": "http://m.tepin.hk/themesmobile/68ecshopcom_mobile/images/jack/Korea.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg",
+            "brandName": "丝芬"
+       }]
+   }
 }

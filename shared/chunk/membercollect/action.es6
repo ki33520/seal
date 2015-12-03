@@ -23,10 +23,7 @@ function receiveCollect(param,res){
 export default function fetchCollect(url,param){
     return (dispatch)=>{
         dispatch(requestCollect(param));
-        return apiRequest(url,param,{
-            type:"jsonp",
-            jsonpcallback:"jsoncallback"
-        }).then((res)=>{
+        return apiRequest(url,param).then((res)=>{
             dispatch(receiveCollect(param,res));
         });
     }

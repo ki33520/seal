@@ -30,7 +30,7 @@ function feedbackByForm(state={},action){
 	            feedbackChanging:false,
 	            feedbackChanged:action.res.isChanged,
 	            errMsg:action.res.errMsg
-	        },action.res.result);
+	        });
 	    case SHOW_ALERT:
 	    case HIDE_ALERT:
 	        return alertReducer(state,action)
