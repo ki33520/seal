@@ -202,6 +202,29 @@ let dom = {
         node = node.parentNode;
       }
       return false;
+    },
+    offsetTop(value){
+        let isCSS1Compat = (document.compatMode === 'CSS1Compat');
+        let supportPageOffset = window.pageYOffset !== undefined;
+        let scrollTop = supportPageOffset ? window.pageYOffset : 
+                        isCSS1Compat? document.documentElement.scrollTop:
+                        document.body.scrollTop;
+        let scrollLeft = supportPageOffset ? window.pageXOffset : 
+                        isCSS1Compat? document.documentElement.scrollLeft:
+                        document.body.scrollLeft;
+        if(value !== undefined){
+            window.scrollTo(scrollLeft,value);
+        }
+        return scrollTop;
+    },
+    registerPullDownEvent(callback) {
+        // const self = this;
+        this.bindEvent(window,'scroll',()=>{
+            var offsetTop = this.offsetTop();
+            if (document.documentElement.clientHeight + offsetTop >= document.documentElement.scrollHeight) {
+                callback();
+            }
+        });
     }
 }
 
