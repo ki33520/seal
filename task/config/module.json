@@ -116,9 +116,9 @@
         },
         "vendor": "react"
     },
-    "coupons":{
-        "html": ["coupons.html"],
-        "path": "./client/bundle/coupons/",
+    "coupon":{
+        "html": ["coupon.html"],
+        "path": "./client/bundle/coupon/",
         "compiler": {
             "js": "babel",
             "css": "stylus"

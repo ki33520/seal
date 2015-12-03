@@ -7,7 +7,7 @@ export class Tabs extends Component{
     constructor(props){
         super(props);
         this.state = {
-            activeIndex:props.activeIndex !== undefined?props.activeIndex:0,
+            activeIndex:props.activeIndex,
             prevIndex:null
         }
     }
@@ -41,8 +41,8 @@ export class Tabs extends Component{
                 active:i === this.state.activeIndex
             });
             return (
-                <span className={classes} key={"tab-nav-"+i} 
-                onClick={this.handleClick.bind(this,i)}>{title}</span>
+                <li className={classes} key={"tab-nav-"+i} 
+                onClick={this.handleClick.bind(this,i)}>{title}</li>
             );
         })
     }
@@ -60,8 +60,10 @@ export class Tabs extends Component{
         })
         return(
             <div className="tabs">
-            <div className="tabs-nav">{this.renderNav()}</div>
-            <div className={contentClasses}>{React.Children.map(this.props.children,this.renderContent.bind(this))}</div>
+                <div className="polyTabs">
+                    <ul>{this.renderNav()}</ul>
+                </div>
+                <div className={contentClasses}>{React.Children.map(this.props.children,this.renderContent.bind(this))}</div>
             </div>
         )
     }
@@ -69,6 +71,7 @@ export class Tabs extends Component{
 
 Tabs.defaultProps = {
     effect:"fade",
+    activeIndex:0,
     onSelect:function(){}
 }
 
