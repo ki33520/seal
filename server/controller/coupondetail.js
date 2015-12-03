@@ -1,8 +1,8 @@
 'use strict';
 
 var _ = require("lodash");
+var util = require("../lib/util");
 var bluebird = require("bluebird");
-var util = require("../lib/util.js");
 var CouponDetail = util.getSharedComponent("coupondetail");
 
 var couponDetail = function(req, res, next) {
@@ -11,19 +11,17 @@ var couponDetail = function(req, res, next) {
     //var couponNo = req.params.id;
 
     bluebird.props({
-        coupon: util.fetchAPI("coupon", {
-            memberId: 'user.memberId',
-            couponNo: 'couponNo'
-        }, true)
+        coupon: util.fetchAPI("coupondetail", {
+            productId: 'id'
+        },true)
     }).then(function(resp) {
      
-        if (resp.code === "success") {
-             
+        if (resp.coupon.code === "success") {
 
             var initialState = {
                 coupon: {}
             };
-            var markup = util.getMarkupByComponent(Coupon({
+            var markup = util.getMarkupByComponent(CouponDetail({
                 initialState: initialState
             }));
             res.render('coupondetail', {
