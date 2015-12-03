@@ -5,14 +5,14 @@
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="coupons-container">
-    <div id="coupons">{{ markup|safe }}</div>
+<div class="coupon-container">
+    <div id="coupon">{{ markup|safe }}</div>
 </div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
 <script src="/hmr/react.js"></script>
-<script src="/hmr/coupons.js"></script>
+<script src="/hmr/coupon.js"></script>
 <!-- endinject -->
 {% endblock %}
