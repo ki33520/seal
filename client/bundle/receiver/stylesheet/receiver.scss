@@ -1,0 +1,161 @@
+@import "../../asset/common.scss";
+@import "../../asset/router.scss";
+@import "../../../shared/common/header/header.scss";
+body {
+    background: #F1F1F1;
+}
+
+@mixin receiver-panel {
+    background: #FFF;
+    padding: .5rem .4rem;
+    margin: 0 0 .3rem 0;
+}
+
+.receiver-container {
+    padding-bottom: 2.5rem;
+}
+
+.receiver-content {
+    font-size: .7rem;
+    .receivers {
+        .receiver {
+            &:first-child {
+                margin-top: .3rem;
+            }
+            @include receiver-panel;
+            font-size:.65rem;
+            .receiver-header {
+                margin: 0;
+                font-size: .7rem;
+                line-height: 1.5rem;
+                display: flex;
+                &>label {
+                    flex: 1;
+                    padding: 0 0 0 .25rem;
+                }
+                &>b {
+                    padding: 0 0 0 .25rem;
+                    font-weight: 400;
+                    flex: 2;
+                }
+                &>em {
+                    font-style: normal;
+                    flex: 1;
+                }
+            }
+            .receiver-detail {
+                padding: .4rem 0;
+                border-bottom: .05rem solid #DDD;
+            }
+            .receiver-footer {
+                padding: .3rem 0 0 0;
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                &>a {
+                    padding-right: .25rem;
+                    &>.iconfont {
+                        margin-right: .15rem;
+                    }
+                }
+                &>a:last-child {
+                    padding: 0;
+                }
+            }
+        }
+    }
+    .add-receiver {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #F9F9F9;
+        z-index: 100;
+        border-top: .05rem solid #DBDBDB;
+        height: 2.5rem;
+        padding: 0 .4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &>a {
+            padding: .4rem .5rem;
+            border: .05rem solid $pink-color;
+            color: $pink-color;
+            border-radius: .25rem;
+            &>.iconfont {
+                font-size: .7rem;
+                margin-right: .2rem;
+            }
+        }
+    }
+}
+
+$gray-color:#999;
+
+.receiver-form-content {
+    font-size: .7rem;
+    .receiver-form {
+        .receiver-form-fieldset {
+            @include receiver-panel;
+            .receiver-form-row {
+                display: flex;
+                align-items: flex-start;
+                padding: .4rem 0;
+                line-height: 1.2rem;
+                .receiver-form-label {
+                    color: $gray-color;
+                    flex: 1;
+                }
+                .receiver-form-field {
+                    flex: 6.5;
+                    &>input[type="text"],
+                    &>textarea {
+                        border: 0 none;
+                        margin: 0;
+                        line-height: 1.1rem;
+                        padding: 0 .5rem;
+                    }
+                }
+                &.receiver-form-textarea-row {
+                    .receiver-form-field {
+                        flex: 3.5;
+                        textarea {
+                            width: 90%;
+                            min-height: 2rem;
+                            line-height: 1.1rem;
+                            padding: .1rem .2rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.receiver-form-field {
+    line-height: 0;
+    .dropdown {
+        button {
+            padding: .1rem 0.5rem;
+            border: 0 none;
+            width: 60%;
+        }
+        .dropdown-content {
+            .selected-items {
+                li {
+                    padding: 0.4rem 1rem;
+                    color: #AAA;
+                    .selected-item {
+                        text-align: center;
+                    }
+                    &.checked {
+                        border-top: .05rem solid #DDD;
+                        border-bottom: .05rem solid #DDD;
+                        color: #333;
+                        background: #FFF;
+                    }
+                }
+            }
+        }
+    }
+}
