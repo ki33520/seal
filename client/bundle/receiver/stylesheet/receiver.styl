@@ -1,11 +1,12 @@
-@import "../../asset/common.scss";
-@import "../../asset/router.scss";
-@import "../../../shared/common/header/header.scss";
+@import "../../common/common";
+@import "../../common/iconfont.styl"
+@import "../../common/header.styl"
+@import "../../common/router";
 body {
     background: #F1F1F1;
 }
 
-@mixin receiver-panel {
+.receiver-panel {
     background: #FFF;
     padding: .5rem .4rem;
     margin: 0 0 .3rem 0;
@@ -22,7 +23,7 @@ body {
             &:first-child {
                 margin-top: .3rem;
             }
-            @include receiver-panel;
+            @extend .receiver-panel;
             font-size:.65rem;
             .receiver-header {
                 margin: 0;
@@ -90,20 +91,19 @@ body {
     }
 }
 
-$gray-color:#999;
 
 .receiver-form-content {
     font-size: .7rem;
     .receiver-form {
         .receiver-form-fieldset {
-            @include receiver-panel;
+            @extend .receiver-panel;
             .receiver-form-row {
                 display: flex;
                 align-items: flex-start;
                 padding: .4rem 0;
                 line-height: 1.2rem;
                 .receiver-form-label {
-                    color: $gray-color;
+                    color: #999;
                     flex: 1;
                 }
                 .receiver-form-field {

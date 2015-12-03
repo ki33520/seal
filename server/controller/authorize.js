@@ -1,19 +1,20 @@
 'use strict';
-var util = require("../../shared/lib/util.es6");
+var util = require("../lib/util");
+var sharedUtil = require("../../shared/lib/util.es6");
 var _ = require("lodash");
+var config = require("../lib/config");
 
 var loginGateway = function(req, res, next) {
-    var config = req.app.locals.config;
     var code = req.query.code;
     var returnUrl = req.query.returnUrl;
-    util.apiRequest(config.api.loginTokenByCode.url, {
+    util.fetchAPI("loginTokenByCode", {
         accessCode: code
-    }).then(function(resp) {
+    },true).then(function(resp) {
         if (resp.code === "success") {
             if (returnUrl === null) {
                 location.replace("/usercenter");
             } else {
-                returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
+                returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
                 req.session.user = resp.object;
                 res.redirect(returnUrl);
             }
@@ -26,12 +27,11 @@ var loginGateway = function(req, res, next) {
 }
 
 var logoutGateway = function(req, res, next) {
-    var config = req.app.locals.config;
     var returnUrl = req.query.returnUrl;
     if (returnUrl === null) {
         location.replace("/usercenter");
     } else {
-        returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
+        returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
         req.session.user = undefined;
         res.redirect(returnUrl);
     }

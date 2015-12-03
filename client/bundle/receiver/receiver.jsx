@@ -1,5 +1,5 @@
 'use strict'
-import Receiver from "../../shared/receiver/app.jsx";
+import Receiver from "../../../shared/chunk/receiver/app.jsx";
 import React from "react";
 
 function bootstrap(){

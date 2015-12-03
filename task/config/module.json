@@ -124,5 +124,14 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "receiver":{
+        "html": ["receiver.html"],
+        "path": "./client/bundle/receiver/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }

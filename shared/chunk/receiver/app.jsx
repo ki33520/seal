@@ -2,7 +2,7 @@
 import React from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
-import createStoreWithMiddleware from "../lib/redux-helper.es6";
+import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Receiver from "./component.jsx";
 
 function selector(state){
@@ -43,7 +43,7 @@ class ReceiverApp extends React.Component{
         });
         return (
             <Provider store={store}>
-            {()=><ReceiverConnected />}
+            <ReceiverConnected />
             </Provider>
         )
     }
