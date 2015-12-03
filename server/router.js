@@ -39,7 +39,7 @@ router.get("/receiver",mainController.requireAuthorize,require("./controller/rec
 router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 
-router.get("/coupons", require("./controller/coupons"));
+router.get("/coupon", require("./controller/coupon"));
 
 router.get("/cart", require("./controller/cart").cart);
 router.all("/mock/api/:api",require("./mock/api").all);
