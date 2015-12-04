@@ -4,11 +4,11 @@ import React,{Component} from "react";
 
 class Node extends Component{
     render(){
-        const {collect} = this.props;
+        const {list} = this.props;
         return (
             <ul className="collect-list">
                 {
-                    collect.list.map((child,key) => {
+                    list.map((child,key) => {
                         return (
                             <li id={child.goodId} key={key}>
                                 <div className="col col-left">

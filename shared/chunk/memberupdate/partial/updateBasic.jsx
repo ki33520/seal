@@ -14,10 +14,12 @@ class UpdateBasic extends Component{
         super(props);
         const {birthdy} = props.basicByForm;
         const arr = birthdy.split('-');
+        var max = (new Date(arr[0],arr[1], 0)).getDate();  
         this.state = {
             year: arr[0],
             month: arr[1],
-            day: arr[2]
+            day: arr[2],
+            max: max
         }
     }
     handleFieldChange(fieldName,e){
@@ -52,16 +54,18 @@ class UpdateBasic extends Component{
         var object = {};
         const name = e.target.name;
         object[name] = e.target.value;
-        this.setState(object);
 
         var obj = Object.assign({},this.state,object);
+        object.max = (new Date(obj.year,obj.month, 0)).getDate();
+        this.setState(object);
         const birthdy = obj.year+"-"+obj.month+'-'+obj.day;
         dispatch(changeField(fieldName,birthdy));
     }
     render(){
         const {basicByForm} = this.props;
         const {nickname,gender,birthdy,alertContent,alertActive} = basicByForm;
-        const {year,month,day} = this.state;
+        const {year,month,day,max} = this.state;
+        console.log(this.state)
         var optionYear = [],
             optionMonth = [],
             optionDay = [];
@@ -78,7 +82,7 @@ class UpdateBasic extends Component{
                 <option value={value} key={i}>{value}</option>
             ));
         };
-        for(let i=1;i<31;i++){
+        for(let i=1;i<=max;i++){
             let value = i<10?'0'+i:i;
             optionDay.push((
                 <option value={value} key={i}>{value}</option>

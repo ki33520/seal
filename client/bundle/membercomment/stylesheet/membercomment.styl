@@ -108,52 +108,54 @@ body{
 
 }
 .tabs {
-    .tabs-nav {
-		height: 1.16rem;
-        background: #FFF;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        &>span {
-            flex: 1;
-            display: block;
-            text-align: center;
-            line-height: 1.16rem;
-            border-left: .05rem solid #DEDEDE;
-            border-bottom: .1rem solid #DEDEDE;
-            &.active {
-                border-bottom: .1rem solid #811da1;
-                color: #811da1;
-            }
-        }
-    }
-    .tabs-content {
-        position: relative;
-        .tabs-item {
-            position: absolute;
-            z-index: 100;
-            width: 100%;
-            transform: translateX(-100%);
-            opacity: 0;
-            visibility: hidden;
-            &.active {
-                opacity: 1;
-                transform: translateX(0);
-                visibility: visible;
-            }
-            &.active ~ * {
-                transform: translateX(100%);
-            }
-        }
-        &.tabs-content-fade {
-            .tabs-item {
-                transition: opacity .2s linear 0s;
-            }
-        }
-        &.tabs-content-slide {
-            .tabs-item {
-                transition: transform .2s linear 0s;
-            }
-        }
-    }
+	.polyTabs {
+		ul{
+			display: flex;
+			height: 1.16rem;
+			background: #FFF;
+			justify-content: center;
+			align-items: center;
+			li {
+				flex: 1;
+				display: block;
+				text-align: center;
+				line-height: 1.16rem;
+				border-left: .05rem solid #DEDEDE;
+				border-bottom: .1rem solid #DEDEDE;
+				&.active {
+					border-bottom: .1rem solid #811da1;
+					color: #811da1;
+				}
+			}
+		}
+	}
+	.tabs-content {
+		position: relative;
+		.tabs-item {
+			position: absolute;
+			z-index: 100;
+			width: 100%;
+			transform: translateX(-100%);
+			opacity: 0;
+			visibility: hidden;
+			&.active {
+				opacity: 1;
+				transform: translateX(0);
+				visibility: visible;
+			}
+			&.active ~ * {
+				transform: translateX(100%);
+			}
+		}
+		&.tabs-content-fade {
+			.tabs-item {
+				transition: opacity .2s linear 0s;
+			}
+		}
+		&.tabs-content-slide {
+			.tabs-item {
+				transition: transform .2s linear 0s;
+			}
+		}
+	}
 }

@@ -7,11 +7,12 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import MembercollectList from "./component.jsx";
 
 function selector(state){
-    const {memberCollectByUser,isFetched,isFetching} = state;
+    const {collect,isFetched,isFetching,pageSize} = state.memberCollectByUser;
     return {
-        memberCollectByUser,
+        collect,
         isFetched,
-        isFetching
+        isFetching,
+        pageSize
     };
 }
 
@@ -24,11 +25,12 @@ function configureStore(initialState){
 
 class MembercollectApp extends Component{
     render(){
-        const {collect,isFetched} = this.props.initialState;
+        const {collect,isFetched,pageSize} = this.props.initialState;
         const initialState = {
             memberCollectByUser:{
                 isFetching:false,
                 isFetched,
+                pageSize,
                 collect
             }
         };

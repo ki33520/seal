@@ -7,22 +7,26 @@ var CollectApp = util.getSharedComponent("membercollect");
 
 var collectlist = function(req, res, next) {
     var user = req.session.user;
-    var pageIndex = req.query.pageIndex !== undefined ? req.query.pageIndex : 1;
+    var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
+    var pageSize = req.query.pageSize !== undefined ? Number(req.query.pageSize) : 5;
     bluebird.props({
         memberCollectByUser: util.fetchAPI("memberCollectByUser", {
             memberId: "",
             pageIndex: pageIndex,
-            pageSize: 10
+            pageSize: pageSize
         },true)
     }).then(function(ret) {
         if (ret.memberCollectByUser.code === "success") {
+            var collect = ret.memberCollectByUser.page;
+            collect.list = _.slice(collect.list,0,pageIndex*pageSize);
+            collect.pageIndex = pageIndex;
             if (req.xhr === true) {
-                res.json(ret.memberCollectByUser.page);
+                res.json(collect);
             } else {
-                var collect = ret.memberCollectByUser.page;
                 var initialState = {
                     isFetched: true,
-                    collect: collect
+                    collect: collect,
+                    pageSize
                 };
                 
                 var markup = util.getMarkupByComponent(CollectApp({initialState:initialState}));

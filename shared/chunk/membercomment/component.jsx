@@ -46,9 +46,9 @@ class CommentList extends Component{
             for(let i=0;i<5;i++){
                 let star;
                 if(i<child.stars){
-                    star = (<div className="iconfont icon-starA"></div>);
+                    star = (<div key={i} className="iconfont icon-starA"></div>);
                 }else{
-                    star = (<div className="iconfont icon-starB"></div>);
+                    star = (<div key={i} className="iconfont icon-starB"></div>);
                 }
                 stars.push(star)
             };
@@ -79,9 +79,9 @@ class CommentList extends Component{
             for(let i=0;i<5;i++){
                 let star;
                 if(i<child.stars){
-                    star = (<div className="iconfont icon-starA"></div>);
+                    star = (<div key={i} className="iconfont icon-starA"></div>);
                 }else{
-                    star = (<div className="iconfont icon-starB"></div>);
+                    star = (<div key={i} className="iconfont icon-starB"></div>);
                 }
                 stars.push(star)
             };

@@ -17,7 +17,7 @@ import {alert} from "../common/action.es6";
 class MembercollectList extends Component{
     constructor(props){
         super(props);
-        const {collect,isFetching,isFetched} = props.memberCollectByUser;
+        const {collect,isFetching,isFetched} = props;
         this.state = {
             collect,
             isFetching,
@@ -31,11 +31,12 @@ class MembercollectList extends Component{
     }
     beginRefresh(){
         const {dispatch} = this.props;
-        const {collect,isFetching} = this.props.memberCollectByUser;
-        var pageCount = collect.totalPage;
-        var pageIndex = collect.pageNo;
+        const {collect,isFetching,pageSize} = this.props;
+        var pageCount = Math.ceil(collect.totalPage/pageSize);
+        var pageIndex = collect.pageIndex;
         var nextPage = pageIndex + 1;
-        if(pageCount < pageIndex){
+        console.log(pageCount,nextPage);
+        if(pageCount < nextPage){
             // this.setState({isFetching:false});
             return false;
         }
@@ -47,14 +48,15 @@ class MembercollectList extends Component{
         }))
     }
     render(){
-        const {memberCollectByUser} = this.props;
+        //console.log(this.props)
+        const {collect} = this.props;
         var tpl = (
             <div className="collect-content">
                 <Header>
                     <span className="title">我的收藏</span>
                     <span className="btn-right">+</span>
                 </Header>
-                <Node {...memberCollectByUser} />
+                <Node {...collect} />
                 <GoTop />
                 <Refresher />
             </div>

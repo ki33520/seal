@@ -10,10 +10,12 @@ function memberCollectByUser(state={},action){
     switch(action.type){
         case REQUEST_COLLECT:
             return Object.assign({},state,{
+                isFetched:false,
                 isFetching:true
             })
         case RECEIVE_COLLECT:
             return Object.assign({},state,{
+                isFetched:true,
                 isFetching:false,
                 collect:action.res
             })
