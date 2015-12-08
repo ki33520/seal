@@ -65,7 +65,7 @@ class UpdateBasic extends Component{
         const {basicByForm} = this.props;
         const {nickname,gender,birthdy,alertContent,alertActive} = basicByForm;
         const {year,month,day,max} = this.state;
-        console.log(this.state)
+        
         var optionYear = [],
             optionMonth = [],
             optionDay = [];
