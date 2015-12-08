@@ -3,7 +3,7 @@
 import React,{Component} from "react";
 import _ from "lodash";
 import Header from "../../common/header.jsx";
-import CascadeArea from "../../common/cascadearea/cascadearea.jsx";
+import CascadeArea from "../../common/cascadearea.jsx";
 
 import {fetchProvinces,fetchCities,fetchDistricts,saveReceiver,changeField} from "../action.es6";
 import {alert} from "../../common/action.es6";

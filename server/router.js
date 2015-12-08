@@ -20,6 +20,11 @@ router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
+router.get("/cart", require("./controller/cart").cart);
+router.get("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
+router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
+router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
+router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
@@ -43,7 +48,6 @@ router.get("/coupon", require("./controller/coupon"));
 router.get("/coupondetail", require("./controller/coupondetail"));
 
 
-router.get("/cart", require("./controller/cart").cart);
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", require("./controller/main.js").notFoundHandler);
 router.use(require("./controller/main.js").errorHandler);

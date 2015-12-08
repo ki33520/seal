@@ -35,6 +35,15 @@
         },
         "vendor": "react"
     },
+    "confirmorder": {
+        "html": ["confirmorder.html"],
+        "path": "./client/bundle/confirmorder/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
     "goodlist": {
         "html": ["goodlist.html"],
         "path": "./client/bundle/goodlist/",
@@ -83,6 +92,24 @@
     "membercenter":{
         "html": ["membercenter.html"],
         "path": "./client/bundle/membercenter/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "orderlist":{
+        "html": ["orderlist.html"],
+        "path": "./client/bundle/orderlist/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "orderdetail":{
+        "html": ["orderdetail.html"],
+        "path": "./client/bundle/orderdetail/",
         "compiler": {
             "js": "babel",
             "css": "stylus"

@@ -1,7 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import SelectedSlide from "../../../component/selected/selectedslide.jsx";
+import SelectedSlide from "../../component/selected/selectedslide.jsx";
 
 class CascadeArea extends Component{
     componentDidMount(){

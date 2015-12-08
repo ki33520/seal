@@ -32,7 +32,7 @@ var util = {
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param)
         } else {
-            console.log('apiName',apiName)
+            // console.log('apiName',apiName)
             return sharedUtil.apiRequest("http://:5000/mock/api/" + apiName)
         }
     }

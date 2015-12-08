@@ -1,0 +1,18 @@
+{% extends "./layout.html" %}
+{% block title %}Cart{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div class="order-list-container">
+    <div id="order-list">{{ markup|safe }}</div>
+</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/hmr/react.js"></script>
+<script src="/hmr/orderlist.js"></script>
+<!-- endinject -->
+{% endblock %}

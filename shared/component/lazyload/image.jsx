@@ -1,7 +1,7 @@
 'use strict'
 
-import React,{Component} from "react/addons";
-const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+import React,{Component} from "react";
+import ReactCSSTransitionGroup from "react/lib/ReactCSSTransitionGroup"
 
 const placeholder = "/client/asset/image/blank.gif";
 
