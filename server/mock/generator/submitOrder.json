@@ -1,0 +1,17 @@
+{
+    "code": "success",
+    "msg": null,
+    "time": 1446113589867,
+    "orderNo": null,
+    "paymentStatus": null,
+    "orderPayTotal": null,
+    "payObject": {
+        "appId": "tepin",
+        "t": 1446113591,
+        "h": "6a3fc4cc40469af9c7fdc4f7696ab1ab",
+        "message": "{\"message\":\"{\\\"address\\\":\\\"湖南长沙市芙蓉区1111111111111\\\",\\\"orderNo\\\":\\\"9930700000000524\\\",\\\"appName\\\":\\\"特品汇\\\",\\\"mobile\\\":\\\"15574131978\\\",\\\"orderStatusURL\\\":\\\"\\\",\\\"userName\\\":\\\"王小明\\\",\\\"homeURL\\\":\\\"http://tepin.youayun.cn:9998/\\\",\\\"createTime\\\":\\\"2015-10-29 18:13:10\\\",\\\"totalFee\\\":0.02,\\\"clientIp\\\":\\\"\\\",\\\"endTime\\\":\\\"2015-10-29 20:13:10\\\",\\\"orderDtailURL\\\":\\\"http://tepin.youayun.cn:9998//member/transaction/orderDetail.ya?orderNo=fc6804de50afd2b10150b3163cbd006e\\\",\\\"productList\\\":[{\\\"mallName\\\":\\\"川西坝子\\\",\\\"brandsName\\\":\\\"川西坝子\\\",\\\"mallId\\\":\\\"fc6804de504c954c015050b9f0d0002f\\\",\\\"shopName\\\":\\\"川西坝子\\\",\\\"goodsColorAndSize\\\":\\\"镜片大小:蓝\\\",\\\"brandsId\\\":\\\"fc6804de506b41b601506e7daa6c0022\\\",\\\"shopId\\\":\\\"fc6804de506b41b601506e7be939000e\\\",\\\"goodsName\\\":\\\"北京火锅\\\"}]}\"}",
+        "channel": "WEB",
+        "openId": "2d2ee88f9b314dcd9b1bfcdb42c97f0e"
+    },
+    "payurl": "http://cashier.e9448.com/cashier/v1/Cashier"
+}

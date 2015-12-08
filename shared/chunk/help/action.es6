@@ -32,7 +32,6 @@ function finishChangeFeedback(param,res){
 export function changeFeedback(url,param){
     return (dispatch)=>{
         dispatch(startChangeFeedback(param));
-        console.log(param)
         apiRequest(url,param,{method:"POST"}).then((res)=>{
             dispatch(finishChangeFeedback(param,res));
         })

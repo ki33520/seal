@@ -1,0 +1,273 @@
+@import "../../common/common";
+@import "../../common/router";
+@import "../../common/header";
+@import "../../receiver/stylesheet/receiver";
+body {
+    background: #F1F1F1;
+}
+
+.text-overflow{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+$gray-color = #555
+.confirm-panel {
+    background: #FFF;
+    padding: .5rem .4rem;
+    margin: 0 0 .5rem 0;
+}
+
+.confirm-title {
+    display: flex;
+    align-items: center;
+    padding: .4rem .4rem;
+    &>div:first-child {
+        flex: 10;
+    }
+    &>div:last-child {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+.confirm-checkbox {
+    display: flex;
+    .check-label {
+        padding-left: .25rem;
+    }
+}
+
+.confirm-order-content {
+    font-size: .7rem;
+    padding-bottom: 2.5rem;
+    .confirm-receiver {
+        background: #FFF;
+        &>a {
+            @extend .confirm-title;
+            .confirm-receiver-selected {
+                p {
+                    margin: 0;
+                    line-height: 1.25rem;
+                }
+            }
+        }
+    }
+    .confirm-delivery-time {
+        background: #FFF;
+        margin: .5rem 0;
+        .selected {
+            &>button {
+                .dropdown-status:before {
+                    content: "收货时间";
+                    float: left;
+                    color: #AAA;
+                    padding-right: .25rem;
+                    &>.status {
+                        @extend .text-overflow;
+                    }
+                }
+                border:0 none;
+                .dropdown-status {
+                    width: 90%;
+                }
+                .iconfont {
+                    width: 10%;
+                }
+            }
+            &> .dropdown-content.active {
+                margin: 0;
+                border: 0 none;
+                border-top: .05rem solid #DDD;
+            }
+            .selected-items li .iconfont {
+                float: left;
+                width: 10%;
+            }
+            .selected-items li .selected-item {
+                float: right;
+                width: 90%;
+                padding-left: .25rem;
+                box-sizing: border-box;
+            }
+            .selected-items li.checked .iconfont {
+                color: $pink-color;
+            }
+        }
+    }
+}
+
+@import "../../common/ordergoods";
+.order-total {
+    background: #FFF;
+    padding: .5rem .4rem;
+    margin: 0 0 .5rem 0;
+    &>div {
+        overflow: hidden;
+        clear: both;
+        padding: .25rem 0;
+        &>span {
+            color: #AAA;
+            display: block;
+            float: left;
+        }
+        &>b {
+            display: block;
+            float: right;
+            font-weight: 400;
+        }
+    }
+}
+
+.order-toolbar {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #FFF;
+    z-index: 100;
+    border-top: .05rem solid #DBDBDB;
+    height: 2.5rem;
+    padding: 0 .4rem;
+    &>a {
+        width: 25%;
+        margin: .3rem 0 .3rem;
+        padding: .1rem .5rem;
+        line-height: 1.6rem;
+        font-size: .7rem;
+        text-align: center;
+        height: 1.6rem;
+        display: block;
+        color: #FFF;
+        background: $pink-color;
+        border-radius: .15rem;
+    }
+    .order-sumprice {
+        width: 75%;
+        color: #AAA;
+        &>b {
+            color: #333;
+            padding-left: .25rem;
+            font-weight: 400;
+        }
+    }
+}
+
+.confirm-coupon {
+    @extend .confirm-panel;
+    @extend .confirm-title;
+    .confirm-coupon-status {
+        &>span {
+            color: #AAA;
+        }
+        &>b {
+            padding-left: .25rem;
+            font-weight: 400;
+        }
+    }
+}
+
+.coupon-row {
+    background: url(/client/asset/image/youa_pink.png) no-repeat 0 0;
+    box-shadow: .15rem .15rem .15rem #EBEBEB;
+    background-size: 100% 100%;
+    margin-bottom: .75rem;
+    display: flex;
+    align-items: center;
+    min-height: 6rem;
+    .coupon-brief {
+        flex: 1;
+        text-align: center;
+        .coupon-price {
+            color: $pink-color;
+            font-size: 1.2rem;
+            letter-spacing: -0.1rem;
+        }
+        .coupon-term {
+            font-size: .6rem;
+            color: #666;
+            padding: .15rem .2rem;
+            @extend .text-overflow;
+        }
+    }
+    .coupon-detail {
+        flex: 2;
+        font-size: .6rem;
+        &>div {
+            margin: 0 .75rem;
+        }
+        .coupon-kind {
+            font-size: .7rem;
+            line-height: 1.2rem;
+        }
+        .coupon-date {
+            line-height: 1rem;
+        }
+        .coupon-explain {
+            border-top: .05rem solid #CCC;
+            padding: .15rem 0 0 0;
+            color: #999;
+        }
+    }
+}
+
+.confirm-balance-ticket {
+    @extend .confirm-panel;
+    .confirm-ticket,
+    .confirm-balance {
+        padding: .25rem 0;
+        @extend .confirm-checkbox;
+        .check-label {
+            label {
+                padding: 0 .2rem;
+                &>b {
+                    padding: 0 .15rem;
+                }
+            }
+        }
+    }
+}
+
+.confirm-invoice {
+    @extend .confirm-panel;
+    .invoice-toolbar {
+        @extend .confirm-checkbox;
+        padding-bottom: .25rem;
+    }
+    .invoice-form {
+        display: none;
+        &.active {
+            display: block;
+        }
+        .invoice-form-row {
+            display: flex;
+            padding: .25rem 0;
+            border-top: .05rem solid #DDD;
+            .invoice-form-label {
+                flex: 1;
+                padding-top: .25rem;
+            }
+            .invoice-form-input {
+                flex: 3;
+                &>div {
+                    @extend .confirm-checkbox;
+                    align-items: center;
+                    padding: .25rem 0;
+                }
+                &>div:last-child {
+                    input {
+                        border: 0 none;
+                        background: #DDD;
+                        padding: .2rem .2rem;
+                        margin: 0;
+                        margin-left: .5rem;
+                        line-height: .85rem;
+                    }
+                }
+            }
+        }
+    }
+}
