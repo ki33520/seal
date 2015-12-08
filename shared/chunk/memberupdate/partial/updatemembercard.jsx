@@ -10,26 +10,80 @@ import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 class UpdateMemberCard extends Component{
-    handleFieldChange(fieldName,e){
+    handleFieldChange(e){
         e && e.preventDefault();
         const {dispatch} = this.props;
+        const fieldName = e.target.name;
         dispatch(changeField(fieldName,e.target.value));
+    }
+    handleFieldBlur(e){
+        e && e.preventDefault();
+        const {dispatch,membercardByForm} = this.props;
+        const fieldName = e.target.name;
+        let obj = {};
+        obj[fieldName] = membercardByForm[fieldName]
+        this.formVerify(obj,e);
+    }
+    formVerify(field,e){
+        e && e.preventDefault();
+        const {dispatch,membercardByForm} = this.props;
+        const rules = {
+            cardNo: {
+                reg: /^[0-9]{10}$/,
+                msg: "会员卡卡号"
+            },
+            mobileNumber: {
+                reg: /^(1(([35][0-9])|(47)|[8][0123456789]))\d{8}$/,
+                msg: "手机号码"
+            },
+            verifyCode: {
+                reg: /^[0-9]{6}$/,
+                msg: "验证码"
+            }
+        };
+        if(typeof field === 'object'){
+            for(let i in field){
+                let rule = rules[i];
+                if(rule){
+                    if(!rule.reg.test(field[i]) || !field[i]){
+                        dispatch(alert("请正确填写"+rule.msg,1000));
+                        return false;
+                    };
+                }else{
+                    field[i]();
+                }
+            }
+        }
     }
     handleBindMembercard(e){
         e && e.preventDefault();
         const {dispatch,membercardByForm} = this.props;
         const {cardNo,mobileNumber,verifyCode} = membercardByForm;
-        dispatch(bindMembercard("/updatemembercard",{
-            cardNo,mobileNumber,verifyCode
-        }));
+
+        this.formVerify({
+            cardNo,mobileNumber,verifyCode,
+            callback: function(){
+                dispatch(bindMembercard("/updatemembercard",{
+                    cardNo,mobileNumber,verifyCode
+                }));
+            }
+        },e);
+        
     }
     handleSendVerifyCode(e){
         e && e.preventDefault();
         const {dispatch,membercardByForm} = this.props;
-        const {mobileNumber} = membercardByForm;
-        dispatch(sendVerifyCode("/updatemembercardverifycode",{
-            mobileNumber
-        }));
+        const {cardNo,mobileNumber} = membercardByForm;
+
+        this.formVerify({
+            cardNo,
+            mobileNumber,
+            callback: function(){
+                dispatch(sendVerifyCode("/updatemembercardverifycode",{
+                    cardNo,mobileNumber
+                }));
+            }
+        },e);
     }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props
@@ -62,16 +116,16 @@ class UpdateMemberCard extends Component{
                 <ul className="setup-form">
                     <li>
                         <input type="text" placeholder="请输入友阿会员卡卡号" name="cardNo" value={cardNo} 
-                        onChange={this.handleFieldChange.bind(this,"cardNo")}/>
+                        onChange={this.handleFieldChange.bind(this)}/>
                     </li>
                     <li>
                         <input type="text" placeholder="请输入会员卡绑定手机" name="mobileNumber" value={mobileNumber} 
-                        onChange={this.handleFieldChange.bind(this,"mobileNumber")}/>
+                        onChange={this.handleFieldChange.bind(this,)}/>
                     </li>
                     <li>
                         <div className="inner">
                             <input type="text" placeholder="请输入验证码" name="verifyCode" value={verifyCode} 
-                            onChange={this.handleFieldChange.bind(this,"verifyCode")}/>
+                            onChange={this.handleFieldChange.bind(this)}/>
                             <a href="javascript:void(null)" onClick={this.handleSendVerifyCode.bind(this)}>获取验证码</a>
                         </div>
                     </li>
