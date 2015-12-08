@@ -68,7 +68,9 @@ class ConfirmOrderRouter extends Component{
         }
         const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
-            <TransitionGroup component="div" transitionName={transitionName} transitionLeave={false}>
+            <TransitionGroup component="div" transitionName={transitionName} 
+            transitionLeave={false} 
+            transitionEnterTimeout={500} transitionLeaveTimeout={300}>
             {currentView}
             </TransitionGroup>
         );

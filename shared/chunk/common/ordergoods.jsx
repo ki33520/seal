@@ -8,8 +8,9 @@ class OrderGoods extends Component{
     renderGood(good,cartIndex,goodIndex){
         var props = [];
         for(let propName in good.props){
+            const propKey = "prop-" + propName
             props.push((
-                <span>{propName}:<b>{good.props[propName]}</b></span>
+                <span key={propKey}>{propName}:<b>{good.props[propName]}</b></span>
             ))
         }
         const goodKey = "good-" + goodIndex;
