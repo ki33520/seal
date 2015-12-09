@@ -2,6 +2,9 @@
     "goodById": {
         "uri": "/WAP/product/detail.ya"
     },
+    "cartByUser":{
+    	"uri":"/cart/v1/findCarts"
+    },
     "loginTokenByCode": {
         "uri": "/security/WAP/newLoginForWAP.bdo"
     }

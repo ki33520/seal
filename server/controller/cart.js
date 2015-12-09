@@ -5,24 +5,30 @@ var util = require("../lib/util");
 var bluebird = require("bluebird");
 var CartApp = util.getSharedComponent("cart");
 
+ 
 var cart = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
+    var memberId = '90a19c2d49184fefa7421c5d7eacf551';
 
     util.fetchAPI("cartByUser",{
-        memberId:"001"
-    },true).then(function(ret){
-        if(ret.code === "success"){
-            var cart = ret.object;
+        memberId:memberId
+    },true).then(function(resp){
+        if(resp.returnCode === 0){
             var initialState = {
-                cart: cart,
+                isFetched: true,
+                carts: resp.object
             };
-            var markup = util.getMarkupByComponent(CartApp({initialState:initialState}));
+
+            var markup = util.getMarkupByComponent(CartApp({
+                initialState: initialState
+            }));
 
             res.render('cart', {
                 markup: markup,
                 initialState: initialState
-            })
+            });
+            
         }else{
             next(new Error(ret.msg));
         }

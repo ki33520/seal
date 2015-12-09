@@ -7,9 +7,10 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Cart from "./component.jsx";
 
 function selector(state){
-    const {cartByUser} = state;
+    const {carts,isFetched} = state.cartByUser;
     return {
-        cartByUser
+        isFetched,
+        carts
     };
 }
 
@@ -22,10 +23,11 @@ function configureStore(initialState){
 
 class CartApp extends Component{
     render(){
-        const {cart} = this.props.initialState;
+        const {carts,isFetched} = this.props.initialState;
         const initialState = {
             cartByUser:{
-                cart
+                carts,
+                isFetched
             }
         };
         var store = configureStore(initialState);
