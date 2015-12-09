@@ -1,4 +1,6 @@
-$pink-color = #e30083;
+@import "./common/common";
+@import "./common/util";
+@import "./common/variable";
 .slider {
     height: 100%;
     width: 100%;
@@ -7,8 +9,8 @@ $pink-color = #e30083;
     line-height:0;
     .control-nav {
         position: absolute;
-        height: .5rem;
-        bottom: .5rem;
+        height: px2rem(10);
+        bottom: px2rem(10);
         left: 0;
         right: 0;
         z-index: 12;
@@ -17,12 +19,12 @@ $pink-color = #e30083;
         font-size: 0;
         &>span {
             display: inline-block;
-            width: .5rem;
-            height: .5rem;
+            width: px2rem(10);
+            height: px2rem(10);
             background: #333;
             opacity: .5;
             border-radius: 100%;
-            margin: 0 .25rem;
+            margin: 0 px2rem(5);
             &.active {
                 background: $pink-color;
             }
@@ -41,11 +43,11 @@ $pink-color = #e30083;
             display: flex;
             justify-content: center;
             &>span {
-                width: 1rem;
-                height: 1rem;
+                width: px2rem(20);
+                height: px2rem(20);
                 display: block;
                 align-self: center;
-                font-size: 1.2rem;
+                font-size: px2rem(20);
             }
         }
         .direction-nav-prev {

@@ -1,18 +1,25 @@
-@import "../core/masklayer.styl";
+@import "./common/common";
+@import "./common/util";
+@import "./masklayer";
+
 .popup{
     position: absolute;
     z-index: 1000;
     height: 100%;
-    background: #555;
+    background: #FBFBFB;
+    box-shadow:0 px2rem(1) px2rem(8) rgba(0,0,0,.5)
 }
 
 .popup-left {
     top: 0;
     width: 75%;
     left: -75%;
+    opacity:0.5;
+    transition:all .2s ease-in-out;
     &.active {
-        transition:translate .5s ease-in;
-        transform: translate3D(100%, 0, 0);
+        transition:all .2s ease-in-out;
+        left:0;
+        opacity:1;
     }
 }
 
@@ -21,22 +28,23 @@
     width: 80%;
     right: -80%;
     opacity:0.5;
-    // transform: translate3D(0, 0, 0);
     transition:all .2s ease-in-out;
     &.active {
         transition:all .2s ease-in-out;
         opacity:1;
         right:0;
-        // transform: translate3D(-100%, 0, 0);
     }
 }
 
 .popup-bottom {
-    bottom: 0;
+    bottom: -35%;
     width: 100%;
     height: 35%;
+    transition:all .2s ease-in-out;
+    opacity:0.5;
     &.active {
-        transition:translate .5s ease-in;
-        transform: translate3D(0, -100%, 0);
+        transition:all .2s ease-in-out;
+        opacity:1;
+        bottom:0;
     }
 }

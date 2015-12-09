@@ -1,3 +1,5 @@
+@import "./common/common";
+@import "./common/util";
 .tabs {
     .tabs-nav {
         background: #FFF;
@@ -8,11 +10,11 @@
             flex: 1;
             display: block;
             text-align: center;
-            line-height: 1.75rem;
-            border-left: .05rem solid #DEDEDE;
-            border-bottom: .1rem solid #DEDEDE;
+            line-height: px2rem(35);
+            border-left: px2rem(1) solid #DEDEDE;
+            border-bottom: px2rem(2) solid #DEDEDE;
             &.active {
-                border-bottom: .1rem solid $pink-color;
+                border-bottom: px2rem(2) solid $pink-color;
                 color: $pink-color;
             }
         }

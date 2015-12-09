@@ -1,11 +1,13 @@
+@import "./common/common";
+@import "./common/util";
 .back-to-top {
     position: fixed;
-    bottom: 2rem;
-    right: .5rem;
+    bottom: px2rem(40);
+    right: px2rem(10);
     background: rgba(0, 0, 0, .75);
-    width: 2rem;
-    height:2rem;
-    border-radius: 2rem;
+    width: px2rem(40);
+    height:px2rem(40);
+    border-radius: px2rem(40);
     z-index: 100;
     text-align: center;
     opacity:0;
@@ -21,7 +23,7 @@
         justify-content:center;
         align-items:center;
         span {
-            font-size: .9rem;
+            font-size:px2rem(18);
             color: #FFF;
         }
     }

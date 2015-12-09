@@ -1,28 +1,30 @@
+@import "./common/common";
+@import "./common/util";
 .popover {
     position: absolute;
     color: #fff;
     background: rgba(0, 0, 0, .9);
-    line-height:1.1rem;
-    top: -1.4rem;
+    line-height:px2rem(22);
+    top: px2rem(-28);
     text-align: center;
-    font-size: .65rem;
-    border-radius: .2rem;
+    font-size: px2rem(13);
+    border-radius: px2rem(4);
     white-space: nowrap;
-    padding: 0 .25rem;
+    padding: 0 px2rem(5);
     left: 0;
     display:none;
     &.active{
         display:block;
     }
     &:after {
-        border: 4px solid transparent;
-        border-top: 4px solid #000;
+        border: px2rem(4) solid transparent;
+        border-top: px2rem(4) solid #000;
         opacity: .9;
         width: 0;
         height: 0;
         position: absolute;
-        bottom: -0.4rem;
-        left: .4rem;
+        bottom: px2rem(-8);
+        left: px2rem(8);
         content: '';
         margin-left: 0;
     }
