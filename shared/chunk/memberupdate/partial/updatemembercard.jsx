@@ -120,7 +120,7 @@ class UpdateMemberCard extends Component{
                     </li>
                     <li>
                         <input type="text" placeholder="请输入会员卡绑定手机" name="mobileNumber" value={mobileNumber} 
-                        onChange={this.handleFieldChange.bind(this,)}/>
+                        onChange={this.handleFieldChange.bind(this)}/>
                     </li>
                     <li>
                         <div className="inner">
