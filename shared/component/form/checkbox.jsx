@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Icon from "../icon.jsx";
 
@@ -13,10 +14,10 @@ class Checkbox extends Component{
     }
     componentDidUpdate(prevProps,prevState){
         if(this.state.checked === false && prevState.checked === true){
-            React.findDOMNode(this.refs.checkInput).checked = false; 
+            ReactDOM.findDOMNode(this.refs.checkInput).checked = false; 
         }
         if(this.state.checked === true && prevState.checked === false){
-            React.findDOMNode(this.refs.checkInput).checked = true; 
+            ReactDOM.findDOMNode(this.refs.checkInput).checked = true; 
         }
     }
     componentWillReceiveProps(nextProps){
@@ -42,12 +43,6 @@ class Checkbox extends Component{
         var checkInput = (
             <input type="checkbox" onChange={this.handleChange.bind(this)} ref="checkInput" defaultChecked={checked}/>
         );
-        if(type === "radio"){
-            checkedIcon = "dot-circled";
-            uncheckIcon = "circle-empty";
-            checkInput = (<input type="radio" name={name} onChange={this.handleChange.bind(this)} defaultChecked={checked} 
-            ref="checkInput"/>);
-        }
         checkedIcon = this.props.checkedIcon ? this.props.checkedIcon:checkedIcon;
         uncheckIcon = this.props.uncheckIcon ? this.props.uncheckIcon:uncheckIcon;
         const classes = classNames("checkbox",this.props.className);
@@ -62,7 +57,6 @@ class Checkbox extends Component{
 }
 
 Checkbox.defaultProps = {
-    type:"checkbox",
     checked:false,
     onChange:function(){}
 }
