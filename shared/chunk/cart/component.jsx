@@ -4,19 +4,23 @@ import React,{Component} from "react";
 import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
+import {updateCart,deleteCart,toggleItem,toggleCart,toggleAll} from "./action.es6";
+//import Checkbox from "../../component/form/checkbox.jsx";
 
- 
- 
 
-class CartRow extends Component {
+class CartMKTList extends Component {
     render(){
         const {list}=this.props;
-        //console.log(list)
-        var item = list.cartProductList.map((good,i)=>{
-            const key = 'cart-row-item'+i;
+        var goods = list.cartProductList.map((good,i)=>{
+            const key = 'goods-'+i;
             return (<CartGoods goods={good} key={key} />);
-        });  
-        return (<div className="group">{item}</div>)
+        });
+        return (
+            <div className="J_item">
+                <div className="manjian"><em>满减</em>购物满200减30，满300减80，满400减120</div>
+                {goods}
+            </div>
+        )
     }
 }
 
@@ -24,7 +28,7 @@ class CartGoods extends Component {
     render(){
         const {goods} = this.props;
         return (
-            <div className="J_item">
+            <div className="group">
                 <a className="shanchu"></a>
                 <div className="J_moveRight">
                     <div className="checkboxRed">
@@ -33,20 +37,21 @@ class CartGoods extends Component {
                     </div>
                     <div>
                         <div className="img_wrap">
-                            <a className=" J_ytag cartlist" href="goods.php?id=878">
+                            <a className="J_ytag cartlist" href="goods.php?id=878">
                             <img width="100%" src={goods.imageUrl} /></a>
                             <span className="limitBuy">限购{goods.buyLimit}件</span>
                         </div>
-                        
                         <div className="gd_info">
-                                <p className="name">
-                                  <b>{goods.title}</b>
-                                  <span>&yen;{goods.salesPrice}</span>
-                                  <em>x{goods.qty}</em>
-                                </p>
+                            <p className="name">
+                              <b>{goods.title}</b>
+                              <span>&yen;{goods.salesPrice}</span>
+                              <em>x{goods.qty}</em>
+                            </p>
+                            <div className="act_wrap"> 
                                 <NumberPicker value={goods.qty}/>
                             </div>
-                     </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
@@ -54,11 +59,15 @@ class CartGoods extends Component {
 }
 
 class CartGroup extends Component {
+    handleClick(){
+
+    }
+
     render(){
         const {cart,handleChange} = this.props;
-        var cartRow = cart.cartMKTList.map((list,i)=>{
-            const key = 'cart-row-'+i;
-            return(<CartRow key={key} list={list} />);
+        var groupItem = cart.cartMKTList.map((list,i)=>{
+            const key = 'group-'+i;
+            return (<CartMKTList list={list} key={key}/>);
         });
         return (
             <div className="onlyList clearfix">
@@ -72,8 +81,7 @@ class CartGroup extends Component {
                         <div className="depot_bot"><em></em>再购1件立享【98元任选2件】</div>
                     </div>
                 </div>
-                <div className="manjian"><em>满减</em>购物满200减30，满300减80，满400减120</div>
-                {cartRow}
+                {groupItem}
                 <div className="section_wrap cart_buy">
                     <div className="cartFirst clearfix">
                         <span id="selected_number_1">已选商品{cart.qtys}件</span>
@@ -86,10 +94,11 @@ class CartGroup extends Component {
                         <p>
                             <span>总计(不含运费、税金)：<em>&yen;{cart.totalFee}</em></span>
                         </p>
-                        <p><input type="button"  className="btn_buy" value="结算" /></p>
+                        <p><input type="button"  className="btn_buy" value="结算" onClick={this.handleClick.bind(this)}/></p>
                     </div>
-                    <div className="cart_tips">
-                        <i></i><span>省钱贴士：单笔订单税金50元以内，可以免税哦！</span>
+                    <div className="cart_tips_1">
+                        <i></i>
+                        <span>省钱贴士：单笔订单税金50元以内，可以免税哦！</span>
                     </div>
                 </div>
             </div>
@@ -106,11 +115,11 @@ class Cart extends Component{
 
     render(){
  
-        const {isFetched,carts} = this.props;
+        const {carts} = this.props;
 
         var cartList = carts.map((cart,i)=>{
             const key = 'cart-'+i;
-            return (<CartGroup cart={cart} handleChange={this.handleChange.bind(this)} key={key}/>);
+            return (<CartGroup key={key} cart={cart} handleChange={this.handleChange.bind(this)}/>);
         });
 
         return (
