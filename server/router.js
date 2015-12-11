@@ -21,6 +21,8 @@ router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
 router.get("/cart", require("./controller/cart").cart);
+router.post("/updateCart", require("./controller/cart").updateCart);
+
 router.get("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));

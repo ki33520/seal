@@ -15,19 +15,23 @@ var cart = function(req, res, next) {
         memberId:memberId
     },true).then(function(resp){
         if(resp.returnCode === 0){
-            var initialState = {
-                isFetched: true,
-                carts: resp.object
-            };
+            if (req.xhr === true) {
+                res.json(resp);
+            }else{
+                var initialState = {
+                    isFetched: true,
+                    carts: resp.object
+                };
 
-            var markup = util.getMarkupByComponent(CartApp({
-                initialState: initialState
-            }));
+                var markup = util.getMarkupByComponent(CartApp({
+                    initialState: initialState
+                }));
 
-            res.render('cart', {
-                markup: markup,
-                initialState: initialState
-            });
+                res.render('cart', {
+                    markup: markup,
+                    initialState: initialState
+                });
+            }
             
         }else{
             next(new Error(ret.msg));
@@ -35,6 +39,36 @@ var cart = function(req, res, next) {
     })
 }
 
+var updateCart = function(req, res, next) {
+    var user = req.session.user;
+    var singleCode = req.body.singleCode;
+    var qty = req.body.qty;
+ 
+    util.fetchAPI('updateCart', {
+        memberId: '90a19c2d49184fefa7421c5d7eacf551',
+        singleCode: singleCode,
+        qty: qty,
+        figureUpFlag: false
+    },true).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                cartUpdated: true
+            })
+        } else {
+            res.json({
+                cartUpdated: true,
+                errMsg: resp.msg
+            })
+        }
+    }, function() {
+        res.json({
+            apiResponded: false
+        })
+    })
+}
+
+
 module.exports = {
-    cart:cart
+    cart: cart,
+    updateCart: updateCart
 };
