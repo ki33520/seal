@@ -26,6 +26,13 @@ app.use(session({
 app.engine('html', cons.swig);
 app.set('view engine', 'html');
 app.set("views", __dirname + '/../view');
+
+app.use(function(req, res, next) {
+    var config = require("./lib/config");
+    app.locals.config = config;
+    next();
+})
+
 app.use(router);
 
 module.exports = app;

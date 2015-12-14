@@ -32,15 +32,15 @@ router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
 router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
-router.get("/membercenter", require("./controller/membercenter"));
-router.get("/membercenter/collect", require("./controller/membercollect"));
-router.get("/membercenter/comment", require("./controller/membercomment").index);
-router.get("/membercenter/update", require("./controller/memberupdate").update);
+router.get("/membercenter",mainController.requireAuthorize,require("./controller/membercenter"));
+router.get("/membercenter/collect",mainController.requireAuthorize,require("./controller/membercollect"));
+router.get("/membercenter/comment",mainController.requireAuthorize,require("./controller/membercomment").index);
+router.get("/membercenter/update",mainController.requireAuthorize,require("./controller/memberupdate").update);
 
-router.post("/updatebasic", require("./controller/memberupdate").updateBasic);
-router.post("/updatepassword", require("./controller/memberupdate").updatePassword);
-router.post("/updatemembercard", require("./controller/memberupdate").updateMembercard);
-router.post("/updatemembercardverifycode", require("./controller/memberupdate").updateMemberCardVerifyCode);
+router.post("/updatebasic",mainController.requireAuthorize,require("./controller/memberupdate").updateBasic);
+router.post("/updatepassword",mainController.requireAuthorize,require("./controller/memberupdate").updatePassword);
+router.post("/updatemembercard",mainController.requireAuthorize,require("./controller/memberupdate").updateMembercard);
+router.post("/updatemembercardverifycode",mainController.requireAuthorize,require("./controller/memberupdate").updateMemberCardVerifyCode);
 
 router.get("/receiver",mainController.requireAuthorize,require("./controller/receiver").receiver);
 router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
@@ -51,7 +51,7 @@ router.get("/coupondetail", require("./controller/coupondetail"));
 
 
 router.all("/mock/api/:api",require("./mock/api").all);
-router.all("*", require("./controller/main.js").notFoundHandler);
-router.use(require("./controller/main.js").errorHandler);
+router.all("*", mainController.notFoundHandler);
+router.use(mainController.errorHandler);
 
 module.exports = router;

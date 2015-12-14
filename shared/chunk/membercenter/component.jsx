@@ -18,37 +18,44 @@ import {alert} from "../common/action.es6";
 class MemberCenter extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            member: props.memberCenterByUser.member,
-            login: props.memberCenterByUser.login
+    }
+    renderBanner(){
+        const {isLogined,member} = this.props;
+        const {loginUrl,registerUrl} = this.props.api;
+        
+        if(isLogined === false){
+            return (
+                <div className="userBtns">
+                    <a href={registerUrl}>注&nbsp;册</a>
+                    <a href={loginUrl}>登&nbsp;录</a>
+                </div>
+            )
+        }else{
+            return (
+                <div className="userInfo">
+                    <div className="userInfo_con">
+                        <img id={member.nickname} src="client/asset/images/userPic.gif" />
+                        <a href="javascript:void(0);"><img src="client/asset/images/user_qr.png" /></a>
+                    </div>
+                    <span>{member.mobile}</span>
+                </div>
+            )
         }
     }
     render(){
-        const {member,login} = this.state;
-        const links = login ? '' : '/login';
-        const loginClasses = classNames({
-            login: login
-        });
-        var tpl = (
+        const {isFetched, member, isLogined, api} = this.props;
+
+        return (
             <div>
                 <div className="user">
-                    <header className={loginClasses}>
+                    <header>
                         <div className="top">
                             <span>个人中心</span>
                         </div>
-
-                        <div className="userBtns">
-                            <a href="login.html">注&nbsp;册</a>
-                            <a href="reg.html">登&nbsp;录</a>
+                        <div className="userBanner">
+                            {this.renderBanner()}
                         </div>
-
-                        <div className="userInfo">
-                            <div className="userInfo_con">
-                                <img src="client/asset/images/userPic.gif" />
-                                <a href="javascript:void(0);"><img src="client/asset/images/user_qr.png" /></a>
-                            </div>
-                            <span>15845213695</span>
-                        </div>
+                        
                         <div className="userGoods">
                             <a href="/membercenter/order" className="userGoods_1">
                                 <em></em>
@@ -181,7 +188,6 @@ class MemberCenter extends Component{
                 </div>
             </div>
         );
-        return tpl;
     }
 }
 

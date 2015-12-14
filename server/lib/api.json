@@ -5,6 +5,12 @@
     "cartByUser":{
     	"uri":"/cart/v1/findCarts"
     },
+    "memberCenterByUser":{
+        "uri":"/member/v1/findMemberInfo"
+    },
+    "collectByUser":{
+    	"uri":"/collect/v1/findByPage"
+    },
     "loginTokenByCode": {
         "uri": "/security/WAP/newLoginForWAP.bdo"
     }
