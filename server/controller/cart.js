@@ -52,11 +52,11 @@ var updateCart = function(req, res, next) {
     },true).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({
-                cartUpdated: true
+                isUpdated: true
             })
         } else {
             res.json({
-                cartUpdated: true,
+                isUpdated: true,
                 errMsg: resp.msg
             })
         }
@@ -67,8 +67,33 @@ var updateCart = function(req, res, next) {
     })
 }
 
+var deleteCart = function(req, res, next) {
+    var cartId = req.body.cartId;
+    var user = req.session.user;
+
+    util.fetchAPI('deleteCart', {
+        memberId: '90a19c2d49184fefa7421c5d7eacf551',
+        cartId: cartId
+    },true).then(function(resp) {
+        if (resp.code === "success") {
+            res.json({
+                isDeleted: true
+            })
+        } else {
+            res.json({
+                isDeleted: true,
+                errMsg: resp.msg
+            })
+        }
+    }, function() {
+        res.json({
+            apiResponded: false
+        })
+    })
+}
 
 module.exports = {
     cart: cart,
-    updateCart: updateCart
+    updateCart: updateCart,
+    deleteCart:deleteCart
 };

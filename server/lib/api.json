@@ -13,5 +13,8 @@
     },
     "loginTokenByCode": {
         "uri": "/security/WAP/newLoginForWAP.bdo"
+    },
+    "deleteCart":{
+    	"uri":"/cart/v1/deleteCartById"
     }
 }

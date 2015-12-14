@@ -5,11 +5,12 @@ export const START_UPDATE_CART = "START_UPDATE_CART";
 export const FINISH_UPDATE_CART = "FINISH_UPDATE_CART";
 export const START_FETCH_CART = "START_FETCH_CART";
 export const FINISH_FETCH_CART = "FINISH_FETCH_CART";
+export const START_DELETE_CART = "START_DELETE_CART";
+export const FINISH_DELETE_CART = "FINISH_DELETE_CART";
  
 function fetchCart(dispatch){
     dispatch(startFetchCart());
     apiRequest('/cart').then((resp)=>{
-        console.log(resp)
         resp.object[0].qtys = 99;
         dispatch(finishFetchCart(resp));
     });
@@ -41,8 +42,19 @@ function finishUpdateCart(res){
     }
 }
 
-function startReadCart(dispatch){
-    console.log(dispatch)
+function startDeleteCart(param){
+    return {
+        type:START_DELETE_CART,
+        param
+    }
+}
+
+function finishDeleteCart(param,res){
+    return {
+        type:FINISH_DELETE_CART,
+        param,
+        res
+    }
 }
 
 export function updateCart(param){
@@ -50,9 +62,18 @@ export function updateCart(param){
         dispatch(startUpdateCart());
         apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
             dispatch(finishUpdateCart(res));
-            fetchCart(dispatch) 
+            fetchCart(dispatch);
         })
     }
 }
 
+export function deleteCart(cartId){
+    return (dispatch)=>{
+        dispatch(startDeleteCart(cartId));
+        apiRequest('/deleteCart',cartId,{method:"POST"}).then((res)=>{
+            dispatch(finishDeleteCart(cartId,res));
+            fetchCart(dispatch);
+        })
+    }
+}
  

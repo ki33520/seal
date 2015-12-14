@@ -1,4 +1,11 @@
- 
+.checkbox {
+    float: left;
+    width: .43rem;
+    height: .43rem;
+    margin: 0 10px 5px 0;
+    padding: 0;
+    color:rgb(46,228,76);
+} 
 
 .cart{
 	background-color:#fff;
@@ -6,44 +13,7 @@
 .cart .onlyList{
 	border-top:.26rem solid #f5f5f5;
 }
-.cart .checkboxRed {
-    width:.43rem;
-    height: .43rem;
-    background: #CD0933;
-    float: left;
-    border-radius: 100%;
-    position: relative;
-    background: url(/client/asset/images/checkbox-off.png) no-repeat center;
-    background-size: 100% 100%;
-    padding: 0;
-}
-.checkboxRed input {
-    background: none;
-    width: .43rem;
-    height: .43rem;
-    position: relative;
-    z-index: 3;
-    -webkit-appearance: none;
-    outline: none;
-	border:0;
-    /* visibility: hidden; */
-}
-.checkboxRed label {
-    display: block;
-    width: .43rem;
-    height: .43rem;
-    border-radius: 100%;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-.checkboxRed input[type=checkbox]:checked + label, .checkboxRed input[class=default] + label{
-    background: none;
-    background: url(/client/asset/images/checkbox-on.png) no-repeat center;
-    background-size: 100% 100%;
-}
+ 
 .cart .J_store{
 	padding:.32rem;
 	border-bottom:1px solid #d7d7d7;
