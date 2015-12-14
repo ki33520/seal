@@ -6,7 +6,7 @@ import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
 import {updateCart,deleteCart} from "./action.es6";
-//import Checkbox from "../../component/form/checkbox.jsx";
+import Checkbox from "../../component/form/checkbox.jsx";
 
  
  
@@ -17,9 +17,6 @@ class Cart extends Component {
 
     }
 
-    toggleItemChecked(){
-
-    }
 
     handleChangeBuyed(param) {
         const {dispatch} = this.props;
@@ -29,8 +26,12 @@ class Cart extends Component {
         })
     }
 
-    toggleItemChecked(){
+    toggleCartItemsChecked(isChecked){
+        console.log(isChecked)
+    }
 
+    toggleItemChecked(isChecked){
+        console.log(isChecked)
     }
 
     handleDeleteCart(cartId){
@@ -44,10 +45,10 @@ class Cart extends Component {
             <div className="group" key={goodKey}>
                 <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId)}></a>
                 <div className="J_moveRight">
-                    <div className="checkboxRed">
-                        <input type="checkbox"   defaultChecked="checked" />
-                        <label></label>
-                    </div>
+                     
+                    <Checkbox checked="true"
+                    checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
+                    onChange={this.toggleItemChecked.bind(this)} />
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href="goods.php?id=878">
@@ -98,10 +99,9 @@ class Cart extends Component {
                 return(
                     <div className="onlyList clearfix" key={cartKey}>
                         <div className="J_store clearfix">
-                            <div className="checkboxRed">
-                                <input type="checkbox" checked="checked" onChange={this.toggleItemChecked.bind(this)}/>
-                                <label></label>
-                            </div>
+                            <Checkbox checked="true"
+                            checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
+                            onChange={this.toggleCartItemsChecked.bind(this)}/>
                             <div className="depot">
                                 <span>{cart.warehouseName}</span>
                                 <div className="depot_bot"><em></em>{cart.promoName}</div>
