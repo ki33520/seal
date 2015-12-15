@@ -1,11 +1,23 @@
 {
     "goodById": {
-        "uri": "/WAP/product/detail.ya"
+        "uri": "/WAP/product/detail.ya",
+        "baseURL":{
+            "develop":"http://product.hwg.youayun.cn:7986",
+            "production":"http://product.tepin.hk"
+        }
     },
     "cartByUser":{
-    	"uri":"/cart/v1/findCarts"
+    	"uri":"/cart/v1/findCarts",
+        "baseURL":{
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "production":"http://order.tepin.hk"
+        }
     },
     "loginTokenByCode": {
-        "uri": "/security/WAP/newLoginForWAP.bdo"
+        "uri": "/security/WAP/newLoginForWAP.bdo",
+        "baseURL":{
+            "develop":"http://member.hwg.youayun.cn:7986",
+            "production":"http://member.tepin.hk"
+        }
     }
 }
