@@ -24,9 +24,9 @@ config.cardUrl = config.oathServer +
 
 config.api = _.mapValues(api, function(v) {
     if(runtime === "develop"){
-        v.url = v.baseURL["develop"]
+        v.url = v.baseURL["develop"]?v.baseURL["develop"]:"http://wsns.tepin.youayun.cn"
     }else{
-        v.url = v.baseURL["production"]
+        v.url = v.baseURL["production"]?v.baseURL["production"]:'http://spi.tepin.com/mserver'
     }
     // v.url = config.apiServer + v.uri;
     return v;
