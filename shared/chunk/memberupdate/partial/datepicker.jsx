@@ -7,7 +7,7 @@ class Datepicker extends Component{
         console.log(this.refs.year)
     }
     render(){
-        const {memberInfo,birthdyChange} = this.props;
+        const {year,month,day,max,birthdyChange} = this.props;
         var optionYear = [],
             optionMonth = [],
             optionDay = [];
@@ -18,33 +18,33 @@ class Datepicker extends Component{
                 <option value={value} key={i}>{value}</option>
             ));
         };
-        for(let i=0;i<12;i++){
-            let value = i+1;
+        for(let i=1;i<13;i++){
+            let value = i<10?'0'+i:i;
             optionMonth.push((
                 <option value={value} key={i}>{value}</option>
             ));
         };
-        for(let i=0;i<30;i++){
-            let value = i+1;
+        for(let i=1;i<=max;i++){
+            let value = i<10?'0'+i:i;
             optionDay.push((
                 <option value={value} key={i}>{value}</option>
             ));
         };
         return (
-            <div className="label-item" id={memberInfo.id}>
+            <div className="label-item">
                 <label>生日</label>
-                <select ref="year" onFocus={this.year.bind(this)} onChange={birthdyChange.bind(this)}>
-                    <option defaultValue="default" className="default">请选择</option>
+                <select value={year} name="year" onChange={birthdyChange.bind(this,"birthdy")}>
+                    <option value="-1">请选择</option>
                     {optionYear}
                 </select>
                 <span>年</span>
-                <select ref="month">
-                    <option defaultValue="default" className="default">请选择</option>
+                <select value={month} name="month" onChange={birthdyChange.bind(this,"birthdy")}>
+                    <option value="-1">请选择</option>
                     {optionMonth}
                 </select>
                 <span>月</span>
-                <select ref="day">
-                    <option defaultValue="default" className="default">请选择</option>
+                <select value={day} name="day" onChange={birthdyChange.bind(this,"birthdy")}>
+                    <option value="-1">请选择</option>
                     {optionDay}
                 </select>
                 <span>日</span>

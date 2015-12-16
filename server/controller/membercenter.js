@@ -14,18 +14,23 @@ var memberCenter = function(req, res, next) {
     var authorized = req.session.user !== undefined;
     if (authorized === true) {
         var user = req.session.user;
-        console.log(config.api.memberCenterByUser.url)
+
         bluebird.props({
-            memberCenterByUser: util.fetchAPI("memberCenterByUser", {
+            memberDetailByUser: util.fetchAPI("memberDetailByUser", {
                 memberId: user.memberId
-            },false)
+            },true),
+            memberCountOrder: util.fetchAPI("memberCountOrder", {
+                memberId: user.memberId
+            },true),
         }).then(function(ret) {
-            if (ret.memberCenterByUser.code === "success") {
-                var member = ret.memberCenterByUser.object;
+            if (ret.memberDetailByUser.code === "success") {
+                var member = ret.memberDetailByUser.object;
+                var countOrder = ret.memberCountOrder.object;
                 var initialState = {
                     isFetched: true,
                     isLogined: authorized,
                     member: member,
+                    countOrder: countOrder,
                     api: {
                         logoutUrl: logoutUrl
                     }
@@ -43,12 +48,12 @@ var memberCenter = function(req, res, next) {
         });
     }else{
         bluebird.props({
-            memberCenterByUser: util.fetchAPI("memberCenterByUser", {
+            memberDetailByUser: util.fetchAPI("memberDetailByUser", {
                 memberId: ''
             },true)
         }).then(function(ret) {
-            if (ret.memberCenterByUser.code === "success") {
-                var member = ret.memberCenterByUser.object;
+            if (ret.memberDetailByUser.code === "success") {
+                var member = ret.memberDetailByUser.object;
                 var initialState = {
                     isFetched: true,
                     isLogined: authorized,

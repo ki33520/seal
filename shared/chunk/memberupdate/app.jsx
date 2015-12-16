@@ -7,9 +7,9 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import MemberUpdate from "./component.jsx";
 
 function selector(state){
-    const {memberInfo,basicByForm,passwordByForm,membercardByForm} = state;
+    const {detailByUser,basicByForm,passwordByForm,membercardByForm} = state;
     return {
-        memberInfo,
+        detailByUser,
         basicByForm,
         passwordByForm,
         membercardByForm
@@ -27,7 +27,10 @@ class MemberupdateApp extends Component{
     render(){
         const {memberInfo} = this.props.initialState;
         const initialState = {
-            memberInfo,
+            detailByUser:{
+                isFetching:false,
+                memberInfo
+            },
             basicByForm: memberInfo
         };
         var store = configureStore(initialState);
