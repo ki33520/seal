@@ -8,12 +8,12 @@ var MemberupdateApp = util.getSharedComponent("memberupdate");
 var update = function(req, res, next) {
     var user = req.session.user;
     bluebird.props({
-        regiestOrLogin: util.fetchAPI("regiestOrLogin", {
-            memberId: ""
+        memberDetailByUser: util.fetchAPI("memberDetailByUser", {
+            memberId: user.memberId
         },true)
     }).then(function(ret) {
-        if (ret.regiestOrLogin.code === "success") {
-            var memberInfo = ret.regiestOrLogin.object;
+        if (ret.memberDetailByUser.code === "success") {
+            var memberInfo = ret.memberDetailByUser.object;
             var initialState = {
                 memberInfo: memberInfo
             };
@@ -23,19 +23,20 @@ var update = function(req, res, next) {
                 initialState: initialState
             })
         }else{
-            next(new Error(ret.regiestOrLogin.msg));
+            next(new Error(ret.memberDetailByUser.msg));
         }
     });
 }
 
 var updateBasic = function(req, res, next) {
+    var user = req.session.user;
     var nickname = req.body.nickname;
     var gender = req.body.gender;
     var birthdy = req.body.birthdy;
     bluebird.props({
         updateBasicByUser: util.fetchAPI("updateBasicByUser", {
-            memberId: "",
-            nickname: nickname,
+            memberId: user.memberId,
+            nickName: nickname,
             gender: gender,
             birthdy: birthdy
         },true)
@@ -56,15 +57,16 @@ var updateBasic = function(req, res, next) {
 }
 
 var updatePassword = function(req, res, next) {
+    var user = req.session.user;
     var oldPassword = req.body.oldPassword;
     var password = req.body.password;
     var repeatPassword = req.body.repeatPassword;
     bluebird.props({
         updatePasswordByUser: util.fetchAPI("updatePasswordByUser", {
-            memberId: "",
-            oldPassword: oldPassword,
+            memberId: user.memberId,
+            opassword: oldPassword,
             password: password,
-            repeatPassword: repeatPassword
+            rpassword: repeatPassword
         },true)
     }).then(function(ret) {
         if (ret.updatePasswordByUser.code === "success") {
@@ -81,15 +83,14 @@ var updatePassword = function(req, res, next) {
 }
 
 var updateMembercard = function(req, res, next) {
-    var config = req.app.locals.config;
+    var user = req.session.user;
     var cardNo = req.body.cardNo;
     var mobileNumber = req.body.mobileNumber;
     var verifyCode = req.body.verifyCode;
-    var user = req.session.user;
 
     bluebird.props({
         updateMembercardByUser: util.fetchAPI("updateMembercardByUser", {
-            memberId: "",
+            memberId: user.memberId,
             cardNo: cardNo,
             mobileNumber: mobileNumber,
             verifyCode: verifyCode

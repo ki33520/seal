@@ -4,6 +4,7 @@ import React,{Component} from "react";
 import _ from "lodash";
 import classNames from "classnames";
 import Header from "../../common/header.jsx";
+import Datepicker from "./datepicker.jsx";
 
 import {changeBasic,changeField} from "../action.es6";
 import {alert} from "../../common/action.es6";
@@ -49,6 +50,7 @@ class UpdateBasic extends Component{
     }
     birthdyChange(fieldName,e){
         e && e.preventDefault();
+        console.log(this)
         const {dispatch} = this.props;
 
         var object = {};
@@ -62,32 +64,8 @@ class UpdateBasic extends Component{
         dispatch(changeField(fieldName,birthdy));
     }
     render(){
-        const {basicByForm} = this.props;
+        const {dispatch,basicByForm} = this.props;
         const {nickname,gender,birthdy,alertContent,alertActive} = basicByForm;
-        const {year,month,day,max} = this.state;
-        
-        var optionYear = [],
-            optionMonth = [],
-            optionDay = [];
-        const yearNow = new Date().getFullYear();
-        for(let i=0;i<100;i++){
-            let value = yearNow-i;
-            optionYear.push((
-                <option value={value} key={i}>{value}</option>
-            ));
-        };
-        for(let i=1;i<13;i++){
-            let value = i<10?'0'+i:i;
-            optionMonth.push((
-                <option value={value} key={i}>{value}</option>
-            ));
-        };
-        for(let i=1;i<=max;i++){
-            let value = i<10?'0'+i:i;
-            optionDay.push((
-                <option value={value} key={i}>{value}</option>
-            ));
-        };
         return (
             <div className="basic-content">
                 <Header>
@@ -115,24 +93,7 @@ class UpdateBasic extends Component{
                     </div>
                 </div>
                 <div className="form-item">
-                    <div className="label-item">
-                        <label>生日</label>
-                        <select value={year} name="year" onChange={this.birthdyChange.bind(this,"birthdy")}>
-                            <option value="-1">请选择</option>
-                            {optionYear}
-                        </select>
-                        <span>年</span>
-                        <select value={month} name="month" onChange={this.birthdyChange.bind(this,"birthdy")}>
-                            <option value="-1">请选择</option>
-                            {optionMonth}
-                        </select>
-                        <span>月</span>
-                        <select value={day} name="day" onChange={this.birthdyChange.bind(this,"birthdy")}>
-                            <option value="-1">请选择</option>
-                            {optionDay}
-                        </select>
-                        <span>日</span>
-                    </div>
+                    <Datepicker {...this.state} birthdyChange={this.birthdyChange.bind(this)} />
                     <div className="tips">填生日有惊喜哦！</div>
                 </div>
 

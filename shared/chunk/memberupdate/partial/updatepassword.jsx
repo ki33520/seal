@@ -63,7 +63,6 @@ class UpdatePassword extends Component{
         e && e.preventDefault();
         const {dispatch,passwordByForm} = this.props;
         const {oldPassword,password,repeatPassword} = passwordByForm;
-
         this.formVerify({
             oldPassword,password,repeatPassword,
             callback: function(){
@@ -87,7 +86,6 @@ class UpdatePassword extends Component{
         }
     }
     render(){
-        console.log(this.props.passwordByForm)
         const {oldPassword,password,repeatPassword,alertContent,alertActive} = this.props.passwordByForm;
         return (
             <div className="formlist-content">
