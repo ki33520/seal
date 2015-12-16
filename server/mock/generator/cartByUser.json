@@ -8,6 +8,8 @@
             "cartMKTList": [
                 {
                     "promoFee": 0,
+                    "promoType":"满减",
+                    "promoName":"购物满200减30，满300减80，满400减120",
                     "cartProductList": [
                         {
                             "cartId": "40289eeb516ce64a01516cf303430000",
@@ -49,7 +51,7 @@
             "warehouseId": "402880a551240c440151240c4ccf0004",
             "totalFee": 210,
             "tariffFee": 0,
-            "qtys": 3,
+            "qtys": 4,
             "warehouseName": "宁波保税区一号仓1",
             "salesTotalFee": 210
         }

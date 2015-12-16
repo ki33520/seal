@@ -5,7 +5,7 @@ import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
-import {updateCart,deleteCart} from "./action.es6";
+import {changeBuyed,changeItem,deleteCart} from "./action.es6";
 import Checkbox from "../../component/form/checkbox.jsx";
 
  
@@ -18,20 +18,36 @@ class Cart extends Component {
     }
 
 
-    handleChangeBuyed(param) {
-        const {dispatch} = this.props;
-        dispatch(updateCart(param));
-        this.setState({
-            isFetching:true
-        })
+    handleChangeBuyed(cartIndex,groupIndex,goodsIndex,number) {
+        const {dispatch,carts} = this.props;
+        const id = carts[cartIndex].groupList[groupIndex].productList[goodsIndex].id;
+        dispatch(changeBuyed({
+            id,
+            number,
+            cartIndex,
+            groupIndex,
+            goodsIndex
+        }));
     }
 
     toggleCartItemsChecked(isChecked){
         console.log(isChecked)
     }
 
-    toggleItemChecked(isChecked){
-        console.log(isChecked)
+    toggleItemChecked(cartIndex,groupIndex,goodsIndex,checked){
+        const {dispatch,carts} = this.props;
+        var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
+        const id = goods.id;
+        const number = checked ? goods.number : 0;
+       
+        dispatch(changeItem({
+            id,
+            number,
+            checked,
+            cartIndex,
+            groupIndex,
+            goodsIndex
+        }));
     }
 
     handleDeleteCart(cartId){
@@ -46,23 +62,23 @@ class Cart extends Component {
                 <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId)}></a>
                 <div className="J_moveRight">
                      
-                    <Checkbox checked="true"
+                    <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
-                    onChange={this.toggleItemChecked.bind(this)} />
+                    onChange={this.toggleItemChecked.bind(this,cartIndex,groupIndex,goodsIndex)} />
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href="goods.php?id=878">
                             <img width="100%" src={goods.imageUrl} /></a>
-                            <span className="limitBuy">限购{goods.buyLimit}件</span>
+                            <span className="limitBuy">限购{goods.limit}件</span>
                         </div>
                         <div className="gd_info">
                             <p className="name">
                               <b>{goods.title}</b>
-                              <span>&yen;{goods.salesPrice}</span>
-                              <em>x{goods.qty}</em>
+                              <span>&yen;{goods.price}</span>
+                              <em>x{goods.number}</em>
                             </p>
                             <div className="act_wrap"> 
-                                <NumberPicker value={goods.qty} onChange={this.handleChangeBuyed.bind(this)}/>
+                                <NumberPicker value={goods.number} onChange={this.handleChangeBuyed.bind(this,cartIndex,groupIndex,goodsIndex)}/>
                             </div>
                         </div>
                     </div>
@@ -75,13 +91,13 @@ class Cart extends Component {
         const rowKey = "row-" + groupIndex;
         var goods = [];
 
-        rows.cartProductList.map((item,k)=>{
+        rows.productList.map((item,k)=>{
             goods.push(this.renderGoods(item,cartIndex,groupIndex,k))
         })
 
         return(
             <div className="J_item" key={rowKey}>
-                <div className="manjian"><em>满减</em>购物满200减30，满300减80，满400减120</div>
+                <div className="manjian"><em>满减</em>{rows.promoName}</div>
                 {goods}
             </div>
         );
@@ -92,14 +108,14 @@ class Cart extends Component {
             return carts.map((cart,i)=>{
                 const cartKey = "cart-" + i;
                 var rows = [];
-                cart.cartMKTList.forEach((list,j)=>{
+                cart.groupList.forEach((list,j)=>{
                     rows.push(this.renderRow(list,i,j));
                 });
             
                 return(
                     <div className="onlyList clearfix" key={cartKey}>
                         <div className="J_store clearfix">
-                            <Checkbox checked="true"
+                            <Checkbox checked={cart.checked}
                             checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
                             onChange={this.toggleCartItemsChecked.bind(this)}/>
                             <div className="depot">
@@ -110,15 +126,15 @@ class Cart extends Component {
                         {rows}
                         <div className="section_wrap cart_buy">
                             <div className="cartFirst clearfix">
-                                <span>已选商品{cart.qtys}件</span>
+                                <span>已选商品{cart.number}件</span>
                                 <div className="cartFirst_two">
-                                    <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;<span>{cart.salesTotalFee}</span></p>
-                                    <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.tariffFee}</p>
+                                    <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;<span>{cart.price}</span></p>
+                                    <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.save}</p>
                                 </div>
                             </div>
                             <div id="J_wrapperCartTop">
                                 <p>
-                                    <span id="cart_money_info2_1">总计(不含运费、税金)：<em>&yen;{cart.totalFee}</em></span>
+                                    <span>总计(不含运费、税金)：<em>&yen;{cart.pay}</em></span>
                                 </p>
                                 <p><input type="button"  className="btn_buy" value="结算" onClick={this.checkout.bind(this)}/></p>
                             </div>
