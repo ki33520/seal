@@ -49,7 +49,7 @@ class MembercollectList extends Component{
     render(){
         //console.log(this.props)
         const {collect} = this.props;
-        var tpl = (
+        return (
             <div className="collect-content">
                 <Header>
                     <span className="title">我的收藏</span>
@@ -60,7 +60,6 @@ class MembercollectList extends Component{
                 <Refresher />
             </div>
         );
-        return tpl;
     }
 }
 

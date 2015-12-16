@@ -7,7 +7,7 @@ import Header from "../../common/header.jsx";
 
 class Update extends Component{
     render(){
-        const {memberInfo} = this.props;
+        const {memberInfo} = this.props.detailByUser;
         return (
             <div className="update-content">
                 <Header>

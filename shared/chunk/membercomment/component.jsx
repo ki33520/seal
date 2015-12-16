@@ -66,75 +66,45 @@ class CommentList extends Component{
         </nav>
         )
     }
+    renderStar(comment){
+        return comment.map((child,i)=>{
+            const key = "comment-" + i;
+            var stars = [];
+            for(let i=0;i<5;i++){
+                let star;
+                if(i<child.stars){
+                    star = (<div key={i} className="iconfont icon-star-full"></div>);
+                }else{
+                    star = (<div key={i} className="iconfont icon-star-empty"></div>);
+                }
+                stars.push(star)
+            };
+            return (
+                <li id={child.goodId} key={key}>
+                    <div className="product">
+                        <div className="col col-left">
+                            <img src={child.imageUrl} />
+                        </div>
+                        <div className="col col-right">
+                            <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
+                            <div className="title">{child.title}</div>
+                        </div>
+                    </div>
+                    <div className="stars-culm">
+                        <div className={"stars stars-"+child.stars}>
+                            {stars}
+                        </div>
+                        <div className="date">{child.createAt}</div>
+                    </div>
+                    <div className="content">{child.content}</div>
+                </li>
+            )
+        });
+    }
     render(){
         var {allComment,showComment} = this.props;
-        
-        allComment = allComment.map((child,i)=>{
-            const key = "comment-" + i;
-            var stars = [];
-            for(let i=0;i<5;i++){
-                let star;
-                if(i<child.stars){
-                    star = (<div key={i} className="iconfont icon-starA"></div>);
-                }else{
-                    star = (<div key={i} className="iconfont icon-starB"></div>);
-                }
-                stars.push(star)
-            };
-            return (
-                <li id={child.goodId} key={key}>
-                    <div className="product">
-                        <div className="col col-left">
-                            <img src={child.imageUrl} />
-                        </div>
-                        <div className="col col-right">
-                            <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
-                            <div className="title">{child.title}</div>
-                        </div>
-                    </div>
-                    <div className="stars-culm">
-                        <div className={"stars stars-"+child.stars}>
-                            {stars}
-                        </div>
-                        <div className="date">{child.createAt}</div>
-                    </div>
-                    <div className="content">{child.content}</div>
-                </li>
-            )
-        });
-        showComment = showComment.map((child,i)=>{
-            const key = "comment-" + i;
-            var stars = [];
-            for(let i=0;i<5;i++){
-                let star;
-                if(i<child.stars){
-                    star = (<div key={i} className="iconfont icon-starA"></div>);
-                }else{
-                    star = (<div key={i} className="iconfont icon-starB"></div>);
-                }
-                stars.push(star)
-            };
-            return (
-                <li id={child.goodId} key={key}>
-                    <div className="product">
-                        <div className="col col-left">
-                            <img src={child.imageUrl} />
-                        </div>
-                        <div className="col col-right">
-                            <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
-                            <div className="title">{child.title}</div>
-                        </div>
-                    </div>
-                    <div className="stars-culm">
-                        <div className={"stars stars-"+child.stars}>
-                            {stars}
-                        </div>
-                        <div className="date">{child.createAt}</div>
-                    </div>
-                    <div className="content">{child.content}</div>
-                </li>
-            )
-        });
+        var allComments = this.renderStar(allComment);
+        var showComments = this.renderStar(showComment);
         return (
             <div className="comment-content">
             <div className="comment-header">
@@ -144,8 +114,8 @@ class CommentList extends Component{
             </div>
             <div className="tab-content">
                 <Tabs effect="slide">
-                    <TabsItem title="全部评论"><ul className="comment-list">{allComment}</ul></TabsItem>
-                    <TabsItem title="晒单"><ul className="comment-list">{showComment}</ul></TabsItem>
+                    <TabsItem title="全部评论"><ul className="comment-list">{allComments}</ul></TabsItem>
+                    <TabsItem title="晒单"><ul className="comment-list">{showComments}</ul></TabsItem>
                 </Tabs>
             </div>
             <GoTop />

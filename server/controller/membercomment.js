@@ -9,7 +9,7 @@ var index = function(req, res, next) {
     var user = req.session.user;
     bluebird.props({
         allComment: util.fetchAPI("memberCommentByUser", {
-            memberId: "",
+            memberId: user.memberId,
             pageIndex: 0,
             pageSize: 10
         },true),

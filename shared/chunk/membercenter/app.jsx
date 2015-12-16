@@ -7,9 +7,9 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import MemberCenter from "./component.jsx";
 
 function selector(state){
-    const {member,api,isLogined,isFetched,isFetching} = state.memberCenterByUser;
+    const {member,countOrder,api,isLogined,isFetched,isFetching} = state.memberCenterByUser;
     return {
-        member,api,isLogined,isFetched,isFetching
+        member,countOrder,api,isLogined,isFetched,isFetching
     };
 }
 
@@ -22,12 +22,13 @@ function configureStore(initialState){
 
 class MembercenterApp extends Component{
     render(){
-        const {isFetched,member,isLogined,api} = this.props.initialState;
+        const {isFetched,member,isLogined,api,countOrder} = this.props.initialState;
         const initialState = {
             memberCenterByUser:{
                 isFetching:false,
                 isFetched,
                 member,
+                countOrder,
                 isLogined,
                 api
             }
