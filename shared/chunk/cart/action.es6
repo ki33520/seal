@@ -7,12 +7,20 @@ export const START_FETCH_CART = "START_FETCH_CART";
 export const FINISH_FETCH_CART = "FINISH_FETCH_CART";
 export const START_DELETE_CART = "START_DELETE_CART";
 export const FINISH_DELETE_CART = "FINISH_DELETE_CART";
+export const FINISH_UPDATE_BUYED="FINISH_UPDATE_BUYED";
+export const FINISH_UPDATE_ITEM = "FINISH_UPDATE_ITEM";
  
-function fetchCart(dispatch){
+function updateBuyed(dispatch,param){
+    //dispatch(startFetchCart());
+    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
+        dispatch(finishUpdateBuyed(res,param));
+    });
+}
+
+function updateItem(dispatch,param){
     dispatch(startFetchCart());
-    apiRequest('/cart').then((resp)=>{
-        resp.object[0].qtys = 99;
-        dispatch(finishFetchCart(resp));
+    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
+        dispatch(finishUpdateItem(res,param));
     });
 }
 
@@ -22,9 +30,18 @@ function startFetchCart(){
     }
 }
 
-function finishFetchCart(res){
+function finishUpdateBuyed(res,param){
     return {
-        type:FINISH_FETCH_CART,
+        type:FINISH_UPDATE_BUYED,
+        param,
+        res
+    }
+}
+
+function finishUpdateItem(res,param){
+    return {
+        type:FINISH_UPDATE_ITEM,
+        param,
         res
     }
 }
@@ -57,12 +74,12 @@ function finishDeleteCart(param,res){
     }
 }
 
-export function updateCart(param){
+export function changeBuyed(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
         apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
             dispatch(finishUpdateCart(res));
-            fetchCart(dispatch);
+            updateBuyed(dispatch,param);
         })
     }
 }
@@ -72,8 +89,19 @@ export function deleteCart(cartId){
         dispatch(startDeleteCart(cartId));
         apiRequest('/deleteCart',cartId,{method:"POST"}).then((res)=>{
             dispatch(finishDeleteCart(cartId,res));
-            fetchCart(dispatch);
+            //fetchCart(dispatch,param);
         })
     }
 }
+
+export function changeItem(param){
+    return (dispatch)=>{
+        dispatch(startUpdateCart());
+        apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
+            dispatch(finishUpdateCart(res));
+            updateItem(dispatch,param);
+        })
+    }
+}
+
  
