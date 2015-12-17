@@ -157,10 +157,9 @@ var submitOrder = function(req, res, next) {
     var logisticTime = req.body.logisticTime;
     var receiverId = req.body.receiverId;
     var invoiceId = req.body.invoiceId;
-
     // console.log({
     //     memberId: user.memberId,
-    //     itemCodes: itemIds,
+    //     itemCodes: receiverId,
     //     qtys: buyeds,
     //     couponNo: couponNo,
     //     payPwd: payPassword,
