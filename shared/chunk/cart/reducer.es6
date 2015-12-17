@@ -3,51 +3,45 @@
 import {combineReducers} from "redux";
 import _ from "lodash";
 import {START_UPDATE_CART,FINISH_UPDATE_CART,
-START_FETCH_CART,FINISH_FETCH_CART,FINISH_UPDATE_BUYED,FINISH_UPDATE_ITEM,
-START_DELETE_CART,FINISH_DELETE_CART} from "./action.es6";
+    FINISH_DELETE_CART,FINISH_TOGGLE_CART,
+FINISH_TOGGLE_ALL,FINISH_TOGGLE_NOT} from "./action.es6";
 
 function cartByUser(state={},action){
     switch(action.type){
         case START_UPDATE_CART:
             return Object.assign({},state,{
-                isUpdating:true,
-                isUpdated:false
-            });
-        case FINISH_UPDATE_CART:
-            var isUpdated = false;
-            if(action.res.isUpdated === true){
-                isUpdated = true;
-            }
-            return Object.assign({},state,{
-                isUpdating:false,
-                isUpdated
-            });
-        case START_FETCH_CART:
-            return Object.assign({},state,{
                 isFetching:true,
-                isFetched:false
+                isFetchted:false
             });
-        case FINISH_UPDATE_BUYED:
+
+        case FINISH_UPDATE_CART:
             var carts = state.carts.slice();
+            var isFetchted = false;
             var {cartIndex,groupIndex,goodsIndex,number} = action.param;
-            carts[cartIndex].number += (number-carts[cartIndex].groupList[groupIndex].productList[goodsIndex].number)
-            carts[cartIndex].groupList[groupIndex].productList[goodsIndex].number=action.res.cart.groupList[groupIndex].productList[goodsIndex].number;
+            //var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
+            
+            if(action.res.isFetched){
+                carts[cartIndex]=action.res.cart;
+                isFetchted = true;
+            }
+ 
             return Object.assign({},state,{
                 isFetching:false,
-                isFetched:true,
+                isFetchted,
                 carts
             });
-        case FINISH_UPDATE_ITEM:
+
+        case FINISH_TOGGLE_CART:
             var carts = state.carts.slice();
             var {id,cartIndex,groupIndex,goodsIndex,checked} = action.param;
-           
-            var number = carts[cartIndex].groupList[groupIndex].productList[goodsIndex].number;
-            //carts[cartIndex].groupList[groupIndex].itemIds;
-            
+            var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
+
+            goods.checked = checked;
+
             if(checked){
-                var len = carts[cartIndex].itemIds.push(id);
-                carts[cartIndex].buyeds.push(number);
-                carts[cartIndex].checked = carts[cartIndex].len===len;
+                carts[cartIndex].itemIds.push(id);
+                carts[cartIndex].buyeds.push(goods.number);
+                carts[cartIndex].checked = carts[cartIndex].len === carts[cartIndex].itemIds.length;
             }else{
                 var index = carts[cartIndex].itemIds.indexOf(id);
                 carts[cartIndex].itemIds.splice(index,1);
@@ -55,28 +49,53 @@ function cartByUser(state={},action){
                 carts[cartIndex].checked = false;
             }
             
-            
             return Object.assign({},state,{
                 isFetching:false,
-                isFetched:true,
+                isFetchted:true,
                 carts
             });
 
-        case START_DELETE_CART:
-            return Object.assign({},state,{
-                isDeleting:true
-            });
+
         case FINISH_DELETE_CART:
-            var isDeleted = false;
-            var carts = state.carts;
-            if(action.res.code === "success"){
-                const {cartIndex,goodInde} = action.param;
-                carts.list[cartIndex].goods.splice(goodIndex,1);
-                isDeleted = true
+            var carts = state.carts.slice();
+            var {cartIndex} = action.param;
+            if(action.res.isFetched){
+                carts[cartIndex]=action.res.cart;
+                return Object.assign({},state,{
+                    isFetching:false,
+                    isFetchted:true,
+                    carts
+                });
             }
+            
+        case FINISH_TOGGLE_ALL:
+            var carts = state.carts.slice();
+            var {cartIndex,checked} = action.param;
+            carts[cartIndex].checked=checked;
+            carts[cartIndex] =  action.res.cart;
+            
             return Object.assign({},state,{
-                isDeleting:false,
-                isDeleted,
+                isFetching:false,
+                isFetchted:true,
+                carts
+            });
+
+        case FINISH_TOGGLE_NOT:
+            var carts = state.carts.slice();
+            var {cartIndex,checked} = action.param;
+            carts[cartIndex].checked=false;
+            carts[cartIndex].itemIds=[];
+            carts[cartIndex].buyeds=[];
+            carts[cartIndex].number = 0;
+            carts[cartIndex].pay = 0;
+            carts[cartIndex].save = 0;
+            carts[cartIndex].price = 0;
+            carts[cartIndex].groupList.map((cart,i)=>{
+                cart.productList.map((goods,j)=>{
+                    goods.checked=false
+                })
+            })
+            return Object.assign({},state,{
                 carts
             });
         default:

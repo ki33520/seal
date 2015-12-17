@@ -3,105 +3,103 @@ import {apiRequest} from "../../lib/util.es6";
 
 export const START_UPDATE_CART = "START_UPDATE_CART";
 export const FINISH_UPDATE_CART = "FINISH_UPDATE_CART";
-export const START_FETCH_CART = "START_FETCH_CART";
-export const FINISH_FETCH_CART = "FINISH_FETCH_CART";
-export const START_DELETE_CART = "START_DELETE_CART";
 export const FINISH_DELETE_CART = "FINISH_DELETE_CART";
-export const FINISH_UPDATE_BUYED="FINISH_UPDATE_BUYED";
-export const FINISH_UPDATE_ITEM = "FINISH_UPDATE_ITEM";
- 
-function updateBuyed(dispatch,param){
-    //dispatch(startFetchCart());
-    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
-        dispatch(finishUpdateBuyed(res,param));
-    });
-}
-
-function updateItem(dispatch,param){
-    dispatch(startFetchCart());
-    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
-        dispatch(finishUpdateItem(res,param));
-    });
-}
-
-function startFetchCart(){
-    return {
-        type:START_FETCH_CART
-    }
-}
-
-function finishUpdateBuyed(res,param){
-    return {
-        type:FINISH_UPDATE_BUYED,
-        param,
-        res
-    }
-}
-
-function finishUpdateItem(res,param){
-    return {
-        type:FINISH_UPDATE_ITEM,
-        param,
-        res
-    }
-}
+export const FINISH_TOGGLE_CART = "FINISH_TOGGLE_CART";
+export const FINISH_TOGGLE_ALL = "FINISH_TOGGLE_ALL";
+export const FINISH_TOGGLE_NOT = "FINISH_TOGGLE_NOT";
 
 function startUpdateCart(){
     return {
         type:START_UPDATE_CART
     }
 }
-
-function finishUpdateCart(res){
-    return {
-        type:FINISH_UPDATE_CART,
-        res
-    }
-}
-
-function startDeleteCart(param){
-    return {
-        type:START_DELETE_CART,
-        param
-    }
-}
-
-function finishDeleteCart(param,res){
-    return {
-        type:FINISH_DELETE_CART,
-        param,
-        res
-    }
-}
-
-export function changeBuyed(param){
-    return (dispatch)=>{
-        dispatch(startUpdateCart());
-        apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
-            dispatch(finishUpdateCart(res));
-            updateBuyed(dispatch,param);
-        })
-    }
-}
-
-export function deleteCart(cartId){
-    return (dispatch)=>{
-        dispatch(startDeleteCart(cartId));
-        apiRequest('/deleteCart',cartId,{method:"POST"}).then((res)=>{
-            dispatch(finishDeleteCart(cartId,res));
-            //fetchCart(dispatch,param);
-        })
-    }
-}
-
-export function changeItem(param){
-    return (dispatch)=>{
-        dispatch(startUpdateCart());
-        apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
-            dispatch(finishUpdateCart(res));
-            updateItem(dispatch,param);
-        })
-    }
-}
-
  
+function finishUpdateCart(dispatch,param){
+    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
+        dispatch({
+            type:FINISH_UPDATE_CART,
+            param,
+            res
+        });
+    });
+}
+
+
+function finishToggleCart(dispatch,param){
+    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
+        dispatch({
+            type:FINISH_TOGGLE_CART,
+            param,
+            res
+        });
+    });
+}
+
+
+function finishDeleteCart(dispatch,param){
+
+    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
+        dispatch({
+            type:FINISH_DELETE_CART,
+            param,
+            res
+        });
+    });
+}
+
+
+function finishToggleAllChecked(dispatch,param){
+
+    apiRequest('/fetchCart',param,{method:"POST"}).then((res)=>{
+        dispatch({
+            type:FINISH_TOGGLE_ALL,
+            param,
+            res
+        });
+    });
+}
+
+function toggleAllChecked(dispatch,param){
+    dispatch({
+        type:FINISH_TOGGLE_NOT,
+        param
+    });
+}
+
+export function updateCart(param){
+    return (dispatch)=>{
+        dispatch(startUpdateCart());
+        apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
+            finishUpdateCart(dispatch,param,res);
+        })
+    }
+}
+
+export function deleteCart(param){
+    return (dispatch)=>{
+        dispatch(startUpdateCart());
+        apiRequest('/deleteCart',param,{method:"POST"}).then((res)=>{
+            finishDeleteCart(dispatch,param);
+        })
+    }
+}
+
+export function toggleCart(param){
+    return (dispatch)=>{
+        dispatch(startUpdateCart());
+        apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
+            finishToggleCart(dispatch,param);
+        })
+    }
+}
+
+export function toggleAll(param){
+    return (dispatch)=>{
+        if(param.checked===false){
+            toggleAllChecked(dispatch,param);
+        }else{
+            dispatch(startUpdateCart());
+            finishToggleAllChecked(dispatch,param);
+        }
+    }
+}

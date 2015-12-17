@@ -161,16 +161,14 @@ var fetchCart = function(req, res, next) {
         if(resp.returnCode === 0){
             var carts = formatCarts(resp.object);
             var cart = carts[cartIndex];
-            //test code
-            cart.groupList[groupIndex].productList[goodsIndex].number = req.body.number;
-
+ 
             res.json({
                 isFetched: true,
                 cart:cart
             });
         }else{
             res.json({
-                isUpdated:false,
+                isFetched:false,
                 errMsg:resp.msg
             });
         }
