@@ -23,6 +23,8 @@ export class Tabs extends Component{
     handleClick(index,e){
         e && e.preventDefault();
         const prevIndex = this.state.activeIndex;
+        const {handleToggleFlag} = this.props;
+        handleToggleFlag && handleToggleFlag(index,e);
         this.setState({
             activeIndex:index,
             prevIndex

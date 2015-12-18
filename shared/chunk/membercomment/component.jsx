@@ -11,6 +11,7 @@ import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
 
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
+import Node from "./partial/node.jsx";
 import fetchComment from "./action.es6";
 import {alert} from "../common/action.es6";
 
@@ -19,92 +20,45 @@ class CommentList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            displayFlag:"all"
+            displayFlag: 0
         }
     }
     componentDidMount(){
         dom.registerPullDownEvent(()=>{
-            this.beginRefresh();
+            this.beginRefresh(1);
         }.bind(this));
     }
-    beginRefresh(){
-        const {dispatch} = this.props;
-        const {collect,isFetching,pageSize} = this.props;
-        var pageCount = Math.ceil(collect.totalPage/pageSize);
-        var pageIndex = collect.pageIndex;
-        var nextPage = pageIndex + 1;
-        if(pageCount < nextPage){
-            // this.setState({isFetching:false});
+    beginRefresh(interval,flag){
+        const {allComment,showComment,isFetching,dispatch} =  this.props;
+        var comments = allComment,
+            fetchLink = "/membercenter/comment",
+            pageCount = 1,
+            nextPage = 1;
+        var flag = flag ? flag: this.state.displayFlag;
+        if(flag === 1){
+            fetchLink = "/membercenter/showcomment";
+            comments = showComment;
+        }
+        if(comments){
+            pageCount = Math.ceil(comments.totalPage/comments.pageSize);
+            nextPage = comments.pageIndex + interval;
+        };
+        if(pageCount < nextPage || isFetching){
             return false;
         }
-        if(isFetching === true){
-            return false;
-        }
-        dispatch(fetchCollect(window.location.href,{
+        dispatch(fetchComment(fetchLink,{
             pageIndex:nextPage
-        }))
+        }));
     }
     toggleFlag(flag,e){
         e && e.preventDefault();
         this.setState({
             displayFlag:flag
         });
-    }
-    renderTab(){
-        const firstClasses = classNames({
-            active:this.state.displayFlag === "all"
-        })            
-        const secondClasses = classNames({
-            active:this.state.displayFlag === "show"
-        })
-        return (
-        <nav>
-            <a href="javascript:void(null)" className={firstClasses} 
-            onClick={this.toggleFlag.bind(this,"all")}>全部评论</a>
-            <a href="javascript:void(null)" className={secondClasses} 
-            onClick={this.toggleFlag.bind(this,"show")}>晒单</a>
-        </nav>
-        )
-    }
-    renderStar(comment){
-        return comment.map((child,i)=>{
-            const key = "comment-" + i;
-            var stars = [];
-            for(let i=0;i<5;i++){
-                let star;
-                if(i<child.stars){
-                    star = (<div key={i} className="iconfont icon-star-full"></div>);
-                }else{
-                    star = (<div key={i} className="iconfont icon-star-empty"></div>);
-                }
-                stars.push(star)
-            };
-            return (
-                <li id={child.goodId} key={key}>
-                    <div className="product">
-                        <div className="col col-left">
-                            <img src={child.imageUrl} />
-                        </div>
-                        <div className="col col-right">
-                            <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
-                            <div className="title">{child.title}</div>
-                        </div>
-                    </div>
-                    <div className="stars-culm">
-                        <div className={"stars stars-"+child.stars}>
-                            {stars}
-                        </div>
-                        <div className="date">{child.createAt}</div>
-                    </div>
-                    <div className="content">{child.content}</div>
-                </li>
-            )
-        });
+        this.beginRefresh(0,flag);
     }
     render(){
         var {allComment,showComment} = this.props;
-        var allComments = this.renderStar(allComment);
-        var showComments = this.renderStar(showComment);
         return (
             <div className="comment-content">
             <div className="comment-header">
@@ -113,9 +67,13 @@ class CommentList extends Component{
                 </Header>
             </div>
             <div className="tab-content">
-                <Tabs effect="slide">
-                    <TabsItem title="全部评论"><ul className="comment-list">{allComments}</ul></TabsItem>
-                    <TabsItem title="晒单"><ul className="comment-list">{showComments}</ul></TabsItem>
+                <Tabs handleToggleFlag={this.toggleFlag.bind(this)} effect="slide">
+                    <TabsItem title="全部评论">
+                        <Node comments={allComment} />
+                    </TabsItem>
+                    <TabsItem title="晒单">
+                        <Node comments={showComment} />
+                    </TabsItem>
                 </Tabs>
             </div>
             <GoTop />
