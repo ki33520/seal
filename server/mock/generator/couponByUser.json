@@ -1,0 +1,84 @@
+{ 
+        "returnCode": 0,
+        "message": "成功",
+        "object": { 
+            "result": [ 
+                { 
+                    "couponDefName": "20元满159使用（11.11）",
+                    "employName": [ 
+                        "海外购"
+                    ],
+                    "money": 20,
+                    "validityDate": "Nov 30, 2015 3:39:33 PM",
+                    "statusName": "可使用",
+                    "couponNo": "0688135600006313",
+                    "issueDate": "Nov 9, 2015 3:04:21 PM",
+                    "status": 3,
+                    "ruleObject": { 
+                        "createdAt": "Nov 18, 2015 6:43:19 PM",
+                        "couponName": "测试优惠券满30即可使用",
+                        "recordStatus": "EXIST",
+                        "batchCode": "068813",
+                        "channel": "WEB",
+                        "start": 0,
+                        "limit": 15,
+                        "songAccount": 30,
+                        "id": "40288004511a20fa01511a3106110000",
+                        "inserter": "00001",
+                        "updatedAt": "Nov 18, 2015 6:43:19 PM"
+                    }
+                },
+                { 
+                    "couponDefName": "20元满159使用（11.11）",
+                    "employName": [ 
+                        "海外购"
+                    ],
+                    "money": 20,
+                    "validityDate": "Nov 30, 2015 3:39:33 PM",
+                    "statusName": "可使用",
+                    "couponNo": "0688135600006313",
+                    "issueDate": "Nov 9, 2015 3:04:21 PM",
+                    "status": 3,
+                    "ruleObject": { 
+                        "createdAt": "Nov 18, 2015 6:43:19 PM",
+                        "couponName": "测试优惠券满30即可使用",
+                        "recordStatus": "EXIST",
+                        "batchCode": "068813",
+                        "channel": "WEB",
+                        "start": 0,
+                        "limit": 15,
+                        "songAccount": 30,
+                        "id": "40288004511a20fa01511a3106110001",
+                        "inserter": "00001",
+                        "updatedAt": "Nov 18, 2015 6:43:19 PM"
+                    }
+                },
+                { 
+                    "couponDefName": "20元满159使用（11.11）",
+                    "employName": [ 
+                        "海外购"
+                    ],
+                    "money": 20,
+                    "validityDate": "Nov 30, 2015 3:39:33 PM",
+                    "statusName": "可使用",
+                    "couponNo": "0688135600006313",
+                    "issueDate": "Nov 9, 2015 3:04:21 PM",
+                    "status": 3,
+                    "ruleObject": { 
+                        "createdAt": "Nov 18, 2015 6:43:19 PM",
+                        "couponName": "测试优惠券满30即可使用",
+                        "recordStatus": "EXIST",
+                        "batchCode": "068813",
+                        "channel": "WEB",
+                        "start": 0,
+                        "limit": 15,
+                        "songAccount": 30,
+                        "id": "40288004511a20fa01511a3106110002",
+                        "inserter": "00001",
+                        "updatedAt": "Nov 18, 2015 6:43:19 PM"
+                    }
+                }
+            ],
+        "totalCount": 3
+        }
+    }

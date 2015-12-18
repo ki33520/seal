@@ -9,13 +9,13 @@ var coupon = function(req, res, next) {
 
     var pageIndex = req.query.pageIndex || 1;
     bluebird.props({
-        goods: util.fetchAPI("coupon", {
+        coupon: util.fetchAPI("couponByUser", {
             pageIndex: pageIndex,
             pageSize: 12
         }, true)
     }).then(function(resp) {
         // resp = resp[0].body
-        if (resp.goods.code === "success") {
+        if (resp.coupon.code === "success") {
              
             if (req.xhr === true) {
                 res.json(resp);
