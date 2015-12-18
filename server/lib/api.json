@@ -75,5 +75,12 @@
             "develop":"http://product.hwg.youayun.cn:7989",
             "production":"http://product.tepin.hk"
         }
+    },
+    "couponByUser":{
+        "uri":"/coupon/v1/findUserCouponList",
+        "baseURL":{
+            "develop":"http://product.hwg.youayun.cn:7989",
+            "production":"http://product.tepin.hk"
+        }
     }
 }

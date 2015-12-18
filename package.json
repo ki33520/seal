@@ -33,6 +33,7 @@
     "express-session": "^1.12.1",
     "lodash": "^3.10.1",
     "method-override": "^2.3.3",
+    "moment": "^2.10.6",
     "normalize.css": "^3.0.3",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
