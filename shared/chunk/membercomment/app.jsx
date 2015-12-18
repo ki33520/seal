@@ -7,10 +7,11 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import CommentList from "./component.jsx";
 
 function selector(state){
-    const {allComment,showComment,isFetching} = state.commentByUser;
+    const {allComment,showComment,isFetching,isFetched} = state.commentByUser;
     return {
         allComment,
         showComment,
+        isFetched,
         isFetching
     };
 }
@@ -27,11 +28,12 @@ class CommentApp extends Component{
         super(props);
     }
     render(){
-        const {allComment,showComment} = this.props.initialState;
+        const {allComment,showComment,isFetched} = this.props.initialState;
         const initialState = {
             commentByUser:{
                 allComment,
                 showComment,
+                isFetched,
                 isFetching: false
             }
         };

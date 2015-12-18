@@ -18,11 +18,6 @@ class MembercollectList extends Component{
     constructor(props){
         super(props);
         const {collect,isFetching,isFetched} = props;
-        this.state = {
-            collect,
-            isFetching,
-            isFetched
-        }
     }
     componentDidMount(){
         dom.registerPullDownEvent(()=>{

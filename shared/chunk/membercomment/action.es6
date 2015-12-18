@@ -23,10 +23,7 @@ function receiveComment(param,res){
 export default function fetchComment(url,param){
     return (dispatch)=>{
         dispatch(requestComment(param));
-        return apiRequest(url,param,{
-            type:"jsonp",
-            jsonpcallback:"jsoncallback"
-        }).then((res)=>{
+        return apiRequest(url,param).then((res)=>{
             dispatch(receiveComment(param,res));
         });
     }

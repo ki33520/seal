@@ -11,7 +11,7 @@ var collectlist = function(req, res, next) {
     var pageSize = req.query.pageSize !== undefined ? Number(req.query.pageSize) : 5;
     bluebird.props({
         memberCollectByUser: util.fetchAPI("memberCollectByUser", {
-            memberId: "",
+            memberId: user.memberId,
             pageIndex: pageIndex,
             pageSize: pageSize
         },true)
