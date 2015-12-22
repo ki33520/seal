@@ -8,11 +8,15 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Coupon from "./component.jsx";
 
 function selector(state){
-    const {enableCoupons,legueCoupons,invalidCoupons} = state.receiverByUser
+    const {enableCoupons,legueCoupons,invalidCoupons,
+        enableIndex,invalidIndex,legueIndex} = state.couponByUser
     return {
         enableCoupons,
         legueCoupons,
-        invalidCoupons
+        invalidCoupons,
+        enableIndex,
+        invalidIndex,
+        legueIndex
     };
 }
 
@@ -25,12 +29,17 @@ function configureStore(initialState){
 class CouponApp extends Component{
     render(){
          
-        const {enableCoupons,legueCoupons,invalidCoupons} = this.props.initialState;
+        const {enableCoupons,legueCoupons,invalidCoupons,
+            enableIndex,invalidIndex,legueIndex} = this.props.initialState;
+
         const initialState = {
-            receiverByUser:{
+            couponByUser:{
                 enableCoupons,
                 legueCoupons,
-                invalidCoupons
+                invalidCoupons,
+                enableIndex,
+                invalidIndex,
+                legueIndex
             }
         };
         var store = configureStore(initialState);
