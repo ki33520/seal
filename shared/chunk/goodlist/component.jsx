@@ -23,11 +23,11 @@ class GoodListApp extends React.Component{
             popupBrandActive:false,
             showNotEmpty:false,
             popupClassifyType:null,
-            sortType:SORT_NORMAL
+            sortType:SORT_NORMAL,
+            needClear:false,
+            isFocused:false,
+            keywords:props.keywords
         }
-    }
-    componentDidMount(){
-       
     }
 
     closeAllPopups(){
@@ -36,7 +36,7 @@ class GoodListApp extends React.Component{
             popupActive:false,
             popupClassifyActive:false,
             popupBrandActive:false
-        })
+        });
     }
 
     resetFilter(){
@@ -64,6 +64,46 @@ class GoodListApp extends React.Component{
         });
     }
 
+    handleChange(e){
+        e.preventDefault();
+        const keywords = e.target.value;
+        if(keywords !== this.state.keywords){
+            this.setState({
+                keywords:keywords
+            });
+        }
+
+        if(keywords.length>0){
+            this.setState({
+                needClear:true
+            });
+        }
+    }
+
+    handleBlur(){
+        this.setState({
+            needClear:false,
+            isFocused:false
+        });
+    }
+
+    handleFocus(e){
+        var needClear = this.state.keywords.length > 0 ? true : false
+        e.preventDefault();
+        this.setState({
+            needClear:needClear,
+            isFocused:true
+        });
+    }
+
+    handleClearInput(e){
+        e.preventDefault();
+        this.setState({
+            keywords:'',
+            isFocused:true
+        });
+    }
+
     toggleSortActive(type){
         
         switch(type){
@@ -88,7 +128,7 @@ class GoodListApp extends React.Component{
     }
 
     render(){
-        const {isFetching,pagination,isFetched,keywords} = this.props;
+        const {isFetching,pagination,isFetched} = this.props;
         var goods = [];
         if(isFetched === true){
             if(pagination.list.length > 0){
@@ -107,11 +147,27 @@ class GoodListApp extends React.Component{
             "rollOut-slideLeft":this.state.popupActive
         });
 
+        const closebtn = classNames({
+            "iconfont":true,
+            "icon-close":this.state.needClear
+        });
+
+        const searchBox = classNames("search-box",{
+            "search-foucs" : this.state.isFocused
+        });
+
         return (
             <div>
                 <div className={classes}>
                     <Header>
-                        <span className="title">{keywords}</span>
+                        <div className={searchBox}>
+                            <input type="search" value={this.state.keywords} 
+                            onChange={this.handleChange.bind(this)}
+                            onBlur={this.handleBlur.bind(this)}
+                            onFocus={this.handleFocus.bind(this)} />
+                            <span></span>
+                            <i className={closebtn} onClick={this.handleClearInput.bind(this)}></i>
+                        </div>
                         <span className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</span>
                     </Header>
                     <GoodSorter orderBy={this.toggleSortActive.bind(this)} sortType={this.state.sortType}/>
