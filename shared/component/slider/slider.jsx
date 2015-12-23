@@ -36,7 +36,9 @@ class Slider extends Component{
         const slideNodeHeight = slideNode.querySelector(".slides").firstChild.offsetHeight
         const slidesWidth = slideNodeWidth * this.slides.length;
         const slidesHeight = slideNodeHeight * this.slides.length;
-        if(slidesWidth === 0 || slidesHeight === 0){
+        // console.log('slidesHeight',slideNode.querySelector(".slides").offsetHeight)
+        if(slidesWidth === 0 && oriention === "horizontal"
+            || (slidesHeight === 0 && oriention === "vertical")){
             return;
         }
         var slidesStyle = {
@@ -198,7 +200,7 @@ class Slider extends Component{
             var scrollX = this.state.slideStyle.width * activeIndex;
             transform = "translate3D(-"+scrollX+"px,0,0)";
         }
-        const slidesNode = React.findDOMNode(this.refs.slides);
+        const slidesNode = ReactDOM.findDOMNode(this.refs.slides);
         if(transform !== null){
             slidesNode.style.transform = transform;
             slidesNode.style.transitionDuration = ".3s";
@@ -229,7 +231,7 @@ class Slider extends Component{
             scrollX += offsetX;
             transform = "translate3D(-"+scrollX+"px,0,0)";
         }
-        const slidesNode = React.findDOMNode(this.refs.slides);
+        const slidesNode = ReactDOM.findDOMNode(this.refs.slides);
         if(transform !==null){
             slidesNode.style.transform = transform;
             slidesNode.style.transitionDuration = ".3s";
@@ -320,17 +322,13 @@ class Slider extends Component{
         if(state.prevActiveIndex === null){
             return;
         }
+        // console.log(this.state)
         const {oriention} = props;
         const count = this.slides.length;
         const activeIndex = state.activeIndex;
         var slidesStyle = this.state.slidesStyle;
         if(this.needPseudoNode() === true){
             var transform;
-            // var symbol = direction === "prev"?"-":"-";
-            // console.log("direction",direction)
-            // console.log('prevActiveIndex',state.prevActiveIndex)
-            // console.log('activeIndex',activeIndex)
-            // console.log('nextActiveIndex',state.nextActiveIndex)
             // if direction is next and should active is pseudo item then redirect to the first real item
             if(activeIndex === 1&& state.direction === "next"){
                 transform = oriention === "horizontal"?
@@ -429,13 +427,14 @@ class Slider extends Component{
         if(this.props.controlNav === true){
             var activeIndex = this.getActiveIndex();
             const slidesCount = this.slides.length;
+            // console.log(slidesCount)
             if(this.needPseudoNode() === true){
                 // if direction is next and should active is pseudo item then redirect to 1
                 activeIndex = (activeIndex === slidesCount - 1)?1:activeIndex;
                 // if direction is prev and should active is pseudo item then redirect to the last real item
                 activeIndex = (activeIndex === 0)?(slidesCount - 2):activeIndex;
             }
-            const children = React.Children.map(this.props.children,(child,i)=>{
+            const children = React.Children.map(this.slides,(child,i)=>{
                 /* dont render pseudo control item*/
                 if(this.needPseudoNode() === true && i === slidesCount - 1){
                     return;
@@ -443,7 +442,6 @@ class Slider extends Component{
                 if(this.needPseudoNode() === true && i === 0){
                     return;
                 }
-                // console.log('activeIndex',activeIndex,"i",i)
                 const childrenClasses = classNames({
                     active:activeIndex === i
                 })

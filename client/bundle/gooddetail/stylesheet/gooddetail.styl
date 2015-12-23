@@ -1,11 +1,30 @@
 @import "../../common/common.styl"
 @import "../../common/iconfont.styl"
 @import "../../common/header.styl"
-@import "../../component/slider.styl"
 @import "../../component/dropdown.styl"
 @import "../../component/popover.styl"
 @import "../../component/numberpicker.styl"
+@import "../../component/slidetabs.styl"
+@import "../../component/slider.styl"
+@import "../../component/popup.styl"
 @import "./goods.css"
+
+.gooddetail-container{
+    height:100%;
+    #good-detail{
+        height:100%;
+        .good-detail-content{
+            height:100%;
+            
+        }
+    }
+}
+.popup-bottom{
+    opacity:1;
+    position:fixed;
+    height:auto;
+    bottom:-100%;
+}
 
 .slider .control-nav{
     position: absolute;
@@ -110,6 +129,10 @@ $pink-color = #ED1946;
 .con{
     position:static;
     height:auto;
+    padding:0 0 px2rem(8) 0;
+    &>a{
+        color:#FFF;
+    }
     .goodsSure{
         display:flex;
         justify-content:spacing-between;
@@ -155,3 +178,75 @@ $pink-color = #ED1946;
         }
     }
 }
+.goodsBtns{
+    z-index:100;
+}
+.goodsBtns a.goods_cart{
+    text-align:center;
+}
+.goodsBtns a.goods_cart .iconfont{
+    font-size:.65rem;
+}
+
+.slide-tabs .slide-tabs-navbar{
+    background:#FFF;
+    border-bottom:0 none;
+    .slide-tabs-navbar-item{
+        line-height:1.15rem;
+        border-left:0 none;
+        border-bottom:px2rem(1) solid #D7D7D7;
+        
+        &.active{
+            border-bottom:px2rem(2) solid #801da1;
+            color:#801da1;
+        }
+    }
+}
+.faq img{
+    width:100%;
+}
+
+.good-detail-content{
+    .good-detail-upper{
+        display:none;
+        // visibility:hidden
+        &.visible{
+            // visibility:visible;
+            display:block;
+            padding-bottom:1.12rem;
+        }
+    }
+    .good-detail-down{
+        // display:none;
+        visibility:hidden;
+        top:0;
+        height:0;
+        overflow:hidden;
+        &.visible{
+            visibility:visible;
+            height:auto;
+            // display:block;
+        }
+        &>.pull-trigger{
+            margin:0 0 .5rem 0;
+        }
+        .specification-content{
+            padding:.5rem 0;
+        }
+        .specification-row{
+            margin-bottom:.3rem;
+            font-size:.7rem;
+            line-height:1rem;
+            padding:0 .4rem;
+            .specification-name{
+                color:#999;
+                display:inline-block;
+            }
+            .specification-value{
+                display:inline-block;
+                padding:0 0 0 .25rem;
+            }
+        }
+    }
+}
+

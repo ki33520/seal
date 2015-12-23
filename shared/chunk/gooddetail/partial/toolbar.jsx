@@ -34,16 +34,10 @@ class Toolbar extends Component{
     render(){
         const {addToCart,toggleFavorite,directBuy} = this.props
         return (
-            <div className="good-toolbar">
-            <div className="good-toolbar-icon" onClick={toggleFavorite}></div>
-            <a className="good-toolbar-icon" href="/cart">
-            <span className="cart-badge">{this.state.cartCount}</span>
-            <div className="cart-overlayer" ref="cartOverlayer"></div>
-            </a>
-            <div className="good-toolbar-button"><a href="javascript:void(null)" 
-            onClick={addToCart}>加入购物袋</a></div>
-            <div className="good-toolbar-button"><a href="javascript:void(null)" 
-            onClick={directBuy}>立即购买</a>{this.props.children}</div>
+            <div className="goodsBtns">
+            <a href="/cart" className="goods_cart"><i className="iconfont icon-cart"><em>99+</em></i></a>
+            <a href="javascript:void(0);" onClick={directBuy} className="goods_buy">立即购买</a>
+            <a href="javascript:void(null)" onClick={addToCart} className="goods_add">加入购物车</a>
             </div>
         )
     }
