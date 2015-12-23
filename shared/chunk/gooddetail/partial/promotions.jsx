@@ -12,7 +12,7 @@ class Promotions extends Component{
                 i++;
                 const key = "promotion-" + i;
                 promotions.push((
-                    <div className="promotion" key={key}>
+                    <div className="promotion-row" key={key}>
                         <span className="promotion-title">{k}</span>
                         <span className="promotion-desc">{this.props.promotions[k]}</span>
                     </div>
@@ -23,9 +23,12 @@ class Promotions extends Component{
         return (
             <div className="good-promotions">
                 <Dropdown showStatus={false} 
-                foldIcon="up-open" unfoldIcon="right-open">
+                foldIcon="up" unfoldIcon="down">
                 <div className="promotions-brief">{promotionBriefs}</div>
-                <div className="promotions">{promotions}</div>
+                <div className="promotions">
+                <p>可享受以下促销</p>
+                {promotions}
+                </div>
                 </Dropdown>
             </div>
         )
