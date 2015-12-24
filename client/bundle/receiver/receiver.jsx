@@ -1,10 +1,11 @@
 'use strict'
 import Receiver from "../../../shared/chunk/receiver/app.jsx";
 import React from "react";
+import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        React.render(<Receiver initialState={initialState} />,document.getElementById('receiver'));
+        ReactDOM.render(<Receiver initialState={initialState} />,document.getElementById('receiver'));
 }
 
 if(typeof window.addEventListener){
@@ -14,7 +15,7 @@ if(typeof window.addEventListener){
 }
 
 window.onpageshow = function(event) {
-    console.log('onpageshow',event.persisted)
+    // console.log('onpageshow',event.persisted)
     if (event.persisted) {
         window.location.reload() 
     }

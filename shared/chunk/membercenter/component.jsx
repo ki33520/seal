@@ -109,7 +109,7 @@ class MemberCenter extends Component{
                 </div>
 
                 <div className="helpList">
-                    <a href="/membercenter/receiver">
+                    <a href="/receiver">
                         <dl>
                             <dt>
                                 <img src="client/asset/images/user_icon_2.png" />

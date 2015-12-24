@@ -20,31 +20,38 @@ class Receiver extends Component{
                 const checkbox = checkable?(<Checkbox checked={checked} 
                 onChange={this.handleCheck.bind(this,receiver)}/>):null;
                 return (
-                    <div className="receiver" key={key}>
-                    <div className="receiver-header">{checkbox}<label>{receiver.name}</label><b>{receiver.mobileNumber}</b><em>默认地址</em></div>
-                    <div className="receiver-detail">
-                    <div>{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</div>
-                    </div>
-                    <div className="receiver-footer">
-                    <a href={"#/updatereceiver/"+receiver.id}><Icon icon="help-circled" />修改</a>
-                    <a><Icon icon="info-circled" />删除</a>
-                    </div>
+                    <div className="order-time" key={key}>
+                        <p>{receiver.name}<span className="mobNum">{receiver.mobileNumber}</span>
+                        <i>【默认】</i>
+                        </p>
+                        <p>433101**********1011<em>实名</em></p>
+                        <p>{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
+                        <div className="toolsArea">
+                            <span className="pen"><a href={"#/updatereceiver/"+receiver.id}><em></em>修改</a></span>
+                            <span className="del"><em></em>删除</span>
+                        </div>
                     </div>
                 )
             });
             return receiversContent;
         }
-        return null;
+        return (
+            <div className="empty">
+                <img src="/client/images/empty_address.png" />
+                <span>快来添加您的收货地址吧！</span>
+                <a href="#" className="empty_btn">添加新地址</a>
+            </div>
+        );
     }
     render(){
         return (
             <div className="receiver-content">
-            <Header title="收货地址"/>
-            <div className="receivers">
+            <Header>收货地址</Header>
+            <div className="selectArea">
             {this.renderReceivers()}
-            <div className="add-receiver">
-            <a href="#/addreceiver"><Icon icon="plus"/>添加新地址</a>
             </div>
+            <div className="addBtns">
+                <a href="#/addreceiver" className="addBtn">添加新地址</a>
             </div>
             </div>
         )

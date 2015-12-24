@@ -1,5 +1,5 @@
 'use strict';
-import util from "../../lib/util.es6";
+import {apiRequest} from "../../lib/util.es6";
 
 export const CHANGE_FIELD= "CHANGE_FIELD";
 export const REQUEST_PROVINCES = "REQUEST_PROVINCES";
@@ -32,7 +32,7 @@ function responseReceiver(res){
 export function fetchReceiver(url){
     return (dispatch)=>{
         dispatch(requestReceiver());
-        util.apiRequest(url).then((res)=>{
+        apiRequest(url).then((res)=>{
             dispatch(responseReceiver(res));
         })
     }
@@ -65,7 +65,7 @@ function responseProvinces(param,res){
 export function fetchProvinces(url,param){
     return (dispatch)=>{
         dispatch(requestProvinces(param));
-        util.apiRequest(url,param).then((res)=>{
+        apiRequest(url,param).then((res)=>{
             // console.log('provinces',res)
             dispatch(responseProvinces(param,res));
         })
@@ -91,7 +91,7 @@ function responseCities(param,res){
 export function fetchCities(url,param){
     return (dispatch)=>{
         dispatch(requestCities(param));
-        util.apiRequest(url,param).then((res)=>{
+        apiRequest(url,param).then((res)=>{
             dispatch(responseCities(param,res));
         })
     }
@@ -116,7 +116,7 @@ function responseDistricts(param,res){
 export function fetchDistricts(url,param){
     return (dispatch)=>{
         dispatch(requestDistricts(param));
-        util.apiRequest(url,param).then((res)=>{
+        apiRequest(url,param).then((res)=>{
             dispatch(responseDistricts(param,res));
         })
     }
@@ -141,7 +141,7 @@ function finishSaveReceiver(param,res){
 export function saveReceiver(param){
     return (dispatch)=>{
         dispatch(startSaveReceiver(param));
-        util.apiRequest("/savereceiver",param,{
+        apiRequest("/savereceiver",param,{
             method:"post",
             type:"json"
         }).then((res)=>{
