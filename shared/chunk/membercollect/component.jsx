@@ -48,7 +48,6 @@ class MembercollectList extends Component{
             <div className="collect-content">
                 <Header>
                     <span className="title">我的收藏</span>
-                    <span className="btn-right">+</span>
                 </Header>
                 <Node {...collect} />
                 <GoTop />
