@@ -49,22 +49,31 @@
 				}
 				.price{
 					display: flex;
+					font-family: Helvetica, sans-serif;
 					align-items: baseline;
 					position: absolute;
 					bottom: 0;
 					left: 0;
 					width: 100%;
-					span{
+					>span{
 						flex: 1;
 						display: block;
 						color: #ed1844;
-						font-size: .45rem;
+						font-size: .5rem;
 						font-weight: normal;
+						i{
+							font-style: none;
+							font-size: .4rem;
+							font-weight: normal;
+						}
 						&:last-child{
 							color: #aaa;
 							font-size: .3rem;
 							text-align: right;
 							text-decoration: line-through;
+							i{
+								font-size: .3rem;
+							}
 						}
 					}
 				}
