@@ -98,6 +98,15 @@
         },
         "vendor": "react"
     },
+    "receiver":{
+        "html": ["receiver.html"],
+        "path": "./client/bundle/receiver/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
     "orderlist":{
         "html": ["orderlist.html"],
         "path": "./client/bundle/orderlist/",

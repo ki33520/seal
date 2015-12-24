@@ -1,129 +1,61 @@
 @import "../../common/common";
-@import "../../common/iconfont.styl"
-@import "../../common/header.styl"
+@import "../../common/iconfont";
+@import "../../common/header";
 @import "../../common/router";
+@import "./receiver.css";
+@import "../../component/selected";
 body {
     background: #F1F1F1;
 }
-
 .receiver-panel {
     background: #FFF;
-    padding: .5rem .4rem;
-    margin: 0 0 .3rem 0;
+    margin-bottom:px2rem(8);
 }
-
-.receiver-container {
-    padding-bottom: 2.5rem;
-}
-
-.receiver-content {
-    font-size: .7rem;
-    .receivers {
-        .receiver {
-            &:first-child {
-                margin-top: .3rem;
-            }
-            @extend .receiver-panel;
-            font-size:.65rem;
-            .receiver-header {
-                margin: 0;
-                font-size: .7rem;
-                line-height: 1.5rem;
-                display: flex;
-                &>label {
-                    flex: 1;
-                    padding: 0 0 0 .25rem;
-                }
-                &>b {
-                    padding: 0 0 0 .25rem;
-                    font-weight: 400;
-                    flex: 2;
-                }
-                &>em {
-                    font-style: normal;
-                    flex: 1;
-                }
-            }
-            .receiver-detail {
-                padding: .4rem 0;
-                border-bottom: .05rem solid #DDD;
-            }
-            .receiver-footer {
-                padding: .3rem 0 0 0;
-                display: flex;
-                justify-content: flex-end;
-                align-items: center;
-                &>a {
-                    padding-right: .25rem;
-                    &>.iconfont {
-                        margin-right: .15rem;
-                    }
-                }
-                &>a:last-child {
-                    padding: 0;
-                }
-            }
-        }
-    }
-    .add-receiver {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #F9F9F9;
-        z-index: 100;
-        border-top: .05rem solid #DBDBDB;
-        height: 2.5rem;
-        padding: 0 .4rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        &>a {
-            padding: .4rem .5rem;
-            border: .05rem solid $pink-color;
-            color: $pink-color;
-            border-radius: .25rem;
-            &>.iconfont {
-                font-size: .7rem;
-                margin-right: .2rem;
-            }
-        }
-    }
-}
-
 
 .receiver-form-content {
-    font-size: .7rem;
     .receiver-form {
         .receiver-form-fieldset {
             @extend .receiver-panel;
+            &:last-child .receiver-form-row:first-child{
+                border:0 none;
+            }
             .receiver-form-row {
                 display: flex;
                 align-items: flex-start;
-                padding: .4rem 0;
-                line-height: 1.2rem;
+                justify-content:center;
+                padding: px2rem(8) 0;
+                border-top:px2rem(1) solid #D7D7D7;
+                margin:0 px2rem(10) 0 px2rem(5);
+                line-height: px2rem(24);
+                &>i{
+                    width:px2rem(6);
+                    color:#dd1847;
+                }
                 .receiver-form-label {
-                    color: #999;
-                    flex: 1;
+                    width:px2rem(65);
                 }
                 .receiver-form-field {
-                    flex: 6.5;
-                    &>input[type="text"],
-                    &>textarea {
+                    flex: 1;
+                    &>input[type="text"]{
                         border: 0 none;
                         margin: 0;
-                        line-height: 1.1rem;
-                        padding: 0 .5rem;
+                        padding:0;
+                        line-height: px2rem(24);
+                        width:100%;
+                        outline:none;
                     }
                 }
                 &.receiver-form-textarea-row {
                     .receiver-form-field {
                         flex: 3.5;
                         textarea {
-                            width: 90%;
-                            min-height: 2rem;
-                            line-height: 1.1rem;
-                            padding: .1rem .2rem;
+                            width: 100%;
+                            border: 0 none;
+                            margin: 0;
+                            padding:0;
+                            outline:none;
+                            min-height:px2rem(60);
+                            line-height:px2rem(24);
                         }
                     }
                 }

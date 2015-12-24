@@ -24,13 +24,13 @@ class ReceiverRouter extends Component{
                     currentRoute:"addreceiver"
                 });
             },
-            "updatereceiver/:id":(id)=>{
+            "/updatereceiver/:id":(id)=>{
                 this.setState({
                     currentRoute:"updatereceiver",
                     currentParam:{id}
                 });
             },
-            "receiver":()=>{
+            "/receiver":()=>{
                 this.setState({
                     currentRoute:"index"
                 });
@@ -75,7 +75,9 @@ class ReceiverRouter extends Component{
         }
         const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
-            <TransitionGroup component="div" transitionName={transitionName} transitionLeave={false}>
+            <TransitionGroup component="div" transitionName={transitionName} 
+            transitionLeave={false} 
+            transitionEnterTimeout={500} transitionLeaveTimeout={300}>
             {currentView}
             </TransitionGroup>
         );
