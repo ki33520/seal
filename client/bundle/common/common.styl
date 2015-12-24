@@ -150,6 +150,10 @@ a,a:visited,a:hover{
     zoom: 1;
 }
 
+px2rem($px){
+    return $px/32 * 1rem;
+}
+
 @media screen and (max-width:320px){
     html {
         font-size:32px;

@@ -12,19 +12,28 @@ class Coupon extends Component{
     }
     renderCouponRow(){
         const {coupons} = this.props;
+        if(coupons.length === 0){
+            return (
+             <div className="empty">
+                <img src="/client/asset/images/empty_selectCoupon.png" />
+                <span>您目前没有可用优惠券哟~</span>
+            </div>
+            )
+        }
         return coupons.map((coupon,i)=>{
             const key = "coupon-" + i;
             return (
-                <div className="coupon-row tepin-coupon" onClick={this.handleCheck.bind(this,coupon)}>
-                <section className="coupon-brief">
-                    <div className="coupon-price">{coupon.shortName}</div>
-                    <div className="coupon-term">{coupon.assertion}</div>
-                </section>
-                <section className="coupon-detail">
-                    <div className="coupon-kind">特品汇www.tepin.com</div>
-                    <div className="coupon-date">{coupon.useDate}&nbsp;-&nbsp;{coupon.validityDate}</div>
-                    <div className="coupon-explain">{coupon.couponDesc}</div>
-                </section>
+                <div className="coupon haitao hover">
+                    <div className="left">
+                        <div className="price"><em>&yen;</em>{coupon.shortName}</div>
+                        <div className="term">{coupon.assertion}</div>
+                    </div>
+                    <div className="right">
+                        <div className="kind">海外购www.tepin.hk</div>
+                        <div className="date">{coupon.useDate}-{coupon.validityDate}</div>
+                        <div className="explain">{coupon.couponDesc}</div>
+                    </div>
+                    <div className="selected" onClick={this.handleCheck.bind(this,coupon)}></div>
                 </div>
             )
         })
@@ -32,8 +41,12 @@ class Coupon extends Component{
     render(){
         return (
             <div className="coupon-content">
-            <Header title="优惠券"/>
+            <Header>选择优惠券</Header>
+            <div className="listMain">
+            <div className="list_youa">
             {this.renderCouponRow()}
+            </div>
+            </div>
             </div>
         )
     }

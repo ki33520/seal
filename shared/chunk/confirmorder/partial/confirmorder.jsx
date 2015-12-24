@@ -6,7 +6,7 @@ import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
 import Header from "../../common/header.jsx";
 
-import OrderGoods from "../../common/ordergoods.jsx";
+import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";
 
 import {alert} from "../../common/action.es6";
@@ -16,66 +16,63 @@ import {submitOrder,changeDeliveryTime,toggleTicket,toggleBalance,changePaypassw
 
 class ConfirmOrder extends Component{
     renderReceiver(receiver){
-        return (
-            <div className="confirm-receiver">
-            <a href="#/receiver">
-                <div className="confirm-receiver-selected">
-                <p>{receiver.name}&nbsp;{receiver.mobileNumber}</p>
-                <p>{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
+        if(receiver === null){
+            return (
+                <div className="order-time noReceive">
+                    <span>
+                        <i className="iconfont icon-plus"></i>
+                        请添加您的收货地址
+                    </span>
                 </div>
-                <div className="confirm-receiver-caret"><Icon icon="right-open"/></div>
-            </a>
-            </div>
-        )
-    }
-    renderDeliveryTime(){
-        const options = [
-            {label:'工作日,双休日及节假日均可送货',value:'NOLIMIT'},
-            {label:'仅周一至周五送货',value:'WORKDAY'},
-            {label:'仅双休日及节假日送货',value:'EXCEPTWORKDAY'}
-        ]
-        const {checkedDeliveryTime} = this.props.order;
+            )
+        }
         return (
-            <div className="confirm-delivery-time">
-            <Selected options={options} 
-            onChange={this.handleChangeDeliveryTime.bind(this)}
-            value={checkedDeliveryTime} 
-            selectedIcon="check" 
-            unselectedIcon="check"/>
+            <a href="#/receiver">
+            <div className="order-time">
+            <p>{receiver.name}<span className="mobNum">{receiver.mobileNumber}</span></p>
+            <p>433101**********1011<em>实名</em></p>
+            <p className="fs12px">{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
+            <span className="order-icpe"><i className="iconfont icon-right"></i></span>
             </div>
+            </a>
         )
-    }
-    handleChangeDeliveryTime(deliveryTime){
-        const {dispatch} = this.props;
-        dispatch(changeDeliveryTime(deliveryTime));
     }
     renderTotal(order){
         return (
-            <div className="order-total">
-                <div><span>商品金额</span><b>￥{order.productFee}</b></div>
-                <div><span>运费</span><b>￥{order.shipFee}</b></div>
-                <div><span>活动优惠</span><b>￥{order.promoAmount}</b></div>
-                <div><span>优惠券</span><b>￥{order.promoAmount}</b></div>
-                <div><span>电子券</span><b>￥{order.promoAmount}</b></div>
-                <div><span>余额</span><b>￥{order.promoAmount}</b></div>
-                <div><span>合计金额</span><b>￥{order.totalAmount}</b></div>
-            </div>
-        )
-    }
-    renderBalanceAndTicket(){
-        const {dispatch,order} = this.props;
-        const handleToggleTicket = (useTicket)=>{
-            dispatch(toggleTicket(useTicket))
-        }
-        const handleToggleBalance = (useBalance)=>{
-            dispatch(toggleBalance(useBalance))
-        }
-        return (
-            <div className="confirm-balance-ticket">
-            <div className="confirm-balance"><Checkbox onChange={handleToggleTicket}/><div className="check-label"
-            >电子券付款<label>(当前电子券<b>￥{order.ticket}</b>)</label></div></div>
-            <div className="confirm-balance"><Checkbox onChange={handleToggleBalance}/><div className="check-label"
-            >余额付款<label>(当前余额<b>￥{order.balance}</b>)</label></div></div>
+            <div className="count-box">
+                <div className="title">
+                    <div className="fl title-txt">结算</div>
+                </div>
+                <div className="bottom-line">
+                    <div className="label">商品总价：</div>
+                    <div className="data"> - &yen;<span>{order.productFee}</span></div>
+                </div>
+                <div className=" bottom-line">
+                    <div className="label">国内运费：</div>
+                    <div className="red-box"> 包邮 </div>
+                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                </div>
+                <div className=" bottom-line">
+                    <div className="label">国际运费：</div>
+                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                </div>
+                <div className="bottom-line">
+                    <div className="label">关税：</div>
+                    <div className="red-box">免税</div>
+                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                </div>
+                <div className="bottom-line intro">
+                    <div className="label">优惠活动：</div>
+                    <div className="data"> - &yen;<span>{order.promoAmount}</span></div>
+                </div>
+                <div className="bottom-line intro">
+                    <div className="label">优惠券：</div>
+                    <div className="data"> - &yen; <span id="coupon_money">{order.promoAmount}</span></div>
+                </div>
+                <div className=" bottom-line no-border">
+                    <div className="label">应付金额：</div>
+                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalAmount}</span></div>
+                </div>
             </div>
         )
     }
@@ -128,23 +125,21 @@ class ConfirmOrder extends Component{
         const {order,alertActive,alertContent} = this.props;
         return (
             <div className="confirm-order-content">
-            <Header title="确认订单"/>
+            <Header>确认订单</Header>
             {this.renderReceiver(order.checkedReceiver)}
-            {this.renderDeliveryTime()}
             <OrderGoods {...this.props.order}/>
-            <a href="#/coupon">
-            <div className="confirm-coupon">
-            <div className="confirm-coupon-status">优惠券<b>{order.checkedCoupon === undefined?"":order.checkedCoupon.couponDefName}</b></div>
-            <div className="confirm-coupon-caret"><Icon icon="right-open"/></div>
+            <div className="ckTo-box clearfix">
+                <a href="#/coupon">
+                <div className="intro">
+                <span>优惠券</span>
+                <span><em><i>券</i>新人5元券</em><i className="iconfont icon-right"></i></span>
+                </div>
+                </a>
             </div>
-            </a>
-            {this.renderBalanceAndTicket()}
-            <Invoice {...this.props.order}/>
             {this.renderTotal(order)}
-            <div className="order-toolbar">
-                <div className="order-sumprice">合计:<b>￥{order.totalAmount}</b></div>
-                <a href="javascript:void(null)" onClick={this.submitOrder.bind(this)}
-                >提交订单</a>
+            <div className="confirmBtns">
+                <a href="javascript:void(0);" className="confirm_btn" 
+                onClick={this.submitOrder.bind(this)}>提交订单</a>
                 {this.renderSubmitForm()}
             </div>
             <Alert active={alertActive}>{alertContent}</Alert>

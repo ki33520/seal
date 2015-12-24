@@ -71,22 +71,22 @@ class MemberCenter extends Component{
                     </div>
                     
                     <div className="userGoods">
-                        <a href="/membercenter/order" className="userGoods_1">
+                        <a href="/orderlist?status=STATUS_NOT_PAY?status=STATUS_NOT_PAY?status=STATUS_NOT_PAY" className="userGoods_1">
                             <em></em>
                             <span>待付款</span>
                             <i>{countOrder.paymentNum}</i>
                         </a>
-                        <a href="/membercenter/order" className="userGoods_2">
+                        <a href="/orderlist?status=STATUS_NOT_SEND" className="userGoods_2">
                             <em></em>
                             <span>待发货</span>
                             <i>{countOrder.sendNum}</i>
                         </a>
-                        <a href="/membercenter/order" className="userGoods_3">
+                        <a href="/orderlist?status=STATUS_SEND" className="userGoods_3">
                             <em></em>
                             <span>待收货</span>
                             <i>{countOrder.signNum}</i>
                         </a>
-                        <a href="/membercenter/order" className="userGoods_4">
+                        <a href="/orderlist?status=STATUS_NOT_COMMENT" className="userGoods_4">
                             <em></em>
                             <span>待评价</span>
                             <i>{countOrder.commentNum}</i>
@@ -109,7 +109,7 @@ class MemberCenter extends Component{
                 </div>
 
                 <div className="helpList">
-                    <a href="/membercenter/address">
+                    <a href="/membercenter/receiver">
                         <dl>
                             <dt>
                                 <img src="client/asset/images/user_icon_2.png" />
