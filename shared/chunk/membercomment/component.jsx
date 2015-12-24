@@ -58,7 +58,8 @@ class CommentList extends Component{
         this.beginRefresh(0,flag);
     }
     render(){
-        var {allComment,showComment} = this.props;
+        var {allComment,showComment,activeIndex} = this.props;
+        var a=0,b=1;
         return (
             <div className="comment-content">
             <div className="comment-header">
@@ -67,11 +68,11 @@ class CommentList extends Component{
                 </Header>
             </div>
             <div className="tab-content">
-                <Tabs handleToggleFlag={this.toggleFlag.bind(this)} effect="slide">
-                    <TabsItem title="全部评论">
+                <Tabs handleToggleFlag={this.toggleFlag.bind(this)} effect="slide" activeIndex={this.state.displayFlag}>
+                    <TabsItem title="全部评论" handleTouch={this.toggleFlag.bind(this)}>
                         <Node comments={allComment} />
                     </TabsItem>
-                    <TabsItem title="晒单">
+                    <TabsItem title="晒单" handleTouch={this.toggleFlag.bind(this)}>
                         <Node comments={showComment} />
                     </TabsItem>
                 </Tabs>

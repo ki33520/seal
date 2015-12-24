@@ -19,6 +19,7 @@ body{
 				padding: 0 .1rem .25rem .1rem;
 				margin-bottom: .25rem;
 				border-bottom: 1px solid #d7d7d7;
+				font-size: .35rem;
 				.col{
 				}
 				.col-left{
@@ -57,6 +58,7 @@ body{
 				display: flex;
 				margin-bottom: .25rem;
 				padding: 0 .2rem;
+				line-height: .5rem;
 				.stars{
 					flex: 4;
 					display: flex;
@@ -64,16 +66,35 @@ body{
 					color: #ffdd00;
 					.iconfont{
 						flex: 1;
+						font-size: .43rem;
 					}
 				}
 				.date{
 					flex: 5;
+					font-size: .2rem;
 					color: #999;
 					text-align: right;
 				}
 			}
 			.content{
 				padding: 0 .2rem;
+			}
+			.pic-list{
+				display: flex;
+				padding: .3rem .1rem 0 .1rem;
+				>li{
+					width: 25%;
+					line-height: 0;
+					>img{
+						width: 2rem;
+						height: 2rem;
+						box-sizing: content-box;
+						border: 1px solid #e0e0e0;
+					}
+				}
+				&.hide{
+					display: none;
+				}
 			}
 		}
 	}
@@ -111,7 +132,6 @@ body{
 	.polyTabs {
 		ul{
 			display: flex;
-			height: 1.16rem;
 			background: #FFF;
 			justify-content: center;
 			align-items: center;
@@ -120,10 +140,11 @@ body{
 				display: block;
 				text-align: center;
 				line-height: 1.16rem;
-				border-left: .05rem solid #DEDEDE;
-				border-bottom: .1rem solid #DEDEDE;
+				border-bottom: 1px solid #DEDEDE;
+				padding-bottom: 2px;
 				&.active {
-					border-bottom: .1rem solid #811da1;
+					border-bottom: 3px solid #811da1;
+					padding-bottom: 0;
 					color: #811da1;
 				}
 			}
@@ -131,17 +152,20 @@ body{
 	}
 	.tabs-content {
 		position: relative;
+		width: 100%;
+		overflow: hidden;
 		.tabs-item {
-			position: absolute;
+			flex: 1;
 			z-index: 100;
 			width: 100%;
 			transform: translateX(-100%);
+			transition: transform height 2s;
 			opacity: 0;
-			display: none;
+			height: 0;
 			visibility: hidden;
 			&.active {
 				opacity: 1;
-				display: block;
+				height: auto;
 				transform: translateX(0);
 				visibility: visible;
 			}
