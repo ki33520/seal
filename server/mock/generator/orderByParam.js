@@ -22,9 +22,9 @@ var orderList = {
         "pageNo":1,
         "list":function(){
             var list = [];
-            for(var i = 0;i<5;i++){
+            for(var i = 0;i<= faker.random.number(5);i++){
                 var goods = [];
-                for (var i = 0; i <= faker.random.number(4); i++) {
+                for (var j = 0; j <= faker.random.number(4); j++) {
                     goods.push({
                         id:i,
                         imageUrl:faker.image.food(300,300),
@@ -34,6 +34,7 @@ var orderList = {
                     })
                 };
                 var order = {
+                    id:j,
                     orderNo:faker.random.uuid(),
                     createdAt:faker.date.past().getTime(),
                     status:orderStatus[faker.random.number(7)],

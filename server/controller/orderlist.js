@@ -19,7 +19,6 @@ var orderList = function(req, res,next) {
             if (req.xhr === true) {
                 res.json(resp);
             } else {
-                console.log(resp.page)
                 var initialState = {
                     isFetched: true,
                     pagination: resp.page

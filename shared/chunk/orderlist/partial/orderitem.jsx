@@ -28,31 +28,27 @@ class OrderItem extends Component{
         if(goods.length > 1){
             goods = goods.map((good,i)=>{
                 return (
-                    <a className="img_wrap J_ytag cartlist" href="#" key={i}>
-                    <image src={good.imageUrl} />
-                    </a>
+                    <span className="img_wrap J_ytag cartlist" key={i}>
+                    <image src={good.imageUrl} key={i}/>
+                    </span>
                 )
             })
             return (
-                <div className="order-list">
-                    <div className="J_moveRight">
-                        <div className="clearfix">{goods}</div>
-                    </div>
+                <div className="J_moveRight">
+                    <div className="clearfix">{goods}</div>
                 </div>
             )
         }
         let good = goods[0];
         return (
-            <div className="order-list">
-                <div className="J_moveRight">
-                    <div className="clearfix">
-                        <a className="img_wrap J_ytag cartlist" href="#">
-                            <Image src={good.imageUrl} />
-                        </a>
-                        <div className="gd_info">
-                            <p className="name">{good.title}</p>
-                            <p className="value">&yen;{good.salePrice}</p>
-                        </div>
+            <div className="J_moveRight">
+                <div className="clearfix">
+                    <span className="img_wrap J_ytag cartlist">
+                        <Image src={good.imageUrl} />
+                    </span>
+                    <div className="gd_info">
+                        <p className="name">{good.title}</p>
+                        <p className="value">&yen;{good.salePrice}</p>
                     </div>
                 </div>
             </div>
@@ -69,7 +65,7 @@ class OrderItem extends Component{
                         <em>{orderStatus[status]}</em>
                     </div>
                 </div>
-                {this.renderGoods(goods)}
+                <div className="order-list"><a href={"/orderdetail/"+id}>{this.renderGoods(goods)}</a></div>
                 <div className="order-down">
                     <span>合计：<em>&yen;{finalFee}</em></span>
                     {this.renderButtons()}
