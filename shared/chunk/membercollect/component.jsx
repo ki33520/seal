@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
-import {apiRequest} from "../../lib/util.es6";
+import util,{apiRequest} from "../../lib/util.es6";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 import GoTop from "../../component/gotop.jsx";
@@ -20,7 +20,7 @@ class MembercollectList extends Component{
         const {collect,isFetching,isFetched} = props;
     }
     componentDidMount(){
-        dom.registerPullDownEvent(()=>{
+        util.registerPullDownEvent(()=>{
             this.beginRefresh();
         }.bind(this));
     }
@@ -48,7 +48,6 @@ class MembercollectList extends Component{
             <div className="collect-content">
                 <Header>
                     <span className="title">我的收藏</span>
-                    <span className="btn-right">+</span>
                 </Header>
                 <Node {...collect} />
                 <GoTop />

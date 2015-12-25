@@ -15,7 +15,7 @@ export class Tabs extends Component{
         if(nextProps.activeIndex !== undefined && 
             nextProps.activeIndex !== this.props.activeIndex){
             this.setState({
-                prevIndex:this.prop.activeIndex,
+                prevIndex:this.props.activeIndex,
                 activeIndex:nextProps.activeIndex
             })
         }
@@ -51,7 +51,7 @@ export class Tabs extends Component{
     renderContent(child,index){
         return React.cloneElement(child,{
             active:index === this.state.activeIndex,
-            key:child.key ? child.key:index
+            index:child.key ? child.key:index
         });
     }
     render(){
@@ -78,14 +78,39 @@ Tabs.defaultProps = {
 }
 
 export class TabsItem extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            activeIndex:props.activeIndex,
+            prevIndex:null
+        }
+    }
+    handleTouch(index,e){
+        e && e.preventDefault();
+        var index = index===0? 1: 0;
+        const prevIndex = this.state.activeIndex;
+        const {handleTouch} = this.props;
+        handleTouch && handleTouch(index,e);
+        this.setState({
+            activeIndex:index,
+            prevIndex
+        },()=>{
+            this.props.onSelect(index);
+        })
+    }
     render(){
-        const {active,key} = this.props;
+        const {active,index,handleTouch} = this.props;
         const classes = classNames("tabs-item",{
             active
         })
+        // onClick={this.handleTouch.bind(this,index)}
         return (
-            <div className={classes} key={"tabs-item-" + key}>{this.props.children}</div>
+            <div className={classes} key={"tabs-item-" + index}>{this.props.children}</div>
         )
     }
 }
 
+TabsItem.defaultProps = {
+    activeIndex:0,
+    onSelect:function(){}
+}

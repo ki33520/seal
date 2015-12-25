@@ -1,12 +1,22 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
 
 class Node extends Component{
     renderNode(list){
         return list.map((child,i)=>{
             const key = "comment-" + i;
-            var stars = [];
+            var stars = [],
+                imagesUrl = child.imageUrl.split(','),
+                picList = [];
+            for(let i=1;i<imagesUrl.length;i++){
+                picList.push(<li key={i}><img src={imagesUrl[i]} /></li>);
+            };
+            const listclass = classNames({
+                "pic-list": true,
+                "hide": !picList.length
+            })
             for(let i=0;i<5;i++){
                 let star;
                 if(i<child.stars){
@@ -20,7 +30,7 @@ class Node extends Component{
                 <li id={child.goodId} key={key}>
                     <div className="product">
                         <div className="col col-left">
-                            <img src={child.imageUrl} />
+                            <img src={imagesUrl[0]} />
                         </div>
                         <div className="col col-right">
                             <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
@@ -34,6 +44,10 @@ class Node extends Component{
                         <div className="date">{child.createAt}</div>
                     </div>
                     <div className="content">{child.content}</div>
+                    <ul className={listclass}>
+                        {picList}
+                    </ul>
+                    
                 </li>
             )
         });

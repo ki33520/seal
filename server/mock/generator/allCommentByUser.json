@@ -8,7 +8,7 @@
         "list":[{
             "title":"丝纷 测试商品 XS 白粉红",
             "goodId":"3123",
-            "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg,http://imgtest.tepin.com/null/tepin-test/d/1/o/1448265567648579.jpg,http://imgtest.tepin.com/null/tepin-test/e/g/w/1448265577814648.jpg",
             "createAt":"2015-11-11 12:00",
             "stars": 4,
             "origin": "韩国",
@@ -26,7 +26,7 @@
        },{
             "title":"丝纷 测试商品 XS 白粉红",
             "goodId":"xx",
-            "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg,http://imgtest.tepin.com/null/tepin-test/d/1/o/1448265567648579.jpg,http://imgtest.tepin.com/null/tepin-test/e/g/w/1448265577814648.jpg",
             "createAt":"2015-11-11 12:00",
             "stars": 3,
             "origin": "韩国",
@@ -71,7 +71,7 @@
        },{
             "title":"丝纷 测试商品 XS 白粉红",
             "goodId":"xx",
-            "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg",
+            "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg,http://imgtest.tepin.com/null/tepin-test/d/1/o/1448265567648579.jpg,http://imgtest.tepin.com/null/tepin-test/e/g/w/1448265577814648.jpg",
             "createAt":"2015-11-11 12:00",
             "stars": 5,
             "origin": "韩国",
