@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
-import {apiRequest} from "../../lib/util.es6";
+import util,{apiRequest} from "../../lib/util.es6";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 import GoTop from "../../component/gotop.jsx";
@@ -24,7 +24,7 @@ class CommentList extends Component{
         }
     }
     componentDidMount(){
-        dom.registerPullDownEvent(()=>{
+        util.registerPullDownEvent(()=>{
             this.beginRefresh(1);
         }.bind(this));
     }

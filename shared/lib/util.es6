@@ -77,3 +77,10 @@ export function registerPullDownEvent(callback) {
         }
     });
 }
+const util = {
+    bindEvent,
+    unbindEvent,
+    scrollTop,
+    registerPullDownEvent
+}
+export default util;
