@@ -33,6 +33,77 @@ var receiver = function(req, res,next) {
     })
 }
 
+var addReceiver = function(req, res) {
+    var initialState = {
+        isFetched: true,
+        receiver: {
+            isDefault: true,
+            provinces: [{
+                value: "",
+                label: "请选择"
+            }],
+            cities: [{
+                value: "",
+                label: "请选择"
+            }],
+            districts: [{
+                value: "",
+                label: "请选择"
+            }]
+        },
+    };
+    var markup = util.getMarkupByComponent(ReceiverForm({
+        initialState: initialState
+    }));
+    res.render('receiverform', {
+        markup: markup,
+        initialState: initialState
+    })
+
+}
+
+var updateReceiver = function(req, res, next) {
+    var id = req.params.id;
+    var user = req.session.user;
+    util.fetchAPI("receiverById", {
+        addressId:id
+    },true).then(function(resp) {
+        if (resp.code === "success") {
+            var address = resp.object;
+            var receiver = {
+                id: address.id,
+                consignee: address.name,
+                mobile: address.mobileNumber,
+                zipcode: address.zipcode,
+                address: address.address,
+                province: address.provinceCode,
+                city: address.cityCode,
+                district: address.districtCode,
+                provinces: [{
+                    value: "",
+                    label: "请选择"
+                }],
+                cities: [{
+                    value: "",
+                    label: "请选择"
+                }],
+                districts: [{
+                    value: "",
+                    label: "请选择"
+                }],
+                isDefault: address.defaultChecked === 1
+            };
+            var initialState = {
+                isFetched: true,
+                receiver: receiver,
+            };
+            res.json(initialState);
+        } else {
+            next(new Error(resp.msg));
+        }
+    })
+}
+
 var saveReceiver = function(req, res, next) {
     if (req.xhr === false) {
         return;
@@ -123,6 +194,8 @@ var cascadeArea = function(req, res) {
 
 module.exports = {
     receiver: receiver,
+    addReceiver:addReceiver,
+    updateReceiver:updateReceiver,
     saveReceiver: saveReceiver,
     cascadeArea: cascadeArea
 };

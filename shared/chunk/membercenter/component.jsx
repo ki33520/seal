@@ -71,7 +71,7 @@ class MemberCenter extends Component{
                     </div>
                     
                     <div className="userGoods">
-                        <a href="/orderlist?status=STATUS_NOT_PAY?status=STATUS_NOT_PAY?status=STATUS_NOT_PAY" className="userGoods_1">
+                        <a href="/orderlist?status=STATUS_NOT_PAY" className="userGoods_1">
                             <em></em>
                             <span>待付款</span>
                             <i>{countOrder.paymentNum}</i>
