@@ -80,7 +80,6 @@ Tabs.defaultProps = {
 export class TabsItem extends Component{
     constructor(props){
         super(props);
-        console.log(props)
         this.state = {
             activeIndex:props.activeIndex,
             prevIndex:null
