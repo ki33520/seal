@@ -1,9 +1,9 @@
 'use strict';
 
 import React,{Component} from "react";
-import LazyLoad from "../../../component/lazyload/lazyload.jsx";
-import Image from "../../../component/lazyload/image.jsx";
+import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
+import moment from "moment";
 
 const orderStatus = {
     "STATUS_NOT_PAY":"待付款",
@@ -16,30 +16,64 @@ const orderStatus = {
 };
 
 class OrderItem extends Component{
-    render(){
-        const {createdAt,id,orderItemList,orderNo,finalFee,status} = this.props;
-        const imageUrl = orderItemList[0].imageUrl;
+    renderButtons(){
         return (
-            <div className="order-list-item">
-            <div className="item-title">
-            下单时间:<b>{createdAt}</b>
+            <div className="order-buttons">
+            <a href="#" className="pop_c">去支付</a>
+            <a href="#" className="view_c">去支付</a>
             </div>
-            <a href={"/orderdetail/"+id}>
-            <div className="item-content">
-                <div className="item-thumbnail">
-                <LazyLoad offset={100}>
-                <Image src={imageUrl}>
-                </Image>
-                </LazyLoad>
+        )
+    }
+    renderGoods(goods){
+        if(goods.length > 1){
+            goods = goods.map((good,i)=>{
+                return (
+                    <a className="img_wrap J_ytag cartlist" href="#" key={i}>
+                    <image src={good.imageUrl} />
+                    </a>
+                )
+            })
+            return (
+                <div className="order-list">
+                    <div className="J_moveRight">
+                        <div className="clearfix">{goods}</div>
+                    </div>
                 </div>
-                <div className="item-detail">
-                    <p><span>订单编号:<b>{orderNo}</b></span></p>
-                    <p><span>订单金额:<b>￥{finalFee}</b></span></p>
-                    <p><span>订单状态:<b>{orderStatus[status]}</b></span></p>
+            )
+        }
+        let good = goods[0];
+        return (
+            <div className="order-list">
+                <div className="J_moveRight">
+                    <div className="clearfix">
+                        <a className="img_wrap J_ytag cartlist" href="#">
+                            <Image src={good.imageUrl} />
+                        </a>
+                        <div className="gd_info">
+                            <p className="name">{good.title}</p>
+                            <p className="value">&yen;{good.salePrice}</p>
+                        </div>
+                    </div>
                 </div>
-                <div className="item-caret"><Icon icon="right-open"/></div>
             </div>
-            </a>
+        )
+    }
+    render(){
+        const {createdAt,id,orderNo,goods,finalFee,status} = this.props;
+        return (
+            <div className="order-box">
+                <div className="order-up">
+                    <span>{moment(createdAt).format("YYYY-MM-DD")}</span>
+                    <div className="right">
+                        <i>01:15:47&nbsp;后自动取消</i>
+                        <em>{orderStatus[status]}</em>
+                    </div>
+                </div>
+                {this.renderGoods(goods)}
+                <div className="order-down">
+                    <span>合计：<em>&yen;{finalFee}</em></span>
+                    {this.renderButtons()}
+                </div>
             </div>
         )
     }

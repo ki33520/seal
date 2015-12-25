@@ -31,7 +31,7 @@ class OrderListApp extends React.Component{
         });
         return (
             <Provider store={store}>
-            {()=><OrderListConnected />}
+            <OrderListConnected />
             </Provider>
         )
     }

@@ -102,7 +102,7 @@ export class SlideTabsItem extends Component{
     }
     render(){
         const {key,active} = this.props;
-        const classes = classNames("slide-tabs-item",{
+        const classes = classNames("slide-tabs-item",this.props.className,{
             active
         })
         return (
