@@ -98,7 +98,7 @@ class MemberCenter extends Component{
                     <a href="/orderlist">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_1.png" />
+                                <img src="/client/asset/images/user_icon_1.png" />
                                 全部订单
                             </dt>
                             <dd>
@@ -112,7 +112,7 @@ class MemberCenter extends Component{
                     <a href="/receiver">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_2.png" />
+                                <img src="/client/asset/images/user_icon_2.png" />
                                 收货地址
                             </dt>
                             <dd>
@@ -123,7 +123,7 @@ class MemberCenter extends Component{
                     <a href="/membercenter/collect">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_3.png" />
+                                <img src="/client/asset/images/user_icon_3.png" />
                                 我的收藏
                             </dt>
                             <dd>
@@ -134,7 +134,7 @@ class MemberCenter extends Component{
                     <a href="/membercenter/comment">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_4.png" />
+                                <img src="/client/asset/images/user_icon_4.png" />
                                 我的评论
                                 <em className="dot"></em>
                             </dt>
@@ -146,7 +146,7 @@ class MemberCenter extends Component{
                     <a href="/coupon">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_5.png" />
+                                <img src="/client/asset/images/user_icon_5.png" />
                                 优惠券
                                 <em className="dot"></em>
                             </dt>
@@ -158,7 +158,7 @@ class MemberCenter extends Component{
                     <a href="/membercenter/update">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_6.png" />
+                                <img src="/client/asset/images/user_icon_6.png" />
                                 账户设置
                             </dt>
                             <dd>
@@ -172,7 +172,7 @@ class MemberCenter extends Component{
                     <a href="/aboutus">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_7.png" />
+                                <img src="/client/asset/images/user_icon_7.png" />
                                 关于我们
                             </dt>
                             <dd>
@@ -186,7 +186,7 @@ class MemberCenter extends Component{
                     <a href="/help">
                         <dl>
                             <dt>
-                                <img src="client/asset/images/user_icon_8.png" />
+                                <img src="/client/asset/images/user_icon_8.png" />
                                 帮助反馈
                             </dt>
                             <dd>

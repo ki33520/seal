@@ -58,7 +58,7 @@ class CommentList extends Component{
         this.beginRefresh(0,flag);
     }
     render(){
-        var {allComment,showComment,activeIndex} = this.props;
+        var {allComment,showComment,activeIndex,isFetching} = this.props;
         var a=0,b=1;
         return (
             <div className="comment-content">
@@ -76,6 +76,8 @@ class CommentList extends Component{
                         <Node comments={showComment} />
                     </TabsItem>
                 </Tabs>
+                <GoTop />
+                <Refresher active={isFetching} />
             </div>
             <GoTop />
             </div>
