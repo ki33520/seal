@@ -31,7 +31,7 @@ export class SlideTabs extends Component{
         this.setState({
             activeIndex:i,
             // navbarSlidable:true,
-        })
+        },()=>this.props.onSelect())
     }
     componentDidMount(){
         this.initialize()
@@ -39,10 +39,16 @@ export class SlideTabs extends Component{
     initialize(){
         let contentNode = ReactDOM.findDOMNode(this.refs["content"])
         if(this.props.axis === "x"){
-            let contentNodeWidth = contentNode.offsetWidth * contentNode.children.length
-            contentNode.style.width = `${contentNodeWidth}px`
+            let contentNodeWidth = contentNode.parentNode.parentNode.offsetWidth * contentNode.children.length
+            // contentNode.style.width = `${contentNodeWidth}px`
+            // this.setState({
+            //     contentStyle:{
+            //         width:`${contentNodeWidth}px`
+            //     }
+            // })
+            // contentNode.children.style.width = '320px';
         }else{
-            let contentNodeHeight = contentNode.offsetHeight * contentNode.children.length
+            let contentNodeHeight = contentNode.parentNode.parentNode.offsetHeight * contentNode.children.length
             contentNode.style.height = `${contentNodeHeight}px`
         }
     }
@@ -65,16 +71,18 @@ export class SlideTabs extends Component{
                 </Slidable>
             )
         }
-        return <div className="slide-tabs-navbar slide-tabs-navbar-fixed">{navigators}</div>
+        return <div className="slide-tabs-navbar">{navigators}</div>
     }
     renderTabsItem(child,index){
         return React.cloneElement(child,Object.assign({},child.props,{
             active:(index === this.state.activeIndex),
-            key:index
+            key:index,
+            axis:this.props.axis
         }))
     }
     render(){
         const classes = classNames("slide-tabs",{
+            "slide-tabs-fixed":this.props.navbarSlidable === false,
             "slide-tabs-vertical":this.props.axis === "y"
         })
         return (
@@ -99,14 +107,36 @@ SlideTabs.defaultProps = {
 export class SlideTabsItem extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            itemStyle:null
+        }
+    }
+    componentDidMount(){
+        let contentNode = ReactDOM.findDOMNode(this)
+        let itemStyle = {}
+        if(this.props.axis === "x"){
+            itemStyle.width = contentNode.parentNode.parentNode.offsetWidth
+        }else{
+            itemStyle.height = contentNode.parentNode.parentNode.offsetHeight
+        }
+        this.setState({
+            itemStyle
+        })
     }
     render(){
         const {key,active} = this.props;
         const classes = classNames("slide-tabs-item",this.props.className,{
             active
         })
+        let children = this.props.children
+        if(React.Children.count(this.props.children) === 1){
+            let child = React.Children.only(this.props.children)
+            children = React.cloneElement(child,Object.assign({},child.props,{
+                redraw:this.state.itemStyle !== null
+            }))
+        }
         return (
-            <div className={classes} key={key}>{this.props.children}</div>
+            <div className={classes} key={key} style={this.state.itemStyle}>{children}</div>
         )
     }
 }

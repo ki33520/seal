@@ -3,14 +3,14 @@ import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
-import Weather from "./component.jsx";
+import Index from "./component.jsx";
 import * as actions from "./action.es6";
 
-let WeatherConnected = connect((state)=>{
+let IndexConnected = connect((state)=>{
     return state;
-})(wrapComponentWithActions(Weather,actions));
+})(wrapComponentWithActions(Index,actions));
 
-class WeatherApp extends React.Component{
+class IndexApp extends React.Component{
     render(){
         const {weather} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
@@ -21,10 +21,10 @@ class WeatherApp extends React.Component{
         });
         return (
             <Provider store={store}>
-            <WeatherConnected />
+            <IndexConnected />
             </Provider>
         )
     }
 }
 
-export default WeatherApp;
+export default IndexApp;

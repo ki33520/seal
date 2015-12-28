@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<WeatherApp initialState={initialState} />,document.getElementById('weather'));
+        ReactDOM.render(<WeatherApp initialState={initialState} />,document.getElementById('index'));
 }
 
 if(typeof window.addEventListener){

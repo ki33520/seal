@@ -64,11 +64,10 @@ var payType = [{
 
 
 var orderDetail = function(req, res) {
-    var config = req.app.locals.config;
     var id = req.params.id;
-    util.apiRequest(config.api.orderById.url, {
+    util.fetchAPI("orderById", {
         orderId: id
-    }).then(function(resp) {
+    },true).then(function(resp) {
         if (resp.code === "success") {
             var order = resp.object;
             // _.map(order.orderItemList, function(v, k) {

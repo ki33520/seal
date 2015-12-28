@@ -29,7 +29,7 @@ class OrderDetailApp extends React.Component{
         });
         return (
             <Provider store={store}>
-            {()=><OrderDetailConnected />}
+            <OrderDetailConnected />
             </Provider>
         )
     }
