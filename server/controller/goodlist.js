@@ -5,28 +5,89 @@ var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 
-var goodList = function(req, res, next) {
+function formatGoodsInfo(result){
+    var goodsList = [];
+    var productNames = [];
+    var brandNames=[];
+    var categoryNames=[];
 
-    var pageIndex = req.query.pageIndex || 1;
+    if(result.cbls.length) {
+        result.cbls.map((v)=>{
+            goodsList.push({
+                smallImageUrl:'/client/asset/' + v.imageUrlWap,
+                salesPrice:v.salesPrice,
+                originPrice:v.originPrice,
+                discounts:v.discounts,
+                isSaleOut:v.localStock==="0",
+                singleCode:v.singleCode,
+                materTitle:v.materTitle,
+                productArea:v.productArea,
+                flag:'/client/asset/'+v.flag,
+                activityType:v.activityType
+            })
+        })
+    }
+
+    if(result.productNames.length){
+        result.productNames.map((v)=>{
+            productNames.push({
+                name:v.name
+            })
+        })
+    }
+
+    if(result.brandNames.length){
+        result.brandNames.map((v)=>{
+            brandNames.push({
+                name:v.name
+            })
+        })
+    }
+
+    if(result.categoryNames.length){
+        result.categoryNames.map((v)=>{
+            categoryNames.push({
+                name:v.name
+            })
+        })
+    }
+
+    return {
+        productNames,
+        brandNames,
+        categoryNames,
+        goodsList
+    }
+}
+
+var goodList = function(req, res, next) {
+    var keywords = req.params.keyword||'';
+    var pageIndex = req.body.pageIndex || 1;
+    //1:新品,2:折扣,3:价格,4:销量,5:收藏
+    var sortType = req.body.sortType||1;
+    //true:asc,false:desc
+    var sortViewType = req.body.sortViewType||false;
+    var isHaveGoods = req.body.isHaveGoods||true;
+
     bluebird.props({
         goods: util.fetchAPI("goodList", {
+            searchKey:keywords,
+            sortType:sortType,
+            sortViewType:sortViewType,
+            isHaveGoods:isHaveGoods,
             pageIndex: pageIndex,
-            pageSize: 12
+            pageSize: 10
         }, true)
     }).then(function(resp) {
-        if (resp.goods.code === "success") {
-            resp.goods.page.list.map(function(v) {
-                v.smallImageUrl = '/client/asset/' + v.smallImageUrl;
-                v.country.icon = '/client/asset/'+ v.country.icon;
-            })
+        if (resp.goods.returnCode === 0) {
+            var result = formatGoodsInfo(resp.goods.object)
             if (req.xhr === true) {
                 res.json(resp);
             } else {
                  
                 var initialState = {
-                    isFetched: true,
-                    keywords : '奶粉',
-                    pagination: resp.goods.page
+                    keywords : keywords,
+                    pagination:result
                 };
 
                 var markup = util.getMarkupByComponent(GoodListApp({
