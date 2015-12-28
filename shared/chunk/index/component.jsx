@@ -1,53 +1,55 @@
 'use strict'
 import React,{Component} from "react";
 import classNames from "classnames";
+import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
+import Slider from "../../component/slider/slider.jsx";
+import Slide from "../../component/slider/slide.jsx";
 
-class Weather extends Component{
-    handleChange(e){
-        e && e.preventDefault();
-        const {changeField} = this.props;
-        changeField("city",e.target.value);
-    }
-    handleQuery(e){
-        e && e.preventDefault();
-        const {fetchWeather} = this.props;
-        const {weather} = this.props.weatherByCityName;
-        fetchWeather({
-            cityname:weather.city
-        });
-    }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.weatherByCityName.weatherFetching === false && 
-            this.props.weatherByCityName.weatherFetching === true){
-            if(nextProps.weatherByCityName.weatherFetched === true){
-                alert("fetch success!");
-            }else{
-                alert(nextProps.errMsg);
-            }
-        }
-    }
+
+import Header from "./partial/header.jsx";
+import Floor from "./partial/floor.jsx";
+
+class Index extends Component{
     render(){
         const {weather} = this.props.weatherByCityName;
         const classes = classNames({
-            "weather-content":true
+            "index-content":true
         })
         return (
             <div className={classes}>
-                <h3>Weather</h3>
-                <div className="weather-form">
-                    <input type="text" name="cityname" value={weather.city} onChange={this.handleChange.bind(this)}/>
-                    <button onClick={this.handleQuery.bind(this)}>Query</button>
-                    <p><label>City:</label><span>{weather.pinyin}</span></p>
-                    <p><label>Date:</label><span>{weather.date}</span></p>
-                    <p><label>Postcode:</label><span>{weather.postCode}</span></p>
-                    <p><label>Sunrise:</label><span>{weather.sunrise}</span></p>
-                    <p><label>Sunset:</label><span>{weather.sunset}</span></p>
-                    <p><label>Coordinate:</label><span>{weather.longitude}/{weather.latitude}</span></p>
-                    <p><label>Weather:</label><span>{weather.weather}</span></p>
-                </div>
+            <Header/>
+            <SlideTabs axis="x">
+            <SlideTabsItem navigator={()=><span><b>首页</b></span>}>
+            <Floor ref="floor"/>
+            </SlideTabsItem>
+            <SlideTabsItem navigator={()=><span><b>母婴用品</b></span>}>
+            <Floor ref="floor"/>
+            </SlideTabsItem>
+            <SlideTabsItem navigator={()=><span><b>美妆个护</b></span>}>
+            <Floor ref="floor"/>
+            </SlideTabsItem>
+            <SlideTabsItem navigator={()=><span><b>营养保健</b></span>}>
+            <Floor ref="floor"/>
+            </SlideTabsItem>
+            <SlideTabsItem navigator={()=><span><b>家居生活</b></span>}>
+            <Floor ref="floor"/>
+            </SlideTabsItem>
+            <SlideTabsItem navigator={()=><span><b>国际轻奢</b></span>}>
+            <Floor ref="floor"/>
+            </SlideTabsItem>
+            </SlideTabs>
+            <nav className="bottomNav">
+                <ul className="clearfix">
+                    <li><a href="#" className="nav_hover"><i></i>海外购</a></li>
+                    <li><a href="#"><i></i>分类</a></li>
+                    <li><a href="#"><i></i>爆款</a></li>
+                    <li><a href="#"><i></i>购物车</a></li>
+                    <li><a href="#"><i></i>个人中心</a></li>
+                </ul>
+            </nav>
             </div>
         )
     }
 }
 
-export default Weather;
+export default Index;

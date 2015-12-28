@@ -7,71 +7,15 @@ import Icon from "../../../component/icon.jsx";
 class StatusProgress extends Component{
     render(){
         return (
-            <ul className="order-status-progress">
-            <li>
-                <div className="progress-item">
-                <div>
-                    <Icon icon="info-circled"/>
-                    <p>待付款</p>
+            <div className="rate">
+                <img src="/client/asset/images/orderRate_01.gif" />
+                <div className="rateText">
+                    <span>待付款</span>
+                    <span className="notTo">待发货</span>
+                    <span className="notTo">待收货</span>
+                    <span className="notTo">已完成</span>
                 </div>
-                <div>
-                <Icon icon="right-open"/>
-                </div>
-                </div>
-            </li>
-            <li>
-                <div className="progress-item">
-                <div>
-                    <Icon icon="info-circled"/>
-                    <p>待审核</p>
-                </div>
-                <div>
-                <Icon icon="right-open"/>
-                </div>
-                </div>
-            </li>
-            <li>
-                <div className="progress-item">
-                <div>
-                    <Icon icon="info-circled"/>
-                    <p>待发货</p>
-                </div>
-                <div>
-                <Icon icon="right-open"/>
-                </div>
-                </div>
-            </li>
-            <li>
-                <div className="progress-item">
-                <div>
-                    <Icon icon="info-circled"/>
-                    <p>待收货</p>
-                </div>
-                <div>
-                <Icon icon="right-open"/>
-                </div>
-                </div>
-            </li>
-            <li>
-                <div className="progress-item">
-                <div>
-                    <Icon icon="info-circled"/>
-                    <p>已签收</p>
-                </div>
-                <div>
-                <Icon icon="right-open"/>
-                </div>
-                </div>
-            </li>
-            <li>
-                <div className="progress-item">
-                <div>
-                    <Icon icon="info-circled"/>
-                    <p>已完成</p>
-                </div>
-                </div>
-            </li>
-            </ul>
+            </div>
         )
     }
 }

@@ -184,10 +184,10 @@ class Slidable extends Component{
             onTouchMove:this.handleTouchMove.bind(this),
             onTouchEnd:this.handleTouchEnd.bind(this),
             active:this.state.activeIndex,
-            style:{
+            style:Object.assign({},this.props.style,{
                 transitionDuration:".3s",
                 transitionProperty:"transform"
-            }
+            })
         }))
     }
 }
