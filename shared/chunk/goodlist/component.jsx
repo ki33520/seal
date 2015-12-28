@@ -2,7 +2,9 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
-import {SORT_NORMAL,SORT_PRICE_DESC,SORT_PRICE_ASC,SORT_SALES} from "./action.es6";
+import {
+    SORT_NORMAL,SORT_PRICE_DESC,SORT_PRICE_ASC,SORT_SALES
+} from "./action.es6";
 
 import Refresher from "../../component/refresher.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
@@ -12,6 +14,8 @@ import Filter from "./partial/filter.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import GoodSorter from "./partial/goodStore.jsx";
 import FilterClassify from "./partial/filterClassify.jsx";
+import FilterProduct from "./partial/filterProduct.jsx";
+import FilterBrand from "./partial/filterBrand.jsx"
 
 class GoodListApp extends React.Component{
     constructor(props){
@@ -19,10 +23,10 @@ class GoodListApp extends React.Component{
         this.state = {
             maskActive:false,
             popupActive:false,
-            popupClassifyActive:false,
-            popupBrandActive:false,
+            productActive:false,
+            classifyActive:false,
+            brandActive:false,
             showNotEmpty:false,
-            popupClassifyType:null,
             sortType:SORT_NORMAL,
             needClear:false,
             isFocused:false,
@@ -34,8 +38,9 @@ class GoodListApp extends React.Component{
         this.setState({
             maskActive:false,
             popupActive:false,
-            popupClassifyActive:false,
-            popupBrandActive:false
+            classifyActive:false,
+            brandActive:false,
+            productActive:false,
         });
     }
 
@@ -46,17 +51,31 @@ class GoodListApp extends React.Component{
     }
 
     togglePopupActive(){
+        const popupActive = !this.state.popupActive;
         this.setState({
-            popupActive:!this.state.popupActive,
-            maskActive:!this.state.popupActive
+            popupActive:popupActive,
+            maskActive:popupActive
         });
     }
 
-    togglePopupClassifyActive(){
+    togglePopupClassify(){
         this.setState({
-            popupClassifyActive:!this.state.popupClassifyActive
+            classifyActive:!this.state.classifyActive
         });
     }
+
+    togglePopupProduct(){
+        this.setState({
+            productActive:!this.state.productActive
+        });
+    }
+    
+    togglePopupBrandFilter(){
+        this.setState({
+            brandActive:!this.state.brandActive
+        });
+    }
+ 
 
     toggleCanBuy(){
         this.setState({
@@ -128,19 +147,18 @@ class GoodListApp extends React.Component{
     }
 
     render(){
-        const {isFetching,pagination,isFetched} = this.props;
+        const {isFetching,pagination} = this.props;
         var goods = [];
-        if(isFetched === true){
-            if(pagination.list.length > 0){
-                pagination.list.forEach(function(item,i){
-                    const key = "good-" + i;
-                    //item.salePrice = item.salePrice.toFixed(2);
-                    //item.standardPrice = item.standardPrice.toFixed(2);
-                    goods.push(<GoodItem goods={item} key={key} />)
-                })
-            }
-        }
 
+        if(pagination.goodsList.length > 0){
+            pagination.goodsList.forEach(function(item,i){
+                const key = "good-" + i;
+                //item.salePrice = item.salePrice.toFixed(2);
+                //item.standardPrice = item.standardPrice.toFixed(2);
+                goods.push(<GoodItem goods={item} key={key} />)
+            });
+        }
+    
         const classes=classNames({
             "rollOut-animate":true,
             "good-list-content":true,
@@ -182,12 +200,22 @@ class GoodListApp extends React.Component{
                     showNotEmpty={this.state.showNotEmpty}
                     handleCanBuy={this.toggleCanBuy.bind(this)}
                     handleReset={this.resetFilter.bind(this)}
-                    handleFilter={this.togglePopupClassifyActive.bind(this)}
+                    classifyFilter={this.togglePopupClassify.bind(this)}
+                    productFilter={this.togglePopupProduct.bind(this)}
+                    brandFilter={this.togglePopupBrandFilter.bind(this)}
                     handleClose={this.togglePopupActive.bind(this)} />
                 <FilterClassify 
-                    type={this.state.popupClassifyType}
-                    active={this.state.popupClassifyActive}
-                    handleClose={this.togglePopupClassifyActive.bind(this)} />
+                    category={pagination.categoryNames}
+                    active={this.state.classifyActive}
+                    handleClose={this.togglePopupClassify.bind(this)} />
+                <FilterBrand 
+                    brands={pagination.brandNames}
+                    active={this.state.brandActive}
+                    handleClose={this.togglePopupBrandFilter.bind(this)} />
+                <FilterProduct 
+                    products={pagination.productNames}
+                    active={this.state.productActive}
+                    handleClose={this.togglePopupProduct.bind(this)} />
                 <GoTop />
                 <Refresher active={isFetching} />
             </div>

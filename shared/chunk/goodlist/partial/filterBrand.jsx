@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import classNames from "classnames";
 
-class FilterClassify extends Component{
+class FilterBrand extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -12,7 +12,6 @@ class FilterClassify extends Component{
         }
     }
  
-
     handleCheck(i,e){
         var isChecked = this.state.isChecked;
         isChecked[i] = !isChecked[i];
@@ -21,11 +20,11 @@ class FilterClassify extends Component{
         });
     }
 
-    renderNav(category){
-        if(!category || category.length<1){
+    renderNav(brands){
+        if(!brands || brands.length<1){
             return '暂无分类';
         }
-        var menu = category.map((item,i)=>{
+        var menu = brands.map((item,i)=>{
             const key="nav-"+i;
             const checked = classNames("iconfont",{
                 "icon-check": this.state.isChecked[key]
@@ -40,14 +39,14 @@ class FilterClassify extends Component{
         
  
         return (
-            <div className="helpList">
+             <div className="helpList">
                 {menu}
             </div>
-        )
+        );
     }
 
     render(){
-        const {active,category,handleClose} = this.props;
+        const {active,brands,handleClose} = this.props;
         const classess = classNames({
             "second-slider":true,
             "rollIn-animate":true,
@@ -59,11 +58,11 @@ class FilterClassify extends Component{
             	<Header handleGoBack={handleClose.bind(this)}>
                     <span className="btn-right" onClick={handleClose.bind(this)}>确定</span>
                 </Header>
-                {this.renderNav(category)}
+                {this.renderNav(brands)}
             </div>
         );
     }
 }
  
 
-export default FilterClassify;
+export default FilterBrand;

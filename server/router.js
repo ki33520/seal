@@ -54,7 +54,7 @@ router.post("/savereceiver",mainController.requireAuthorize,require("./controlle
 router.get("/coupon", require("./controller/coupon").coupon);
 router.post("/fetchCoupon", require("./controller/coupon").fetchCoupon);
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
-
+ 
 
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);

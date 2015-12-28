@@ -7,36 +7,28 @@ class GoodItem extends Component{
     	 
     	var goods = this.props.goods;
     	//console.log(goods)
-    	var status=goods.status,
-    		activityType=goods.activityType,
-    		icon=goods.country.icon,
-    		name = goods.country.name,
-    		salePrice=goods.salePrice,
-    		standardPrice=goods.standardPrice,
-    		smallImageUrl=goods.smallImageUrl,
-    		title=goods.title;
-
+    	 
     	const statusClass = classNames({
-            "sale-out":status==1
+            "sale-out":goods.isSaleOut
         });
     	const activityClass=classNames({
-    		"flash-sale":activityType==1,
-    		"phone-price":activityType==2
+    		"flash-sale":goods.activityType==1,
+    		"phone-price":goods.activityType==2
     	});
         return (
-            <a href="#" title="">
+            <a href={"/gooddetail/"+goods.id}>
             	<div className="clearfix">
                 	<div className={statusClass}></div>
                 	<div className={activityClass}></div>
-                    <img src={smallImageUrl} alt="" />
+                    <img src={goods.smallImageUrl} alt="" />
                     <div className="country">
-                    	<i><img src={icon} alt="" /></i>
-                    	{name}
+                    	<i><img src={goods.flag} alt="" /></i>
+                    	{goods.productArea}
                     </div>
-                    <p>{title}</p>
+                    <p>{goods.materTitle}</p>
                     <div>
-                        <span className="now-price">&yen;{salePrice}</span>
-                        <span className="old-price">&yen;{standardPrice}</span>
+                        <span className="now-price">&yen;{goods.salesPrice}</span>
+                        <span className="old-price">&yen;{goods.originPrice}</span>
                     </div>
                 </div>
 	        </a>
