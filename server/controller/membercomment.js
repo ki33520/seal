@@ -16,9 +16,11 @@ var index = function(req, res, next) {
             pageSize: pageSize
         },true)
     }).then(function(ret) {
-        if (ret.allComment.code === "success") {
-            var allComment = ret.allComment.page;
-            allComment.list = _.slice(allComment.list,0,pageIndex*pageSize);
+        if (ret.allComment.returnCode === 0) {
+            var allComment = {},
+                object = ret.allComment.object;
+            allComment.totalCount = object.totalCount;
+            allComment.list = _.slice(object.result,0,pageIndex*pageSize);
             allComment.pageIndex = pageIndex;
             allComment.pageSize = pageSize;
             if (req.xhr === true) {
@@ -38,7 +40,7 @@ var index = function(req, res, next) {
                 })
             }
         }else{
-            next(new Error(ret.msg));
+            next(new Error(ret.allComment.message));
         }
     });
 }
@@ -54,16 +56,18 @@ var showComment = function(req, res, next) {
             pageSize: pageSize
         },true)
     }).then(function(ret) {
-        if (ret.showComment.code === "success") {
-            var showComment = ret.showComment.page;
-            showComment.list = _.slice(showComment.list,0,pageIndex*pageSize);
+        if (ret.showComment.returnCode === 0) {
+            var showComment = {},
+                object = ret.showComment.object;
+            showComment.totalCount = object.totalCount;
+            showComment.list = _.slice(object.result,0,pageIndex*pageSize);
             showComment.pageIndex = pageIndex;
             showComment.pageSize = pageSize;
             res.json({
                 showComment
             });
         }else{
-            next(new Error(ret.msg));
+            next(new Error(ret.message));
         }
     });
 }

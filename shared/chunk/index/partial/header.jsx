@@ -8,11 +8,11 @@ class Header extends Component{
     render(){
         return (
             <header>
-                <a className="logo" href="#">
+                <a className="logo" href="#/">
                     <img src="/client/asset/images/indexlogo.png" />
                 </a>
                 <a className="indexQrcode" href="#"></a>
-                <a className="indexSearch" href="search.html"></a>
+                <a className="indexSearch" href="#/search"></a>
             </header>
         )
     }

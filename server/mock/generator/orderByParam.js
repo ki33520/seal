@@ -12,7 +12,7 @@ const orderStatus = [
 ];
 
 var orderList = {
-    "msg": "查询商品列表页成功",
+    "msg": "查询订单列表页成功",
     "code": "success",
     "time": Date.now(),
     "page":{

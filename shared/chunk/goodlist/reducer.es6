@@ -1,20 +1,19 @@
 'use strict'
-import {
-SORT_NORMAL
-} from "./action.es6";
 import {combineReducers} from "redux";
 import _ from "lodash";
-
+import {REQUEST_GOODS,RECEIVE_GOODS} from "./action.es6";
 
 function goodsByParam(state={},action){
     switch(action.type){
-
-        case SORT_NORMAL:
+        case REQUEST_GOODS:
+            return Object.assign({},state,{
+                isFetching:true
+            });
+        case RECEIVE_GOODS:
             return Object.assign({},state,{
                 isFetching:false,
-                pagination:action.res
+                pagination:action.pagination
             });
-         
         default:
             return state;
     }

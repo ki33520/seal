@@ -15,7 +15,6 @@ router.get("/logingateway",require("./controller/authorize").loginGateway);
 router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
 router.get("/", require("./controller/main.js").index);
-router.post("/weather", require("./controller/main.js").weather);
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
@@ -25,7 +24,7 @@ router.post("/updateCart", require("./controller/cart").updateCart);
 router.post("/deleteCart", require("./controller/cart").deleteCart);
 router.post("/fetchCart", require("./controller/cart").fetchCart);
 
-router.get("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
+router.post("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
