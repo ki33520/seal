@@ -57,7 +57,7 @@ class Node extends Component{
         return (
             <ul className="comment-list">
                 {
-                    comments && comments.result && this.renderNode(comments.result)
+                    comments && comments.list && this.renderNode(comments.list)
                 }
             </ul>
         )
