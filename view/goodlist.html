@@ -1,0 +1,19 @@
+{% extends './layout.html' %}
+{% block title %}搜索结果{% endblock %} 
+{% block css %}
+<!-- inject:css -->
+<link rel="stylesheet" href="/client/bundle/goodlist/dist/goodlist-7db018cf57aa95fc3c0d.css">
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div class="good-list-container">
+    <div id="good-list">{{ markup|safe }}</div>
+</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/client/vendor/dist/react-7db018cf57aa95fc3c0d.js"></script>
+<script src="/client/bundle/goodlist/dist/goodlist-7db018cf57aa95fc3c0d.js"></script>
+<!-- endinject -->
+{% endblock %}
