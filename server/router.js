@@ -24,7 +24,7 @@ router.post("/updateCart", require("./controller/cart").updateCart);
 router.post("/deleteCart", require("./controller/cart").deleteCart);
 router.post("/fetchCart", require("./controller/cart").fetchCart);
 
-router.get("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
+router.post("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);

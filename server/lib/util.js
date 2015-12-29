@@ -32,8 +32,8 @@ var util = {
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param)
         } else {
-            // console.log('apiName',apiName)
-            return sharedUtil.apiRequest("http://:5000/mock/api/" + apiName)
+            var listenPort = process.env.LISTEN_PORT || 3000;
+            return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
     }
 }
