@@ -8,10 +8,10 @@ class Node extends Component{
         return list.map((child,i)=>{
             const key = "comment-" + i;
             var stars = [],
-                imagesUrl = child.imageUrl.split(','),
+                imagesList = child.imageUrlList,
                 picList = [];
-            for(let i=1;i<imagesUrl.length;i++){
-                picList.push(<li key={i}><img src={imagesUrl[i]} /></li>);
+            for(let i=0;i<imagesList.length;i++){
+                picList.push(<li key={i}><img src={imagesList[i]} /></li>);
             };
             const listclass = classNames({
                 "pic-list": true,
@@ -19,7 +19,7 @@ class Node extends Component{
             })
             for(let i=0;i<5;i++){
                 let star;
-                if(i<child.stars){
+                if(i<child.rate){
                     star = (<div key={i} className="iconfont icon-star-full"></div>);
                 }else{
                     star = (<div key={i} className="iconfont icon-star-empty"></div>);
@@ -30,18 +30,18 @@ class Node extends Component{
                 <li id={child.goodId} key={key}>
                     <div className="product">
                         <div className="col col-left">
-                            <img src={imagesUrl[0]} />
+                            <img src={imagesList[0]} />
                         </div>
                         <div className="col col-right">
                             <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
-                            <div className="title">{child.title}</div>
+                            <div className="title">{child.productName}</div>
                         </div>
                     </div>
                     <div className="stars-culm">
                         <div className={"stars stars-"+child.stars}>
                             {stars}
                         </div>
-                        <div className="date">{child.createAt}</div>
+                        <div className="date">{child.createdAt}</div>
                     </div>
                     <div className="content">{child.content}</div>
                     <ul className={listclass}>

@@ -8,13 +8,12 @@ var GoodDetailApp = util.getSharedComponent("gooddetail");
 var goodDetail = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
-    bluebird.props({
-        goodById: util.fetchAPI("goodById", {
-            productId: id
-        },true)
-    }).then(function(ret) {
-        if (ret.goodById.code === "success") {
-            var good = ret.goodById.object;
+    util.fetchAPI("goodById", {
+        productId: id
+    }, true).then(function(ret) {
+        // console.log('ret',ret)
+        if (ret.code === "success") {
+            var good = ret.object;
             var properties = [];
 
             _.forIn(good.props, function(v, k) {
@@ -24,7 +23,7 @@ var goodDetail = function(req, res, next) {
                         propertyValues: [],
                     });
                 })
-            //fill specValue with item's propValues
+                //fill specValue with item's propValues
             _.each(good.items, function(v) {
                     _.each(properties, function(property, k) {
                         properties[k].propertyValues.push({
@@ -60,13 +59,15 @@ var goodDetail = function(req, res, next) {
                 good: good,
                 cartCount: cartCount
             };
-            var markup = util.getMarkupByComponent(GoodDetailApp({initialState:initialState}));
+            var markup = util.getMarkupByComponent(GoodDetailApp({
+                initialState: initialState
+            }));
 
             res.render('gooddetail', {
                 markup: markup,
                 initialState: initialState
             })
-        }else{
+        } else {
             next(new Error(ret.msg));
         }
     })
