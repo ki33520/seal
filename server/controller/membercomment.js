@@ -17,8 +17,10 @@ var index = function(req, res, next) {
         },true)
     }).then(function(ret) {
         if (ret.allComment.returnCode === 0) {
-            var allComment = ret.allComment.object;
-            allComment.list = _.slice(allComment.list,0,pageIndex*pageSize);
+            var allComment = {},
+                object = ret.allComment.object;
+            allComment.totalCount = object.totalCount;
+            allComment.list = _.slice(object.result,0,pageIndex*pageSize);
             allComment.pageIndex = pageIndex;
             allComment.pageSize = pageSize;
             if (req.xhr === true) {
@@ -55,8 +57,10 @@ var showComment = function(req, res, next) {
         },true)
     }).then(function(ret) {
         if (ret.showComment.returnCode === 0) {
-            var showComment = ret.showComment.object;
-            showComment.list = _.slice(showComment.list,0,pageIndex*pageSize);
+            var showComment = {},
+                object = ret.showComment.object;
+            showComment.totalCount = object.totalCount;
+            showComment.list = _.slice(object.result,0,pageIndex*pageSize);
             showComment.pageIndex = pageIndex;
             showComment.pageSize = pageSize;
             res.json({
