@@ -67,7 +67,7 @@ class Floor extends Component{
     }
     renderSlider(){
         return (
-            <Slider ref="slider">
+            <Slider ref="slider" autoPlay={true}>
                 <Slide>
                     <a href="">
                         <img src="/client/asset/images/banner.gif" alt=""/>
@@ -87,11 +87,13 @@ class Floor extends Component{
         )
     }
     componentDidUpdate(){
-        // console.log(this.props)
         if(this.props.redraw === true){
             let sliderNode = ReactDOM.findDOMNode(this)
             // console.log(sliderNode.parentNode.offsetWidth)
-            this.refs["slider"].initialize()
+            this.refs["slider"].initialize({
+                width:sliderNode.parentNode.offsetWidth
+            })
+            // this.refs["slider"].play()
         }
     }
     render(){

@@ -1,18 +1,23 @@
 @import "../../common/common";
 @import "../../common/iconfont";
+@import "../../common/router";
 @import "../../component/slidetabs";
 @import "../../component/slider";
 @import "./index.css";
+@import "./search.css";
 
 .index-container{
     height:100%;
     #index{
         height:100%;
+        &>div{
+            height:100%;
+        }
     }
 }
 .floor-content{
-    padding-bottom:1.38rem;
     width:100%;
+    position:absolute;
     .m-entry{
         padding:.44rem 0;
     }
@@ -24,7 +29,7 @@
     overflow:hidden;
 }
 .slide-tabs {
-    position:absolute;
+    // position:absolute;
     // width:100%;
     .slide-tabs-navbar{
         border:0 none;
@@ -43,9 +48,12 @@
         }
     }
     .slide-tabs-content{
+        overflow:hidden;
+        padding-bottom:px2rem(81);
         .slide-tabs-item{
             overflow-y:auto;
             overflow-x:hidden;
+            position:relative;
         }
     }
 }
@@ -53,5 +61,16 @@
 .indexSingle{
     padding:.266rem 0 0;
     margin:0 .32rem;
+}
+
+
+.search-wrap{
+    height:100%;
+    background:#F7F7F7;
+    .search-box{
+        &>input{
+            border:0 none;
+        }
+    }
 }
 
