@@ -7,6 +7,7 @@ import dom from "../../lib/dom.es6";
 import MaskLayer from "../../component/masklayer.jsx";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
+import Footer from "../common/footer.jsx";
 
 import {addCart,addFavorite} from "./action.es6";
 import {alert} from "../common/action.es6";
@@ -136,7 +137,6 @@ class MemberCenter extends Component{
                             <dt>
                                 <img src="/client/asset/images/user_icon_4.png" />
                                 我的评论
-                                <em className="dot"></em>
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>
@@ -148,7 +148,6 @@ class MemberCenter extends Component{
                             <dt>
                                 <img src="/client/asset/images/user_icon_5.png" />
                                 优惠券
-                                <em className="dot"></em>
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>
@@ -195,6 +194,7 @@ class MemberCenter extends Component{
                         </dl>
                     </a>
                 </div>
+                <Footer activeIndex="4" />
                 <MaskLayer visible={this.state.maskActive} handleClick={this.closeAllPopups.bind(this)}/>
                 <div className={classes}>
                     <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>

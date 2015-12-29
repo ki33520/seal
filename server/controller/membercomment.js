@@ -16,8 +16,8 @@ var index = function(req, res, next) {
             pageSize: pageSize
         },true)
     }).then(function(ret) {
-        if (ret.allComment.code === "success") {
-            var allComment = ret.allComment.page;
+        if (ret.allComment.returnCode === 0) {
+            var allComment = ret.allComment.object;
             allComment.list = _.slice(allComment.list,0,pageIndex*pageSize);
             allComment.pageIndex = pageIndex;
             allComment.pageSize = pageSize;
@@ -38,7 +38,7 @@ var index = function(req, res, next) {
                 })
             }
         }else{
-            next(new Error(ret.msg));
+            next(new Error(ret.allComment.message));
         }
     });
 }
@@ -54,8 +54,8 @@ var showComment = function(req, res, next) {
             pageSize: pageSize
         },true)
     }).then(function(ret) {
-        if (ret.showComment.code === "success") {
-            var showComment = ret.showComment.page;
+        if (ret.showComment.returnCode === 0) {
+            var showComment = ret.showComment.object;
             showComment.list = _.slice(showComment.list,0,pageIndex*pageSize);
             showComment.pageIndex = pageIndex;
             showComment.pageSize = pageSize;
@@ -63,7 +63,7 @@ var showComment = function(req, res, next) {
                 showComment
             });
         }else{
-            next(new Error(ret.msg));
+            next(new Error(ret.message));
         }
     });
 }
