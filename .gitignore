@@ -1,11 +1,5 @@
 node_modules/
 npm-debug.log
 .git/
-.settings/
-# client/**/dist/
 client/**/build/
-# vendor/
-# /client/**/stylesheet/
-# /client/**/*.jsx
 client/**/__coverage__/
-# /server/**/__tests__/
