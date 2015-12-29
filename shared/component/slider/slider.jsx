@@ -24,6 +24,9 @@ class Slider extends Component{
         this.initialize();
         this.props.autoPlay && this.slideToNext();
     }
+    componentWillUnmount(){
+        clearTimeout(this.timeout)
+    }
     initialize(rect = null){
         const {oriention} = this.props;
         var {activeIndex} = this.state;

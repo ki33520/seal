@@ -22,17 +22,15 @@ export class SlideTabs extends Component{
     handleSelect(i,e){
         e && e.preventDefault()
         this.setState({
-            activeIndex:i,
-            // navbarSlidable:false
+            activeIndex:i
         },()=>{
             this.props.onSelect()   
         })
     }
-    handleActiveChange(i,e){
+    handleContentActiveChange(i,e){
         this.setState({
-            activeIndex:i,
-            // navbarSlidable:true,
-        },()=>this.props.onSelect())
+            activeIndex:i
+        })
     }
     renderNavbar(){
         let navigators = [];
@@ -47,7 +45,7 @@ export class SlideTabs extends Component{
         })
         if(this.props.navbarSlidable === true){
             return (
-                <Slidable axis={this.props.axis} ref="navbar" name="navbar" 
+                <Slidable axis={this.props.axis} name="navbar" 
                 activeIndex={this.state.activeIndex}>
                     <div className="slide-tabs-navbar">{navigators}</div>
                 </Slidable>
@@ -69,9 +67,12 @@ export class SlideTabs extends Component{
         })
         return (
             <div className={classes}>
-            <Slidable axis={this.props.axis} handleActiveChange={this.handleActiveChange.bind(this)} 
+            <Slidable axis={this.props.axis} name="content" 
+            onlyInside={true}
+            simulateTranslate={true}
+            handleActiveChange={this.handleContentActiveChange.bind(this)} 
             activeIndex={this.state.activeIndex}>
-            <div className="slide-tabs-content" ref="content">{React.Children.map(this.props.children,this.renderTabsItem.bind(this))}</div>
+            <div className="slide-tabs-content">{React.Children.map(this.props.children,this.renderTabsItem.bind(this))}</div>
             </Slidable>
             {this.renderNavbar()}
             </div>

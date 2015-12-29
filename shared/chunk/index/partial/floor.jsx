@@ -93,6 +93,7 @@ class Floor extends Component{
             this.refs["slider"].initialize({
                 width:sliderNode.parentNode.offsetWidth
             })
+            // this.refs["slider"].play()
         }
     }
     render(){
