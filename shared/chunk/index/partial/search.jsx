@@ -20,10 +20,10 @@ class SearchBox extends Component{
                 <div className="searchHot clearfix">
                     <span>热搜</span>
                     <div>
-                        <a href="#">洗衣液</a>
-                        <a href="#">女士香水</a>
-                        <a href="#">洗衣液</a>
-                        <a href="#">女士香水</a>
+                        <a href="/goodlist/1">洗衣液</a>
+                        <a href="/goodlist/2">女士香水</a>
+                        <a href="/goodlist/2">洗衣液</a>
+                        <a href="/goodlist/2">女士香水</a>
                     </div>
                 </div>
                 <div className="searchList">
@@ -31,14 +31,14 @@ class SearchBox extends Component{
                         <em>历史搜索</em>
                         <i>清空记录</i>
                     </span>
-                    <a href="#">洗衣液</a>
-                    <a href="#">洗衣液</a>
-                    <a href="#">洗衣液</a>
+                    <a href="/goodlist/2">洗衣液</a>
+                    <a href="/goodlist/2">洗衣液</a>
+                    <a href="/goodlist/2">洗衣液</a>
                 </div>
                 <div className="searchOut">
-                    <a href="#">金利来</a>
-                    <a href="#">金纺</a>
-                    <a href="#">金立手机</a>
+                    <a href="/goodlist/2">金利来</a>
+                    <a href="/goodlist/2">金纺</a>
+                    <a href="/goodlist/2">金立手机</a>
                 </div>
             </div>
         )
