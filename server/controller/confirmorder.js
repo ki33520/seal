@@ -115,18 +115,17 @@ var confirmOrder = function(req, res, next) {
     var buyeds = req.body.buyeds !== undefined ? req.body.buyeds : null;
     var user = req.session.user;
     // console.log(itemIds, buyeds)
-    bluebird.props({
-        orderByParam: util.fetchAPI("orderByParam", {
-            memberId: user.memberId,
-            itemIds: itemIds,
-            nums: buyeds
-        },true),
-    }).then(function(resp) {
-        if (resp.orderByParam.code === "success") {
-            var order = formatOrder(resp.orderByParam);
-            _.extend(order,{
-                itemIds:itemIds,
-                buyeds:buyeds
+    util.fetchAPI("confirmOrder", {
+        memberId: user.memberId,
+        itemIds: itemIds,
+        nums: buyeds
+    }, true).then(function(ret) {
+        if (ret.code === "success") {
+            console.log('ret',ret)
+            var order = formatOrder(ret);
+            _.extend(order, {
+                itemIds: itemIds,
+                buyeds: buyeds
             })
             var initialState = {
                 isFetched: true,
@@ -141,8 +140,9 @@ var confirmOrder = function(req, res, next) {
                 initialState: initialState
             })
         } else {
-            next(new Error(resp.msg))
+            next(new Error(ret.msg))
         }
+
     })
 }
 
@@ -177,24 +177,24 @@ var submitOrder = function(req, res, next) {
         payPwd: payPassword,
         ticketActive: ticketActive,
         balanceActive: balanceActive,
-        memberDlvAddressId:receiverId,
-        logisticTime:logisticTime,
-        invoiceId:invoiceId
-    },true).then(function(resp) {
+        memberDlvAddressId: receiverId,
+        logisticTime: logisticTime,
+        invoiceId: invoiceId
+    }, true).then(function(resp) {
         if (resp.code === "success") {
             var payObject = resp.payObject;
-            payObject.channel ="WAP";
+            payObject.channel = "WAP";
             res.json({
-                orderSubmited:true,
-                result:{
-                    payObject:payObject,
-                    payUrl:resp.payurl
+                orderSubmited: true,
+                result: {
+                    payObject: payObject,
+                    payUrl: resp.payurl
                 }
             });
         } else {
             res.json({
-                orderSubmited:false,
-                errMsg:resp.msg
+                orderSubmited: false,
+                errMsg: resp.msg
             });
         }
     })
