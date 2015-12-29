@@ -1,0 +1,18 @@
+{% extends "./layout.html" %}
+{% block title %}Detail{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div class="memberupdate-container">
+    <div id="member-update">{{ markup|safe }}</div>
+</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/hmr/react.js"></script>
+<script src="/hmr/memberupdate.js"></script>
+<!-- endinject -->
+{% endblock %}

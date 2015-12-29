@@ -1,0 +1,43 @@
+{
+  "msg": "查询商品列表页成功",
+  "code": "success",
+  "time": 1446711268924,
+  "page": {
+      "totalCount":6,
+        "totalPage":1,
+        "pageSize":6,
+        "pageNo":1,
+        "list":[
+        {
+            "id":"1",
+            "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
+            "smallImageUrl":"images/pic8.gif",
+            "standardPrice":99.00,
+            "salePrice":199.00,
+            "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
+            "activityType":1,
+            "status":1
+        },
+        {
+            "id":"2",
+            "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
+            "smallImageUrl":"images/pic9.gif",
+            "standardPrice":99.00,
+            "salePrice":199.00,
+            "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
+            "activityType":1,
+            "status":1
+        },
+        {
+            "id":"3",
+            "title":"荷兰原装Hero baby 【免税店】 奶粉1段(0-6个",
+            "smallImageUrl":"images/pic10.gif",
+            "standardPrice":99.00,
+            "salePrice":199.00,
+            "country":{"icon":"images/ico_flag.png","name":"荷兰直采"},
+            "activityType":1,
+            "status":1
+        }
+      ]
+  }
+}

@@ -1,56 +1,53 @@
-'use strict'
+'use strict';
+
 import React,{Component} from "react";
-import classNames from "classnames";
+import Index from "./partial/index.jsx";
+import SearchBox from "./partial/search.jsx";
+import {Router} from "director";
+import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
 
-import {fetchWeather,changeField} from "./action.es6";
-
-class Weather extends Component{
-    handleChange(e){
-        e && e.preventDefault();
-        const {dispatch} = this.props;
-        dispatch(changeField("city",e.target.value));
-    }
-    handleQuery(e){
-        e && e.preventDefault();
-        const {dispatch} = this.props;
-        const {weather} = this.props.weatherByCityName;
-        dispatch(fetchWeather({
-            cityname:weather.city
-        }));
-    }
-    componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
-        if(nextProps.weatherByCityName.weatherFetching === false && 
-            this.props.weatherByCityName.weatherFetching === true){
-            if(nextProps.weatherByCityName.weatherFetched === true){
-                alert("fetch success!");
-            }else{
-                alert(nextProps.errMsg);
-            }
+class IndexRouter extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            currentRoute:"index"
         }
     }
+    componentDidMount(){
+        Router({
+            "/search":()=>{
+                this.setState({
+                    currentRoute:"search"
+                });
+            },
+            "/":()=>{
+                this.setState({
+                    currentRoute:"index"
+                });
+            }
+        }).init("/");
+    }
     render(){
-        const {weather} = this.props.weatherByCityName;
-        const classes = classNames({
-            "weather-content":true
-        })
+        const {currentRoute} = this.state;
+        var currentView = null;
+        if(currentRoute === "index"){
+            currentView =  (
+                <Index {...this.props} key={currentRoute}/>
+            )
+        }else if(currentRoute === "search"){
+            currentView =  (
+                <SearchBox {...this.props} key={currentRoute}/>
+            )
+        }
+        const transitionName = currentRoute !== 'index'?'moveUp':'fadeIn';
         return (
-            <div className={classes}>
-                <h3>Weather</h3>
-                <div className="weather-form">
-                    <input type="text" name="cityname" value={weather.city} onChange={this.handleChange.bind(this)}/>
-                    <button onClick={this.handleQuery.bind(this)}>Query</button>
-                    <p><label>City:</label><span>{weather.pinyin}</span></p>
-                    <p><label>Date:</label><span>{weather.date}</span></p>
-                    <p><label>Postcode:</label><span>{weather.postCode}</span></p>
-                    <p><label>Sunrise:</label><span>{weather.sunrise}</span></p>
-                    <p><label>Sunset:</label><span>{weather.sunset}</span></p>
-                    <p><label>Coordinate:</label><span>{weather.longitude}/{weather.latitude}</span></p>
-                    <p><label>Weather:</label><span>{weather.weather}</span></p>
-                </div>
-            </div>
-        )
+            <TransitionGroup component="div" transitionName={transitionName} 
+            transitionLeave={false} 
+            transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+            {currentView}
+            </TransitionGroup>
+        );
     }
 }
 
-export default Weather;
+export default IndexRouter;

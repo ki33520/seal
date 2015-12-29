@@ -11,6 +11,9 @@ var router = require("./router.js");
 
 app.use('/client', express.static('client'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended:true
+}));
 app.use(methodOverride());
 
 app.use(session({
@@ -26,6 +29,13 @@ app.use(session({
 app.engine('html', cons.swig);
 app.set('view engine', 'html');
 app.set("views", __dirname + '/../view');
+
+app.use(function(req, res, next) {
+    var config = require("./lib/config");
+    app.locals.config = config;
+    next();
+})
+
 app.use(router);
 
 module.exports = app;

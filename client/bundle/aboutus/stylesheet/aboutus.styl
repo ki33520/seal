@@ -1,0 +1,54 @@
+@import "../../common/common.styl"
+@import "../../common/iconfont.styl"
+@import "../../common/header.styl"
+@import "../../common/member.styl"
+
+.aboutus-content{
+	font-size: .32rem;
+	color: $gray-color;
+	padding: 0 0 2.5rem 0;
+	background-color: #fff;
+	> img{
+		width:100%;
+	}
+	> p{
+		padding:.28rem .5rem;
+	}
+	> div{
+		padding:.28rem .5rem;
+	}
+	.m-entry {
+		padding:.3rem .5rem;
+		overflow: hidden;
+		display: flex;
+	}
+	.m-entry span {
+		flex: 1;
+		font-size: .3rem;
+		text-align: center;
+		line-height: 1;
+	}
+	.m-entry span:before {
+		content: "";
+		display: block;
+		width: 30px;
+		height: 30px;
+		margin: 0 auto;
+		background: url(/client/asset/images/enter-ico_2.png) no-repeat;
+		background-size: 100%;
+		margin-bottom:.3rem;
+	}
+	.m-entry span:nth-child(2):before {
+		background-position:0 -36px;
+		background-size: 100%;
+	}
+	.m-entry span:nth-child(3):before {
+		background-position:0 -72px;
+		background-size: 100%;
+	}
+	.m-entry span:nth-child(4):before {
+		background-position:0 -107px;
+		background-size: 100%;
+	}
+
+}

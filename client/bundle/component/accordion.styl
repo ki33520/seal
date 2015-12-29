@@ -1,26 +1,28 @@
+@import "../common/common";
+@import "../common/util";
 .accordion {
-    border: .05rem solid #DEDEDE;
+    border:px2rem(1) solid #DEDEDE;
     background: #FFF;
-    margin-bottom: 1rem;
+    margin-bottom: px2rem(20);
     .accordion-item {
         line-height:0;
         font-size:0;
-        border-top:.05rem solid #DEDEDE;
+        border-top:px2rem(1) solid #DEDEDE;
         &:first-child {
             border-top:0 none;
         }
         dt {
-            padding: .4rem .5rem;
-            line-height: 1.2rem;
+            padding: px2rem(8) px2rem(10);
+            line-height: px2rem(24);
             cursor: pointer;
-            font-size:.7rem;
+            font-size:px2rem(14);
             position:relative;
             &>.iconfont{
                 position:absolute;
                 right:3%;
                 top:50%;
-                font-size:.7rem;
-                margin-top:-0.4rem;
+                font-size:px2rem(14);
+                margin-top:px2rem(-8);
                 line-height:1;
                 transform:rotate(0);
                 transition:transform .3s linear;
@@ -30,15 +32,15 @@
             display: none;
             overflow:hidden;
             .accordion-content {
-                font-size:.7rem;
-                line-height:1rem;
-                padding: .4rem .5rem;
+                font-size:px2rem(14);
+                line-height:px2rem(20);
+                padding:px2rem(8) px2rem(10);
             }
         }
         &.active {
             dt {
                 background: #F5F5F5;
-                box-shadow:.05rem .05rem .05rem #DEDEDE;
+                box-shadow:px2rem(1) px2rem(1) px2rem(1) #DEDEDE;
                 &>.iconfont{
                     transform:rotate(90deg);
                 }

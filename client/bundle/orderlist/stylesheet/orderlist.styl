@@ -1,0 +1,33 @@
+@import "../../common/common";
+@import "../../common/iconfont";
+@import "../../common/header";
+@import "../../component/slidetabs";
+@import "./orderlist.css";
+$gray-color = #555
+body {
+    background: #F1F1F1;
+}
+
+.right{
+    float:right;
+}
+
+.order-down{
+    &>.order-buttons{
+        float:right;
+    }
+}
+
+.slide-tabs .slide-tabs-navbar{
+    border:0 none;
+    .slide-tabs-navbar-item{
+        background:#FFF;
+        border:0 none;
+        border-bottom:px2rem(1) solid #D7D7D7;
+        line-height:px2rem(36);
+        &.active{
+            color:#801da1;
+            border-color:#801da1;
+        }
+    }
+}

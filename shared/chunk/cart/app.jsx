@@ -3,13 +3,15 @@ import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
-import createStoreWithMiddleware from "../../lib/store-creator.es6";
+import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Cart from "./component.jsx";
 
 function selector(state){
-    const {cartByUser} = state;
+    const {carts,isFetched,isFetching} = state.cartByUser;
     return {
-        cartByUser
+        isFetched,
+        isFetching,
+        carts
     };
 }
 
@@ -22,10 +24,12 @@ function configureStore(initialState){
 
 class CartApp extends Component{
     render(){
-        const {cart} = this.props.initialState;
+        const {carts,isFetched} = this.props.initialState;
         const initialState = {
             cartByUser:{
-                cart
+                isFetching:false,
+                isFetched,
+                carts
             }
         };
         var store = configureStore(initialState);

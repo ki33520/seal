@@ -2,8 +2,8 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import Dropdown from "../dropdown/dropdown.jsx";
-import Icon from "../core/icon.jsx";
+import Dropdown from "../dropdown.jsx";
+import Icon from "../icon.jsx";
 
 class Selected extends Component{
     constructor(props){
@@ -20,7 +20,12 @@ class Selected extends Component{
         return this.state.value;
     }
     hasValue(value){
-        return this.getValueArray().indexOf(value) > -1;
+        const {multiple} = this.props;
+        if(multiple === true){
+            return this.getValueArray().indexOf(value) > -1;
+        }else{
+            return this.getValue() === value;
+        }
     }
     setValue(value){
         this.setState({
@@ -80,7 +85,6 @@ class Selected extends Component{
             const checkedIcon = checked?<Icon icon={selectedIcon}/>:
             unselectedIcon === null?null:<Icon icon={unselectedIcon}/>;
             checked && selectedLabels.push(option.label);
-
             if(filterText && this.props.optionFilter(filterText,option) === false){
                 return;
             }
@@ -134,18 +138,16 @@ class Selected extends Component{
             maxHeight:this.props.maxHeight
         }
         return (
-            <div>
-                <Dropdown className={classes} title={status} ref="dropdown" {...this.props}>
-                {this.props.filterInput?(
-                    <div className="filter-input">
-                    <input type="text" onChange={this.handleFilterInput.bind(this)} ref="filterInput"/>
-                    <Icon icon="search"/>
-                    </div>
-                ):null}
-                <ul className="selected-items" style={itemsStyle}>{items}</ul>
-                <input type="hidden" value={this.state.value}/>
-                </Dropdown>
-            </div>
+            <Dropdown className={classes} title={status} ref="dropdown" {...this.props}>
+            {this.props.filterInput?(
+                <div className="filter-input">
+                <input type="text" onChange={this.handleFilterInput.bind(this)} ref="filterInput"/>
+                <Icon icon="search"/>
+                </div>
+            ):null}
+            <ul className="selected-items" style={itemsStyle}>{items}</ul>
+            <input type="hidden" value={this.state.value}/>
+            </Dropdown>
         )
     }
 }

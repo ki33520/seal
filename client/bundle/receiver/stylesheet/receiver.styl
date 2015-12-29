@@ -1,0 +1,93 @@
+@import "../../common/common";
+@import "../../common/iconfont";
+@import "../../common/header";
+@import "../../common/router";
+@import "./receiver.css";
+@import "../../component/selected";
+body {
+    background: #F1F1F1;
+}
+.receiver-panel {
+    background: #FFF;
+    margin-bottom:px2rem(8);
+}
+
+.receiver-form-content {
+    .receiver-form {
+        .receiver-form-fieldset {
+            @extend .receiver-panel;
+            &:last-child .receiver-form-row:first-child{
+                border:0 none;
+            }
+            .receiver-form-row {
+                display: flex;
+                align-items: flex-start;
+                justify-content:center;
+                padding: px2rem(8) 0;
+                border-top:px2rem(1) solid #D7D7D7;
+                margin:0 px2rem(10) 0 px2rem(5);
+                line-height: px2rem(24);
+                &>i{
+                    width:px2rem(6);
+                    color:#dd1847;
+                }
+                .receiver-form-label {
+                    width:px2rem(65);
+                }
+                .receiver-form-field {
+                    flex: 1;
+                    &>input[type="text"]{
+                        border: 0 none;
+                        margin: 0;
+                        padding:0;
+                        line-height: px2rem(24);
+                        width:100%;
+                        outline:none;
+                    }
+                }
+                &.receiver-form-textarea-row {
+                    .receiver-form-field {
+                        flex: 3.5;
+                        textarea {
+                            width: 100%;
+                            border: 0 none;
+                            margin: 0;
+                            padding:0;
+                            outline:none;
+                            min-height:px2rem(60);
+                            line-height:px2rem(24);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.receiver-form-field {
+    line-height: 0;
+    .dropdown {
+        button {
+            padding: .1rem 0.5rem;
+            border: 0 none;
+            width: 60%;
+        }
+        .dropdown-content {
+            .selected-items {
+                li {
+                    padding: 0.4rem 1rem;
+                    color: #AAA;
+                    .selected-item {
+                        text-align: center;
+                    }
+                    &.checked {
+                        border-top: .05rem solid #DDD;
+                        border-bottom: .05rem solid #DDD;
+                        color: #333;
+                        background: #FFF;
+                    }
+                }
+            }
+        }
+    }
+}

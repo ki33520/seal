@@ -11,6 +11,7 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import PullHook from "../../component/pullhook.jsx";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
+import Popup from "../../component/popup.jsx";
 
 import Promotions from "./partial/promotions.jsx";
 import Properties from "./partial/properties.jsx";
@@ -18,6 +19,7 @@ import Specification from "./partial/specification.jsx";
 import Toolbar from "./partial/toolbar.jsx";
 import {addCart,addFavorite} from "./action.es6";
 import {alert} from "../common/action.es6";
+import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 
 class GoodDetail extends Component{
     constructor(props){
@@ -28,7 +30,8 @@ class GoodDetail extends Component{
             buyed:0,
             selectedItem:null,
             upperVisble:true,
-            downVisble:false
+            downVisble:false,
+            popupActive:false
         }
     }
     onPropertyChange(selectedProperty,selectedPropertyValue,e){
@@ -130,6 +133,8 @@ class GoodDetail extends Component{
     }
     addToCart(e){
         e && e.preventDefault();
+        this.togglePopup();
+        return;
         const {selectedItem,buyed,good} = this.state;
         const {dispatch} = this.props;
         if(selectedItem === null){
@@ -149,6 +154,12 @@ class GoodDetail extends Component{
                 itemId:selectedItem.id
             }));
         }
+    }
+    togglePopup(e){
+        e && e.preventDefault();
+        this.setState({
+            popupActive:!this.state.popupActive
+        })
     }
     toggleFavorite(e){
         e && e.preventDefault();
@@ -183,7 +194,9 @@ class GoodDetail extends Component{
             downVisble:true,
             upperVisble:false
         },()=>{
+            // console.log('handlePullUp')
             dom.scrollTop(window,0);
+            // this.refs["slidetabs"].initialize()
         })
     }
     handlePullDown(e){
@@ -207,7 +220,7 @@ class GoodDetail extends Component{
             );
         });
 
-        const upperClasses = classNames("good-detail-upper",{
+        const upperClasses = classNames("good-detail-upper","goods_top",{
             visible:this.state.upperVisble
         })
         const downClasses = classNames("good-detail-down",{
@@ -215,34 +228,75 @@ class GoodDetail extends Component{
         })
         return (
             <div className="good-detail-content">
-            <Header title="商品详情"/>
+            <Header>商品详情<a className="globa" href="javascript:void(0);"><i></i></a></Header>
             <div className={upperClasses}>
                 <Slider effect="roll" autoPlay={true} speed={200}>{slides}</Slider>
-                <div className="good-title">{good.title}</div>
-                <div className="good-prices">
-                    <div className="sale-price">{good.salePrice}</div>
-                    <div className="original-price">
-                    <div className="price-tag">专柜价:<b>{good.originalPrice}</b><em>{good.discount}</em>
+                <div className="title clearfix">
+                    <span>Cowala 咔哇熊高钙儿童成人学生全脂奶粉学生全脂奶粉学生全脂奶粉50g</span>
+                    <a className="goods_share">
+                        <i className="iconfont icon-share"></i>
+                        分享
+                    </a>
+                </div>
+                 <div className="price clearfix">
+                    <span className="nowPrice">&yen;{good.salePrice}</span>
+                    <span className="oldPrice">市场价&yen;{good.originalPrice}</span>
+                    <span className="countdown"><i className="iconfont icon-time"></i>距本期结束<em>04:34:10</em></span>
+                </div>
+
+                <div className="promotion clearfix">
+                    <dl>
+                        <dt>促销：</dt>
+                        <dd><Promotions promotions={good.marketing}/></dd>
+                    </dl>
+                </div>
+                 <a href="javascript:void(0);" className="goComment clearfix">
+                    <div className="left">
+                        <i className="iconfont icon-comment"></i>
+                        用户评论
+                      <em>(29)</em>
                     </div>
-                    <div className="store-tag">门店:<b>{good.mallName}</b></div>
+                    <div className="right">
+                        查看更多评价
+                        <i className="iconfont icon-right"></i>
                     </div>
+                </a>
+
+                <div className="overView">
+                    <dl>
+                      <dt>原产地：</dt>
+                      <dd><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</dd>
+                    </dl>
+                    <dl>
+                      <dt>发货仓：</dt>
+                      <dd>宁波一号保税仓库发货</dd>
+                    </dl>
+                    <dl>
+                      <dt>关税：</dt>
+                      <dd>
+                            <a href="#" className="tariff">
+                                <span>税费=不含税商品单价*件数*商品税率</span>
+                                <span>（根据海关规定，若订单税费≤50，海关予以免征）</span>
+                                <i className="iconfont icon-right"></i>
+                            </a>
+                        </dd>
+                    </dl>
+                    <div className="smallLine"></div> 
+                    <dl>
+                      <dt>税费：</dt>
+                      <dd>10% <a href="#" className="iconfont icon-ask"></a></dd>
+                    </dl>
+                    <dl>
+                      <dt>运费：</dt>
+                      <dd>包邮</dd>
+                    </dl>   
                 </div>
-                <div className="divider-title">
-                    <span>促销</span>
+                <div className="assure">
+                    <img src="/client/asset/images/assure.gif" />
                 </div>
-                <Promotions promotions={good.marketing}/>
-                <Properties properties={good.properties}
-                stock={good.stock}
-                selectedProperty={this.state.selectedProperty}
-                onPropertyChange={this.onPropertyChange.bind(this)} />
-                <div className="divider-title">
-                    <span>数量</span>
-                </div>
-                <div className="good-buyed">
-                <NumberPicker value={this.state.buyed} onChange={this.handleBuyedChanged.bind(this)}/>
-                </div>
+
                 <PullHook 
-                className="pull-trigger" 
+                className="teyla" 
                 oriention="BOTTOM_TO_TOP"
                 onPullEnd={this.handlePullUp.bind(this)}
                 >上拉显示商品详情</PullHook>
@@ -252,21 +306,52 @@ class GoodDetail extends Component{
             toggleFavorite={this.toggleFavorite.bind(this)} 
             addToCart={this.addToCart.bind(this)}>
             </Toolbar>
+            <Popup direction="bottom" active={this.state.popupActive}>
+                <div className="con">
+                    <div className="goodsSure">
+                        <img src={good.mainImageUrl} alt="" />
+                        <div className="left">
+                            <span>&yen;169.20</span>
+                            <em>库存<i>9</i>件</em>
+                        </div>
+                        <i className="iconfont icon-close-circled" onClick={this.togglePopup.bind(this)}></i>
+                    </div>
+                    <Properties properties={good.properties}
+                    stock={good.stock}
+                    selectedProperty={this.state.selectedProperty}
+                    onPropertyChange={this.onPropertyChange.bind(this)} />
+                    <div className="pro clearfix">
+                        <div className="pro-name">
+                            <span>购买数量</span>
+                            <em>（限购2件）</em>
+                        </div>
+                        <div className="good-buyed">
+                        <NumberPicker value={this.state.buyed} onChange={this.handleBuyedChanged.bind(this)}/>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0);" className="goodsSureBtn">立即购买</a>
+                </div>
+            </Popup>
             <form action="/confirmorder" method="GET" ref="directBuyForm">
                 <input type="hidden" value={selectedItem !== null?selectedItem.id:""} name="itemIds"/>
                 <input type="hidden" value={buyed} name="buyeds"/>
             </form>
             <div className={downClasses}>
                 <PullHook 
-                className="pull-trigger" 
+                className="teyla" 
                 oriention="TOP_TO_BOTTOM"
                 onPullEnd={this.handlePullDown.bind(this)}
                 >下拉返回详情顶部</PullHook>
-                <Specification specList={good.specList}/>
-                <div className="divider-title">
-                    <span>商品图片</span>
-                </div>
+                <SlideTabs axis="x" navbarSlidable={false} ref="slidetabs">
+                <SlideTabsItem navigator={()=><span>图文详情</span>}>
                 <div className="good-desc" dangerouslySetInnerHTML={{__html:good.detail}}></div>
+                </SlideTabsItem>
+                <SlideTabsItem navigator={()=><span>保税FAQ</span>}>
+                <div className="faq">
+                <img src="/client/asset/images/FAQshow.gif" />
+                </div>
+                </SlideTabsItem>
+                </SlideTabs>
             </div>
             </div>
         )

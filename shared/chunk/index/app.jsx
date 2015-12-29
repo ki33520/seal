@@ -1,20 +1,16 @@
 'use strict'
-import React from "react";
+import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
-import createStoreWithMiddleware from "../../lib/store-creator.es6";
-import Weather from "./component.jsx";
+import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
+import Index from "./component.jsx";
+import * as actions from "./action.es6";
 
-function selector(state){
-    const {weatherByCityName} = state
-    return {
-        weatherByCityName
-    };
-}
+let IndexConnected = connect((state)=>{
+    return state;
+})(wrapComponentWithActions(Index,actions));
 
-let WeatherConnected = connect(selector)(Weather);
-
-class WeatherApp extends React.Component{
+class IndexApp extends React.Component{
     render(){
         const {weather} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
@@ -25,10 +21,10 @@ class WeatherApp extends React.Component{
         });
         return (
             <Provider store={store}>
-            <WeatherConnected />
+            <IndexConnected />
             </Provider>
         )
     }
 }
 
-export default WeatherApp;
+export default IndexApp;

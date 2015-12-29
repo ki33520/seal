@@ -14,7 +14,7 @@ class Properties extends Component{
             var propertyValues = [];
             property.propertyValues.map((propertyValue,j)=>{
                 const active = property.selectedValue !== null && property.selectedValue.value === propertyValue.value;
-                const propertyClasses = classNames("property-value",{
+                const propertyClasses = classNames({
                     active,
                     default:propertyValue.disabled === true
                 })
@@ -23,12 +23,11 @@ class Properties extends Component{
                 // console.log('popoverActive',selectedProperty,active,popoverActive)
                 // console.log(property.selectedValue,propertyValue)
                 propertyValues.push((
-                    <div className={propertyClasses} 
+                    <a className={propertyClasses} 
+                    href="javascript:void(null)"
                     key={"property-value-"+ j}
                     onClick={onPropertyChange.bind(this,property,propertyValue)}
-                    ><Popover 
-                    active={popoverActive}
-                    >还剩<b>{stock}</b>件</Popover>{propertyValue.value}</div>
+                    >{propertyValue.value}</a>
                 ));
             })
             return (
@@ -36,7 +35,7 @@ class Properties extends Component{
                     <div className="divider-title">
                         <span>{property.propertyName}</span>
                     </div>
-                    <div className="property-values">
+                    <div className="select clearfix">
                     {propertyValues}
                     </div>
                 </div>

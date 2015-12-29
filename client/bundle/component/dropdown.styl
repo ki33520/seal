@@ -1,23 +1,24 @@
-@import "./mixin.styl";
+@import "../common/common";
+@import "../common/util";
 .dropdown {
     position: relative;
     display: inline-block;
-    font-size: .7rem;
+    font-size: px2rem(14);
     width:100%;
     button {
         outline: 0 none;
         background: #FFF;
-        padding: .4rem .5rem;
-        border: 1px solid #E5E5E5;
-        border-radius: .2rem;
-        line-height: 1rem;
+        padding: px2rem(8) px2rem(10);
+        border: px2rem(1) solid #E5E5E5;
+        border-radius: px2rem(4);
+        line-height: px2rem(20);
         clear: both;
         overflow: hidden;
         width:100%;
         .iconfont {
             float: right;
-            font-size: .65rem;
-            padding-left: .25rem;
+            font-size: px2rem(13);
+            padding-left: px2rem(5);
             box-sizing: border-box;
             width: 20%;
             color:#888;
@@ -29,8 +30,8 @@
         }
     }
     &.active button {
-        border-radius: .2rem .2rem 0 0;
-        border: 1px solid #CCC;
+        border-radius: px2rem(4) px2rem(4) 0 0;
+        border: px2rem(1) solid #CCC;
     }
     &>.dropdown-content {
         position: absolute;
@@ -38,15 +39,15 @@
         background: #FFF;
         width: 100%;
         box-sizing: border-box;
-        border-radius: 0 0 .2rem .2rem;
+        border-radius: 0 0 px2rem(4) px2rem(4);
         display: none;
         opacity: 0;
-        padding: 0 0 .4rem 0;
+        padding: 0 0 px2rem(8) 0;
         text-align: left;
         &.active {
-            border: 1px solid #CCC;
+            border: px2rem(1) solid #CCC;
             border-top: 0 none;
-            margin-top: -0.05rem;
+            margin-top: px2rem(-1);
             display: block;
             overflow:hidden;
             opacity: 1;
@@ -58,13 +59,13 @@
 .dropdown-headless{
     position: relative;
     display: inline-block;
-    font-size: .7rem;
+    font-size: px2rem(14);
     width:100%;
     &>.dropdown-content{
         position:static;
         opacity:1;
         display: block;
-        padding: 0 0 .4rem 0;
+        padding: 0 0 px2rem(8) 0;
         text-align: left;
         width: 100%;
         &.active{
@@ -73,14 +74,14 @@
         }
     }
     .fixed-caret{
-        width:1rem;
-        height:1rem;
+        width:px2rem(20);
+        height:px2rem(20);
         right:0;
         top:0;
         position:absolute;
         .iconfont {
-            font-size: .65rem;
-            padding-left: .25rem;
+            font-size: px2rem(13);
+            padding-left: px2rem(13);
             box-sizing: border-box;
             color:#888;
         }

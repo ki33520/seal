@@ -54,7 +54,7 @@ module.exports = {
         }, {
             test: /\.styl/,
             exclude: [node_modules_dir],
-            loader: ExtractTextPlugin.extract('style', 'css!stylus!autoprefixer')
+            loader: ExtractTextPlugin.extract('style', 'css!autoprefixer!stylus')
         }, {
             test: /\.css/,
             exclude: [node_modules_dir],
@@ -79,6 +79,7 @@ module.exports = {
                 warnings: false
             }
         }),
+        new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin(moduleEntryPath + "[name]/" + env.distFolder + "[name]-[hash].css")
     ], commonChunks)
 }

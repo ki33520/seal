@@ -3,6 +3,7 @@ var util = require("../lib/util");
 var ErrorContent = util.getSharedComponent("common","error.jsx");
 var WeatherApp = util.getSharedComponent("index");
 var sharedUtil = require("../../shared/lib/util.es6");
+var config = require("../lib/config");
 
 var weather = function(req,res){
     var cityName = req.body.cityname;
@@ -49,7 +50,27 @@ var index = function(req,res,next) {
     })
 };
 
-var errorHandler = function(err, req, res, next) {
+var authorizeLocals = function(req, res, next) {
+    var loginRedirectUrl = util.getAuthGatewayUrl(req, "/logingateway", true);
+    var logoutRedirectUrl = util.getAuthGatewayUrl(req, "/logoutgateway", true);
+
+    res.locals.loginUrl = config.loginUrl + "&redirectUrl=" + loginRedirectUrl;
+    res.locals.registerUrl = config.registerUrl + "&redirectUrl=" + loginRedirectUrl;
+    res.locals.logoutUrl = config.logoutUrl + "&redirectUrl=" + logoutRedirectUrl;
+    next();
+}
+
+var requireAuthorize = function(req, res, next) {
+    var loginRedirectUrl = util.getAuthGatewayUrl(req, "/logingateway", true);
+    var loginUrl = config.loginUrl + "&redirectUrl=" + loginRedirectUrl;
+    if (req.session.user !== undefined) {
+        next();
+    } else {
+        res.redirect(loginUrl);
+    }
+}
+
+var errorHandler = function(err, req, res) {
     if (err) {
         var initialState = {
             msg: err.message
@@ -84,6 +105,8 @@ var notFoundHandler = function(req, res) {
 module.exports = {
     index:index,
     weather:weather,
+    authorizeLocals:authorizeLocals,
+    requireAuthorize:requireAuthorize,
     notFoundHandler:notFoundHandler,
     errorHandler:errorHandler
 };

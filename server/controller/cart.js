@@ -2,33 +2,182 @@
 
 var _ = require("lodash");
 var util = require("../lib/util");
-var bluebird = require("bluebird");
 var CartApp = util.getSharedComponent("cart");
 
+function formatCarts(originalCarts) {
+    var carts = [];
+
+     _.each(originalCarts, function(originalCart, i) {
+        var cart = {
+            warehouseName: originalCart.warehouseName,
+            warehouseId: originalCart.warehouseId,
+            price:originalCart.salesTotalFee,
+            save:originalCart.promoFee,
+            pay:originalCart.totalFee,
+            number:originalCart.qtys,
+            saveType:originalCart.promoType,
+            promoName:originalCart.promoName,
+            checked:true,
+            itemIds:[],
+            buyeds:[],
+            groupList:[]
+        };
+
+        var len = 0;
+        _.each(originalCart.cartMKTList, function(promoList, j){
+            var group = {
+                saveType:promoList.promoType,
+                promoName:promoList.promoName,
+                savePrice:promoList.promoFee,
+                productList:[]
+            }
+
+            _.each(promoList.cartProductList,function(productList,k){
+                var goods = {
+                    imageUrl:productList.imageUrl,
+                    id:productList.singleCode,
+                    title:productList.title,
+                    props:productList.props,
+                    originPrice:productList.originPrice,
+                    price:productList.salesPrice,
+                    discount:productList.discount,
+                    number:productList.qty,
+                    stock:productList.stockFlag,
+                    limit:productList.buyLimit,
+                    checked:true
+                }
+                len++;
+                group.productList.push(goods);
+                cart.itemIds.push(productList.singleCode);
+                cart.buyeds.push(productList.qty);
+            });
+
+            cart.groupList.push(group);
+            cart.len = len;
+        });
+
+        carts.push(cart);
+    });
+    
+    return carts;
+}
+ 
 var cart = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
+    var memberId = '90a19c2d49184fefa7421c5d7eacf551';
 
     util.fetchAPI("cartByUser",{
-        memberId:"001"
-    },true).then(function(ret){
-        if(ret.code === "success"){
-            var cart = ret.object;
+        memberId:memberId
+    },true).then(function(resp){
+        if(resp.returnCode === 0){
+            var carts = formatCarts(resp.object);
             var initialState = {
-                cart: cart,
+                isFetched: true,
+                carts
             };
-            var markup = util.getMarkupByComponent(CartApp({initialState:initialState}));
+
+            var markup = util.getMarkupByComponent(CartApp({
+                initialState: initialState
+            }));
 
             res.render('cart', {
-                markup: markup,
-                initialState: initialState
-            })
+                markup,
+                initialState
+            });
+        
+            
         }else{
             next(new Error(ret.msg));
         }
     })
 }
 
+var updateCart = function(req, res, next) {
+    var user = req.session.user;
+    var id = req.body.id;
+    var number = req.body.number;
+ 
+    util.fetchAPI('updateCart', {
+        memberId: '90a19c2d49184fefa7421c5d7eacf551',
+        singleCode: id,
+        qty: number,
+        figureUpFlag: false
+    },true).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                isUpdated: true
+            })
+        } else {
+            res.json({
+                isUpdated: true,
+                errMsg: resp.msg
+            })
+        }
+    }, function() {
+        res.json({
+            apiResponded: false
+        })
+    })
+}
+
+var deleteCart = function(req, res, next) {
+    var cartId = req.body.cartId;
+    var user = req.session.user;
+
+    util.fetchAPI('deleteCart', {
+        memberId: '90a19c2d49184fefa7421c5d7eacf551',
+        cartId: cartId
+    },true).then(function(resp) {
+        if(resp.returnCode === 0){
+            res.json({
+                isDeleted: true
+            })
+        } else {
+            res.json({
+                isDeleted: true,
+                errMsg: resp.msg
+            })
+        }
+    }, function() {
+        res.json({
+            apiResponded: false
+        })
+    })
+}
+
+var fetchCart = function(req, res, next) {
+    var id = req.params.id;
+    var user = req.session.user;
+    var memberId = '90a19c2d49184fefa7421c5d7eacf551';
+    var cartIndex = req.body.cartIndex;
+    var groupIndex = req.body.groupIndex;
+    var goodsIndex = req.body.goodsIndex;
+  
+    util.fetchAPI("cartByUser",{
+        memberId:memberId
+    },true).then(function(resp){
+
+        if(resp.returnCode === 0){
+            var carts = formatCarts(resp.object);
+            var cart = carts[cartIndex];
+ 
+            res.json({
+                isFetched: true,
+                cart:cart
+            });
+        }else{
+            res.json({
+                isFetched:false,
+                errMsg:resp.msg
+            });
+        }
+    });
+}
+
 module.exports = {
-    cart:cart
+    cart: cart,
+    updateCart: updateCart,
+    deleteCart:deleteCart,
+    fetchCart:fetchCart
 };

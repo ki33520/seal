@@ -34,5 +34,140 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "confirmorder": {
+        "html": ["confirmorder.html"],
+        "path": "./client/bundle/confirmorder/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "goodlist": {
+        "html": ["goodlist.html"],
+        "path": "./client/bundle/goodlist/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "activity":{
+        "html": ["activity.html"],
+        "path": "./client/bundle/activity/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "trendy":{
+        "html": ["trendy.html"],
+        "path": "./client/bundle/trendy/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "aboutus":{
+        "html": ["aboutus.html"],
+        "path": "./client/bundle/aboutus/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "help":{
+        "html": ["help.html"],
+        "path": "./client/bundle/help/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "membercenter":{
+        "html": ["membercenter.html"],
+        "path": "./client/bundle/membercenter/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "receiver":{
+        "html": ["receiver.html"],
+        "path": "./client/bundle/receiver/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "orderlist":{
+        "html": ["orderlist.html"],
+        "path": "./client/bundle/orderlist/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "orderdetail":{
+        "html": ["orderdetail.html"],
+        "path": "./client/bundle/orderdetail/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "membercollect":{
+        "html": ["membercollect.html"],
+        "path": "./client/bundle/membercollect/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "membercomment":{
+        "html": ["membercomment.html"],
+        "path": "./client/bundle/membercomment/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "memberupdate":{
+        "html": ["memberupdate.html"],
+        "path": "./client/bundle/memberupdate/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "coupon":{
+        "html": ["coupon.html"],
+        "path": "./client/bundle/coupon/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "coupondetail":{
+        "html": ["coupondetail.html"],
+        "path": "./client/bundle/coupondetail/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }

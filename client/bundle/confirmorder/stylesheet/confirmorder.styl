@@ -1,0 +1,46 @@
+@import "../../common/common";
+@import "../../common/iconfont"
+@import "../../common/router";
+@import "../../common/header";
+@import "./confirmorder.css";
+@import "./coupon.css";
+.text-overflow{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+$gray-color = #555
+
+.confirm-order-content{
+    padding-bottom:1.32rem;
+}
+
+.orderConfirm_title{
+    &>em{
+        background-position:50% 50%;
+        width:px2rem(58);
+        height:px2rem(20);
+        line-height:px2rem(20);
+        font-size:px2rem(11);
+    }
+    &>span{
+        line-height:px2rem(20);
+    }
+    &>i{
+        line-height:px2rem(20);
+    }
+}
+
+.ckTo-box .intro{
+    span{
+        float:none;
+    }
+    &>span{
+        float:left;
+    }
+    &>span:last-child{
+        float:right;
+    }
+}
+
