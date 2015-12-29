@@ -24,7 +24,7 @@ class Slider extends Component{
         this.initialize();
         this.props.autoPlay && this.slideToNext();
     }
-    initialize(){
+    initialize(rect = null){
         const {oriention} = this.props;
         var {activeIndex} = this.state;
         if(this.props.defaultActiveIndex !== undefined){
@@ -32,8 +32,12 @@ class Slider extends Component{
         }
         // const slideNode = React.findDOMNode(this).querySelector(".slides").firstChild;
         const slideNode = ReactDOM.findDOMNode(this);
-        const slideNodeWidth = slideNode.offsetWidth;
-        const slideNodeHeight = slideNode.querySelector(".slides").firstChild.offsetHeight
+        let slideNodeWidth = slideNode.offsetWidth;
+        let slideNodeHeight = slideNode.querySelector(".slides").firstChild.offsetHeight
+        if(rect !== null){
+            slideNodeWidth = rect.width ? rect.width:slideNodeWidth
+            slideNodeHeight = rect.height ? rect.height:slideNodeHeight
+        }
         const slidesWidth = slideNodeWidth * this.slides.length;
         const slidesHeight = slideNodeHeight * this.slides.length;
         // console.log('slidesHeight',slideNode.querySelector(".slides").offsetHeight)
@@ -524,6 +528,8 @@ Slider.defaultProps = {
     loop:true,
     speed:300,
     delay:5000,
+    rect:null,
+    height:null,
     pauseOnHover:true,
     onChange:function(){}
 }

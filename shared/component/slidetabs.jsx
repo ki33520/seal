@@ -21,36 +21,18 @@ export class SlideTabs extends Component{
     }
     handleSelect(i,e){
         e && e.preventDefault()
-        // console.log('handleSelect')
         this.setState({
             activeIndex:i,
             // navbarSlidable:false
-        },()=>this.props.onSelect())
+        },()=>{
+            this.props.onSelect()   
+        })
     }
     handleActiveChange(i,e){
         this.setState({
             activeIndex:i,
             // navbarSlidable:true,
         },()=>this.props.onSelect())
-    }
-    componentDidMount(){
-        this.initialize()
-    }
-    initialize(){
-        let contentNode = ReactDOM.findDOMNode(this.refs["content"])
-        if(this.props.axis === "x"){
-            let contentNodeWidth = contentNode.parentNode.parentNode.offsetWidth * contentNode.children.length
-            // contentNode.style.width = `${contentNodeWidth}px`
-            // this.setState({
-            //     contentStyle:{
-            //         width:`${contentNodeWidth}px`
-            //     }
-            // })
-            // contentNode.children.style.width = '320px';
-        }else{
-            let contentNodeHeight = contentNode.parentNode.parentNode.offsetHeight * contentNode.children.length
-            contentNode.style.height = `${contentNodeHeight}px`
-        }
     }
     renderNavbar(){
         let navigators = [];
