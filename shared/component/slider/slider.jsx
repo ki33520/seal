@@ -59,7 +59,7 @@ class Slider extends Component{
             slidesStyle = Object.assign({},slidesStyle,{
                 transitionProperty:"transform",
                 transitionTimingFunction:"ease-in-out",
-                transform
+                WebkitTransform:transform
             })
         }
         // console.log('currentStyle',slideNodeHeight)
@@ -145,14 +145,14 @@ class Slider extends Component{
             const absOfOffsetY = Math.abs(offsetY);
             if(absOfOffsetY >= offsetHeight / 2){
                 if(offsetY < 0){
-                    console.log('next Y')
+                    // console.log('next Y')
                     setTimeout(this.next.bind(this),100);
                 }else if(offsetY > 0){
-                    console.log('prev Y')
+                    // console.log('prev Y')
                     setTimeout(this.prev.bind(this),100);
                 }
             }else{
-                console.log('restorePosition');
+                // console.log('restorePosition');
                 absOfOffsetY > 0 && this.restorePosition();
             }
         }
@@ -209,7 +209,7 @@ class Slider extends Component{
         }
         const slidesNode = ReactDOM.findDOMNode(this.refs.slides);
         if(transform !== null){
-            slidesNode.style.transform = transform;
+            slidesNode.style.WebkitTransform = transform;
             slidesNode.style.transitionDuration = ".3s";
         }
     }
@@ -240,7 +240,7 @@ class Slider extends Component{
         }
         const slidesNode = ReactDOM.findDOMNode(this.refs.slides);
         if(transform !==null){
-            slidesNode.style.transform = transform;
+            slidesNode.style.WebkitTransform = transform;
             slidesNode.style.transitionDuration = ".3s";
         }
     }
@@ -365,7 +365,7 @@ class Slider extends Component{
                 }
                 // console.log('transform',transform)
                 slidesStyle = Object.assign({},slidesStyle,{
-                    transform,
+                    WebkitTransform:transform,
                     transitionDuration:speed+"s"
                 })
             }

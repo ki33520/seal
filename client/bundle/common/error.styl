@@ -1,19 +1,39 @@
-.error-layer {
-    font-size: .7rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    .error-panel {
-        align-self: baseline;
-        padding-top:3rem;
-        width: 60%;
-        &>img {
-            width: 100%;
-        }
-        p {
-            margin: .5rem 0;
-            text-align:center;
-        }
-    }
+@import "./common";
+@import "./header";
+@import "./iconfont";
+.empty{
+    padding-top:20%;
+}
+.empty img{
+    width:100%;
+    margin-bottom:5%;
+}
+.empty span{
+    color:#666;
+    font-size:.4rem;
+    display:block;
+    text-align:center;
+}
+.empty span.title{
+    font-size: .46rem;
+    line-height: 1.15rem;
+    display: block;
+    text-align: center;
+}
+.empty a.empty_btn{
+    width:2rem;
+    height:.68rem;
+    line-height:.68rem;
+    display:block;
+    margin:.52rem auto 0;
+    color:#801da1;
+    border:1px solid #801da1;
+    border-radius:3px;
+    text-align:center;
+}
+.noPadTop{
+    padding:0;
+}
+.noPadTop img{
+    padding-top:20%;
 }
