@@ -20,7 +20,8 @@ export class SlideTabs extends Component{
         return false
     }
     handleSelect(i,e){
-        e && e.preventDefault()
+        console.log('handleSelect')
+        // e && e.preventDefault()
         this.setState({
             activeIndex:i
         },()=>{
@@ -68,6 +69,7 @@ export class SlideTabs extends Component{
         return (
             <div className={classes}>
             <Slidable axis={this.props.axis} name="content" 
+            transitionMove={false} 
             onlyInside={true}
             simulateTranslate={true}
             handleActiveChange={this.handleContentActiveChange.bind(this)} 
