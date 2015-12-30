@@ -5,6 +5,23 @@ var util = require("../lib/util");
 var bluebird = require("bluebird");
 var CommentApp = util.getSharedComponent("membercomment");
 
+function formatComment(object) {
+   return object.map((child,i)=>{
+        return {
+            productName: child.productName,
+            content: child.content,
+            rate: child.rate,
+            imageUrlList: child.imageUrlList,
+            origin: child.origin,
+            originImageUrl: child.originImageUrl,
+            isOpen: child.isOpen,
+            isView: child.isView,
+            id: child.id,
+            createdAt: child.createdAt
+        };
+    });
+}
+
 var index = function(req, res, next) {
     var user = req.session.user;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
@@ -20,7 +37,7 @@ var index = function(req, res, next) {
             var allComment = {},
                 object = ret.allComment.object;
             allComment.totalCount = object.totalCount;
-            allComment.list = _.slice(object.result,0,pageIndex*pageSize);
+            allComment.list = _.slice(formatComment(object.result),0,pageIndex*pageSize);
             allComment.pageIndex = pageIndex;
             allComment.pageSize = pageSize;
             if (req.xhr === true) {
