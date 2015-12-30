@@ -9,25 +9,23 @@ var trendy = function(req, res, next) {
 
     var pageIndex = req.query.pageIndex || 1;
     bluebird.props({
-        goods: util.fetchAPI("trendy", {
+        goods: util.fetchAPI("fetchTendyGoods", {
             pageIndex: pageIndex,
             pageSize: 12
         }, true)
     }).then(function(resp) {
         // resp = resp[0].body
         if (resp.goods.code === "success") {
-            resp.goods.page.list.map(function(v) {
+            resp.goods.list.map(function(v) {
                 v.smallImageUrl = '/client/asset/' + v.smallImageUrl;
-                v.country.icon = '/client/asset/'+ v.country.icon;
+                v.flag = '/client/asset/'+ v.flag;
             })
             if (req.xhr === true) {
                 res.json(resp);
             } else {
                  
                 var initialState = {
-                    isFetched: true,
-                    title : '暴款',
-                    pagination: resp.goods.page
+                    pagination: resp.goods.list
                 };
 
                 var markup = util.getMarkupByComponent(Trendy({

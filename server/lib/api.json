@@ -90,25 +90,11 @@
             "production":"http://product.tepin.hk"
         }
     },
-    "fetchCategory":{
-        "uri":"/single/v1/findShowCategories",
+    "fetchTendyGoods":{
+        "uri":"/content/v1/activityproduct/list",
         "baseURL":{
             "develop":"http://product.hwg.youayun.cn:7989",
-            "production":"http://product.tepin.hk"
-        }
-    },
-    "fetchBrand":{
-        "uri":"/brand/v1/findListWap",
-        "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
-            "production":"http://product.tepin.hk"
-        }
-    },
-    "fetchProductArea":{
-        "uri":"/sourceArea/v1/findListWap",
-        "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
-            "production":"http://product.tepin.hk"
+            "production":"marketing.hwg.youayun.cn"
         }
     }
 }

@@ -15,29 +15,38 @@ class Trendy extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            maskActive:false
- 
+            currentIndex:0
         }
     }
-    componentDidMount(){
-       
+
+    handleClick(index){
+        this.setState({
+            currentIndex:index
+        });
     }
- 
-  
+
+    renderNav(){
+        var nav = ["美容彩妆","母婴用品","营养保健"];
+        return nav.map((name,i)=>{
+            const classes = classNames({
+                "current":i === this.state.currentIndex
+            });
+            return (
+                <li className={classes} key={"tab-nav-"+i} 
+                onClick={this.handleClick.bind(this,i)}>{name}</li>
+            );
+        });
+    }
 
     render(){
-        const {isFetching,pagination,isFetched} = this.props;
-         
+        const {pagination} = this.props;
         var goods = [];
-        if(isFetched === true){
-            if(pagination.list.length > 0){
-                pagination.list.forEach(function(item,i){
-                    const key = "good-" + i;
-                    //item.salePrice = item.salePrice.toFixed(2);
-                    //item.standardPrice = item.standardPrice.toFixed(2);
-                    goods.push(<GoodItem goods={item} key={key} />)
-                })
-            }
+       
+        if(pagination.length > 0){
+            pagination.forEach(function(item,i){
+                const key = "good-" + i;
+                goods.push(<GoodItem goods={item} key={key} />)
+            })
         }
 
         return (
@@ -49,19 +58,11 @@ class Trendy extends React.Component{
                     </div>
                 </Header> 
                 <div className="polyTabs">
-                    <ul>
-                        <li className="current"><i>美容彩妆</i></li>
-                        <li><i>母婴用品</i></li>
-                        <li><i>营养保健</i></li>
-                    </ul>
+                    <ul>{this.renderNav()}</ul>
                 </div>
                 <div className="polyCon">
-                    <div id="page-content">
-                        <div className="poly_1 page-0 page-current">
-                            <div className="activityGeneral">
-                                {goods}
-                            </div>
-                        </div>
+                    <div className="activityGeneral">
+                        {goods}
                     </div>
                 </div>
                 <Footer activeIndex="2"/>
