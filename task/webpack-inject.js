@@ -15,9 +15,10 @@ gulp.task("develop-webpack", function() {
             cssFiles = [],
             jsFiles = [],
             // vendorCSSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.css'),
-            // moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
+            moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
             vendorJSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.js'),
             moduleJSFile = path.join(moduleObj.path, env.buildFolder + '*.js');
+        // cssFiles.push(moduleCSSFile);
         jsFiles.push(vendorJSFile);
         jsFiles.push(moduleJSFile);
         var sources = gulp.src(_.union(cssFiles, jsFiles), {

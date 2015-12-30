@@ -21,7 +21,6 @@ class GoodListApp extends React.Component{
             productActive:false,
             classifyActive:false,
             brandActive:false,
-            showNotEmpty:false,
             needClear:false,
             isFocused:false,
             keywords:props.keywords
@@ -38,12 +37,6 @@ class GoodListApp extends React.Component{
         });
     }
 
-    resetFilter(){
-        this.setState({
-            showNotEmpty:false 
-        });
-    }
-
     togglePopupActive(){
         const popupActive = !this.state.popupActive;
         this.setState({
@@ -51,7 +44,21 @@ class GoodListApp extends React.Component{
             maskActive:popupActive
         });
     }
-
+    handleChangeFilter(type){
+        switch(type){
+            case 'classfiy':
+                this.togglePopupClassify();
+                break;
+            case 'brand':
+                this.togglePopupBrandFilter();
+                break;
+            case 'product':
+                this.togglePopupProduct();
+                break;
+            default:
+                break;
+        }
+    }
     togglePopupClassify(){
         this.setState({
             classifyActive:!this.state.classifyActive
@@ -70,12 +77,6 @@ class GoodListApp extends React.Component{
         });
     }
  
-
-    toggleCanBuy(){
-        this.setState({
-            showNotEmpty:!this.state.showNotEmpty
-        });
-    }
 
     handleChange(e){
         e.preventDefault();
@@ -185,12 +186,8 @@ class GoodListApp extends React.Component{
                     handleClick={this.closeAllPopups.bind(this)} />
                 <Filter 
                     popupActive={this.state.popupActive}
-                    showNotEmpty={this.state.showNotEmpty}
-                    handleCanBuy={this.toggleCanBuy.bind(this)}
-                    handleReset={this.resetFilter.bind(this)}
-                    classifyFilter={this.togglePopupClassify.bind(this)}
-                    productFilter={this.togglePopupProduct.bind(this)}
-                    brandFilter={this.togglePopupBrandFilter.bind(this)}
+                    handleCanBuy={this.toggleSortActive.bind(this)}
+                    filter={this.handleChangeFilter.bind(this)}
                     handleClose={this.togglePopupActive.bind(this)} />
                 <FilterClassify 
                     category={pagination.categoryNames}
