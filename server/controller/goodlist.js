@@ -1,10 +1,9 @@
 'use strict';
-
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var GoodListApp = util.getSharedComponent("goodlist");
-
+ 
 function formatGoodsInfo(result){
     var goodsList = [];
     var productNames = [];
@@ -63,9 +62,7 @@ function formatGoodsInfo(result){
 var goodList = function(req, res, next) {
     var keywords = req.params.keyword||'';
     var pageIndex = req.body.pageIndex || 1;
-    //1:新品,2:折扣,3:价格,4:销量,5:收藏
     var sortType = req.body.sortType||1;
-    //true:asc,false:desc
     var sortViewType = req.body.sortViewType||false;
     var isHaveGoods = req.body.isHaveGoods||true;
 
@@ -82,7 +79,7 @@ var goodList = function(req, res, next) {
         if (resp.goods.returnCode === 0) {
             var result = formatGoodsInfo(resp.goods.object)
             if (req.xhr === true) {
-                res.json(resp);
+                res.json(result);
             } else {
                  
                 var initialState = {

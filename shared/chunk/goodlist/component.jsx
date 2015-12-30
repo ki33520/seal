@@ -2,10 +2,7 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
-import {
-    SORT_NORMAL,SORT_PRICE_DESC,SORT_PRICE_ASC,SORT_SALES
-} from "./action.es6";
-
+import fetchGoods from "./action.es6";
 import Refresher from "../../component/refresher.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import GoTop from "../../component/gotop.jsx";
@@ -14,8 +11,6 @@ import Filter from "./partial/filter.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import GoodSorter from "./partial/goodStore.jsx";
 import FilterClassify from "./partial/filterClassify.jsx";
-import FilterProduct from "./partial/filterProduct.jsx";
-import FilterBrand from "./partial/filterBrand.jsx"
 
 class GoodListApp extends React.Component{
     constructor(props){
@@ -27,7 +22,6 @@ class GoodListApp extends React.Component{
             classifyActive:false,
             brandActive:false,
             showNotEmpty:false,
-            sortType:SORT_NORMAL,
             needClear:false,
             isFocused:false,
             keywords:props.keywords
@@ -123,41 +117,35 @@ class GoodListApp extends React.Component{
         });
     }
 
-    toggleSortActive(type){
-        
-        switch(type){
-            case SORT_PRICE_DESC:
-                var active = this.state.sortType;
-                active = active==SORT_PRICE_DESC ? SORT_PRICE_ASC : SORT_PRICE_DESC
-                this.setState({
-                    sortType:active
-                });
-                break;
-            case SORT_SALES:
-                this.setState({
-                    sortType:SORT_SALES
-                });
-                break;
-            default:
-                this.setState({
-                    sortType:SORT_NORMAL
-                });
-                break;
-        }
+    toggleSortActive(param){
+        const {dispatch} = this.props;
+        const keywords = this.state.keywords;
+        const url = '/goodlist/'+keywords;
+        dispatch(fetchGoods(url,param));
     }
 
     render(){
-        const {isFetching,pagination} = this.props;
+        const {isFetching,pagination,keywords} = this.props;
         var goods = [];
 
-        if(pagination.goodsList.length > 0){
-            pagination.goodsList.forEach(function(item,i){
-                const key = "good-" + i;
-                //item.salePrice = item.salePrice.toFixed(2);
-                //item.standardPrice = item.standardPrice.toFixed(2);
-                goods.push(<GoodItem goods={item} key={key} />)
-            });
+        if(!pagination.goodsList.length){
+            return (
+                <div className="empty noPadTop">
+                    <Header>
+                        <span className="title">{keywords}</span>
+                    </Header>
+                    <img src="/client/asset/images/empty_search.png" />
+                    <div className="tips">抱歉，没有找到与“{keywords}”相关的商品，<br/>您可以换个词再试试~！</div>
+                </div>
+            )
         }
+
+       
+        pagination.goodsList.forEach(function(item,i){
+            const key = "good-" + i;
+            goods.push(<GoodItem goods={item} key={key} />)
+        });
+     
     
         const classes=classNames({
             "rollOut-animate":true,
@@ -188,7 +176,7 @@ class GoodListApp extends React.Component{
                         </div>
                         <span className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</span>
                     </Header>
-                    <GoodSorter orderBy={this.toggleSortActive.bind(this)} sortType={this.state.sortType}/>
+                    <GoodSorter orderBy={this.toggleSortActive.bind(this)} />
                     <div className="special-activity-list clearfix">
                         {goods}
                     </div>
@@ -208,12 +196,12 @@ class GoodListApp extends React.Component{
                     category={pagination.categoryNames}
                     active={this.state.classifyActive}
                     handleClose={this.togglePopupClassify.bind(this)} />
-                <FilterBrand 
-                    brands={pagination.brandNames}
+                <FilterClassify 
+                    category={pagination.brandNames}
                     active={this.state.brandActive}
                     handleClose={this.togglePopupBrandFilter.bind(this)} />
-                <FilterProduct 
-                    products={pagination.productNames}
+                <FilterClassify 
+                    category={pagination.productNames}
                     active={this.state.productActive}
                     handleClose={this.togglePopupProduct.bind(this)} />
                 <GoTop />
