@@ -12,7 +12,7 @@ var update = function(req, res, next) {
             memberId: user.memberId
         },true)
     }).then(function(ret) {
-        if (ret.memberDetailByUser.code === "success") {
+        if (ret.memberDetailByUser.returnCode === 0) {
             var memberInfo = ret.memberDetailByUser.object;
             var initialState = {
                 memberInfo: memberInfo
@@ -41,7 +41,7 @@ var updateBasic = function(req, res, next) {
             birthdy: birthdy
         },true)
     }).then(function(ret) {
-        if (ret.updateBasicByUser.code === "success") {
+        if (ret.updateBasicByUser.returnCode === 0) {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
                 isChanged: true,
@@ -50,7 +50,7 @@ var updateBasic = function(req, res, next) {
         }else{
             res.json({
                 isChanged:false,
-                errMsg:ret.updateBasicByUser.msg
+                errMsg:ret.updateBasicByUser.message
             })
         }
     });
@@ -69,14 +69,14 @@ var updatePassword = function(req, res, next) {
             rpassword: repeatPassword
         },true)
     }).then(function(ret) {
-        if (ret.updatePasswordByUser.code === "success") {
+        if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true
             })
         }else{
             res.json({
                 isChanged:false,
-                errMsg:ret.updatePasswordByUser.msg
+                errMsg:ret.updatePasswordByUser.message
             })
         }
     });
@@ -96,14 +96,14 @@ var updateMembercard = function(req, res, next) {
             verifyCode: verifyCode
         },true)
     }).then(function(ret) {
-        if (ret.updateMembercardByUser.code === "success") {
+        if (ret.updateMembercardByUser.returnCode === 0) {
             res.json({
                 isChanged: true
             })
         }else{
             res.json({
                 isChanged:false,
-                errMsg:ret.updateMembercardByUser.msg
+                errMsg:ret.updateMembercardByUser.message
             })
         }
     });
@@ -127,7 +127,7 @@ var updateMemberCardVerifyCode = function(req, res, next) {
         }else{
             res.json({
                 isSend:false,
-                errMsg:ret.updateMemberCardVerifyCode.msg
+                errMsg:ret.updateMemberCardVerifyCode.message
             })
         }
     });
