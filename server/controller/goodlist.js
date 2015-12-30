@@ -3,7 +3,8 @@ var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var GoodListApp = util.getSharedComponent("goodlist");
- 
+var param = require("../../shared/chunk/goodlist/constant.es6");
+
 function formatGoodsInfo(result){
     var goodsList = [];
     var productNames = [];
@@ -61,10 +62,10 @@ function formatGoodsInfo(result){
 
 var goodList = function(req, res, next) {
     var keywords = req.params.keyword||'';
-    var pageIndex = req.body.pageIndex || 1;
-    var sortType = req.body.sortType||1;
-    var sortViewType = req.body.sortViewType||false;
-    var isHaveGoods = req.body.isHaveGoods||true;
+    var pageIndex = req.query.pageIndex || 1;
+    var sortType = req.query.sortType||param.SORT_NORMAL;
+    var sortViewType = req.query.sortViewType||param.SORT_DESC;
+    var isHaveGoods = req.query.isHaveGoods||param.isHaveGoods;
 
     bluebird.props({
         goods: util.fetchAPI("goodList", {
@@ -84,7 +85,8 @@ var goodList = function(req, res, next) {
                  
                 var initialState = {
                     keywords : keywords,
-                    pagination:result
+                    pagination:result,
+                    isFetching:false
                 };
 
                 var markup = util.getMarkupByComponent(GoodListApp({
