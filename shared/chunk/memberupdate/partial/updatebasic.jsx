@@ -50,7 +50,6 @@ class UpdateBasic extends Component{
     }
     birthdyChange(fieldName,e){
         e && e.preventDefault();
-        console.log(this)
         const {dispatch} = this.props;
 
         var object = {};
