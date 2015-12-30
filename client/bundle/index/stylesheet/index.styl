@@ -6,12 +6,18 @@
 @import "./index.css";
 @import "./search.css";
 
+html,body{
+    overflow:hidden;
+}
 .index-container{
     height:100%;
+    overflow:hidden;
     #index{
         height:100%;
+        overflow:hidden;
         &>div{
             height:100%;
+            overflow:hidden;
         }
     }
 }
@@ -53,6 +59,7 @@
         .slide-tabs-item{
             overflow-y:auto;
             overflow-x:hidden;
+            -webkit-overflow-scrolling: touch;
         }
     }
 }
