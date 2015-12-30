@@ -25,6 +25,10 @@ class Trendy extends React.Component{
         });
     }
 
+    handleSearch(){
+        location.href="/search";
+    }
+
     renderNav(){
         var nav = ["美容彩妆","母婴用品","营养保健"];
         return nav.map((name,i)=>{
@@ -53,7 +57,7 @@ class Trendy extends React.Component{
             <div>
                 <Header canBack="false">
                     <div className="logo"><img src="client/asset/images/indexlogo.png" /></div>
-                    <div className="btn-right">
+                    <div className="btn-right" onClick={this.handleSearch.bind(this)}>
                         <Icon icon="search"/>
                     </div>
                 </Header> 
