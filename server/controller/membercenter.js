@@ -23,7 +23,7 @@ var memberCenter = function(req, res, next) {
                 memberId: user.memberId
             },true),
         }).then(function(ret) {
-            if (ret.memberDetailByUser.code === "success") {
+            if (ret.memberDetailByUser.returnCode === 0 && ret.memberCountOrder.returnCode === 0) {
                 var member = ret.memberDetailByUser.object;
                 var countOrder = ret.memberCountOrder.object;
                 var initialState = {
@@ -43,7 +43,12 @@ var memberCenter = function(req, res, next) {
                     initialState: initialState
                 })
             }else{
-                next(new Error(ret.msg));
+                if(!ret.memberDetailByUser.returnCode){
+                    next(new Error(ret.memberDetailByUser.message));
+                }
+                if(!ret.memberCountOrder.returnCode){
+                    next(new Error(ret.memberCountOrder.message));
+                }
             }
         });
     }else{
@@ -52,7 +57,7 @@ var memberCenter = function(req, res, next) {
                 memberId: ''
             },true)
         }).then(function(ret) {
-            if (ret.memberDetailByUser.code === "success") {
+            if (ret.memberDetailByUser.returnCode === 0) {
                 var member = ret.memberDetailByUser.object;
                 var initialState = {
                     isFetched: true,
@@ -71,7 +76,7 @@ var memberCenter = function(req, res, next) {
                     initialState: initialState
                 })
             }else{
-                next(new Error(ret.msg));
+                next(new Error(ret.memberDetailByUser.msg));
             }
         });
     }

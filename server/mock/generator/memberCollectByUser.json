@@ -1,11 +1,9 @@
 {
-    "code":"success",
-    "msg":"访问成功",
-    "time":1427188628187,
-    "page":{
-        "totalPage": 12,
-        "pageNo": 1,
-        "list":[{
+    "returnCode": 0,
+    "message": "成功",
+    "object":{
+        "totalCount": 12,
+        "result":[{
             "title": "丝纷1 测试商品 XS 白粉红",
             "goodId": "1",
             "salesPrice": 599.00,

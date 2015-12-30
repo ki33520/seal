@@ -16,17 +16,20 @@ var collectlist = function(req, res, next) {
             pageSize: pageSize
         },true)
     }).then(function(ret) {
-        if (ret.memberCollectByUser.code === "success") {
-            var collect = ret.memberCollectByUser.page;
-            collect.list = _.slice(collect.list,0,pageIndex*pageSize);
+        if (ret.memberCollectByUser.returnCode === 0) {
+            var collect = {},
+                object = ret.memberCollectByUser.object;
+            collect.totalCount = object.totalCount;
+            collect.list = _.slice(object.result,0,pageIndex*pageSize);
             collect.pageIndex = pageIndex;
+            collect.pageSize = pageSize;
+            
             if (req.xhr === true) {
                 res.json(collect);
             } else {
                 var initialState = {
                     isFetched: true,
-                    collect: collect,
-                    pageSize
+                    collect: collect
                 };
                 
                 var markup = util.getMarkupByComponent(CollectApp({initialState:initialState}));
@@ -38,7 +41,7 @@ var collectlist = function(req, res, next) {
             }
             
         }else{
-            next(new Error(ret.msg));
+            next(new Error(ret.memberCollectByUser.msg));
         }
     });
     
