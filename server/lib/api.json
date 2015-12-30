@@ -62,6 +62,13 @@
             "production":"http://member.tepin.hk"
         }
     },
+    "memberCountOrder":{
+        "uri":"/order/v1/countOrder",
+        "baseURL":{
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "production":"http://member.tepin.hk"
+        }
+    },
     "loginTokenByCode": {
         "uri": "/security/WAP/newLoginForWAP.bdo",
         "baseURL":{

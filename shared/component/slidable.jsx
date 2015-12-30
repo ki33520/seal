@@ -154,15 +154,15 @@ class Slidable extends Component{
         // console.log('offsetY',this.offsetY,this.translateY,"offsetX",this.offsetX)
     }
     handleTouchMove(e){
-        e && e.preventDefault();
+        e && e.stopPropagation();
         const {animateDuration} = this.props;
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = dom.inTouchableRegion(clientX,clientY,e.currentTarget);
         if(this.props.onlyInside && !inTouchableRegion){
             return;
         }
-        this.translateY += (clientY - this.lastY)
-        this.translateX += (clientX - this.lastX)
+        this.translateY += Math.abs(clientY - this.lastY) < 5 ? 0 : (clientY - this.lastY);
+        this.translateX += Math.abs(clientX - this.lastX) < 5 ? 0 : (clientX - this.lastX);
 
         this.translateY = this.translateY >= 0 ? 0 : this.translateY;
         this.translateX = this.translateX >= 0 ? 0 : this.translateX;
@@ -170,8 +170,11 @@ class Slidable extends Component{
             this.lastY = clientY;
             this.lastX = clientX;
         })
-        rAF(this.transitionTouch.bind(this,animateDuration))
         // console.log("translateY",this.translateY,"lastY",this.lastY,"clientY",clientY)
+        // setTimeout(()=>{
+            // this.transitionTouch(animateDuration)
+        // },300)
+        rAF(this.transitionTouch.bind(this,animateDuration))
     }
     checkEdge(onEdge = ()=>{}){
         const {axis} = this.props;
@@ -205,7 +208,7 @@ class Slidable extends Component{
             // _.delay(()=>{
             // let duration = duration || 0.3
             translateNode.style.transitionDuration = `${duration}s`;
-            translateNode.style.transform = transform;
+            translateNode.style.WebkitTransform = transform;
             // },60)
         }
     }

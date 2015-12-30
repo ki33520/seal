@@ -1,18 +1,16 @@
 'use strict';
 
 import React,{Component} from "react";
+import Header from "./header.jsx";
 
 class ErrorContent extends Component{
     render(){
-        const {msg} = this.props.initialState
+        const {msg,code} = this.props.initialState
         return (
-            <div className="error-content">
-                <div className="error-layer">
-                    <div className="error-panel">
-                        <img src="/client/asset/image/error.png"/>
-                        <p>{msg}</p>
-                    </div>
-                </div>
+            <div className="empty noPadTop">
+                <Header>{code}</Header>
+                <img src="/client/asset/images/404.png" />
+                <span>{msg}</span>
             </div>
         );
     }
