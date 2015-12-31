@@ -1,0 +1,18 @@
+{% extends "./layout.html" %}
+{% block title %}类目聚合页{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div class="navbar-container">
+    <div id="navbar-markup">{{ markup|safe }}</div>
+</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/hmr/react.js"></script>
+<script src="/hmr/navbar.js"></script>
+<!-- endinject -->
+{% endblock %}

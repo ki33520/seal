@@ -178,5 +178,14 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "navbar":{
+        "html": ["navbar.html"],
+        "path": "./client/bundle/navbar/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }
