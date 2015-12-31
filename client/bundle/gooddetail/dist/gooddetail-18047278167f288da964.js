@@ -4672,7 +4672,7 @@ webpackJsonp([7],{
 	            });
 	            var children = this.props.children;
 	            if (_react2["default"].Children.count(this.props.children) === 1) {
-	                console.log(_react2["default"].Children.count(this.props.children));
+	                // console.log(React.Children.count(this.props.children))
 	                var child = _react2["default"].Children.only(this.props.children);
 	                children = _react2["default"].cloneElement(child, _Object$assign({}, child.props, {
 	                    redraw: this.state.itemStyle !== null
