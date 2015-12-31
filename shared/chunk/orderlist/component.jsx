@@ -26,19 +26,19 @@ class OrderList extends Component{
             <Header>我的订单</Header>
             <SlideTabs axis="x" navbarSlidable={false}>
                 <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
-                {this.renderOrders()}
+                <div className="order-content">{this.renderOrders()}</div>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
-                {this.renderOrders()}
+                <div className="order-content">{this.renderOrders()}</div>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
-                {this.renderOrders()}
+                <div className="order-content">{this.renderOrders()}</div>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                {this.renderOrders()}
+                <div className="order-content">{this.renderOrders()}</div>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
-                {this.renderOrders()}
+                <div className="order-content">{this.renderOrders()}</div>
                 </SlideTabsItem>
             </SlideTabs>
             </div>
