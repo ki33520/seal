@@ -103,5 +103,12 @@
             "develop":"http://product.hwg.youayun.cn:7989",
             "production":"marketing.hwg.youayun.cn"
         }
+    },
+    "fetchHotKeywords":{
+        "uri":"/content/v1/hotword/list",
+        "baseURL":{
+            "develop":"http://product.hwg.youayun.cn:7989",
+            "production":"marketing.hwg.youayun.cn"
+        }
     }
 }
