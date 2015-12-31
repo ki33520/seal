@@ -1163,7 +1163,13 @@ header .resetLink{
     background:url(/client/asset/images/showOff.png) 0 -56px no-repeat;
     background-size:100%;
     margin-top:.2rem;
-}html,
+}@charset "utf-8";
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url("/client/asset/font/_gbk-webfont.eot");
+  src: url("/client/asset/font/_gbk-webfont.eot?#iefix") format('embedded-opentype'), url("/client/asset/font/_gbk-webfont.woff") format('woff'), url("/client/asset/font/_gbk-webfont.ttf") format('truetype'), url("/client/asset/font/_gbk-webfont.svg#iconfont") format('svg');
+}
+html,
 body {
   height: 100%;
 }
@@ -1175,6 +1181,7 @@ body {
   margin: 0;
 }
 body * {
+  font-family: 'fontNameRegular', 'microsoft yahei', arial;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -1618,6 +1625,12 @@ a:hover {
 .fadeIn-leave.fadeIn-leave-active {
   opacity: 0.01;
 }
+@charset "utf-8";
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url("/client/asset/font/_gbk-webfont.eot");
+  src: url("/client/asset/font/_gbk-webfont.eot?#iefix") format('embedded-opentype'), url("/client/asset/font/_gbk-webfont.woff") format('woff'), url("/client/asset/font/_gbk-webfont.ttf") format('truetype'), url("/client/asset/font/_gbk-webfont.svg#iconfont") format('svg');
+}
 html,
 body {
   height: 100%;
@@ -1630,6 +1643,7 @@ body {
   margin: 0;
 }
 body * {
+  font-family: 'fontNameRegular', 'microsoft yahei', arial;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -1932,6 +1946,12 @@ a:hover {
 .slide-tabs.slide-tabs-vertical .slide-tabs-content .slide-tabs-item {
   display: block;
 }
+@charset "utf-8";
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url("/client/asset/font/_gbk-webfont.eot");
+  src: url("/client/asset/font/_gbk-webfont.eot?#iefix") format('embedded-opentype'), url("/client/asset/font/_gbk-webfont.woff") format('woff'), url("/client/asset/font/_gbk-webfont.ttf") format('truetype'), url("/client/asset/font/_gbk-webfont.svg#iconfont") format('svg');
+}
 html,
 body {
   height: 100%;
@@ -1944,6 +1964,7 @@ body {
   margin: 0;
 }
 body * {
+  font-family: 'fontNameRegular', 'microsoft yahei', arial;
   margin: 0;
   padding: 0;
   box-sizing: border-box;

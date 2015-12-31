@@ -1,10 +1,10 @@
-webpackJsonp([15],{
+webpackJsonp([16],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(437);
-	module.exports = __webpack_require__(446);
+	__webpack_require__(445);
+	module.exports = __webpack_require__(454);
 
 
 /***/ },
@@ -2449,14 +2449,14 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 437:
+/***/ 445:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
-	var _sharedChunkOrderdetailAppJsx = __webpack_require__(438);
+	var _sharedChunkOrderdetailAppJsx = __webpack_require__(446);
 
 	var _sharedChunkOrderdetailAppJsx2 = _interopRequireDefault(_sharedChunkOrderdetailAppJsx);
 
@@ -2481,7 +2481,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 438:
+/***/ 446:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2506,7 +2506,7 @@ webpackJsonp([15],{
 
 	var _reactRedux = __webpack_require__(190);
 
-	var _reducerEs6 = __webpack_require__(439);
+	var _reducerEs6 = __webpack_require__(447);
 
 	var _reducerEs62 = _interopRequireDefault(_reducerEs6);
 
@@ -2514,7 +2514,7 @@ webpackJsonp([15],{
 
 	var _libReduxHelperEs62 = _interopRequireDefault(_libReduxHelperEs6);
 
-	var _componentJsx = __webpack_require__(441);
+	var _componentJsx = __webpack_require__(449);
 
 	var _componentJsx2 = _interopRequireDefault(_componentJsx);
 
@@ -2574,7 +2574,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 439:
+/***/ 447:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2585,7 +2585,7 @@ webpackJsonp([15],{
 	    value: true
 	});
 
-	var _actionEs6 = __webpack_require__(440);
+	var _actionEs6 = __webpack_require__(448);
 
 	var _redux = __webpack_require__(197);
 
@@ -2616,7 +2616,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 440:
+/***/ 448:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2658,7 +2658,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 441:
+/***/ 449:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2683,11 +2683,11 @@ webpackJsonp([15],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _partialOrderdetailJsx = __webpack_require__(442);
+	var _partialOrderdetailJsx = __webpack_require__(450);
 
 	var _partialOrderdetailJsx2 = _interopRequireDefault(_partialOrderdetailJsx);
 
-	var _partialLogisticsJsx = __webpack_require__(445);
+	var _partialLogisticsJsx = __webpack_require__(453);
 
 	var _partialLogisticsJsx2 = _interopRequireDefault(_partialLogisticsJsx);
 
@@ -2755,7 +2755,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 442:
+/***/ 450:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2782,11 +2782,11 @@ webpackJsonp([15],{
 
 	var _commonHeaderJsx2 = _interopRequireDefault(_commonHeaderJsx);
 
-	var _statusprogressJsx = __webpack_require__(443);
+	var _statusprogressJsx = __webpack_require__(451);
 
 	var _statusprogressJsx2 = _interopRequireDefault(_statusprogressJsx);
 
-	var _ordergoodsJsx = __webpack_require__(444);
+	var _ordergoodsJsx = __webpack_require__(452);
 
 	var _ordergoodsJsx2 = _interopRequireDefault(_ordergoodsJsx);
 
@@ -3098,7 +3098,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 443:
+/***/ 451:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3181,7 +3181,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 444:
+/***/ 452:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3302,7 +3302,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 445:
+/***/ 453:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3329,11 +3329,11 @@ webpackJsonp([15],{
 
 	var _commonHeaderJsx2 = _interopRequireDefault(_commonHeaderJsx);
 
-	var _statusprogressJsx = __webpack_require__(443);
+	var _statusprogressJsx = __webpack_require__(451);
 
 	var _statusprogressJsx2 = _interopRequireDefault(_statusprogressJsx);
 
-	var _actionEs6 = __webpack_require__(440);
+	var _actionEs6 = __webpack_require__(448);
 
 	var Logistics = (function (_Component) {
 	    _inherits(Logistics, _Component);
@@ -3492,7 +3492,7 @@ webpackJsonp([15],{
 
 /***/ },
 
-/***/ 446:
+/***/ 454:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

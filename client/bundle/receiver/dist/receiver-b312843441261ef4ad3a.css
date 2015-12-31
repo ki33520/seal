@@ -251,7 +251,13 @@ header .screening {
     flex: 1;
     margin:.15rem .3rem 0 0;
     padding:0 .4rem 0 .2rem;
-}html,
+}@charset "utf-8";
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url("/client/asset/font/_gbk-webfont.eot");
+  src: url("/client/asset/font/_gbk-webfont.eot?#iefix") format('embedded-opentype'), url("/client/asset/font/_gbk-webfont.woff") format('woff'), url("/client/asset/font/_gbk-webfont.ttf") format('truetype'), url("/client/asset/font/_gbk-webfont.svg#iconfont") format('svg');
+}
+html,
 body {
   height: 100%;
 }
@@ -263,6 +269,7 @@ body {
   margin: 0;
 }
 body * {
+  font-family: 'fontNameRegular', 'microsoft yahei', arial;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -750,6 +757,12 @@ a:hover {
 .fadeIn-leave.fadeIn-leave-active {
   opacity: 0.01;
 }
+@charset "utf-8";
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url("/client/asset/font/_gbk-webfont.eot");
+  src: url("/client/asset/font/_gbk-webfont.eot?#iefix") format('embedded-opentype'), url("/client/asset/font/_gbk-webfont.woff") format('woff'), url("/client/asset/font/_gbk-webfont.ttf") format('truetype'), url("/client/asset/font/_gbk-webfont.svg#iconfont") format('svg');
+}
 html,
 body {
   height: 100%;
@@ -762,6 +775,7 @@ body {
   margin: 0;
 }
 body * {
+  font-family: 'fontNameRegular', 'microsoft yahei', arial;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -1049,6 +1063,12 @@ a:hover {
     transform: rotate(359deg);
   }
 }
+@charset "utf-8";
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url("/client/asset/font/_gbk-webfont.eot");
+  src: url("/client/asset/font/_gbk-webfont.eot?#iefix") format('embedded-opentype'), url("/client/asset/font/_gbk-webfont.woff") format('woff'), url("/client/asset/font/_gbk-webfont.ttf") format('truetype'), url("/client/asset/font/_gbk-webfont.svg#iconfont") format('svg');
+}
 html,
 body {
   height: 100%;
@@ -1061,6 +1081,7 @@ body {
   margin: 0;
 }
 body * {
+  font-family: 'fontNameRegular', 'microsoft yahei', arial;
   margin: 0;
   padding: 0;
   box-sizing: border-box;

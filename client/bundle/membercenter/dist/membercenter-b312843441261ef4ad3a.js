@@ -1,10 +1,10 @@
-webpackJsonp([20],{
+webpackJsonp([11],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(559);
-	module.exports = __webpack_require__(565);
+	__webpack_require__(401);
+	module.exports = __webpack_require__(406);
 
 
 /***/ },
@@ -644,66 +644,6 @@ webpackJsonp([20],{
 
 /***/ },
 
-/***/ 235:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(234);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var Refresher = (function (_React$Component) {
-	    _inherits(Refresher, _React$Component);
-
-	    function Refresher() {
-	        _classCallCheck(this, Refresher);
-
-	        _get(Object.getPrototypeOf(Refresher.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(Refresher, [{
-	        key: "render",
-	        value: function render() {
-	            var classes = (0, _classnames2["default"])({
-	                "refresher": true,
-	                "refresher-active": this.props.active
-	            });
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: classes },
-	                _react2["default"].createElement("span", { className: "iconfont icon-loading animate-spin" }),
-	                "正在加载"
-	            );
-	        }
-	    }]);
-
-	    return Refresher;
-	})(_react2["default"].Component);
-
-	exports["default"] = Refresher;
-	module.exports = exports["default"];
-
-/***/ },
-
 /***/ 236:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -751,108 +691,6 @@ webpackJsonp([20],{
 	})(_react.Component);
 
 	exports["default"] = MaskLayer;
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 237:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _libUtilEs6 = __webpack_require__(227);
-
-	var _libUtilEs62 = _interopRequireDefault(_libUtilEs6);
-
-	var _lodash = __webpack_require__(231);
-
-	var _lodash2 = _interopRequireDefault(_lodash);
-
-	var _classnames = __webpack_require__(234);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _libDomEs6 = __webpack_require__(238);
-
-	var GoTop = (function (_Component) {
-	    _inherits(GoTop, _Component);
-
-	    function GoTop(props) {
-	        _classCallCheck(this, GoTop);
-
-	        _get(Object.getPrototypeOf(GoTop.prototype), "constructor", this).call(this, props);
-	        this.state = {
-	            active: false
-	        };
-	    }
-
-	    _createClass(GoTop, [{
-	        key: "toggleVisble",
-	        value: function toggleVisble() {
-	            var scrollTop = _libUtilEs62["default"].scrollTop();
-	            if (scrollTop > 50) {
-	                this.setState({ active: true });
-	            } else {
-	                this.setState({ active: false });
-	            }
-	        }
-	    }, {
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            //util.bindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
-	        }
-	    }, {
-	        key: "componentWillUnmount",
-	        value: function componentWillUnmount() {
-	            //util.unbindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
-	        }
-	    }, {
-	        key: "backToTop",
-	        value: function backToTop() {
-	            (0, _libDomEs6.smoothScroll)(window, 0);
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var classes = (0, _classnames2["default"])({
-	                "back-to-top": true,
-	                "active": this.state.active
-	            });
-
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: classes },
-	                _react2["default"].createElement(
-	                    "a",
-	                    { href: null, onClick: this.backToTop },
-	                    _react2["default"].createElement("span", { className: "iconfont icon-up-big" })
-	                )
-	            );
-	        }
-	    }]);
-
-	    return GoTop;
-	})(_react.Component);
-
-	exports["default"] = GoTop;
 	module.exports = exports["default"];
 
 /***/ },
@@ -1219,90 +1057,6 @@ webpackJsonp([20],{
 
 /***/ },
 
-/***/ 240:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _defineProperty = __webpack_require__(241)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(234);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var Icon = (function (_Component) {
-	    _inherits(Icon, _Component);
-
-	    function Icon() {
-	        _classCallCheck(this, Icon);
-
-	        _get(Object.getPrototypeOf(Icon.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(Icon, [{
-	        key: "render",
-	        value: function render() {
-	            var icon = this.props.icon;
-
-	            var classes = (0, _classnames2["default"])(this.props.className, _defineProperty({
-	                "iconfont": true
-	            }, "icon-" + icon, true));
-	            return _react2["default"].createElement("span", { className: classes });
-	        }
-	    }]);
-
-	    return Icon;
-	})(_react.Component);
-
-	exports["default"] = Icon;
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 241:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _Object$defineProperty = __webpack_require__(30)["default"];
-
-	exports["default"] = function (obj, key, value) {
-	  if (key in obj) {
-	    _Object$defineProperty(obj, key, {
-	      value: value,
-	      enumerable: true,
-	      configurable: true,
-	      writable: true
-	    });
-	  } else {
-	    obj[key] = value;
-	  }
-
-	  return obj;
-	};
-
-	exports.__esModule = true;
-
-/***/ },
-
 /***/ 251:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1350,7 +1104,7 @@ webpackJsonp([20],{
 	            });
 	            switch (index) {
 	                case 1:
-	                    window.location.href = '/classify';
+	                    window.location.href = '/navbar';
 	                    break;
 	                case 2:
 	                    window.location.href = '/trendy';
@@ -1416,16 +1170,163 @@ webpackJsonp([20],{
 
 /***/ },
 
-/***/ 559:
+/***/ 261:
+/***/ function(module, exports) {
+
+	'use strict';
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.alert = alert;
+	var SHOW_ALERT = "SHOW_ALERT";
+	exports.SHOW_ALERT = SHOW_ALERT;
+	var HIDE_ALERT = "HIDE_ALERT";
+
+	exports.HIDE_ALERT = HIDE_ALERT;
+	function showAlert(content) {
+	    return {
+	        type: SHOW_ALERT,
+	        content: content
+	    };
+	}
+
+	function hideAlert(content) {
+	    return {
+	        type: HIDE_ALERT,
+	        content: content
+	    };
+	}
+
+	function alert() {
+	    var content = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+	    var delay = arguments.length <= 1 || arguments[1] === undefined ? 3000 : arguments[1];
+
+	    return function (dispatch) {
+	        dispatch(showAlert(content));
+	        setTimeout(function () {
+	            dispatch(hideAlert(content));
+	        }, delay);
+	    };
+	}
+
+/***/ },
+
+/***/ 262:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _Object$assign = __webpack_require__(210)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.alertReducer = alertReducer;
+
+	var _actionEs6 = __webpack_require__(261);
+
+	function alertReducer(state, action) {
+	    if (state === undefined) state = {};
+
+	    switch (action.type) {
+	        case _actionEs6.SHOW_ALERT:
+	            return _Object$assign({}, state, {
+	                alertActive: true,
+	                alertContent: action.content
+	            });
+	        case _actionEs6.HIDE_ALERT:
+	            return _Object$assign({}, state, {
+	                alertActive: false,
+	                alertContent: action.content
+	            });
+	        default:
+	            return state;
+	    }
+	}
+
+/***/ },
+
+/***/ 277:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(234);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _libDomEs6 = __webpack_require__(238);
+
+	var _libDomEs62 = _interopRequireDefault(_libDomEs6);
+
+	var Alert = (function (_Component) {
+	    _inherits(Alert, _Component);
+
+	    function Alert() {
+	        _classCallCheck(this, Alert);
+
+	        _get(Object.getPrototypeOf(Alert.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Alert, [{
+	        key: "render",
+	        value: function render() {
+	            var classes = (0, _classnames2["default"])("alert-layer", {
+	                "active": this.props.active
+	            });
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: classes },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "alert" },
+	                    this.props.children
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Alert;
+	})(_react.Component);
+
+	Alert.defaultProps = {
+	    autoHide: true,
+	    delay: 3000
+	};
+
+	exports["default"] = Alert;
+	module.exports = exports["default"];
+
+/***/ },
+
+/***/ 401:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
-	var _sharedChunkTrendyAppJsx = __webpack_require__(560);
+	var _sharedChunkMembercenterAppJsx = __webpack_require__(402);
 
-	var _sharedChunkTrendyAppJsx2 = _interopRequireDefault(_sharedChunkTrendyAppJsx);
+	var _sharedChunkMembercenterAppJsx2 = _interopRequireDefault(_sharedChunkMembercenterAppJsx);
 
 	var _react = __webpack_require__(33);
 
@@ -1437,7 +1338,7 @@ webpackJsonp([20],{
 
 	function bootstrap() {
 	    var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-	    _reactDom2["default"].render(_react2["default"].createElement(_sharedChunkTrendyAppJsx2["default"], { initialState: initialState }), document.getElementById('trendy'));
+	    _reactDom2["default"].render(_react2["default"].createElement(_sharedChunkMembercenterAppJsx2["default"], { initialState: initialState }), document.getElementById('member-center'));
 	}
 
 	if (typeof window.addEventListener) {
@@ -1448,10 +1349,9 @@ webpackJsonp([20],{
 
 /***/ },
 
-/***/ 560:
+/***/ 402:
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	'use strict';
 
 	var _get = __webpack_require__(4)["default"];
@@ -1474,7 +1374,7 @@ webpackJsonp([20],{
 
 	var _reactRedux = __webpack_require__(190);
 
-	var _reducerEs6 = __webpack_require__(561);
+	var _reducerEs6 = __webpack_require__(403);
 
 	var _reducerEs62 = _interopRequireDefault(_reducerEs6);
 
@@ -1484,108 +1384,106 @@ webpackJsonp([20],{
 
 	var _libReduxHelperEs62 = _interopRequireDefault(_libReduxHelperEs6);
 
-	var _componentJsx = __webpack_require__(563);
+	var _componentJsx = __webpack_require__(405);
 
 	var _componentJsx2 = _interopRequireDefault(_componentJsx);
 
 	function selector(state) {
-	    var _state$goodsByParam = state.goodsByParam;
-	    var pagination = _state$goodsByParam.pagination;
-	    var isFetching = _state$goodsByParam.isFetching;
+	    var _state$memberCenterByUser = state.memberCenterByUser;
+	    var member = _state$memberCenterByUser.member;
+	    var countOrder = _state$memberCenterByUser.countOrder;
+	    var api = _state$memberCenterByUser.api;
+	    var isLogined = _state$memberCenterByUser.isLogined;
+	    var isFetched = _state$memberCenterByUser.isFetched;
+	    var isFetching = _state$memberCenterByUser.isFetching;
 
 	    return {
-	        isFetching: isFetching,
-	        pagination: pagination
+	        member: member, countOrder: countOrder, api: api, isLogined: isLogined, isFetched: isFetched, isFetching: isFetching
 	    };
 	}
 
-	var TrendyConnected = (0, _reactRedux.connect)(selector)(_componentJsx2["default"]);
+	var MemberCenterConnected = (0, _reactRedux.connect)(selector)(_componentJsx2["default"]);
 
 	function configureStore(initialState) {
 	    var store = (0, _libReduxHelperEs62["default"])(_reducerEs62["default"], initialState);
 	    return store;
 	}
 
-	var TrendyApp = (function (_Component) {
-	    _inherits(TrendyApp, _Component);
+	var MembercenterApp = (function (_Component) {
+	    _inherits(MembercenterApp, _Component);
 
-	    function TrendyApp() {
-	        _classCallCheck(this, TrendyApp);
+	    function MembercenterApp() {
+	        _classCallCheck(this, MembercenterApp);
 
-	        _get(Object.getPrototypeOf(TrendyApp.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(MembercenterApp.prototype), "constructor", this).apply(this, arguments);
 	    }
 
-	    _createClass(TrendyApp, [{
+	    _createClass(MembercenterApp, [{
 	        key: "render",
 	        value: function render() {
-	            var pagination = this.props.initialState.pagination;
+	            var _props$initialState = this.props.initialState;
+	            var isFetched = _props$initialState.isFetched;
+	            var member = _props$initialState.member;
+	            var isLogined = _props$initialState.isLogined;
+	            var api = _props$initialState.api;
+	            var countOrder = _props$initialState.countOrder;
 
 	            var initialState = {
-	                goodsByParam: {
+	                memberCenterByUser: {
 	                    isFetching: false,
-	                    pagination: pagination
+	                    isFetched: isFetched,
+	                    member: member,
+	                    countOrder: countOrder,
+	                    isLogined: isLogined,
+	                    api: api
 	                }
 	            };
+
 	            var store = configureStore(initialState);
 	            return _react2["default"].createElement(
 	                _reactRedux.Provider,
 	                { store: store },
-	                _react2["default"].createElement(TrendyConnected, null)
+	                _react2["default"].createElement(MemberCenterConnected, null)
 	            );
 	        }
 	    }]);
 
-	    return TrendyApp;
+	    return MembercenterApp;
 	})(_react.Component);
 
-	exports["default"] = TrendyApp;
+	exports["default"] = MembercenterApp;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 561:
+/***/ 403:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var _Object$assign = __webpack_require__(210)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _actionEs6 = __webpack_require__(562);
-
 	var _redux = __webpack_require__(197);
 
-	var _lodash = __webpack_require__(231);
+	var _actionEs6 = __webpack_require__(404);
 
-	var _lodash2 = _interopRequireDefault(_lodash);
+	var _commonActionEs6 = __webpack_require__(261);
 
-	function goodsByParam(state, action) {
+	var _commonReducerEs6 = __webpack_require__(262);
+
+	function memberCenterByUser(state, action) {
 	    if (state === undefined) state = {};
 
 	    switch (action.type) {
-	        case _actionEs6.REQUEST_GOODS:
-	            return _Object$assign({}, state, {
-	                isFetching: true
-	            });
-	        case _actionEs6.RECEIVE_GOODS:
-	            var list = _lodash2["default"].union(state.pagination.list, action.pagination.list);
-	            action.pagination.list = list;
-	            return _Object$assign({}, state, {
-	                isFetching: false,
-	                pagination: action.pagination
-	            });
 	        default:
 	            return state;
 	    }
 	}
 
 	var rootReducer = (0, _redux.combineReducers)({
-	    goodsByParam: goodsByParam
+	    memberCenterByUser: memberCenterByUser
 	});
 
 	exports["default"] = rootReducer;
@@ -1593,54 +1491,53 @@ webpackJsonp([20],{
 
 /***/ },
 
-/***/ 562:
+/***/ 404:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports["default"] = fetchGoods;
+	exports["default"] = fetchMember;
 
 	var _libUtilEs6 = __webpack_require__(227);
 
-	var SORT_NORMAL = "SORT_NORMAL";
-	exports.SORT_NORMAL = SORT_NORMAL;
-	var SORT_PRICE_DESC = "SORT_PRICE_DESC";
-	exports.SORT_PRICE_DESC = SORT_PRICE_DESC;
-	var SORT_PRICE_ASC = "SORT_PRICE_ASC";
-	exports.SORT_PRICE_ASC = SORT_PRICE_ASC;
-	var SORT_SALES = "SORT_SALES";
+	var REQUEST_MEMBER = "REQUEST_MEMBER";
+	exports.REQUEST_MEMBER = REQUEST_MEMBER;
+	var RECEIVE_MEMBER = "RECEIVE_MEMBER";
 
-	exports.SORT_SALES = SORT_SALES;
-	function receiveGoods(param, res) {
+	exports.RECEIVE_MEMBER = RECEIVE_MEMBER;
+	function requestMember(param) {
 	    return {
-	        type: RECEIVE_GOODS,
-	        param: param,
-	        pagination: res.page,
-	        receiveAt: Date.now()
-	    };
-	}
-
-	function requestGoods(param) {
-	    return {
-	        type: REQUEST_GOODS,
+	        type: REQUEST_MEMBER,
 	        param: param
 	    };
 	}
 
-	function fetchGoods(url, param) {
-	    return function (dispath) {
-	        dispath(requestGoods(param));
-	        return (0, _libUtilEs6.apiRequest)(url, param).then(function (res) {
-	            dispath(receiveGoods(param, res));
+	function receiveMember(param, res) {
+	    return {
+	        type: RECEIVE_MEMBER,
+	        receiveAt: Date.now(),
+	        param: param,
+	        res: res
+	    };
+	}
+
+	function fetchMember(url, param) {
+	    return function (dispatch) {
+	        dispatch(requestMember(param));
+	        return (0, _libUtilEs6.apiRequest)(url, param, {
+	            type: "jsonp",
+	            jsonpcallback: "jsoncallback"
+	        }).then(function (res) {
+	            dispatch(receiveMember(param, res));
 	        });
 	    };
 	}
 
 /***/ },
 
-/***/ 563:
+/***/ 405:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1663,33 +1560,25 @@ webpackJsonp([20],{
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _lodash = __webpack_require__(231);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
 	var _classnames = __webpack_require__(234);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _libUtilEs6 = __webpack_require__(227);
+	var _libDomEs6 = __webpack_require__(238);
 
-	var _libUtilEs62 = _interopRequireDefault(_libUtilEs6);
-
-	var _componentRefresherJsx = __webpack_require__(235);
-
-	var _componentRefresherJsx2 = _interopRequireDefault(_componentRefresherJsx);
+	var _libDomEs62 = _interopRequireDefault(_libDomEs6);
 
 	var _componentMasklayerJsx = __webpack_require__(236);
 
 	var _componentMasklayerJsx2 = _interopRequireDefault(_componentMasklayerJsx);
 
-	var _componentGotopJsx = __webpack_require__(237);
+	var _componentAlertJsx = __webpack_require__(277);
 
-	var _componentGotopJsx2 = _interopRequireDefault(_componentGotopJsx);
-
-	var _componentIconJsx = __webpack_require__(240);
-
-	var _componentIconJsx2 = _interopRequireDefault(_componentIconJsx);
-
-	var _partialGoodItemJsx = __webpack_require__(564);
-
-	var _partialGoodItemJsx2 = _interopRequireDefault(_partialGoodItemJsx);
+	var _componentAlertJsx2 = _interopRequireDefault(_componentAlertJsx);
 
 	var _commonHeaderJsx = __webpack_require__(217);
 
@@ -1699,206 +1588,384 @@ webpackJsonp([20],{
 
 	var _commonFooterJsx2 = _interopRequireDefault(_commonFooterJsx);
 
-	var Trendy = (function (_React$Component) {
-	    _inherits(Trendy, _React$Component);
+	var _actionEs6 = __webpack_require__(404);
 
-	    function Trendy(props) {
-	        _classCallCheck(this, Trendy);
+	var _commonActionEs6 = __webpack_require__(261);
 
-	        _get(Object.getPrototypeOf(Trendy.prototype), "constructor", this).call(this, props);
+	var MemberCenter = (function (_Component) {
+	    _inherits(MemberCenter, _Component);
+
+	    function MemberCenter(props) {
+	        _classCallCheck(this, MemberCenter);
+
+	        _get(Object.getPrototypeOf(MemberCenter.prototype), "constructor", this).call(this, props);
 	        this.state = {
-	            currentIndex: 0
+	            maskActive: false,
+	            popupActive: false
 	        };
 	    }
 
-	    _createClass(Trendy, [{
-	        key: "handleClick",
-	        value: function handleClick(index) {
+	    _createClass(MemberCenter, [{
+	        key: "togglePopupActive",
+	        value: function togglePopupActive() {
 	            this.setState({
-	                currentIndex: index
+	                maskActive: !this.state.popupActive,
+	                popupActive: !this.state.popupActive
 	            });
 	        }
 	    }, {
-	        key: "handleSearch",
-	        value: function handleSearch() {
-	            location.href = "/search";
+	        key: "closeAllPopups",
+	        value: function closeAllPopups() {
+	            this.setState({
+	                maskActive: false,
+	                popupActive: false
+	            });
 	        }
 	    }, {
-	        key: "renderNav",
-	        value: function renderNav() {
-	            var _this = this;
+	        key: "renderBanner",
+	        value: function renderBanner() {
+	            var _props = this.props;
+	            var isLogined = _props.isLogined;
+	            var member = _props.member;
+	            var _props$api = this.props.api;
+	            var loginUrl = _props$api.loginUrl;
+	            var registerUrl = _props$api.registerUrl;
 
-	            var nav = ["美容彩妆", "母婴用品", "营养保健"];
-	            return nav.map(function (name, i) {
-	                var classes = (0, _classnames2["default"])({
-	                    "current": i === _this.state.currentIndex
-	                });
+	            if (isLogined === false) {
 	                return _react2["default"].createElement(
-	                    "li",
-	                    { className: classes, key: "tab-nav-" + i,
-	                        onClick: _this.handleClick.bind(_this, i) },
-	                    name
+	                    "div",
+	                    { className: "userBtns" },
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: registerUrl },
+	                        "注 册"
+	                    ),
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: loginUrl },
+	                        "登 录"
+	                    )
 	                );
-	            });
+	            } else {
+	                return _react2["default"].createElement(
+	                    "div",
+	                    { className: "userInfo" },
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "userInfo_con" },
+	                        _react2["default"].createElement("img", { title: member.nickname, src: member.imageUrl }),
+	                        _react2["default"].createElement("a", { className: "user-qr iconfont icon-erweima", href: "javascript:void(0);", onClick: this.togglePopupActive.bind(this) })
+	                    ),
+	                    _react2["default"].createElement(
+	                        "span",
+	                        null,
+	                        member.mobileNumber
+	                    )
+	                );
+	            }
 	        }
 	    }, {
 	        key: "render",
 	        value: function render() {
-	            var pagination = this.props.pagination;
+	            var _props2 = this.props;
+	            var isFetched = _props2.isFetched;
+	            var member = _props2.member;
+	            var isLogined = _props2.isLogined;
+	            var api = _props2.api;
+	            var countOrder = _props2.countOrder;
 
-	            var goods = [];
-
-	            if (pagination.length > 0) {
-	                pagination.forEach(function (item, i) {
-	                    var key = "good-" + i;
-	                    goods.push(_react2["default"].createElement(_partialGoodItemJsx2["default"], { goods: item, key: key }));
-	                });
-	            }
-
+	            var classes = (0, _classnames2["default"])({
+	                "pop-qr": true,
+	                "active": this.state.popupActive
+	            });
 	            return _react2["default"].createElement(
 	                "div",
-	                null,
+	                { className: "user" },
 	                _react2["default"].createElement(
-	                    _commonHeaderJsx2["default"],
-	                    { canBack: "false" },
+	                    "header",
+	                    null,
 	                    _react2["default"].createElement(
 	                        "div",
-	                        { className: "logo" },
-	                        _react2["default"].createElement("img", { src: "client/asset/images/indexlogo.png" })
-	                    ),
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "btn-right", onClick: this.handleSearch.bind(this) },
-	                        _react2["default"].createElement(_componentIconJsx2["default"], { icon: "search" })
-	                    )
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "polyTabs" },
-	                    _react2["default"].createElement(
-	                        "ul",
-	                        null,
-	                        this.renderNav()
-	                    )
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "polyCon" },
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "activityGeneral" },
-	                        goods
-	                    )
-	                ),
-	                _react2["default"].createElement(_commonFooterJsx2["default"], { activeIndex: "2" })
-	            );
-	        }
-	    }]);
-
-	    return Trendy;
-	})(_react2["default"].Component);
-
-	exports["default"] = Trendy;
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 564:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(234);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var GoodItem = (function (_Component) {
-	    _inherits(GoodItem, _Component);
-
-	    function GoodItem() {
-	        _classCallCheck(this, GoodItem);
-
-	        _get(Object.getPrototypeOf(GoodItem.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(GoodItem, [{
-	        key: "render",
-	        value: function render() {
-
-	            var goods = this.props.goods;
-	            //console.log(goods)
-
-	            var statusClass = (0, _classnames2["default"])({
-	                "soldOut": goods.status == 1
-	            });
-
-	            return _react2["default"].createElement(
-	                "a",
-	                { href: "#", className: "clearfix" },
-	                _react2["default"].createElement("img", { src: goods.smallImageUrl }),
-	                _react2["default"].createElement("div", { className: statusClass }),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "right" },
-	                    _react2["default"].createElement(
-	                        "span",
-	                        { className: "name" },
-	                        goods.title
-	                    ),
-	                    _react2["default"].createElement(
-	                        "span",
-	                        { className: "country" },
+	                        { className: "top" },
 	                        _react2["default"].createElement(
-	                            "i",
+	                            "span",
 	                            null,
-	                            _react2["default"].createElement("img", { src: goods.flag })
+	                            "个人中心"
+	                        )
+	                    ),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "userBanner" },
+	                        this.renderBanner()
+	                    ),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "userGoods" },
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "/orderlist?status=STATUS_NOT_PAY", className: "userGoods_1" },
+	                            _react2["default"].createElement("em", null),
+	                            _react2["default"].createElement(
+	                                "span",
+	                                null,
+	                                "待付款"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "i",
+	                                null,
+	                                countOrder.paymentNum
+	                            )
 	                        ),
-	                        goods.country
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "/orderlist?status=STATUS_NOT_SEND", className: "userGoods_2" },
+	                            _react2["default"].createElement("em", null),
+	                            _react2["default"].createElement(
+	                                "span",
+	                                null,
+	                                "待发货"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "i",
+	                                null,
+	                                countOrder.sendNum
+	                            )
+	                        ),
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "/orderlist?status=STATUS_SEND", className: "userGoods_3" },
+	                            _react2["default"].createElement("em", null),
+	                            _react2["default"].createElement(
+	                                "span",
+	                                null,
+	                                "待收货"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "i",
+	                                null,
+	                                countOrder.signNum
+	                            )
+	                        ),
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "/orderlist?status=STATUS_NOT_COMMENT", className: "userGoods_4" },
+	                            _react2["default"].createElement("em", null),
+	                            _react2["default"].createElement(
+	                                "span",
+	                                null,
+	                                "待评价"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "i",
+	                                null,
+	                                countOrder.commentNum
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "helpList" },
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/orderlist" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_1.png" }),
+	                                "全部订单"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "helpList" },
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/receiver" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_2.png" }),
+	                                "收货地址"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
 	                    ),
 	                    _react2["default"].createElement(
-	                        "span",
-	                        { className: "nowPrice" },
-	                        "¥",
-	                        goods.salePrice
+	                        "a",
+	                        { href: "/membercenter/collect" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_3.png" }),
+	                                "我的收藏"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
 	                    ),
 	                    _react2["default"].createElement(
-	                        "span",
-	                        { className: "oldPrice" },
-	                        "¥",
-	                        goods.standardPrice
+	                        "a",
+	                        { href: "/membercenter/comment" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_4.png" }),
+	                                "我的评论"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
+	                    ),
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/coupon" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_5.png" }),
+	                                "优惠券"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
+	                    ),
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/membercenter/update" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_6.png" }),
+	                                "账户设置"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "helpList" },
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/aboutus" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_7.png" }),
+	                                "关于我们"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "helpList" },
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/help" },
+	                        _react2["default"].createElement(
+	                            "dl",
+	                            null,
+	                            _react2["default"].createElement(
+	                                "dt",
+	                                null,
+	                                _react2["default"].createElement("img", { src: "/client/asset/images/user_icon_8.png" }),
+	                                "帮助反馈"
+	                            ),
+	                            _react2["default"].createElement(
+	                                "dd",
+	                                null,
+	                                _react2["default"].createElement("i", { className: "iconfont icon-right" })
+	                            )
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(_commonFooterJsx2["default"], { activeIndex: "4" }),
+	                _react2["default"].createElement(_componentMasklayerJsx2["default"], { visible: this.state.maskActive, handleClick: this.closeAllPopups.bind(this) }),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: classes },
+	                    _react2["default"].createElement("div", { className: "btn-close iconfont icon-close", onClick: this.togglePopupActive.bind(this) }),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "top" },
+	                        "扫码分享"
+	                    ),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "center" },
+	                        _react2["default"].createElement("img", { src: member.cardUrl })
+	                    ),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "bottom" },
+	                        "邀请小伙伴扫一扫分享给TA"
 	                    )
 	                )
 	            );
 	        }
 	    }]);
 
-	    return GoodItem;
+	    return MemberCenter;
 	})(_react.Component);
 
-	exports["default"] = GoodItem;
+	exports["default"] = MemberCenter;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 565:
+/***/ 406:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

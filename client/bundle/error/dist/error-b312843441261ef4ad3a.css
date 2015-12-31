@@ -1,3 +1,9 @@
+@charset "utf-8";
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url("/client/asset/font/_gbk-webfont.eot");
+  src: url("/client/asset/font/_gbk-webfont.eot?#iefix") format('embedded-opentype'), url("/client/asset/font/_gbk-webfont.woff") format('woff'), url("/client/asset/font/_gbk-webfont.ttf") format('truetype'), url("/client/asset/font/_gbk-webfont.svg#iconfont") format('svg');
+}
 html,
 body {
   height: 100%;
@@ -10,6 +16,7 @@ body {
   margin: 0;
 }
 body * {
+  font-family: 'fontNameRegular', 'microsoft yahei', arial;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -172,6 +179,50 @@ a:hover {
     font-size: 44px;
   }
 }
+.header {
+  height: 1.17rem;
+  line-height: 1.17rem;
+  background: url("/client/asset/images/headerBg.png") 50% 50% no-repeat;
+  background-size: cover;
+  text-align: center;
+  position: relative;
+}
+.header .title {
+  font-size: 0.46rem;
+}
+.header .logo img {
+  width: 2.1rem;
+  display: inline-block;
+  margin-top: 0.35rem;
+  overflow: hidden;
+}
+.header .iconfont {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  font-size: 0.58rem;
+  width: 1.17rem;
+  height: 1.17rem;
+  color: #999;
+}
+.header .btn-right {
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 9;
+  width: 1.17rem;
+  height: 1.17rem;
+  color: #801da1;
+}
+.header .btn-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.17rem;
+  height: 1.17rem;
+  color: #666;
+}
 @font-face {
   font-family: 'fontNameRegular';
   src: url("/client/asset/webfontkit/_gbk-webfont.eot");
@@ -297,111 +348,39 @@ a:hover {
     transform: rotate(359deg);
   }
 }
-.header {
-  height: 1.17rem;
-  line-height: 1.17rem;
-  background: url("/client/asset/images/headerBg.png") 50% 50% no-repeat;
-  background-size: cover;
-  text-align: center;
-  position: relative;
+.empty {
+  padding-top: 20%;
 }
-.header .title {
-  font-size: 0.46rem;
-}
-.header .logo img {
-  width: 2.1rem;
-  display: inline-block;
-  margin-top: 0.35rem;
-  overflow: hidden;
-}
-.header .iconfont {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 9;
-  font-size: 0.58rem;
-  width: 1.17rem;
-  height: 1.17rem;
-  color: #999;
-}
-.header .btn-right {
-  position: absolute;
-  right: 0;
-  top: 0;
-  z-index: 9;
-  width: 1.17rem;
-  height: 1.17rem;
-  color: #801da1;
-}
-.header .btn-left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1.17rem;
-  height: 1.17rem;
-  color: #666;
-}
-body {
-  background-color: #f1f1f1;
-}
-.header>span {
-  margin-right: 0.2rem;
-}
-.header>span a {
-  color: #811da1;
-  font-size: 0.4rem;
-}
-.aboutus-content {
-  font-size: 0.32rem;
-  color: #555;
-  padding: 0 0 2.5rem 0;
-  background-color: #fff;
-}
-.aboutus-content > img {
+.empty img {
   width: 100%;
+  margin-bottom: 5%;
 }
-.aboutus-content > p {
-  padding: 0.28rem 0.5rem;
-}
-.aboutus-content > div {
-  padding: 0.28rem 0.5rem;
-}
-.aboutus-content .m-entry {
-  padding: 0.3rem 0.5rem;
-  overflow: hidden;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-.aboutus-content .m-entry span {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  font-size: 0.3rem;
-  text-align: center;
-  line-height: 1;
-}
-.aboutus-content .m-entry span:before {
-  content: "";
+.empty span {
+  color: #666;
+  font-size: 0.4rem;
   display: block;
-  width: 30px;
-  height: 30px;
-  margin: 0 auto;
-  background: url("/client/asset/images/enter-ico_2.png") no-repeat;
-  background-size: 100%;
-  margin-bottom: 0.3rem;
+  text-align: center;
 }
-.aboutus-content .m-entry span:nth-child(2):before {
-  background-position: 0 -36px;
-  background-size: 100%;
+.empty span.title {
+  font-size: 0.46rem;
+  line-height: 1.15rem;
+  display: block;
+  text-align: center;
 }
-.aboutus-content .m-entry span:nth-child(3):before {
-  background-position: 0 -72px;
-  background-size: 100%;
+.empty a.empty_btn {
+  width: 2rem;
+  height: 0.68rem;
+  line-height: 0.68rem;
+  display: block;
+  margin: 0.52rem auto 0;
+  color: #801da1;
+  border: 1px solid #801da1;
+  border-radius: 3px;
+  text-align: center;
 }
-.aboutus-content .m-entry span:nth-child(4):before {
-  background-position: 0 -107px;
-  background-size: 100%;
+.noPadTop {
+  padding: 0;
+}
+.noPadTop img {
+  padding-top: 20%;
 }
