@@ -115,7 +115,7 @@ export class SlideTabsItem extends Component{
         })
         let children = this.props.children
         if(React.Children.count(this.props.children) === 1){
-        console.log(React.Children.count(this.props.children))
+        // console.log(React.Children.count(this.props.children))
             let child = React.Children.only(this.props.children)
             children = React.cloneElement(child,Object.assign({},child.props,{
                 redraw:this.state.itemStyle !== null
