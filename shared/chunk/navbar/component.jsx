@@ -5,74 +5,95 @@ import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
 import classNames from "classnames";
 
-class Navbar extends Component{
+class Menu extends Component{
     constructor(props){
         super(props);
         this.state = {
-            currentIndex: 0
+            activeIndex: 0
         }
     }
-    handleSearch(){
-        location.href="/search"
-    }
+
     handleClick(index){
         this.setState({
-            currentIndex:index
+            activeIndex:index
         });
     }
-    renderNav(){
-        var nav = ["类别","品牌","产地"];
-        return nav.map((name,i)=>{
+
+    render(){
+        const {nav} = this.props;
+        var item = nav.map((name,i)=>{
             const classes = classNames({
-                "current":i === this.state.currentIndex
+                "current":i === this.state.activeIndex
             });
             return (
                 <li className={classes} key={"tab-nav-"+i} 
                 onClick={this.handleClick.bind(this,i)}><i>{name}</i></li>
             );
         });
+
+        return (
+            <ul>{item}</ul>
+        )
     }
+}
+
+class Side extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            activeIndex: 0
+        }
+    }
+
+    handleClick(index){
+        this.setState({
+            activeIndex:index
+        });
+    }
+
+    render(){
+        const {nav} = this.props;
+        var item = nav.map((name,i)=>{
+            const classes = classNames("name",{
+                "current":i === this.state.activeIndex
+            });
+            return (
+                <li className={classes} key={"tab-nav-"+i} onClick={this.handleClick.bind(this,i)}>
+                    {name}
+                </li>
+            );
+        });
+
+        return (
+            <ul className="leftNav">{item}</ul>
+        )
+    }
+}
+
+class Navbar extends Component{
+    
+    handleSearch(){
+        location.href="/search"
+    }
+    
+    
     render(){
         return (
             <div className="box">
                 <Header>
+                    <div className="logo"><img src="client/asset/images/indexlogo.png" /></div>
                     <div className="btn-right" onClick={this.handleSearch.bind(this)}>
                         <Icon icon="search"/>
                     </div>
                 </Header>
                 <div className="polyTabs">
-                    <ul>
-                        {this.renderNav()}
-                    </ul>
+                    <Menu nav={["类别","品牌","产地"]} />
                 </div>
                 <div className="polyCon">
                     <div id="page-content">
                         <div className="poly_1 page-0 page-current">
                             <div className="category-bd"></div>
-                            <div className="leftNav">
-                            
-                                <div className="name on">
-                                    <div className="bd-on shake"><div>母婴用品</div></div>
-                                    <div className="bd"><div>母婴用品</div></div>
-                                </div>
-                                <div className="name">
-                                    <div className="bd-on shake"><div>美容彩妆</div></div>
-                                    <div className="bd"><div>美容彩妆</div></div>
-                                </div>
-                                <div className="name">
-                                    <div className="bd-on shake"><div>营养保健</div></div>
-                                    <div className="bd"><div>营养保健</div></div>
-                                </div>
-                                <div className="name">
-                                    <div className="bd-on shake"><div>家居洗护</div></div>
-                                    <div className="bd"><div>家居洗护</div></div>
-                                </div>
-                                <div className="name">
-                                    <div className="bd-on shake"><div>进口美食</div></div>
-                                    <div className="bd"><div>进口美食</div></div>
-                                </div>
-
-                            </div>
+                            <Side nav={["母婴用品","美容彩妆","营养保健","家居洗护","进口美食"]} />
                             
                             <div className="rightCon">
                                 <div className="sh fadeIn">

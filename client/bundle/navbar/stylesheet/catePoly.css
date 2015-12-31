@@ -78,6 +78,7 @@ header{
     left: 0;
     background-color: #f7f7f7;
 }
+
 .leftNav{
 	position:relative;
 	z-index:1;
@@ -92,21 +93,14 @@ header{
     background-color: #f3f4f6;
 	border-bottom:1px solid #d7d7d7;
 }
-.leftNav .name .bd-on {
-    display: none;
-}
-.leftNav .name.on .bd-on {
+ 
+.leftNav .current {
     border-left: 5px solid #801da1;
-    display: inherit;
 	background-color:#fff;
+	-webkit-animation:shake 0.5s;
 }
-.leftNav .name.on .bd {
-	display:none;
-}
-.leftNav .name .bd > div {
-    font-size: .32rem;
-    color: #333;
-}
+ 
+ 
 .rightCon{
 	width:75%;
 	float:right;
