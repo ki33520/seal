@@ -1,3 +1,13 @@
+@charset "utf-8";
+
+@font-face {
+  font-family: 'fontNameRegular';
+  src: url('/client/asset/font/_gbk-webfont.eot');
+  src: url('/client/asset/font/_gbk-webfont.eot?#iefix') format('embedded-opentype'),
+    url('/client/asset/font/_gbk-webfont.woff') format('woff'),
+    url('/client/asset/font/_gbk-webfont.ttf') format('truetype'),
+    url('/client/asset/font/_gbk-webfont.svg#iconfont') format('svg');
+}
 
 html,
 body {
@@ -13,6 +23,7 @@ body {
 }
 
 body * {
+  font-family: 'fontNameRegular','microsoft yahei',arial;
   margin: 0;
   padding: 0;
    box-sizing: border-box;
