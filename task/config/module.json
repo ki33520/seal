@@ -169,5 +169,14 @@
             "css": "stylus"
         },
         "vendor": "react"
+    },
+    "search":{
+        "html": ["search.html"],
+        "path": "./client/bundle/search/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
     }
 }

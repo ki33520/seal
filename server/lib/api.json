@@ -62,6 +62,13 @@
             "production":"http://member.tepin.hk"
         }
     },
+    "memberCountOrder":{
+        "uri":"/order/v1/countOrder",
+        "baseURL":{
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "production":"http://member.tepin.hk"
+        }
+    },
     "loginTokenByCode": {
         "uri": "/security/WAP/newLoginForWAP.bdo",
         "baseURL":{
@@ -90,25 +97,18 @@
             "production":"http://product.tepin.hk"
         }
     },
-    "fetchCategory":{
-        "uri":"/single/v1/findShowCategories",
+    "fetchTendyGoods":{
+        "uri":"/content/v1/activityproduct/list",
         "baseURL":{
             "develop":"http://product.hwg.youayun.cn:7989",
-            "production":"http://product.tepin.hk"
+            "production":"marketing.hwg.youayun.cn"
         }
     },
-    "fetchBrand":{
-        "uri":"/brand/v1/findListWap",
+    "fetchHotKeywords":{
+        "uri":"/content/v1/hotword/list",
         "baseURL":{
             "develop":"http://product.hwg.youayun.cn:7989",
-            "production":"http://product.tepin.hk"
-        }
-    },
-    "fetchProductArea":{
-        "uri":"/sourceArea/v1/findListWap",
-        "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
-            "production":"http://product.tepin.hk"
+            "production":"marketing.hwg.youayun.cn"
         }
     }
 }

@@ -6,25 +6,31 @@
 @import "./index.css";
 @import "./search.css";
 
+html,body{
+    overflow:hidden;
+}
 .index-container{
     height:100%;
+    overflow:hidden;
     #index{
         height:100%;
+        overflow:hidden;
         &>div{
             height:100%;
+            overflow:hidden;
         }
     }
 }
 .floor-content{
     width:100%;
-    position:absolute;
+    // position:absolute;
     .m-entry{
         padding:.44rem 0;
     }
 }
 
 .index-content{
-    position:relative;
+    // position:relative;
     height:100%;
     overflow:hidden;
 }
@@ -53,7 +59,7 @@
         .slide-tabs-item{
             overflow-y:auto;
             overflow-x:hidden;
-            position:relative;
+            -webkit-overflow-scrolling: touch;
         }
     }
 }
@@ -61,6 +67,19 @@
 .indexSingle{
     padding:.266rem 0 0;
     margin:0 .32rem;
+}
+
+.activity{
+    img{
+        display:block;
+    }
+    // box-sizing:border-box;
+    // li:nth-child(2){
+    //     width:56.5%;
+    // }
+    // li:nth-child(1){
+    //     width:43.5%;
+    // }
 }
 
 

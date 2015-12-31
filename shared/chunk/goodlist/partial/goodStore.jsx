@@ -2,36 +2,87 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import {SORT_NORMAL,SORT_PRICE_DESC,SORT_PRICE_ASC,SORT_SALES} from "../action.es6";
+
+import{
+    SORT_NORMAL,SORT_PRICE,SORT_SALES,SORT_ASC,SORT_DESC
+} from "../constant.es6";
+ 
 
 class GoodSorter extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            type:SORT_NORMAL,
+            order:SORT_ASC
+        }
+    }
+
+    orderByDefault(){
+        if(this.state.type===SORT_NORMAL){
+            return false;
+        }
+        this.setState({
+            type:SORT_NORMAL,
+            order:SORT_ASC
+        });
+        this.props.orderBy({
+            type:SORT_NORMAL,
+            order:SORT_DESC
+        });
+    }
+
+    orderBySales(){
+        if(this.state.type===SORT_SALES){
+            return false;
+        }
+        this.setState({
+            type:SORT_SALES,
+            order:SORT_ASC
+        });
+        this.props.orderBy({
+            type:SORT_SALES,
+            order:SORT_DESC
+        });
+    }
+
+    orderByPrice(){
+        this.setState({
+            type:SORT_PRICE,
+            order:this.state.order === SORT_ASC ? SORT_DESC : SORT_ASC
+        });
+        this.props.orderBy({
+            type:SORT_PRICE,
+            order:this.state.order
+        });
+    }
+ 
 
     render(){
-        const {orderBy,sortType} = this.props;
-  
+        
         const normalClass=classNames('normal',{
-            "active":sortType===SORT_NORMAL,
+            "active":this.state.type===SORT_NORMAL
         });
-
-        const priceClass=classNames('price',{
-            "active":sortType===SORT_PRICE_DESC,
-            "price-asc":sortType===SORT_PRICE_ASC
+ 
+        const priceClass=classNames("price",{
+            "active":this.state.type===SORT_PRICE && this.state.order === SORT_DESC,
+            "price-asc":this.state.type===SORT_PRICE && this.state.order === SORT_ASC
         });
 
         const salesClass=classNames('sales',{
-            "active":sortType===SORT_SALES,
+            "active":this.state.type===SORT_SALES
         });
 
         return (
             <div>
                 <div className="search-order">
-                    <a href="javascript:void(0);" className={normalClass} onClick={orderBy.bind(this,SORT_NORMAL)}><i></i>默认</a>
-                    <a href="javascript:void(0);" className={priceClass}  onClick={orderBy.bind(this,SORT_PRICE_DESC)}><i></i>价格</a>
-                    <a href="javascript:void(0);" className={salesClass}  onClick={orderBy.bind(this,SORT_SALES)}><i></i>销量</a>
+                    <a href="javascript:;" className={normalClass} onClick={this.orderByDefault.bind(this)}><i></i>默认</a>
+                    <a href="javascript:;" className={priceClass}  onClick={this.orderByPrice.bind(this)}><i></i>价格</a>
+                    <a href="javascript:;" className={salesClass}  onClick={this.orderBySales.bind(this)}><i></i>销量</a>
                 </div>
             </div>
         )
     }
 }
+
 
 export default GoodSorter;

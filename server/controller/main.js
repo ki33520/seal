@@ -2,37 +2,13 @@
 var util = require("../lib/util");
 var ErrorContent = util.getSharedComponent("common","error.jsx");
 var WeatherApp = util.getSharedComponent("index");
-var sharedUtil = require("../../shared/lib/util.es6");
 var config = require("../lib/config");
 
-var weather = function(req,res){
-    var cityName = req.body.cityname;
-    if(req.xhr === true){
-        sharedUtil.apiRequest("http://apistore.baidu.com/microservice/weather",{
-            cityname:cityName
-        }).then(function(ret){
-            if(ret.errMsg === "success"){
-                res.json({
-                    weatherFetched:true,
-                    result:ret.retData
-                })
-            }else{
-                res.json({
-                    weatherFetched:false,
-                    errMsg:ret.errMsg
-                })
-            }
-        })
-    }
-}
-
 var index = function(req,res,next) {
-    sharedUtil.apiRequest("http://apistore.baidu.com/microservice/weather",{
-        cityname:"长沙"
-    }).then(function(ret){
-        if(ret.errMsg === "success"){
+    util.fetchAPI("index",{},true).then(function(ret){
+        if(ret.code === "success"){
             var initialState = {
-                weather:ret.retData
+                data:ret.object
             };
             var markup = util.getMarkupByComponent(WeatherApp({
                 initialState:initialState
@@ -43,7 +19,7 @@ var index = function(req,res,next) {
             });
 
         }else{
-            next(new Error(ret.errMsg))
+            next(new Error(ret.msg))
         }
     },function(){
         next(new Error("api request failed"))
@@ -73,6 +49,7 @@ var requireAuthorize = function(req, res, next) {
 var errorHandler = function(err, req, res) {
     if (err) {
         var initialState = {
+            code:"500",
             msg: err.message
         };
         var markup = util.getMarkupByComponent(ErrorContent({
@@ -90,7 +67,8 @@ var errorHandler = function(err, req, res) {
 
 var notFoundHandler = function(req, res) {
     var initialState = {
-        msg: "page not found"
+        code:"404",
+        msg: "啊噢~您访问的页面不在地球上..."
     };
     var markup = util.getMarkupByComponent(ErrorContent({
         initialState: initialState
@@ -104,7 +82,6 @@ var notFoundHandler = function(req, res) {
 
 module.exports = {
     index:index,
-    weather:weather,
     authorizeLocals:authorizeLocals,
     requireAuthorize:requireAuthorize,
     notFoundHandler:notFoundHandler,

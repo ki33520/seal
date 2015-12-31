@@ -10,9 +10,9 @@ import GoodList from "./component.jsx";
 function selector(state){
     const {pagination,isFetching,keywords} = state.goodsByParam
     return {
+        isFetching,
         pagination,
-        keywords,
-        isFetching
+        keywords
     };
 }
 
@@ -25,12 +25,12 @@ function configureStore(initialState){
 
 class GoodListApp extends Component{
     render(){
-        const {pagination,keywords} = this.props.initialState;
+        const {pagination,keywords,isFetching} = this.props.initialState;
         const initialState = {
             goodsByParam:{
-                isFetching:false,
-                keywords,
-                pagination
+                isFetching,
+                pagination,
+                keywords
             }
         };
         var store = configureStore(initialState);

@@ -40,7 +40,7 @@ class CommentList extends Component{
             comments = showComment;
         }
         if(comments){
-            pageCount = Math.ceil(comments.totalPage/comments.pageSize);
+            pageCount = Math.ceil(comments.totalCount/comments.pageSize);
             nextPage = comments.pageIndex + interval;
         };
         if(pageCount < nextPage || isFetching){

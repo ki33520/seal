@@ -26,8 +26,8 @@ class MembercollectList extends Component{
     }
     beginRefresh(){
         const {dispatch} = this.props;
-        const {collect,isFetching,pageSize} = this.props;
-        var pageCount = Math.ceil(collect.totalPage/pageSize);
+        const {collect,isFetching} = this.props;
+        var pageCount = Math.ceil(collect.totalCount/collect.pageSize);
         var pageIndex = collect.pageIndex;
         var nextPage = pageIndex + 1;
         if(pageCount < nextPage){

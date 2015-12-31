@@ -15,9 +15,10 @@ gulp.task("develop-webpack", function() {
             cssFiles = [],
             jsFiles = [],
             // vendorCSSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.css'),
-            // moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
+            moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
             vendorJSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.js'),
             moduleJSFile = path.join(moduleObj.path, env.buildFolder + '*.js');
+        // cssFiles.push(moduleCSSFile);
         jsFiles.push(vendorJSFile);
         jsFiles.push(moduleJSFile);
         var sources = gulp.src(_.union(cssFiles, jsFiles), {
@@ -34,11 +35,11 @@ gulp.task("develop-webpack", function() {
                 // console.log('filepath',filepath)
                 if (vendorPattern.test(filepath) === true) {
                     if (path.extname(filepath) === ".js") {
-                        // filepath = filepath.replace(buildPattern, env.hmrPath);
+                        filepath = filepath.replace(buildPattern, env.hmrPath);
                     }
                 } else if (vendorPattern.test(filepath) === false) {
                     if (path.extname(filepath) === ".js") {
-                        // filepath = filepath.replace(buildPattern, env.hmrPath);
+                        filepath = filepath.replace(buildPattern, env.hmrPath);
                     }
                 }
                 return inject.transform.apply(inject.transform, arguments);

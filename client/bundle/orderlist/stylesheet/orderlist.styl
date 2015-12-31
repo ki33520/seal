@@ -18,16 +18,39 @@ body {
     }
 }
 
-.slide-tabs .slide-tabs-navbar{
-    border:0 none;
-    .slide-tabs-navbar-item{
-        background:#FFF;
+.order-list-container{
+    height:100%;
+    #order-list{
+        height:100%;
+    }
+}
+.order-list-content{
+    height:100%;
+    overflow:hidden;
+}
+
+.slide-tabs{
+    overflow:hidden;
+    .slide-tabs-navbar{
         border:0 none;
-        border-bottom:px2rem(1) solid #D7D7D7;
-        line-height:px2rem(36);
-        &.active{
-            color:#801da1;
-            border-color:#801da1;
+        .slide-tabs-navbar-item{
+            background:#FFF;
+            border:0 none;
+            border-bottom:px2rem(1) solid #D7D7D7;
+            line-height:px2rem(36);
+            &.active{
+                color:#801da1;
+                border-color:#801da1;
+            }
+        }
+    }
+    .slide-tabs-content{
+        overflow:hidden;
+        padding-bottom:px2rem(40);
+        .slide-tabs-item{
+            overflow-y:auto;
+            overflow-x:hidden;
+            -webkit-overflow-scrolling: touch;
         }
     }
 }
