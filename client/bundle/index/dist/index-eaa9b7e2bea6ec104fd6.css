@@ -354,11 +354,10 @@ nav.bottomNav ul li a.nav_hover{
 }
 .activity_3 li:nth-child(2) div a:nth-child(1){
     width:2.78666666rem;
-    /*float:left;*/
 }
 .activity_3 li:nth-child(2) div a:nth-child(2){
     width:2.9735rem;
-    /*float:right;*/
+    margin-left:.133333rem;
 }
 .activity_3 li:nth-child(2) > a{
     clear:both;
