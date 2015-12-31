@@ -10,7 +10,7 @@ var orderList = function(req, res,next) {
     var status = req.query.status !== undefined ? req.query.status : "" ;
     var pageIndex = req.query.pageIndex !== undefined ? req.query.pageIndex : 1;
     util.fetchAPI("orderByParam", {
-        memberId: user.memberId,
+        memberId: "",
         orderStatus: status,
         pageIndex: pageIndex,
         pageSize: 10
