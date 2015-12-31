@@ -90,16 +90,15 @@ class Floor extends Component{
         if(this.props.redraw === true){
             let sliderNode = ReactDOM.findDOMNode(this)
             // console.log(sliderNode.parentNode.offsetWidth)
-            this.refs["slider"].initialize({
-                width:sliderNode.parentNode.offsetWidth
-            })
+            // this.refs["slider"].initialize({
+            //     width:sliderNode.parentNode.offsetWidth
+            // })
             // this.refs["slider"].play()
         }
     }
     render(){
         return (
             <div className="floor-content">
-                {this.renderSlider()}
                 <div className="m-entry">
                     <span>精选特卖</span>
                     <span>热销排行</span>

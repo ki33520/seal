@@ -98,15 +98,17 @@ class Slidable extends Component{
         }
     }
     handleTouchStart(e){
-        // e && e.preventDefault();
+        e && e.stopPropagation();
         const {clientY,clientX} = e.changedTouches[0];
-        this.startTouchX = clientX;
+        const {axis} = this.props;
         this.startTouchY = clientY;
         this.lastY = this.startTouchY;
+        this.startTouchX = clientX;
         this.lastX = this.startTouchX;
+        this.moveDirection = null;
     }
     handleTouchEnd(e){
-        // e && e.preventDefault();
+        e && e.stopPropagation();
         const {clientY,clientX} = e.changedTouches[0];
         if(this.startTouchX !== clientX || this.startTouchY !== clientY){
             const {axis,animateDuration,thresholdOfChange} = this.props;
@@ -119,7 +121,9 @@ class Slidable extends Component{
             if(this.props.handleActiveChange === false){
                 return;
             }
-            if(this.touchDirection() !== axis){
+            let touchDirection = Math.abs(this.endTouchX - this.startTouchX) > Math.abs(this.endTouchY - this.startTouchY) ?
+            "x":"y";
+            if(touchDirection !== axis){
                 return;
             }
             let nextIndex = this.state.activeIndex;
@@ -142,6 +146,7 @@ class Slidable extends Component{
                 let itemWidth = itemNode.offsetWidth;
                 let activeIndex = Math.abs(this.translateX) / itemWidth
                 let step = (this.endTouchX - this.startTouchX) / itemWidth
+                // console.log('step',this.endTouchX,this.startTouchX,step)
                 activeIndex = (Math.abs(step) > thresholdOfChange && step < 0) ? Math.ceil(activeIndex):Math.floor(activeIndex)
                 activeIndex = (Math.abs(step) > thresholdOfChange && step > 0) ? Math.floor(activeIndex):Math.ceil(activeIndex)
                 if(this.lastX !== this.startTouchX && activeIndex !== this.state.activeIndex){
@@ -154,31 +159,32 @@ class Slidable extends Component{
                 - (nextIndex * itemNode.offsetWidth) :0;
             }
             this.checkEdge()
+            // console.log('this.translateX',Math.abs(this.endTouchX - this.startTouchX),Math.abs(this.endTouchY - this.startTouchY))
+            // console.log('translateY',this.translateY)
             // this.transitionTouch(this.props.animateDuration)
             // if(this.touchDirection() === axis){
             rAF(this.transitionTouch.bind(this,animateDuration))
             // }
         }
     }
-    touchDirection(){
-        return Math.abs(this.endTouchX - this.startTouchX) > Math.abs(this.endTouchY - this.startTouchY) ?
-        "x":"y"
-    }
     handleTouchMove(e){
-        // e && e.preventDefault();
+        e && e.stopPropagation();
         const {animateDuration,axis} = this.props;
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = dom.inTouchableRegion(clientX,clientY,e.currentTarget);
         if(this.props.onlyInside && !inTouchableRegion){
             return;
         }
-        if(axis === "y"){
+        let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
+        if(this.moveDirection && this.moveDirection !== moveDirection){
+            return
+        }
+        this.moveDirection = moveDirection
+        if(axis === "y" && this.moveDirection === "y"){
             this.translateY += (clientY - this.lastY)
-        }else if(axis === "x"){
+        }else if(axis === "x" && this.moveDirection === "x"){
             this.translateX += (clientX - this.lastX)
         }
-        // this.translateY += Math.abs(clientY - this.lastY) < 5 ? 0 : (clientY - this.lastY);
-        // this.translateX += Math.abs(clientX - this.lastX) < 5 ? 0 : (clientX - this.lastX);
 
         this.translateY = this.translateY >= 0 ? 0 : this.translateY;
         this.translateX = this.translateX >= 0 ? 0 : this.translateX;
@@ -187,7 +193,18 @@ class Slidable extends Component{
             this.lastX = clientX;
         })
         if(this.props.transitionMove === true){
-            rAF(this.transitionTouch.bind(this,animateDuration))
+            let transitionTouch = this.transitionTouch.bind(this,animateDuration)
+            // console.log('this.translateX',(clientX - this.lastX),this.translateX)
+            if(this.touchMoving){
+                return
+            }
+            this.touchMoving = true
+            this.timeout = setTimeout(()=>{
+                transitionTouch()
+                this.touchMoving = false
+                clearTimeout(this.timeout)
+            },200)
+            // _.throttle(transitionTouch,60)
         }
     }
     checkEdge(onEdge = ()=>{}){
