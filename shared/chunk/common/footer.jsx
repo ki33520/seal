@@ -18,7 +18,7 @@ class Footer extends Component{
         });
         switch(index){
             case 1:
-                window.location.href='/classify';
+                window.location.href='/navbar';
                 break;
             case 2:
                 window.location.href='/trendy';
