@@ -4,6 +4,7 @@ import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Slidable from "./slidable.jsx";
+import dom from "../lib/dom.es6";
 
 export class SlideTabs extends Component{
     constructor(props){
@@ -13,6 +14,16 @@ export class SlideTabs extends Component{
             // navbarSlidable:false
         }
     }
+    componentDidMount(){
+        dom.bindEvent(document,"touchmove",(e)=>{
+            // e && e.preventDefault()
+        })
+    }
+    componentWillUnmount(){
+        dom.unbindEvent(document,"touchmove",(e)=>{
+            // e && e.preventDefault()
+        })
+    }
     shouldComponentUpdate(nextProps,nextState){
         if(nextState.activeIndex !== this.state.activeIndex){
             return true
@@ -20,7 +31,6 @@ export class SlideTabs extends Component{
         return false
     }
     handleSelect(i,e){
-        console.log('handleSelect')
         // e && e.preventDefault()
         this.setState({
             activeIndex:i
@@ -69,7 +79,7 @@ export class SlideTabs extends Component{
         return (
             <div className={classes}>
             <Slidable axis={this.props.axis} name="content" 
-            transitionMove={false} 
+            transitionMove={true} 
             onlyInside={true}
             simulateTranslate={true}
             handleActiveChange={this.handleContentActiveChange.bind(this)} 
@@ -115,7 +125,6 @@ export class SlideTabsItem extends Component{
         })
         let children = this.props.children
         if(React.Children.count(this.props.children) === 1){
-        // console.log(React.Children.count(this.props.children))
             let child = React.Children.only(this.props.children)
             children = React.cloneElement(child,Object.assign({},child.props,{
                 redraw:this.state.itemStyle !== null
