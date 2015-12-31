@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "./client/bundle/search/../" + ({"0":"aboutus","1":"activity","2":"cart","3":"confirmorder","4":"coupon","5":"coupondetail","6":"error","7":"gooddetail","8":"goodlist","9":"help","10":"index","11":"membercenter","12":"membercollect","13":"membercomment","14":"memberupdate","15":"orderdetail","16":"orderlist","18":"receiver","19":"search","20":"trendy"}[chunkId]||chunkId) + "/dist/" + chunkId + "-" + "eaa9b7e2bea6ec104fd6" + ".chunk.js";
+/******/ 			script.src = __webpack_require__.p + "./client/bundle/search/../" + ({"0":"aboutus","1":"activity","2":"cart","3":"confirmorder","4":"coupon","5":"coupondetail","6":"error","7":"gooddetail","8":"goodlist","9":"help","10":"index","11":"membercenter","12":"membercollect","13":"membercomment","14":"memberupdate","15":"orderdetail","16":"orderlist","18":"receiver","19":"search","20":"trendy"}[chunkId]||chunkId) + "/dist/" + chunkId + "-" + "c566bc53005cbdc60e21" + ".chunk.js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};

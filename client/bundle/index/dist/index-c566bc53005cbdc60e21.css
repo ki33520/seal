@@ -2270,6 +2270,9 @@ body {
 .slide-tabs .slide-tabs-navbar .slide-tabs-navbar-item>span {
   padding-bottom: 0.09375rem;
 }
+.slide-tabs .slide-tabs-navbar .slide-tabs-navbar-item>span b {
+  font-weight: 400;
+}
 .slide-tabs .slide-tabs-navbar .slide-tabs-navbar-item.active>span {
   color: #801da1;
   border-bottom: 0.03125rem solid #801da1;
