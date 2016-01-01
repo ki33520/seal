@@ -121,9 +121,9 @@ class Slidable extends Component{
             if(this.props.handleActiveChange === false){
                 return;
             }
-            let touchDirection = Math.abs(this.endTouchX - this.startTouchX) > Math.abs(this.endTouchY - this.startTouchY) ?
-            "x":"y";
-            if(touchDirection !== axis){
+            // let touchDirection = Math.abs(this.endTouchX - this.startTouchX) > Math.abs(this.endTouchY - this.startTouchY) ?
+            // "x":"y";
+            if(this.moveDirection !== axis){
                 return;
             }
             let nextIndex = this.state.activeIndex;
@@ -164,7 +164,7 @@ class Slidable extends Component{
             // this.transitionTouch(this.props.animateDuration)
             // if(this.touchDirection() === axis){
             rAF(this.transitionTouch.bind(this,animateDuration))
-            // }
+            dom.removeClass(ReactDOM.findDOMNode(this),"sliding")
         }
     }
     handleTouchMove(e){
@@ -180,6 +180,10 @@ class Slidable extends Component{
             return
         }
         this.moveDirection = moveDirection
+        if(this.moveDirection === axis){
+            dom.addClass(ReactDOM.findDOMNode(this),"sliding")
+            // e && e.preventDefault()
+        }
         if(axis === "y" && this.moveDirection === "y"){
             this.translateY += (clientY - this.lastY)
         }else if(axis === "x" && this.moveDirection === "x"){
@@ -243,6 +247,11 @@ class Slidable extends Component{
             // },60)
         }
     }
+    handleScroll(e){
+        // e && e.preventDefault()
+        // console.log('handleScroll')
+        this.scrolling = true
+    }
     render(){
         let child = React.Children.only(this.props.children);
         // console.log('activeIndex',this.state.activeIndex)
@@ -250,6 +259,7 @@ class Slidable extends Component{
             onTouchStart:this.handleTouchStart.bind(this),
             onTouchMove:this.handleTouchMove.bind(this),
             onTouchEnd:this.handleTouchEnd.bind(this),
+            onScroll:this.handleScroll.bind(this),
             active:this.state.activeIndex,
             style:Object.assign({},this.props.style,{
                 // transitionDuration:`${this.props.animateDuration}s`,
