@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import Index from "./partial/index.jsx";
 import SearchBox from "./partial/search.jsx";
 import {Router} from "director";
-import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
+import {Switcher,SwitcherCase} from "module"
 
 class IndexRouter extends Component{
     constructor(props){
@@ -29,22 +29,11 @@ class IndexRouter extends Component{
     }
     render(){
         const {currentRoute} = this.state;
-        var currentView = null;
-        if(currentRoute === "index"){
-            currentView =  (
-                <Index {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "search"){
-            currentView =  (
-                <SearchBox {...this.props} key={currentRoute}/>
-            )
-        }
-        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
-            <div className="router">
-                <div className={currentRoute==="index"?"active":""}><Index {...this.props}/></div>
-                <div className={currentRoute==="search"?"active":""}><SearchBox {...this.props}/></div>
-            </div>
+            <Switcher currentRoute={currentRoute}>
+                <SwitcherCase name="index"><Index {...this.props}/></SwitcherCase>
+                <SwitcherCase name="search"><SearchBox {...this.props}/></SwitcherCase>
+            </Switcher>
         );
     }
 }
