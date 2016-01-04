@@ -1,11 +1,11 @@
 'use strict';
-import Trendy from "../../../shared/chunk/trendy/app.jsx";
+import TrendyApp from "../../../shared/chunk/trendy/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<Trendy initialState={initialState} />,document.getElementById('trendy'));
+        ReactDOM.render(<TrendyApp initialState={initialState} />,document.getElementById('trendy-container'));
 }
 
 if(typeof window.addEventListener){
