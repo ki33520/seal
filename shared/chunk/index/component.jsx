@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import Index from "./partial/index.jsx";
 import SearchBox from "./partial/search.jsx";
 import {Router} from "director";
-import {Switcher,SwitcherCase} from "module"
+import {Switcher,SwitcherCase} from "../common/switcher.jsx"
 
 class IndexRouter extends Component{
     constructor(props){

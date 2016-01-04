@@ -7,7 +7,7 @@ export class Switcher extends Component{
     renderRoute(child,i){
         const {currentRoute} = this.props;
         const {name} = child.props; 
-        return React.cloneElement(child,Object.assgin({},child.props,{
+        return React.cloneElement(child,Object.assign({},child.props,{
             active:currentRoute === name,
             key:i
         }))
