@@ -15,6 +15,11 @@ router.get("/logingateway",require("./controller/authorize").loginGateway);
 router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
 router.get("/", require("./controller/main.js").index);
+router.get("/mobileonly", require("./controller/topic.js").mobileOnly);
+router.get("/finest", require("./controller/topic.js").finest);
+router.get("/stockup", require("./controller/topic.js").stockup);
+router.get("/flashbuy", require("./controller/flashbuy.js"));
+
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));

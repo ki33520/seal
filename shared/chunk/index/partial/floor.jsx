@@ -119,17 +119,17 @@ class Floor extends Component{
                 <div className="activity">
                     <ul className="clearfix">
                         <li>
-                            <a href="#">
+                            <a href="/mobileonly">
                                 <img src="/client/asset/images/pic3.gif" alt="" />
                                 <span></span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/finest">
                                 <img src="/client/asset/images/pic4.gif" alt="" />
                                 <span></span>
                             </a>
-                            <a href="#">
+                            <a href="/stockup">
                                 <img src="/client/asset/images/pic5.gif" alt="" />
                                 <span></span>
                             </a>
@@ -153,7 +153,7 @@ class Floor extends Component{
                 <div className="flashBuy">
                     <div className="title">
                         <span><i></i>闪购精选</span>
-                        <a href="/">更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
+                        <a href="/flashbuy">更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
                     </div>
                     <a href="/gooddetail/1" className="clearfix">
                         <img src="/client/asset/images/pic8.gif" />
