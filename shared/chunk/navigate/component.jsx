@@ -77,7 +77,7 @@ class CategoryRow extends Component{
             let current = classNames("name",{
                 "active":i===this.state.activeIndex
             });
-            let key = "nav-"+i;
+            let key = "cate-"+i;
             return (
                 <li className={current} key={key} onClick={this.handleClick.bind(this,i)}>{name}</li>
             )
@@ -92,7 +92,7 @@ class CategoryRow extends Component{
                 "sh":i===this.state.activeIndex
             })
             return (
-                <div className={classes}>
+                <div className={classes} key={'content-'+i}>
                     <a href="#" className="ad">
                         <img src="/client/asset/images/pic24.gif"/>
                     </a>
