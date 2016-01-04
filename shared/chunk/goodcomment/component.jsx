@@ -29,15 +29,18 @@ class CommentList extends Component{
         }.bind(this));
     }
     beginRefresh(interval,flag){
-        const {allComment,showComment,isFetching,dispatch} =  this.props;
-        var comments = allComment,
-            fetchLink = "/membercenter/comment",
+        const {allComment,showComment,isFetching,dispatch,goodId} =  this.props;
+        var comments,
+            fetchLink,
             pageCount = 1,
             nextPage = 1;
         var flag = flag!= undefined ? flag: this.state.displayFlag;
-        if(flag === 1){
-            fetchLink = "/membercenter/showcomment";
+        if(flag === 0){
+            comments = allComment;
+            fetchLink = "/goodcomment/"+goodId;
+        }else{
             comments = showComment;
+            fetchLink = "/goodcommentshow/"+goodId;
         }
         if(comments){
             pageCount = Math.ceil(comments.totalCount/comments.pageSize);
@@ -58,13 +61,13 @@ class CommentList extends Component{
         this.beginRefresh(0,flag);
     }
     render(){
-        var {allComment,showComment,activeIndex,isFetching} = this.props;
+        var {allComment,showComment,activeIndex,isFetching,goodId} = this.props;
         var a=0,b=1;
         return (
             <div className="comment-content">
                 <div className="comment-header">
                     <Header>
-                        <span className="title">我的评论</span>
+                        <span className="title">商品评论</span>
                     </Header>
                 </div>
                 <div className="tab-content">

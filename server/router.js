@@ -24,11 +24,12 @@ router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
-
 router.get("/cart",require("./controller/cart").cart);
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
 router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
 router.post("/fetchCart", mainController.requireAuthorize,require("./controller/cart").fetchCart);
+router.get("/goodcomment/:id", require("./controller/goodcomment").index);
+router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 
 router.post("/confirmorder",require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
