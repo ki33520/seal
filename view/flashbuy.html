@@ -1,16 +1,18 @@
 {% extends "./layout.html" %}
-{% block title %}暴款{% endblock %}
+{% block title %}{% endblock %}
 {% block css %}
 <!-- inject:css -->
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div id="trendy-container">{{ markup|safe }}</div>
+<div class="flashbuy-container">
+    <div id="flashbuy">{{ markup|safe }}</div>
+</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
 <script src="/hmr/react.js"></script>
-<script src="/hmr/trendy.js"></script>
+<script src="/hmr/flashbuy.js"></script>
 <!-- endinject -->
 {% endblock %}

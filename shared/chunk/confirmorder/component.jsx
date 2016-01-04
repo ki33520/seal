@@ -70,7 +70,7 @@ class ConfirmOrderRouter extends Component{
         return (
             <TransitionGroup component="div" transitionName={transitionName} 
             transitionLeave={false} 
-            transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+            transitionEnterTimeout={300} transitionLeaveTimeout={100}>
             {currentView}
             </TransitionGroup>
         );

@@ -1,13 +1,11 @@
 'use strict';
-import ConfirmOrder from "../../../shared/chunk/confirmorder/app.jsx";
+import NavigateApp from "../../../shared/chunk/navigate/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
-Object.assign = Object.assign || require('object-assign')
-
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<ConfirmOrder initialState={initialState} />,document.getElementById('confirm-order'));
+    ReactDOM.render(<NavigateApp initialState={initialState} />,document.getElementById('navigate-container'));
 }
 
 if(typeof window.addEventListener){

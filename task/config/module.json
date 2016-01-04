@@ -17,6 +17,24 @@
         },
         "vendor": "react"
     },
+    "topic": {
+        "html": ["topic.html"],
+        "path": "./client/bundle/topic/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "flashbuy": {
+        "html": ["flashbuy.html"],
+        "path": "./client/bundle/flashbuy/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
     "gooddetail": {
         "html": ["gooddetail.html"],
         "path": "./client/bundle/gooddetail/",
@@ -188,9 +206,9 @@
         },
         "vendor": "react"
     },
-    "navbar":{
-        "html": ["navbar.html"],
-        "path": "./client/bundle/navbar/",
+    "navigate":{
+        "html": ["navigate.html"],
+        "path": "./client/bundle/navigate/",
         "compiler": {
             "js": "babel",
             "css": "stylus"

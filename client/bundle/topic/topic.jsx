@@ -1,13 +1,11 @@
 'use strict';
-import ConfirmOrder from "../../../shared/chunk/confirmorder/app.jsx";
+import Topic from "../../../shared/chunk/topic/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
-Object.assign = Object.assign || require('object-assign')
-
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<ConfirmOrder initialState={initialState} />,document.getElementById('confirm-order'));
+        ReactDOM.render(<Topic initialState={initialState} />,document.getElementById('topic'));
 }
 
 if(typeof window.addEventListener){

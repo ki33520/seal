@@ -116,12 +116,11 @@ var confirmOrder = function(req, res, next) {
     var user = req.session.user;
     // console.log(itemIds, buyeds)
     util.fetchAPI("confirmOrder", {
-        memberId: user.memberId,
+        // memberId: user.memberId,
         itemIds: itemIds,
         nums: buyeds
     }, true).then(function(ret) {
         if (ret.code === "success") {
-            console.log('ret',ret)
             var order = formatOrder(ret);
             _.extend(order, {
                 itemIds: itemIds,

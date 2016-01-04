@@ -185,7 +185,7 @@ class Cart extends Component {
         const {carts} = this.props;
 
         return (
-            <div className="cart-content">
+            <div>
                 <Header>
                     <span className="title">购物车</span>
                 </Header>
@@ -193,7 +193,7 @@ class Cart extends Component {
                     {this.renderGroup(carts)}
                 </div>
                 <Footer activeIndex="3"/>
-                <MaskLayer visible={this.props.isFetching} />
+                <MaskLayer visible={false} />
             </div>
         )
     }

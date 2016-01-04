@@ -1,13 +1,11 @@
 {% extends "./layout.html" %}
-{% block title %}Detail{% endblock %}
+{% block title %}购物车{% endblock %}
 {% block css %}
 <!-- inject:css -->
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="cart-container">
-    <div id="cart">{{ markup|safe }}</div>
-</div>
+<div id="cart-container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}

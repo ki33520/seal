@@ -15,18 +15,23 @@ router.get("/logingateway",require("./controller/authorize").loginGateway);
 router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
 router.get("/", require("./controller/main.js").index);
+router.get("/mobileonly", require("./controller/topic.js").mobileOnly);
+router.get("/finest", require("./controller/topic.js").finest);
+router.get("/stockup", require("./controller/topic.js").stockup);
+router.get("/flashbuy", require("./controller/flashbuy.js"));
+
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
-router.get("/cart", require("./controller/cart").cart);
-router.post("/updateCart", require("./controller/cart").updateCart);
-router.post("/deleteCart", require("./controller/cart").deleteCart);
-router.post("/fetchCart", require("./controller/cart").fetchCart);
+router.get("/cart",require("./controller/cart").cart);
+router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
+router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
+router.post("/fetchCart", mainController.requireAuthorize,require("./controller/cart").fetchCart);
 router.get("/goodcomment/:id", require("./controller/goodcomment").index);
 router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 
-router.post("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
+router.post("/confirmorder",require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",require("./controller/orderlist"));
 router.get("/orderdetail/:id",require("./controller/orderdetail").orderDetail);
@@ -37,7 +42,7 @@ router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
 router.get("/membercenter",mainController.requireAuthorize,require("./controller/membercenter"));
 router.get("/membercenter/collect",mainController.requireAuthorize,require("./controller/membercollect"));
-router.get("/membercenter/comment",mainController.requireAuthorize,require("./controller/membercomment").index);
+router.get("/membercenter/comment",require("./controller/membercomment").index);
 router.get("/membercenter/showcomment",mainController.requireAuthorize,require("./controller/membercomment").showComment);
 router.get("/membercenter/update",mainController.requireAuthorize,require("./controller/memberupdate").update);
 
@@ -56,7 +61,7 @@ router.get("/coupon", require("./controller/coupon").coupon);
 router.post("/fetchCoupon", require("./controller/coupon").fetchCoupon);
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
 router.get("/search", require("./controller/search").index);
-router.get("/navbar", require("./controller/navbar"));
+router.get("/navigate", require("./controller/navigate"));
 
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);

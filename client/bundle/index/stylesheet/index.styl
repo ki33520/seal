@@ -7,6 +7,9 @@
 @import "./search.css";
 
 html,body{
+    height: 100%;
+}
+body{
     overflow:hidden;
 }
 .index-container{
@@ -60,7 +63,6 @@ html,body{
         overflow:hidden;
         padding-bottom:px2rem(81);
         .slide-tabs-item{
-            // overflow:hidden;
             overflow-y:auto;
             overflow-x:hidden;
             -webkit-overflow-scrolling: touch;
@@ -79,26 +81,37 @@ html,body{
     margin:0 .32rem;
 }
 
-.activity{
-    img{
-        display:block;
+.slider .control-nav{
+    position: absolute;
+    width: 100%;
+    bottom: .5rem;
+    left: 50%;
+    margin-left: -50%;
+    z-index: 10;
+    text-align: center;
+    &>span{
+        width: 8px;
+        height: 8px;
+        background: url(/client/asset/images/bannerDot2.png) 0 0 no-repeat;
+        background-size: 100%;
+        opacity:1;    
+        &.active{
+            background: url(/client/asset/images/bannerDot2.png) 0 -8px no-repeat;
+            background-size: 100%;    
+        }
     }
-    // box-sizing:border-box;
-    // li:nth-child(2){
-    //     width:56.5%;
-    // }
-    // li:nth-child(1){
-    //     width:43.5%;
-    // }
 }
-
 
 .search-wrap{
     height:100%;
     background:#F7F7F7;
     .search-box{
         &>input{
+            box-sizing:border-box;
             border:0 none;
+        }
+        &>span{
+            font-size:px2rem(12);
         }
     }
 }

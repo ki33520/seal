@@ -39,13 +39,12 @@ class IndexRouter extends Component{
                 <SearchBox {...this.props} key={currentRoute}/>
             )
         }
-        const transitionName = currentRoute !== 'index'?'moveUp':'fadeIn';
+        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
-            <TransitionGroup component="div" transitionName={transitionName} 
-            transitionLeave={false} 
-            transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-            {currentView}
-            </TransitionGroup>
+            <div className="router">
+                <div className={currentRoute==="index"?"active":""}><Index {...this.props}/></div>
+                <div className={currentRoute==="search"?"active":""}><SearchBox {...this.props}/></div>
+            </div>
         );
     }
 }

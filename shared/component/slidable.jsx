@@ -168,6 +168,7 @@ class Slidable extends Component{
         }
     }
     handleTouchMove(e){
+        // e && e.preventDefault()
         e && e.stopPropagation();
         const {animateDuration,axis} = this.props;
         const {clientY,clientX} = e.changedTouches[0];
@@ -247,11 +248,6 @@ class Slidable extends Component{
             // },60)
         }
     }
-    handleScroll(e){
-        // e && e.preventDefault()
-        // console.log('handleScroll')
-        this.scrolling = true
-    }
     render(){
         let child = React.Children.only(this.props.children);
         // console.log('activeIndex',this.state.activeIndex)
@@ -259,7 +255,6 @@ class Slidable extends Component{
             onTouchStart:this.handleTouchStart.bind(this),
             onTouchMove:this.handleTouchMove.bind(this),
             onTouchEnd:this.handleTouchEnd.bind(this),
-            onScroll:this.handleScroll.bind(this),
             active:this.state.activeIndex,
             style:Object.assign({},this.props.style,{
                 // transitionDuration:`${this.props.animateDuration}s`,
