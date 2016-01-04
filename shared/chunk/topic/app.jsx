@@ -7,22 +7,19 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Navbar from "./component.jsx";
 
 function selector(state){
-    const {navbar,isFetching} = state.goodsByParam;
-    return {
-        navbar,
-        isFetching
-    };
+    return state
 }
 
 let NavbarConnected = connect(selector)(Navbar);
 
 class NavbarApp extends React.Component{
     render(){
-        const {navbar} = this.props.initialState;
+        const {data,title} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
-            goodsByParam:{
+            topic:{
                 isFetching:false,
-                navbar
+                data,
+                title
             }
         });
         return (

@@ -67,7 +67,7 @@ var cart = function(req, res, next) {
     var user = req.session.user;
  
     util.fetchAPI("cartByUser",{
-        memberId:user.memberId
+        // memberId:user.memberId
     },true).then(function(resp){
         if(resp.returnCode === 0){
             var carts = formatCarts(resp.object);
