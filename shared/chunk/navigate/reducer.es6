@@ -12,7 +12,7 @@ function goodsByParam(state={},action){
         case RECEIVE_GOODS:
             return Object.assign({},state,{
                 isFetching:false,
-                pagination:action.pagination
+                navigate:action.pagination
             });
         default:
             return state;

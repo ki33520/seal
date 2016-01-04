@@ -179,9 +179,9 @@
         },
         "vendor": "react"
     },
-    "navbar":{
-        "html": ["navbar.html"],
-        "path": "./client/bundle/navbar/",
+    "navigate":{
+        "html": ["navigate.html"],
+        "path": "./client/bundle/navigate/",
         "compiler": {
             "js": "babel",
             "css": "stylus"

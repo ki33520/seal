@@ -3,23 +3,23 @@
 var _ = require("lodash");
 var util = require("../lib/util");
 var bluebird = require("bluebird");
-var NavbarApp = util.getSharedComponent("navbar");
+var NavigateApp = util.getSharedComponent("navigate");
 
-var navbar = function(req, res, next) {
+var navigate = function(req, res, next) {
     bluebird.props({
         result: util.fetchAPI("fetchHotKeywords", {}, true)
     }).then(function(resp) {
      
         if(resp.result.returnCode===0){
             var initialState = {
-                navbar: resp.result.object
+                navigate: resp.result.object
             }; 
 
-            var markup = util.getMarkupByComponent(NavbarApp({
+            var markup = util.getMarkupByComponent(NavigateApp({
                 initialState:initialState
             }));
 
-            res.render('navbar', {
+            res.render('navigate', {
                 markup: markup,
                 initialState: initialState
             });
@@ -28,4 +28,4 @@ var navbar = function(req, res, next) {
 }
  
 
-module.exports = navbar;
+module.exports = navigate;

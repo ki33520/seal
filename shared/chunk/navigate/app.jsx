@@ -4,33 +4,33 @@ import {Provider,connect} from "react-redux";
 import {createStore} from "redux";
 import rootReducer from "./reducer.es6";
 import createStoreWithMiddleware from "../../lib/redux-helper.es6";
-import Navbar from "./component.jsx";
+import Navigate from "./component.jsx";
 
 function selector(state){
-    const {navbar,isFetching} = state.goodsByParam;
+    const {navigate,isFetching} = state.goodsByParam;
     return {
-        navbar,
+        navigate,
         isFetching
     };
 }
 
-let NavbarConnected = connect(selector)(Navbar);
+let NavigateConnected = connect(selector)(Navigate);
 
-class NavbarApp extends React.Component{
+class NavigateApp extends React.Component{
     render(){
-        const {navbar} = this.props.initialState;
+        const {navigate} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
             goodsByParam:{
                 isFetching:false,
-                navbar
+                navigate
             }
         });
         return (
             <Provider store={store}>
-            <NavbarConnected />
+            <NavigateConnected />
             </Provider>
         )
     }
 }
 
-export default NavbarApp;
+export default NavigateApp;
