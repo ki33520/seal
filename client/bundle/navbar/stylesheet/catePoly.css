@@ -54,7 +54,7 @@ header{
 }
 .polyTabs ul li.current {
 }
-.polyTabs ul li.current i{
+.active i{
 	color: #801da1;
     border-bottom: .053333rem solid #801da1;
 }
@@ -87,6 +87,7 @@ header{
 }
 .leftNav .name{
     width:100%;
+    color: black;
     line-height:1.34rem;
     height:1.34rem;
     text-align: center;
@@ -94,7 +95,7 @@ header{
 	border-bottom:1px solid #d7d7d7;
 }
  
-.leftNav .current {
+.leftNav .active {
     border-left: 5px solid #801da1;
 	background-color:#fff;
 	-webkit-animation:shake 0.5s;
