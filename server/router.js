@@ -19,10 +19,11 @@ router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
-router.get("/cart", require("./controller/cart").cart);
-router.post("/updateCart", require("./controller/cart").updateCart);
-router.post("/deleteCart", require("./controller/cart").deleteCart);
-router.post("/fetchCart", require("./controller/cart").fetchCart);
+
+router.get("/cart", mainController.requireAuthorize,require("./controller/cart").cart);
+router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
+router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
+router.post("/fetchCart", mainController.requireAuthorize,require("./controller/cart").fetchCart);
 
 router.post("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);

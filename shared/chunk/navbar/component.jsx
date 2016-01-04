@@ -5,7 +5,7 @@ import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
 import classNames from "classnames";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
-import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
+//import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 
 class Navbar extends Component{
  
