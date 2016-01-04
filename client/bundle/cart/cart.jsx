@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<CartApp initialState={initialState} />,document.getElementById('cart'));
+    ReactDOM.render(<CartApp initialState={initialState} />,document.getElementById('cart-container'));
 }
 
 if(typeof window.addEventListener){

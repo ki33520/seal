@@ -9,7 +9,6 @@ function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
         ReactDOM.render(<WeatherApp initialState={initialState} />,document.getElementById('index'));
 }
-
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

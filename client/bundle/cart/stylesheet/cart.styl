@@ -1,9 +1,28 @@
 
-@import "../../common/common.styl"
-@import "../../common/iconfont.styl"
-@import "../../common/header.styl"
-@import "../../common/footer.styl"
-@import "../../component/masklayer.styl"
-@import "../../component/numberpicker.styl"
-@import "../../component/form.styl"
-@import "./cart.css"
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/header.styl";
+@import "../../common/footer.styl";
+@import "../../component/masklayer.styl";
+@import "../../component/numberpicker.styl";
+@import "../../component/form.styl";
+@import "./cart.css";
+
+.number-picker{
+    border: 1px #e5e5e5 solid;
+    border-radius: 3px;
+    &>div {
+	    height: .62rem;
+	    width: .62rem;
+	    line-height: .62rem;
+	    padding: 0;
+    }
+    &>input{
+    	height: .62rem;
+    	max-width: 1rem;
+	    line-height: .62rem;
+	    border: 1px #dcdcdc solid;
+	    border-top: 0;
+	    border-bottom: 0;
+    }
+}

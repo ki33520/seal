@@ -65,10 +65,9 @@ function formatCarts(originalCarts) {
 var cart = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
-    var memberId = '90a19c2d49184fefa7421c5d7eacf551';
-
+ 
     util.fetchAPI("cartByUser",{
-        memberId:memberId
+        memberId:user.memberId
     },true).then(function(resp){
         if(resp.returnCode === 0){
             var carts = formatCarts(resp.object);

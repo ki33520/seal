@@ -142,10 +142,10 @@ header .indexSearch:before{
     padding-bottom:.266rem;
     position:relative;
 }
-.panic a img{
+.panic a>img{
     width:100%;
 }
-.panic a span{
+.panic a>span{
     width:100%;
     height:.614rem;
     line-height:.614rem;
@@ -158,13 +158,13 @@ header .indexSearch:before{
     font-size:.32rem;
     vertical-align:middle;
 }
-.panic a span i{
+.panic a>span i{
     vertical-align:middle;
     display:inline-block;
     height:.614rem;
     padding-top:.08rem;
 }
-.panic a span img{
+.panic a>span img{
     display:inline;
     width:.38rem;
     height:.38rem;
@@ -269,13 +269,21 @@ nav.bottomNav ul li a.nav_hover{
     height:.827rem;
     display:block;
 }
+.activity ul{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
 .activity li:nth-child(1){
     width:4.027rem;
-    float:left;
 }
 .activity li:nth-child(2){
-    float:right;
     width:5.2rem;
+    text-align:right;
+    margin-left:.133333rem;
+}
+.activity li:nth-child(2) a{
+    float:right;
 }
 .activity li:nth-child(2) a:nth-child(2){
     margin-top:.133334rem;
@@ -293,9 +301,15 @@ nav.bottomNav ul li a.nav_hover{
     background-size:100%;
 }
 
+/* activity_2 */
 .activity_2{
     padding:.266rem .32rem;
     border-bottom:.2666rem solid #f7f7f7;
+}
+.activity_2 ul{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
 }
 .activity_2 a{
     display:block;
@@ -306,36 +320,44 @@ nav.bottomNav ul li a.nav_hover{
 }
 .activity_2 li:nth-child(1){
     width:6.253rem;
-    float:left;
 }
 .activity_2 li:nth-child(2){
-    float:right;
     width:2.973rem;
+    margin-left:.133333rem;
 }
 
+/* activity_3 */
 .activity_3{
     padding:.266rem .32rem;
     border-bottom:.2666rem solid #f7f7f7;
 }
+.activity_3 ul{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
 .activity_3 li:nth-child(1){
     width:3.3333333rem;
-    float:left;
 }
 .activity_3 li:nth-child(2){
     width:5.8933333rem;
-    float:right;
+    margin-left:.133333rem;
 }
 .activity_3 li a{
     width:100%;
     display:block;
 }
+.activity_3 li:nth-child(2) div{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
 .activity_3 li:nth-child(2) div a:nth-child(1){
     width:2.78666666rem;
-    float:left;
 }
 .activity_3 li:nth-child(2) div a:nth-child(2){
     width:2.9735rem;
-    float:right;
+    margin-left:.133333rem;
 }
 .activity_3 li:nth-child(2) > a{
     clear:both;

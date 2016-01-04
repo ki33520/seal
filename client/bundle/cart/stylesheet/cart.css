@@ -165,7 +165,7 @@
 	font-size:.32rem;
 	color:#333;
 }
-.J_item .gd_info .name span {
+.J_item .gd_info .name > span {
     font-size:.32rem;
     vertical-align: top;
     float: right;
@@ -213,7 +213,6 @@
 	top:2.2rem;
 }
 .gd_info .act_wrap {
-    width: 3.8rem;
     height: .7rem;
 }
 .gd_info .add {
