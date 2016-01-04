@@ -165,7 +165,7 @@
 	font-size:.32rem;
 	color:#333;
 }
-.J_item .gd_info .name span {
+.J_item .gd_info .name > span {
     font-size:.32rem;
     vertical-align: top;
     float: right;
