@@ -7,7 +7,7 @@ import classNames from "classnames";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
 //import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 
-class Navbar extends Component{
+class Nvigate extends Component{
  
     handleSearch(){
         location.href="/search"
@@ -179,4 +179,4 @@ class OriginRow extends Component{
         );
     }
 }
-export default Navbar;
+export default Nvigate;

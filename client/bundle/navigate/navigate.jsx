@@ -1,11 +1,11 @@
 'use strict';
-import NavbarApp from "../../../shared/chunk/navbar/app.jsx";
+import NavigateApp from "../../../shared/chunk/navigate/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<NavbarApp initialState={initialState} />,document.getElementById('navbar-markup'));
+    ReactDOM.render(<NavigateApp initialState={initialState} />,document.getElementById('navigate-container'));
 }
 
 if(typeof window.addEventListener){
