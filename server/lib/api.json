@@ -55,6 +55,13 @@
             "production":"http://member.tepin.hk"
         }
     },
+    "goodCommentByUser": {
+        "uri": "/comments/v1/findByProductCode",
+        "baseURL":{
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "production":"http://member.tepin.hk"
+        }
+    },
     "updatePasswordByUser":{
         "uri":"/comments/v1/changePassword",
         "baseURL":{
