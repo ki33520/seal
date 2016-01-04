@@ -8,9 +8,10 @@ import {Tabs,TabsItem} from "../../component/tabs.jsx";
 
 class Topic extends Component{
     render(){
+        const {title} = this.props.topic;
         return (
             <div className="topic-content">
-            <Header>手机专享</Header>
+            <Header>{title}</Header>
             <div className="flashBuy">
                 <a href="/gooddetail/1" className="clearfix">
                     <img src="/client/asset/images/pic8.gif" />

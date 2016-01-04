@@ -7,7 +7,8 @@ var mobileOnly = function(req,res,next) {
     util.fetchAPI("index",{},true).then(function(ret){
         if(ret.code === "success"){
             var initialState = {
-                data:ret.object
+                data:ret.object,
+                title:"手机专享"
             };
             var markup = util.getMarkupByComponent(Topic({
                 initialState:initialState
@@ -28,7 +29,8 @@ var finest = function(req,res,next) {
     util.fetchAPI("index",{},true).then(function(ret){
         if(ret.code === "success"){
             var initialState = {
-                data:ret.object
+                data:ret.object,
+                title:"海外精选"
             };
             var markup = util.getMarkupByComponent(Topic({
                 initialState:initialState
@@ -49,7 +51,8 @@ var stockup = function(req,res,next) {
     util.fetchAPI("index",{},true).then(function(ret){
         if(ret.code === "success"){
             var initialState = {
-                data:ret.object
+                data:ret.object,
+                title:"今日海囤"
             };
             var markup = util.getMarkupByComponent(Topic({
                 initialState:initialState
