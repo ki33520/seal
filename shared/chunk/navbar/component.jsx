@@ -58,41 +58,76 @@ class Navbar extends Component{
 }
 
 class CategoryRow extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            activeIndex:0
+        }
+    }
+
+    handleClick(index){
+        this.setState({
+            activeIndex:index
+        })
+    }
+
+    renderNav(){
+        var titles = ["母婴用品","美容彩妆","营养保健","家居洗护","进口美食"];
+        return titles.map((name,i)=>{
+            let current = classNames("name",{
+                "active":i===this.state.activeIndex
+            });
+            let key = "nav-"+i;
+            return (
+                <li className={current} key={key} onClick={this.handleClick.bind(this,i)}>{name}</li>
+            )
+        });
+    }
+
+    renderContent(){
+        var content=[1,2,3,4,5];
+
+        return content.map((item,i)=>{
+            let classes = classNames("fadeIn",{
+                "sh":i===this.state.activeIndex
+            })
+            return (
+                <div className={classes}>
+                    <a href="#" className="ad">
+                        <img src="/client/asset/images/pic24.gif"/>
+                    </a>
+                    <div className="content">
+                        <div className="title">热门分类</div>
+                        <a href="/" className="cg">
+                            <img src="/client/asset/images/965_G_1445533723842.gif"/>
+                            <div>母婴直邮</div>
+                        </a>
+                        <a href="/" className="cg">
+                            <img src="/client/asset/images/965_G_1445533723842.gif"/>
+                            <div>美妆直邮</div>
+                        </a>
+                        <a href="/" className="cg">
+                            <img src="/client/asset/images/965_G_1445533723842.gif"/>
+                            <div>保健直邮</div>
+                        </a>
+                    </div>
+                </div>
+            )
+        })
+  
+    }
 
     render(){
-        const {Category} = this.props;
+        //let {category} = this.props;
          
         return (
             <div>
                 <div className="category-bd"></div>
                 <ul className="leftNav">
-                    <li className="name active">母婴用品</li>
-                    <li className="name">美容彩妆</li>
-                    <li className="name">营养保健</li>
-                    <li className="name">家居洗护</li>
-                    <li className="name">进口美食</li>
+                    {this.renderNav()}
                 </ul>
                 <div className="rightCon">
-                    <div className="sh fadeIn">
-                        <a href="#" className="ad">
-                            <img src="/client/asset/images/pic24.gif"/>
-                        </a>
-                        <div className="content">
-                            <div className="title">热门分类</div>
-                            <a href="/" className="cg">
-                                <img src="/client/asset/images/965_G_1445533723842.gif"/>
-                                <div>母婴直邮</div>
-                            </a>
-                            <a href="/" className="cg">
-                                <img src="/client/asset/images/965_G_1445533723842.gif"/>
-                                <div>美妆直邮</div>
-                            </a>
-                            <a href="/" className="cg">
-                                <img src="/client/asset/images/965_G_1445533723842.gif"/>
-                                <div>保健直邮</div>
-                            </a>
-                        </div>
-                    </div>
+                    {this.renderContent()}
                 </div>
             </div>
         );
