@@ -23,6 +23,8 @@ router.get("/cart", require("./controller/cart").cart);
 router.post("/updateCart", require("./controller/cart").updateCart);
 router.post("/deleteCart", require("./controller/cart").deleteCart);
 router.post("/fetchCart", require("./controller/cart").fetchCart);
+router.get("/goodcomment/:id", require("./controller/goodcomment").index);
+router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 
 router.post("/confirmorder",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);

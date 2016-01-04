@@ -26,6 +26,15 @@
         },
         "vendor": "react"
     },
+    "goodcomment": {
+        "html": ["goodcomment.html"],
+        "path": "./client/bundle/goodcomment/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
     "cart": {
         "html": ["cart.html"],
         "path": "./client/bundle/cart/",
