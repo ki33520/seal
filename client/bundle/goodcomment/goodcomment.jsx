@@ -1,11 +1,11 @@
 'use strict';
-import NavigateApp from "../../../shared/chunk/navigate/app.jsx";
+import MembercommentApp from "../../../shared/chunk/goodcomment/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-    ReactDOM.render(<NavigateApp initialState={initialState} />,document.getElementById('navigate-container'));
+        ReactDOM.render(<MembercommentApp initialState={initialState} />,document.getElementById('good-comment'));
 }
 
 if(typeof window.addEventListener){
