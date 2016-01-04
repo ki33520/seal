@@ -142,10 +142,10 @@ header .indexSearch:before{
     padding-bottom:.266rem;
     position:relative;
 }
-.panic a img{
+.panic a>img{
     width:100%;
 }
-.panic a span{
+.panic a>span{
     width:100%;
     height:.614rem;
     line-height:.614rem;
@@ -158,13 +158,13 @@ header .indexSearch:before{
     font-size:.32rem;
     vertical-align:middle;
 }
-.panic a span i{
+.panic a>span i{
     vertical-align:middle;
     display:inline-block;
     height:.614rem;
     padding-top:.08rem;
 }
-.panic a span img{
+.panic a>span img{
     display:inline;
     width:.38rem;
     height:.38rem;

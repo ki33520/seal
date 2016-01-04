@@ -39,7 +39,7 @@ class IndexRouter extends Component{
                 <SearchBox {...this.props} key={currentRoute}/>
             )
         }
-        const transitionName = currentRoute !== 'index'?'moveUp':'fadeIn';
+        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
             <TransitionGroup component="div" transitionName={transitionName} 
             transitionLeave={false} 
