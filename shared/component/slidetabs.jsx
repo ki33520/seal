@@ -16,10 +16,10 @@ export class SlideTabs extends Component{
         }
     }
     componentDidMount(){
-        noBounceScroll.enable()
+        // noBounceScroll.enable()
     }
     componentWillUnmount(){
-        noBounceScroll.disable()
+        // noBounceScroll.disable()
     }
     shouldComponentUpdate(nextProps,nextState){
         if(nextState.activeIndex !== this.state.activeIndex){

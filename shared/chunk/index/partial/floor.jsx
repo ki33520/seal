@@ -98,7 +98,10 @@ class Floor extends Component{
     }
     render(){
         return (
-            <div className="floor-content">
+            <div className="floor-content" onTouchMove={(e)=>{
+                // console.log('floor scroll')
+                // e && e.stopPropagation()
+            }}>
                 {this.renderSlider()}
                 <div className="m-entry">
                     <span>精选特卖</span>
