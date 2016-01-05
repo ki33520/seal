@@ -93,7 +93,7 @@
     "deleteCart":{
     	"uri":"/cart/v1/deleteCartById",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://order.hwg.youayun.cn:7989",
             "production":"http://product.tepin.hk"
         }
     },

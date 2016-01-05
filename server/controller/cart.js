@@ -69,6 +69,7 @@ var cart = function(req, res, next) {
     util.fetchAPI("cartByUser",{
         memberId:user.memberId
     },true).then(function(resp){
+
         if(resp.returnCode === 0){
             var carts = formatCarts(resp.object);
             var initialState = {
@@ -85,6 +86,7 @@ var cart = function(req, res, next) {
             });
         
         }else{
+
             next(new Error(ret.msg));
         }
     })
@@ -95,6 +97,7 @@ var updateCart = function(req, res, next) {
     var id = req.body.id;
     var number = req.body.number;
     var isCumulation = req.body.cumulation;
+
     util.fetchAPI('updateCart', {
         memberId: user.memberId,
         singleCode: id,
@@ -123,7 +126,7 @@ var deleteCart = function(req, res, next) {
     var user = req.session.user;
 
     util.fetchAPI('deleteCart', {
-        memberId: '90a19c2d49184fefa7421c5d7eacf551',
+        memberId: user.memberId,
         cartId: cartId
     },true).then(function(resp) {
         if(resp.returnCode === 0){
@@ -146,13 +149,12 @@ var deleteCart = function(req, res, next) {
 var fetchCart = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
-    var memberId = '90a19c2d49184fefa7421c5d7eacf551';
     var cartIndex = req.body.cartIndex;
     var groupIndex = req.body.groupIndex;
     var goodsIndex = req.body.goodsIndex;
   
     util.fetchAPI("cartByUser",{
-        memberId:memberId
+        memberId:user.memberId
     },true).then(function(resp){
 
         if(resp.returnCode === 0){
