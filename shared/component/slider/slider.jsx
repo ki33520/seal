@@ -120,6 +120,9 @@ class Slider extends Component{
         if(this.animateSlide() === true){
             return;
         }
+        if(this.touchEnabled === false){
+            return
+        }
         const {clientY,clientX} = e.changedTouches[0];
         this.startTouchX = clientX;
         this.startTouchY = clientY;
@@ -130,6 +133,10 @@ class Slider extends Component{
         if(this.animateSlide() === true){
             return;
         }
+        if(this.touchEnabled === false){
+            return
+        }
+
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = this.inTouchableRegion(clientX,clientY,e.currentTarget);
         if(!inTouchableRegion){
@@ -178,6 +185,10 @@ class Slider extends Component{
         if(this.animateSlide() === true){
             return;
         }
+        if(this.touchEnabled === false){
+            return
+        }
+
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = this.inTouchableRegion(clientX,clientY,e.currentTarget);
         if(!inTouchableRegion){
@@ -525,6 +536,7 @@ Slider.defaultProps = {
     effect:"roll",
     infinity:true,
     direction:"next",
+    touchEnabled:true,
     reverse:false,
     oriention:"horizontal", //vertical
     autoPlay:false,

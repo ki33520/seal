@@ -108,7 +108,7 @@ class Slidable extends Component{
         this.moveDirection = null;
     }
     handleTouchEnd(e){
-        e && e.stopPropagation();
+        e && e.preventDefault();
         const {clientY,clientX} = e.changedTouches[0];
         if(this.startTouchX !== clientX || this.startTouchY !== clientY){
             const {axis,animateDuration,thresholdOfChange} = this.props;

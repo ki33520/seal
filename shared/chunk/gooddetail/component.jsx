@@ -250,7 +250,7 @@ class GoodDetail extends Component{
                         <dd><Promotions promotions={good.marketing}/></dd>
                     </dl>
                 </div>
-                 <a href="/membercenter/comment" className="goComment clearfix">
+                 <a href="/goodcomment/1" className="goComment clearfix">
                     <div className="left">
                         <i className="iconfont icon-comment"></i>
                         用户评论

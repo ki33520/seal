@@ -67,7 +67,7 @@ class Floor extends Component{
     }
     renderSlider(){
         return (
-            <Slider ref="slider" autoPlay={true}>
+            <Slider ref="slider" autoPlay={true} touchEnabled={false}>
                 <Slide>
                     <a href="/activity">
                         <img src="/client/asset/images/banner.gif" alt=""/>
