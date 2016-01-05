@@ -4603,7 +4603,7 @@ webpackJsonp([13],{
 	        value: function renderSlider() {
 	            return _react2["default"].createElement(
 	                _componentSliderSliderJsx2["default"],
-	                { ref: "slider", autoPlay: true, touchEnabled: false },
+	                { ref: "slider", autoPlay: true, touchEnabled: false, effect: "fade" },
 	                _react2["default"].createElement(
 	                    _componentSliderSlideJsx2["default"],
 	                    null,
