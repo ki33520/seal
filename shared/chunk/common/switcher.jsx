@@ -5,10 +5,11 @@ import classNames from "classnames"
 
 export class Switcher extends Component{
     renderRoute(child,i){
-        const {currentRoute} = this.props;
+        const {currentRoute,prevRoute} = this.props;
         const {name} = child.props; 
         return React.cloneElement(child,Object.assign({},child.props,{
             active:currentRoute === name,
+            prev:prevRoute === name,
             key:i
         }))
     }
@@ -21,9 +22,10 @@ export class Switcher extends Component{
 
 export class SwitcherCase extends Component{
     render(){
-        const {key,active} = this.props;
+        const {key,active,prev} = this.props;
         const classes = classNames("switcher-case",{
-            active
+            active,
+            prev
         })
         return (
             <div className={classes} key={key}>{this.props.children}</div>

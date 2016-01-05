@@ -10,27 +10,30 @@ class IndexRouter extends Component{
     constructor(props){
         super(props);
         this.state = {
-            currentRoute:"index"
+            currentRoute:null,
+            prevRoute:null
         }
     }
     componentDidMount(){
         Router({
             "/search":()=>{
                 this.setState({
-                    currentRoute:"search"
+                    currentRoute:"search",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/":()=>{
                 this.setState({
-                    currentRoute:"index"
+                    currentRoute:"index",
+                    prevState:this.state.currentRoute
                 });
             }
         }).init("/");
     }
     render(){
-        const {currentRoute} = this.state;
+        const {currentRoute,prevRoute} = this.state;
         return (
-            <Switcher currentRoute={currentRoute}>
+            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
                 <SwitcherCase name="index"><Index {...this.props}/></SwitcherCase>
                 <SwitcherCase name="search"><SearchBox {...this.props}/></SwitcherCase>
             </Switcher>

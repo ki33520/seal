@@ -43,33 +43,33 @@ class ConfirmOrder extends Component{
                 <div className="title">
                     <div className="fl title-txt">结算</div>
                 </div>
-                <div className="bottom-line">
+                <div className="count-box-line">
                     <div className="label">商品总价：</div>
                     <div className="data"> - &yen;<span>{order.productFee}</span></div>
                 </div>
-                <div className=" bottom-line">
+                <div className="count-box-line">
                     <div className="label">国内运费：</div>
                     <div className="red-box"> 包邮 </div>
                     <div className="data"> - &yen;<span>{order.shipFee}</span></div>
                 </div>
-                <div className=" bottom-line">
+                <div className="count-box-line">
                     <div className="label">国际运费：</div>
                     <div className="data"> - &yen;<span>{order.shipFee}</span></div>
                 </div>
-                <div className="bottom-line">
+                <div className="count-box-line">
                     <div className="label">关税：</div>
                     <div className="red-box">免税</div>
                     <div className="data"> - &yen;<span>{order.shipFee}</span></div>
                 </div>
-                <div className="bottom-line intro">
+                <div className="count-box-line intro">
                     <div className="label">优惠活动：</div>
                     <div className="data"> - &yen;<span>{order.promoAmount}</span></div>
                 </div>
-                <div className="bottom-line intro">
+                <div className="count-box-line intro">
                     <div className="label">优惠券：</div>
                     <div className="data"> - &yen; <span id="coupon_money">{order.promoAmount}</span></div>
                 </div>
-                <div className=" bottom-line no-border">
+                <div className=" count-box-line no-border">
                     <div className="label">应付金额：</div>
                     <div className="data red-w">&yen;<span id="total_amount_money">{order.totalAmount}</span></div>
                 </div>

@@ -5,7 +5,7 @@ import ConfirmOrder from "./partial/confirmorder.jsx";
 import Receiver from "../receiver/app.jsx";
 import Coupon from "./partial/coupon.jsx";
 import {Router} from "director";
-import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
+import {Switcher,SwitcherCase} from "../common/switcher.jsx";
 
 import {changeReceiver,changeCoupon} from "./action.es6";
 
@@ -13,24 +13,28 @@ class ConfirmOrderRouter extends Component{
     constructor(props){
         super(props);
         this.state = {
-            currentRoute:"index"
+            currentRoute:null,
+            prevRoute:null
         }
     }
     componentDidMount(){
         Router({
             "/receiver":()=>{
                 this.setState({
-                    currentRoute:"receiver"
+                    currentRoute:"receiver",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/coupon":()=>{
                 this.setState({
-                    currentRoute:"coupon"
+                    currentRoute:"coupon",
+                    prevRoute:this.state.currentRoute
                 })
             },
             "/":()=>{
                 this.setState({
-                    currentRoute:"index"
+                    currentRoute:"index",
+                    prevRoute:this.state.currentRoute
                 });
             }
         }).init("/");
@@ -44,36 +48,19 @@ class ConfirmOrderRouter extends Component{
         dispatch(changeCoupon(coupon));
     }
     render(){
-        const {currentRoute} = this.state;
-        var currentView = null;
-        if(currentRoute === "index"){
-            currentView =  (
-                <ConfirmOrder {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "receiver"){
-            const initialState = {
-                receivers:this.props.order.receivers,
-                onCheck:this.handleChangeReceiver.bind(this),
-                checkedReceiver:this.props.order.checkedReceiver
-            }
-            // console.log('receivers',initialState)
-            currentView =  (
-                <Receiver initialState={initialState} key={currentRoute}/>
-            )
-        }else if(currentRoute === "coupon"){
-            currentView =  (
-                <Coupon {...this.props.order} onCheck={this.handleChangeCoupon.bind(this)} key={currentRoute}/>
-            )
-            
+        const {currentRoute,prevRoute} = this.state;
+        const receiverInitialState = {
+            receivers:this.props.order.receivers,
+            onCheck:this.handleChangeReceiver.bind(this),
+            checkedReceiver:this.props.order.checkedReceiver
         }
-        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
-            <TransitionGroup component="div" transitionName={transitionName} 
-            transitionLeave={false} 
-            transitionEnterTimeout={300} transitionLeaveTimeout={100}>
-            {currentView}
-            </TransitionGroup>
-        );
+            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
+            <SwitcherCase name="index"><ConfirmOrder {...this.props}/></SwitcherCase>
+            <SwitcherCase name="receiver"><Receiver initialState={receiverInitialState} {...this.props}/></SwitcherCase>
+            <SwitcherCase name="coupon"><Coupon {...this.props.order} onCheck={this.handleChangeCoupon.bind(this)}/></SwitcherCase>
+            </Switcher>
+        );    
     }
 }
 
