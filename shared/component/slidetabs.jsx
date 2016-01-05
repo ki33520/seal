@@ -115,6 +115,24 @@ export class SlideTabsItem extends Component{
             itemStyle
         })
     }
+    handleTouchStart(e){
+        const {clientY,clientX} = e.changedTouches[0];
+        this.startTouchY = clientY;
+        this.startTouchX = clientX;
+        this.moveDirection = null;
+    }
+    handleTouchMove(e){
+        const {clientY,clientX} = e.changedTouches[0];
+        let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
+        if(this.moveDirection && this.moveDirection !== moveDirection){
+            return
+        }
+        this.moveDirection = moveDirection
+        // console.log(this.moveDirection,"this.moveDirection")
+        if(this.moveDirection === "y"){
+            e.stopPropagation()
+        }
+    }
     render(){
         const {key,active} = this.props;
         const classes = classNames("slide-tabs-item",this.props.className,{
@@ -122,10 +140,13 @@ export class SlideTabsItem extends Component{
         })
         let child = React.Children.only(this.props.children)
         return (
-            <div className={classes} key={key} style={this.state.itemStyle}>{
-            React.cloneElement(child,Object.assign({},child.props,{
+            <div className={classes} key={key} style={this.state.itemStyle} 
+            onTouchMove={this.handleTouchMove.bind(this)} 
+            onTouchStart={this.handleTouchStart.bind(this)}>
+            {React.cloneElement(child,Object.assign({},child.props,{
                     redraw:this.state.itemStyle !== null
-            }))}</div>
+            }))}
+            </div>
         )
     }
 }
