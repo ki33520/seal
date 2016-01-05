@@ -18,20 +18,16 @@ class Cart extends Component {
         checkoutForm.submit();
     }
 
-    handleChangeBuyed(cartIndex,groupIndex,goodsIndex,number) {
-        const {dispatch,carts} = this.props;
-        var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
-
+    handleChangeBuyed(goods,cartIndex,number) {
+        const {dispatch} = this.props;
         if(goods.checked===false){
             return false;
         }
-    
         dispatch(updateCart({
             id:goods.id,
             number,
             cartIndex,
-            groupIndex,
-            goodsIndex
+            isCumulation:false
         }));
     }
 
@@ -44,14 +40,13 @@ class Cart extends Component {
         }));
     }
 
-    toggleItemChecked(cartIndex,groupIndex,goodsIndex,checked){
-        const {dispatch,carts} = this.props;
-        var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
-        const id = goods.id;
+    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
+        const {dispatch} = this.props;
         const number = checked ? goods.number : 0;
        
         dispatch(toggleCart({
-            id,
+            id:goods.id,
+            isCumulation:false,
             number,
             checked,
             cartIndex,
@@ -60,25 +55,22 @@ class Cart extends Component {
         }));
     }
 
-    handleDeleteCart(id,cartIndex,groupIndex,goodsIndex){
+    handleDeleteCart(id){
         const {dispatch} = this.props;
         dispatch(deleteCart({
-            id,
-            cartIndex,
-            groupIndex,
-            goodsIndex
+            id
         }));
     }
  
     renderGoods(goods,cartIndex,groupIndex,goodsIndex) {
         return(
             <div className="group" key={"goods-"+goodsIndex}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.id,cartIndex,groupIndex,goodsIndex)}></a>
+                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.id)}></a>
                 <div className="J_moveRight">
                      
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
-                    onChange={this.toggleItemChecked.bind(this,cartIndex,groupIndex,goodsIndex)} />
+                    onChange={this.toggleItemChecked.bind(this,goods,cartIndex,groupIndex,goodsIndex)} />
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href="goods.php?id=878">
@@ -92,7 +84,7 @@ class Cart extends Component {
                               <em>x{goods.number}</em>
                             </p>
                             <div className="act_wrap"> 
-                                <NumberPicker value={goods.number} onChange={this.handleChangeBuyed.bind(this,cartIndex,groupIndex,goodsIndex)}/>
+                                <NumberPicker value={goods.number} onChange={this.handleChangeBuyed.bind(this,goods,cartIndex)}/>
                             </div>
                         </div>
                     </div>
@@ -126,7 +118,7 @@ class Cart extends Component {
     }
 
     renderTips(money){
-        let message = '';
+        let message = null;
 
         if(money>=50){
             message = "省钱贴士：单笔订单税金50元以内，可以免税哦！"
