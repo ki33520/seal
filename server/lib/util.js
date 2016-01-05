@@ -31,9 +31,16 @@ var util = {
     },
     fetchAPI: function(apiName, param, isMock) {
         isMock = isMock || false;
-        param = _.extend(param,{t:Date.now() / 1000})
+        param = _.extend(param,{
+            appId:"haiwaigou",
+            channel:"Mobile",
+            terminalType:"H5",
+            t:Date.now() / 1000
+        })
         var signature = this.getSignatureByParam(param,"b320de0549a24ff6995dc0e2c38ff491")
+        // console.log('signature',signature)
         param = _.extend(param,{h:signature})
+        console.log("param",param)
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param)
         } else {
@@ -51,6 +58,7 @@ var util = {
             paramList.push(key + "=" + param[key])
         })
         paramList.push("appKey=" + salt)
+        // console.log("paramList",paramList)
         paramList = paramList.join("&")
         return md5(paramList)
     }

@@ -8,7 +8,7 @@
         overflow-y:auto;
         -webkit-overflow-scrolling: touch;
         height:100%;
-        // visibility:hidden;
+        visibility:hidden;
         position:absolute;
         z-index:1000;
         background:#FFF;
@@ -16,6 +16,7 @@
         &.prev{
             z-index:1001;
             opacity:0.3;
+            visibility:visible;
         }
         &.active{
             z-index:1002;
@@ -23,7 +24,7 @@
             box-shadow:0 px2rem(2) px2rem(2) 0 rgba(0,0,0,.14),
             0 px2rem(3) px2rem(1) px2rem(-2) rgba(0,0,0,.2),
             0 px2rem(1) px2rem(5) 0 rgba(0,0,0,.12)
-            // visibility:visible;
+            visibility:visible;
             // transform:translate3d(0,0,0)
             animation:rightToLeft .3s ease-in;
         }
