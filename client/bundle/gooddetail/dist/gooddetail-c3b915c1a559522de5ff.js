@@ -4543,12 +4543,12 @@ webpackJsonp([10],{
 	        key: "componentDidMount",
 	        // navbarSlidable:false
 	        value: function componentDidMount() {
-	            _libDomNobounceScrollEs62["default"].enable();
+	            // noBounceScroll.enable()
 	        }
 	    }, {
 	        key: "componentWillUnmount",
 	        value: function componentWillUnmount() {
-	            _libDomNobounceScrollEs62["default"].disable();
+	            // noBounceScroll.disable()
 	        }
 	    }, {
 	        key: "shouldComponentUpdate",
@@ -4563,6 +4563,7 @@ webpackJsonp([10],{
 	        value: function handleSelect(i, e) {
 	            var _this = this;
 
+	            console.log('handleSelect');
 	            // e && e.preventDefault()
 	            this.setState({
 	                activeIndex: i
@@ -4915,7 +4916,7 @@ webpackJsonp([10],{
 	        value: function handleTouchEnd(e) {
 	            var _this3 = this;
 
-	            e && e.preventDefault();
+	            e && e.stopPropagation();
 	            var _e$changedTouches$02 = e.changedTouches[0];
 	            var clientY = _e$changedTouches$02.clientY;
 	            var clientX = _e$changedTouches$02.clientX;
