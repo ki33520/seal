@@ -10,24 +10,19 @@ function cartByUser(state={},action){
     switch(action.type){
         case START_UPDATE_CART:
             return Object.assign({},state,{
-                isFetching:true,
-                isFetchted:false
+                isFetching:true
             });
 
         case FINISH_UPDATE_CART:
             var carts = state.carts.slice();
-            var isFetchted = false;
             var {cartIndex,groupIndex,goodsIndex,number} = action.param;
             //var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
             
-            if(action.res.isFetched){
-                carts[cartIndex]=action.res.cart;
-                isFetchted = true;
-            }
+
+            carts[cartIndex]=action.res.cart;
  
             return Object.assign({},state,{
                 isFetching:false,
-                isFetchted,
                 carts
             });
 
@@ -51,7 +46,6 @@ function cartByUser(state={},action){
             
             return Object.assign({},state,{
                 isFetching:false,
-                isFetchted:true,
                 carts
             });
 
@@ -63,7 +57,6 @@ function cartByUser(state={},action){
                 carts[cartIndex]=action.res.cart;
                 return Object.assign({},state,{
                     isFetching:false,
-                    isFetchted:true,
                     carts
                 });
             }
@@ -76,7 +69,6 @@ function cartByUser(state={},action){
             
             return Object.assign({},state,{
                 isFetching:false,
-                isFetchted:true,
                 carts
             });
 

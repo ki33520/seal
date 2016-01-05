@@ -250,7 +250,7 @@ class GoodDetail extends Component{
                         <dd><Promotions promotions={good.marketing}/></dd>
                     </dl>
                 </div>
-                 <a href="javascript:void(0);" className="goComment clearfix">
+                 <a href="/goodcomment/1" className="goComment clearfix">
                     <div className="left">
                         <i className="iconfont icon-comment"></i>
                         用户评论
@@ -294,7 +294,6 @@ class GoodDetail extends Component{
                 <div className="assure">
                     <img src="/client/asset/images/assure.gif" />
                 </div>
-
                 <PullHook 
                 className="teyla" 
                 oriention="BOTTOM_TO_TOP"

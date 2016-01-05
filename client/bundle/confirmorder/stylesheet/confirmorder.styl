@@ -1,13 +1,21 @@
 @import "../../common/common";
 @import "../../common/iconfont"
-@import "../../common/router";
+@import "../../common/switcher";
 @import "../../common/header";
+@import "../../component/alert";
 @import "./confirmorder.css";
 @import "./coupon.css";
 .text-overflow{
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
+}
+
+.confirm-order-container{
+    height:100%;
+    &>#confirm-order{
+        height:100%;
+    }
 }
 
 $gray-color = #555
@@ -44,3 +52,44 @@ $gray-color = #555
     }
 }
 
+.count-box{
+    .count-box-line{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        height:.96rem;
+        line-height:.96rem;
+        padding:0 .32rem;
+        .label{
+            flex:1;
+            color:#999;
+        }
+        &.intro .data{
+            color:#27c241;
+        }
+        .data{
+            color:#333;
+            font-size:.266667rem;
+            span{
+                margin-left:.12rem;
+                font-size:.373333rem;
+            }
+            &.red-w{
+                color: #D32449;
+                font-size:.32rem;
+            }
+        }
+        .red-box{
+            width:.986667rem;
+            height: .5333333rem;
+            line-height:.54rem;
+            background: url(/client/asset/images/ico5.gif) right no-repeat;
+            background-size:auto 100%;
+            color: #D32449;
+            font-size:.27rem;
+            text-align:center;
+            padding-right:.13rem;
+            margin-right:px2rem(12);
+        }
+    }
+}

@@ -13,7 +13,7 @@ let dom = {
       },
       unbindEvent(el,event,listener){
         if(el.removeEventListener){
-            el.removeEventListener(event,listener);
+            el.removeEventListener(event,listener,false);
         }else if(el.detachEvent){
             el.detachEvent("on${event}",listener);
         }

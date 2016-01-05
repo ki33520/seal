@@ -9,7 +9,14 @@
     "cartByUser":{
     	"uri":"/cart/v1/findCarts",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "production":"http://product.tepin.hk"
+        }
+    },
+    "updateCart":{
+        "uri":"/cart/v1/saveOrUpdateCart",
+        "baseURL":{
+            "develop":"http://order.hwg.youayun.cn:7989",
             "production":"http://product.tepin.hk"
         }
     },
@@ -50,6 +57,13 @@
     },
     "memberCommentByUser":{
         "uri":"/comments/v1/findCommentList",
+        "baseURL":{
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "production":"http://member.tepin.hk"
+        }
+    },
+    "goodCommentByUser": {
+        "uri": "/comments/v1/findByProductCode",
         "baseURL":{
             "develop":"http://member.hwg.youayun.cn:7987",
             "production":"http://member.tepin.hk"

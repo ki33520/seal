@@ -1,19 +1,17 @@
 {% extends "./layout.html" %}
-{% block title %}Detail{% endblock %}
+{% block title %}购物车{% endblock %}
 {% block css %}
 <!-- inject:css -->
-<link rel="stylesheet" href="/client/bundle/cart/dist/cart-b312843441261ef4ad3a.css">
+<link rel="stylesheet" href="/client/bundle/cart/dist/cart-209f7b758832ca9e53bd.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="cart-container">
-    <div id="cart">{{ markup|safe }}</div>
-</div>
+<div id="cart-container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="/client/vendor/dist/react-b312843441261ef4ad3a.js"></script>
-<script src="/client/bundle/cart/dist/cart-b312843441261ef4ad3a.js"></script>
+<script src="/client/vendor/dist/react-209f7b758832ca9e53bd.js"></script>
+<script src="/client/bundle/cart/dist/cart-209f7b758832ca9e53bd.js"></script>
 <!-- endinject -->
 {% endblock %}

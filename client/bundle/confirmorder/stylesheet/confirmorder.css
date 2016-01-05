@@ -296,3 +296,23 @@
     width: 40%;
     text-align: center;
 }
+
+.addBtns{
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:1.2rem;
+    border-top:1px solid #dcdddd;
+    background-color:#fff;
+    text-align:center;
+}
+.addBtns a.addBtn{
+    line-height:.94rem;
+    display:inline-block;
+    background-color:#801da1;
+    color:#fdf7f8;
+    margin-top:.13rem;
+    border-radius:20px;
+    width:40%;
+}

@@ -34,7 +34,7 @@ class CommentList extends Component{
             fetchLink = "/membercenter/comment",
             pageCount = 1,
             nextPage = 1;
-        var flag = flag ? flag: this.state.displayFlag;
+        var flag = flag!= undefined ? flag: this.state.displayFlag;
         if(flag === 1){
             fetchLink = "/membercenter/showcomment";
             comments = showComment;
@@ -62,24 +62,24 @@ class CommentList extends Component{
         var a=0,b=1;
         return (
             <div className="comment-content">
-            <div className="comment-header">
-                <Header>
-                    <span className="title">我的评论</span>
-                </Header>
-            </div>
-            <div className="tab-content">
-                <Tabs handleToggleFlag={this.toggleFlag.bind(this)} effect="slide" activeIndex={this.state.displayFlag}>
-                    <TabsItem title="全部评论" handleTouch={this.toggleFlag.bind(this)}>
-                        <Node comments={allComment} />
-                    </TabsItem>
-                    <TabsItem title="晒单" handleTouch={this.toggleFlag.bind(this)}>
-                        <Node comments={showComment} />
-                    </TabsItem>
-                </Tabs>
+                <div className="comment-header">
+                    <Header>
+                        <span className="title">我的评论</span>
+                    </Header>
+                </div>
+                <div className="tab-content">
+                    <Tabs handleToggleFlag={this.toggleFlag.bind(this)} effect="slide" activeIndex={this.state.displayFlag}>
+                        <TabsItem title="全部评论" handleTouch={this.toggleFlag.bind(this)}>
+                            <Node comments={allComment} />
+                        </TabsItem>
+                        <TabsItem title="晒单" handleTouch={this.toggleFlag.bind(this)}>
+                            <Node comments={showComment} />
+                        </TabsItem>
+                    </Tabs>
+                    <GoTop />
+                    <Refresher active={isFetching} />
+                </div>
                 <GoTop />
-                <Refresher active={isFetching} />
-            </div>
-            <GoTop />
             </div>
         )
     }

@@ -2,18 +2,16 @@
 {% block title %}暴款{% endblock %}
 {% block css %}
 <!-- inject:css -->
-<link rel="stylesheet" href="/client/bundle/trendy/dist/trendy-b312843441261ef4ad3a.css">
+<link rel="stylesheet" href="/client/bundle/trendy/dist/trendy-209f7b758832ca9e53bd.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="trendy-container">
-    <div id="trendy">{{ markup|safe }}</div>
-</div>
+<div id="trendy-container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="/client/vendor/dist/react-b312843441261ef4ad3a.js"></script>
-<script src="/client/bundle/trendy/dist/trendy-b312843441261ef4ad3a.js"></script>
+<script src="/client/vendor/dist/react-209f7b758832ca9e53bd.js"></script>
+<script src="/client/bundle/trendy/dist/trendy-209f7b758832ca9e53bd.js"></script>
 <!-- endinject -->
 {% endblock %}

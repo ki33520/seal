@@ -21,7 +21,7 @@
                             "stockFlag": true,
                             "props": "尺寸:大;颜色:白色",
                             "taxRate": 0,
-                            "buyLimit": 71,
+                            "buyLimit": 6,
                             "abroadFee": 0,
                             "tariffFee": 0,
                             "imageUrl": "http://youahaitao.oss-cn-hangzhou.aliyuncs.com/images/201507/thumb_img/878_thumb_G_1438295153599.jpg",
@@ -38,7 +38,7 @@
                             "stockFlag": true,
                             "props": "尺寸:大;颜色:白色",
                             "taxRate": 0,
-                            "buyLimit": 71,
+                            "buyLimit": 3,
                             "abroadFee": 0,
                             "tariffFee": 0,
                             "imageUrl": "http://youahaitao.oss-cn-hangzhou.aliyuncs.com/images/201507/thumb_img/878_thumb_G_1438295153599.jpg",
@@ -49,11 +49,11 @@
                 }
             ],
             "warehouseId": "402880a551240c440151240c4ccf0004",
-            "totalFee": 210,
+            "totalFee": 270,
             "tariffFee": 0,
             "qtys": 4,
             "warehouseName": "宁波保税区一号仓1",
-            "salesTotalFee": 210
+            "salesTotalFee": 270
         }
     ]
 }

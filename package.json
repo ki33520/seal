@@ -32,6 +32,7 @@
     "express": "^4.13.1",
     "express-session": "^1.12.1",
     "lodash": "^3.10.1",
+    "md5": "^2.0.0",
     "method-override": "^2.3.3",
     "moment": "^2.10.6",
     "normalize.css": "^3.0.3",

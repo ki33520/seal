@@ -41,7 +41,7 @@ class Index extends Component{
             <nav className="bottomNav">
                 <ul className="clearfix">
                     <li><a href="/" className="nav_hover"><i></i>海外购</a></li>
-                    <li><a href="/"><i></i>分类</a></li>
+                    <li><a href="/category"><i></i>分类</a></li>
                     <li><a href="/trendy"><i></i>爆款</a></li>
                     <li><a href="/cart"><i></i>购物车</a></li>
                     <li><a href="/membercenter"><i></i>个人中心</a></li>

@@ -10,39 +10,15 @@ import Icon from "../../component/icon.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
+import {Tabs,TabsItem} from "../../component/tabs.jsx";
 
 class Trendy extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            currentIndex:0
-        }
-    }
-
-    handleClick(index){
-        this.setState({
-            currentIndex:index
-        });
-    }
 
     handleSearch(){
         location.href="/search";
     }
 
-    renderNav(){
-        var nav = ["美容彩妆","母婴用品","营养保健"];
-        return nav.map((name,i)=>{
-            const classes = classNames({
-                "current":i === this.state.currentIndex
-            });
-            return (
-                <li className={classes} key={"tab-nav-"+i} 
-                onClick={this.handleClick.bind(this,i)}>{name}</li>
-            );
-        });
-    }
-
-    render(){
+    renderContent(i){
         const {pagination} = this.props;
         var goods = [];
        
@@ -54,21 +30,33 @@ class Trendy extends React.Component{
         }
 
         return (
+            <div className="activityGeneral">{goods}</div>
+        );
+    }
+
+    renderNav(){
+        var nav = ["美容彩妆","母婴用品","营养保健"];
+        return nav.map((name,i)=>{
+            return (
+                <TabsItem title={<i>{name}</i>} key={'nav-'+i}>{this.renderContent(i)}</TabsItem>
+            );
+        });
+    }
+
+    render(){
+        
+        return (
             <div>
                 <Header canBack="false">
-                    <div className="logo"><img src="client/asset/images/indexlogo.png" /></div>
+                    <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
                     <div className="btn-right" onClick={this.handleSearch.bind(this)}>
                         <Icon icon="search"/>
                     </div>
                 </Header> 
-                <div className="polyTabs">
-                    <ul>{this.renderNav()}</ul>
-                </div>
-                <div className="polyCon">
-                    <div className="activityGeneral">
-                        {goods}
-                    </div>
-                </div>
+                <Tabs effect="slide">
+                    {this.renderNav()}
+                </Tabs>
+ 
                 <Footer activeIndex="2"/>
             </div>
         )
