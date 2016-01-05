@@ -51,6 +51,14 @@
             // border-left:px2rem(1) solid #E0E0E0;
             // display:table-cell;
             flex:1;
+            overflow-y:auto;
+            overflow-x:hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+        &.sliding{
+            .slide-tabs-item{
+                overflow:hidden;
+            }
         }
     }
     
@@ -82,6 +90,7 @@
             height:100%;
             .slide-tabs-item{
                 display:block;
+                overflow:hidden;
             }
         }
     }
