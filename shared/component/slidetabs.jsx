@@ -16,10 +16,10 @@ export class SlideTabs extends Component{
         }
     }
     componentDidMount(){
-        noBounceScroll.enable()
+        // noBounceScroll.enable()
     }
     componentWillUnmount(){
-        noBounceScroll.disable()
+        // noBounceScroll.disable()
     }
     shouldComponentUpdate(nextProps,nextState){
         if(nextState.activeIndex !== this.state.activeIndex){
@@ -28,6 +28,7 @@ export class SlideTabs extends Component{
         return false
     }
     handleSelect(i,e){
+        console.log('handleSelect')
         // e && e.preventDefault()
         this.setState({
             activeIndex:i
