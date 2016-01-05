@@ -1,36 +1,35 @@
 'use strict'
 import React from "react";
 import {Provider,connect} from "react-redux";
-import {createStore} from "redux";
 import rootReducer from "./reducer.es6";
 import createStoreWithMiddleware from "../../lib/redux-helper.es6";
-import Navigate from "./component.jsx";
+import Category from "./component.jsx";
 
 function selector(state){
-    const {navigate,isFetching} = state.goodsByParam;
+    const {category,isFetching} = state.goodsByParam;
     return {
-        navigate,
+        category,
         isFetching
     };
 }
 
-let NavigateConnected = connect(selector)(Navigate);
+let CategoryConnected = connect(selector)(Category);
 
-class NavigateApp extends React.Component{
+class CategoryApp extends React.Component{
     render(){
-        const {navigate} = this.props.initialState;
+        const {category} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
             goodsByParam:{
                 isFetching:false,
-                navigate
+                category
             }
         });
         return (
             <Provider store={store}>
-            <NavigateConnected />
+            <CategoryConnected />
             </Provider>
         )
     }
 }
 
-export default NavigateApp;
+export default CategoryApp;

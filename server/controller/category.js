@@ -3,23 +3,23 @@
 var _ = require("lodash");
 var util = require("../lib/util");
 var bluebird = require("bluebird");
-var NavigateApp = util.getSharedComponent("navigate");
+var CategoryApp = util.getSharedComponent("category");
 
-var navigate = function(req, res, next) {
+var category = function(req, res, next) {
     bluebird.props({
         result: util.fetchAPI("fetchHotKeywords", {}, true)
     }).then(function(resp) {
      
         if(resp.result.returnCode===0){
             var initialState = {
-                navigate: resp.result.object
+                category: resp.result.object
             }; 
 
-            var markup = util.getMarkupByComponent(NavigateApp({
+            var markup = util.getMarkupByComponent(CategoryApp({
                 initialState:initialState
             }));
 
-            res.render('navigate', {
+            res.render('category', {
                 markup: markup,
                 initialState: initialState
             });
@@ -28,4 +28,4 @@ var navigate = function(req, res, next) {
 }
  
 
-module.exports = navigate;
+module.exports = category;

@@ -61,7 +61,7 @@ router.get("/coupon", require("./controller/coupon").coupon);
 router.post("/fetchCoupon", require("./controller/coupon").fetchCoupon);
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
 router.get("/search", require("./controller/search").index);
-router.get("/navigate", require("./controller/navigate"));
+router.get("/category", require("./controller/category"));
 
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);

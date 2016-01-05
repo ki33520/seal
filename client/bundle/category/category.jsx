@@ -1,11 +1,11 @@
 'use strict';
-import NavigateApp from "../../../shared/chunk/navigate/app.jsx";
+import CategoryApp from "../../../shared/chunk/category/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-    ReactDOM.render(<NavigateApp initialState={initialState} />,document.getElementById('navigate-container'));
+    ReactDOM.render(<CategoryApp initialState={initialState} />,document.getElementById('category-container'));
 }
 
 if(typeof window.addEventListener){
