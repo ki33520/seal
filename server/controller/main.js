@@ -5,7 +5,9 @@ var WeatherApp = util.getSharedComponent("index");
 var config = require("../lib/config");
 
 var index = function(req,res,next) {
-    util.fetchAPI("index",{},true).then(function(ret){
+    util.fetchAPI("index",{
+        accessToken:"19386d895011403c8cb1400a3a088aef"
+    },true).then(function(ret){
         if(ret.code === "success"){
             var initialState = {
                 data:ret.object
