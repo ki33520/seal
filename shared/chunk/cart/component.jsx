@@ -14,7 +14,6 @@ import Checkbox from "../../component/form/checkbox.jsx";
 class Cart extends Component {
     checkout(cartIndex,e){
         e && e.preventDefault();
-        console.log(cartIndex,e)
         const checkoutForm = ReactDOM.findDOMNode(this.refs["checkoutForm"+cartIndex]);
         checkoutForm.submit();
     }
@@ -72,9 +71,8 @@ class Cart extends Component {
     }
  
     renderGoods(goods,cartIndex,groupIndex,goodsIndex) {
-        const goodKey = "goods-"+goodsIndex;
         return(
-            <div className="group" key={goodKey}>
+            <div className="group" key={"goods-"+goodsIndex}>
                 <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.id,cartIndex,groupIndex,goodsIndex)}></a>
                 <div className="J_moveRight">
                      
@@ -104,15 +102,14 @@ class Cart extends Component {
     }
 
     renderRow(rows,cartIndex,groupIndex){
-        const rowKey = "row-" + groupIndex;
-        var goods = [];
+        let goods = [];
 
         rows.productList.map((item,k)=>{
             goods.push(this.renderGoods(item,cartIndex,groupIndex,k))
         })
 
         return(
-            <div className="J_item" key={rowKey}>
+            <div className="J_item" key={"row-" + groupIndex}>
                 <div className="manjian"><em>满减</em>{rows.promoName}</div>
                 {goods}
             </div>
@@ -128,70 +125,103 @@ class Cart extends Component {
         )
     }
 
+    renderTips(money){
+        let message = '';
+
+        if(money>=50){
+            message = "省钱贴士：单笔订单税金50元以内，可以免税哦！"
+        }else if(money >1000){
+            message = "啊哦，海关规定购买多件的总价（不含税）不能超过&yen;1000哦，请您分多次购买。";
+        }
+
+        if(message){
+            return(
+                <div className="cart-tips">
+                    <div className="arrow"></div>
+                    <div className="con">
+                        {message}
+                    </div>
+                </div>
+            )
+        }
+ 
+        return '';
+    }
+
     renderGroup(carts){
-        if(carts.length > 0){
-            return carts.map((cart,i)=>{
-                const cartKey = "cart-" + i;
-                var rows = [];
-                cart.groupList.forEach((list,j)=>{
-                    rows.push(this.renderRow(list,i,j));
-                });
-                var btnClass = classNames({
-                    "btn_buy":true,
-                    "unable_buy":cart.itemIds.length===0
-                })
-                return(
-                    <div className="onlyList clearfix" key={cartKey}>
-                        <div className="J_store clearfix">
-                            <Checkbox checked={cart.checked}
-                            checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
-                            onChange={this.toggleCartItemsChecked.bind(this,i)}/>
-                            <div className="depot">
-                                <span>{cart.warehouseName}</span>
-                                <div className="depot_bot"><em></em>{cart.promoName}</div>
-                            </div>
-                        </div>
-                        {rows}
-                        <div className="section_wrap cart_buy">
-                            <div className="cartFirst clearfix">
-                                <span>已选商品{cart.number}件</span>
-                                <div className="cartFirst_two">
-                                    <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;<span>{cart.price}</span></p>
-                                    <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.save}</p>
-                                </div>
-                            </div>
-                            <div id="J_wrapperCartTop">
-                                <p>
-                                    <span>总计(不含运费、税金)：<em>&yen;{cart.pay}</em></span>
-                                </p>
-                                <p>
-                                    <input type="button"  className={btnClass} value="结算" onClick={this.checkout.bind(this,i)}/>
-                                </p>
-                            </div>
-                            <div className="cart_tips_1">
-                                <i></i>
-                                <span>省钱贴士：单笔订单税金50元以内，可以免税哦！</span>
-                            </div>
-                            {this.renderForm(cart,i)}
+
+        return carts.map((cart,i)=>{
+            let rows = [];
+            cart.groupList.forEach((list,j)=>{
+                rows.push(this.renderRow(list,i,j));
+            });
+            let btnClass = classNames({
+                "btn_buy":true,
+                "unable_buy":cart.itemIds.length===0
+            })
+
+            return(
+                <div className="onlyList clearfix" key={"cart-" + i}>
+                    <div className="J_store clearfix">
+                        <Checkbox checked={cart.checked}
+                        checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
+                        onChange={this.toggleCartItemsChecked.bind(this,i)}/>
+                        <div className="depot">
+                            <span>{cart.warehouseName}</span>
+                            <div className="depot_bot"><em></em>{cart.promoName}</div>
                         </div>
                     </div>
-                )
-            });
+                    {rows}
+                    <div className="section_wrap cart_buy">
+                        <div className="cartFirst clearfix">
+                            <span>已选商品{cart.number}件</span>
+                            <div className="cartFirst_two">
+                                <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{cart.price}</p>
+                                <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.save}</p>
+                            </div>
+                        </div>
+                        <div id="J_wrapperCartTop">
+                            <p>
+                                <span>总计(不含运费、税金)：<em>&yen;{cart.pay}</em></span>
+                            </p>
+                            <p>
+                                <input type="button"  className={btnClass} value="结算" onClick={this.checkout.bind(this,i)}/>
+                            </p>
+                        </div>
+                        {this.renderTips(cart.pay)}
+                        {this.renderForm(cart,i)}
+                    </div>
+                </div>
+            )
+        });
+        
+    }
+
+    cartBody(){
+        const {carts} = this.props;
+        if(carts.length){
+            return  (
+                <div className="cart">
+                    {this.renderGroup(carts)}
+                </div>
+            )
+        }else{
+            return (
+                <Empty />
+            )
         }
     }
 
     render() {
- 
-        const {carts} = this.props;
 
         return (
             <div>
                 <Header>
                     <span className="title">购物车</span>
                 </Header>
-                <div className="cart">
-                    {this.renderGroup(carts)}
-                </div>
+                
+                {this.cartBody()}
+    
                 <Footer activeIndex="3"/>
                 <MaskLayer visible={false} />
             </div>
@@ -199,5 +229,16 @@ class Cart extends Component {
     }
 }
 
+class Empty extends Component {
+    render(){
+        return (
+            <div className="empty">
+                <img src="/client/asset/images/empty_cart.png" />
+                <span>购物车还空着呢，快去挑选商品吧！</span>
+                <a href="/" className="empty_btn">挑选商品</a>
+            </div>
+        )
+    }
+}
  
 export default Cart;

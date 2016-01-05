@@ -5,10 +5,10 @@ var util = require("../lib/util");
 var CartApp = util.getSharedComponent("cart");
 
 function formatCarts(originalCarts) {
-    var carts = [];
+    let carts = [];
 
      _.each(originalCarts, function(originalCart, i) {
-        var cart = {
+        let cart = {
             warehouseName: originalCart.warehouseName,
             warehouseId: originalCart.warehouseId,
             price:originalCart.salesTotalFee,
@@ -23,7 +23,7 @@ function formatCarts(originalCarts) {
             groupList:[]
         };
 
-        var len = 0;
+        let len = 0;
         _.each(originalCart.cartMKTList, function(promoList, j){
             var group = {
                 saveType:promoList.promoType,
@@ -65,14 +65,13 @@ function formatCarts(originalCarts) {
 var cart = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
- 
+
     util.fetchAPI("cartByUser",{
-        // memberId:user.memberId
+        memberId:user.memberId
     },true).then(function(resp){
         if(resp.returnCode === 0){
             var carts = formatCarts(resp.object);
             var initialState = {
-                isFetched: true,
                 carts
             };
 
@@ -85,7 +84,6 @@ var cart = function(req, res, next) {
                 initialState
             });
         
-            
         }else{
             next(new Error(ret.msg));
         }
@@ -96,12 +94,12 @@ var updateCart = function(req, res, next) {
     var user = req.session.user;
     var id = req.body.id;
     var number = req.body.number;
- 
+    var isCumulation = req.body.cumulation;
     util.fetchAPI('updateCart', {
-        memberId: '90a19c2d49184fefa7421c5d7eacf551',
+        memberId: user.memberId,
         singleCode: id,
         qty: number,
-        figureUpFlag: false
+        figureUpFlag: isCumulation
     },true).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({
