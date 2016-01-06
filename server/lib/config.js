@@ -4,8 +4,8 @@ var api = require("./api.json");
 
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
-    "oathServer": "https://login.tepin.com"
-
+    "oathServer": "https://login.tepin.com",
+    "imgServer":"http://imgtest.tepin.com/"
 };
 var runtime = process.env["NODE_ENV"];
 if (runtime === "develop") {

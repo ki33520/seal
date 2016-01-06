@@ -1,36 +1,29 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 import {
-    CHANGE_FIELD,REQUEST_WEATHER,RESPONSE_WEATHER
+    REQUEST_HOTWORD,RESPONSE_HOTWORD
 } from "./constant.es6";
-export function changeField(name,value){
-    return {
-        type:CHANGE_FIELD,
-        name,
-        value
-    }
-}
 
-function requestWeather(param){
+function requestHotWord(param){
     return {
-        type:REQUEST_WEATHER,
+        type:REQUEST_HOTWORD,
         param
     }
 }
 
-function responseWeather(param,res){
+function responseHotWord(param,res){
     return {
-        type:RESPONSE_WEATHER,
+        type:RESPONSE_HOTWORD,
         param,
         res
     }
 }
 
-export function fetchWeather(param){
+export function fetchHotWord(param){
     return (dispatch)=>{
-        dispatch(requestWeather(param));
-        apiRequest("/weather",param,{method:"POST"}).then((res)=>{
-            dispatch(responseWeather(param,res));
+        dispatch(requestHotWord(param));
+        apiRequest("/searchhotwords",param).then((res)=>{
+            dispatch(responseHotWord(param,res));
         })
     }
 }

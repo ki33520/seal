@@ -9,7 +9,6 @@ var index = function(req, res, next) {
     bluebird.props({
         result: util.fetchAPI("fetchHotKeywords", {}, true)
     }).then(function(resp) {
-     
         if(resp.result.returnCode===0){
             var initialState = {
                 keywords: resp.result.object

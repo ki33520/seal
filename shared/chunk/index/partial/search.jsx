@@ -1,10 +1,24 @@
 'use strict';
 
 import React,{Component} from "react";
+import {fetchHotWord} from "../action.es6"
 
 class SearchBox extends Component{
     constructor(props){
         super(props);
+    }
+    componentDidMount(){
+        const {dispatch} = this.props
+        dispatch(fetchHotWord())
+    }
+    renderHotWord(){
+        let {hotwords} = this.props.search;
+        if(hotwords){
+            return hotwords.map((hotword,i)=>{
+                return <a href="/goodlist/1" key={i}>{hotword.name}</a>
+            })
+        }
+        return null
     }
     render(){
         return (
@@ -19,12 +33,7 @@ class SearchBox extends Component{
                 </div>
                 <div className="searchHot clearfix">
                     <span>热搜</span>
-                    <div>
-                        <a href="/goodlist/1">洗衣液</a>
-                        <a href="/goodlist/2">女士香水</a>
-                        <a href="/goodlist/2">洗衣液</a>
-                        <a href="/goodlist/2">女士香水</a>
-                    </div>
+                    <div>{this.renderHotWord()}</div>
                 </div>
                 <div className="searchList">
                     <span className="clearfix">

@@ -1,6 +1,13 @@
 {
-    "index":{
+    "indexChannels":{
         "uri":"/content/v1/manage/list",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7985",
+            "production":"http://product.tepin.hk"
+        }
+    },
+    "floorsByChannel":{
+        "uri":"/content/v1/template/list",
         "baseURL":{
             "develop":"http://192.168.0.162:7985",
             "production":"http://product.tepin.hk"
@@ -128,7 +135,7 @@
     "fetchHotKeywords":{
         "uri":"/content/v1/hotword/list",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://marketing.hwg.youayun.cn:7985",
             "production":"marketing.hwg.youayun.cn"
         }
     }
