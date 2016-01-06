@@ -14,8 +14,9 @@ var collectlist = function(req, res, next) {
             memberId: user.memberId,
             pageIndex: pageIndex,
             pageSize: pageSize
-        },true)
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.memberCollectByUser.returnCode === 0) {
             var collect = {},
                 object = ret.memberCollectByUser.object;

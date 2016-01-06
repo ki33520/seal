@@ -1,17 +1,62 @@
-@import "../../common/common.styl"
-@import "../../common/iconfont.styl"
-@import "../../common/header.styl"
-@import "../../common/member.styl"
-@import "../../component/refresher.styl"
-@import "../../component/masklayer.styl"
-@import "../../component/gotop.styl"
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/header.styl";
+@import "../../common/member.styl";
+@import "../../component/slidetabs";
+@import "../../component/slider";
+@import "../../component/refresher.styl";
+@import "../../component/masklayer.styl";
+@import "../../component/gotop.styl";
 
 body{
 	background-color: #f1f1f1;
 }
+.membercomment-container{
+	height:100%;
+	overflow:hidden;
+	#member-comment{
+		height:100%;
+		overflow:hidden;
+		&>div{
+			height:100%;
+			overflow:hidden;
+		}
+	}
+}
 .comment-content{
 	color: $gray-color;
 	padding: 0 0 0 0;
+	.tab-content{
+		height: 100%;
+		overflow: hidden;
+	}
+	.slide-tabs {
+		// position:absolute;
+		// width:100%;
+		.slide-tabs-navbar{
+			border:0 none;
+			background:#FFF;
+			width: 100%;
+			.slide-tabs-navbar-item{
+				line-height:px2rem(38);
+				border:0 none;
+				width:px2rem(72);
+				&.active{
+					border-bottom:px2rem(2) solid #801da1;
+				}
+				&>span{
+					padding-bottom:px2rem(3);
+				}
+				&.active>span{
+					color:#801da1;
+				}
+			}
+		}
+		.slide-tabs-content{
+			padding-bottom: 1.17rem;
+		}
+		
+	}
 	.comment-list{
 		>li{
 			padding: .3rem .25rem;
@@ -130,61 +175,4 @@ body{
 		}
 	}
 
-}
-.tabs {
-	.polyTabs {
-		ul{
-			display: flex;
-			background: #FFF;
-			justify-content: center;
-			align-items: center;
-			li {
-				flex: 1;
-				display: block;
-				text-align: center;
-				line-height: 1.16rem;
-				border-bottom: 1px solid #DEDEDE;
-				padding-bottom: 2px;
-				&.active {
-					border-bottom: 3px solid #811da1;
-					padding-bottom: 0;
-					color: #811da1;
-				}
-			}
-		}
-	}
-	.tabs-content {
-		position: relative;
-		width: 100%;
-		overflow: hidden;
-		.tabs-item {
-			flex: 1;
-			z-index: 100;
-			width: 100%;
-			transform: translateX(-100%);
-			transition: transform height 2s;
-			opacity: 0;
-			height: 0;
-			visibility: hidden;
-			&.active {
-				opacity: 1;
-				height: auto;
-				transform: translateX(0);
-				visibility: visible;
-			}
-			&.active ~ * {
-				transform: translateX(100%);
-			}
-		}
-		&.tabs-content-fade {
-			.tabs-item {
-				transition: opacity .2s linear 0s;
-			}
-		}
-		&.tabs-content-slide {
-			.tabs-item {
-				transition: transform .2s linear 0s;
-			}
-		}
-	}
 }

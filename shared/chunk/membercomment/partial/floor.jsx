@@ -3,7 +3,7 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 
-class Node extends Component{
+class Floor extends Component{
     renderNode(list){
         return list.map((child,i)=>{
             const key = "comment-" + i;
@@ -27,7 +27,7 @@ class Node extends Component{
                 stars.push(star)
             };
             return (
-                <li id={child.goodId} key={key}>
+                <li key={key}>
                     <div className="product">
                         <div className="col col-left">
                             <img src={imagesList[0]} />
@@ -64,4 +64,4 @@ class Node extends Component{
     }
 }
 
-export default Node;
+export default Floor;

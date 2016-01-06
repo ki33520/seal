@@ -3,7 +3,6 @@ var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var GoodListApp = util.getSharedComponent("goodlist");
-var param = require("../../shared/chunk/goodlist/constant.es6");
 
 function formatGoodsInfo(result){
     var goodsList = [];
@@ -61,21 +60,21 @@ function formatGoodsInfo(result){
 }
 
 var goodList = function(req, res, next) {
-    var keywords = req.params.keyword||'';
-    var pageIndex = req.query.pageIndex || 1;
-    var sortType = req.query.sortType||param.SORT_NORMAL;
-    var sortViewType = req.query.sortViewType||param.SORT_DESC;
-    var isHaveGoods = req.query.isHaveGoods||param.isHaveGoods;
+    var keywords = req.body.keyword||'美国进口';
+    var pageIndex = req.body.pageIndex||1;
+    var sortType = req.body.sortType||1;
+    var sortViewType = req.body.sortViewType||true;
+    var isHaveGoods = req.body.isHaveGoods||false;
 
     bluebird.props({
-        goods: util.fetchAPI("goodList", {
+        goods: util.fetchAPI("fetchGoodsList", {
             searchKey:keywords,
             sortType:sortType,
             sortViewType:sortViewType,
             isHaveGoods:isHaveGoods,
-            pageIndex: pageIndex,
+            currentPage: pageIndex,
             pageSize: 10
-        }, true)
+        })
     }).then(function(resp) {
         if (resp.goods.returnCode === 0) {
             var result = formatGoodsInfo(resp.goods.object)
@@ -102,7 +101,7 @@ var goodList = function(req, res, next) {
             next(new Error(resp.msg));
         }
     },function(){
-       console.log('error')
+        //next(new Error("api request failed"))
     });
 
 }

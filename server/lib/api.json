@@ -37,63 +37,70 @@
     "regiestOrLogin":{
         "uri":"/member/v1/regiestOrLogin",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "memberMemberInfo":{
         "uri":"/member/v1/findMemberInfo",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "memberDetailByUser":{
         "uri":"/member/v1/findMemberDetail",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "updateBasicByUser":{
         "uri":"/member/v1/saveMemberInfo",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "memberCollectByUser":{
         "uri":"/collect/v1/findByPage",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "memberCommentByUser":{
         "uri":"/comments/v1/findCommentList",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "goodCommentByUser": {
         "uri": "/comments/v1/findByProductCode",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "updatePasswordByUser":{
         "uri":"/comments/v1/changePassword",
         "baseURL":{
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
     "memberCountOrder":{
         "uri":"/order/v1/countOrder",
         "baseURL":{
-            "develop":"http://order.hwg.youayun.cn:7986",
+            "develop":"http://192.168.0.162:7986",
+            "production":"http://member.tepin.hk"
+        }
+    },
+    "receiverByUser":{
+        "uri":"/address/v1/findAddressList",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"
         }
     },
@@ -118,10 +125,10 @@
             "production":"http://product.tepin.hk"
         }
     },
-    "goodList":{
+    "fetchGoodsList":{
         "uri":"/search/v1/findListByParams",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://192.168.0.161:7988",
             "production":"http://product.tepin.hk"
         }
     },

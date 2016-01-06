@@ -37,7 +37,7 @@ var util = {
             appId:"haiwaigou",
             channel:"Mobile",
             terminalType:"H5",
-            t:moment().format("X")
+            t:1452063928//moment().format("X")
         })
         var signature = this.getSignatureByParam(param,"b320de0549a24ff6995dc0e2c38ff491")
         // console.log('signature',signature)
@@ -62,8 +62,8 @@ var util = {
             }
         })
         paramList.push("appKey=" + salt)
-        // console.log("paramList",paramList)
         paramList = paramList.join("&")
+         console.log("paramList",paramList,md5(paramList))
         return md5(paramList)
     }
 }
