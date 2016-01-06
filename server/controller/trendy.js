@@ -4,34 +4,44 @@ var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var Trendy = util.getSharedComponent("trendy");
+var config = require("../lib/config.js");
 
-function filter(originalData){
+function filterItem(originalData){
+    let goodsList = [];
+    if(originalData && originalData.length){
+        originalData.map((g,i)=>{
+            goodsList.push({
+                id:g.singleCode,
+                title:g.title,
+                imageUrl:config.imgServer+g.imageUrl,
+                salePrice:g.salesPrice,
+                originPrice:g.originPrice,
+                stock:g.localStock<1,
+                country:g.sourceName,
+                flag:g.sourceImageUrl,
+                isQuick:g.wapPrice>0
+            });
+        });
+    }
+    
+    return goodsList;
+}
+
+function filterList(originalData){
     let data={
         titles:[],
         goodsList:[]
     }
-
+ 
     originalData.map((item,i)=>{
-        let product = item.activityProductList;
-        let goods = [];
+   
+        let goods = filterItem(item.activityProductList);
 
-        if(product&&product.length){
-            product.map((g,i)=>{
-                goods.push({
-                    id:g.singleCode,
-                    title:g.title,
-                    imageUrl:g.imageUrl,
-                    salePrice:g.salesPrice,
-                    originPrice:g.originPrice,
-                    stock:g.localStock>0,
-                    country:g.sourceName,
-                    flag:g.sourceImageUrl,
-                    isQuick:g.wapPrice>0
-                })
-            });
-        }
+        data.titles.push({
+            name:item.activityName,
+            id:item.id
+        });
 
-        data.titles.push(item.activityName);
         data.goodsList.push(goods);
     });
 
@@ -49,7 +59,7 @@ var trendy = function(req, res, next) {
     }).then(function(resp) {
  
         if (resp.goods.returnCode === 0) {
-            let result = filter(resp.goods.object);
+            let result = filterList(resp.goods.object);
  
             if (req.xhr === true) {
                 res.json(result);
@@ -75,6 +85,33 @@ var trendy = function(req, res, next) {
 
 }
 
+var activity = function(req, res, next) {
 
+    let pageIndex = req.body.pageIndex || 1;
+    let id = req.body.id;
 
-module.exports = trendy;
+    bluebird.props({
+        goods: util.fetchAPI("fetchActivityTendyGoods", {
+            activityId:id,
+            activityType:'ACTIVITY_BK',
+            start: pageIndex,
+            Limit: 10
+        })
+    }).then(function(resp) {
+
+        if (resp.goods.returnCode === 0) {
+            let result = filterItem(resp.goods.object.result);
+ 
+            res.json(result);
+            
+        } else {
+            next(new Error(resp.msg));
+        }
+    });
+
+}
+
+module.exports = {
+    trendy:trendy,
+    activity:activity
+};

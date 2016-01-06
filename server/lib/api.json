@@ -139,6 +139,13 @@
             "production":"marketing.hwg.youayun.cn"
         }
     },
+    "fetchActivityTendyGoods":{
+        "uri":"/content/v1/activityproduct/list",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7985",
+            "production":"marketing.hwg.youayun.cn"
+        }
+    },
     "fetchHotKeywords":{
         "uri":"/content/v1/hotword/list",
         "baseURL":{
