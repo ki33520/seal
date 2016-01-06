@@ -65,7 +65,7 @@ export class SlideTabs extends Component{
     renderTabsItem(child,index){
         return React.cloneElement(child,Object.assign({},child.props,{
             active:(index === this.state.activeIndex),
-            key:index,
+            identify:index,
             axis:this.props.axis
         }))
     }
@@ -135,13 +135,13 @@ export class SlideTabsItem extends Component{
         }
     }
     render(){
-        const {key,active} = this.props;
+        const {identify,active} = this.props;
         const classes = classNames("slide-tabs-item",this.props.className,{
             active
         })
         let child = React.Children.only(this.props.children)
         return (
-            <div className={classes} key={key} style={this.state.itemStyle} 
+            <div className={classes} key={identify} style={this.state.itemStyle} 
             onTouchMove={this.handleTouchMove.bind(this)} 
             onTouchStart={this.handleTouchStart.bind(this)}>
             {React.cloneElement(child,Object.assign({},child.props,{

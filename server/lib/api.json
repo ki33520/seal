@@ -1,4 +1,11 @@
 {
+    "index":{
+        "uri":"/content/v1/manage/list",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7985",
+            "production":"http://product.tepin.hk"
+        }
+    },
     "goodById": {
         "uri": "/WAP/product/detail.ya",
         "baseURL":{
@@ -93,7 +100,7 @@
     "deleteCart":{
     	"uri":"/cart/v1/deleteCartById",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://order.hwg.youayun.cn:7989",
             "production":"http://product.tepin.hk"
         }
     },

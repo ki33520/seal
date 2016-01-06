@@ -6,9 +6,9 @@ var config = require("../lib/config");
 
 var index = function(req,res,next) {
     util.fetchAPI("index",{
-        accessToken:"19386d895011403c8cb1400a3a088aef"
-    },true).then(function(ret){
-        if(ret.code === "success"){
+        channel:"Mobile"
+    }).then(function(ret){
+        if(ret.returnCode === 0){
             var initialState = {
                 data:ret.object
             };
