@@ -28,7 +28,6 @@ export class SlideTabs extends Component{
         return false
     }
     handleSelect(i,e){
-        console.log('handleSelect')
         // e && e.preventDefault()
         this.setState({
             activeIndex:i
@@ -139,14 +138,18 @@ export class SlideTabsItem extends Component{
         const classes = classNames("slide-tabs-item",this.props.className,{
             active
         })
-        let child = React.Children.only(this.props.children)
+        let child = this.props.children
+        if(this.props.children.length === 0){
+            let child = React.Children.only(this.props.children)
+            child = React.cloneElement(child,Object.assign({},child.props,{
+                    redraw:this.state.itemStyle !== null
+            }))
+        }
         return (
             <div className={classes} key={identify} style={this.state.itemStyle} 
             onTouchMove={this.handleTouchMove.bind(this)} 
             onTouchStart={this.handleTouchStart.bind(this)}>
-            {React.cloneElement(child,Object.assign({},child.props,{
-                    redraw:this.state.itemStyle !== null
-            }))}
+            {child}
             </div>
         )
     }

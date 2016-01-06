@@ -10,8 +10,9 @@ var update = function(req, res, next) {
     bluebird.props({
         memberDetailByUser: util.fetchAPI("memberDetailByUser", {
             memberId: user.memberId
-        },true)
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.memberDetailByUser.returnCode === 0) {
             var memberInfo = ret.memberDetailByUser.object;
             var initialState = {

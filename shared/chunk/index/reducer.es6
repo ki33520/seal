@@ -1,41 +1,40 @@
 'use strict';
 
 import {
-    CHANGE_FIELD,
-    REQUEST_WEATHER,
-    RESPONSE_WEATHER
+    REQUEST_HOTWORD,
+    RESPONSE_HOTWORD
 } from "./constant.es6";
 import {combineReducers} from "redux";
 
-export function weatherByCityName(state={},action){
+function search(state={},action){
     switch(action.type){
-        case CHANGE_FIELD:
-            const {name,value} = action;
-            var weather = Object.assign({},state.weather);
-            weather[name] = value;
+        case REQUEST_HOTWORD:
             return Object.assign({},state,{
-                weather
+                hotwordFetched:false,
+                hotwordFetching:true
             });
-        case REQUEST_WEATHER:
+        case RESPONSE_HOTWORD:
+            const hotwords = action.res.result;
+            const hotwordFetched = action.res.hotwordFetched;
             return Object.assign({},state,{
-                weatherFetched:false,
-                weatherFetching:true
-            });
-        case RESPONSE_WEATHER:
-            const weather = action.res.result;
-            const weatherFetched = action.res.weatherFetched;
-            return Object.assign({},state,{
-                weather,
-                weatherFetched,
-                weatherFetching:false
+                hotwords,
+                hotwordFetched,
+                hotwordFetching:false
             })
         default:
             return state;
     }
 }
 
+function index(state={},action){
+    switch(action.type){
+        default:
+            return state
+    }
+}
+
 const rootReducer = combineReducers({
-    weatherByCityName
+    index,search
 });
 
 export default rootReducer;

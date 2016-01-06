@@ -2,7 +2,7 @@
 import reqwest from "reqwest";
 import {base64} from "./crypto";
 
-export function apiRequest(url,param, options = {
+export function apiRequest(url,param={}, options = {
     method:"GET",
     type:"json"
 }){
@@ -10,7 +10,7 @@ export function apiRequest(url,param, options = {
         url,
         data:param
     });
-    //console.log('url',url,param)
+    // console.log('url',url,param)
     return reqwest(options);
 }
 

@@ -12,11 +12,11 @@ let IndexConnected = connect((state)=>{
 
 class IndexApp extends React.Component{
     render(){
-        const {weather} = this.props.initialState;
+        const {channels,floors} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
-            weatherByCityName:{
-                isFetching:false,
-                weather
+            index:{
+                channels,
+                floors
             }
         });
         return (

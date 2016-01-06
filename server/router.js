@@ -14,15 +14,16 @@ var mainController = require("./controller/main");
 router.get("/logingateway",require("./controller/authorize").loginGateway);
 router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
-router.get("/", require("./controller/main.js").index);
+router.get("/", require("./controller/index.js").index);
+router.get("/searchhotwords", require("./controller/index.js").searchHotWords);
 router.get("/mobileonly", require("./controller/topic.js").mobileOnly);
 router.get("/finest", require("./controller/topic.js").finest);
 router.get("/stockup", require("./controller/topic.js").stockup);
 router.get("/flashbuy", require("./controller/flashbuy.js"));
 
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
-router.get("/goodlist", require("./controller/goodlist"));
-router.get("/activity", require("./controller/activity"));
+router.get("/goodlist/:keyword", require("./controller/goodlist"));
+router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
 router.get("/cart",mainController.requireAuthorize,require("./controller/cart").cart);
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
@@ -42,7 +43,7 @@ router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
 router.get("/membercenter",mainController.requireAuthorize,require("./controller/membercenter"));
 router.get("/membercenter/collect",mainController.requireAuthorize,require("./controller/membercollect"));
-router.get("/membercenter/comment",mainController.requireAuthorize,require("./controller/membercomment").index);
+router.get("/membercenter/comment",require("./controller/membercomment").index);
 router.get("/membercenter/showcomment",mainController.requireAuthorize,require("./controller/membercomment").showComment);
 router.get("/membercenter/update",mainController.requireAuthorize,require("./controller/memberupdate").update);
 
