@@ -1,4 +1,11 @@
 {
+    "index":{
+        "uri":"/content/v1/manage/list",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7985",
+            "production":"http://product.tepin.hk"
+        }
+    },
     "goodById": {
         "uri": "/WAP/product/detail.ya",
         "baseURL":{

@@ -6,6 +6,8 @@ var config = require("./config");
 var url = require("url");
 var _ = require("lodash");
 var md5 = require("md5");
+var moment = require("moment");
+var reqwest = require("reqwest");
 
 var util = {
     getAuthGatewayUrl: function(req, authPath) {
@@ -35,12 +37,12 @@ var util = {
             appId:"haiwaigou",
             channel:"Mobile",
             terminalType:"H5",
-            t:Date.now() / 1000
+            t:moment().format("X")
         })
         var signature = this.getSignatureByParam(param,"b320de0549a24ff6995dc0e2c38ff491")
         // console.log('signature',signature)
         param = _.extend(param,{h:signature})
-        console.log("param",param)
+        // console.log("param",param)
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param)
         } else {
@@ -55,7 +57,9 @@ var util = {
         })
         var paramList = [];
         _.each(sortedKeys,function(key){
-            paramList.push(key + "=" + param[key])
+            if(param[key] !== ""){
+                paramList.push(key + "=" + param[key])
+            }
         })
         paramList.push("appKey=" + salt)
         // console.log("paramList",paramList)
