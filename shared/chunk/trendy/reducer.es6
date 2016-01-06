@@ -1,8 +1,5 @@
 'use strict'
-import {
-    REQUEST_GOODS,
-    RECEIVE_GOODS
-} from "./action.es6";
+import {REQUEST_GOODS,RECEIVE_GOODS} from "./action.es6";
 import {combineReducers} from "redux";
 import _ from "lodash";
 
@@ -14,11 +11,12 @@ function goodsByParam(state={},action){
                 isFetching:true
             });
         case RECEIVE_GOODS:
-            var list = _.union(state.pagination.list,action.pagination.list);
-            action.pagination.list = list;
+            const {pagination} = state;
+            const {index} = action.param;
+            pagination.goodsList[index]=action.res;
             return Object.assign({},state,{
                 isFetching:false,
-                pagination:action.pagination
+                pagination:pagination
             });
         default:
             return state;

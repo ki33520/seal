@@ -24,7 +24,9 @@ router.get("/flashbuy", require("./controller/flashbuy.js"));
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity/:id", require("./controller/activity"));
-router.get("/trendy", require("./controller/trendy"));
+router.get("/trendy", require("./controller/trendy").trendy);
+router.post("/trendyActivity",require("./controller/trendy").activity);
+
 router.get("/cart",mainController.requireAuthorize,require("./controller/cart").cart);
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
 router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
