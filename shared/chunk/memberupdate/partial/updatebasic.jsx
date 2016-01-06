@@ -13,15 +13,24 @@ import Alert from "../../../component/alert.jsx";
 class UpdateBasic extends Component{
     constructor(props){
         super(props);
-        const {birthdy} = props.basicByForm;
-        const arr = birthdy.split('-');
-        var max = (new Date(arr[0],arr[1], 0)).getDate();  
+        const {createdAt} = props.basicByForm;
+        var date = new Date(createdAt),
+            year = date.getFullYear(),
+            month = date.getMonth()+1,
+            day = date.getDate();
+        var max = (new Date(year,month,0)).getDate();  
+        
         this.state = {
-            year: arr[0],
-            month: arr[1],
-            day: arr[2],
+            year: year,
+            month: month< 10 ? '0'+month : month,
+            day: day,
             max: max
         }
+    }
+    componentDidMount(){
+        const {dispatch} = this.props;
+        const birthdy = this.state.year+"-"+this.state.month+'-'+this.state.day;
+        dispatch(changeField('birthdy',birthdy));
     }
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
@@ -31,9 +40,9 @@ class UpdateBasic extends Component{
     handleChangeBasic(e){
         e && e.preventDefault();
         const {dispatch,basicByForm} = this.props;
-        const {nickname,gender,birthdy} = basicByForm;
+        const {nickName,gender,birthdy} = basicByForm;
         dispatch(changeBasic("/updatebasic",{
-            nickname,gender,birthdy
+            nickName,gender,birthdy
         }));
     }
     componentWillReceiveProps(nextProps){
@@ -63,8 +72,9 @@ class UpdateBasic extends Component{
         dispatch(changeField(fieldName,birthdy));
     }
     render(){
+        console.log(this.state)
         const {dispatch,basicByForm} = this.props;
-        const {nickname,gender,birthdy,alertContent,alertActive} = basicByForm;
+        const {nickName,gender,birthdy,alertContent,alertActive} = basicByForm;
         return (
             <div className="basic-content">
                 <Header>
@@ -74,7 +84,7 @@ class UpdateBasic extends Component{
                 <div className="form-item">
                     <div className="label-item">
                         <label>昵称</label>
-                        <input type="text" placeholder="请填写" name="nickname" value={nickname} onChange={this.handleFieldChange.bind(this,"nickname")}/>
+                        <input type="text" placeholder="请填写" name="nickName" value={nickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
                     </div>
                     <div className="tips">4-20个字符，可全部有字母组成，或数字、字母、“_”、“-”任意两种以上组合</div>
                 </div>
