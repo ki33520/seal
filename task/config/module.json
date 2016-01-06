@@ -206,9 +206,9 @@
         },
         "vendor": "react"
     },
-    "category":{
-        "html": ["category.html"],
-        "path": "./client/bundle/category/",
+    "polymer":{
+        "html": ["polymer.html"],
+        "path": "./client/bundle/polymer/",
         "compiler": {
             "js": "babel",
             "css": "stylus"
