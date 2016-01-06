@@ -55,13 +55,6 @@
             "production":"http://member.tepin.hk"
         }
     },
-    "updateBasicByUser":{
-        "uri":"/member/v1/saveMemberInfo",
-        "baseURL":{
-            "develop":"http://192.168.0.162:7987",
-            "production":"http://member.tepin.hk"
-        }
-    },
     "memberCollectByUser":{
         "uri":"/collect/v1/findByPage",
         "baseURL":{
@@ -83,8 +76,15 @@
             "production":"http://member.tepin.hk"
         }
     },
+    "updateBasicByUser":{
+        "uri":"/member/v1/saveMemberInfo",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7987",
+            "production":"http://member.tepin.hk"
+        }
+    },
     "updatePasswordByUser":{
-        "uri":"/comments/v1/changePassword",
+        "uri":"/member/v1/changePassword",
         "baseURL":{
             "develop":"http://192.168.0.162:7987",
             "production":"http://member.tepin.hk"

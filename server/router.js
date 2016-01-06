@@ -49,7 +49,7 @@ router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
 router.get("/membercenter",mainController.requireAuthorize,require("./controller/membercenter"));
 router.get("/membercenter/collect",mainController.requireAuthorize,require("./controller/membercollect"));
-router.get("/membercenter/comment",require("./controller/membercomment").index);
+router.get("/membercenter/comment",mainController.requireAuthorize,require("./controller/membercomment").index);
 router.get("/membercenter/showcomment",mainController.requireAuthorize,require("./controller/membercomment").showComment);
 router.get("/membercenter/update",mainController.requireAuthorize,require("./controller/memberupdate").update);
 
