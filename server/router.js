@@ -21,7 +21,7 @@ router.get("/stockup", require("./controller/topic.js").stockup);
 router.get("/flashbuy", require("./controller/flashbuy.js"));
 
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
-router.get("/goodlist/:keyword", require("./controller/goodlist"));
+router.get("/goodlist", require("./controller/goodlist"));
 router.get("/activity", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy"));
 router.get("/cart",mainController.requireAuthorize,require("./controller/cart").cart);
