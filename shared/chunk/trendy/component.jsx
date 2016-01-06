@@ -18,12 +18,11 @@ class Trendy extends React.Component{
         location.href="/search";
     }
 
-    renderContent(i){
-        const {pagination} = this.props;
+    renderContent(goodsList){
         var goods = [];
        
-        if(pagination.length > 0){
-            pagination.forEach(function(item,i){
+        if(goodsList.length > 0){
+            goodsList.forEach(function(item,i){
                 const key = "good-" + i;
                 goods.push(<GoodItem goods={item} key={key} />)
             })
@@ -35,10 +34,15 @@ class Trendy extends React.Component{
     }
 
     renderNav(){
-        var nav = ["美容彩妆","母婴用品","营养保健"];
-        return nav.map((name,i)=>{
+        const {pagination} = this.props;
+        let titles = pagination.titles;
+        let goodsList = pagination.goodsList;
+
+        return titles.map((name,i)=>{
             return (
-                <TabsItem title={<i>{name}</i>} key={'nav-'+i}>{this.renderContent(i)}</TabsItem>
+                <TabsItem title={<i>{name}</i>} key={'nav-'+i}>
+                    {this.renderContent(goodsList[i])}
+                </TabsItem>
             );
         });
     }
