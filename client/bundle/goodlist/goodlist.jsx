@@ -1,11 +1,11 @@
 'use strict'
-import GoodList from "../../../shared/chunk/goodlist/app.jsx";
+import GoodListApp from "../../../shared/chunk/goodlist/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<GoodList initialState={initialState} />,document.getElementById('good-list'));
+    ReactDOM.render(<GoodListApp initialState={initialState} />,document.getElementById('good-list-container'));
 }
 
 if(typeof window.addEventListener){
