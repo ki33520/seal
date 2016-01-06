@@ -37,12 +37,12 @@ var util = {
             appId:"haiwaigou",
             channel:"Mobile",
             terminalType:"H5",
-            t:1452063928//moment().format("X")
+            t:moment().format("X")
         })
         var signature = this.getSignatureByParam(param,"b320de0549a24ff6995dc0e2c38ff491")
         // console.log('signature',signature)
         param = _.extend(param,{h:signature})
-        // console.log("param",param)
+         console.log("param",param)
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param)
         } else {
@@ -62,8 +62,8 @@ var util = {
             }
         })
         paramList.push("appKey=" + salt)
+         //console.log("paramList",paramList)
         paramList = paramList.join("&")
-         console.log("paramList",paramList,md5(paramList))
         return md5(paramList)
     }
 }

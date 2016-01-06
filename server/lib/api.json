@@ -128,14 +128,21 @@
     "fetchGoodsList":{
         "uri":"/search/v1/findListByParams",
         "baseURL":{
-            "develop":"http://192.168.0.161:7988",
+            "develop":"http://192.168.0.162:7989",
             "production":"http://product.tepin.hk"
         }
     },
     "fetchTendyGoods":{
+        "uri":"/content/v1/templatebk/list",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7985",
+            "production":"marketing.hwg.youayun.cn"
+        }
+    },
+    "fetchActivityTendyGoods":{
         "uri":"/content/v1/activityproduct/list",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://192.168.0.162:7985",
             "production":"marketing.hwg.youayun.cn"
         }
     },

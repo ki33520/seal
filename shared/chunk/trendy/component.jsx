@@ -4,13 +4,13 @@ import classNames from "classnames";
 import util from "../../lib/util.es6";
 
 import Refresher from "../../component/refresher.jsx";
-import MaskLayer from "../../component/masklayer.jsx";
 import GoTop from "../../component/gotop.jsx";
 import Icon from "../../component/icon.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
+import fetchGoods from "./action.es6";
 
 class Trendy extends React.Component{
 
@@ -18,12 +18,22 @@ class Trendy extends React.Component{
         location.href="/search";
     }
 
-    renderContent(i){
-        const {pagination} = this.props;
+    handleClick(index){
+        const {pagination,dispatch} = this.props;
+        const {titles} = pagination;
+        
+        dispatch(fetchGoods('/trendyActivity',{
+            id:titles[index].id,
+            pageIndex:1,
+            index
+        }));
+    }
+
+    renderContent(goodsList){
         var goods = [];
        
-        if(pagination.length > 0){
-            pagination.forEach(function(item,i){
+        if(goodsList.length > 0){
+            goodsList.forEach(function(item,i){
                 const key = "good-" + i;
                 goods.push(<GoodItem goods={item} key={key} />)
             })
@@ -35,10 +45,15 @@ class Trendy extends React.Component{
     }
 
     renderNav(){
-        var nav = ["美容彩妆","母婴用品","营养保健"];
-        return nav.map((name,i)=>{
+        const {pagination} = this.props;
+        let titles = pagination.titles;
+        let goodsList = pagination.goodsList;
+
+        return titles.map((item,i)=>{
             return (
-                <TabsItem title={<i>{name}</i>} key={'nav-'+i}>{this.renderContent(i)}</TabsItem>
+                <TabsItem title={<i>{item.name}</i>} key={'nav-'+i}>
+                    {this.renderContent(goodsList[i])}
+                </TabsItem>
             );
         });
     }
@@ -53,10 +68,10 @@ class Trendy extends React.Component{
                         <Icon icon="search"/>
                     </div>
                 </Header> 
-                <Tabs effect="slide">
+                <Tabs effect="slide" onSelect={this.handleClick.bind(this)}>
                     {this.renderNav()}
                 </Tabs>
- 
+                <Refresher active={this.props.isFetching}/>
                 <Footer activeIndex="2"/>
             </div>
         )

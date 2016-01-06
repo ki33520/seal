@@ -20,11 +20,17 @@ router.get("/mobileonly", require("./controller/topic.js").mobileOnly);
 router.get("/finest", require("./controller/topic.js").finest);
 router.get("/stockup", require("./controller/topic.js").stockup);
 router.get("/flashbuy", require("./controller/flashbuy.js"));
+router.get("/polymer", require("./controller/polymer").polymer);
+router.get("/categorybrands", require("./controller/polymer").categoryBrands);
+router.get("/allbrands", require("./controller/polymer").allBrands);
+router.get("/allorigins", require("./controller/polymer").allOrigins);
 
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
 router.get("/goodlist/:keyword", require("./controller/goodlist"));
 router.get("/activity/:id", require("./controller/activity"));
-router.get("/trendy", require("./controller/trendy"));
+router.get("/trendy", require("./controller/trendy").trendy);
+router.post("/trendyActivity",require("./controller/trendy").activity);
+
 router.get("/cart",mainController.requireAuthorize,require("./controller/cart").cart);
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
 router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
@@ -62,7 +68,6 @@ router.get("/coupon", require("./controller/coupon").coupon);
 router.post("/fetchCoupon", require("./controller/coupon").fetchCoupon);
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
 router.get("/search", require("./controller/search").index);
-router.get("/category", require("./controller/category"));
 
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);

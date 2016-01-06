@@ -1,11 +1,11 @@
 'use strict';
-import CategoryApp from "../../../shared/chunk/category/app.jsx";
+import PolymerApp from "../../../shared/chunk/polymer/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-    ReactDOM.render(<CategoryApp initialState={initialState} />,document.getElementById('category-container'));
+    ReactDOM.render(<PolymerApp initialState={initialState} />,document.getElementById('polymer-container'));
 }
 
 if(typeof window.addEventListener){
