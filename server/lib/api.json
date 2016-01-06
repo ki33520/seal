@@ -118,10 +118,10 @@
             "production":"http://product.tepin.hk"
         }
     },
-    "goodList":{
+    "fetchGoodsList":{
         "uri":"/search/v1/findListByParams",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://192.168.0.161:7988",
             "production":"http://product.tepin.hk"
         }
     },

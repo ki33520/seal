@@ -10,7 +10,7 @@ export function apiRequest(url,param, options = {
         url,
         data:param
     });
-    console.log('url',url,param)
+    //console.log('url',url,param)
     return reqwest(options);
 }
 
