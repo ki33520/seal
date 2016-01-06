@@ -102,8 +102,8 @@ class Slidable extends Component{
         const {clientY,clientX} = e.changedTouches[0];
         const {axis} = this.props;
         this.startTouchY = clientY;
-        this.lastY = this.startTouchY;
         this.startTouchX = clientX;
+        this.lastY = this.startTouchY;
         this.lastX = this.startTouchX;
         this.moveDirection = null;
     }
@@ -168,8 +168,8 @@ class Slidable extends Component{
         }
     }
     handleTouchMove(e){
-        // e && e.preventDefault()
-        e && e.stopPropagation();
+        e && e.preventDefault()
+        // e && e.stopPropagation();
         const {animateDuration,axis} = this.props;
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = dom.inTouchableRegion(clientX,clientY,e.currentTarget);
@@ -211,6 +211,7 @@ class Slidable extends Component{
             },200)
             // _.throttle(transitionTouch,60)
         }
+        e && e.preventDefault()
     }
     checkEdge(onEdge = ()=>{}){
         const {axis} = this.props;

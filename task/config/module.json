@@ -17,9 +17,36 @@
         },
         "vendor": "react"
     },
+    "topic": {
+        "html": ["topic.html"],
+        "path": "./client/bundle/topic/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "flashbuy": {
+        "html": ["flashbuy.html"],
+        "path": "./client/bundle/flashbuy/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
     "gooddetail": {
         "html": ["gooddetail.html"],
         "path": "./client/bundle/gooddetail/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
+    "goodcomment": {
+        "html": ["goodcomment.html"],
+        "path": "./client/bundle/goodcomment/",
         "compiler": {
             "js": "babel",
             "css": "stylus"
@@ -179,9 +206,9 @@
         },
         "vendor": "react"
     },
-    "navbar":{
-        "html": ["navbar.html"],
-        "path": "./client/bundle/navbar/",
+    "category":{
+        "html": ["category.html"],
+        "path": "./client/bundle/category/",
         "compiler": {
             "js": "babel",
             "css": "stylus"

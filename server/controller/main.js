@@ -5,8 +5,10 @@ var WeatherApp = util.getSharedComponent("index");
 var config = require("../lib/config");
 
 var index = function(req,res,next) {
-    util.fetchAPI("index",{},true).then(function(ret){
-        if(ret.code === "success"){
+    util.fetchAPI("index",{
+        channel:"Mobile"
+    }).then(function(ret){
+        if(ret.returnCode === 0){
             var initialState = {
                 data:ret.object
             };

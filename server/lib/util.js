@@ -4,6 +4,10 @@ var ReactDOMServer = require("react-dom/server");
 var sharedUtil = require("../../shared/lib/util.es6");
 var config = require("./config");
 var url = require("url");
+var _ = require("lodash");
+var md5 = require("md5");
+var moment = require("moment");
+var reqwest = require("reqwest");
 
 var util = {
     getAuthGatewayUrl: function(req, authPath) {
@@ -29,12 +33,38 @@ var util = {
     },
     fetchAPI: function(apiName, param, isMock) {
         isMock = isMock || false;
+        param = _.extend(param,{
+            appId:"haiwaigou",
+            channel:"Mobile",
+            terminalType:"H5",
+            t:1452063928//moment().format("X")
+        })
+        var signature = this.getSignatureByParam(param,"b320de0549a24ff6995dc0e2c38ff491")
+        // console.log('signature',signature)
+        param = _.extend(param,{h:signature})
+        // console.log("param",param)
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param)
         } else {
             var listenPort = process.env.LISTEN_PORT || 3000;
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
+    },
+    getSignatureByParam(param,salt){
+        var keys = _.keys(param);
+        var sortedKeys = _.sortBy(keys,function(key){ 
+            return key
+        })
+        var paramList = [];
+        _.each(sortedKeys,function(key){
+            if(param[key] !== ""){
+                paramList.push(key + "=" + param[key])
+            }
+        })
+        paramList.push("appKey=" + salt)
+        paramList = paramList.join("&")
+         console.log("paramList",paramList,md5(paramList))
+        return md5(paramList)
     }
 }
 

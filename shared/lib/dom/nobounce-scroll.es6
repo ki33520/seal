@@ -15,8 +15,6 @@ let handleTouchmove = (e)=>{
     const height = parseInt(style.getPropertyValue('height'), 10);
     const isScrollable = scrolling === 'touch' && (overflowY === 'auto' || overflowY === 'scroll');
     const canScroll = el.scrollHeight > el.offsetHeight;
-    // console.log('isScrollable',isScrollable)
-    // console.log('canScroll',canScroll)
     if(isScrollable && canScroll){
       const currentY = e.touches ? e.touches[0].screenY:e.screenY;
       const isAtTop = (startY <= currentY && el.scrollTop === 0);
@@ -28,7 +26,7 @@ let handleTouchmove = (e)=>{
     }
     el = el.parentNode
   }
-  e.preventDefault()
+  // e.preventDefault()
 }
 
 let handleTouchstart = function(e) {

@@ -16,10 +16,10 @@ export class SlideTabs extends Component{
         }
     }
     componentDidMount(){
-        noBounceScroll.enable()
+        // noBounceScroll.enable()
     }
     componentWillUnmount(){
-        noBounceScroll.disable()
+        // noBounceScroll.disable()
     }
     shouldComponentUpdate(nextProps,nextState){
         if(nextState.activeIndex !== this.state.activeIndex){
@@ -28,6 +28,7 @@ export class SlideTabs extends Component{
         return false
     }
     handleSelect(i,e){
+        console.log('handleSelect')
         // e && e.preventDefault()
         this.setState({
             activeIndex:i
@@ -64,7 +65,7 @@ export class SlideTabs extends Component{
     renderTabsItem(child,index){
         return React.cloneElement(child,Object.assign({},child.props,{
             active:(index === this.state.activeIndex),
-            key:index,
+            identify:index,
             axis:this.props.axis
         }))
     }
@@ -115,17 +116,38 @@ export class SlideTabsItem extends Component{
             itemStyle
         })
     }
+    handleTouchStart(e){
+        const {clientY,clientX} = e.changedTouches[0];
+        this.startTouchY = clientY;
+        this.startTouchX = clientX;
+        this.moveDirection = null;
+    }
+    handleTouchMove(e){
+        const {clientY,clientX} = e.changedTouches[0];
+        let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
+        if(this.moveDirection && this.moveDirection !== moveDirection){
+            return
+        }
+        this.moveDirection = moveDirection
+        // console.log(this.moveDirection,"this.moveDirection")
+        if(this.moveDirection === "y"){
+            e.stopPropagation()
+        }
+    }
     render(){
-        const {key,active} = this.props;
+        const {identify,active} = this.props;
         const classes = classNames("slide-tabs-item",this.props.className,{
             active
         })
         let child = React.Children.only(this.props.children)
         return (
-            <div className={classes} key={key} style={this.state.itemStyle}>{
-            React.cloneElement(child,Object.assign({},child.props,{
+            <div className={classes} key={identify} style={this.state.itemStyle} 
+            onTouchMove={this.handleTouchMove.bind(this)} 
+            onTouchStart={this.handleTouchStart.bind(this)}>
+            {React.cloneElement(child,Object.assign({},child.props,{
                     redraw:this.state.itemStyle !== null
-            }))}</div>
+            }))}
+            </div>
         )
     }
 }

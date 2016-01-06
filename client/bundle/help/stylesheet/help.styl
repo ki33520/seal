@@ -1,9 +1,9 @@
-@import "../../common/common.styl"
-@import "../../common/iconfont.styl"
-@import "../../common/router.styl"
-@import "../../common/header.styl"
-@import "../../component/alert.styl"
-@import "../../common/member.styl"
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/router.styl";
+@import "../../common/header.styl";
+@import "../../component/alert.styl";
+@import "../../common/member.styl";
 
 .help-content{
 	header{
@@ -20,7 +20,7 @@
 		padding: .3rem .4rem .15rem .4rem;
 	}
 	.list{
-		li{
+		>li{
 			font-size: .35rem;
 			border-bottom: 1px solid #d7d7d7;
 			>a{
@@ -37,14 +37,19 @@
 					flex: 1;
 					content: "\e603";
 					font-family: "iconfont";
-					color: #666;
+					color: #999;
 					text-align: right;
 					padding-right: .5rem;
 					box-sizing: border-box;
 					width: 1rem;
 				}
+				.tips{
+					color: #999;
+					font-size: .3rem;
+					margin-left: .1rem;
+				}
 				.left-col{
-					flex: 7;
+					flex: 6;
 					.iconfont{
 						font-size: .4rem;
 						&::before{
@@ -53,12 +58,12 @@
 					}
 				}
 				.right-col{
-					flex: 2;
+					flex: 3;
 					padding-top: .2rem;
 					text-align: center;
 					span{
 						font-size: .3rem;
-						line-height: .4rem;
+						line-height: .45rem;
 						display: block;
 						color: #8435c2;
 					}

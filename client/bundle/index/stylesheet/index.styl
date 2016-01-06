@@ -1,6 +1,7 @@
 @import "../../common/common";
 @import "../../common/iconfont";
 @import "../../common/router";
+@import "../../common/switcher";
 @import "../../component/slidetabs";
 @import "../../component/slider";
 @import "./index.css";
@@ -60,18 +61,7 @@ body{
         }
     }
     .slide-tabs-content{
-        overflow:hidden;
         padding-bottom:px2rem(81);
-        .slide-tabs-item{
-            overflow-y:auto;
-            overflow-x:hidden;
-            -webkit-overflow-scrolling: touch;
-        }
-        &.sliding{
-            .slide-tabs-item{
-                overflow:hidden;
-            }
-        }
     }
     
 }

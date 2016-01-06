@@ -1,10 +1,9 @@
-@import "../../common/common.styl"
-@import "../../common/iconfont.styl"
-@import "../../common/header.styl"
-@import "../../common/footer.styl"
-@import "../../common/member.styl"
-@import "../../component/popup.styl"
-
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/header.styl";
+@import "../../common/footer.styl";
+@import "../../common/member.styl";
+@import "../../component/popup.styl";
 
 .user{
 	padding: 0 0 1.6466667rem 0;
@@ -163,47 +162,51 @@
 			}
 		}
 	}
-	.helpList {
-    	padding:.266667rem 0 0;
-    	&::last-child{
+	.helpList{
+		padding:.266667rem 0 0;
+		&::last-child{
 			padding-bottom:.266667rem;
 		}
-	}
-	.helpList dl {
-	    background-color: #fff;
-	    padding: .3rem .28rem;
-	    border-bottom: 1px solid #d7d7d7;
-		height:1.16rem;
-		line-height:.56rem;
-	}
-	.helpList a:last-child dl{
-		border:0;
-	}
-	.helpList dl dt {
-	    float: left;
-	    width: 92%;
-	}
-	.helpList dl dt img{
-		width:.56rem;
-		height:.56rem;
-		display:inline;
-		margin-right:.12rem;
-		vertical-align: bottom;
-	}
-	.helpList dl dt em.dot{
-		width:.16rem;
-		height:.16rem;
-		display:block;
-		background-color:#e0063d;
-		float:right;
-		border-radius:50%;
-		position:relative;
-		top:.18rem;
-
-	}
-	.helpList dl dd {
-	    width: .5rem;
-	    float: right;
+		a{
+			dl{
+				background-color: #fff;
+				padding: .3rem .28rem;
+				border-bottom: 1px solid #d7d7d7;
+				height:1.16rem;
+				line-height:.56rem;
+				dt{
+					float: left;
+					width: 92%;
+					img{
+						width:.56rem;
+						height:.56rem;
+						display:inline;
+						margin-right: .28rem;
+						vertical-align: bottom;
+					}
+					em.dot{
+						width:.16rem;
+						height:.16rem;
+						display:block;
+						background-color:#e0063d;
+						float:right;
+						border-radius:50%;
+						position:relative;
+						top:.18rem;
+					}
+				}
+				dd{
+					width: .5rem;
+					float: right;
+					i.iconfont:before{
+						color: #999;
+					}
+				}
+			}
+			&:last-child dl{
+				border:0;
+			}
+		}
 	}
 	.pop-qr{
 		position: absolute;

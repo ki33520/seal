@@ -1,4 +1,11 @@
 {
+    "index":{
+        "uri":"/content/v1/manage/list",
+        "baseURL":{
+            "develop":"http://192.168.0.162:7985",
+            "production":"http://product.tepin.hk"
+        }
+    },
     "goodById": {
         "uri": "/WAP/product/detail.ya",
         "baseURL":{
@@ -9,7 +16,14 @@
     "cartByUser":{
     	"uri":"/cart/v1/findCarts",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "production":"http://product.tepin.hk"
+        }
+    },
+    "updateCart":{
+        "uri":"/cart/v1/saveOrUpdateCart",
+        "baseURL":{
+            "develop":"http://order.hwg.youayun.cn:7989",
             "production":"http://product.tepin.hk"
         }
     },
@@ -55,6 +69,13 @@
             "production":"http://member.tepin.hk"
         }
     },
+    "goodCommentByUser": {
+        "uri": "/comments/v1/findByProductCode",
+        "baseURL":{
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "production":"http://member.tepin.hk"
+        }
+    },
     "updatePasswordByUser":{
         "uri":"/comments/v1/changePassword",
         "baseURL":{
@@ -79,7 +100,7 @@
     "deleteCart":{
     	"uri":"/cart/v1/deleteCartById",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://order.hwg.youayun.cn:7989",
             "production":"http://product.tepin.hk"
         }
     },
@@ -90,10 +111,10 @@
             "production":"http://product.tepin.hk"
         }
     },
-    "goodList":{
+    "fetchGoodsList":{
         "uri":"/search/v1/findListByParams",
         "baseURL":{
-            "develop":"http://product.hwg.youayun.cn:7989",
+            "develop":"http://192.168.0.161:7988",
             "production":"http://product.tepin.hk"
         }
     },

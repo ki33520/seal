@@ -7,7 +7,7 @@ import classNames from "classnames";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
 //import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 
-class Navbar extends Component{
+class Category extends Component{
  
     handleSearch(){
         location.href="/search"
@@ -77,7 +77,7 @@ class CategoryRow extends Component{
             let current = classNames("name",{
                 "active":i===this.state.activeIndex
             });
-            let key = "nav-"+i;
+            let key = "cate-"+i;
             return (
                 <li className={current} key={key} onClick={this.handleClick.bind(this,i)}>{name}</li>
             )
@@ -92,7 +92,7 @@ class CategoryRow extends Component{
                 "sh":i===this.state.activeIndex
             })
             return (
-                <div className={classes}>
+                <div className={classes} key={'content-'+i}>
                     <a href="#" className="ad">
                         <img src="/client/asset/images/pic24.gif"/>
                     </a>
@@ -179,4 +179,4 @@ class OriginRow extends Component{
         );
     }
 }
-export default Navbar;
+export default Category;

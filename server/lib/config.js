@@ -3,13 +3,13 @@ var _ = require("lodash");
 var api = require("./api.json");
 
 var config = {
-    // "apiServer": "http://spi.tepin.com/mserver",
+    "apiServer": "http://spi.tepin.com/mserver",
     "oathServer": "https://login.tepin.com"
 
 };
 var runtime = process.env["NODE_ENV"];
 if (runtime === "develop") {
-    // config.apiServer = "http://wsns.tepin.youayun.cn";
+    config.apiServer = "http://wsns.tepin.youayun.cn";
     config.oathServer = "https://ssl.e9448.com";
 }
 
@@ -24,9 +24,9 @@ config.cardUrl = config.oathServer +
 
 config.api = _.mapValues(api, function(v) {
     if(runtime === "develop"){
-        v.url = v.baseURL["develop"]?v.baseURL["develop"]:"http://wsns.tepin.youayun.cn"
+        v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
     }else{
-        v.url = v.baseURL["production"]?v.baseURL["production"]:'http://spi.tepin.com/mserver'
+        v.url = v.baseURL["production"]?v.baseURL["production"] + v.uri:config.apiServer
     }
     // v.url = config.apiServer + v.uri;
     return v;

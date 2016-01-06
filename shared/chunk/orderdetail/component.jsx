@@ -4,46 +4,39 @@ import React,{Component} from "react";
 import OrderDetail from "./partial/orderdetail.jsx";
 import Logistics from "./partial/logistics.jsx";
 import {Router} from "director";
-import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
+import {Switcher,SwitcherCase} from "../common/switcher.jsx";
 
 class OrderDetailRouter extends Component{
     constructor(props){
         super(props);
         this.state = {
-            currentRoute:"index"
+            currentRoute:null,
+            prevRoute:null
         }
     }
     componentDidMount(){
         Router({
             "/logistics":()=>{
                 this.setState({
-                    currentRoute:"logistics"
+                    currentRoute:"logistics",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/":()=>{
                 this.setState({
-                    currentRoute:"index"
+                    currentRoute:"index",
+                    prevRoute:this.state.currentRoute
                 });
             }
         }).init("/");
     }
     render(){
-        const {currentRoute} = this.state;
-        var currentView = null;
-        if(currentRoute === "index"){
-            currentView =  (
-                <OrderDetail {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "logistics"){
-            currentView =  (
-                <Logistics {...this.props} key={currentRoute}/>
-            )
-        }
-        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
+        const {currentRoute,prevRoute} = this.state;
         return (
-            <TransitionGroup component="div" transitionName={transitionName} transitionLeave={false}>
-            {currentView}
-            </TransitionGroup>
+            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
+            <SwitcherCase name="index"><OrderDetail {...this.props}/></SwitcherCase>
+            <SwitcherCase name="logistics"><Logistics {...this.props}/></SwitcherCase>
+            </Switcher>
         );
     }
 }
