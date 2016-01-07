@@ -2,93 +2,86 @@
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
+var config = require("../lib/config.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 
-function formatGoodsInfo(result){
-    var goodsList = [];
-    var productNames = [];
-    var brandNames=[];
-    var categoryNames=[];
-
-    if(result.cbls.length) {
-        result.cbls.map((v)=>{
-            goodsList.push({
-                smallImageUrl:'/client/asset/' + v.imageUrlWap,
-                salesPrice:v.salesPrice,
-                originPrice:v.originPrice,
-                discounts:v.discounts,
-                isSaleOut:v.localStock==="0",
-                singleCode:v.singleCode,
-                materTitle:v.materTitle,
-                productArea:v.productArea,
-                flag:'/client/asset/'+v.flag,
-                activityType:v.activityType
-            })
+function filterGoodsList(result){
+    let list = [];
+ 
+    result && result.map((v)=>{
+        list.push({
+            smallImageUrl:config.imgServer + v.imageUrlWap,
+            salesPrice:v.salesPrice,
+            originPrice:v.originPrice,
+            discounts:v.discounts,
+            stock:v.stock,
+            id:v.singleCode,
+            materTitle:v.materTitle,
+            productArea:v.productArea,
+            flag:config.imgServer +v.flag,
+            activityType:v.activityType
         })
-    }
+    });
+    
+    return list;
+}
 
-    if(result.productNames.length){
-        result.productNames.map((v)=>{
-            productNames.push({
-                name:v.name
-            })
+function filterNames(result){
+    let list = [];
+    result && result.map((item,i)=>{
+        //test ## ##
+        var tmp = item.split('##');
+        item = {name:tmp[0],id:tmp[1]};
+
+        list.push({
+            id:item.id,
+            name:item.name
         })
-    }
-
-    if(result.brandNames.length){
-        result.brandNames.map((v)=>{
-            brandNames.push({
-                name:v.name
-            })
-        })
-    }
-
-    if(result.categoryNames.length){
-        result.categoryNames.map((v)=>{
-            categoryNames.push({
-                name:v.name
-            })
-        })
-    }
-
+    });
+    return list;
+}
+ 
+function filterResult(result){
+ 
     return {
-        productNames,
-        brandNames,
-        categoryNames,
-        goodsList
+        areaNames:filterNames(result.areaNames),
+        brandNames:filterNames(result.brandNames),
+        categoryNames:filterNames(result.categoryNames),
+        goodsList:filterGoodsList(result.cbls)
     }
 }
 
 var goodList = function(req, res, next) {
-    var keywords = req.body.keyword||'美国进口';
-    var pageIndex = req.body.pageIndex||1;
-    var sortType = req.body.sortType||1;
-    var sortViewType = req.body.sortViewType||true;
-    var isHaveGoods = req.body.isHaveGoods||false;
+    let searchKey = req.query.searchKey||'';
+    let currentPage = req.query.pageIndex||1;
+    let sortType = req.query.sortType||1;
+    let sortViewType = req.query.sortViewType||true;
+    let isHaveGoods = req.query.isHaveGoods||false;
 
     bluebird.props({
         goods: util.fetchAPI("fetchGoodsList", {
-            searchKey:keywords,
-            sortType:sortType,
-            sortViewType:sortViewType,
-            isHaveGoods:isHaveGoods,
-            currentPage: pageIndex,
-            pageSize: 10
+            searchKey,
+            sortType,
+            sortViewType,
+            currentPage
         })
     }).then(function(resp) {
+
         if (resp.goods.returnCode === 0) {
-            var result = formatGoodsInfo(resp.goods.object)
+            let result = filterResult(resp.goods);
             if (req.xhr === true) {
                 res.json(result);
             } else {
                  
-                var initialState = {
-                    keywords : keywords,
-                    pagination:result,
-                    isFetching:false
+                let initialState = {
+                    searchKey,
+                    goodsList:result.goodsList,
+                    areaNames:result.areaNames,
+                    brandNames:result.brandNames,
+                    categorys:result.categoryNames
                 };
 
-                var markup = util.getMarkupByComponent(GoodListApp({
+                let markup = util.getMarkupByComponent(GoodListApp({
                     initialState: initialState
                 }));
 
@@ -101,7 +94,7 @@ var goodList = function(req, res, next) {
             next(new Error(resp.msg));
         }
     },function(){
-        //next(new Error("api request failed"))
+        next(new Error("api request failed"))
     });
 
 }

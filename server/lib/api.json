@@ -156,7 +156,7 @@
     "fetchGoodsList": {
         "uri": "/search/v1/findListByParams",
         "baseURL": {
-            "develop": "http://192.168.0.162:7989",
+            "develop": "http://192.168.0.162:7988",
             "production": "http://product.tepin.hk"
         }
     },

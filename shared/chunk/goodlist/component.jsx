@@ -7,10 +7,10 @@ import Refresher from "../../component/refresher.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import GoTop from "../../component/gotop.jsx";
 import Header from "../common/header.jsx";
-import Filter from "./partial/filter.jsx";
+import Sidebar from "./partial/sidebar.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import GoodSorter from "./partial/goodStore.jsx";
-import FilterClassify from "./partial/filterClassify.jsx";
+import Filter from "./partial/filter.jsx";
 
 class GoodListApp extends React.Component{
     constructor(props){
@@ -19,19 +19,23 @@ class GoodListApp extends React.Component{
             maskActive:false,
             popupActive:false,
             productActive:false,
-            classifyActive:false,
+            filterActive:false,
             brandActive:false,
-            needClear:false,
-            isFocused:false,
-            keywords:props.keywords
+            requestParam:{
+                searchKey:props.searchKey
+            }
         }
+    }
+
+    handleGoBack(){
+        location.href='/';
     }
 
     closeAllPopups(){
         this.setState({
             maskActive:false,
             popupActive:false,
-            classifyActive:false,
+            filterActive:false,
             brandActive:false,
             productActive:false,
         });
@@ -44,6 +48,7 @@ class GoodListApp extends React.Component{
             maskActive:popupActive
         });
     }
+    
     handleChangeFilter(type){
         switch(type){
             case 'classfiy':
@@ -59,90 +64,75 @@ class GoodListApp extends React.Component{
                 break;
         }
     }
-    togglePopupClassify(){
+
+    togglePopupClassify(names){
+        let {requestParam} = this.state;
+        if(names && names.length){
+            requestParam = Object.assign(requestParam,{
+                categoryName:names.join(',')
+            })
+        }
         this.setState({
-            classifyActive:!this.state.classifyActive
+            filterActive:!this.state.filterActive,
+            requestParam
         });
     }
 
-    togglePopupProduct(){
+    togglePopupProduct(names){
+        let {requestParam} = this.state;
+        if(names && names.length){
+            requestParam = Object.assign(requestParam,{
+                sourceAreas:names.join(',')
+            })
+        }
         this.setState({
-            productActive:!this.state.productActive
+            productActive:!this.state.productActive,
+            requestParam
         });
     }
     
-    togglePopupBrandFilter(){
-        this.setState({
-            brandActive:!this.state.brandActive
-        });
-    }
- 
-
-    handleChange(e){
-        e.preventDefault();
-        const keywords = e.target.value;
-        if(keywords !== this.state.keywords){
-            this.setState({
-                keywords:keywords
-            });
+    togglePopupBrandFilter(names){
+        let {requestParam} = this.state;
+        if(names && names.length){
+            requestParam = Object.assign(requestParam,{
+                brandName:names.join(',')
+            })
         }
-
-        if(keywords.length>0){
-            this.setState({
-                needClear:true
-            });
-        }
-    }
-
-    handleBlur(){
         this.setState({
-            needClear:false,
-            isFocused:false
-        });
-    }
-
-    handleFocus(e){
-        var needClear = this.state.keywords.length > 0 ? true : false
-        e.preventDefault();
-        this.setState({
-            needClear:needClear,
-            isFocused:true
-        });
-    }
-
-    handleClearInput(e){
-        e.preventDefault();
-        this.setState({
-            keywords:'',
-            isFocused:true
+            brandActive:!this.state.brandActive,
+            requestParam
         });
     }
 
     toggleSortActive(param){
-        const {dispatch} = this.props;
-        const keywords = this.state.keywords;
-        const url = '/goodlist/'+keywords;
-        dispatch(fetchGoods(url,param));
+        const {dispatch,searchKey} = this.props;
+        const {requestParam} = this.state;
+        param = Object.assign(requestParam,param);
+        this.setState({
+            requestParam
+        },()=>{
+            dispatch(fetchGoods('/goodlist',param));
+        });
     }
 
     render(){
-        const {isFetching,pagination,keywords} = this.props;
+        const {goodsList,areaNames,brandNames,categorys,searchKey,isFetching} = this.props;
         var goods = [];
-
-        if(!pagination.goodsList.length){
+ 
+        if(!goodsList.length){
             return (
                 <div className="empty noPadTop">
-                    <Header>
-                        <span className="title">{keywords}</span>
+                    <Header handleGoBack={this.handleGoBack}>
+                        <span className="title">{searchKey}</span>
                     </Header>
                     <img src="/client/asset/images/empty_search.png" />
-                    <div className="tips">抱歉，没有找到与“{keywords}”相关的商品，<br/>您可以换个词再试试~！</div>
+                    <div className="tips">抱歉，没有找到与“{searchKey}”相关的商品，<br/>您可以换个词再试试~！</div>
                 </div>
             )
         }
 
        
-        pagination.goodsList.forEach(function(item,i){
+        goodsList.forEach(function(item,i){
             const key = "good-" + i;
             goods.push(<GoodItem goods={item} key={key} />)
         });
@@ -166,42 +156,39 @@ class GoodListApp extends React.Component{
         return (
             <div>
                 <div className={classes}>
-                    <Header>
+                    <Header handleGoBack={this.handleGoBack}>
                         <div className={searchBox}>
-                            <input type="search" value={this.state.keywords} 
-                            onChange={this.handleChange.bind(this)}
-                            onBlur={this.handleBlur.bind(this)}
-                            onFocus={this.handleFocus.bind(this)} />
+                            <input type="search" defaultValue={this.state.searchKey} />
                             <span></span>
-                            <i className={closebtn} onClick={this.handleClearInput.bind(this)}></i>
+                            <i className={closebtn}></i>
                         </div>
                         <span className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</span>
                     </Header>
-                    <GoodSorter orderBy={this.toggleSortActive.bind(this)} />
+                    <GoodSorter toggleSort={this.toggleSortActive.bind(this)} />
                     <div className="special-activity-list clearfix">
                         {goods}
                     </div>
                 </div>
-                <MaskLayer visible={this.state.maskActive} 
-                    handleClick={this.closeAllPopups.bind(this)} />
-                <Filter 
+
+                <Sidebar 
                     popupActive={this.state.popupActive}
                     handleCanBuy={this.toggleSortActive.bind(this)}
                     filter={this.handleChangeFilter.bind(this)}
                     handleClose={this.togglePopupActive.bind(this)} />
-                <FilterClassify 
-                    category={pagination.categoryNames}
-                    active={this.state.classifyActive}
+                <Filter 
+                    names={categorys}
+                    active={this.state.filterActive}
                     handleClose={this.togglePopupClassify.bind(this)} />
-                <FilterClassify 
-                    category={pagination.brandNames}
+                <Filter 
+                    names={brandNames}
                     active={this.state.brandActive}
                     handleClose={this.togglePopupBrandFilter.bind(this)} />
-                <FilterClassify 
-                    category={pagination.productNames}
+                <Filter 
+                    names={areaNames}
                     active={this.state.productActive}
                     handleClose={this.togglePopupProduct.bind(this)} />
                 <GoTop />
+                <MaskLayer visible={this.state.maskActive} />
                 <Refresher active={isFetching} />
             </div>
         )

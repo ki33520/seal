@@ -7,7 +7,7 @@ class Header extends Component{
         const {canBack,handleGoBack} = this.props;
         if(canBack === true){
             return (
-                <a href="javascript:void(null)" onClick={handleGoBack} className="iconfont icon-back"></a>
+                <a href="javascript:;" onClick={handleGoBack} className="iconfont icon-back"></a>
             )
         }
         return null
