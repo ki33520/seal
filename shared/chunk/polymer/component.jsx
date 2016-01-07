@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import Header from "../common/header.jsx";
+import Footer from "../common/footer.jsx";
 import Icon from "../../component/icon.jsx";
 import classNames from "classnames";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
@@ -27,6 +28,7 @@ class Polymer extends Component{
                         <SlideTabsItem navigator={()=><i>产地</i>}><Origin {...this.props}/></SlideTabsItem>
                     </SlideTabs>
                 </div>
+                <Footer activeIndex="2"/>
             </div>
         )
     }

@@ -24,7 +24,7 @@ function categoryBrands(state={},action){
             const categorybrands = action.res.result;
             const categoryBrandsFetched = action.res.categoryBrandsFetched;
             return Object.assign({},state,{
-                categoryBrands:categorybrands,
+                ...categorybrands,
                 categoryBrandsFetched,
                 categoryBrandsFetching:false
             })

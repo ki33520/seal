@@ -10,7 +10,7 @@ function responseCategoryBrands(param,res){
     return {
         type:RESPONSE_CATEGORYBRANDS,
         param:param,
-        pagination:res
+        res:res
     }
 }
 
@@ -34,7 +34,7 @@ function responseAllBrands(param,res){
     return {
         type:RESPONSE_ALLBRANDS,
         param:param,
-        pagination:res
+        res:res
     }
 }
 
@@ -58,7 +58,7 @@ function responseAllOrigins(param,res){
     return {
         type:RESPONSE_ALLBRANDS,
         param:param,
-        pagination:res
+        res:res
     }
 }
 

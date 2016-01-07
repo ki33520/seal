@@ -22,7 +22,8 @@ export class SlideTabs extends Component{
         // noBounceScroll.disable()
     }
     shouldComponentUpdate(nextProps,nextState){
-        if(nextState.activeIndex !== this.state.activeIndex){
+        if(nextState.activeIndex !== this.state.activeIndex 
+            || nextProps.activeIndex !== this.props.activeIndex){
             return true
         }
         return false
