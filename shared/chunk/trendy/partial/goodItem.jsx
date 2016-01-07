@@ -6,8 +6,6 @@ class GoodItem extends Component{
     render(){
     	 
     	var goods = this.props.goods;
-    	//console.log(goods)
- 
 
     	const statusClass = classNames({
             "soldOut":goods.stock
