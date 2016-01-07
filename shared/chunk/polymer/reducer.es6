@@ -3,7 +3,8 @@ import {combineReducers} from "redux";
 import {
     REQUEST_CATEGORYBRANDS,RESPONSE_CATEGORYBRANDS,
     REQUEST_ALLBRANDS,RESPONSE_ALLBRANDS,
-    REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS
+    REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD
 } from "./constants.es6";
 
 function allCategory(state={},action){
@@ -73,7 +74,28 @@ function allOrigin(state={},action){
     }
 }
 
+function search(state={},action){
+    switch(action.type){
+        case REQUEST_HOTWORD:
+            return Object.assign({},state,{
+                hotwordFetched:false,
+                hotwordFetching:true
+            });
+        case RESPONSE_HOTWORD:
+            const hotwords = action.res.result;
+            const hotwordFetched = action.res.hotwordFetched;
+            return Object.assign({},state,{
+                hotwords,
+                hotwordFetched,
+                hotwordFetching:false
+            })
+        default:
+            return state;
+    }
+}
+
 const rootReducer = combineReducers({
+    search,
     allCategory,
     categoryBrands,
     allBrand,

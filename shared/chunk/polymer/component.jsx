@@ -1,37 +1,52 @@
 'use strict';
 
 import React,{Component} from "react";
-import Header from "../common/header.jsx";
-import Footer from "../common/footer.jsx";
-import Icon from "../../component/icon.jsx";
-import classNames from "classnames";
-import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
-import Category from "./partial/category.jsx";
-import Brand from "./partial/brand.jsx";
-import Origin from "./partial/origin.jsx";
+import Polymer from "./partial/polymer.jsx";
+import AllBrands from "./partial/allbrands.jsx";
+import SearchBox from "./partial/search.jsx";
+import {Router} from "director";
+import {Switcher,SwitcherCase} from "../common/switcher.jsx"
 
-class Polymer extends Component{
+class PolymerRouter extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            currentRoute:null,
+            prevRoute:null
+        }
+    }
+    componentDidMount(){
+        Router({
+            "/allbrands":()=>{
+                this.setState({
+                    currentRoute:"allbrands",
+                    prevRoute:this.state.currentRoute
+                });
+            },
+            "/search":()=>{
+                this.setState({
+                    currentRoute:"search",
+                    prevRoute:this.state.currentRoute
+                });
+            },
+            "/":()=>{
+                this.setState({
+                    currentRoute:"index",
+                    prevState:this.state.currentRoute
+                });
+            }
+        }).init("/");
+    }
     render(){
-        //var {categorys,brands,origins} = this.props;
+        const {currentRoute,prevRoute} = this.state;
         return (
-            <div className="box">
-                <Header>
-                    <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
-                    <div className="btn-right">
-                        <Icon icon="search"/>
-                    </div>
-                </Header>
-                <div className="polymer-list">
-                    <SlideTabs navbarSlidable={false}>
-                        <SlideTabsItem navigator={()=><i>类别</i>}><Category {...this.props.allCategory}/></SlideTabsItem>
-                        <SlideTabsItem navigator={()=><i>品牌</i>}><Brand {...this.props}/></SlideTabsItem>
-                        <SlideTabsItem navigator={()=><i>产地</i>}><Origin {...this.props}/></SlideTabsItem>
-                    </SlideTabs>
-                </div>
-                <Footer activeIndex="2"/>
-            </div>
-        )
+            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
+                <SwitcherCase name="index"><Polymer {...this.props}/></SwitcherCase>
+                <SwitcherCase name="allbrands"><AllBrands {...this.props}/></SwitcherCase>
+                <SwitcherCase name="search"><SearchBox {...this.props}/></SwitcherCase>
+            </Switcher>
+        );
     }
 }
 
-export default Polymer;
+export default PolymerRouter;

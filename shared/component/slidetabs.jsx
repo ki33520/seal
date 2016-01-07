@@ -21,13 +21,6 @@ export class SlideTabs extends Component{
     componentWillUnmount(){
         // noBounceScroll.disable()
     }
-    shouldComponentUpdate(nextProps,nextState){
-        if(nextState.activeIndex !== this.state.activeIndex 
-            || nextProps.activeIndex !== this.props.activeIndex){
-            return true
-        }
-        return false
-    }
     handleSelect(i,e){
         // e && e.preventDefault()
         this.setState({
@@ -39,7 +32,7 @@ export class SlideTabs extends Component{
     handleContentActiveChange(i,e){
         this.setState({
             activeIndex:i
-        })
+        },()=>this.props.onSelect(i))
     }
     renderNavbar(){
         let navigators = [];
@@ -149,18 +142,11 @@ export class SlideTabsItem extends Component{
         const classes = classNames("slide-tabs-item",this.props.className,{
             active
         })
-        let child = this.props.children
-        if(this.props.children.length === 0){
-            let child = React.Children.only(this.props.children)
-            child = React.cloneElement(child,Object.assign({},child.props,{
-                    redraw:this.state.itemStyle !== null
-            }))
-        }
         return (
             <div className={classes} key={identify} style={this.state.itemStyle} 
             onTouchMove={this.handleTouchMove.bind(this)} 
             onTouchStart={this.handleTouchStart.bind(this)}>
-            {child}
+            {this.props.children}
             </div>
         )
     }

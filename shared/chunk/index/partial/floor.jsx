@@ -67,16 +67,6 @@ class Floor extends Component{
         }
         return null
     }
-    componentDidUpdate(){
-        if(this.props.redraw === true){
-            let sliderNode = ReactDOM.findDOMNode(this)
-            // console.log(sliderNode.parentNode.offsetWidth)
-            // this.refs["slider"].initialize({
-            //     width:sliderNode.parentNode.offsetWidth
-            // })
-            // this.refs["slider"].play()
-        }
-    }
     renderBadges(){
         let {badges} = this.props.floors;
         return badges.map((badge,i)=>{
