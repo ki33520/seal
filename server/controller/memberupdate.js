@@ -8,7 +8,7 @@ var MemberupdateApp = util.getSharedComponent("memberupdate");
 var update = function(req, res, next) {
     var user = req.session.user;
     bluebird.props({
-        memberDetailByUser: util.fetchAPI("memberMemberInfo", {
+        memberDetailByUser: util.fetchAPI("memberDetailByUser", {
             memberId: user.memberId
         },false)
     }).then(function(ret) {
@@ -34,7 +34,6 @@ var updateBasic = function(req, res, next) {
     var nickName = req.body.nickName;
     var gender = req.body.gender;
     var birthdy = req.body.birthdy;
-    console.log(req.body)
     bluebird.props({
         updateBasicByUser: util.fetchAPI("updateBasicByUser", {
             memberId: user.memberId,
@@ -43,6 +42,7 @@ var updateBasic = function(req, res, next) {
             birthday: birthdy
         },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.updateBasicByUser.returnCode === 0) {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
@@ -69,8 +69,9 @@ var updatePassword = function(req, res, next) {
             opassword: oldPassword,
             password: password,
             rpassword: repeatPassword
-        },true)
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true

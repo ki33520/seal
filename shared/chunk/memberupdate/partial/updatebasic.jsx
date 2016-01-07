@@ -72,7 +72,6 @@ class UpdateBasic extends Component{
         dispatch(changeField(fieldName,birthdy));
     }
     render(){
-        console.log(this.state)
         const {dispatch,basicByForm} = this.props;
         const {nickName,gender,birthdy,alertContent,alertActive} = basicByForm;
         return (
