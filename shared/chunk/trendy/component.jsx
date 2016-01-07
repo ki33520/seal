@@ -2,15 +2,14 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
+import fetchGoods from "./action.es6";
 
+import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Refresher from "../../component/refresher.jsx";
-import GoTop from "../../component/gotop.jsx";
 import Icon from "../../component/icon.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
-import {Tabs,TabsItem} from "../../component/tabs.jsx";
-import fetchGoods from "./action.es6";
 
 class Trendy extends React.Component{
 
@@ -19,6 +18,7 @@ class Trendy extends React.Component{
     }
 
     handleClick(index){
+        console.log(index)
         const {pagination,dispatch} = this.props;
         const {titles} = pagination;
         
@@ -44,22 +44,15 @@ class Trendy extends React.Component{
         );
     }
 
-    renderNav(){
-        const {pagination} = this.props;
-        let titles = pagination.titles;
-        let goodsList = pagination.goodsList;
-
-        return titles.map((item,i)=>{
-            return (
-                <TabsItem title={<i>{item.name}</i>} key={'nav-'+i}>
-                    {this.renderContent(goodsList[i])}
-                </TabsItem>
-            );
-        });
-    }
-
     render(){
-        
+        const {titles,goodsList} = this.props.pagination;
+        const tabs = titles.map((item,i)=>{
+            return (
+                <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
+                    {this.renderContent(goodsList[i])}
+                </SlideTabsItem>
+            )
+        })
         return (
             <div>
                 <Header canBack="false">
@@ -68,9 +61,10 @@ class Trendy extends React.Component{
                         <Icon icon="search"/>
                     </div>
                 </Header> 
-                <Tabs effect="slide" onSelect={this.handleClick.bind(this)}>
-                    {this.renderNav()}
-                </Tabs>
+                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
+                    {tabs}
+                </SlideTabs>
+     
                 <Refresher active={this.props.isFetching}/>
                 <Footer activeIndex="2"/>
             </div>
