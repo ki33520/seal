@@ -7,10 +7,10 @@ var Trendy = util.getSharedComponent("trendy");
 var config = require("../lib/config.js");
 
 function filterItem(originalData){
-    let goodsList = [];
+    let list = [];
     if(originalData && originalData.length){
         originalData.map((g,i)=>{
-            goodsList.push({
+            list.push({
                 id:g.singleCode,
                 title:g.title,
                 imageUrl:config.imgServer+g.imageUrl,
@@ -24,13 +24,13 @@ function filterItem(originalData){
         });
     }
     
-    return goodsList;
+    return list;
 }
 
 function filterList(originalData){
     let data={
         titles:[],
-        goodsList:[]
+        list:[]
     }
  
     originalData.map((item,i)=>{
@@ -42,7 +42,7 @@ function filterList(originalData){
             id:item.id
         });
 
-        data.goodsList.push(goods);
+        data.list.push(goods);
     });
 
     return data;
@@ -66,7 +66,8 @@ var trendy = function(req, res, next) {
             } else {
                  
                 var initialState = {
-                    pagination: result
+                    titles: result.titles,
+                    list : result.list
                 };
 
                 var markup = util.getMarkupByComponent(Trendy({

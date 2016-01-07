@@ -17,11 +17,15 @@ class Trendy extends React.Component{
         location.href="/search";
     }
 
+
     handleClick(index){
-        console.log(index)
-        const {pagination,dispatch} = this.props;
-        const {titles} = pagination;
-        
+ 
+        const {titles,list,dispatch} = this.props;
+
+        if(list[index].length){
+            return false;
+        }
+
         dispatch(fetchGoods('/trendyActivity',{
             id:titles[index].id,
             pageIndex:1,
@@ -29,27 +33,25 @@ class Trendy extends React.Component{
         }));
     }
 
-    renderContent(goodsList){
+    renderContent(list){
         var goods = [];
        
-        if(goodsList.length > 0){
-            goodsList.forEach(function(item,i){
-                const key = "good-" + i;
-                goods.push(<GoodItem goods={item} key={key} />)
-            })
-        }
-
+        list.forEach(function(item,i){
+            goods.push(<GoodItem goods={item} key={"good-" + i} />)
+        })
+        
         return (
             <div className="activityGeneral">{goods}</div>
         );
     }
 
     render(){
-        const {titles,goodsList} = this.props.pagination;
+        const {titles,list} = this.props;
+ 
         const tabs = titles.map((item,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
-                    {this.renderContent(goodsList[i])}
+                    {this.renderContent(list[i])}
                 </SlideTabsItem>
             )
         })

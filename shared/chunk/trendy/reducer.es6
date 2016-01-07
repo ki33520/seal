@@ -11,12 +11,12 @@ function goodsByParam(state={},action){
                 isFetching:true
             });
         case RECEIVE_GOODS:
-            const {pagination} = state;
+            const {list} = state;
             const {index} = action.param;
-            pagination.goodsList[index]=action.res;
+            list[index]=action.res;
             return Object.assign({},state,{
                 isFetching:false,
-                pagination:pagination
+                list:list
             });
         default:
             return state;
