@@ -32,7 +32,7 @@ export class SlideTabs extends Component{
         this.setState({
             activeIndex:i
         },()=>{
-            this.props.onSelect()   
+            this.props.onSelect(i)   
         })
     }
     handleContentActiveChange(i,e){
