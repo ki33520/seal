@@ -37,6 +37,7 @@ class CascadeArea extends Component{
     }
     renderProvince(){
         const {provinces,receiver} = this.props;
+        console.log(provinces)
         const province = receiver === null?"":receiver.province;
         if(provinces.length > 1){
             return (

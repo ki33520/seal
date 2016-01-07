@@ -22,6 +22,7 @@ export class SlideTabs extends Component{
         // noBounceScroll.disable()
     }
     shouldComponentUpdate(nextProps,nextState){
+        console.log(nextProps,this.props)
         if(nextState.activeIndex !== this.state.activeIndex 
             || nextProps.activeIndex !== this.props.activeIndex){
             return true
@@ -39,6 +40,8 @@ export class SlideTabs extends Component{
     handleContentActiveChange(i,e){
         this.setState({
             activeIndex:i
+        },()=>{
+            this.props.onSelect(i)   
         })
     }
     renderNavbar(){

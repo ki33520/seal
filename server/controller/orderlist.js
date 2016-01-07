@@ -7,21 +7,24 @@ var OrderList = util.getSharedComponent("orderlist");
 
 var orderList = function(req, res,next) {
     var user = req.session.user;
-    var status = req.query.status !== undefined ? req.query.status : "" ;
+    var status = req.query.status !== undefined ? req.query.status : 0 ;
     var pageIndex = req.query.pageIndex !== undefined ? req.query.pageIndex : 1;
-    util.fetchAPI("orderByParam", {
-        memberId: "",
+    var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
+    util.fetchAPI("orderByUser", {
+        memberId: user.memberId,
+        timeType: timeType,
         orderStatus: status,
-        pageIndex: pageIndex,
+        pageNo: pageIndex,
         pageSize: 10
-    },true).then(function(resp) {
-        if (resp.code === "success") {
+    },false).then(function(resp) {
+        console.log(resp)
+        if (resp.returnCode === 0) {
             if (req.xhr === true) {
                 res.json(resp);
             } else {
                 var initialState = {
                     isFetched: true,
-                    pagination: resp.page
+                    pagination: resp.object
                 };
                 var markup = util.getMarkupByComponent(OrderList({
                     initialState: initialState

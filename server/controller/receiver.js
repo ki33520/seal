@@ -11,9 +11,10 @@ var receiver = function(req, res,next) {
     var user = req.session.user;
     util.fetchAPI("receiverByUser", {
         memberId: user.memberId
-    },true).then(function(resp) {
-        if (resp.code === "success") {
-            var receivers = resp.addressList;
+    },false).then(function(resp) {
+        console.log(resp)
+        if (resp.returnCode === 0) {
+            var receivers = resp.object;
             var initialState = {
                 isFetched: true,
                 receivers: receivers
@@ -26,7 +27,7 @@ var receiver = function(req, res,next) {
                 initialState: initialState
             })
         }else{
-            next(new Error(resp.msg))
+            next(new Error(resp.message))
         }
     }).fail(function(resp){
         next(new Error("api response failed"))
@@ -67,7 +68,7 @@ var updateReceiver = function(req, res, next) {
     var user = req.session.user;
     util.fetchAPI("receiverById", {
         addressId:id
-    },true).then(function(resp) {
+    },false).then(function(resp) {
         if (resp.code === "success") {
             var address = resp.object;
             var receiver = {
@@ -159,18 +160,20 @@ var saveReceiver = function(req, res, next) {
 }
 
 var cascadeArea = function(req, res) {
+    console.log(req.xhr)
     if (req.xhr !== true) {
         return;
     }
     var isProvince = req.query.isprovince;
-    var code = req.query.code;
-    if(isProvince === "true"){
-        code = "CATALOG_REGION";
-    }
+    var code = req.query.code ? req.query.code : '';
+    // if(isProvince === "true"){
+    //     code = "CATALOG_REGION";
+    // }
     util.fetchAPI("cascadeArea", {
-        nodecode: code, //CATALOG_REGION 查询省
+        code: code, //CATALOG_REGION 查询省
         // isProvice: isProvince
-    },true).then(function(resp) {
+    },false).then(function(resp) {
+        console.log(resp)
         if (resp.code === "success") {
             var items = [];
             _.each(resp.dictionaryList, function(v, k) {
@@ -189,6 +192,8 @@ var cascadeArea = function(req, res) {
                 errMsg: resp.msg
             })
         }
+    }).fail(function(resp){
+        console.log(resp)
     })
 }
 

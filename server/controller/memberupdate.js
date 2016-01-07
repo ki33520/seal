@@ -8,7 +8,7 @@ var MemberupdateApp = util.getSharedComponent("memberupdate");
 var update = function(req, res, next) {
     var user = req.session.user;
     bluebird.props({
-        memberDetailByUser: util.fetchAPI("memberDetailByUser", {
+        memberDetailByUser: util.fetchAPI("memberMemberInfo", {
             memberId: user.memberId
         },false)
     }).then(function(ret) {
@@ -24,7 +24,7 @@ var update = function(req, res, next) {
                 initialState: initialState
             })
         }else{
-            next(new Error(ret.memberDetailByUser.msg));
+            next(new Error(ret.memberDetailByUser.message));
         }
     });
 }
