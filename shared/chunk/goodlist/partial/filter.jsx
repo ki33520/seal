@@ -3,74 +3,81 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import classNames from "classnames";
-import{isHaveGoods} from "../constant.es6";
 
 class Filter extends Component{
     constructor(props){
         super(props);
         this.state = {
-            isHaveGoods:isHaveGoods
+            checked:{},
+            values:[]
         }
     }
+ 
+    handleSave(){
+        let {values} = this.state;
+        this.props.handleClose(values);
+    }
 
-    toggleCanBuy(){
-        var isHaveGood = !this.state.isHaveGoods;
+    handleCheck(key,value){
+        let {checked,values} = this.state;
+        let index = values.indexOf(value);
+        checked[key] = !checked[key];
+
+        if(index === -1){
+            values.push(value);
+        }else{
+            values.splice(index,1);
+        }
+        
         this.setState({
-            isHaveGoods:isHaveGood
-        })
-
-        this.props.handleCanBuy({
-            isHaveGoods:isHaveGood
+            checked,
+            values
         });
     }
 
-    handleReset(){
-        this.setState({
-            isHaveGoods:false
-        })
+    renderNav(names){
+        if(!names || names.length<1){
+            return '暂无分类';
+        }
+        var menu = names.map((item,i)=>{
+            const key="nav-"+i;
+            const checked = classNames("iconfont",{
+                "icon-check": this.state.checked[key]
+            });
+            return (
+                <dl onClick={this.handleCheck.bind(this,key,item.id)} key={key}>
+                    <dt>{item.name}</dt>
+                    <dd className={checked}></dd>
+                </dl>
+            )
+        });
+        
+ 
+        return (
+            <div className="helpList">
+                {menu}
+            </div>
+        )
     }
 
     render(){
-        const {popupActive} = this.props;
-        const classes=classNames({
-            "menu-slider":true,
+        const {active,names,handleClose} = this.props;
+        const classess = classNames({
+            "second-slider":true,
             "rollIn-animate":true,
-            "rollIn-slideLeft":popupActive
+            "rollIn-slideLeft":active
         });
-        const exist = classNames({
-            onShow:this.state.isHaveGoods
-        })
-       
+ 
         return (
-            <div className={classes}>
-            	<Header canBack={false}>
-                    <span className="btn-left" onClick={this.handleReset.bind(this)}>重置</span>
-                    <span className="btn-right" onClick={this.props.handleClose.bind(this)}>确定</span>
+            <div className={classess}>
+            	<Header handleGoBack={handleClose.bind(this)}>
+                    <span className="btn-right" onClick={this.handleSave.bind(this)}>确定</span>
                 </Header>
-                
-                <div className="showHave">
-                	<dl>
-                        <dt>只显示有货</dt>
-                        <dd className={exist} onClick={this.toggleCanBuy.bind(this)}><i></i></dd>
-                    </dl>
-                </div>
-                
-                <div className="helpList">
-                    <dl onClick={this.props.filter.bind(this,'classfiy')}>
-                        <dt>类别</dt>
-                        <dd className="iconfont icon-right"></dd>
-                    </dl>
-                    <dl onClick={this.props.filter.bind(this,'brand')}>
-                        <dt>品牌</dt>
-                        <dd className="iconfont icon-right"></dd>
-                    </dl>
-                    <dl onClick={this.props.filter.bind(this,'product')}>
-                        <dt>产地</dt>
-                        <dd className="iconfont icon-right"></dd>
-                    </dl>
-                </div>
+                {this.renderNav(names)}
             </div>
         );
     }
 }
+ 
+
 export default Filter;

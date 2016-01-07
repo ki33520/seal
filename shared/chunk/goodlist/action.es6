@@ -7,7 +7,7 @@ function receiveGoods(param,res){
     return {
         type:RECEIVE_GOODS,
         param:param,
-        pagination:res
+        res:res
     }
 }
 
@@ -22,7 +22,7 @@ export default function fetchGoods(url,param){
     return (dispath)=>{
         dispath(requestGoods(param));
         return apiRequest(url,param).then((res)=>{
-            dispath(receiveGoods(param,res))
+            dispath(receiveGoods(param,res.goodsList))
         })
     }
 }
