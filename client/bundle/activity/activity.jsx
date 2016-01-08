@@ -1,11 +1,11 @@
 'use strict';
-import Activity from "../../../shared/chunk/activity/app.jsx";
+import ActivityApp from "../../../shared/chunk/activity/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<Activity initialState={initialState} />,document.getElementById('activity'));
+    ReactDOM.render(<ActivityApp initialState={initialState} />,document.getElementById('activity-container'));
 }
 
 if(typeof window.addEventListener){

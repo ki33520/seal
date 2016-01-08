@@ -1,0 +1,103 @@
+@import "../../common/common";
+@import "../../common/iconfont";
+@import "../../common/header";
+@import "../../common/footer";
+@import "../../common/switcher";
+@import "../../component/slidetabs";
+@import "../../component/scrollnav";
+@import "./allbrands";
+@import "./catePoly.css";
+@import "./search.css";
+
+.polymer-container{
+    height:100%;
+    &>div{
+        height:100%;
+        .polymer-content{
+            height:100%;
+            overflow:hidden;
+            .polymer-list{
+                height:100%;
+                padding-bottom:px2rem(37);
+                box-sizing:border-box;
+                overflow:hidden;
+            }
+        }
+    }
+}
+
+.polymer-list{
+    &>.slide-tabs{
+        padding-bottom:px2rem(44);
+        box-sizing:border-box;
+        &>.slide-tabs-navbar{
+            background:#FFF;
+            border-bottom:1px solid #d7d7d7;
+            &>.slide-tabs-navbar-item{
+                line-height:px2rem(37);
+                border-left:0 none;
+                &.active{
+                    i{
+                        color:#801da1;
+                        border-color:#801da1;
+                    }
+                }
+            }
+        }
+        &>.slide-tabs-content{
+            &>.slide-tabs-item{
+                position:relative;
+            }
+        }
+    }
+}
+
+.category-list{
+    height:100%;
+    position:absolute;
+    overflow:hidden;
+    &>.slide-tabs{
+        background:#F7F7F7;
+        .slide-tabs-navbar{
+            background:#F7F7F7;
+            width:25%;
+            border-bottom:0 none;
+            align-self:flex-start;
+            .slide-tabs-navbar-item{
+                border-right:0 none;
+                line-height:px2rem(41);
+                &.active{
+                    border-left:px2rem(5) solid #801da1;
+                    animation:shake 0.5s;
+                }
+            }
+        }
+        .slide-tabs-content{
+            background:#FFF;
+        }
+    }
+    
+    .rightCon{
+        float:none;
+        width:100%;
+        padding:px2rem(10);
+        box-sizing:border-box;
+        &>div{
+            display:block;
+        }
+    }
+}
+
+.search-wrap{
+    height:100%;
+    background:#F7F7F7;
+    .search-box{
+        &>input{
+            box-sizing:border-box;
+            border:0 none;
+        }
+        &>span{
+            font-size:px2rem(12);
+        }
+    }
+}

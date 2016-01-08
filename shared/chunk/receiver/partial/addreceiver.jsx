@@ -19,41 +19,42 @@ class AddReceiver extends Component{
         const {dispatch} = this.props;
         dispatch(fetchProvinces("/cascadearea",{
             code:"",
-            isprovince:true
+            findMap: "findProvinceMap"
         }));
     }
     loadCities(province){
         const {dispatch} = this.props;
         dispatch(fetchCities("/cascadearea",{
             code:province,
-            isprovince:false
+            findMap: "findCityMap"
         }))
     }
     loadDistricts(city){
         const {dispatch} = this.props;
         dispatch(fetchDistricts("/cascadearea",{
             code:city,
-            isprovince:false
+            findMap: "findCountyMap"
         }))
     }
     handleSave(e){
         e && e.preventDefault();
         const {receiver,dispatch,provinces,cities,districts} = this.props
-        const {consignee,mobile,zipcode,address,isDefault,
+        console.log(receiver)
+        const {consignee,idCard,mobile,zipcode,address,isDefault,
             province,city,district
-        } = receiver;
+        } = (receiver === null?{}:receiver);
         const selectedProvince = _.findWhere(provinces,{value:province});
         const selectedCity = _.findWhere(cities,{value:city});
         const selectedDistrict = _.findWhere(districts,{value:district});
         dispatch(saveReceiver({
-            consignee,mobile,zipcode,address,
+            consignee,idCard,mobile,zipcode,address,
             isdefault:isDefault,
             province:selectedProvince.label,
             provincecode:selectedProvince.value,
             city:selectedCity.label,
             citycode:selectedCity.value,
             district:selectedDistrict.label,
-            districtcode:selectedDistrict.value
+            districtcode:selectedDistrict.value,
         }))
     }
     componentWillReceiveProps(nextProps){
@@ -71,14 +72,14 @@ class AddReceiver extends Component{
     render(){
         const {saveSuccess,alertActive,alertContent,receiver} = this.props
         const {
-            consignee,mobile,zipcode,address,isDefault,
+            consignee,idCard,mobile,zipcode,address,isDefault,
             province,city,district,
         } = (receiver === null?{}:receiver);
         return (
             <div className="receiver-form-content">
             <Header>
             <span className="title">添加新地址</span>
-            <a className="screening" href="javascript:void(0);">保存</a>
+            <a className="screening" href="javascript:void(0);" onClick={this.handleSave.bind(this)}>保存</a>
             </Header>
             <p className="prompt">温馨提示：收件人请使用和身份证号对应的真实姓名，否则您购买的商品将无法通过海关检查！</p>
             <div className="receiver-form">
@@ -94,9 +95,9 @@ class AddReceiver extends Component{
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">身份证号</div>
-                <div className="receiver-form-field"><input type="text" value={mobile} 
+                <div className="receiver-form-field"><input type="text" value={idCard} 
                 placeholder="填写后，我们会加密处理" 
-                onChange={this.handleFieldChange.bind(this,"mobile")}/></div>
+                onChange={this.handleFieldChange.bind(this,"idCard")}/></div>
                 </div>
             </div>
             <div className="receiver-form-fieldset">

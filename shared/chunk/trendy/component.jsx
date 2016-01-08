@@ -2,15 +2,14 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
+import fetchGoods from "./action.es6";
 
+import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Refresher from "../../component/refresher.jsx";
-import MaskLayer from "../../component/masklayer.jsx";
-import GoTop from "../../component/gotop.jsx";
 import Icon from "../../component/icon.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
-import {Tabs,TabsItem} from "../../component/tabs.jsx";
 
 class Trendy extends React.Component{
 
@@ -18,33 +17,44 @@ class Trendy extends React.Component{
         location.href="/search";
     }
 
-    renderContent(i){
-        const {pagination} = this.props;
-        var goods = [];
-       
-        if(pagination.length > 0){
-            pagination.forEach(function(item,i){
-                const key = "good-" + i;
-                goods.push(<GoodItem goods={item} key={key} />)
-            })
+
+    handleClick(index){
+ 
+        const {titles,list,dispatch} = this.props;
+
+        if(list[index].length){
+            return false;
         }
 
+        dispatch(fetchGoods('/trendyActivity',{
+            id:titles[index].id,
+            pageIndex:1,
+            index
+        }));
+    }
+
+    renderContent(list){
+        var goods = [];
+       
+        list.forEach(function(item,i){
+            goods.push(<GoodItem goods={item} key={"good-" + i} />)
+        })
+        
         return (
             <div className="activityGeneral">{goods}</div>
         );
     }
 
-    renderNav(){
-        var nav = ["美容彩妆","母婴用品","营养保健"];
-        return nav.map((name,i)=>{
-            return (
-                <TabsItem title={<i>{name}</i>} key={'nav-'+i}>{this.renderContent(i)}</TabsItem>
-            );
-        });
-    }
-
     render(){
-        
+        const {titles,list} = this.props;
+ 
+        const tabs = titles.map((item,i)=>{
+            return (
+                <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
+                    {this.renderContent(list[i])}
+                </SlideTabsItem>
+            )
+        })
         return (
             <div>
                 <Header canBack="false">
@@ -53,10 +63,11 @@ class Trendy extends React.Component{
                         <Icon icon="search"/>
                     </div>
                 </Header> 
-                <Tabs effect="slide">
-                    {this.renderNav()}
-                </Tabs>
- 
+                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
+                    {tabs}
+                </SlideTabs>
+     
+                <Refresher active={this.props.isFetching}/>
                 <Footer activeIndex="2"/>
             </div>
         )

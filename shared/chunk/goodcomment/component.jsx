@@ -1,19 +1,15 @@
 'use strict'
 
 import React,{Component} from "react";
-import _ from "lodash";
 import classNames from "classnames";
-import dom from "../../lib/dom.es6";
 import util,{apiRequest} from "../../lib/util.es6";
-import Alert from "../../component/alert.jsx";
-import Header from "../common/header.jsx";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
+import fetchComment from "./action.es6";
 
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
+import Header from "../common/header.jsx";
 import Node from "./partial/node.jsx";
-import fetchComment from "./action.es6";
-import {alert} from "../common/action.es6";
 
 
 class CommentList extends Component{

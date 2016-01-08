@@ -7,11 +7,13 @@ var MemberupdateApp = util.getSharedComponent("memberupdate");
 
 var update = function(req, res, next) {
     var user = req.session.user;
+    console.log(req.session)
     bluebird.props({
         memberDetailByUser: util.fetchAPI("memberDetailByUser", {
             memberId: user.memberId
-        },true)
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.memberDetailByUser.returnCode === 0) {
             var memberInfo = ret.memberDetailByUser.object;
             var initialState = {
@@ -23,24 +25,25 @@ var update = function(req, res, next) {
                 initialState: initialState
             })
         }else{
-            next(new Error(ret.memberDetailByUser.msg));
+            next(new Error(ret.memberDetailByUser.message));
         }
     });
 }
 
 var updateBasic = function(req, res, next) {
     var user = req.session.user;
-    var nickname = req.body.nickname;
+    var nickName = req.body.nickName;
     var gender = req.body.gender;
     var birthdy = req.body.birthdy;
     bluebird.props({
         updateBasicByUser: util.fetchAPI("updateBasicByUser", {
             memberId: user.memberId,
-            nickName: nickname,
+            nickName: nickName,
             gender: gender,
-            birthdy: birthdy
-        },true)
+            birthday: birthdy
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.updateBasicByUser.returnCode === 0) {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
@@ -67,8 +70,9 @@ var updatePassword = function(req, res, next) {
             opassword: oldPassword,
             password: password,
             rpassword: repeatPassword
-        },true)
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true

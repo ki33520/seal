@@ -1,0 +1,170 @@
+{
+    "areaNames": [
+        {
+            "name": "英国直采",
+            "id": "402880a55123a227015123a230060002"
+        },
+        {
+            "name": " 英国直采",
+            "id": "402880a55123a2e2015123a2ec8c0002"
+        },
+        {
+            "name": " 英国直采",
+            "id": "402880a55123ae71015123ae7a5a0002"
+        },
+        {
+            "name": " 泰国junit",
+            "id": "402880f550ffe14a0150ffe156f40000"
+        },
+        {
+            "name": " 英国直采",
+            "id": "402880a551240c440151240c4c190002"
+        },
+        {
+            "name": " 法国",
+            "id": "fc6804de51d824a50151e794b1d6001b"
+        },
+        {
+            "name": " 美国",
+            "id": "fc6804de51d824a50151e792d3b5001a"
+        }
+    ],
+    "brandNames": [
+        {
+            "name": "121",
+            "id": "402880e1516aa6c701516ae06a370001"
+        },
+        {
+            "name": " 爱他美",
+            "id": "fc6804de51e796dc0151e79ee4a60002"
+        },
+        {
+            "name": " 耐克junit",
+            "id": "402880f550ffe8900150ffe896810000"
+        },
+        {
+            "name": " 惠氏",
+            "id": "fc6804de51e796dc0151e7a094130003"
+        },
+        {
+            "name": " 荷兰牛栏",
+            "id": "fc6804de51e7a33f0151e7a3d7340000"
+        },
+        {
+            "name": " 甘尼克",
+            "id": "402880a55123a2e2015123a2ecf60003"
+        }
+    ],
+    "categoryNames": [
+        {
+            "name": "youa",
+            "id": "0 (13)"
+        },
+        {
+            "name": " 母婴3",
+            "id": "402880e1515b832101515b8336870000 (0)"
+        }
+    ],
+    "goodsList": [
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/",
+            "salesPrice": "1.00",
+            "originPrice": "1.00",
+            "discounts": "1.00",
+            "stock": false,
+            "id": "S454000000090",
+            "materTitle": "111",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/devfiles/tepin-test/v/n/1/1449197069989840.jpg",
+            "salesPrice": "1.00",
+            "originPrice": "1.00",
+            "discounts": "1.00",
+            "stock": false,
+            "id": "S634000000097",
+            "materTitle": "2345",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/",
+            "salesPrice": "188.00",
+            "originPrice": "200.00",
+            "discounts": "2.00",
+            "stock": true,
+            "id": "S618000000138",
+            "materTitle": "adidas 阿迪达斯 男士针织拉链连帽卫衣",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/",
+            "salesPrice": "198.00",
+            "originPrice": "200.00",
+            "discounts": "1.00",
+            "stock": true,
+            "id": "S814000000139",
+            "materTitle": "adidas 阿迪达斯 男士针织拉链连帽卫衣",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/",
+            "salesPrice": "198.00",
+            "originPrice": "200.00",
+            "discounts": "2.00",
+            "stock": true,
+            "id": "S764000000143",
+            "materTitle": "3件装 | Wyeth 惠氏 金装S26系列婴儿奶粉3段 900克 1-3岁",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/imageWapUrl",
+            "salesPrice": "198.00",
+            "originPrice": "200.00",
+            "discounts": "2.00",
+            "stock": true,
+            "id": "S314000000142",
+            "materTitle": "NII 中性款素描毛圈布卫衣 小麦色",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/",
+            "salesPrice": "198.00",
+            "originPrice": "200.00",
+            "discounts": "2.00",
+            "stock": true,
+            "id": "S709000000147",
+            "materTitle": "innisfree 悦诗风吟 香榧祛痘洗面奶 150毫升",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/",
+            "salesPrice": "198.00",
+            "originPrice": "200.00",
+            "discounts": "2.00",
+            "stock": true,
+            "id": "S667000000146",
+            "materTitle": "Sukin 苏芊 敏感肌肤适用洗面奶 125毫升",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/imageWapUrl",
+            "salesPrice": "70.00",
+            "originPrice": "100.00",
+            "discounts": "0.70",
+            "stock": true,
+            "id": "S0002938124",
+            "materTitle": "美国进口babyganics甘尼克果蔬奶瓶清洗液柑橘香型补充装946ml",
+            "flag": "http://imgtest.tepin.com/undefined"
+        },
+        {
+            "smallImageUrl": "http://imgtest.tepin.com/devfiles/tepin-test/v/n/1/1449197069989840.jpg",
+            "salesPrice": "70.00",
+            "originPrice": "100.00",
+            "discounts": "0.70",
+            "stock": true,
+            "id": "S00029381236",
+            "materTitle": "美国进口babyganics甘尼克果蔬奶瓶清洗液柑橘香型补充装946ml",
+            "flag": "http://imgtest.tepin.com/undefined"
+        }
+    ]
+}

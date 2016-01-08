@@ -22,24 +22,25 @@ export class SlideTabs extends Component{
         // noBounceScroll.disable()
     }
     shouldComponentUpdate(nextProps,nextState){
-        if(nextState.activeIndex !== this.state.activeIndex){
+        console.log(nextProps,this.props)
+        if(nextState.activeIndex !== this.state.activeIndex 
+            || nextProps.activeIndex !== this.props.activeIndex){
             return true
         }
         return false
     }
     handleSelect(i,e){
-        console.log('handleSelect')
         // e && e.preventDefault()
         this.setState({
             activeIndex:i
         },()=>{
-            this.props.onSelect()   
+            this.props.onSelect(i)   
         })
     }
     handleContentActiveChange(i,e){
         this.setState({
             activeIndex:i
-        })
+        },()=>this.props.onSelect(i))
     }
     renderNavbar(){
         let navigators = [];
@@ -74,16 +75,25 @@ export class SlideTabs extends Component{
             "slide-tabs-fixed":this.props.navbarSlidable === false,
             "slide-tabs-vertical":this.props.axis === "y"
         })
+        let tabsContent = (
+            <div className="slide-tabs-content"
+            >{React.Children.map(this.props.children,this.renderTabsItem.bind(this))}</div>
+        ) 
+        if(this.props.contentSlidable === true){
+            tabsContent = (
+                <Slidable axis={this.props.axis} name="content" 
+                transitionMove={true} 
+                onlyInside={true}
+                simulateTranslate={true}
+                handleActiveChange={this.handleContentActiveChange.bind(this)} 
+                activeIndex={this.state.activeIndex}>
+                <div className="slide-tabs-content">{React.Children.map(this.props.children,this.renderTabsItem.bind(this))}</div>
+                </Slidable>
+            )
+        }
         return (
             <div className={classes}>
-            <Slidable axis={this.props.axis} name="content" 
-            transitionMove={true} 
-            onlyInside={true}
-            simulateTranslate={true}
-            handleActiveChange={this.handleContentActiveChange.bind(this)} 
-            activeIndex={this.state.activeIndex}>
-            <div className="slide-tabs-content">{React.Children.map(this.props.children,this.renderTabsItem.bind(this))}</div>
-            </Slidable>
+            {tabsContent}
             {this.renderNavbar()}
             </div>
         )
@@ -94,6 +104,7 @@ SlideTabs.defaultProps = {
     activeIndex:0,
     axis:"x",
     navbarSlidable:true,
+    contentSlidable:true,
     onSelect:()=>{}
 }
 
@@ -139,14 +150,11 @@ export class SlideTabsItem extends Component{
         const classes = classNames("slide-tabs-item",this.props.className,{
             active
         })
-        let child = React.Children.only(this.props.children)
         return (
             <div className={classes} key={identify} style={this.state.itemStyle} 
             onTouchMove={this.handleTouchMove.bind(this)} 
             onTouchStart={this.handleTouchStart.bind(this)}>
-            {React.cloneElement(child,Object.assign({},child.props,{
-                    redraw:this.state.itemStyle !== null
-            }))}
+            {this.props.children}
             </div>
         )
     }

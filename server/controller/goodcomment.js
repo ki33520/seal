@@ -27,11 +27,11 @@ var index = function(req, res, next) {
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var pageSize = 5;
     bluebird.props({
-        allComment: util.fetchAPI("allCommentById", {
+        allComment: util.fetchAPI("goodCommentByUser", {
             productCode: goodId,
             pageIndex: pageIndex,
             pageSize: pageSize
-        },true)
+        },false)
     }).then(function(ret) {
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
@@ -68,11 +68,11 @@ var showComment = function(req, res, next) {
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var pageSize = 5;
     bluebird.props({
-        showComment: util.fetchAPI("showCommentById", {
+        showComment: util.fetchAPI("goodCommentByUser", {
             productCode: goodId,
             pageIndex: pageIndex,
             pageSize: pageSize
-        },true)
+        },false)
     }).then(function(ret) {
         if (ret.showComment.returnCode === 0) {
             var showComment = {},

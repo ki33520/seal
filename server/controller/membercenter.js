@@ -14,17 +14,18 @@ var memberCenter = function(req, res, next) {
     var authorized = req.session.user !== undefined;
     if (authorized === true) {
         var user = req.session.user;
-
+        console.log(user)
         bluebird.props({
-            memberDetailByUser: util.fetchAPI("memberDetailByUser", {
+            memberMemberInfo: util.fetchAPI("memberMemberInfo", {
                 memberId: user.memberId
-            },true),
+            },false),
             memberCountOrder: util.fetchAPI("memberCountOrder", {
                 memberId: user.memberId
-            },true),
+            },false),
         }).then(function(ret) {
-            if (ret.memberDetailByUser.returnCode === 0 && ret.memberCountOrder.returnCode === 0) {
-                var member = ret.memberDetailByUser.object;
+            console.log(ret)
+            if (ret.memberMemberInfo.returnCode === 0 && ret.memberCountOrder.returnCode === 0) {
+                var member = ret.memberMemberInfo.object;
                 var countOrder = ret.memberCountOrder.object;
                 var initialState = {
                     isFetched: true,
@@ -43,8 +44,8 @@ var memberCenter = function(req, res, next) {
                     initialState: initialState
                 })
             }else{
-                if(!ret.memberDetailByUser.returnCode){
-                    next(new Error(ret.memberDetailByUser.message));
+                if(!ret.memberMemberInfo.returnCode){
+                    next(new Error(ret.memberMemberInfo.message));
                 }
                 if(!ret.memberCountOrder.returnCode){
                     next(new Error(ret.memberCountOrder.message));
@@ -53,12 +54,12 @@ var memberCenter = function(req, res, next) {
         });
     }else{
         bluebird.props({
-            memberDetailByUser: util.fetchAPI("memberDetailByUser", {
+            memberMemberInfo: util.fetchAPI("memberMemberInfo", {
                 memberId: ''
             },true)
         }).then(function(ret) {
-            if (ret.memberDetailByUser.returnCode === 0) {
-                var member = ret.memberDetailByUser.object;
+            if (ret.memberMemberInfo.returnCode === 0) {
+                var member = ret.memberMemberInfo.object;
                 var initialState = {
                     isFetched: true,
                     isLogined: authorized,
@@ -76,7 +77,7 @@ var memberCenter = function(req, res, next) {
                     initialState: initialState
                 })
             }else{
-                next(new Error(ret.memberDetailByUser.msg));
+                next(new Error(ret.memberMemberInfo.msg));
             }
         });
     }

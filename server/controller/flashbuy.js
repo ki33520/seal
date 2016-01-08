@@ -2,12 +2,18 @@
 var util = require("../lib/util");
 var FlashBuy = util.getSharedComponent("flashbuy");
 var config = require("../lib/config");
+var _ = require("lodash");
 
 var flashBuy = function(req,res,next) {
-    util.fetchAPI("index",{},true).then(function(ret){
-        if(ret.code === "success"){
+    var id = req.params.id
+    util.fetchAPI("flashBuy",{
+        manageId:id,
+        start:0,
+        limit:10
+    }).then(function(ret){
+        if(ret.returnCode === 0){
             var initialState = {
-                data:ret.object
+                groupGoods:ret.object
             };
             var markup = util.getMarkupByComponent(FlashBuy({
                 initialState:initialState
@@ -24,5 +30,19 @@ var flashBuy = function(req,res,next) {
         next(new Error("api request failed"))
     })
 };
+
+function flashBuyFilter(flashbuys){
+    var _flashbuys = _.map(flashbuys,function(flashbuy){
+        return {
+            imageUrl:config.imgServer + flashbuy.imageUrl,
+            startTime:flashbuy.startTime,
+            endTime:flashbuy.endTime,
+        }
+    })
+    _flashbuys = _.groupBy(_flashbuys,function(flashbuy){
+        return flashbuy.startTime == null
+    })
+    return _flashbuys
+}
 
 module.exports = flashBuy

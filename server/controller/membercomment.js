@@ -27,17 +27,19 @@ var index = function(req, res, next) {
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var pageSize = 5;
     bluebird.props({
-        allComment: util.fetchAPI("allCommentByUser", {
+        allComment: util.fetchAPI("memberCommentByUser", {
             memberId: user.memberId,
+            status: 2,
             pageIndex: pageIndex,
             pageSize: pageSize
-        },true)
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
                 object = ret.allComment.object;
             allComment.totalCount = object.totalCount;
-            allComment.list = _.slice(formatComment(object.result),0,pageIndex*pageSize);
+            allComment.list = object.result ? _.slice(formatComment(object.result),0,pageIndex*pageSize) : [];
             allComment.pageIndex = pageIndex;
             allComment.pageSize = pageSize;
             if (req.xhr === true) {
@@ -67,12 +69,14 @@ var showComment = function(req, res, next) {
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var pageSize = 5;
     bluebird.props({
-        showComment: util.fetchAPI("showCommentByUser", {
+        showComment: util.fetchAPI("memberCommentByUser", {
             memberId: user.memberId,
+            status: 2,
             pageIndex: pageIndex,
             pageSize: pageSize
-        },true)
+        },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.showComment.returnCode === 0) {
             var showComment = {},
                 object = ret.showComment.object;

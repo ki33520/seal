@@ -8,37 +8,22 @@ import {Tabs,TabsItem} from "../../component/tabs.jsx";
 
 class FlashBuy extends Component{
     renderGoods(){
-        return (
-            <div className="flashBuy">
-                <a href="/gooddetail/1" className="clearfix">
-                    <img src="/client/asset/images/pic8.gif" />
-                    <div className="right">
-                        <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
-                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                        <span className="nowPrice">&yen;99.0</span>
-                        <span className="oldPrice">&yen;199.0</span>
-                    </div>
-                </a>
-                <a href="/gooddetail/1" className="clearfix">
-                    <img src="/client/asset/images/pic8.gif" />
-                    <div className="right">
-                        <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
-                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                        <span className="nowPrice">&yen;99.0</span>
-                        <span className="oldPrice">&yen;199.0</span>
-                    </div>
-                </a>
-                <a href="/gooddetail/1" className="clearfix">
-                    <img src="/client/asset/images/pic8.gif" />
-                    <div className="right">
-                        <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
-                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                        <span className="nowPrice">&yen;99.0</span>
-                        <span className="oldPrice">&yen;199.0</span>
-                    </div>
-                </a>
-            </div>
-        )
+        const {groupGoods} = this.props.flashBuy
+        if(groupGoods){
+            return groupGoods.map((good,i)=>{
+                return (
+                    <a href="/gooddetail/1" className="clearfix" key={i}>
+                        <img src={good.imageUrl} />
+                        <div className="right">
+                            <span className="name">{good.title}</span>
+                            <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
+                            <span className="nowPrice">&yen;{good.salePrice}</span>
+                            <span className="oldPrice">&yen;{good.originPrice}</span>
+                        </div>
+                    </a>
+                )
+            })
+        }
     }
     render(){
         return (
@@ -50,7 +35,7 @@ class FlashBuy extends Component{
                     <div className="titleBorder"></div>
                     <p><em>14</em>时<em>14</em>分<em>14</em>秒</p>
                 </div>
-                {this.renderGoods()}
+                <div className="flashBuy">{this.renderGoods()}</div>
             </div>
             <div className="willFlash">
                 <div className="willFlash_title">
@@ -58,9 +43,9 @@ class FlashBuy extends Component{
                 </div>
                 <div className="willFlash_con">
                     <div className="willFlash_time">开售时间<em>12:00</em></div>
-                    {this.renderGoods()}
+                    <div className="flashBuy">{this.renderGoods()}</div>
                     <div className="willFlash_time">开售时间<em>12:30</em></div>
-                    {this.renderGoods()}
+                    <div className="flashBuy">{this.renderGoods()}</div>
                     <div className="willFlash_line"></div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import {combineReducers} from "redux";
 import _ from "lodash";
 import {REQUEST_GOODS,RECEIVE_GOODS} from "./action.es6";
 
-function goodsByParam(state={},action){
+function flashBuy(state={},action){
     switch(action.type){
         case REQUEST_GOODS:
             return Object.assign({},state,{
@@ -20,7 +20,7 @@ function goodsByParam(state={},action){
 }
 
 const rootReducer = combineReducers({
-    goodsByParam
+    flashBuy
 });
 
 export default rootReducer;

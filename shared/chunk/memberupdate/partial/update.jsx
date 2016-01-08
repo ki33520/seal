@@ -14,7 +14,7 @@ class Update extends Component{
                     <span className="title">账户设置</span>
                 </Header>
                 <ul className="userInfo">
-                    <li>nickname: {memberInfo.nickname}</li>
+                    <li>nickname: {memberInfo.nickName}</li>
                     <li>email: {memberInfo.email}</li>
                     <li>mobileNumber: {memberInfo.mobileNumber}</li>
                 </ul>

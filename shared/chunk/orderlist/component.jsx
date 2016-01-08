@@ -9,7 +9,7 @@ class OrderList extends Component{
     renderOrders(){
         const {pagination} = this.props;
         // console.log('pagination',pagination.list)
-        if(pagination.list.length > 0){
+        if(pagination.result && pagination.result.length > 0){
             const orders = pagination.list.map((v,i)=>{
                 const key = "order-item-" + i;
                 return (
@@ -21,6 +21,7 @@ class OrderList extends Component{
         return null;
     }
     render(){
+        console.log(this.props)
         return (
             <div className="order-list-content">
             <Header>我的订单</Header>

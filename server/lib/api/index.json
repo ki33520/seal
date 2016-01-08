@@ -1,0 +1,16 @@
+{
+    "flashBuy": {
+        "uri": "/content/v1/activitysg/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "fetchAssociateKeywords":{
+        "uri":  "/search/v1/findListByAssociateWAP",
+        "baseURL": {
+            "develop": "http://192.168.0.161:7988",
+            "production": "http://product.tepin.hk"
+        }
+    }
+}

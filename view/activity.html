@@ -1,19 +1,17 @@
 {% extends "./layout.html" %}
-{% block title %}专题活动{% endblock %}
+{% block title %}专场活动{% endblock %}
 {% block css %}
 <!-- inject:css -->
-<link rel="stylesheet" href="/client/bundle/activity/dist/activity-c3b915c1a559522de5ff.css">
+<link rel="stylesheet" href="/client/bundle/activity/dist/activity-25fa11dee3e68b879c63.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="activity-container">
-    <div id="activity">{{ markup|safe }}</div>
-</div>
+<div id="activity-container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="/client/vendor/dist/react-c3b915c1a559522de5ff.js"></script>
-<script src="/client/bundle/activity/dist/activity-c3b915c1a559522de5ff.js"></script>
+<script src="/client/vendor/dist/react-25fa11dee3e68b879c63.js"></script>
+<script src="/client/bundle/activity/dist/activity-25fa11dee3e68b879c63.js"></script>
 <!-- endinject -->
 {% endblock %}

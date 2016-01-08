@@ -3,34 +3,38 @@
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
-var Activity = util.getSharedComponent("activity");
+var ActivityApp = util.getSharedComponent("activity");
+
+function filterResult(result){
+    let list = [];
+
+
+}
 
 var activity = function(req, res, next) {
 
-    var pageIndex = req.query.pageIndex || 1;
+    let pageIndex = req.query.pageIndex || 1;
     bluebird.props({
         goods: util.fetchAPI("specialActivity", {
-            pageIndex: pageIndex,
-            pageSize: 12
-        }, true)
+            activityId:req.params.id,
+            start: pageIndex,
+            limit: 12
+        })
     }).then(function(resp) {
-        // resp = resp[0].body
-        if (resp.goods.code === "success") {
-            resp.goods.page.list.map(function(v) {
-                v.smallImageUrl = '/client/asset/' + v.smallImageUrl;
-                v.country.icon = '/client/asset/'+ v.country.icon;
-            })
+ 
+        if (resp.goods.returnCode === 0) {
+             
             if (req.xhr === true) {
                 res.json(resp);
             } else {
                  
-                var initialState = {
+                let initialState = {
                     isFetched: true,
                     title : '专场活动',
                     pagination: resp.goods.page
                 };
 
-                var markup = util.getMarkupByComponent(Activity({
+                let markup = util.getMarkupByComponent(ActivityApp({
                     initialState: initialState
                 }));
 
@@ -47,7 +51,5 @@ var activity = function(req, res, next) {
     });
 
 }
-
-
 
 module.exports = activity;

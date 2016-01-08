@@ -1,0 +1,17 @@
+{% extends "./layout.html" %}
+{% block title %}类目聚合页{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<link rel="stylesheet" href="/client/bundle/polymer/dist/polymer-25fa11dee3e68b879c63.css">
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div id="category-container">{{ markup|safe }}</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/client/vendor/dist/react-25fa11dee3e68b879c63.js"></script>
+<script src="/client/bundle/polymer/dist/polymer-25fa11dee3e68b879c63.js"></script>
+<!-- endinject -->
+{% endblock %}

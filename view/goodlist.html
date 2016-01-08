@@ -2,18 +2,16 @@
 {% block title %}搜索结果{% endblock %} 
 {% block css %}
 <!-- inject:css -->
-<link rel="stylesheet" href="/client/bundle/goodlist/dist/goodlist-c3b915c1a559522de5ff.css">
+<link rel="stylesheet" href="/client/bundle/goodlist/dist/goodlist-25fa11dee3e68b879c63.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="good-list-container">
-    <div id="good-list">{{ markup|safe }}</div>
-</div>
+<div id="good-list-container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="/client/vendor/dist/react-c3b915c1a559522de5ff.js"></script>
-<script src="/client/bundle/goodlist/dist/goodlist-c3b915c1a559522de5ff.js"></script>
+<script src="/client/vendor/dist/react-25fa11dee3e68b879c63.js"></script>
+<script src="/client/bundle/goodlist/dist/goodlist-25fa11dee3e68b879c63.js"></script>
 <!-- endinject -->
 {% endblock %}

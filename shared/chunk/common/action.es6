@@ -1,6 +1,16 @@
 'use strict';
-export const SHOW_ALERT = "SHOW_ALERT";
-export const HIDE_ALERT = "HIDE_ALERT";
+import {
+    CHANGE_FIELD,
+    SHOW_ALERT,HIDE_ALERT
+} from "./constant.es6"
+
+export function changeField(name,value){
+    return {
+        type:CHANGE_FIELD,
+        name,
+        value
+    }
+}
 
 function showAlert(content){
     return {
