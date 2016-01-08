@@ -5,9 +5,7 @@
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="coupon-container">
-    <div id="coupon">{{ markup|safe }}</div>
-</div>
+<div id="coupon" class="coupon-container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
