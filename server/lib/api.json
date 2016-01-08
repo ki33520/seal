@@ -180,5 +180,12 @@
             "develop": "http://marketing.hwg.youayun.cn:7985",
             "production": "marketing.hwg.youayun.cn"
         }
+    },
+    "specialActivity": {
+        "uri": "/content/v1/templetedetail/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "production": "marketing.hwg.youayun.cn"
+        }
     }
 }
