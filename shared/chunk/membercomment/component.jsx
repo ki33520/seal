@@ -55,7 +55,7 @@ class CommentList extends Component{
         this.beginRefresh(0,flag);
     }
     render(){
-        var {allComment,showComment,activeIndex,isFetching} = this.props;
+        var {allComment,showComment,isFetching} = this.props;
         return (
             <div className="comment-content">
                 <div className="comment-header">
@@ -64,7 +64,7 @@ class CommentList extends Component{
                     </Header>
                 </div>
                 <div className="tab-content">
-                    <SlideTabs axis="x" onSelect={this.toggleFlag.bind(this)} >
+                    <SlideTabs axis="x" activeIndex={this.state.displayFlag} onSelect={this.toggleFlag.bind(this)} >
                         <SlideTabsItem navigator={()=><span><b>全部评论</b></span>}>
                             <Floor comments={allComment} ref="floor"/>
                         </SlideTabsItem>

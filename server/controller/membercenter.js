@@ -14,7 +14,7 @@ var memberCenter = function(req, res, next) {
     var authorized = req.session.user !== undefined;
     if (authorized === true) {
         var user = req.session.user;
-
+        console.log(user)
         bluebird.props({
             memberMemberInfo: util.fetchAPI("memberMemberInfo", {
                 memberId: user.memberId

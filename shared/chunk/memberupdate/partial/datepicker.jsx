@@ -3,9 +3,6 @@
 import React,{Component} from "react";
 
 class Datepicker extends Component{
-    year(){
-        console.log(this.refs.year)
-    }
     render(){
         const {year,month,day,max,birthdyChange} = this.props;
         var optionYear = [],
