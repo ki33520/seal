@@ -4,27 +4,27 @@
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
-var Coupon = util.getSharedComponent("coupon");
-var pageSize = 10;
+var CouponApp = util.getSharedComponent("coupon");
+ 
 
-function couponByUser(config) {
-    return util.fetchAPI("couponByUser", config,true);
+function couponByUser(param) {
+    return util.fetchAPI("couponByUser", param);
 }
 
 function formatCoupons(originalCoupons) {
-    var site={
+    let site={
             tepin:"特品汇www.tepin.com",
             hnmall:"农博汇www.hnmall.com",
             haitao:"海外购www.tepin.hk"
         };
-    var coupons = originalCoupons.map((v,k)=>{
+    let coupons = originalCoupons.map((v,k)=>{
         //v.validityDate = moment(v.validityDate,'YYYY-MM-DD HH:mm');
         //v.issueDate = moment(v.issueDate,'YYYY-MM-DD HH:mm');
-        var flag = flagOfCoupon(v);
-        var d1 = new Date(v.validityDate);
-        var d2 = new Date(v.issueDate);
-        v.validityDate = d1.getFullYear()+'.'+d1.getMonth()+'.'+d1.getDay();
-        v.issueDate = d2.getFullYear()+'.'+d2.getMonth()+'.'+d2.getDay();
+        let flag = flagOfCoupon(v);
+        let d1 = new Date(v.validityDate);
+        let d2 = new Date(v.issueDate);
+        v.validityDate = d1.getFullYear()+'.'+(d1.getMonth()+1)+'.'+d1.getDay();
+        v.issueDate = d2.getFullYear()+'.'+(d2.getMonth()+1)+'.'+d2.getDay();
         v.flag = flag;
         v.site = site[flag];
         return v;
@@ -63,44 +63,37 @@ function flagOfCoupon(coupon) {
     return flag;
 }
 
- 
-
 var coupon = function(req, res, next) {
-
-    var memberId = 'fc6804de4ffab221014ffd0ed2160001';
-    
-
-    //优惠券状态:0未生效,1已使用,2已过期,3可使用.
-    //4已失效(已失效，包括已使用和已过期),5有效券(有效优惠券，包括可使用和未生效)
+    let user = req.session.user;
+    let memberId = 'fc6804de51c482730151e8ec0a080023';
+    //优惠券状态:0未使用(包含已生效、未生效)
+    //3已失效(包括已使用和已过期)
     //是否联盟 0：非联盟,1：联盟 
     bluebird.props({
-        enableCoupons: couponByUser({
+        coupons: couponByUser({
             memberId: memberId,
             isMerchants: 0,
-            status: 0,
-            pageSize: pageSize,
-            currentPage: 1
+            status: 5,
+            pageSize: 10,
+            pageIndex: 1
         })
     }).then(function(resp) {
-        // resp = resp[0].body
-        if(resp.enableCoupons.returnCode===0){
-            var enableCoupons = [];
+        console.log(resp.coupons.object.result)
+        if(resp.coupons.returnCode===0){
+            let coupons = [];
+            let result = resp.coupons.object.result;
 
-            if (resp.enableCoupons.object.result !== null && 
-                resp.enableCoupons.object.result.length > 0) {
-                enableCoupons = formatCoupons(resp.enableCoupons.object.result)
+            if (result && result.length) {
+                coupons = formatCoupons(result);
             }
 
-            var initialState = {
-                enableCoupons: enableCoupons,
-                invalidCoupons:[],
+            let initialState = {
+                youaCoupons: coupons,
                 legueCoupons:[],
-                enableIndex:1,
-                invalidIndex:0,
-                legueIndex:0
+                invalidCoupons:[]
             };
 
-            var markup = util.getMarkupByComponent(Coupon({
+            let markup = util.getMarkupByComponent(CouponApp({
                 initialState: initialState
             }));
 
@@ -115,15 +108,15 @@ var coupon = function(req, res, next) {
 }
 
 var fetchCoupon = function(req, res, next){
-    var memberId = 'fc6804de4ffab221014ffd0ed2160001';
-    var isMerchants = req.body.isMerchants;
-    var status = req.body.status;
-    var pageIndex=req.body.pageIndex;
-    var pageSize = 10;
+    let user = req.session.user;
+    let isMerchants = req.body.isMerchants;
+    let status = req.body.status;
+    let pageIndex=req.body.pageIndex;
+    let pageSize = 10;
  
     bluebird.props({
         coupons: couponByUser({
-            memberId,
+            memberId:user.memberId,
             isMerchants,
             status,
             pageSize,
@@ -131,7 +124,7 @@ var fetchCoupon = function(req, res, next){
         })
     }).then(function(resp) {
         if(resp.coupons.returnCode===0){
-            var coupons = formatCoupons(resp.coupons.object.result);
+            let coupons = formatCoupons(resp.coupons.object.result);
             res.json({
                 isFetched: true,
                 pageIndex:pageIndex,

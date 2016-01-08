@@ -7,11 +7,11 @@ var OrderList = util.getSharedComponent("orderlist");
 
 var orderList = function(req, res,next) {
     var user = req.session.user;
-    var status = req.query.status !== undefined ? req.query.status : 0 ;
+    var status = req.query.status !== undefined ? Number(req.query.status) : 0 ;
     var pageIndex = req.query.pageIndex !== undefined ? req.query.pageIndex : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
     util.fetchAPI("orderByUser", {
-        memberId: user.memberId,
+        memberId: 'fc6804de51c482730151e8ec0a080023',
         timeType: timeType,
         orderStatus: status,
         pageNo: pageIndex,

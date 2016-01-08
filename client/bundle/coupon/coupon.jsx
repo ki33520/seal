@@ -1,11 +1,11 @@
 'use strict';
-import Coupon from "../../../shared/chunk/coupon/app.jsx";
+import CouponApp from "../../../shared/chunk/coupon/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<Coupon initialState={initialState} />,document.getElementById('coupon'));
+    ReactDOM.render(<CouponApp initialState={initialState} />,document.getElementById('coupon'));
 }
 
 if(typeof window.addEventListener){
