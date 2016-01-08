@@ -19,11 +19,9 @@ var activity = function(req, res, next) {
             activityId:req.params.id,
             start: pageIndex,
             limit: 12
-        })
+        },true)
     }).then(function(resp) {
- 
         if (resp.goods.returnCode === 0) {
-             
             if (req.xhr === true) {
                 res.json(resp);
             } else {

@@ -225,10 +225,6 @@ class Slidable extends Component{
             this.translateY = - maxBeyondY
         }else if(maxBeyondX <= (- this.translateX) && maxBeyondX > 0 && axis === "x"){
             this.translateX = - maxBeyondX
-        }else if(translateNode.offsetHeight < translateNode.parentNode.offsetHeight){
-            // this.translateY = 0
-        }else if(translateNode.offsetWidth < translateNode.parentNode.offsetWidth && axis === "x"){
-            // this.translateX = 0;
         }else{
             onEdge()
         }

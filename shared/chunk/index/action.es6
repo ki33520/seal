@@ -2,6 +2,7 @@
 import {apiRequest} from "../../lib/util.es6";
 import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND
 } from "./constant.es6";
@@ -83,3 +84,29 @@ export function fetchNewRecommend(param){
         })
     }
 }
+
+export {changeField} from "../common/action.es6";
+function requestAssociateWord(param){
+    return {
+        type:REQUEST_ASSOICATEWORD,
+        param
+    }
+}
+
+function responseAssociateWord(param,res){
+    return {
+        type:RESPONSE_ASSOICATEWORD,
+        param,
+        res
+    }
+}
+
+export function fetchAssociateKeywords(param){
+    return (dispatch)=>{
+        dispatch(requestAssociateWord(param));
+        apiRequest("/searchassociate",param,{method:"POST"}).then((res)=>{
+            dispatch(responseAssociateWord(param,res));
+        })
+    }
+}
+

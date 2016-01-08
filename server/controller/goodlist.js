@@ -66,7 +66,6 @@ var goodList = function(req, res, next) {
             currentPage
         })
     }).then(function(resp) {
-
         if (resp.goods.returnCode === 0) {
             let result = filterResult(resp.goods);
             if (req.xhr === true) {

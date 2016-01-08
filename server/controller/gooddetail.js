@@ -7,11 +7,10 @@ var GoodDetailApp = util.getSharedComponent("gooddetail");
 
 var goodDetail = function(req, res, next) {
     var id = req.params.id;
-    var user = req.session.user;
     util.fetchAPI("goodById", {
-        productId: id
-    }, true).then(function(ret) {
-        // console.log('ret',ret)
+        code: id,
+        channel:"Mobile"
+    },true).then(function(ret) {
         if (ret.code === "success") {
             var good = ret.object;
             var properties = [];
@@ -23,7 +22,7 @@ var goodDetail = function(req, res, next) {
                         propertyValues: [],
                     });
                 })
-                //fill specValue with item's propValues
+            //fill specValue with item's propValues
             _.each(good.items, function(v) {
                     _.each(properties, function(property, k) {
                         properties[k].propertyValues.push({
@@ -71,6 +70,20 @@ var goodDetail = function(req, res, next) {
             next(new Error(ret.msg));
         }
     })
+}
+
+function goodFilter(good){
+    var _good = {};
+    _good["imageUrl"] = good.picList
+    _good["salePrice"] = good.salesPrice
+    _good["originPrice"] = good.originPrice
+    _good["discount"] = good.discount
+    _good["isMain"] = good.isMain
+    _good["title"] = good.title
+    _good["subTitle"] = good.subTitle
+    _good["detail"] = good.detail
+    _good["stock"] = good.stock.currentStock
+    _good["warehouse"] = good.wareHouse.name
 }
 
 module.exports = goodDetail;

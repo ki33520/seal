@@ -21,14 +21,13 @@ export class SlideTabs extends Component{
     componentWillUnmount(){
         // noBounceScroll.disable()
     }
-    shouldComponentUpdate(nextProps,nextState){
-        console.log(nextProps,this.props)
-        if(nextState.activeIndex !== this.state.activeIndex 
-            || nextProps.activeIndex !== this.props.activeIndex){
-            return true
-        }
-        return false
-    }
+    // shouldComponentUpdate(nextProps,nextState){
+    //     if(nextState.activeIndex !== this.state.activeIndex 
+    //         || nextProps.activeIndex !== this.props.activeIndex){
+    //         return true
+    //     }
+    //     return false
+    // }
     handleSelect(i,e){
         // e && e.preventDefault()
         this.setState({

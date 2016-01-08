@@ -1,15 +1,21 @@
 'use strict';
 
 import {
-    REQUEST_HOTWORD,
-    RESPONSE_HOTWORD,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND
 } from "./constant.es6";
+import {CHANGE_FIELD} from "../common/constant.es6";
 import {combineReducers} from "redux";
 
 function search(state={},action){
     switch(action.type){
+        case CHANGE_FIELD:
+            const {name,value} = action;
+            return Object.assign({},state,{
+                [name]:value
+            });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{
                 hotwordFetched:false,
@@ -22,6 +28,19 @@ function search(state={},action){
                 hotwords,
                 hotwordFetched,
                 hotwordFetching:false
+            })
+        case REQUEST_ASSOICATEWORD:
+            return Object.assign({},state,{
+                associateWordFetched:false,
+                associateWordFetching:true
+            });
+        case RESPONSE_ASSOICATEWORD:
+            const associatewords = action.res.result;
+            const associateWordFetched = action.res.associateWordFetched;
+            return Object.assign({},state,{
+                associatewords,
+                associateWordFetched,
+                associateWordFetching:false
             })
         default:
             return state;

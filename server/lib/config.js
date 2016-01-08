@@ -2,6 +2,8 @@
 var _ = require("lodash");
 var api = require("./api.json");
 
+api = _.extend(api,require("./api/index.json"))
+
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
     "oathServer": "https://login.tepin.com",
@@ -26,7 +28,7 @@ config.api = _.mapValues(api, function(v) {
     if(runtime === "develop"){
         v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
     }else{
-        v.url = v.baseURL["production"]?v.baseURL["production"] + v.uri:config.apiServer
+        v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
     }
     // v.url = config.apiServer + v.uri;
     return v;
