@@ -12,9 +12,9 @@ class Floor extends Component{
     componentDidMount(){
         const {fetchSingleRecommend,fetchNewRecommend} = this.props;
         const {newRecommendId,singleRecommendId} = this.props.floors;
-        // fetchSingleRecommend({
-        //     activityId:singleRecommendId,
-        // })
+        fetchSingleRecommend({
+            activityId:singleRecommendId,
+        })
         fetchNewRecommend({
             activityId:newRecommendId
         })
