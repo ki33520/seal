@@ -5,7 +5,7 @@ import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
 
-const orderStatus = {
+const orderStatusObj = {
     "STATUS_NOT_PAY":"待付款",
     "STATUS_WAIT_CONFIRM":"待审核",
     "STATUS_CONFIRMED":"待发货",
@@ -24,50 +24,50 @@ class OrderItem extends Component{
             </div>
         )
     }
-    renderGoods(goods){
-        if(goods.length > 1){
-            goods = goods.map((good,i)=>{
+    renderGoods(itemList){
+        if(itemList.length > 1){
+            itemList = itemList.map((good,i)=>{
                 return (
                     <span className="img_wrap J_ytag cartlist" key={i}>
-                    <image src={good.imageUrl} key={i}/>
+                    <image src={good.singleImageUrl} key={i}/>
                     </span>
                 )
             })
             return (
                 <div className="J_moveRight">
-                    <div className="clearfix">{goods}</div>
+                    <div className="clearfix">{itemList}</div>
                 </div>
             )
         }
-        let good = goods[0];
+        let good = itemList[0];
         return (
             <div className="J_moveRight">
                 <div className="clearfix">
                     <span className="img_wrap J_ytag cartlist">
-                        <Image src={good.imageUrl} />
+                        <Image placeholder={good.singleImageUrl} />
                     </span>
                     <div className="gd_info">
-                        <p className="name">{good.title}</p>
-                        <p className="value">&yen;{good.salePrice}</p>
+                        <p className="name">{good.singleTitle}</p>
+                        <p className="value">&yen;{good.salesTotalFee}</p>
                     </div>
                 </div>
             </div>
         )
     }
     render(){
-        const {createdAt,id,orderNo,goods,finalFee,status} = this.props;
+        const {orderCrtTime,id,orderNo,itemList,totalFee,orderStatus} = this.props;
         return (
             <div className="order-box">
                 <div className="order-up">
-                    <span>{moment(createdAt).format("YYYY-MM-DD")}</span>
+                    <span>{moment(orderCrtTime).format("YYYY-MM-DD")}</span>
                     <div className="right">
                         <i>01:15:47&nbsp;后自动取消</i>
-                        <em>{orderStatus[status]}</em>
+                        <em>{orderStatusObj[orderStatus]}</em>
                     </div>
                 </div>
-                <div className="order-list"><a href={"/orderdetail/"+id}>{this.renderGoods(goods)}</a></div>
+                <div className="order-list"><a href={"/orderdetail/"+id}>{this.renderGoods(itemList)}</a></div>
                 <div className="order-down">
-                    <span>合计：<em>&yen;{finalFee}</em></span>
+                    <span>合计：<em>&yen;{totalFee}</em></span>
                     {this.renderButtons()}
                 </div>
             </div>

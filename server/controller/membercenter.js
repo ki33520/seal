@@ -17,10 +17,10 @@ var memberCenter = function(req, res, next) {
         console.log(user)
         bluebird.props({
             memberMemberInfo: util.fetchAPI("memberMemberInfo", {
-                memberId: user.memberId
+                memberId: 'fc6804de51c482730151e8ec0a080023'
             },false),
             memberCountOrder: util.fetchAPI("memberCountOrder", {
-                memberId: user.memberId
+                memberId: 'fc6804de51c482730151e8ec0a080023'
             },false),
         }).then(function(ret) {
             console.log(ret)

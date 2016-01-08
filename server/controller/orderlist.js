@@ -11,7 +11,7 @@ var orderList = function(req, res,next) {
     var pageIndex = req.query.pageIndex !== undefined ? req.query.pageIndex : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
     util.fetchAPI("orderByUser", {
-        memberId: user.memberId,
+        memberId: 'fc6804de51c482730151e8ec0a080023',
         timeType: timeType,
         orderStatus: status,
         pageNo: pageIndex,

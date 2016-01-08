@@ -10,7 +10,7 @@ class OrderList extends Component{
         const {pagination} = this.props;
         // console.log('pagination',pagination.list)
         if(pagination.result && pagination.result.length > 0){
-            const orders = pagination.list.map((v,i)=>{
+            const orders = pagination.result.map((v,i)=>{
                 const key = "order-item-" + i;
                 return (
                     <OrderItem {...v} key={key}/>
