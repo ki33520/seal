@@ -15,9 +15,9 @@ class Floor extends Component{
         // fetchSingleRecommend({
         //     activityId:singleRecommendId,
         // })
-        // fetchNewRecommend({
-        //     activityId:newRecommendId
-        // })
+        fetchNewRecommend({
+            activityId:newRecommendId
+        })
     }
     renderSingleRecommend(){
         let {singleRecommend} = this.props.index;
@@ -100,7 +100,7 @@ class Floor extends Component{
         if(flashbuys === null){
             return null
         }
-        return flashbuys[0].activityProductList.map((good,i)=>{
+        return flashbuys.map((good,i)=>{
             return (
             <a href="/gooddetail/1" className="clearfix" key={i}>
                 <img src="/client/asset/images/pic8.gif" />
@@ -109,7 +109,7 @@ class Floor extends Component{
                     <div className="flashDot"></div>
                     <span className="name">{good.title}</span>
                     <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                    <span className="nowPrice">&yen;{good.salesPrice}</span>
+                    <span className="nowPrice">&yen;{good.salePrice}</span>
                     <span className="oldPrice">&yen;{good.originPrice}</span>
                 </div>
             </a>
