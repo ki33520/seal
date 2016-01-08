@@ -7,10 +7,9 @@ var MemberupdateApp = util.getSharedComponent("memberupdate");
 
 var update = function(req, res, next) {
     var user = req.session.user;
-    console.log(req.session)
     bluebird.props({
         memberDetailByUser: util.fetchAPI("memberDetailByUser", {
-            memberId: user.memberId
+            memberId: 'fc6804de51c482730151e8ec0a080023'
         },false)
     }).then(function(ret) {
         console.log(ret)
@@ -37,7 +36,7 @@ var updateBasic = function(req, res, next) {
     var birthdy = req.body.birthdy;
     bluebird.props({
         updateBasicByUser: util.fetchAPI("updateBasicByUser", {
-            memberId: user.memberId,
+            memberId: 'fc6804de51c482730151e8ec0a080023',
             nickName: nickName,
             gender: gender,
             birthday: birthdy
@@ -66,13 +65,12 @@ var updatePassword = function(req, res, next) {
     var repeatPassword = req.body.repeatPassword;
     bluebird.props({
         updatePasswordByUser: util.fetchAPI("updatePasswordByUser", {
-            memberId: user.memberId,
+            memberId: 'fc6804de51c482730151e8ec0a080023',
             opassword: oldPassword,
             password: password,
             rpassword: repeatPassword
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true
@@ -94,7 +92,7 @@ var updateMembercard = function(req, res, next) {
 
     bluebird.props({
         updateMembercardByUser: util.fetchAPI("updateMembercardByUser", {
-            memberId: user.memberId,
+            memberId: 'fc6804de51c482730151e8ec0a080023',
             cardNo: cardNo,
             mobileNumber: mobileNumber,
             verifyCode: verifyCode

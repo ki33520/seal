@@ -28,7 +28,7 @@ var index = function(req, res, next) {
     var pageSize = 5;
     bluebird.props({
         allComment: util.fetchAPI("memberCommentByUser", {
-            memberId: user.memberId,
+            memberId: 'fc6804de51c482730151e8ec0a080023',
             status: 2,
             pageIndex: pageIndex,
             pageSize: pageSize
@@ -70,7 +70,7 @@ var showComment = function(req, res, next) {
     var pageSize = 5;
     bluebird.props({
         showComment: util.fetchAPI("memberCommentByUser", {
-            memberId: user.memberId,
+            memberId: 'fc6804de51c482730151e8ec0a080023',
             status: 2,
             pageIndex: pageIndex,
             pageSize: pageSize

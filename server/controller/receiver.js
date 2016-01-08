@@ -10,7 +10,7 @@ var Receiver = util.getSharedComponent("receiver");
 var receiver = function(req, res,next) {
     var user = req.session.user;
     util.fetchAPI("receiverByUser", {
-        memberId: user.memberId
+        memberId: 'fc6804de51c482730151e8ec0a080023'
     },false).then(function(resp) {
             console.log(resp)
         if (resp.returnCode === 0) {
@@ -67,7 +67,7 @@ var updateReceiver = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
     util.fetchAPI("receiverById", {
-        memberId: user.memberId,
+        memberId: 'fc6804de51c482730151e8ec0a080023',
         recvAddressId:id
     },false).then(function(resp) {
             console.log(resp)
@@ -116,7 +116,7 @@ var saveReceiver = function(req, res, next) {
     var user = req.session.user;
     var recvAddressId = req.body.recvAddressId;
     var receiver = {
-        memberId: user.memberId,
+        memberId: 'fc6804de51c482730151e8ec0a080023',
         recvLinkman: req.body.consignee,
         idCard: req.body.idCard,
         recvMobile: req.body.mobile,
