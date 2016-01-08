@@ -1,13 +1,11 @@
 {% extends "./layout.html" %}
-{% block title %}专题活动{% endblock %}
+{% block title %}专场活动{% endblock %}
 {% block css %}
 <!-- inject:css -->
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div class="activity-container">
-    <div id="activity">{{ markup|safe }}</div>
-</div>
+<div id="activity-container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
