@@ -2,14 +2,21 @@
     "indexChannels": {
         "uri": "/content/v1/manage/list",
         "baseURL": {
-            "develop": "http://192.168.0.162:7985",
+            "develop": "http://marketing.hwg.youayun.cn:7985",
             "production": "http://product.tepin.hk"
         }
     },
     "floorsByChannel": {
         "uri": "/content/v1/template/list",
         "baseURL": {
-            "develop": "http://192.168.0.162:7985",
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "activityGood": {
+        "uri": "/content/v1/activityproduct/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
             "production": "http://product.tepin.hk"
         }
     },

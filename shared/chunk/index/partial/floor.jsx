@@ -9,19 +9,29 @@ class Floor extends Component{
     constructor(props){
         super(props);
     }
+    componentDidMount(){
+        const {fetchSingleRecommend,fetchNewRecommend} = this.props;
+        const {newRecommendId,singleRecommendId} = this.props.floors;
+        fetchSingleRecommend({
+            activityId:singleRecommendId,
+        })
+        fetchNewRecommend({
+            activityId:newRecommendId
+        })
+    }
     renderSingleRecommend(){
-        let {singleRecommend} = this.props.floors;
-        if(singleRecommend !== null){
+        let {singleRecommend} = this.props.index;
+        if(singleRecommend){
             return singleRecommend.map((good,i)=>{
                 return (
                     <a href="#" className="clearfix" key={i}>
-                        <img src="/client/asset/images/pic21.gif" />
-                        <span className="name">阿瓦隆B群防脱洗发水414ml</span>
-                        <p>拯救你的“纤细稀薄”秀发！“治愈性”洗发水，不只是清洁防脱，更能促进毛囊生长、增加发量！生物素+锯棕榈，解决稀疏问题！无硅、无SLS起泡剂。</p>
+                        <img src={good.imageUrl} />
+                        <span className="name">{good.title}</span>
+                        <p>{good.subTitle}</p>
                         <span className="country"><i><img src="/client/asset/images/ico_flag.png"/></i>荷兰直采</span>
                         <span className="singlePrice">
-                            <span className="nowPrice">&yen;99.0</span>
-                            <span className="oldPrice">&yen;199.0</span>
+                            <span className="nowPrice">&yen;{good.salePrice}</span>
+                            <span className="oldPrice">&yen;{good.originPrice}</span>
                         </span>
                     </a>
                 )
@@ -30,17 +40,17 @@ class Floor extends Component{
         return null
     }
     renderNewRecommend(){
-        let {newRecommend} = this.props.floors;
-        if(newRecommend !== null){
+        let {newRecommend} = this.props.index;
+        if(newRecommend){
             return newRecommend.map((good,i)=>{
                 return (
                     <a href="/gooddetail/1" className="clearfix" key={i}>
-                        <img src="/client/asset/images/pic21.gif" />
+                        <img src={good.imageUrl} />
                         <div className="right">
-                            <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
+                            <span className="name">{good.title}</span>
                             <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                            <span className="nowPrice">&yen;99.0</span>
-                            <span className="oldPrice">&yen;199.0</span>
+                            <span className="nowPrice">&yen;{good.salePrice}</span>
+                            <span className="oldPrice">&yen;{good.originPrice}</span>
                         </div>
                     </a>
                 )   

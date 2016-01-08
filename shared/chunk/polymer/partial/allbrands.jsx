@@ -18,8 +18,8 @@ class AllBrands extends Component{
         if(brands){
             let brandGroup = []
             for(let key in brands){
-                let brandGroupItems = brands[key].map((brand)=>{
-                    return  <li>{brand}</li>
+                let brandGroupItems = brands[key].map((brand,i)=>{
+                    return  <li key={i}>{brand}</li>
                 })
                 brandGroup.push(
                     <div className="anchor-point" data-anchor="anchor-a" key={key}>
