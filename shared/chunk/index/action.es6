@@ -1,7 +1,9 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 import {
-    REQUEST_HOTWORD,RESPONSE_HOTWORD
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
+    REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND
 } from "./constant.es6";
 
 function requestHotWord(param){
@@ -24,6 +26,60 @@ export function fetchHotWord(param){
         dispatch(requestHotWord(param));
         apiRequest("/searchhotwords",param).then((res)=>{
             dispatch(responseHotWord(param,res));
+        })
+    }
+}
+
+function requestSingleRecommend(param){
+    return {
+        type:REQUEST_SINGLERECOMMEND,
+        param
+    }
+}
+
+function responseSingleRecommend(param,res){
+    return {
+        type:RESPONSE_SINGLERECOMMEND,
+        param,
+        res
+    }
+}
+
+export function fetchSingleRecommend(param){
+    param = Object.assign({},param,{
+        activityType:"ACTIVITY_DPTJ"
+    })
+    return (dispatch)=>{
+        dispatch(requestSingleRecommend(param));
+        apiRequest("/activitygood",param).then((res)=>{
+            dispatch(responseSingleRecommend(param,res));
+        })
+    }
+}
+
+function requestNewRecommend(param){
+    return {
+        type:REQUEST_NEWRECOMMEND,
+        param
+    }
+}
+
+function responseNewRecommend(param,res){
+    return {
+        type:RESPONSE_NEWRECOMMEND,
+        param,
+        res
+    }
+}
+
+export function fetchNewRecommend(param){
+    param = Object.assign({},param,{
+        activityType:"ACTIVITY_XPTJ"
+    })
+    return (dispatch)=>{
+        dispatch(requestNewRecommend(param));
+        apiRequest("/activitygood",param).then((res)=>{
+            dispatch(responseNewRecommend(param,res));
         })
     }
 }

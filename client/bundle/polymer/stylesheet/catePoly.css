@@ -54,10 +54,6 @@ header{
 }
 .polyTabs ul li.current {
 }
-.active i{
-	color: #801da1;
-    border-bottom: .053333rem solid #801da1;
-}
 .polyCon{
 	width: 100%;
 	overflow-x: hidden;

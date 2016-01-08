@@ -7,10 +7,6 @@ class Brand extends Component{
     constructor(props){
         super(props);
     }
-    componentDidMount(){
-        const {fetchCategoryBrands} = this.props;
-        fetchCategoryBrands()
-    }
     renderRecommendBrands(){
         let {recommendBrands} = this.props.categoryBrands
         if(recommendBrands){
@@ -43,7 +39,7 @@ class Brand extends Component{
     render(){
         return (
             <div className="poly_2">
-                <a href="#" className="allBrand">全部品牌<i className="iconfont icon-right"></i></a>
+                <a href="#/allbrands" className="allBrand">全部品牌<i className="iconfont icon-right"></i></a>
                 <div className="title">推荐品牌</div>
                 <div className="brandList clearfix">{this.renderRecommendBrands()}</div>
                 {this.renderCategory()}

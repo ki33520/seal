@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-    ReactDOM.render(<PolymerApp initialState={initialState} />,document.getElementById('polymer-container'));
+    ReactDOM.render(<PolymerApp initialState={initialState} />,document.getElementById('polymer'));
 }
 
 if(typeof window.addEventListener){

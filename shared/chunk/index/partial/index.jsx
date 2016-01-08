@@ -18,7 +18,7 @@ class Index extends Component{
         const tabs = channels.map((channel,i)=>{
             return (
                 <SlideTabsItem navigator={()=><span><b>{channel.name}</b></span>} key={i}>
-                <Floor floors={floors}/>
+                <Floor floors={floors} {...this.props}/>
                 </SlideTabsItem>
             )
         })

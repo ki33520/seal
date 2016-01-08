@@ -9,7 +9,7 @@ class GoodItem extends Component{
     	//console.log(goods)
     	 
     	const statusClass = classNames({
-            "sale-out":goods.isSaleOut
+            "sale-out":goods.stock<1
         });
     	const activityClass=classNames({
     		"flash-sale":goods.activityType==1,

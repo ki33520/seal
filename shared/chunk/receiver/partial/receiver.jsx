@@ -19,15 +19,16 @@ class Receiver extends Component{
                 const checked = checkedReceiver !== null?(checkedReceiver.id === receiver.id):false;
                 const checkbox = checkable?(<Checkbox checked={checked} 
                 onChange={this.handleCheck.bind(this,receiver)}/>):null;
+                const isDefault = receiver.isDefault === 1 ? <i>【默认】</i> : <i></i>;
                 return (
                     <div className="order-time" key={key}>
-                        <p>{receiver.name}<span className="mobNum">{receiver.mobileNumber}</span>
-                        <i>【默认】</i>
+                        <p>{receiver.recvLinkman}<span className="mobNum">{receiver.recvMobile}</span>
+                        {isDefault}
                         </p>
-                        <p>433101**********1011<em>实名</em></p>
-                        <p>{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
+                        <p>{receiver.idCard}<em>实名</em></p>
+                        <p>{receiver.provinceName+receiver.cityName+receiver.countyName+receiver.address}</p>
                         <div className="toolsArea">
-                            <span className="pen"><a href={"#/updatereceiver/"+receiver.id}><em></em>修改</a></span>
+                            <span className="pen"><a href={"#/updatereceiver/"+receiver.recvAddressId}><em></em>修改</a></span>
                             <span className="del"><em></em>删除</span>
                         </div>
                     </div>

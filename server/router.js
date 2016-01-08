@@ -16,6 +16,7 @@ router.get("/logoutgateway",mainController.requireAuthorize,require("./controlle
 
 router.get("/", require("./controller/index.js").index);
 router.get("/searchhotwords", require("./controller/index.js").searchHotWords);
+router.get("/activitygood", require("./controller/index.js").activityGood);
 router.get("/mobileonly", require("./controller/topic.js").mobileOnly);
 router.get("/finest", require("./controller/topic.js").finest);
 router.get("/stockup", require("./controller/topic.js").stockup);
@@ -26,7 +27,7 @@ router.get("/allbrands", require("./controller/polymer").allBrands);
 router.get("/allorigins", require("./controller/polymer").allOrigins);
 
 router.get("/gooddetail/:id", require("./controller/gooddetail"));
-router.get("/goodlist/:keyword", require("./controller/goodlist"));
+router.get("/goodlist", require("./controller/goodlist"));
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
 router.post("/trendyActivity",require("./controller/trendy").activity);

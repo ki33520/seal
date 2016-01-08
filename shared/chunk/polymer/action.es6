@@ -3,7 +3,8 @@ import {apiRequest} from "../../lib/util.es6";
 import {
     REQUEST_CATEGORYBRANDS,RESPONSE_CATEGORYBRANDS,
     REQUEST_ALLBRANDS,RESPONSE_ALLBRANDS,
-    REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS
+    REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD
 } from "./constants.es6";
 
 function responseCategoryBrands(param,res){
@@ -56,7 +57,7 @@ export function fetchAllBrands(param){
 
 function responseAllOrigins(param,res){
     return {
-        type:RESPONSE_ALLBRANDS,
+        type:RESPONSE_ALLORIGINS,
         param:param,
         res:res
     }
@@ -64,7 +65,7 @@ function responseAllOrigins(param,res){
 
 function requestAllOrigins(param) {
     return {
-        type:REQUEST_ALLBRANDS,
+        type:REQUEST_ALLORIGINS,
         param:param
     }
 }
@@ -78,3 +79,26 @@ export function fetchAllOrigins(param){
     }
 }
 
+function requestHotWord(param){
+    return {
+        type:REQUEST_HOTWORD,
+        param
+    }
+}
+
+function responseHotWord(param,res){
+    return {
+        type:RESPONSE_HOTWORD,
+        param,
+        res
+    }
+}
+
+export function fetchHotWord(param){
+    return (dispatch)=>{
+        dispatch(requestHotWord(param));
+        apiRequest("/searchhotwords",param).then((res)=>{
+            dispatch(responseHotWord(param,res));
+        })
+    }
+}

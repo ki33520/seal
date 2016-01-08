@@ -12,47 +12,47 @@ class GoodSorter extends Component{
     constructor(props){
         super(props);
         this.state = {
-            type:SORT_NORMAL,
-            order:SORT_ASC
+            sortType:SORT_NORMAL,
+            sortViewType:SORT_ASC
         }
     }
 
     orderByDefault(){
-        if(this.state.type===SORT_NORMAL){
+        if(this.state.sortType===SORT_NORMAL){
             return false;
         }
         this.setState({
-            type:SORT_NORMAL,
-            order:SORT_ASC
+            sortType:SORT_NORMAL,
+            sortViewType:SORT_ASC
         });
-        this.props.orderBy({
-            type:SORT_NORMAL,
-            order:SORT_DESC
+        this.props.toggleSort({
+            sortType:SORT_NORMAL,
+            sortViewType:SORT_DESC
         });
     }
 
     orderBySales(){
-        if(this.state.type===SORT_SALES){
+        if(this.state.sortType===SORT_SALES){
             return false;
         }
         this.setState({
-            type:SORT_SALES,
-            order:SORT_ASC
+            sortType:SORT_SALES,
+            sortViewType:SORT_ASC
         });
-        this.props.orderBy({
-            type:SORT_SALES,
-            order:SORT_DESC
+        this.props.toggleSort({
+            sortType:SORT_SALES,
+            sortViewType:SORT_DESC
         });
     }
 
     orderByPrice(){
         this.setState({
-            type:SORT_PRICE,
-            order:this.state.order === SORT_ASC ? SORT_DESC : SORT_ASC
+            sortType:SORT_PRICE,
+            sortViewType:this.state.sortViewType === SORT_ASC ? SORT_DESC : SORT_ASC
         });
-        this.props.orderBy({
-            type:SORT_PRICE,
-            order:this.state.order
+        this.props.toggleSort({
+            sortType:SORT_PRICE,
+            sortViewType:this.state.sortViewType
         });
     }
  
@@ -60,16 +60,16 @@ class GoodSorter extends Component{
     render(){
         
         const normalClass=classNames('normal',{
-            "active":this.state.type===SORT_NORMAL
+            "active":this.state.sortType===SORT_NORMAL
         });
  
         const priceClass=classNames("price",{
-            "active":this.state.type===SORT_PRICE && this.state.order === SORT_DESC,
-            "price-asc":this.state.type===SORT_PRICE && this.state.order === SORT_ASC
+            "active":this.state.sortType===SORT_PRICE && this.state.sortViewType === SORT_DESC,
+            "price-asc":this.state.sortType===SORT_PRICE && this.state.sortViewType === SORT_ASC
         });
 
         const salesClass=classNames('sales',{
-            "active":this.state.type===SORT_SALES
+            "active":this.state.sortType===SORT_SALES
         });
 
         return (

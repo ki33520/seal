@@ -12,7 +12,7 @@ var receiver = function(req, res,next) {
     util.fetchAPI("receiverByUser", {
         memberId: user.memberId
     },false).then(function(resp) {
-        console.log(resp)
+            console.log(resp)
         if (resp.returnCode === 0) {
             var receivers = resp.object;
             var initialState = {
@@ -67,19 +67,22 @@ var updateReceiver = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
     util.fetchAPI("receiverById", {
-        addressId:id
+        memberId: user.memberId,
+        recvAddressId:id
     },false).then(function(resp) {
-        if (resp.code === "success") {
+            console.log(resp)
+        if(resp.returnCode === 0){
             var address = resp.object;
             var receiver = {
-                id: address.id,
-                consignee: address.name,
-                mobile: address.mobileNumber,
+                recvAddressId: address.recvAddressId,
+                consignee: address.recvLinkman,
+                mobile: address.recvMobile,
+                idCard: address.idCard,
                 zipcode: address.zipcode,
                 address: address.address,
                 province: address.provinceCode,
                 city: address.cityCode,
-                district: address.districtCode,
+                district: address.countyCode,
                 provinces: [{
                     value: "",
                     label: "请选择"
@@ -92,7 +95,7 @@ var updateReceiver = function(req, res, next) {
                     value: "",
                     label: "请选择"
                 }],
-                isDefault: address.defaultChecked === 1
+                isDefault: address.isDefault === 1
             };
             var initialState = {
                 isFetched: true,
@@ -100,59 +103,58 @@ var updateReceiver = function(req, res, next) {
             };
             res.json(initialState);
         } else {
-            next(new Error(resp.msg));
+            next(new Error(resp.message));
         }
     })
 }
 
 var saveReceiver = function(req, res, next) {
+    console.log(req.xhr)
     if (req.xhr === false) {
         return;
     }
     var user = req.session.user;
-    var id = req.body.id;
+    var recvAddressId = req.body.recvAddressId;
     var receiver = {
         memberId: user.memberId,
-        name: req.body.consignee,
-        provinceCode: req.body.provincecode,
-        provinceName: req.body.province,
-        cityName: req.body.city,
-        cityCode: req.body.citycode,
-        districtName: req.body.district,
-        districtCode: req.body.districtcode,
+        recvLinkman: req.body.consignee,
+        idCard: req.body.idCard,
+        recvMobile: req.body.mobile,
+        areaCode: req.body.districtcode,
         address: req.body.address,
         zipcode: req.body.zipcode,
-        mobileNumber: req.body.mobile,
         defaultChecked: req.body.isdefault == "true"?1:0
     }
-    if (id !== "") {
+    if (recvAddressId) {
         receiver = _.extend(receiver, {
-            addressId: req.body.id
+            addressId: req.body.recvAddressId
         })
         // console.log('update receiver', receiver)
-        util.fetchAPI(config.api.updateReceiver.url, receiver).then(function(resp) {
-            if(resp.code === "success"){
+        util.fetchAPI("updateReceiver", receiver, false).then(function(resp) {
+            console.log(resp)
+            if(resp.returnCode === 0){
                 res.json({
                     receiverSaved:true
                 })
             }else{
                 res.json({
                     receiverSaved:false,
-                    errMsg:resp.msg
+                    errMsg:resp.message
                 })
             }
         })
     } else {
-        util.fetchAPI(config.api.addReceiver.url, receiver).then(function(resp) {
+        util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
+            console.log(resp)
             // console.log('resp', resp)
-            if(resp.code === "success"){
+            if(resp.returnCode === 0){
                 res.json({
                     receiverSaved:true
                 })
             }else{
                 res.json({
                     receiverSaved:false,
-                    errMsg:resp.msg
+                    errMsg:resp.message
                 })
             }
         })
@@ -160,26 +162,24 @@ var saveReceiver = function(req, res, next) {
 }
 
 var cascadeArea = function(req, res) {
-    console.log(req.xhr)
     if (req.xhr !== true) {
         return;
     }
-    var isProvince = req.query.isprovince;
+    var findMapUrl = req.query.findMap;
     var code = req.query.code ? req.query.code : '';
     // if(isProvince === "true"){
     //     code = "CATALOG_REGION";
     // }
-    util.fetchAPI("cascadeArea", {
+    util.fetchAPI(findMapUrl, {
         code: code, //CATALOG_REGION 查询省
         // isProvice: isProvince
     },false).then(function(resp) {
-        console.log(resp)
-        if (resp.code === "success") {
+        if (resp.returnCode === 0) {
             var items = [];
-            _.each(resp.dictionaryList, function(v, k) {
+            _.each(resp.areaList, function(v, k) {
                 items.push({
-                    label: v.name,
-                    value: v.code
+                    label: v,
+                    value: k
                 })
             });
             res.json({

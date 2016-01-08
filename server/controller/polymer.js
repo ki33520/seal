@@ -76,12 +76,7 @@ var allBrands = function(req,res,next){
     util.fetchAPI("allBrands",{}).then(function(ret){
         if(ret.returnCode === 0){
             var allbrands = ret.object
-            // categorybrands = _.map(categorybrands,function(hotword){
-            //     return {
-            //         id:hotword.id,
-            //         name:hotword.wordName
-            //     }
-            // })
+            allbrands = allBrandsFilter(allbrands);
             res.json({result:allbrands,brandsFetched:true})
         }else{
             res.json({
@@ -91,16 +86,20 @@ var allBrands = function(req,res,next){
         }
     })
 }
+
+function allBrandsFilter(allbrands){
+    var _allbrands = {}
+    _.each(allbrands[0],function(v,k){
+        _allbrands[k] = v.split(",")
+    })
+    return _allbrands
+}
+
 var allOrigins = function(req,res,next){
     util.fetchAPI("allOrigins",{}).then(function(ret){
         if(ret.returnCode === 0){
             var allorigins = ret.object
-            // allorigins = _.map(allorigins,function(hotword){
-            //     return {
-            //         id:hotword.id,
-            //         name:hotword.wordName
-            //     }
-            // })
+            allorigins = allOriginsFilter(allorigins)
             res.json({result:allorigins,originFetched:true})
         }else{
             res.json({
@@ -109,6 +108,19 @@ var allOrigins = function(req,res,next){
             })
         }
     })
+}
+
+function allOriginsFilter(allorigins){
+    var _allorigins = []
+    _allorigins = _.map(allorigins,function(origin){
+        return {
+            backgroundImageUrl:config.imgServer + origin.backGroupImageUrl,
+            imageUrl:config.imgServer + origin.imageUrl,
+            id:origin.id,
+            name:origin.name
+        }
+    })
+    return _allorigins
 }
 
 
