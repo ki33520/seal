@@ -11,17 +11,19 @@ class Node extends Component{
                     list.map((child,key) => {
                         return (
                             <li id={child.goodId} key={key}>
-                                <div className="col col-left">
-                                    <img src={child.imageUrl} />
-                                </div>
-                                <div className="col col-right">
-                                    <div className="title">{child.title}</div>
-                                    <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
-                                    <div className="price">
-                                        <span><i>￥</i>{child.salesPrice}</span>
-                                        <span><i>￥</i>{child.standardPrice}</span>
+                                <a href={"/gooddetail/"+child.id}>
+                                    <div className="col col-left">
+                                        <img src={child.imageUrl} />
                                     </div>
-                                </div>
+                                    <div className="col col-right">
+                                        <div className="title">{child.title}</div>
+                                        <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
+                                        <div className="price">
+                                            <span><i>￥</i>{child.salesPrice}</span>
+                                            <span><i>￥</i>{child.originPrice}</span>
+                                        </div>
+                                    </div>
+                                </a>
                             </li>
                         )
                     })

@@ -7,7 +7,7 @@ var OrderList = util.getSharedComponent("orderlist");
 
 var orderList = function(req, res,next) {
     var user = req.session.user;
-    var status = req.query.status !== undefined ? req.query.status : 0 ;
+    var status = req.query.status !== undefined ? Number(req.query.status) : 0 ;
     var pageIndex = req.query.pageIndex !== undefined ? req.query.pageIndex : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
     util.fetchAPI("orderByUser", {
