@@ -28,9 +28,9 @@ class OrderItem extends Component{
         if(itemList.length > 1){
             itemList = itemList.map((good,i)=>{
                 return (
-                    <div className="clearfix">
-                        <span className="img_wrap J_ytag cartlist" key={i}>
-                        <Image placeholder={good.singleImageUrl} key={i}/>
+                    <div className="clearfix" key={i}>
+                        <span className="img_wrap J_ytag cartlist">
+                        <Image placeholder={good.singleImageUrl} />
                         </span>
                         <div className="gd_info">
                             <p className="name">{good.singleTitle}</p>
