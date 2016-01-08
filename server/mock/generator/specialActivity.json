@@ -1,6 +1,6 @@
 {
   "msg": "查询商品列表页成功",
-  "code": "success",
+  "returnCode": 0,
   "time": 1446711268924,
   "page": {
       "totalCount":6,
