@@ -12,14 +12,15 @@ class CascadeArea extends Component{
         const {receiver,loadCities,loadDistricts} = this.props;
         const province = receiver === null?"":receiver.province;
         const city = receiver === null?"":receiver.city;
-        if(prevProps.provinces.length === 1 && 
-        this.props.provinces.length > 1 && province !== undefined){
-            loadCities(province);
-        }
-        if(prevProps.cities.length === 1 && 
-        this.props.cities.length > 1 && city !== undefined){
-            loadDistricts(city);
-        }
+        // if(prevProps.provinces.length === 1 && 
+        // this.props.provinces.length > 1 && province !== undefined){
+        //     loadCities(province);
+        //     console.log(prevProps.provinces,province)
+        // }
+        // if(prevProps.cities.length === 1 && 
+        // this.props.cities.length > 1 && city !== undefined){
+        //     loadDistricts(city);
+        // }
     }
     handleProvinceChange(province){
         const {dispatch,changeField,loadCities} = this.props;

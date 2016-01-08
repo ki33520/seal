@@ -42,7 +42,6 @@ class MemberUpdate extends Component{
     }
     render(){
         const {currentRoute} = this.state;
-        console.log(this.props)
         var currentView = null;
         if(currentRoute === "index"){
             currentView =  (
