@@ -15,9 +15,9 @@ class Floor extends Component{
         // fetchSingleRecommend({
         //     activityId:singleRecommendId,
         // })
-        // fetchNewRecommend({
-        //     activityId:newRecommendId
-        // })
+        fetchNewRecommend({
+            activityId:newRecommendId
+        })
     }
     renderSingleRecommend(){
         let {singleRecommend} = this.props.index;
@@ -100,17 +100,17 @@ class Floor extends Component{
         if(flashbuys === null){
             return null
         }
-        return flashbuys.map((flushbuy,i)=>{
+        return flashbuys.map((good,i)=>{
             return (
             <a href="/gooddetail/1" className="clearfix" key={i}>
                 <img src="/client/asset/images/pic8.gif" />
                 <div className="right">
                     <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10分</i><i>46秒</i></em></p>
                     <div className="flashDot"></div>
-                    <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
+                    <span className="name">{good.title}</span>
                     <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                    <span className="nowPrice">&yen;99.0</span>
-                    <span className="oldPrice">&yen;199.0</span>
+                    <span className="nowPrice">&yen;{good.salePrice}</span>
+                    <span className="oldPrice">&yen;{good.originPrice}</span>
                 </div>
             </a>
             )
