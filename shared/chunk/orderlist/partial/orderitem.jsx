@@ -28,14 +28,20 @@ class OrderItem extends Component{
         if(itemList.length > 1){
             itemList = itemList.map((good,i)=>{
                 return (
-                    <span className="img_wrap J_ytag cartlist" key={i}>
-                    <image src={good.singleImageUrl} key={i}/>
-                    </span>
+                    <div className="clearfix">
+                        <span className="img_wrap J_ytag cartlist" key={i}>
+                        <Image placeholder={good.singleImageUrl} key={i}/>
+                        </span>
+                        <div className="gd_info">
+                            <p className="name">{good.singleTitle}</p>
+                            <p className="value">&yen;{good.salesTotalFee}</p>
+                        </div>
+                    </div>
                 )
             })
             return (
                 <div className="J_moveRight">
-                    <div className="clearfix">{itemList}</div>
+                    {itemList}
                 </div>
             )
         }

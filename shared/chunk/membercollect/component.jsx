@@ -42,7 +42,7 @@ class MembercollectList extends Component{
         }))
     }
     render(){
-        //console.log(this.props)
+        console.log(this.props)
         const {collect,isFetching} = this.props;
         return (
             <div className="collect-content">
