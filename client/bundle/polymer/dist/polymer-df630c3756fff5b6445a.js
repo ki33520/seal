@@ -1,10 +1,10 @@
-webpackJsonp([12],{
+webpackJsonp([19],{
 
 /***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(407);
-	module.exports = __webpack_require__(417);
+	__webpack_require__(563);
+	module.exports = __webpack_require__(576);
 
 
 /***/ },
@@ -316,6 +316,77 @@ webpackJsonp([12],{
 	}
 
 	exports["default"] = createLogger;
+	module.exports = exports["default"];
+
+/***/ },
+
+/***/ 217:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var Header = (function (_Component) {
+	    _inherits(Header, _Component);
+
+	    function Header() {
+	        _classCallCheck(this, Header);
+
+	        _get(Object.getPrototypeOf(Header.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Header, [{
+	        key: "renderBackButton",
+	        value: function renderBackButton() {
+	            var _props = this.props;
+	            var canBack = _props.canBack;
+	            var handleGoBack = _props.handleGoBack;
+
+	            if (canBack === true) {
+	                return _react2["default"].createElement("a", { href: "javascript:;", onClick: handleGoBack, className: "iconfont icon-back" });
+	            }
+	            return null;
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2["default"].createElement(
+	                "header",
+	                { className: "header" },
+	                this.renderBackButton(),
+	                this.props.children
+	            );
+	        }
+	    }]);
+
+	    return Header;
+	})(_react.Component);
+
+	Header.defaultProps = {
+	    canBack: true,
+	    handleGoBack: function handleGoBack() {
+	        window.history.back();
+	    }
+	};
+
+	exports["default"] = Header;
 	module.exports = exports["default"];
 
 /***/ },
@@ -937,6 +1008,64 @@ webpackJsonp([12],{
 
 /***/ },
 
+/***/ 240:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
+
+	var _defineProperty = __webpack_require__(241)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames = __webpack_require__(234);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var Icon = (function (_Component) {
+	    _inherits(Icon, _Component);
+
+	    function Icon() {
+	        _classCallCheck(this, Icon);
+
+	        _get(Object.getPrototypeOf(Icon.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Icon, [{
+	        key: "render",
+	        value: function render() {
+	            var icon = this.props.icon;
+
+	            var classes = (0, _classnames2["default"])(this.props.className, _defineProperty({
+	                "iconfont": true
+	            }, "icon-" + icon, true));
+	            return _react2["default"].createElement("span", { className: classes });
+	        }
+	    }]);
+
+	    return Icon;
+	})(_react.Component);
+
+	exports["default"] = Icon;
+	module.exports = exports["default"];
+
+/***/ },
+
 /***/ 241:
 /***/ function(module, exports, __webpack_require__) {
 
@@ -1072,1299 +1201,6 @@ webpackJsonp([12],{
 	};
 
 	exports["default"] = Footer;
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 261:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.changeField = changeField;
-	exports.alert = alert;
-
-	var _constantEs6 = __webpack_require__(262);
-
-	function changeField(name, value) {
-	    return {
-	        type: _constantEs6.CHANGE_FIELD,
-	        name: name,
-	        value: value
-	    };
-	}
-
-	function showAlert(content) {
-	    return {
-	        type: _constantEs6.SHOW_ALERT,
-	        content: content
-	    };
-	}
-
-	function hideAlert(content) {
-	    return {
-	        type: _constantEs6.HIDE_ALERT,
-	        content: content
-	    };
-	}
-
-	function alert() {
-	    var content = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-	    var delay = arguments.length <= 1 || arguments[1] === undefined ? 3000 : arguments[1];
-
-	    return function (dispatch) {
-	        dispatch(showAlert(content));
-	        setTimeout(function () {
-	            dispatch(hideAlert(content));
-	        }, delay);
-	    };
-	}
-
-/***/ },
-
-/***/ 262:
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var CHANGE_FIELD = "CHANGE_FIELD";
-	exports.CHANGE_FIELD = CHANGE_FIELD;
-	var SHOW_ALERT = "SHOW_ALERT";
-	exports.SHOW_ALERT = SHOW_ALERT;
-	var HIDE_ALERT = "HIDE_ALERT";
-	exports.HIDE_ALERT = HIDE_ALERT;
-
-/***/ },
-
-/***/ 281:
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	var _Array$from = __webpack_require__(282)["default"];
-
-	exports["default"] = function (arr) {
-	  if (Array.isArray(arr)) {
-	    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-	    return arr2;
-	  } else {
-	    return _Array$from(arr);
-	  }
-	};
-
-	exports.__esModule = true;
-
-/***/ },
-
-/***/ 282:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = { "default": __webpack_require__(283), __esModule: true };
-
-/***/ },
-
-/***/ 283:
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(284);
-	__webpack_require__(300);
-	module.exports = __webpack_require__(16).Array.from;
-
-/***/ },
-
-/***/ 284:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var $at  = __webpack_require__(285)(true);
-
-	// 21.1.3.27 String.prototype[@@iterator]()
-	__webpack_require__(287)(String, 'String', function(iterated){
-	  this._t = String(iterated); // target
-	  this._i = 0;                // next index
-	// 21.1.5.2.1 %StringIteratorPrototype%.next()
-	}, function(){
-	  var O     = this._t
-	    , index = this._i
-	    , point;
-	  if(index >= O.length)return {value: undefined, done: true};
-	  point = $at(O, index);
-	  this._i += point.length;
-	  return {value: point, done: false};
-	});
-
-/***/ },
-
-/***/ 285:
-/***/ function(module, exports, __webpack_require__) {
-
-	var toInteger = __webpack_require__(286)
-	  , defined   = __webpack_require__(12);
-	// true  -> String#at
-	// false -> String#codePointAt
-	module.exports = function(TO_STRING){
-	  return function(that, pos){
-	    var s = String(defined(that))
-	      , i = toInteger(pos)
-	      , l = s.length
-	      , a, b;
-	    if(i < 0 || i >= l)return TO_STRING ? '' : undefined;
-	    a = s.charCodeAt(i);
-	    return a < 0xd800 || a > 0xdbff || i + 1 === l
-	      || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
-	        ? TO_STRING ? s.charAt(i) : a
-	        : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
-	  };
-	};
-
-/***/ },
-
-/***/ 286:
-/***/ function(module, exports) {
-
-	// 7.1.4 ToInteger
-	var ceil  = Math.ceil
-	  , floor = Math.floor;
-	module.exports = function(it){
-	  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-	};
-
-/***/ },
-
-/***/ 287:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var LIBRARY         = __webpack_require__(288)
-	  , $def            = __webpack_require__(14)
-	  , $redef          = __webpack_require__(289)
-	  , hide            = __webpack_require__(290)
-	  , has             = __webpack_require__(293)
-	  , SYMBOL_ITERATOR = __webpack_require__(294)('iterator')
-	  , Iterators       = __webpack_require__(297)
-	  , $iterCreate     = __webpack_require__(298)
-	  , setToStringTag  = __webpack_require__(299)
-	  , getProto        = __webpack_require__(7).getProto
-	  , BUGGY           = !([].keys && 'next' in [].keys()) // Safari has buggy iterators w/o `next`
-	  , FF_ITERATOR     = '@@iterator'
-	  , KEYS            = 'keys'
-	  , VALUES          = 'values';
-	var returnThis = function(){ return this; };
-	module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE){
-	  $iterCreate(Constructor, NAME, next);
-	  var getMethod = function(kind){
-	    if(!BUGGY && kind in proto)return proto[kind];
-	    switch(kind){
-	      case KEYS: return function keys(){ return new Constructor(this, kind); };
-	      case VALUES: return function values(){ return new Constructor(this, kind); };
-	    } return function entries(){ return new Constructor(this, kind); };
-	  };
-	  var TAG      = NAME + ' Iterator'
-	    , proto    = Base.prototype
-	    , _native  = proto[SYMBOL_ITERATOR] || proto[FF_ITERATOR] || DEFAULT && proto[DEFAULT]
-	    , _default = _native || getMethod(DEFAULT)
-	    , methods, key;
-	  // Fix native
-	  if(_native){
-	    var IteratorPrototype = getProto(_default.call(new Base));
-	    // Set @@toStringTag to native iterators
-	    setToStringTag(IteratorPrototype, TAG, true);
-	    // FF fix
-	    if(!LIBRARY && has(proto, FF_ITERATOR))hide(IteratorPrototype, SYMBOL_ITERATOR, returnThis);
-	  }
-	  // Define iterator
-	  if((!LIBRARY || FORCE) && (BUGGY || !(SYMBOL_ITERATOR in proto))){
-	    hide(proto, SYMBOL_ITERATOR, _default);
-	  }
-	  // Plug for library
-	  Iterators[NAME] = _default;
-	  Iterators[TAG]  = returnThis;
-	  if(DEFAULT){
-	    methods = {
-	      values:  DEFAULT == VALUES ? _default : getMethod(VALUES),
-	      keys:    IS_SET            ? _default : getMethod(KEYS),
-	      entries: DEFAULT != VALUES ? _default : getMethod('entries')
-	    };
-	    if(FORCE)for(key in methods){
-	      if(!(key in proto))$redef(proto, key, methods[key]);
-	    } else $def($def.P + $def.F * BUGGY, NAME, methods);
-	  }
-	  return methods;
-	};
-
-/***/ },
-
-/***/ 288:
-/***/ function(module, exports) {
-
-	module.exports = true;
-
-/***/ },
-
-/***/ 289:
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = __webpack_require__(290);
-
-/***/ },
-
-/***/ 290:
-/***/ function(module, exports, __webpack_require__) {
-
-	var $          = __webpack_require__(7)
-	  , createDesc = __webpack_require__(291);
-	module.exports = __webpack_require__(292) ? function(object, key, value){
-	  return $.setDesc(object, key, createDesc(1, value));
-	} : function(object, key, value){
-	  object[key] = value;
-	  return object;
-	};
-
-/***/ },
-
-/***/ 291:
-/***/ function(module, exports) {
-
-	module.exports = function(bitmap, value){
-	  return {
-	    enumerable  : !(bitmap & 1),
-	    configurable: !(bitmap & 2),
-	    writable    : !(bitmap & 4),
-	    value       : value
-	  };
-	};
-
-/***/ },
-
-/***/ 292:
-/***/ function(module, exports, __webpack_require__) {
-
-	// Thank's IE8 for his funny defineProperty
-	module.exports = !__webpack_require__(17)(function(){
-	  return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
-	});
-
-/***/ },
-
-/***/ 293:
-/***/ function(module, exports) {
-
-	var hasOwnProperty = {}.hasOwnProperty;
-	module.exports = function(it, key){
-	  return hasOwnProperty.call(it, key);
-	};
-
-/***/ },
-
-/***/ 294:
-/***/ function(module, exports, __webpack_require__) {
-
-	var store  = __webpack_require__(295)('wks')
-	  , uid    = __webpack_require__(296)
-	  , Symbol = __webpack_require__(15).Symbol;
-	module.exports = function(name){
-	  return store[name] || (store[name] =
-	    Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
-	};
-
-/***/ },
-
-/***/ 295:
-/***/ function(module, exports, __webpack_require__) {
-
-	var global = __webpack_require__(15)
-	  , SHARED = '__core-js_shared__'
-	  , store  = global[SHARED] || (global[SHARED] = {});
-	module.exports = function(key){
-	  return store[key] || (store[key] = {});
-	};
-
-/***/ },
-
-/***/ 296:
-/***/ function(module, exports) {
-
-	var id = 0
-	  , px = Math.random();
-	module.exports = function(key){
-	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-	};
-
-/***/ },
-
-/***/ 297:
-/***/ function(module, exports) {
-
-	module.exports = {};
-
-/***/ },
-
-/***/ 298:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var $              = __webpack_require__(7)
-	  , descriptor     = __webpack_require__(291)
-	  , setToStringTag = __webpack_require__(299)
-	  , IteratorPrototype = {};
-
-	// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-	__webpack_require__(290)(IteratorPrototype, __webpack_require__(294)('iterator'), function(){ return this; });
-
-	module.exports = function(Constructor, NAME, next){
-	  Constructor.prototype = $.create(IteratorPrototype, {next: descriptor(1, next)});
-	  setToStringTag(Constructor, NAME + ' Iterator');
-	};
-
-/***/ },
-
-/***/ 299:
-/***/ function(module, exports, __webpack_require__) {
-
-	var def = __webpack_require__(7).setDesc
-	  , has = __webpack_require__(293)
-	  , TAG = __webpack_require__(294)('toStringTag');
-
-	module.exports = function(it, tag, stat){
-	  if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
-	};
-
-/***/ },
-
-/***/ 300:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	var ctx         = __webpack_require__(25)
-	  , $def        = __webpack_require__(14)
-	  , toObject    = __webpack_require__(214)
-	  , call        = __webpack_require__(301)
-	  , isArrayIter = __webpack_require__(302)
-	  , toLength    = __webpack_require__(303)
-	  , getIterFn   = __webpack_require__(304);
-	$def($def.S + $def.F * !__webpack_require__(306)(function(iter){ Array.from(iter); }), 'Array', {
-	  // 22.1.2.1 Array.from(arrayLike, mapfn = undefined, thisArg = undefined)
-	  from: function from(arrayLike/*, mapfn = undefined, thisArg = undefined*/){
-	    var O       = toObject(arrayLike)
-	      , C       = typeof this == 'function' ? this : Array
-	      , $$      = arguments
-	      , $$len   = $$.length
-	      , mapfn   = $$len > 1 ? $$[1] : undefined
-	      , mapping = mapfn !== undefined
-	      , index   = 0
-	      , iterFn  = getIterFn(O)
-	      , length, result, step, iterator;
-	    if(mapping)mapfn = ctx(mapfn, $$len > 2 ? $$[2] : undefined, 2);
-	    // if object isn't iterable or it's array with default iterator - use simple case
-	    if(iterFn != undefined && !(C == Array && isArrayIter(iterFn))){
-	      for(iterator = iterFn.call(O), result = new C; !(step = iterator.next()).done; index++){
-	        result[index] = mapping ? call(iterator, mapfn, [step.value, index], true) : step.value;
-	      }
-	    } else {
-	      length = toLength(O.length);
-	      for(result = new C(length); length > index; index++){
-	        result[index] = mapping ? mapfn(O[index], index) : O[index];
-	      }
-	    }
-	    result.length = index;
-	    return result;
-	  }
-	});
-
-
-/***/ },
-
-/***/ 301:
-/***/ function(module, exports, __webpack_require__) {
-
-	// call something on iterator step with safe closing on error
-	var anObject = __webpack_require__(24);
-	module.exports = function(iterator, fn, value, entries){
-	  try {
-	    return entries ? fn(anObject(value)[0], value[1]) : fn(value);
-	  // 7.4.6 IteratorClose(iterator, completion)
-	  } catch(e){
-	    var ret = iterator['return'];
-	    if(ret !== undefined)anObject(ret.call(iterator));
-	    throw e;
-	  }
-	};
-
-/***/ },
-
-/***/ 302:
-/***/ function(module, exports, __webpack_require__) {
-
-	// check on default Array iterator
-	var Iterators  = __webpack_require__(297)
-	  , ITERATOR   = __webpack_require__(294)('iterator')
-	  , ArrayProto = Array.prototype;
-
-	module.exports = function(it){
-	  return (Iterators.Array || ArrayProto[ITERATOR]) === it;
-	};
-
-/***/ },
-
-/***/ 303:
-/***/ function(module, exports, __webpack_require__) {
-
-	// 7.1.15 ToLength
-	var toInteger = __webpack_require__(286)
-	  , min       = Math.min;
-	module.exports = function(it){
-	  return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-	};
-
-/***/ },
-
-/***/ 304:
-/***/ function(module, exports, __webpack_require__) {
-
-	var classof   = __webpack_require__(305)
-	  , ITERATOR  = __webpack_require__(294)('iterator')
-	  , Iterators = __webpack_require__(297);
-	module.exports = __webpack_require__(16).getIteratorMethod = function(it){
-	  if(it != undefined)return it[ITERATOR]
-	    || it['@@iterator']
-	    || Iterators[classof(it)];
-	};
-
-/***/ },
-
-/***/ 305:
-/***/ function(module, exports, __webpack_require__) {
-
-	// getting tag from 19.1.3.6 Object.prototype.toString()
-	var cof = __webpack_require__(11)
-	  , TAG = __webpack_require__(294)('toStringTag')
-	  // ES3 wrong here
-	  , ARG = cof(function(){ return arguments; }()) == 'Arguments';
-
-	module.exports = function(it){
-	  var O, T, B;
-	  return it === undefined ? 'Undefined' : it === null ? 'Null'
-	    // @@toStringTag case
-	    : typeof (T = (O = Object(it))[TAG]) == 'string' ? T
-	    // builtinTag case
-	    : ARG ? cof(O)
-	    // ES3 arguments fallback
-	    : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
-	};
-
-/***/ },
-
-/***/ 306:
-/***/ function(module, exports, __webpack_require__) {
-
-	var ITERATOR     = __webpack_require__(294)('iterator')
-	  , SAFE_CLOSING = false;
-
-	try {
-	  var riter = [7][ITERATOR]();
-	  riter['return'] = function(){ SAFE_CLOSING = true; };
-	  Array.from(riter, function(){ throw 2; });
-	} catch(e){ /* empty */ }
-
-	module.exports = function(exec, skipClosing){
-	  if(!skipClosing && !SAFE_CLOSING)return false;
-	  var safe = false;
-	  try {
-	    var arr  = [7]
-	      , iter = arr[ITERATOR]();
-	    iter.next = function(){ safe = true; };
-	    arr[ITERATOR] = function(){ return iter; };
-	    exec(arr);
-	  } catch(e){ /* empty */ }
-	  return safe;
-	};
-
-/***/ },
-
-/***/ 313:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _toConsumableArray = __webpack_require__(281)["default"];
-
-	var _Object$assign = __webpack_require__(210)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(218);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _classnames = __webpack_require__(234);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _libDomEs6 = __webpack_require__(238);
-
-	var _libDomEs62 = _interopRequireDefault(_libDomEs6);
-
-	var Slider = (function (_Component) {
-	    _inherits(Slider, _Component);
-
-	    function Slider(props) {
-	        _classCallCheck(this, Slider);
-
-	        _get(Object.getPrototypeOf(Slider.prototype), "constructor", this).call(this, props);
-	        var defaultActiveIndex = this.needPseudoNode() ? 1 : 0;
-	        this.state = {
-	            activeIndex: this.props.defaultActiveIndex !== undefined ? this.props.defaultActiveIndex : defaultActiveIndex,
-	            prevActiveIndex: null,
-	            nextActiveIndex: null,
-	            direction: null,
-	            slidesStyle: null,
-	            slideStyle: null
-	        };
-	        this.paused = false;
-	        this.slides = null;
-	    }
-
-	    _createClass(Slider, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            this.initialize();
-	            this.props.autoPlay && this.slideToNext();
-	        }
-	    }, {
-	        key: "componentWillUnmount",
-	        value: function componentWillUnmount() {
-	            clearTimeout(this.timeout);
-	        }
-	    }, {
-	        key: "initialize",
-	        value: function initialize() {
-	            var rect = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-	            var oriention = this.props.oriention;
-	            var activeIndex = this.state.activeIndex;
-
-	            if (this.props.defaultActiveIndex !== undefined) {
-	                activeIndex = this.props.defaultActiveIndex;
-	            }
-	            // const slideNode = React.findDOMNode(this).querySelector(".slides").firstChild;
-	            var slideNode = _reactDom2["default"].findDOMNode(this);
-	            var slideNodeWidth = slideNode.offsetWidth;
-	            var slideNodeHeight = slideNode.querySelector(".slides").firstChild.offsetHeight;
-	            if (rect !== null) {
-	                slideNodeWidth = rect.width ? rect.width : slideNodeWidth;
-	                slideNodeHeight = rect.height ? rect.height : slideNodeHeight;
-	            }
-	            var slidesWidth = slideNodeWidth * this.slides.length;
-	            var slidesHeight = slideNodeHeight * this.slides.length;
-	            // console.log('slidesHeight',slideNode.querySelector(".slides").offsetHeight)
-	            if (slidesWidth === 0 && oriention === "horizontal" || slidesHeight === 0 && oriention === "vertical") {
-	                return;
-	            }
-	            var slidesStyle = {
-	                width: oriention === "horizontal" ? slidesWidth + "px" : null,
-	                height: oriention === "vertical" ? slidesHeight + "px" : null
-	            };
-	            if (this.props.effect === "roll") {
-	                var transform = this.props.oriention === "horizontal" ? "translate3D(-" + slideNodeWidth * activeIndex + "px,0,0)" : "translate3D(0,-" + slideNodeHeight * activeIndex + "px,0)";
-	                slidesStyle = _Object$assign({}, slidesStyle, {
-	                    transitionProperty: "transform",
-	                    transitionTimingFunction: "ease-in-out",
-	                    WebkitTransform: transform
-	                });
-	            }
-	            // console.log('currentStyle',slideNodeHeight)
-	            // const computedStyle = window.getComputedStyle(slideNode,null);
-	            this.setState({
-	                slideStyle: {
-	                    width: oriention === "horizontal" ? slideNodeWidth : null,
-	                    height: oriention === "vertical" ? slideNodeHeight : null
-	                },
-	                slidesStyle: slidesStyle,
-	                activeIndex: activeIndex,
-	                sliderStyle: {
-	                    width: oriention === "horizontal" ? slideNodeWidth : null,
-	                    height: oriention === "vertical" ? slideNodeHeight : null
-	                }
-	            });
-	        }
-	    }, {
-	        key: "slideToNext",
-	        value: function slideToNext() {
-	            var self = this;
-	            var count = this.slides.length;
-	            this.timeout = setTimeout(function interval() {
-	                var prevIndex = self.getActiveIndex();
-	                self.next();
-	                clearTimeout(self.timeout);
-	                if (self.needPseudoNode() === true && prevIndex === count - 1 && self.paused === false) {
-	                    self.timeout = setTimeout(interval, 10);
-	                } else {
-	                    self.timeout = setTimeout(interval, self.props.delay);
-	                }
-	            }, this.props.delay);
-	        }
-	    }, {
-	        key: "needPseudoNode",
-	        value: function needPseudoNode() {
-	            return this.props.effect === "roll" && this.props.loop === true;
-	        }
-	    }, {
-	        key: "play",
-	        value: function play() {
-	            this.paused = false;
-	            this.slideToNext();
-	        }
-	    }, {
-	        key: "pause",
-	        value: function pause() {
-	            this.paused = true;
-	            clearTimeout(this.timeout);
-	        }
-	    }, {
-	        key: "handleMouseOver",
-	        value: function handleMouseOver() {
-	            // console.log('onMouseOver')
-	            if (this.props.pauseOnHover) {
-	                this.pause();
-	            }
-	        }
-	    }, {
-	        key: "handleMouseOut",
-	        value: function handleMouseOut() {
-	            // console.log('onMouseOut')
-	            if (this.paused === true) {
-	                this.play();
-	            }
-	        }
-	    }, {
-	        key: "handleTouchStart",
-	        value: function handleTouchStart(e) {
-	            e && e.preventDefault();
-	            if (this.animateSlide() === true) {
-	                return;
-	            }
-	            if (this.touchEnabled === false) {
-	                return;
-	            }
-	            var _e$changedTouches$0 = e.changedTouches[0];
-	            var clientY = _e$changedTouches$0.clientY;
-	            var clientX = _e$changedTouches$0.clientX;
-
-	            this.startTouchX = clientX;
-	            this.startTouchY = clientY;
-	            // console.log('touch start',e.changedTouches,e.targetTouches,e.touches)
-	        }
-	    }, {
-	        key: "handleTouchEnd",
-	        value: function handleTouchEnd(e) {
-	            e && e.preventDefault();
-	            if (this.animateSlide() === true) {
-	                return;
-	            }
-	            if (this.touchEnabled === false) {
-	                return;
-	            }
-
-	            var _e$changedTouches$02 = e.changedTouches[0];
-	            var clientY = _e$changedTouches$02.clientY;
-	            var clientX = _e$changedTouches$02.clientX;
-
-	            var inTouchableRegion = this.inTouchableRegion(clientX, clientY, e.currentTarget);
-	            if (!inTouchableRegion) {
-	                // e.preventDefault();
-	                // return;
-	            }
-	            var offsetWidth = this.state.slideStyle.width;
-	            var offsetHeight = this.state.slideStyle.height;
-	            var oriention = this.props.oriention;
-
-	            var offsetY, offsetX;
-	            if (oriention === "vertical") {
-	                offsetY = Math.abs(clientY) - Math.abs(this.startTouchY);
-	                var absOfOffsetY = Math.abs(offsetY);
-	                if (absOfOffsetY >= offsetHeight / 2) {
-	                    if (offsetY < 0) {
-	                        // console.log('next Y')
-	                        setTimeout(this.next.bind(this), 100);
-	                    } else if (offsetY > 0) {
-	                        // console.log('prev Y')
-	                        setTimeout(this.prev.bind(this), 100);
-	                    }
-	                } else {
-	                    // console.log('restorePosition');
-	                    absOfOffsetY > 0 && this.restorePosition();
-	                }
-	            }
-	            if (oriention === "horizontal") {
-	                offsetX = Math.abs(clientX) - Math.abs(this.startTouchX);
-	                var absOfOffsetX = Math.abs(offsetX);
-	                // console.log('distance',Math.abs(clientX),Math.abs(this.startTouchX))
-	                if (absOfOffsetX >= offsetWidth / 2) {
-	                    if (offsetX < 0) {
-	                        // console.log('next X');
-	                        setTimeout(this.next.bind(this), 100);
-	                    } else if (offsetX > 0) {
-	                        // console.log('prev X');
-	                        setTimeout(this.prev.bind(this), 100);
-	                    }
-	                } else {
-	                    absOfOffsetX > 0 && this.restorePosition();
-	                }
-	            }
-	        }
-	    }, {
-	        key: "handleTouchMove",
-	        value: function handleTouchMove(e) {
-	            e && e.preventDefault();
-	            if (this.animateSlide() === true) {
-	                return;
-	            }
-	            if (this.touchEnabled === false) {
-	                return;
-	            }
-
-	            var _e$changedTouches$03 = e.changedTouches[0];
-	            var clientY = _e$changedTouches$03.clientY;
-	            var clientX = _e$changedTouches$03.clientX;
-
-	            var inTouchableRegion = this.inTouchableRegion(clientX, clientY, e.currentTarget);
-	            if (!inTouchableRegion) {
-	                e.preventDefault();
-	                return;
-	            }
-
-	            var offsetX = Math.abs(this.startTouchX) - Math.abs(clientX);
-	            var offsetY = Math.abs(this.startTouchY) - Math.abs(clientY);
-
-	            // console.log('currentX',clientX,'currentY',clientY)
-	            // console.log('lastX',this.lastMoveX,'lastY',this.lastMoveY)
-	            this.transitionTouch(offsetX, offsetY);
-	            this.lastMoveY = clientY;
-	            this.lastMoveX = clientX;
-	        }
-
-	        /** if touch move not fill the change condition then restore the slide position */
-	    }, {
-	        key: "restorePosition",
-	        value: function restorePosition() {
-	            // console.log('restorePosition')
-	            var oriention = this.props.oriention;
-
-	            var activeIndex = this.getActiveIndex();
-	            var transform = null;
-	            if (oriention === "vertical") {
-	                var scrollY = this.state.slideStyle.height * activeIndex;
-	                transform = "translate3D(0,-" + scrollY + "px,0)";
-	            } else if (oriention === "horizontal") {
-	                var scrollX = this.state.slideStyle.width * activeIndex;
-	                transform = "translate3D(-" + scrollX + "px,0,0)";
-	            }
-	            var slidesNode = _reactDom2["default"].findDOMNode(this.refs.slides);
-	            if (transform !== null) {
-	                slidesNode.style.WebkitTransform = transform;
-	                slidesNode.style.transitionDuration = ".3s";
-	            }
-	        }
-	    }, {
-	        key: "transitionTouch",
-	        value: function transitionTouch(offsetX, offsetY) {
-	            var oriention = this.props.oriention;
-
-	            var count = this.slides.length;
-	            var activeIndex = this.getActiveIndex();
-	            var transform = null;
-	            if (oriention === "vertical" && offsetY !== 0) {
-	                var scrollY = this.state.slideStyle.height * activeIndex;
-	                var maxOffsetY = 1.25 * this.state.slideStyle.height;
-	                // console.log('maxOffsetY',maxOffsetY,offsetY)
-	                /** vertical move cant beyond limit*/
-	                if (Math.abs(offsetY) > maxOffsetY) {
-	                    // console.log('out of maxOffsetY',offsetY)
-	                    return;
-	                }
-	                scrollY += offsetY;
-	                transform = "translate3D(0,-" + scrollY + "px,0)";
-	            } else if (oriention === "horizontal" && offsetX !== 0) {
-	                var scrollX = this.state.slideStyle.width * activeIndex;
-	                var maxOffsetX = 1.25 * this.state.slideStyle.width;
-	                if (offsetX > maxOffsetX) {
-	                    return;
-	                }
-	                scrollX += offsetX;
-	                transform = "translate3D(-" + scrollX + "px,0,0)";
-	            }
-	            var slidesNode = _reactDom2["default"].findDOMNode(this.refs.slides);
-	            if (transform !== null) {
-	                slidesNode.style.WebkitTransform = transform;
-	                slidesNode.style.transitionDuration = ".3s";
-	            }
-	        }
-	    }, {
-	        key: "inTouchableRegion",
-	        value: function inTouchableRegion(x, y, element) {
-	            var targetOffset = _libDomEs62["default"].offset(element);
-	            var minY = targetOffset.top;
-	            var maxY = targetOffset.top + element.offsetHeight;
-	            var minX = targetOffset.left;
-	            var maxX = targetOffset.left + element.offsetWidth;
-	            var isXValid = x >= minX && x <= maxX;
-	            var isYValid = y >= minY && y <= maxY;
-	            if (isXValid && isYValid) {
-	                return true;
-	            }
-	            return false;
-	        }
-	    }, {
-	        key: "next",
-	        value: function next(e) {
-	            e && e.preventDefault();
-	            var prevIndex = this.getActiveIndex();
-	            var nextIndex = prevIndex + 1;
-	            var count = this.slides.length;
-	            if (nextIndex > count - 1) {
-	                if (!this.props.loop) {
-	                    return;
-	                }
-	                nextIndex = 0;
-	            }
-	            this.handleSelect(nextIndex, "next");
-	        }
-	    }, {
-	        key: "prev",
-	        value: function prev(e) {
-	            e && e.preventDefault();
-	            var prevIndex = this.getActiveIndex();
-	            var nextIndex = prevIndex - 1;
-	            var count = this.slides.length;
-	            if (nextIndex < 0) {
-	                if (!this.props.loop) {
-	                    return;
-	                }
-	                nextIndex = count - 1;
-	            }
-	            this.handleSelect(nextIndex, 'prev');
-	        }
-	    }, {
-	        key: "handleSelect",
-	        value: function handleSelect(index, direction, e) {
-	            var _this = this;
-
-	            e && e.preventDefault();
-	            var count = this.slides.length;
-	            var prevActiveIndex, nextActiveIndex;
-	            if (direction === "next") {
-	                // console.log('index',index)
-	                index = this.needPseudoNode() && index === 0 ? 1 : index;
-	                prevActiveIndex = index - 1, nextActiveIndex = index + 1;
-	                if (prevActiveIndex < 0) {
-	                    prevActiveIndex = count - 1;
-	                }
-	                if (nextActiveIndex >= count) {
-	                    nextActiveIndex = 0;
-	                }
-	            }
-	            if (direction === "prev") {
-	                index = this.needPseudoNode() && index === count - 1 ? count - 2 : index;
-	                // console.log('index',index,count)
-	                prevActiveIndex = index + 1, nextActiveIndex = index - 1;
-	                if (nextActiveIndex < 0) {
-	                    nextActiveIndex = count - 1;
-	                }
-	                if (prevActiveIndex >= count) {
-	                    prevActiveIndex = 0;
-	                }
-	            }
-	            var state = {
-	                activeIndex: index,
-	                prevActiveIndex: prevActiveIndex,
-	                nextActiveIndex: nextActiveIndex,
-	                direction: direction
-	            };
-	            var slidesStyle = this.transitionSlides(state, this.props, direction);
-	            // console.log(slidesStyle)
-	            this.setState(_Object$assign({}, state, {
-	                slidesStyle: slidesStyle
-	            }), function () {
-	                index = _this.needPseudoNode() === true ? index - 1 : index;
-	                // console.log('index will change',index)
-	                _this.props.onChange(index);
-	            });
-	        }
-	    }, {
-	        key: "transitionSlides",
-	        value: function transitionSlides(state, props, direction) {
-	            if (state.prevActiveIndex === null) {
-	                return;
-	            }
-	            // console.log(this.state)
-	            var oriention = props.oriention;
-
-	            var count = this.slides.length;
-	            var activeIndex = state.activeIndex;
-	            var slidesStyle = this.state.slidesStyle;
-	            if (this.needPseudoNode() === true) {
-	                var transform;
-	                // if direction is next and should active is pseudo item then redirect to the first real item
-	                if (activeIndex === 1 && state.direction === "next") {
-	                    transform = oriention === "horizontal" ? "translate3D(-" + this.state.slideStyle.width + "px,0,0)" : "translate3D(0,-" + this.state.slideStyle.height + "px,0)";
-	                    slidesStyle = _Object$assign({}, slidesStyle, {
-	                        transform: transform,
-	                        transitionDuration: "0s"
-	                    });
-	                    // if direction is prev and should active is pseudo item then redirect to the last real item
-	                } else if (activeIndex === count - 2 && state.direction === "prev") {
-	                        transform = oriention === "horizontal" ? "translate3D(-" + this.state.slideStyle.width * activeIndex + "px,0,0)" : "translate3D(0,-" + this.state.slideStyle.height * activeIndex + "px,0)";
-	                        slidesStyle = _Object$assign({}, slidesStyle, {
-	                            transform: transform,
-	                            transitionDuration: "0s"
-	                        });
-	                    } else {
-	                        var speed = props.speed / 1000;
-	                        if (oriention === "horizontal") {
-	                            var _scrollX = this.state.slideStyle.width * activeIndex;
-	                            transform = "translate3D(-" + _scrollX + "px,0,0)";
-	                        } else if (oriention === "vertical") {
-	                            var _scrollY = this.state.slideStyle.height * activeIndex;
-	                            transform = "translate3D(0,-" + _scrollY + "px,0)";
-	                        }
-	                        // console.log('transform',transform)
-	                        slidesStyle = _Object$assign({}, slidesStyle, {
-	                            WebkitTransform: transform,
-	                            transitionDuration: speed + "s"
-	                        });
-	                    }
-	                return slidesStyle;
-	            }
-	            return slidesStyle;
-	        }
-	    }, {
-	        key: "componentDidUpdate",
-	        value: function componentDidUpdate(prevProps, prevState) {
-	            var count = this.slides.length;
-	            var nextTick = this.props.speed + 10;
-	            if (this.needPseudoNode() === true) {
-	                if (prevState.activeIndex === count - 1 && this.state.direction === "next" && this.state.activeIndex === prevState.activeIndex
-	                // && this.state.prevActiveIndex !== 0
-	                ) {
-	                        // if direction is next and should active is pseudo item then redirect to the first real item
-	                        setTimeout(this.next.bind(this), nextTick);
-	                    } else if (this.getActiveIndex() === 0 && this.state.direction === "prev" && this.state.activeIndex === prevState.activeIndex) {
-	                    // console.log('updated ---',prevState.activeIndex,this.state.activeIndex)
-	                    // if direction is prev and should active is pseudo item then redirect to the last real item
-	                    setTimeout(this.prev.bind(this), nextTick);
-	                    // console.log('updated',this.state.activeIndex)
-	                }
-	            }
-	        }
-	    }, {
-	        key: "getActiveIndex",
-	        value: function getActiveIndex() {
-	            return this.props.activeIndex !== undefined ? this.props.activeIndex : this.state.activeIndex;
-	        }
-	    }, {
-	        key: "renderSlide",
-	        value: function renderSlide(child, index) {
-	            var activeIndex = this.getActiveIndex();
-	            var isActive = index === activeIndex;
-	            var isPrevActive = this.state.prevActiveIndex !== null && this.state.prevActiveIndex === index;
-	            var isNextActive = this.state.nextActiveIndex !== null && this.state.nextActiveIndex === index;
-	            return _react2["default"].cloneElement(child, {
-	                active: isActive,
-	                prev: isPrevActive,
-	                next: isNextActive,
-	                key: child.key ? child.key : index,
-	                style: this.state.slideStyle,
-	                animateOut: isPrevActive,
-	                animateIn: isActive && this.state.prevActiveIndex !== null,
-	                animateSpeed: this.props.speed,
-	                animateSlide: this.animateSlide(),
-	                direction: this.state.direction
-	            });
-	        }
-	    }, {
-	        key: "animateSlide",
-	        value: function animateSlide() {
-	            return this.props.effect === "fade";
-	        }
-	    }, {
-	        key: "renderDirectionNav",
-	        value: function renderDirectionNav() {
-	            if (this.props.directionNav === true) {
-	                return _react2["default"].createElement(
-	                    "div",
-	                    { className: "direction-nav" },
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "direction-nav-prev", onClick: this.prev.bind(this) },
-	                        _react2["default"].createElement("span", { className: "iconfont icon-left-open" })
-	                    ),
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "direction-nav-next", onClick: this.next.bind(this) },
-	                        _react2["default"].createElement("span", { className: "iconfont icon-right-open" })
-	                    )
-	                );
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "renderControlNav",
-	        value: function renderControlNav() {
-	            var _this2 = this;
-
-	            if (this.props.controlNav === true) {
-	                var activeIndex;
-
-	                var _ret = (function () {
-	                    activeIndex = _this2.getActiveIndex();
-
-	                    var slidesCount = _this2.slides.length;
-	                    // console.log(slidesCount)
-	                    if (_this2.needPseudoNode() === true) {
-	                        // if direction is next and should active is pseudo item then redirect to 1
-	                        activeIndex = activeIndex === slidesCount - 1 ? 1 : activeIndex;
-	                        // if direction is prev and should active is pseudo item then redirect to the last real item
-	                        activeIndex = activeIndex === 0 ? slidesCount - 2 : activeIndex;
-	                    }
-	                    var children = _react2["default"].Children.map(_this2.slides, function (child, i) {
-	                        /* dont render pseudo control item*/
-	                        if (_this2.needPseudoNode() === true && i === slidesCount - 1) {
-	                            return;
-	                        }
-	                        if (_this2.needPseudoNode() === true && i === 0) {
-	                            return;
-	                        }
-	                        var childrenClasses = (0, _classnames2["default"])({
-	                            active: activeIndex === i
-	                        });
-	                        return _react2["default"].createElement("span", { onClick: _this2.handleSelect.bind(_this2, i, null), className: childrenClasses, key: i });
-	                    });
-	                    var classes = (0, _classnames2["default"])({
-	                        'control-nav': true
-	                    });
-	                    return {
-	                        v: _react2["default"].createElement(
-	                            "div",
-	                            { className: classes },
-	                            children
-	                        )
-	                    };
-	                })();
-
-	                if (typeof _ret === "object") return _ret.v;
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "processSlides",
-	        value: function processSlides() {
-	            var children = arguments.length <= 0 || arguments[0] === undefined ? this.props.children : arguments[0];
-
-	            this.slides = [].concat(_toConsumableArray(children));
-	            if (this.needPseudoNode() === true) {
-	                var count = this.slides.length;
-	                var pseudoFirstNode = _react2["default"].cloneElement(this.slides[0], {
-	                    key: "pseudo-first",
-	                    pseudo: true
-	                });
-	                var pseudoLastNode = _react2["default"].cloneElement(this.slides[count - 1], {
-	                    key: "pseudo-last",
-	                    pseudo: true
-	                });
-	                this.slides.push(pseudoFirstNode);
-	                this.slides.unshift(pseudoLastNode);
-	            }
-	            // console.log('processSlides',this.props.children.length,this.slides.length)
-	        }
-	    }, {
-	        key: "componentWillMount",
-	        value: function componentWillMount() {
-	            this.processSlides();
-	        }
-	    }, {
-	        key: "componentWillUpdate",
-	        value: function componentWillUpdate(nextProps) {
-	            if (nextProps.children.length !== this.props.children.length) {
-	                this.processSlides(nextProps.children);
-	            }
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var _state = this.state;
-	            var sliderStyle = _state.sliderStyle;
-	            var slidesStyle = _state.slidesStyle;
-	            var slideStyle = _state.slideStyle;
-
-	            var classes = (0, _classnames2["default"])("slider", {
-	                "slider-fade": this.props.effect === "fade"
-	            });
-	            if (this.animateSlide()) {
-	                sliderStyle = null;
-	                slidesStyle = null;
-	            }
-	            // console.log('render slider',this.state)
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: classes,
-	                    style: sliderStyle,
-	                    onTouchStart: this.handleTouchStart.bind(this),
-	                    onTouchMove: this.handleTouchMove.bind(this),
-	                    onTouchEnd: this.handleTouchEnd.bind(this),
-	                    onMouseOver: this.handleMouseOver.bind(this),
-	                    onMouseOut: this.handleMouseOut.bind(this) },
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "slides", style: slidesStyle, ref: "slides" },
-	                    _react2["default"].Children.map(this.slides, this.renderSlide.bind(this))
-	                ),
-	                this.renderControlNav(),
-	                this.renderDirectionNav()
-	            );
-	        }
-	    }]);
-
-	    return Slider;
-	})(_react.Component);
-
-	Slider.defaultProps = {
-	    directionNav: false,
-	    controlNav: true,
-	    effect: "roll",
-	    infinity: true,
-	    direction: "next",
-	    touchEnabled: true,
-	    reverse: false,
-	    oriention: "horizontal", //vertical
-	    autoPlay: false,
-	    loop: true,
-	    speed: 300,
-	    delay: 5000,
-	    rect: null,
-	    height: null,
-	    pauseOnHover: true,
-	    onChange: function onChange() {}
-	};
-
-	exports["default"] = Slider;
-	module.exports = exports["default"];
-
-/***/ },
-
-/***/ 314:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _get = __webpack_require__(4)["default"];
-
-	var _inherits = __webpack_require__(18)["default"];
-
-	var _createClass = __webpack_require__(29)["default"];
-
-	var _classCallCheck = __webpack_require__(32)["default"];
-
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(33);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _classnames = __webpack_require__(234);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var Slide = (function (_Component) {
-	    _inherits(Slide, _Component);
-
-	    function Slide() {
-	        _classCallCheck(this, Slide);
-
-	        _get(Object.getPrototypeOf(Slide.prototype), "constructor", this).apply(this, arguments);
-	    }
-
-	    _createClass(Slide, [{
-	        key: "render",
-	        value: function render() {
-	            var _props = this.props;
-	            var active = _props.active;
-	            var prev = _props.prev;
-	            var next = _props.next;
-	            var pseudo = _props.pseudo;
-	            var key = _props.key;
-	            var style = _props.style;
-	            var animateSlide = _props.animateSlide;
-	            var animateSpeed = _props.animateSpeed;
-
-	            var classes = (0, _classnames2["default"])(this.props.className, {
-	                "slide": true,
-	                "active": active,
-	                "prev": prev,
-	                "next": next,
-	                "pseudo-slide": pseudo
-	                // active: (this.props.active && !this.props.animateIn) ||
-	                //     this.props.animateOut,
-	                // next: this.props.active && this.props.animateIn &&
-	                //     this.props.direction === 'next',
-	                // prev: this.props.active && this.props.animateIn &&
-	                //     this.props.direction === 'prev'
-	            });
-	            var slideStyle = {};
-	            if (style !== null) {
-	                var width = style.width;
-	                var height = style.height;
-
-	                width = width !== null ? width + "px" : "100%";
-	                height = height !== null ? height + "px" : "100%";
-	                slideStyle = {
-	                    width: width,
-	                    height: height
-	                };
-	            }
-	            if (animateSlide === true) {
-	                slideStyle.animationDuration = animateSpeed / 1000 + "s";
-	                slideStyle.animationName = "slide-fade";
-	                slideStyle.animationTimingFunction = "ease-in-out";
-	                slideStyle.width = "100%";
-	                slideStyle.height = "100%";
-	            }
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: classes, style: slideStyle, key: "slide-" + key },
-	                this.props.children
-	            );
-	        }
-	    }]);
-
-	    return Slide;
-	})(_react.Component);
-
-	exports["default"] = Slide;
 	module.exports = exports["default"];
 
 /***/ },
@@ -3204,52 +2040,6 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 320:
-/***/ function(module, exports) {
-
-	/* eslint-disable no-unused-vars */
-	'use strict';
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
-
-	function toObject(val) {
-		if (val === null || val === undefined) {
-			throw new TypeError('Object.assign cannot be called with null or undefined');
-		}
-
-		return Object(val);
-	}
-
-	module.exports = Object.assign || function (target, source) {
-		var from;
-		var to = toObject(target);
-		var symbols;
-
-		for (var s = 1; s < arguments.length; s++) {
-			from = Object(arguments[s]);
-
-			for (var key in from) {
-				if (hasOwnProperty.call(from, key)) {
-					to[key] = from[key];
-				}
-			}
-
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
-				for (var i = 0; i < symbols.length; i++) {
-					if (propIsEnumerable.call(from, symbols[i])) {
-						to[symbols[i]] = from[symbols[i]];
-					}
-				}
-			}
-		}
-
-		return to;
-	};
-
-
-/***/ },
-
 /***/ 347:
 /***/ function(module, exports) {
 
@@ -3341,18 +2131,17 @@ webpackJsonp([12],{
 	        }
 	    }, {
 	        key: "componentWillUnmount",
-	        value: function componentWillUnmount() {
-	            // noBounceScroll.disable()
-	        }
-	    }, {
-	        key: "shouldComponentUpdate",
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            console.log(nextProps, this.props);
-	            if (nextState.activeIndex !== this.state.activeIndex || nextProps.activeIndex !== this.props.activeIndex) {
-	                return true;
-	            }
-	            return false;
-	        }
+	        value: function componentWillUnmount() {}
+	        // noBounceScroll.disable()
+
+	        // shouldComponentUpdate(nextProps,nextState){
+	        //     if(nextState.activeIndex !== this.state.activeIndex
+	        //         || nextProps.activeIndex !== this.props.activeIndex){
+	        //         return true
+	        //     }
+	        //     return false
+	        // }
+
 	    }, {
 	        key: "handleSelect",
 	        value: function handleSelect(i, e) {
@@ -4014,18 +2803,16 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 407:
+/***/ 563:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _Object$assign = __webpack_require__(210)["default"];
-
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
-	var _sharedChunkIndexAppJsx = __webpack_require__(408);
+	var _sharedChunkPolymerAppJsx = __webpack_require__(564);
 
-	var _sharedChunkIndexAppJsx2 = _interopRequireDefault(_sharedChunkIndexAppJsx);
+	var _sharedChunkPolymerAppJsx2 = _interopRequireDefault(_sharedChunkPolymerAppJsx);
 
 	var _react = __webpack_require__(33);
 
@@ -4035,12 +2822,11 @@ webpackJsonp([12],{
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	Object.assign = _Object$assign || __webpack_require__(320);
-
 	function bootstrap() {
 	    var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-	    _reactDom2["default"].render(_react2["default"].createElement(_sharedChunkIndexAppJsx2["default"], { initialState: initialState }), document.getElementById('index'));
+	    _reactDom2["default"].render(_react2["default"].createElement(_sharedChunkPolymerAppJsx2["default"], { initialState: initialState }), document.getElementById('polymer'));
 	}
+
 	if (typeof window.addEventListener) {
 	    window.addEventListener("DOMContentLoaded", bootstrap);
 	} else {
@@ -4049,7 +2835,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 408:
+/***/ 564:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4076,7 +2862,7 @@ webpackJsonp([12],{
 
 	var _reactRedux = __webpack_require__(190);
 
-	var _reducerEs6 = __webpack_require__(409);
+	var _reducerEs6 = __webpack_require__(565);
 
 	var _reducerEs62 = _interopRequireDefault(_reducerEs6);
 
@@ -4084,15 +2870,15 @@ webpackJsonp([12],{
 
 	var _libReduxHelperEs62 = _interopRequireDefault(_libReduxHelperEs6);
 
-	var _componentJsx = __webpack_require__(411);
+	var _componentJsx = __webpack_require__(567);
 
 	var _componentJsx2 = _interopRequireDefault(_componentJsx);
 
-	var _actionEs6 = __webpack_require__(416);
+	var _actionEs6 = __webpack_require__(575);
 
 	var actions = _interopRequireWildcard(_actionEs6);
 
-	var IndexConnected = (0, _reactRedux.connect)(function (state) {
+	var PolymerConnected = (0, _reactRedux.connect)(function (state) {
 	    return state;
 	})((0, _libReduxHelperEs6.wrapComponentWithActions)(_componentJsx2["default"], actions));
 
@@ -4107,134 +2893,148 @@ webpackJsonp([12],{
 	    return store;
 	}
 
-	var IndexApp = (function (_React$Component) {
-	    _inherits(IndexApp, _React$Component);
+	var CategoryApp = (function (_React$Component) {
+	    _inherits(CategoryApp, _React$Component);
 
-	    function IndexApp() {
-	        _classCallCheck(this, IndexApp);
+	    function CategoryApp() {
+	        _classCallCheck(this, CategoryApp);
 
-	        _get(Object.getPrototypeOf(IndexApp.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(CategoryApp.prototype), "constructor", this).apply(this, arguments);
 	    }
 
-	    _createClass(IndexApp, [{
+	    _createClass(CategoryApp, [{
 	        key: "render",
 	        value: function render() {
-	            var _props$initialState = this.props.initialState;
-	            var channels = _props$initialState.channels;
-	            var floors = _props$initialState.floors;
-	            var currentChannel = _props$initialState.currentChannel;
+	            var categories = this.props.initialState.categories;
 
 	            var store = configureStore({
-	                index: {
-	                    channels: channels,
-	                    floors: floors,
-	                    currentChannel: currentChannel
+	                allCategory: {
+	                    categories: categories
 	                }
 	            });
 	            return _react2["default"].createElement(
 	                _reactRedux.Provider,
 	                { store: store },
-	                _react2["default"].createElement(IndexConnected, null)
+	                _react2["default"].createElement(PolymerConnected, null)
 	            );
 	        }
 	    }]);
 
-	    return IndexApp;
+	    return CategoryApp;
 	})(_react2["default"].Component);
 
-	exports["default"] = IndexApp;
+	exports["default"] = CategoryApp;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 409:
+/***/ 565:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _defineProperty = __webpack_require__(241)["default"];
+	var _extends = __webpack_require__(209)["default"];
 
-	var _Object$assign2 = __webpack_require__(210)["default"];
+	var _Object$assign = __webpack_require__(210)["default"];
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
 
-	var _constantEs6 = __webpack_require__(410);
-
-	var _commonConstantEs6 = __webpack_require__(262);
-
 	var _redux = __webpack_require__(197);
 
-	function search(state, action) {
+	var _constantsEs6 = __webpack_require__(566);
+
+	function allCategory(state, action) {
 	    if (state === undefined) state = {};
 
 	    switch (action.type) {
-	        case _commonConstantEs6.CHANGE_FIELD:
-	            var name = action.name,
-	                value = action.value;
+	        default:
+	            return state;
+	    }
+	}
 
-	            return _Object$assign2({}, state, _defineProperty({}, name, value));
-	        case _constantEs6.REQUEST_HOTWORD:
-	            return _Object$assign2({}, state, {
-	                hotwordFetched: false,
-	                hotwordFetching: true
+	function categoryBrands(state, action) {
+	    if (state === undefined) state = {};
+
+	    switch (action.type) {
+	        case _constantsEs6.REQUEST_CATEGORYBRANDS:
+	            return _Object$assign({}, state, {
+	                categoryBrandsFetched: false,
+	                categoryBrandsFetching: true
 	            });
-	        case _constantEs6.RESPONSE_HOTWORD:
-	            var hotwords = action.res.result;
-	            var hotwordFetched = action.res.hotwordFetched;
-	            return _Object$assign2({}, state, {
-	                hotwords: hotwords,
-	                hotwordFetched: hotwordFetched,
-	                hotwordFetching: false
+	        case _constantsEs6.RESPONSE_CATEGORYBRANDS:
+	            var categorybrands = action.res.result;
+	            var categoryBrandsFetched = action.res.categoryBrandsFetched;
+	            return _Object$assign({}, state, _extends({}, categorybrands, {
+	                categoryBrandsFetched: categoryBrandsFetched,
+	                categoryBrandsFetching: false
+	            }));
+	        default:
+	            return state;
+	    }
+	}
+
+	function allBrand(state, action) {
+	    if (state === undefined) state = {};
+
+	    switch (action.type) {
+	        case _constantsEs6.REQUEST_ALLBRANDS:
+	            return _Object$assign({}, state, {
+	                brandsFetched: false,
+	                brandsFetching: true
 	            });
-	        case _constantEs6.REQUEST_ASSOICATEWORD:
-	            return _Object$assign2({}, state, {
-	                associateWordFetched: false,
-	                associateWordFetching: true
-	            });
-	        case _constantEs6.RESPONSE_ASSOICATEWORD:
-	            var associatewords = action.res.result;
-	            var associateWordFetched = action.res.associateWordFetched;
-	            return _Object$assign2({}, state, {
-	                associatewords: associatewords,
-	                associateWordFetched: associateWordFetched,
-	                associateWordFetching: false
+	        case _constantsEs6.RESPONSE_ALLBRANDS:
+	            var brands = action.res.result;
+	            var brandsFetched = action.res.brandsFetched;
+	            return _Object$assign({}, state, {
+	                brands: brands,
+	                brandsFetched: brandsFetched,
+	                brandsFetching: false
 	            });
 	        default:
 	            return state;
 	    }
 	}
 
-	function index(state, action) {
+	function allOrigin(state, action) {
 	    if (state === undefined) state = {};
 
 	    switch (action.type) {
-	        case _constantEs6.REQUEST_SINGLERECOMMEND:
-	            return _Object$assign2({}, state, {
-	                singleRecommendFetched: false,
-	                singleRecommendFetching: true
+	        case _constantsEs6.REQUEST_ALLORIGINS:
+	            return _Object$assign({}, state, {
+	                originFetched: false,
+	                originFetching: true
 	            });
-	        case _constantEs6.RESPONSE_SINGLERECOMMEND:
-	            var singleRecommend = action.res.result;
-	            var singleRecommendFetched = action.res.goodFetched;
-	            return _Object$assign2({}, state, {
-	                singleRecommend: singleRecommend,
-	                singleRecommendFetched: singleRecommendFetched,
-	                singleRecommendFetching: false
+	        case _constantsEs6.RESPONSE_ALLORIGINS:
+	            var origins = action.res.result;
+	            var originFetched = action.res.originFetched;
+	            return _Object$assign({}, state, {
+	                origins: origins,
+	                originFetched: originFetched,
+	                originFetching: false
 	            });
-	        case _constantEs6.REQUEST_NEWRECOMMEND:
-	            return _Object$assign2({}, state, {
-	                newRecommendFetched: false,
-	                newRecommendFetching: true
+	        default:
+	            return state;
+	    }
+	}
+
+	function search(state, action) {
+	    if (state === undefined) state = {};
+
+	    switch (action.type) {
+	        case _constantsEs6.REQUEST_HOTWORD:
+	            return _Object$assign({}, state, {
+	                hotwordFetched: false,
+	                hotwordFetching: true
 	            });
-	        case _constantEs6.RESPONSE_NEWRECOMMEND:
-	            var newRecommend = action.res.result;
-	            var newRecommendFetched = action.res.goodFetched;
-	            return _Object$assign2({}, state, {
-	                newRecommend: newRecommend,
-	                newRecommendFetched: newRecommendFetched,
-	                newRecommendFetching: false
+	        case _constantsEs6.RESPONSE_HOTWORD:
+	            var hotwords = action.res.result;
+	            var hotwordFetched = action.res.hotwordFetched;
+	            return _Object$assign({}, state, {
+	                hotwords: hotwords,
+	                hotwordFetched: hotwordFetched,
+	                hotwordFetching: false
 	            });
 	        default:
 	            return state;
@@ -4242,7 +3042,11 @@ webpackJsonp([12],{
 	}
 
 	var rootReducer = (0, _redux.combineReducers)({
-	    index: index, search: search
+	    search: search,
+	    allCategory: allCategory,
+	    categoryBrands: categoryBrands,
+	    allBrand: allBrand,
+	    allOrigin: allOrigin
 	});
 
 	exports["default"] = rootReducer;
@@ -4250,34 +3054,35 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 410:
+/***/ 566:
 /***/ function(module, exports) {
 
 	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	var REQUEST_CATEGORYBRANDS = "REQUEST_CATEGORYBRANDS";
+	exports.REQUEST_CATEGORYBRANDS = REQUEST_CATEGORYBRANDS;
+	var RESPONSE_CATEGORYBRANDS = "RESPONSE_CATEGORYBRANDS";
+	exports.RESPONSE_CATEGORYBRANDS = RESPONSE_CATEGORYBRANDS;
+	var REQUEST_ALLBRANDS = "REQUEST_ALLBRANDS";
+	exports.REQUEST_ALLBRANDS = REQUEST_ALLBRANDS;
+	var RESPONSE_ALLBRANDS = "RESPONSE_ALLBRANDS";
+	exports.RESPONSE_ALLBRANDS = RESPONSE_ALLBRANDS;
+	var REQUEST_ALLORIGINS = "REQUEST_ALLORIGINS";
+	exports.REQUEST_ALLORIGINS = REQUEST_ALLORIGINS;
+	var RESPONSE_ALLORIGINS = "RESPONSE_ALLORIGINS";
+
+	exports.RESPONSE_ALLORIGINS = RESPONSE_ALLORIGINS;
 	var REQUEST_HOTWORD = "REQUEST_HOTWORD";
 	exports.REQUEST_HOTWORD = REQUEST_HOTWORD;
 	var RESPONSE_HOTWORD = "RESPONSE_HOTWORD";
 	exports.RESPONSE_HOTWORD = RESPONSE_HOTWORD;
-	var REQUEST_ASSOICATEWORD = "REQUEST_ASSOICATEWORD";
-	exports.REQUEST_ASSOICATEWORD = REQUEST_ASSOICATEWORD;
-	var RESPONSE_ASSOICATEWORD = "RESPONSE_ASSOICATEWORD";
-
-	exports.RESPONSE_ASSOICATEWORD = RESPONSE_ASSOICATEWORD;
-	var REQUEST_SINGLERECOMMEND = "REQUEST_SINGLERECOMMEND";
-	exports.REQUEST_SINGLERECOMMEND = REQUEST_SINGLERECOMMEND;
-	var RESPONSE_SINGLERECOMMEND = "RESPONSE_SINGLERECOMMEND";
-	exports.RESPONSE_SINGLERECOMMEND = RESPONSE_SINGLERECOMMEND;
-	var REQUEST_NEWRECOMMEND = "REQUEST_NEWRECOMMEND";
-	exports.REQUEST_NEWRECOMMEND = REQUEST_NEWRECOMMEND;
-	var RESPONSE_NEWRECOMMEND = "RESPONSE_NEWRECOMMEND";
-	exports.RESPONSE_NEWRECOMMEND = RESPONSE_NEWRECOMMEND;
 
 /***/ },
 
-/***/ 411:
+/***/ 567:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4300,11 +3105,15 @@ webpackJsonp([12],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _partialIndexJsx = __webpack_require__(412);
+	var _partialPolymerJsx = __webpack_require__(568);
 
-	var _partialIndexJsx2 = _interopRequireDefault(_partialIndexJsx);
+	var _partialPolymerJsx2 = _interopRequireDefault(_partialPolymerJsx);
 
-	var _partialSearchJsx = __webpack_require__(415);
+	var _partialAllbrandsJsx = __webpack_require__(572);
+
+	var _partialAllbrandsJsx2 = _interopRequireDefault(_partialAllbrandsJsx);
+
+	var _partialSearchJsx = __webpack_require__(574);
 
 	var _partialSearchJsx2 = _interopRequireDefault(_partialSearchJsx);
 
@@ -4312,25 +3121,31 @@ webpackJsonp([12],{
 
 	var _commonSwitcherJsx = __webpack_require__(319);
 
-	var IndexRouter = (function (_Component) {
-	    _inherits(IndexRouter, _Component);
+	var PolymerRouter = (function (_Component) {
+	    _inherits(PolymerRouter, _Component);
 
-	    function IndexRouter(props) {
-	        _classCallCheck(this, IndexRouter);
+	    function PolymerRouter(props) {
+	        _classCallCheck(this, PolymerRouter);
 
-	        _get(Object.getPrototypeOf(IndexRouter.prototype), "constructor", this).call(this, props);
+	        _get(Object.getPrototypeOf(PolymerRouter.prototype), "constructor", this).call(this, props);
 	        this.state = {
 	            currentRoute: null,
 	            prevRoute: null
 	        };
 	    }
 
-	    _createClass(IndexRouter, [{
+	    _createClass(PolymerRouter, [{
 	        key: "componentDidMount",
 	        value: function componentDidMount() {
 	            var _this = this;
 
 	            (0, _director.Router)({
+	                "/allbrands": function allbrands() {
+	                    _this.setState({
+	                        currentRoute: "allbrands",
+	                        prevRoute: _this.state.currentRoute
+	                    });
+	                },
 	                "/search": function search() {
 	                    _this.setState({
 	                        currentRoute: "search",
@@ -4358,7 +3173,12 @@ webpackJsonp([12],{
 	                _react2["default"].createElement(
 	                    _commonSwitcherJsx.SwitcherCase,
 	                    { name: "index" },
-	                    _react2["default"].createElement(_partialIndexJsx2["default"], this.props)
+	                    _react2["default"].createElement(_partialPolymerJsx2["default"], this.props)
+	                ),
+	                _react2["default"].createElement(
+	                    _commonSwitcherJsx.SwitcherCase,
+	                    { name: "allbrands" },
+	                    _react2["default"].createElement(_partialAllbrandsJsx2["default"], this.props)
 	                ),
 	                _react2["default"].createElement(
 	                    _commonSwitcherJsx.SwitcherCase,
@@ -4369,15 +3189,15 @@ webpackJsonp([12],{
 	        }
 	    }]);
 
-	    return IndexRouter;
+	    return PolymerRouter;
 	})(_react.Component);
 
-	exports["default"] = IndexRouter;
+	exports["default"] = PolymerRouter;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 412:
+/***/ 568:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4390,7 +3210,274 @@ webpackJsonp([12],{
 
 	var _classCallCheck = __webpack_require__(32)["default"];
 
-	var _extends = __webpack_require__(209)["default"];
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _lodash = __webpack_require__(231);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var _commonHeaderJsx = __webpack_require__(217);
+
+	var _commonHeaderJsx2 = _interopRequireDefault(_commonHeaderJsx);
+
+	var _commonFooterJsx = __webpack_require__(251);
+
+	var _commonFooterJsx2 = _interopRequireDefault(_commonFooterJsx);
+
+	var _componentIconJsx = __webpack_require__(240);
+
+	var _componentIconJsx2 = _interopRequireDefault(_componentIconJsx);
+
+	var _classnames = __webpack_require__(234);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _componentSlidetabsJsx = __webpack_require__(375);
+
+	var _categoryJsx = __webpack_require__(569);
+
+	var _categoryJsx2 = _interopRequireDefault(_categoryJsx);
+
+	var _brandJsx = __webpack_require__(570);
+
+	var _brandJsx2 = _interopRequireDefault(_brandJsx);
+
+	var _originJsx = __webpack_require__(571);
+
+	var _originJsx2 = _interopRequireDefault(_originJsx);
+
+	var Polymer = (function (_Component) {
+	    _inherits(Polymer, _Component);
+
+	    function Polymer() {
+	        _classCallCheck(this, Polymer);
+
+	        _get(Object.getPrototypeOf(Polymer.prototype), "constructor", this).apply(this, arguments);
+	    }
+
+	    _createClass(Polymer, [{
+	        key: "handleSelect",
+	        value: function handleSelect(i) {
+	            var _props = this.props;
+	            var fetchCategoryBrands = _props.fetchCategoryBrands;
+	            var categoryBrands = _props.categoryBrands;
+	            var fetchAllOrigins = _props.fetchAllOrigins;
+	            var allOrigin = _props.allOrigin;
+
+	            if (i === 1 && _lodash2["default"].isEmpty(categoryBrands)) {
+	                fetchCategoryBrands();
+	            }
+	            if (i === 2 && _lodash2["default"].isEmpty(allOrigin)) {
+	                fetchAllOrigins();
+	            }
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "polymer-content" },
+	                _react2["default"].createElement(
+	                    _commonHeaderJsx2["default"],
+	                    null,
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "logo" },
+	                        _react2["default"].createElement("img", { src: "/client/asset/images/indexlogo.png" })
+	                    ),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "btn-right" },
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "#/search" },
+	                            _react2["default"].createElement(_componentIconJsx2["default"], { icon: "search" })
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "polymer-list" },
+	                    _react2["default"].createElement(
+	                        _componentSlidetabsJsx.SlideTabs,
+	                        { navbarSlidable: false, onSelect: this.handleSelect.bind(this) },
+	                        _react2["default"].createElement(
+	                            _componentSlidetabsJsx.SlideTabsItem,
+	                            { navigator: function () {
+	                                    return _react2["default"].createElement(
+	                                        "i",
+	                                        null,
+	                                        "类别"
+	                                    );
+	                                } },
+	                            _react2["default"].createElement(_categoryJsx2["default"], this.props.allCategory)
+	                        ),
+	                        _react2["default"].createElement(
+	                            _componentSlidetabsJsx.SlideTabsItem,
+	                            { navigator: function () {
+	                                    return _react2["default"].createElement(
+	                                        "i",
+	                                        null,
+	                                        "品牌"
+	                                    );
+	                                } },
+	                            _react2["default"].createElement(_brandJsx2["default"], this.props)
+	                        ),
+	                        _react2["default"].createElement(
+	                            _componentSlidetabsJsx.SlideTabsItem,
+	                            { navigator: function () {
+	                                    return _react2["default"].createElement(
+	                                        "i",
+	                                        null,
+	                                        "产地"
+	                                    );
+	                                } },
+	                            _react2["default"].createElement(_originJsx2["default"], this.props)
+	                        )
+	                    )
+	                ),
+	                _react2["default"].createElement(_commonFooterJsx2["default"], { activeIndex: "1" })
+	            );
+	        }
+	    }]);
+
+	    return Polymer;
+	})(_react.Component);
+
+	exports["default"] = Polymer;
+	module.exports = exports["default"];
+
+/***/ },
+
+/***/ 569:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _componentSlidetabsJsx = __webpack_require__(375);
+
+	var Category = (function (_Component) {
+	    _inherits(Category, _Component);
+
+	    function Category(props) {
+	        _classCallCheck(this, Category);
+
+	        _get(Object.getPrototypeOf(Category.prototype), "constructor", this).call(this, props);
+	    }
+
+	    _createClass(Category, [{
+	        key: "renderCategory",
+	        value: function renderCategory(category) {
+	            var children = category.children.map(function (child, i) {
+	                return _react2["default"].createElement(
+	                    "a",
+	                    { href: "/", className: "cg", key: i },
+	                    _react2["default"].createElement("img", { src: "/client/asset/images/965_G_1445533723842.gif" }),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        null,
+	                        child.fullName
+	                    )
+	                );
+	            });
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "rightCon" },
+	                _react2["default"].createElement(
+	                    "a",
+	                    { href: "#", className: "ad" },
+	                    _react2["default"].createElement("img", { src: "/client/asset/images/pic24.gif" })
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "content" },
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "title" },
+	                        "热门分类"
+	                    ),
+	                    children
+	                )
+	            );
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var _this = this;
+
+	            var categories = this.props.categories;
+
+	            var tabs = categories.map(function (category, i) {
+	                return _react2["default"].createElement(
+	                    _componentSlidetabsJsx.SlideTabsItem,
+	                    { navigator: function () {
+	                            return _react2["default"].createElement(
+	                                "span",
+	                                null,
+	                                category.name
+	                            );
+	                        }, key: i },
+	                    _this.renderCategory(category)
+	                );
+	            });
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "category-list" },
+	                _react2["default"].createElement(
+	                    _componentSlidetabsJsx.SlideTabs,
+	                    { axis: "y", contentSlidable: false },
+	                    tabs
+	                )
+	            );
+	        }
+	    }]);
+
+	    return Category;
+	})(_react.Component);
+
+	exports["default"] = Category;
+	module.exports = exports["default"];
+
+/***/ },
+
+/***/ 570:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
 
 	var _interopRequireDefault = __webpack_require__(2)["default"];
 
@@ -4406,89 +3493,110 @@ webpackJsonp([12],{
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _componentSlidetabsJsx = __webpack_require__(375);
+	var Brand = (function (_Component) {
+	    _inherits(Brand, _Component);
 
-	var _componentSliderSliderJsx = __webpack_require__(313);
+	    function Brand(props) {
+	        _classCallCheck(this, Brand);
 
-	var _componentSliderSliderJsx2 = _interopRequireDefault(_componentSliderSliderJsx);
-
-	var _componentSliderSlideJsx = __webpack_require__(314);
-
-	var _componentSliderSlideJsx2 = _interopRequireDefault(_componentSliderSlideJsx);
-
-	var _headerJsx = __webpack_require__(413);
-
-	var _headerJsx2 = _interopRequireDefault(_headerJsx);
-
-	var _commonFooterJsx = __webpack_require__(251);
-
-	var _commonFooterJsx2 = _interopRequireDefault(_commonFooterJsx);
-
-	var _floorJsx = __webpack_require__(414);
-
-	var _floorJsx2 = _interopRequireDefault(_floorJsx);
-
-	var Index = (function (_Component) {
-	    _inherits(Index, _Component);
-
-	    function Index() {
-	        _classCallCheck(this, Index);
-
-	        _get(Object.getPrototypeOf(Index.prototype), "constructor", this).apply(this, arguments);
+	        _get(Object.getPrototypeOf(Brand.prototype), "constructor", this).call(this, props);
 	    }
 
-	    _createClass(Index, [{
+	    _createClass(Brand, [{
+	        key: "renderRecommendBrands",
+	        value: function renderRecommendBrands() {
+	            var recommendBrands = this.props.categoryBrands.recommendBrands;
+
+	            if (recommendBrands) {
+	                return recommendBrands.map(function (brand, i) {
+	                    return _react2["default"].createElement(
+	                        "a",
+	                        { href: "#", key: i },
+	                        _react2["default"].createElement(
+	                            "div",
+	                            null,
+	                            _react2["default"].createElement("img", { src: brand.imageUrl })
+	                        )
+	                    );
+	                });
+	            }
+	            return null;
+	        }
+	    }, {
+	        key: "renderCategory",
+	        value: function renderCategory() {
+	            var categories = this.props.categoryBrands.categories;
+
+	            if (categories) {
+	                return categories.map(function (category, i) {
+	                    var brands = category.brands.map(function (brand, k) {
+	                        return _react2["default"].createElement(
+	                            "a",
+	                            { href: "#", key: k },
+	                            _react2["default"].createElement(
+	                                "div",
+	                                null,
+	                                _react2["default"].createElement("img", { src: brand.imageUrl })
+	                            )
+	                        );
+	                    });
+	                    if (brands) {
+	                        return _react2["default"].createElement(
+	                            "div",
+	                            { className: "category-brands", key: i },
+	                            _react2["default"].createElement(
+	                                "div",
+	                                { className: "title" },
+	                                category.name
+	                            ),
+	                            _react2["default"].createElement(
+	                                "div",
+	                                { className: "brandList clearfix" },
+	                                brands
+	                            )
+	                        );
+	                    }
+	                    return null;
+	                });
+	            }
+	            return null;
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
-	            var _this = this;
-
-	            var _props$index = this.props.index;
-	            var channels = _props$index.channels;
-	            var floors = _props$index.floors;
-
-	            var classes = (0, _classnames2["default"])({
-	                "index-content": true
-	            });
-	            var tabs = channels.map(function (channel, i) {
-	                return _react2["default"].createElement(
-	                    _componentSlidetabsJsx.SlideTabsItem,
-	                    { navigator: function () {
-	                            return _react2["default"].createElement(
-	                                "span",
-	                                null,
-	                                _react2["default"].createElement(
-	                                    "b",
-	                                    null,
-	                                    channel.name
-	                                )
-	                            );
-	                        }, key: i },
-	                    _react2["default"].createElement(_floorJsx2["default"], _extends({ floors: floors }, _this.props))
-	                );
-	            });
 	            return _react2["default"].createElement(
 	                "div",
-	                { className: classes },
-	                _react2["default"].createElement(_headerJsx2["default"], null),
+	                { className: "poly_2" },
 	                _react2["default"].createElement(
-	                    _componentSlidetabsJsx.SlideTabs,
-	                    { axis: "x" },
-	                    tabs
+	                    "a",
+	                    { href: "#/allbrands", className: "allBrand" },
+	                    "全部品牌",
+	                    _react2["default"].createElement("i", { className: "iconfont icon-right" })
 	                ),
-	                _react2["default"].createElement(_commonFooterJsx2["default"], { activeIndex: "0" })
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "title" },
+	                    "推荐品牌"
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "brandList clearfix" },
+	                    this.renderRecommendBrands()
+	                ),
+	                this.renderCategory()
 	            );
 	        }
 	    }]);
 
-	    return Index;
+	    return Brand;
 	})(_react.Component);
 
-	exports["default"] = Index;
+	exports["default"] = Brand;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 413:
+/***/ 571:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4511,41 +3619,184 @@ webpackJsonp([12],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var Header = (function (_Component) {
-	    _inherits(Header, _Component);
+	var Origin = (function (_Component) {
+	    _inherits(Origin, _Component);
 
-	    function Header(props) {
-	        _classCallCheck(this, Header);
+	    function Origin(props) {
+	        _classCallCheck(this, Origin);
 
-	        _get(Object.getPrototypeOf(Header.prototype), "constructor", this).call(this, props);
+	        _get(Object.getPrototypeOf(Origin.prototype), "constructor", this).call(this, props);
 	    }
 
-	    _createClass(Header, [{
+	    _createClass(Origin, [{
+	        key: "renderOrigin",
+	        value: function renderOrigin() {
+	            var origins = this.props.allOrigin.origins;
+
+	            if (origins) {
+	                return origins.map(function (origin, i) {
+	                    return _react2["default"].createElement(
+	                        "a",
+	                        { href: "#", key: i },
+	                        _react2["default"].createElement("img", { src: origin.backgroundImageUrl })
+	                    );
+	                });
+	            }
+	            return null;
+	        }
+	    }, {
 	        key: "render",
 	        value: function render() {
 	            return _react2["default"].createElement(
-	                "header",
+	                "div",
 	                null,
 	                _react2["default"].createElement(
-	                    "a",
-	                    { className: "logo", href: "#/" },
-	                    _react2["default"].createElement("img", { src: "/client/asset/images/indexlogo.png" })
-	                ),
-	                _react2["default"].createElement("a", { className: "indexQrcode", href: "#" }),
-	                _react2["default"].createElement("a", { className: "indexSearch", href: "#/search" })
+	                    "div",
+	                    { className: "kindArea" },
+	                    this.renderOrigin()
+	                )
 	            );
 	        }
 	    }]);
 
-	    return Header;
+	    return Origin;
 	})(_react.Component);
 
-	exports["default"] = Header;
+	exports["default"] = Origin;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 414:
+/***/ 572:
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _get = __webpack_require__(4)["default"];
+
+	var _inherits = __webpack_require__(18)["default"];
+
+	var _createClass = __webpack_require__(29)["default"];
+
+	var _classCallCheck = __webpack_require__(32)["default"];
+
+	var _interopRequireDefault = __webpack_require__(2)["default"];
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(33);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _commonHeaderJsx = __webpack_require__(217);
+
+	var _commonHeaderJsx2 = _interopRequireDefault(_commonHeaderJsx);
+
+	var _componentScrollnavJsx = __webpack_require__(573);
+
+	var _componentScrollnavJsx2 = _interopRequireDefault(_componentScrollnavJsx);
+
+	var _lodash = __webpack_require__(231);
+
+	var _lodash2 = _interopRequireDefault(_lodash);
+
+	var AllBrands = (function (_Component) {
+	    _inherits(AllBrands, _Component);
+
+	    function AllBrands(props) {
+	        _classCallCheck(this, AllBrands);
+
+	        _get(Object.getPrototypeOf(AllBrands.prototype), "constructor", this).call(this, props);
+	    }
+
+	    _createClass(AllBrands, [{
+	        key: "componentDidMount",
+	        value: function componentDidMount() {
+	            var fetchAllBrands = this.props.fetchAllBrands;
+
+	            fetchAllBrands();
+	        }
+	    }, {
+	        key: "renderBrand",
+	        value: function renderBrand() {
+	            var brands = this.props.allBrand.brands;
+
+	            if (brands) {
+	                var brandGroup = [];
+	                for (var key in brands) {
+	                    var brandGroupItems = brands[key].map(function (brand, i) {
+	                        return _react2["default"].createElement(
+	                            "li",
+	                            { key: i },
+	                            brand
+	                        );
+	                    });
+	                    brandGroup.push(_react2["default"].createElement(
+	                        "div",
+	                        { className: "anchor-point", "data-anchor": "anchor-a", key: key },
+	                        _react2["default"].createElement(
+	                            "h5",
+	                            null,
+	                            key
+	                        ),
+	                        _react2["default"].createElement(
+	                            "ul",
+	                            null,
+	                            brandGroupItems
+	                        )
+	                    ));
+	                }
+	                return brandGroup;
+	            }
+	            return null;
+	        }
+	    }, {
+	        key: "render",
+	        value: function render() {
+	            var brands = this.props.allBrand.brands;
+
+	            var navbarRenderer = function navbarRenderer() {
+	                var shortcuts = _lodash2["default"].keys(brands);
+	                return shortcuts.map(function (v) {
+	                    return _react2["default"].createElement(
+	                        "span",
+	                        null,
+	                        v
+	                    );
+	                });
+	            };
+	            return _react2["default"].createElement(
+	                "div",
+	                { className: "all-brands" },
+	                _react2["default"].createElement(
+	                    _commonHeaderJsx2["default"],
+	                    null,
+	                    "全部品牌"
+	                ),
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "all-brands-inner" },
+	                    _react2["default"].createElement(
+	                        _componentScrollnavJsx2["default"],
+	                        { className: "all-brands-list", navbarRenderer: navbarRenderer },
+	                        this.renderBrand()
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return AllBrands;
+	})(_react.Component);
+
+	exports["default"] = AllBrands;
+	module.exports = exports["default"];
+
+/***/ },
+
+/***/ 573:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4572,492 +3823,145 @@ webpackJsonp([12],{
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _componentSliderSliderJsx = __webpack_require__(313);
+	var _classnames = __webpack_require__(234);
 
-	var _componentSliderSliderJsx2 = _interopRequireDefault(_componentSliderSliderJsx);
+	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _componentSliderSlideJsx = __webpack_require__(314);
+	var _libDomEs6 = __webpack_require__(238);
 
-	var _componentSliderSlideJsx2 = _interopRequireDefault(_componentSliderSlideJsx);
+	var _libDomEs62 = _interopRequireDefault(_libDomEs6);
 
-	var Floor = (function (_Component) {
-	    _inherits(Floor, _Component);
+	var ScrollNav = _react2["default"].createClass({
+	    displayName: "ScrollNav",
 
-	    function Floor(props) {
-	        _classCallCheck(this, Floor);
+	    getInitialState: function getInitialState() {
+	        return {
+	            activeIndex: 0
+	        };
+	    },
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            delay: 100,
+	            diffInViewport: 0,
+	            navbarRenderer: function navbarRenderer() {}
+	        };
+	    },
+	    componentDidMount: function componentDidMount() {
+	        this.checkVisible();
+	        _libDomEs62["default"].bindEvent(_reactDom2["default"].findDOMNode(this.refs["content"]), "scroll", this.checkVisible);
+	        // dom.unbindEvent(ReactDOM.findDOMNode(this.refs["content"]),"scroll",this.handleScroll)
+	    },
+	    componentWillUnmount: function componentWillUnmount() {
+	        if (this._timer) {
+	            clearTimeout(this._timer);
+	        }
+	    },
+	    checkVisible: function checkVisible(e) {
+	        var _this = this;
 
-	        _get(Object.getPrototypeOf(Floor.prototype), "constructor", this).call(this, props);
+	        console.log('checkVisible');
+	        var diffInViewport = this.props.diffInViewport;
+
+	        var activeIndex = [];
+	        var containerNode = _reactDom2["default"].findDOMNode(this.refs["content"]);
+	        for (var i = 0; i < containerNode.children.length; i++) {
+	            var childNode = containerNode.children[i];
+	            if (_libDomEs62["default"].inViewport(childNode, containerNode, diffInViewport) === true) {
+	                activeIndex.push(i);
+	            }
+	        }
+	        this._timer = setTimeout(function () {
+	            _this.setState({
+	                activeIndex: activeIndex[0]
+	            });
+	        }, this.props.delay);
+	    },
+	    jumpTo: function jumpTo(index, e) {
+	        var _this2 = this;
+
+	        _libDomEs62["default"].unbindEvent(_reactDom2["default"].findDOMNode(this.refs["content"]), "scroll", this.checkVisible);
+	        var containerNode = _reactDom2["default"].findDOMNode(this.refs["content"]);
+	        var checkNode = containerNode.children[index];
+
+	        _libDomEs62["default"].scrollInView(checkNode, containerNode, function () {
+	            _libDomEs62["default"].bindEvent(_reactDom2["default"].findDOMNode(_this2.refs["content"]), "scroll", _this2.checkVisible);
+	        });
+	        this._timer = setTimeout(function () {
+	            _this2.setState({
+	                activeIndex: index
+	            });
+	        }, this.props.delay);
+	    },
+	    renderNavbar: function renderNavbar() {
+	        var _this3 = this;
+
+	        var navbarRenderer = this.props.navbarRenderer;
+	        var activeIndex = this.state.activeIndex;
+
+	        var navbarItems = navbarRenderer.call(this);
+	        return navbarItems.map(function (navbarItem, i) {
+	            return _react2["default"].createElement(
+	                ScrollNavbarAnchor,
+	                { key: i,
+	                    jumpTo: _this3.jumpTo.bind(_this3, i),
+	                    active: i === activeIndex
+	                },
+	                navbarItem
+	            );
+	        });
+	    },
+	    render: function render() {
+	        var classes = (0, _classnames2["default"])(this.props.className, "scroll-nav-content");
+	        return _react2["default"].createElement(
+	            "div",
+	            { className: "scroll-nav" },
+	            _react2["default"].createElement(
+	                "div",
+	                { className: "scroll-navbar" },
+	                this.renderNavbar()
+	            ),
+	            _react2["default"].createElement(
+	                "div",
+	                { className: classes, ref: "content"
+	                },
+	                this.props.children
+	            )
+	        );
+	    }
+	});
+
+	var ScrollNavbarAnchor = (function (_Component) {
+	    _inherits(ScrollNavbarAnchor, _Component);
+
+	    function ScrollNavbarAnchor() {
+	        _classCallCheck(this, ScrollNavbarAnchor);
+
+	        _get(Object.getPrototypeOf(ScrollNavbarAnchor.prototype), "constructor", this).apply(this, arguments);
 	    }
 
-	    _createClass(Floor, [{
-	        key: "componentDidMount",
-	        value: function componentDidMount() {
-	            var _props = this.props;
-	            var fetchSingleRecommend = _props.fetchSingleRecommend;
-	            var fetchNewRecommend = _props.fetchNewRecommend;
-	            var _props$floors = this.props.floors;
-	            var newRecommendId = _props$floors.newRecommendId;
-	            var singleRecommendId = _props$floors.singleRecommendId;
-
-	            // fetchSingleRecommend({
-	            //     activityId:singleRecommendId,
-	            // })
-	            // fetchNewRecommend({
-	            //     activityId:newRecommendId
-	            // })
-	        }
-	    }, {
-	        key: "renderSingleRecommend",
-	        value: function renderSingleRecommend() {
-	            var singleRecommend = this.props.index.singleRecommend;
-
-	            if (singleRecommend) {
-	                return singleRecommend.map(function (good, i) {
-	                    return _react2["default"].createElement(
-	                        "a",
-	                        { href: "#", className: "clearfix", key: i },
-	                        _react2["default"].createElement("img", { src: good.imageUrl }),
-	                        _react2["default"].createElement(
-	                            "span",
-	                            { className: "name" },
-	                            good.title
-	                        ),
-	                        _react2["default"].createElement(
-	                            "p",
-	                            null,
-	                            good.subTitle
-	                        ),
-	                        _react2["default"].createElement(
-	                            "span",
-	                            { className: "country" },
-	                            _react2["default"].createElement(
-	                                "i",
-	                                null,
-	                                _react2["default"].createElement("img", { src: "/client/asset/images/ico_flag.png" })
-	                            ),
-	                            "荷兰直采"
-	                        ),
-	                        _react2["default"].createElement(
-	                            "span",
-	                            { className: "singlePrice" },
-	                            _react2["default"].createElement(
-	                                "span",
-	                                { className: "nowPrice" },
-	                                "¥",
-	                                good.salePrice
-	                            ),
-	                            _react2["default"].createElement(
-	                                "span",
-	                                { className: "oldPrice" },
-	                                "¥",
-	                                good.originPrice
-	                            )
-	                        )
-	                    );
-	                });
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "renderNewRecommend",
-	        value: function renderNewRecommend() {
-	            var newRecommend = this.props.index.newRecommend;
-
-	            if (newRecommend) {
-	                return newRecommend.map(function (good, i) {
-	                    return _react2["default"].createElement(
-	                        "a",
-	                        { href: "/gooddetail/1", className: "clearfix", key: i },
-	                        _react2["default"].createElement("img", { src: good.imageUrl }),
-	                        _react2["default"].createElement(
-	                            "div",
-	                            { className: "right" },
-	                            _react2["default"].createElement(
-	                                "span",
-	                                { className: "name" },
-	                                good.title
-	                            ),
-	                            _react2["default"].createElement(
-	                                "span",
-	                                { className: "country" },
-	                                _react2["default"].createElement(
-	                                    "i",
-	                                    null,
-	                                    _react2["default"].createElement("img", { src: "/client/asset/images/ico_flag.png", alt: "" })
-	                                ),
-	                                "荷兰"
-	                            ),
-	                            _react2["default"].createElement(
-	                                "span",
-	                                { className: "nowPrice" },
-	                                "¥",
-	                                good.salePrice
-	                            ),
-	                            _react2["default"].createElement(
-	                                "span",
-	                                { className: "oldPrice" },
-	                                "¥",
-	                                good.originPrice
-	                            )
-	                        )
-	                    );
-	                });
-	            }
-	        }
-	    }, {
-	        key: "renderSlider",
-	        value: function renderSlider() {
-	            var slides = this.props.floors.slides;
-
-	            if (slides) {
-	                slides = slides.map(function (slide, i) {
-	                    return _react2["default"].createElement(
-	                        _componentSliderSlideJsx2["default"],
-	                        { key: i },
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/activity/" + slide.id },
-	                            _react2["default"].createElement("img", { src: slide.imageUrl, alt: "" })
-	                        )
-	                    );
-	                });
-	                return _react2["default"].createElement(
-	                    _componentSliderSliderJsx2["default"],
-	                    { ref: "slider", autoPlay: true, touchEnabled: false, effect: "fade" },
-	                    slides
-	                );
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "renderBadges",
-	        value: function renderBadges() {
-	            var badges = this.props.floors.badges;
-
-	            return badges.map(function (badge, i) {
-	                return _react2["default"].createElement(
-	                    "span",
-	                    { key: i },
-	                    badge.title
-	                );
-	            });
-	        }
-	    }, {
-	        key: "renderRushBuy",
-	        value: function renderRushBuy() {
-	            var rushbuys = this.props.floors.rushbuys;
-
-	            if (rushbuys === null) {
-	                return null;
-	            }
-	            return rushbuys.map(function (rushbuy, i) {
-	                return _react2["default"].createElement(
-	                    "a",
-	                    { href: "/activity/" + rushbuy.id, key: i },
-	                    _react2["default"].createElement("img", { src: rushbuy.imageUrl }),
-	                    _react2["default"].createElement(
-	                        "span",
-	                        null,
-	                        _react2["default"].createElement(
-	                            "i",
-	                            null,
-	                            _react2["default"].createElement("img", { src: "/client/asset/images/flashClock.png" })
-	                        ),
-	                        "距本期活动结束：01天34时10分46秒"
-	                    )
-	                );
-	            });
-	        }
-	    }, {
-	        key: "renderFlashBuy",
-	        value: function renderFlashBuy() {
-	            var flashbuys = this.props.floors.flashbuys;
-
-	            if (flashbuys === null) {
-	                return null;
-	            }
-	            return flashbuys.map(function (flushbuy, i) {
-	                return _react2["default"].createElement(
-	                    "a",
-	                    { href: "/gooddetail/1", className: "clearfix", key: i },
-	                    _react2["default"].createElement("img", { src: "/client/asset/images/pic8.gif" }),
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "right" },
-	                        _react2["default"].createElement(
-	                            "p",
-	                            null,
-	                            "距本期闪购结束",
-	                            _react2["default"].createElement(
-	                                "em",
-	                                null,
-	                                _react2["default"].createElement(
-	                                    "i",
-	                                    null,
-	                                    "01"
-	                                ),
-	                                "天",
-	                                _react2["default"].createElement(
-	                                    "i",
-	                                    null,
-	                                    "34"
-	                                ),
-	                                "时",
-	                                _react2["default"].createElement(
-	                                    "i",
-	                                    null,
-	                                    "10分"
-	                                ),
-	                                _react2["default"].createElement(
-	                                    "i",
-	                                    null,
-	                                    "46秒"
-	                                )
-	                            )
-	                        ),
-	                        _react2["default"].createElement("div", { className: "flashDot" }),
-	                        _react2["default"].createElement(
-	                            "span",
-	                            { className: "name" },
-	                            "荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（..."
-	                        ),
-	                        _react2["default"].createElement(
-	                            "span",
-	                            { className: "country" },
-	                            _react2["default"].createElement(
-	                                "i",
-	                                null,
-	                                _react2["default"].createElement("img", { src: "/client/asset/images/ico_flag.png", alt: "" })
-	                            ),
-	                            "荷兰"
-	                        ),
-	                        _react2["default"].createElement(
-	                            "span",
-	                            { className: "nowPrice" },
-	                            "¥99.0"
-	                        ),
-	                        _react2["default"].createElement(
-	                            "span",
-	                            { className: "oldPrice" },
-	                            "¥199.0"
-	                        )
-	                    )
-	                );
-	            });
-	        }
-	    }, {
-	        key: "renderActivityOne",
-	        value: function renderActivityOne() {
-	            var activityOne = this.props.floors.activityOne;
-
-	            if (activityOne) {
-	                var mobileonly = activityOne["手机专享"];
-	                var finest = activityOne["海外精选"];
-	                var stockup = activityOne["今日海囤"];
-	                return _react2["default"].createElement(
-	                    "ul",
-	                    { className: "clearfix" },
-	                    _react2["default"].createElement(
-	                        "li",
-	                        null,
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/mobileonly/" + mobileonly.id },
-	                            _react2["default"].createElement("img", { src: mobileonly.imageUrl, alt: "" }),
-	                            _react2["default"].createElement("span", null)
-	                        )
-	                    ),
-	                    _react2["default"].createElement(
-	                        "li",
-	                        null,
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/finest/" + finest.id },
-	                            _react2["default"].createElement("img", { src: finest.imageUrl, alt: "" }),
-	                            _react2["default"].createElement("span", null)
-	                        ),
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/stockup/" + stockup.id },
-	                            _react2["default"].createElement("img", { src: stockup.imageUrl, alt: "" }),
-	                            _react2["default"].createElement("span", null)
-	                        )
-	                    )
-	                );
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "renderActivityTwo",
-	        value: function renderActivityTwo() {
-	            var activityTwo = this.props.floors.activityTwo;
-
-	            if (activityTwo) {
-	                return activityTwo.map(function (activity, i) {
-	                    return _react2["default"].createElement(
-	                        "li",
-	                        { key: i },
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/activity/" + activity.id },
-	                            _react2["default"].createElement("img", { src: activity.imageUrl, alt: "" }),
-	                            _react2["default"].createElement("span", null)
-	                        )
-	                    );
-	                });
-	            }
-	            return null;
-	        }
-	    }, {
-	        key: "renderActivityThree",
-	        value: function renderActivityThree() {
-	            var activityThree = this.props.floors.activityThree;
-
-	            if (activityThree) {
-	                return _react2["default"].createElement(
-	                    "ul",
-	                    { className: "clearfix" },
-	                    _react2["default"].createElement(
-	                        "li",
-	                        null,
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/activity/" + activityThree[0].id },
-	                            _react2["default"].createElement("img", { src: activityThree[0].imageUrl, alt: "" }),
-	                            _react2["default"].createElement("span", null)
-	                        )
-	                    ),
-	                    _react2["default"].createElement(
-	                        "li",
-	                        null,
-	                        _react2["default"].createElement(
-	                            "div",
-	                            { className: "clearfix" },
-	                            _react2["default"].createElement(
-	                                "a",
-	                                { href: "/activity/" + activityThree[1].id },
-	                                _react2["default"].createElement("img", { src: activityThree[1].imageUrl, alt: "" })
-	                            ),
-	                            _react2["default"].createElement(
-	                                "a",
-	                                { href: "/activity/" + activityThree[2].id },
-	                                _react2["default"].createElement("img", { src: activityThree[2].imageUrl, alt: "" })
-	                            )
-	                        ),
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/activity/" + activityThree[3].id },
-	                            _react2["default"].createElement("img", { src: activityThree[3].imageUrl, alt: "" })
-	                        )
-	                    )
-	                );
-	            }
-	            return null;
-	        }
-	    }, {
+	    _createClass(ScrollNavbarAnchor, [{
 	        key: "render",
 	        value: function render() {
+	            var classes = (0, _classnames2["default"])("scroll-navbar-anchor", {
+	                "active": this.props.active
+	            });
 	            return _react2["default"].createElement(
 	                "div",
-	                { className: "floor-content" },
-	                this.renderSlider(),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "m-entry" },
-	                    this.renderBadges()
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "panic" },
-	                    this.renderRushBuy()
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "activity" },
-	                    this.renderActivityOne()
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "activity_2" },
-	                    _react2["default"].createElement(
-	                        "ul",
-	                        { className: "clearfix" },
-	                        this.renderActivityTwo()
-	                    )
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "flashBuy" },
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "title" },
-	                        _react2["default"].createElement(
-	                            "span",
-	                            null,
-	                            _react2["default"].createElement("i", null),
-	                            "闪购精选"
-	                        ),
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "/flashbuy/" + this.props.index.currentChannel },
-	                            "更多",
-	                            _react2["default"].createElement(
-	                                "i",
-	                                null,
-	                                _react2["default"].createElement("img", { src: "/client/asset/images/ico_more.png" })
-	                            )
-	                        )
-	                    ),
-	                    this.renderFlashBuy()
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "activity_3" },
-	                    this.renderActivityThree()
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "indexSingle" },
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "title" },
-	                        _react2["default"].createElement(
-	                            "span",
-	                            null,
-	                            _react2["default"].createElement("i", null),
-	                            "单品推荐"
-	                        )
-	                    ),
-	                    this.renderSingleRecommend()
-	                ),
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "activityGeneral" },
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "title" },
-	                        _react2["default"].createElement(
-	                            "span",
-	                            null,
-	                            _react2["default"].createElement("i", null),
-	                            "新品推荐"
-	                        )
-	                    ),
-	                    this.renderNewRecommend()
-	                )
+	                { className: classes, onClick: this.props.jumpTo },
+	                this.props.children
 	            );
 	        }
 	    }]);
 
-	    return Floor;
+	    return ScrollNavbarAnchor;
 	})(_react.Component);
 
-	exports["default"] = Floor;
+	exports["default"] = ScrollNav;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 415:
+/***/ 574:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -5080,7 +3984,7 @@ webpackJsonp([12],{
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _actionEs6 = __webpack_require__(416);
+	var _actionEs6 = __webpack_require__(575);
 
 	var SearchBox = (function (_Component) {
 	    _inherits(SearchBox, _Component);
@@ -5107,7 +4011,7 @@ webpackJsonp([12],{
 	                return hotwords.map(function (hotword, i) {
 	                    return _react2["default"].createElement(
 	                        "a",
-	                        { href: "/goodlist", key: i },
+	                        { href: "/goodlist/1", key: i },
 	                        hotword.name
 	                    );
 	                });
@@ -5115,32 +4019,35 @@ webpackJsonp([12],{
 	            return null;
 	        }
 	    }, {
-	        key: "handleSearch",
-	        value: function handleSearch(e) {
-	            e && e.preventDefault();
-	            var _props = this.props;
-	            var changeField = _props.changeField;
-	            var fetchAssociateKeywords = _props.fetchAssociateKeywords;
-
-	            changeField("keyword", e.target.value);
-	            fetchAssociateKeywords({
-	                keyword: e.target.value
-	            });
-	        }
-	    }, {
-	        key: "handleReset",
-	        value: function handleReset(e) {
-	            e && e.preventDefault();
-	            var changeField = this.props.changeField;
-
-	            changeField('keyword', null);
-	        }
-	    }, {
-	        key: "renderSearchList",
-	        value: function renderSearchList() {
+	        key: "render",
+	        value: function render() {
 	            return _react2["default"].createElement(
 	                "div",
-	                { className: "searchbox-list" },
+	                { className: "search-wrap" },
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "search-header" },
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "search-box" },
+	                        _react2["default"].createElement("input", { id: "search-box", type: "search", placeholder: "寻找宝贝" }),
+	                        _react2["default"].createElement("span", null),
+	                        _react2["default"].createElement(
+	                            "div",
+	                            { className: "reset" },
+	                            _react2["default"].createElement("i", { className: "iconfont icon-closefill" })
+	                        )
+	                    ),
+	                    _react2["default"].createElement(
+	                        "div",
+	                        { className: "search-btn" },
+	                        _react2["default"].createElement(
+	                            "a",
+	                            { href: "#/" },
+	                            "取消"
+	                        )
+	                    )
+	                ),
 	                _react2["default"].createElement(
 	                    "div",
 	                    { className: "searchHot clearfix" },
@@ -5174,72 +4081,39 @@ webpackJsonp([12],{
 	                    ),
 	                    _react2["default"].createElement(
 	                        "a",
-	                        { href: "/goodlist" },
+	                        { href: "/goodlist/2" },
 	                        "洗衣液"
 	                    ),
 	                    _react2["default"].createElement(
 	                        "a",
-	                        { href: "/goodlist" },
+	                        { href: "/goodlist/2" },
 	                        "洗衣液"
 	                    ),
 	                    _react2["default"].createElement(
 	                        "a",
-	                        { href: "/goodlist" },
+	                        { href: "/goodlist/2" },
 	                        "洗衣液"
-	                    )
-	                )
-	            );
-	        }
-	    }, {
-	        key: "renderAssociate",
-	        value: function renderAssociate() {
-	            var keyword = this.props.search.keyword;
-
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: "searchOut" },
-	                _react2["default"].createElement(
-	                    "a",
-	                    { href: "/goodlist?searchKey=" + keyword },
-	                    keyword
-	                )
-	            );
-	        }
-	    }, {
-	        key: "render",
-	        value: function render() {
-	            var keyword = this.props.search.keyword;
-
-	            return _react2["default"].createElement(
-	                "div",
-	                { className: "search-wrap" },
-	                _react2["default"].createElement(
-	                    "div",
-	                    { className: "search-header" },
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "search-box" },
-	                        _react2["default"].createElement("input", { id: "search-box", type: "search", placeholder: "寻找宝贝",
-	                            value: keyword,
-	                            onChange: this.handleSearch.bind(this) }),
-	                        _react2["default"].createElement("span", null),
-	                        _react2["default"].createElement(
-	                            "div",
-	                            { className: "reset", onClick: this.handleReset.bind(this) },
-	                            _react2["default"].createElement("i", { className: "iconfont icon-close-fill" })
-	                        )
-	                    ),
-	                    _react2["default"].createElement(
-	                        "div",
-	                        { className: "search-btn" },
-	                        _react2["default"].createElement(
-	                            "a",
-	                            { href: "#/" },
-	                            "取消"
-	                        )
 	                    )
 	                ),
-	                keyword ? this.renderAssociate() : this.renderSearchList()
+	                _react2["default"].createElement(
+	                    "div",
+	                    { className: "searchOut" },
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/goodlist/2" },
+	                        "金利来"
+	                    ),
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/goodlist/2" },
+	                        "金纺"
+	                    ),
+	                    _react2["default"].createElement(
+	                        "a",
+	                        { href: "/goodlist/2" },
+	                        "金立手机"
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -5247,44 +4121,109 @@ webpackJsonp([12],{
 	    return SearchBox;
 	})(_react.Component);
 
-	SearchBox.defaultProps = {
-	    keyword: ""
-	};
-
 	exports["default"] = SearchBox;
 	module.exports = exports["default"];
 
 /***/ },
 
-/***/ 416:
+/***/ 575:
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-
-	var _Object$assign = __webpack_require__(210)["default"];
-
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.fetchCategoryBrands = fetchCategoryBrands;
+	exports.fetchAllBrands = fetchAllBrands;
+	exports.fetchAllOrigins = fetchAllOrigins;
 	exports.fetchHotWord = fetchHotWord;
-	exports.fetchSingleRecommend = fetchSingleRecommend;
-	exports.fetchNewRecommend = fetchNewRecommend;
-	exports.fetchAssociateKeywords = fetchAssociateKeywords;
 
 	var _libUtilEs6 = __webpack_require__(227);
 
-	var _constantEs6 = __webpack_require__(410);
+	var _constantsEs6 = __webpack_require__(566);
+
+	function responseCategoryBrands(param, res) {
+	    return {
+	        type: _constantsEs6.RESPONSE_CATEGORYBRANDS,
+	        param: param,
+	        res: res
+	    };
+	}
+
+	function requestCategoryBrands(param) {
+	    return {
+	        type: _constantsEs6.REQUEST_CATEGORYBRANDS,
+	        param: param
+	    };
+	}
+
+	function fetchCategoryBrands(param) {
+	    return function (dispath) {
+	        dispath(requestCategoryBrands(param));
+	        return (0, _libUtilEs6.apiRequest)("/categorybrands", param).then(function (res) {
+	            dispath(responseCategoryBrands(param, res));
+	        });
+	    };
+	}
+
+	function responseAllBrands(param, res) {
+	    return {
+	        type: _constantsEs6.RESPONSE_ALLBRANDS,
+	        param: param,
+	        res: res
+	    };
+	}
+
+	function requestAllBrands(param) {
+	    return {
+	        type: _constantsEs6.REQUEST_ALLBRANDS,
+	        param: param
+	    };
+	}
+
+	function fetchAllBrands(param) {
+	    return function (dispath) {
+	        dispath(requestAllBrands(param));
+	        return (0, _libUtilEs6.apiRequest)("/allbrands", param).then(function (res) {
+	            dispath(responseAllBrands(param, res));
+	        });
+	    };
+	}
+
+	function responseAllOrigins(param, res) {
+	    return {
+	        type: _constantsEs6.RESPONSE_ALLORIGINS,
+	        param: param,
+	        res: res
+	    };
+	}
+
+	function requestAllOrigins(param) {
+	    return {
+	        type: _constantsEs6.REQUEST_ALLORIGINS,
+	        param: param
+	    };
+	}
+
+	function fetchAllOrigins(param) {
+	    return function (dispath) {
+	        dispath(requestAllOrigins(param));
+	        return (0, _libUtilEs6.apiRequest)("/allorigins", param).then(function (res) {
+	            dispath(responseAllOrigins(param, res));
+	        });
+	    };
+	}
 
 	function requestHotWord(param) {
 	    return {
-	        type: _constantEs6.REQUEST_HOTWORD,
+	        type: _constantsEs6.REQUEST_HOTWORD,
 	        param: param
 	    };
 	}
 
 	function responseHotWord(param, res) {
 	    return {
-	        type: _constantEs6.RESPONSE_HOTWORD,
+	        type: _constantsEs6.RESPONSE_HOTWORD,
 	        param: param,
 	        res: res
 	    };
@@ -5299,96 +4238,9 @@ webpackJsonp([12],{
 	    };
 	}
 
-	function requestSingleRecommend(param) {
-	    return {
-	        type: _constantEs6.REQUEST_SINGLERECOMMEND,
-	        param: param
-	    };
-	}
-
-	function responseSingleRecommend(param, res) {
-	    return {
-	        type: _constantEs6.RESPONSE_SINGLERECOMMEND,
-	        param: param,
-	        res: res
-	    };
-	}
-
-	function fetchSingleRecommend(param) {
-	    param = _Object$assign({}, param, {
-	        activityType: "ACTIVITY_DPTJ"
-	    });
-	    return function (dispatch) {
-	        dispatch(requestSingleRecommend(param));
-	        (0, _libUtilEs6.apiRequest)("/activitygood", param).then(function (res) {
-	            dispatch(responseSingleRecommend(param, res));
-	        });
-	    };
-	}
-
-	function requestNewRecommend(param) {
-	    return {
-	        type: _constantEs6.REQUEST_NEWRECOMMEND,
-	        param: param
-	    };
-	}
-
-	function responseNewRecommend(param, res) {
-	    return {
-	        type: _constantEs6.RESPONSE_NEWRECOMMEND,
-	        param: param,
-	        res: res
-	    };
-	}
-
-	function fetchNewRecommend(param) {
-	    param = _Object$assign({}, param, {
-	        activityType: "ACTIVITY_XPTJ"
-	    });
-	    return function (dispatch) {
-	        dispatch(requestNewRecommend(param));
-	        (0, _libUtilEs6.apiRequest)("/activitygood", param).then(function (res) {
-	            dispatch(responseNewRecommend(param, res));
-	        });
-	    };
-	}
-
-	var _commonActionEs6 = __webpack_require__(261);
-
-	Object.defineProperty(exports, "changeField", {
-	    enumerable: true,
-	    get: function get() {
-	        return _commonActionEs6.changeField;
-	    }
-	});
-
-	function requestAssociateWord(param) {
-	    return {
-	        type: _constantEs6.REQUEST_ASSOICATEWORD,
-	        param: param
-	    };
-	}
-
-	function responseAssociateWord(param, res) {
-	    return {
-	        type: _constantEs6.RESPONSE_ASSOICATEWORD,
-	        param: param,
-	        res: res
-	    };
-	}
-
-	function fetchAssociateKeywords(param) {
-	    return function (dispatch) {
-	        dispatch(requestAssociateWord(param));
-	        (0, _libUtilEs6.apiRequest)("/searchassociate", param, { method: "POST" }).then(function (res) {
-	            dispatch(responseAssociateWord(param, res));
-	        });
-	    };
-	}
-
 /***/ },
 
-/***/ 417:
+/***/ 576:
 /***/ function(module, exports) {
 
 	// removed by extract-text-webpack-plugin

@@ -2120,18 +2120,17 @@ webpackJsonp([18],[
 	        }
 	    }, {
 	        key: "componentWillUnmount",
-	        value: function componentWillUnmount() {
-	            // noBounceScroll.disable()
-	        }
-	    }, {
-	        key: "shouldComponentUpdate",
-	        value: function shouldComponentUpdate(nextProps, nextState) {
-	            console.log(nextProps, this.props);
-	            if (nextState.activeIndex !== this.state.activeIndex || nextProps.activeIndex !== this.props.activeIndex) {
-	                return true;
-	            }
-	            return false;
-	        }
+	        value: function componentWillUnmount() {}
+	        // noBounceScroll.disable()
+
+	        // shouldComponentUpdate(nextProps,nextState){
+	        //     if(nextState.activeIndex !== this.state.activeIndex
+	        //         || nextProps.activeIndex !== this.props.activeIndex){
+	        //         return true
+	        //     }
+	        //     return false
+	        // }
+
 	    }, {
 	        key: "handleSelect",
 	        value: function handleSelect(i, e) {
