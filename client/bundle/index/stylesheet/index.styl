@@ -2,10 +2,11 @@
 @import "../../common/iconfont";
 @import "../../common/router";
 @import "../../common/switcher";
+@import "../../common/search";
+@import "../../common/footer";
 @import "../../component/slidetabs";
 @import "../../component/slider";
 @import "./index.css";
-@import "./search.css";
 
 html,body{
     height: 100%;
@@ -88,20 +89,6 @@ body{
         &.active{
             background: url(/client/asset/images/bannerDot2.png) 0 -8px no-repeat;
             background-size: 100%;    
-        }
-    }
-}
-
-.search-wrap{
-    height:100%;
-    background:#F7F7F7;
-    .search-box{
-        &>input{
-            box-sizing:border-box;
-            border:0 none;
-        }
-        &>span{
-            font-size:px2rem(12);
         }
     }
 }

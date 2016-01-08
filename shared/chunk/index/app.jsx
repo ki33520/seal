@@ -10,13 +10,25 @@ let IndexConnected = connect((state)=>{
     return state;
 })(wrapComponentWithActions(Index,actions));
 
+function configureStore(initialState){
+    const store = createStoreWithMiddleware(rootReducer, initialState)
+    if (module.hot) {
+        module.hot.accept('./reducer.es6', () => {
+            const nextRootReducer = require('./reducer.es6');
+            store.replaceReducer(nextRootReducer);
+        });
+    }
+    return store
+}
+
 class IndexApp extends React.Component{
     render(){
-        const {channels,floors} = this.props.initialState;
-        var store = createStoreWithMiddleware(rootReducer,{
+        const {channels,floors,currentChannel} = this.props.initialState;
+        var store = configureStore({
             index:{
                 channels,
-                floors
+                floors,
+                currentChannel
             }
         });
         return (

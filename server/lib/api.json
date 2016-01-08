@@ -49,7 +49,7 @@
         }
     },
     "goodById": {
-        "uri": "/WAP/product/detail.ya",
+        "uri": "/single/v1/detail",
         "baseURL": {
             "develop": "http://product.hwg.youayun.cn:7989",
             "production": "http://product.tepin.hk"

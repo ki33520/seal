@@ -2,6 +2,8 @@
 var _ = require("lodash");
 var api = require("./api.json");
 
+api = _.extend(api,require("./api/index.json"))
+
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
     "oathServer": "https://login.tepin.com",

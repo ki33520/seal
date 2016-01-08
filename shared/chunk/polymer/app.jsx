@@ -24,7 +24,7 @@ function configureStore(initialState){
 class CategoryApp extends React.Component{
     render(){
         const {categories} = this.props.initialState;
-        var store = createStoreWithMiddleware(rootReducer,{
+        var store = configureStore({
             allCategory:{
                 categories
             }

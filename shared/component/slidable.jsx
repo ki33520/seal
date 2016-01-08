@@ -221,9 +221,9 @@ class Slidable extends Component{
         // let beyondX = dom.offset(translateNode.parentNode).left - dom.offset(translateNode).left; 
         let maxBeyondY = translateNode.offsetHeight - translateNode.parentNode.offsetHeight;
         let maxBeyondX = translateNode.offsetWidth - translateNode.parentNode.offsetWidth;
-        if(maxBeyondY <= (- this.translateY) && maxBeyondY > 0 && axis === "y"){
+        if(maxBeyondY <= (- this.translateY) && axis === "y"){
             this.translateY = - maxBeyondY
-        }else if(maxBeyondX <= (- this.translateX) && maxBeyondX > 0 && axis === "x"){
+        }else if(maxBeyondX <= (- this.translateX) && axis === "x"){
             this.translateX = - maxBeyondX
         }else if(translateNode.offsetHeight < translateNode.parentNode.offsetHeight){
             // this.translateY = 0

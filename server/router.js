@@ -16,11 +16,12 @@ router.get("/logoutgateway",mainController.requireAuthorize,require("./controlle
 
 router.get("/", require("./controller/index.js").index);
 router.get("/searchhotwords", require("./controller/index.js").searchHotWords);
+router.post("/searchassociate", require("./controller/index.js").searchAssociate);
 router.get("/activitygood", require("./controller/index.js").activityGood);
-router.get("/mobileonly", require("./controller/topic.js").mobileOnly);
-router.get("/finest", require("./controller/topic.js").finest);
-router.get("/stockup", require("./controller/topic.js").stockup);
-router.get("/flashbuy", require("./controller/flashbuy.js"));
+router.get("/mobileonly/:id", require("./controller/topic.js").mobileOnly);
+router.get("/finest/:id", require("./controller/topic.js").finest);
+router.get("/stockup/:id", require("./controller/topic.js").stockup);
+router.get("/flashbuy/:id", require("./controller/flashbuy.js"));
 router.get("/polymer", require("./controller/polymer").polymer);
 router.get("/categorybrands", require("./controller/polymer").categoryBrands);
 router.get("/allbrands", require("./controller/polymer").allBrands);
