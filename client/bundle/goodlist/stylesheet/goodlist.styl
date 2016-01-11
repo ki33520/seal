@@ -4,6 +4,9 @@
 @import "../../component/refresher.styl";
 @import "../../component/masklayer.styl";
 @import "../../component/gotop.styl";
+@import "../../common/router";
+@import "../../common/switcher";
+@import "../../common/search";
 
 body {
 	background-color:#f7f7f7;
@@ -12,50 +15,27 @@ body {
 .container {
 	height: 100%;
 }
+ 
+
 .header {
 	background: #fff url(/client/asset/images/headerBg_2.png) 0 bottom no-repeat
-}
-
-.header {
 	.search-box {
-		position: absolute;
 		left:1.6rem;
-		right:1.6rem;
+		top:auto;
 		input {
-		    background-color: #E3E3E6;
-		    border-radius: 5px;
-		    height: .8rem;
-		    color: #333;
-		    font-size: 0.32rem;
-		    width: 100%;
-		    text-indent: .86rem;
-		    line-height: normal;
 		    border: none;
+		    box-sizing: border-box;
 		}
-		span {
-		    position: absolute;
-		    color: #666;
-		    width: 17px;
-		    height: 17px;
-		    text-align: center;
+		&>span {
 		    top: .35rem;
-		    left: .2rem;
-		    background: url(/client/asset/images/searchIcon.png) 0 0 no-repeat;
-		    background-size: 100%;
 		}
-
-		i {
-		    right: 0;
-		    left: auto;
-		    font-size: .32rem;
-		}
-	}
-
-	.search-foucs span{
-		background:url(/client/asset/images/searchIcon.png) 0 -25px no-repeat;
-		background-size:100%;
 	}
 }
+.search-foucs span{
+	background:url(/client/asset/images/searchIcon.png) 0 -25px no-repeat;
+	background-size:100%;
+}
+
 .search-order {
 	display: -webkit-box;
     display: -webkit-flex;

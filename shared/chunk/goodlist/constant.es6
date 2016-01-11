@@ -9,3 +9,11 @@ export const SORT_ASC = true;
 export const SORT_DESC = false;
 
 export const isHaveGoods = false;
+
+export const REQUEST_HOTWORD = 'REQUEST_HOTWORD';
+export const RESPONSE_HOTWORD = 'RESPONSE_HOTWORD';
+export const REQUEST_GOODS = "REQUEST_GOODS";
+export const RECEIVE_GOODS = "RECEIVE_GOODS";
+export const REQUEST_ASSOICATEWORD = "REQUEST_ASSOICATEWORD";
+export const RESPONSE_ASSOICATEWORD = "RESPONSE_ASSOICATEWORD";
+export const CHANGE_FIELD = "CHANGE_FIELD";

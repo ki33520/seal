@@ -73,7 +73,7 @@ var goodList = function(req, res, next) {
             } else {
                  
                 let initialState = {
-                    searchKey,
+                    keyword:searchKey,
                     goodsList:result.goodsList,
                     areaNames:result.areaNames,
                     brandNames:result.brandNames,
