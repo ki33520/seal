@@ -5,7 +5,7 @@
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div id="good-list-container">{{ markup|safe }}</div>
+<div id="good-list" class="container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}

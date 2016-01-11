@@ -21,14 +21,16 @@ class GoodListApp extends React.Component{
             productActive:false,
             filterActive:false,
             brandActive:false,
-            requestParam:{
-                searchKey:props.searchKey
-            }
+            searchActive:false 
         }
     }
 
     handleGoBack(){
         location.href='/';
+    }
+
+    handChange(){
+        
     }
 
     closeAllPopups(){
@@ -158,7 +160,7 @@ class GoodListApp extends React.Component{
                 <div className={classes}>
                     <Header handleGoBack={this.handleGoBack}>
                         <div className={searchBox}>
-                            <input type="search" defaultValue={this.state.searchKey} />
+                            <input type="search" value={searchKey} onChange={this.handChange}/>
                             <span></span>
                             <i className={closebtn}></i>
                         </div>
