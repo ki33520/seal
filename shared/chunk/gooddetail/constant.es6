@@ -1,0 +1,10 @@
+'use strict';
+export const REQUEST_GOOD = "REQUEST_GOOD";
+export const RESPONSE_GOOD = "RESPONSE_GOOD";
+
+export const START_ADD_CART = "START_ADD_CART";
+export const FINISH_ADD_CART = "FINISH_ADD_CART";
+export const START_ADD_FAVORITE = "START_ADD_FAVORITE";
+export const FINISH_ADD_FAVORITE = "FINISH_ADD_FAVORITE";
+
+export const SELECT_ATTR = "SELECT_ATTR";

@@ -1,12 +1,19 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
+import {
+    SELECT_ATTR,
+    REQUEST_GOOD,RESPONSE_GOOD,
+    START_ADD_CART,FINISH_ADD_CART,
+    START_ADD_FAVORITE,FINISH_ADD_FAVORITE
+} from "./constant.es6";
 
-export const REQUEST_GOOD = "REQUEST_GOOD";
-export const RECEIVE_GOOD = "RECEIVE_GOOD";
-export const START_ADD_CART = "START_ADD_CART";
-export const FINISH_ADD_CART = "FINISH_ADD_CART";
-export const START_ADD_FAVORITE = "START_ADD_FAVORITE";
-export const FINISH_ADD_FAVORITE = "FINISH_ADD_FAVORITE";
+export function selectAttr(attr,attrValue){
+    return {
+        type:SELECT_ATTR,
+        attr,
+        attrValue
+    }
+}
 
 function requestGood(param){
     return {
@@ -15,23 +22,21 @@ function requestGood(param){
     }
 }
 
-function receiveGood(param,res){
+function responseGood(param,res){
     return {
-        type:RECEIVE_GOOD,
-        receiveAt:Date.now(),
+        type:RESPONSE_GOOD,
         param,
         res
     }
 }
 
-export default function fetchGood(url,param){
+export {alert} from "../common/action.es6";
+
+export function fetchGood(param){
     return (dispatch)=>{
         dispatch(requestGood(param));
-        return apiRequest(url,param,{
-            type:"jsonp",
-            jsonpcallback:"jsoncallback"
-        }).then((res)=>{
-            dispatch(receiveGood(param,res));
+        return apiRequest("/fetchgood/"+param.id,{}).then((res)=>{
+            dispatch(responseGood(param,res));
         });
     }
 }
@@ -52,10 +57,10 @@ function finishAddCart(param,res){
     }
 }
 
-export function addCart(url,param){
+export function addCart(param){
     return (dispatch)=>{
         dispatch(startAddCart(param));
-        apiRequest(url,param).then((res)=>{
+        apiRequest("/addcart",param).then((res)=>{
             dispatch(finishAddCart(param,res));
         })
     }
@@ -78,10 +83,10 @@ function finishAddFavorite(param,res){
     }
 }
 
-export function addFavorite(url,param){
+export function addFavorite(param){
     return (dispatch)=>{
         dispatch(startAddFavorite(param));
-        apiRequest(url,param).then((res)=>{
+        apiRequest("/addfavorite",param).then((res)=>{
             dispatch(finishAddFavorite(param,res));
         })
     }

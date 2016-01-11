@@ -10,45 +10,16 @@ var goodDetail = function(req, res, next) {
     var id = req.params.id;
     util.fetchAPI("goodById", {
         code: id,
-        channel:"Mobile"
-    },true).then(function(ret) {
+        channel: "Mobile"
+    }).then(function(ret) {
         if (ret.returnCode === 0) {
             var good = goodFilter(ret.object);
-            var properties = [];
-
-            _.forIn(good.props, function(v, k) {
-                    properties.push({
-                        propertyName: k,
-                        selectedValue: null,
-                        propertyValues: [],
-                    });
-                })
-            //fill specValue with item's propValues
-            _.each(good.items, function(v) {
-                    _.each(properties, function(property, k) {
-                        properties[k].propertyValues.push({
-                            value: v.props[property.propertyName],
-                            disabled: false
-                        });
-                    })
-                })
-                //unique specValues and add status,selected property
-            _.map(properties, function(v) {
-                var propertyValues = _.uniq(v.propertyValues, function(propertyValue) {
-                    return propertyValue.value;
-                });
-                v.propertyValues = propertyValues;
-            });
             var slides = good.imageUrl;
             // slides = slides.map(function(slide) {
             //     return slide.replace("imgtest.", "img.") + "@500w_500h_4e";
             // })
             good.slides = slides;
-            // good.originalPrice = good.standardPrice;
-            // good.discount = (good.discount === "10.0") ? "" : good.discount + "折";
-            good.properties = properties;
-            good.stock = null;
-
+            good.mainImageUrl = good.imageUrl[0]
             var cartCount = "";
             // if(resp.cartByUser !== false && resp.cartByUser.code === "ok"){
             //     cartCount = resp.cartByUser.page.totalCount > 0?
@@ -73,41 +44,115 @@ var goodDetail = function(req, res, next) {
     })
 }
 
-function goodFilter(good){
-    var _good = _.pick(good,[
-        "discount","isMain","title","subTitle","detail",
-        "buyLimit","taxRate","sourceAreaId",
-        "useTaxRate","useInlandLogistics","useOutlandLogistics","outlandLogisticsFee",
-        "description","showTaxRate","addCount"
+function goodFilter(good) {
+    var _good = _.pick(good, [
+        "code","discount", "isMain", "title", "subTitle", "detail",
+        "buyLimit", "taxRate", "sourceAreaId",
+        "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
+        "description", "showTaxRate", "addCount"
     ]);
-    _good["imageUrl"] = _.map(good.picList,function(imageUrl){
+    _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl
     })
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice
-    _good["stock"] = good.stock.currentStock
+    _good["stock"] = good.stock.localStock
     _good["warehouse"] = good.wareHouse.name
-    _good["items"] = _.map(good.groups,function(group){
+    var selectedItem = null;
+    _good["items"] = _.map(good.groups, function(group) {
         return {
-            props:group.fattrs,
-            code:group.code,
-            stock:group.stock.currentStock
+            attrs: group.fattrs,
+            code: group.code,
+            stock: group.stock?group.stock.localStock:null
         }
     })
-    var props = {}
-    var keys = _.keys(_good["items"][0].props)
-    _.each(keys,function(key){
-        props[key] = []
+    var attrs = {}
+    var keys = _.keys(_good["items"][0].attrs)
+    _.each(keys, function(key) {
+        attrs[key] = {
+            selectedValue:null,
+            attrValues:[]
+        }
     })
-    _.each(_good["items"],function(item){
-        _.each(props,function(v,k){
-            v.push(item.props[k])
-            props[k] = _.uniq(v)
+    var selectedItem = null
+    _.each(_good["items"], function(item) {
+            if(item.code === _good['code']){
+                selectedItem = item
+            }
+            _.each(attrs, function(v, k) {
+                v["attrValues"].push(item.attrs[k])
+                attrs[k]["attrValues"] = _.uniq(v["attrValues"])
+            })
         })
+    attrs = _.map(attrs,function(attr,k){
+        attr.attrName = k
+        attr.attrValues = _.map(attr.attrValues,function(value){
+            return {
+                value:value,
+                disabled:false
+            }
+        });
+        if(selectedItem !== null){
+            attr.selectedValue = _.findWhere(attr.attrValues,{value:selectedItem.attrs[k]})
+        }
+        return attr
     })
-    // console.log('props',props)
-    _good["props"] = props;
+    _good["selectedItem"] = selectedItem
+    _good["attrs"] = attrs;
     return _good
 }
 
-module.exports = goodDetail;
+var fetchGood = function(req, res, next) {
+    var id = req.params.id;
+    util.fetchAPI("goodById", {
+        code: id,
+        channel: "Mobile"
+    }).then(function(ret) {
+        if (ret.returnCode === 0) {
+            var good = goodFilter(ret.object);
+            var slides = good.imageUrl;
+            good.slides = slides;
+            res.json({
+                result:good,
+                isFetched:true
+            })
+        } else {
+            res.json({
+                isFetched:false,
+                errMsg:ret.msg
+            })
+        }
+    })
+
+}
+
+var addCart = function(req, res, next) {
+    var itemId = req.query.itemId;
+    var buyed = req.query.buyed;
+    util.fetchAPI("updateCart", {
+        memberId:"fc6804de51c482730151e8ec0a080023",
+        singleCode: itemId,
+        qty:buyed,
+        figureUpFlag:true,
+        channel: "Mobile"
+    }).then(function(ret) {
+        // console.log('ret',ret)
+        if (ret.returnCode === 0) {
+            res.json({
+                cartAdded:true
+            })
+        } else {
+            res.json({
+                cartAdded:false,
+                errMsg:ret.msg
+            })
+        }
+    })
+
+}
+
+module.exports = {
+    goodDetail:goodDetail,
+    addCart:addCart,
+    fetchGood:fetchGood
+};
