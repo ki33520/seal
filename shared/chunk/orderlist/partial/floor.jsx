@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
@@ -15,7 +16,7 @@ const orderStatusObj = {
     "STATUS_CANCELED":"已取消"
 };
 
-class OrderItem extends Component{
+class Floor extends Component{
     renderButtons(){
         return (
             <div className="order-buttons">
@@ -60,25 +61,35 @@ class OrderItem extends Component{
             </div>
         )
     }
-    render(){
-        const {orderCrtTime,id,orderNo,itemList,totalFee,orderStatus} = this.props;
-        return (
-            <div className="order-box">
-                <div className="order-up">
-                    <span>{moment(orderCrtTime).format("YYYY-MM-DD")}</span>
-                    <div className="right">
-                        <i>01:15:47&nbsp;后自动取消</i>
-                        <em>{orderStatusObj[orderStatus]}</em>
+    renderNode(list){
+        return list.map((child,i)=>{
+            const {orderCrtTime,id,orderReceiveId,orderNo,itemList,totalFee,orderStatus} = child;
+            return (
+                <div className="order-box" key={i}>
+                    <div className="order-up">
+                        <span>{moment(orderCrtTime).format("YYYY-MM-DD")}</span>
+                        <div className="right">
+                            <i>01:15:47&nbsp;后自动取消</i>
+                            <em>{orderStatusObj[orderStatus]}</em>
+                        </div>
+                    </div>
+                    <div className="order-list"><a href={"/orderdetail/"+orderReceiveId}>{this.renderGoods(itemList)}</a></div>
+                    <div className="order-down">
+                        <span>合计：<em>&yen;{totalFee}</em></span>
+                        {this.renderButtons()}
                     </div>
                 </div>
-                <div className="order-list"><a href={"/orderdetail/"+id}>{this.renderGoods(itemList)}</a></div>
-                <div className="order-down">
-                    <span>合计：<em>&yen;{totalFee}</em></span>
-                    {this.renderButtons()}
-                </div>
+            )
+        });
+    }
+    render(){
+        const {orderItem} = this.props;
+        return (
+            <div className="order-content">
+                {orderItem && orderItem.list && this.renderNode(orderItem.list)}
             </div>
         )
     }
 }
 
-export default OrderItem;
+export default Floor;
