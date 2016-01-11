@@ -68,7 +68,9 @@ class GoodListApp extends React.Component{
     }
 
     togglePopupClassify(names){
-        let {requestParam} = this.state;
+        let requestParam = {
+            searchKey : this.props.searchKey
+        }
         if(names && names.length){
             requestParam = Object.assign(requestParam,{
                 categoryName:names.join(',')
@@ -81,7 +83,9 @@ class GoodListApp extends React.Component{
     }
 
     togglePopupProduct(names){
-        let {requestParam} = this.state;
+        let requestParam = {
+            searchKey : this.props.searchKey
+        }
         if(names && names.length){
             requestParam = Object.assign(requestParam,{
                 sourceAreas:names.join(',')
@@ -94,7 +98,9 @@ class GoodListApp extends React.Component{
     }
     
     togglePopupBrandFilter(names){
-        let {requestParam} = this.state;
+        let requestParam = {
+            searchKey : this.props.searchKey
+        }
         if(names && names.length){
             requestParam = Object.assign(requestParam,{
                 brandName:names.join(',')
@@ -108,7 +114,9 @@ class GoodListApp extends React.Component{
 
     toggleSortActive(param){
         const {dispatch,searchKey} = this.props;
-        const {requestParam} = this.state;
+        let requestParam = {
+            searchKey : this.props.searchKey
+        }
         param = Object.assign(requestParam,param);
         this.setState({
             requestParam
