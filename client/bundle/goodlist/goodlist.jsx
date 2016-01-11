@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-    ReactDOM.render(<GoodListApp initialState={initialState} />,document.getElementById('good-list-container'));
+    ReactDOM.render(<GoodListApp initialState={initialState} />,document.getElementById('good-list'));
 }
 
 if(typeof window.addEventListener){

@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-        ReactDOM.render(<TrendyApp initialState={initialState} />,document.getElementById('trendy-container'));
+        ReactDOM.render(<TrendyApp initialState={initialState} />,document.getElementById('trendy'));
 }
 
 if(typeof window.addEventListener){

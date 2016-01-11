@@ -1,160 +1,202 @@
 {
-    "msg": "查询商品详情页成功",
-    "code": "success",
-    "time": 1446711268924,
+    "returnCode": 0,
     "object": {
-        "mallName": "友阿奥特莱斯",
-        "totalRemainingStock": 995,
-        "salePrice": 0.01,
-        "mallId": "fc6804de504c954c015050b9f0d0002f",
-        "specList": {
-            "品牌":"卡文COVER",
-            "货号":"CS55701",
-            "材质":"羊绒皮面革",
-            "产地":"江苏"
+        "title": "测试单品1号",
+        "subTitle": "",
+        "detail": "描述测试1",
+        "stock": {
+            "singleCode": "S262000000025",
+            "currentStock": 888,
+            "localStock": 888,
+            "safetyStock": 88,
+            "id": "afasdfsddddsss",
+            "createdAt": "Dec 21, 2015 7:56:50 PM",
+            "updatedAt": "Dec 21, 2015 7:56:55 PM",
+            "inserter": "lich",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
         },
-        "discount": 0.0,
-        "standardPrice": 100.0,
-        "title": "卡文COVER 时尚都市女款春鞋CS55701",
-        "categoryName": "",
-        "canBuy": true,
-        "props": {
-            "颜色": "黑色,杏色",
-            "尺码":"34,35,36,37,38"
+        "erp": "ES262000000025",
+        "sku": "SKUS262000000025",
+        "code": "S262000000025",
+        "groupCode": "T00022133",
+        "isMain": 0,
+        "channel": "WEB,Mobile",
+        "originPrice": 100.00,
+        "salesPrice": 89.00,
+        "discount": 0.89,
+        "picList": [
+            "imag1-web"
+        ],
+        "attrs": {},
+        "fattrs": {},
+        "salesCount": 0,
+        "collection": 0,
+        "relCategory": "402880df513da24c01513da25a670000,402880df513da30501513da3126f0000",
+        "storehouseId": "402880f550ffe0890150ffe099e10000",
+        "wareHouse": {
+            "name": "广州一号仓库改版",
+            "code": "99",
+            "supplierId": "402880e1514792c701514792dd6b0000",
+            "supplierName": "供应商测试junit",
+            "id": "402880f550ffe0890150ffe099e10000",
+            "createdAt": "Nov 13, 2015 4:05:21 PM",
+            "updatedAt": "Jan 8, 2016 12:05:35 AM",
+            "inserter": "hejw",
+            "updater": "hejw",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
         },
-        "marketing": {
-            "满金额减金额": "满200减100",
-            "包邮":"此商品包邮"
+        "brand": {
+            "name": "121",
+            "engName": "333",
+            "firstLetter": "33",
+            "logoUrl": "null/tepin-test/8/4/n/1452138331759587.gif",
+            "imageWebUrl": "null/tepin-test/4/z/3/1452138328691845.gif",
+            "imageWapUrl": "null/tepin-test/i/c/n/1452138331449686.gif",
+            "summary": "111",
+            "description": "222",
+            "categorysName": "402880f55114f980015114f990510000",
+            "id": "402880e1516aa6c701516ae06a370001",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
         },
-        "brandId": "fc6804de506b41b601506e7daa6c0022",
-        "subtitle": "专柜正品 质量保证",
-        "imageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg;http://img.tepin.com/yourmart/product/q/r/n/1429838438598977.jpg;http://img.tepin.com/yourmart/product/v/k/9/1429838426656187.jpg;http://img.tepin.com/yourmart/product/9/7/w/1429838432766688.jpg;http://img.tepin.com/yourmart/product/f/s/u/1429838412626261.jpg;http://img.tepin.com/yourmart/product/d/j/v/1429838419644949.jpg",
-        "msOrTm": 0,
-        "id": "S38300000000250",
-        "detail": "此鞋采用羊绒皮制造，舒适耐穿，粗跟低跟搭配时尚的蝴蝶洁都让人感觉很好看.",
-        "mainImageUrl": "http://img.tepin.com/yourmart/product/x/y/l/1429838393254340.jpg@500w_500h_90q",
-        "items": [{
-            "id": "55e944f138e2492aaaa6a3b523e185d3",
-            "props": {
-                "颜色": "杏色",
-                "尺码":"34"
+        "supplier": {
+            "wareHouseSet": [],
+            "name": "海外供应商A",
+            "provinceName": "湖南",
+            "provinceCode": "长沙",
+            "cityName": "长沙",
+            "cityCode": "12122",
+            "state": 1,
+            "isBalance": 1,
+            "balanceCycle": 0,
+            "salerPromiseMoney": 0.00,
+            "platformCost": 0.00,
+            "wuliuCostAvg": 0.00,
+            "tongguanCostAvg": 0.00,
+            "baozhuangCostAvg": 0.00,
+            "id": "9902880a55123b10c015123b1145e0004",
+            "createdAt": "Nov 25, 2015 8:17:52 PM",
+            "updatedAt": "Dec 17, 2015 5:30:11 PM",
+            "inserter": "lich",
+            "updater": "lich",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        },
+        "sourceAreaId": "402880f550ffe14a0150ffe156f40000",
+        "taxRate": 0.20,
+        "buyLimit": 100,
+        "useTaxRate": false,
+        "useInlandLogistics": false,
+        "useOutlandLogistics": false,
+        "outlandLogisticsFee": 30.00,
+        "description": "描述web",
+        "canUseTicket": false,
+        "minAmount": 1,
+        "showTaxRate": 0.00,
+        "addCount": 1,
+        "groups": [{
+            "code": "S262000000025",
+            "fattrs": {
+                "颜色": "纯白",
+                "尺码": "大"
             },
-            "stock": 1,
-            "remainingStock": 1,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "57188ca98349418bb69c12318c4824c8",
-            "props": {
-                "颜色": "杏色",
-                "尺码":"37"
-            },
-            "stock": 6,
-            "remainingStock": 6,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "5a4c06dbb6d54d72925205e1d2c2149b",
-            "props": {
-                "颜色": "黑色",
-                "尺码":"38"
-            },
-            "stock": 5,
-            "remainingStock": 5,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "794b9c3ba310469ea2f755100c18806d",
-            "props": {
-                "颜色": "黑色",
-                "尺码":"37"
-            },
-            "stock": 10,
-            "remainingStock": 10,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "79ab96b76de64a1a9e015a111d70b4b6",
-            "props": {
-                "颜色": "杏色",
-                "尺码":"38"
-            },
-            "stock": 1,
-            "remainingStock": 1,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "ae5eaefa02e6408c897c033f79caf4c8",
-            "props": {
-                "颜色": "杏色",
-                "尺码":"35"
-            },
-            "stock": 6,
-            "remainingStock": 6,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "be2e1133c22a4cc2b5a146d5f75011a9",
-            "props": {
-                "颜色": "黑色",
-                "尺码":"35"
-            },
-            "stock": 8,
-            "remainingStock": 8,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "c7a657f903764ead803867bba723494b",
-            "props": {
-                "颜色": "黑色",
-                "尺码":"36"
-            },
-            "stock": 10,
-            "remainingStock": 10,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salesPrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "ceddab3d6cc741889e713fdcb8e5ff56",
-            "props": {
-                "颜色": "杏色",
-                "尺码":"36"
-            },
-            "stock": 5,
-            "remainingStock": 5,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salePrice": 399.0,
-            "sortOrder": 0
-        }, {
-            "id": "f8b0c33a03014d11a1453b04684af68c",
-            "stock": 3,
-            "remainingStock": 3,
-            "soldQty": 0,
-            "standardPrice": 699.0,
-            "salePrice": 399.0,
-            "sortOrder": 0,
-            "props": {
-                "颜色": "黑色",
-                "尺码": "34"
+            "stock": {
+                "singleCode": "S262000000025",
+                "currentStock": 888,
+                "localStock": 888,
+                "safetyStock": 88,
+                "id": "afasdfsddddsss",
+                "createdAt": "Dec 21, 2015 7:56:50 PM",
+                "updatedAt": "Dec 21, 2015 7:56:55 PM",
+                "inserter": "lich",
+                "start": 0,
+                "limit": 15,
+                "recordStatus": "EXIST"
             }
-        }],
-        "categoryId": "",
-        "status": 1
+        }, {
+            "code": "S699000000026",
+            "fattrs": {
+                "颜色": "黑色",
+                "尺码": "小"
+            },
+            "stock": {
+                "singleCode": "S699000000026",
+                "currentStock": 777,
+                "localStock": 777,
+                "safetyStock": 77,
+                "id": "rertwertgfff",
+                "createdAt": "Dec 21, 2015 7:57:23 PM",
+                "updatedAt": "Dec 21, 2015 7:57:28 PM",
+                "inserter": "lich",
+                "start": 0,
+                "limit": 15,
+                "recordStatus": "EXIST"
+            }
+        }, {
+            "code": "S368000000050",
+            "fattrs": {
+                "颜色": "纯白",
+                "尺码": "小"
+            },
+            "stock": {
+                "singleCode": "S368000000050",
+                "currentStock": 892,
+                "localStock": 892,
+                "safetyStock": 100,
+                "id": "asdfasdfasdfasf",
+                "createdAt": "Dec 16, 2015 2:32:55 PM",
+                "updatedAt": "Jan 8, 2016 3:58:23 PM",
+                "inserter": "lich",
+                "start": 0,
+                "limit": 15,
+                "recordStatus": "EXIST"
+            }
+        }, {
+            "code": "S00029384562",
+            "fattrs": {
+                "颜色": "黑色",
+                "尺码": "大"
+            },
+            "stock": {
+                "singleCode": "S368000000050",
+                "currentStock": 892,
+                "localStock": 892,
+                "safetyStock": 100,
+                "id": "asdfasdfasdfasf",
+                "createdAt": "Dec 16, 2015 2:32:55 PM",
+                "updatedAt": "Jan 8, 2016 3:58:23 PM",
+                "inserter": "lich",
+                "start": 0,
+                "limit": 15,
+                "recordStatus": "EXIST"
+            }
+
+        }, {
+            "code": "S00029384571",
+            "fattrs": {
+                "颜色": "黄色",
+                "尺码": "小"
+            },
+            "stock": {
+                "singleCode": "S368000000050",
+                "currentStock": 892,
+                "localStock": 892,
+                "safetyStock": 100,
+                "id": "asdfasdfasdfasf",
+                "createdAt": "Dec 16, 2015 2:32:55 PM",
+                "updatedAt": "Jan 8, 2016 3:58:23 PM",
+                "inserter": "lich",
+                "start": 0,
+                "limit": 15,
+                "recordStatus": "EXIST"
+            }
+
+        }]
     }
 }

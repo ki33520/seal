@@ -232,7 +232,7 @@ class GoodDetail extends Component{
             <div className={upperClasses}>
                 <Slider effect="roll" autoPlay={true} speed={200}>{slides}</Slider>
                 <div className="title clearfix">
-                    <span>Cowala 咔哇熊高钙儿童成人学生全脂奶粉学生全脂奶粉学生全脂奶粉50g</span>
+                    <span>{good.title}</span>
                     <a className="goods_share">
                         <i className="iconfont icon-share"></i>
                         分享
@@ -240,7 +240,7 @@ class GoodDetail extends Component{
                 </div>
                  <div className="price clearfix">
                     <span className="nowPrice">&yen;{good.salePrice}</span>
-                    <span className="oldPrice">市场价&yen;{good.originalPrice}</span>
+                    <span className="oldPrice">市场价&yen;{good.originPrice}</span>
                     <span className="countdown"><i className="iconfont icon-time"></i>距本期结束<em>04:34:10</em></span>
                 </div>
 
@@ -269,7 +269,7 @@ class GoodDetail extends Component{
                     </dl>
                     <dl>
                       <dt>发货仓：</dt>
-                      <dd>宁波一号保税仓库发货</dd>
+                      <dd>{good.warehouse}</dd>
                     </dl>
                     <dl>
                       <dt>关税：</dt>

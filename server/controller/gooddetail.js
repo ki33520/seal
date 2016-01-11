@@ -4,6 +4,7 @@ var _ = require("lodash");
 var util = require("../lib/util");
 var bluebird = require("bluebird");
 var GoodDetailApp = util.getSharedComponent("gooddetail");
+var config = require("../lib/config");
 
 var goodDetail = function(req, res, next) {
     var id = req.params.id;
@@ -11,8 +12,8 @@ var goodDetail = function(req, res, next) {
         code: id,
         channel:"Mobile"
     },true).then(function(ret) {
-        if (ret.code === "success") {
-            var good = ret.object;
+        if (ret.returnCode === 0) {
+            var good = goodFilter(ret.object);
             var properties = [];
 
             _.forIn(good.props, function(v, k) {
@@ -38,13 +39,13 @@ var goodDetail = function(req, res, next) {
                 });
                 v.propertyValues = propertyValues;
             });
-            var slides = good.imageUrl.split(";");
-            slides = slides.map(function(slide) {
-                return slide.replace("imgtest.", "img.") + "@500w_500h_4e";
-            })
+            var slides = good.imageUrl;
+            // slides = slides.map(function(slide) {
+            //     return slide.replace("imgtest.", "img.") + "@500w_500h_4e";
+            // })
             good.slides = slides;
-            good.originalPrice = good.standardPrice;
-            good.discount = (good.discount === "10.0") ? "" : good.discount + "折";
+            // good.originalPrice = good.standardPrice;
+            // good.discount = (good.discount === "10.0") ? "" : good.discount + "折";
             good.properties = properties;
             good.stock = null;
 
@@ -73,17 +74,40 @@ var goodDetail = function(req, res, next) {
 }
 
 function goodFilter(good){
-    var _good = {};
-    _good["imageUrl"] = good.picList
+    var _good = _.pick(good,[
+        "discount","isMain","title","subTitle","detail",
+        "buyLimit","taxRate","sourceAreaId",
+        "useTaxRate","useInlandLogistics","useOutlandLogistics","outlandLogisticsFee",
+        "description","showTaxRate","addCount"
+    ]);
+    _good["imageUrl"] = _.map(good.picList,function(imageUrl){
+        return config.imgServer + imageUrl
+    })
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice
-    _good["discount"] = good.discount
-    _good["isMain"] = good.isMain
-    _good["title"] = good.title
-    _good["subTitle"] = good.subTitle
-    _good["detail"] = good.detail
     _good["stock"] = good.stock.currentStock
     _good["warehouse"] = good.wareHouse.name
+    _good["items"] = _.map(good.groups,function(group){
+        return {
+            props:group.fattrs,
+            code:group.code,
+            stock:group.stock.currentStock
+        }
+    })
+    var props = {}
+    var keys = _.keys(_good["items"][0].props)
+    _.each(keys,function(key){
+        props[key] = []
+    })
+    _.each(_good["items"],function(item){
+        _.each(props,function(v,k){
+            v.push(item.props[k])
+            props[k] = _.uniq(v)
+        })
+    })
+    // console.log('props',props)
+    _good["props"] = props;
+    return _good
 }
 
 module.exports = goodDetail;

@@ -1,9 +1,223 @@
-@import "../../common/common.styl"
-@import "../../common/iconfont.styl"
-@import "../../common/header.styl"
-@import "../../common/footer.styl"
-@import "../../component/refresher.styl"
-@import "../../component/masklayer.styl"
-@import "../../component/gotop.styl"
-@import "../coupon.css"
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/header.styl";
+@import "../../common/footer.styl";
+@import "../../component/refresher.styl";
+@import "../../component/masklayer.styl";
+@import "../../component/gotop.styl";
+@import "../../component/slidetabs";
  
+.container {
+	height: 100%;
+}
+
+.header {
+	background: #fff;
+	border-bottom: 1px solid #EAEAEA;
+}
+
+.slide-tabs {
+	padding-bottom: 1.38rem;
+	background-color: #f3f3f3;
+	.slide-tabs-navbar {
+		height: 1.16rem;
+		width: 100%;
+		background-color:white;
+	    border-bottom: 1px solid #d7d7d7;
+	    .slide-tabs-navbar-item {
+			line-height: 1.16rem;
+			border: none;
+			&.active {
+				background-color: transparent;
+				border-bottom:.053333rem solid #801da1;
+				color: #801da1;
+			}
+		}
+	}
+}
+
+.coupon {
+    height: 120px;
+    margin-bottom: 15px;
+    box-shadow: 3px 3px 3px #ebebeb;
+    margin: .32rem;
+    position: relative;
+ 
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+.tepin,.haitao,.hnmall,.general,.shop,.youa-invalid {
+	.left {
+	    padding: 30px 6px 30px 16px;
+	    float: left;
+	    width: 32%;
+	    .price {
+		    font-size: .8rem;
+		    letter-spacing: -2px;
+		    font-weight: bold;
+		    text-align: center;
+		}
+		.term {
+		    color: #666;
+		    font-size: .32rem;
+		    text-align: center;
+		}
+	}
+	.right {
+	    padding: 28px 0 0px 0;
+	    float: right;
+	    width: 56%;
+	    margin-right: 3%;
+	    .kind {
+	    	font-size: .32rem;
+	    }
+	    .date {
+		    color: #666;
+		    font-size: .266667rem;
+		    padding: .12rem 0;
+		}
+
+		.explain {
+		    color: #999;
+		    background: url(/client/asset/images/rightLine.png) left top no-repeat;
+		    background-size: 80% 3px;
+		    padding: .12rem 0;
+		    overflow: hidden;
+		    height: .5rem;
+		    line-height: .5rem;
+		    width: 100%;
+		    font-size: .266667rem;
+		}
+	}
+}
+
+.tepin {
+	background-image: url(/client/asset/images/youa_pink.png);
+	.price {
+	    color: #e30182;
+	}
+
+	.kind {
+	    color: #e30182;
+	    padding: .12rem 0;
+	}
+}
+
+.haitao {
+	background-image: url(/client/asset/images/youa_purple.png);
+	.price {
+	    color: #733c93;
+	}
+	.kind {
+	    color: #733c93;
+	    padding: .12rem 0;
+	}
+}
+
+.hnmall{
+	background-image: url(/client/asset/images/youa_red.png);
+	.price {
+	    color: #e50303;
+	}
+	.kind {
+	    color: #e50303;
+	    padding: .12rem 0;
+	}
+}
+
+.general {
+	background-image: url(/client/asset/images/youa_currency.png);
+	.price {
+	    color: #ff8a00;
+	}
+	.kind {
+	    color: #ff8a00;
+	    padding: .12rem 0;
+	}
+}
+
+.shop {
+	background-image: url(/client/asset/images/youa_line.png);
+	.price {
+	    color: #00802a;
+	}
+	.kind {
+	    color: #00802a;
+	    padding: .12rem 0;
+	}
+}
+
+.youa-invalid {
+    background-image: url(/client/asset/images/youa_invalid.png);
+}
+
+.union-invalid {
+    background-image: url(/client/asset/images/union_invalid.png);
+}
+
+.union {
+	background-image: url(/client/asset/images/union_normal.png);
+}
+
+.union-invalid,.union {
+
+	.content {
+	    height: 92px;
+	    .left {
+		    padding: 36px 0 0 20px;
+		    float: left;
+		    width: 33%;
+		    .price {
+		    	font-size: .8rem;
+			    letter-spacing: -2px;
+			    font-weight: bold;
+			    color: #0091f6;
+			    em {
+				    font-size: .64rem;
+				    padding-right: .12rem;
+				    font-weight: normal;
+			    }
+		    }
+		}
+		.right {
+		    padding: .54rem 0 .14rem 0;
+		    float: left;
+		    width: 58%;
+		    .company {
+			    font-size: .4rem;
+			    color: #0091f6;
+			}
+			.explain {
+			    color: #333;
+			    background: url(/client/asset/images/rightLine.png) left top no-repeat;
+			    background-size: 80% 2px;
+			    width: 100%;
+			    overflow: hidden;
+			    height: 1.04rem;
+			    line-height: .4rem;
+			    font-size: .27rem;
+			    padding-top: .24rem;
+			    margin-top: .12rem;
+			}
+		}
+	}
+
+	.bottom {
+	    clear: both;
+	    margin: 0 25px 0 20px;
+	    line-height: 28px;
+	    .term {
+		    float: left;
+		    color: #333;
+		    font-size: .32rem;
+		}
+		.date {
+		    float: right;
+		    color: #666;
+		    font-size: .266667rem;
+		}
+	}
+}
+
+

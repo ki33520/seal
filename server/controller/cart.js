@@ -63,20 +63,20 @@ function formatCarts(originalCarts) {
 }
  
 var cart = function(req, res, next) {
-    var id = req.params.id;
-    var user = req.session.user;
+    let id = req.params.id;
+    let user = req.session.user;
 
     util.fetchAPI("cartByUser",{
         memberId:user.memberId
     },true).then(function(resp){
 
         if(resp.returnCode === 0){
-            var carts = formatCarts(resp.object);
-            var initialState = {
+            let carts = formatCarts(resp.object);
+            let initialState = {
                 carts
             };
 
-            var markup = util.getMarkupByComponent(CartApp({
+            let markup = util.getMarkupByComponent(CartApp({
                 initialState: initialState
             }));
 
@@ -93,10 +93,10 @@ var cart = function(req, res, next) {
 }
 
 var updateCart = function(req, res, next) {
-    var user = req.session.user;
-    var id = req.body.id;
-    var number = req.body.number;
-    var isCumulation = req.body.cumulation;
+    let user = req.session.user;
+    let id = req.body.id;
+    let number = req.body.number;
+    let isCumulation = req.body.cumulation;
 
     util.fetchAPI('updateCart', {
         memberId: user.memberId,
@@ -122,8 +122,8 @@ var updateCart = function(req, res, next) {
 }
 
 var deleteCart = function(req, res, next) {
-    var cartId = req.body.cartId;
-    var user = req.session.user;
+    let cartId = req.body.cartId;
+    let user = req.session.user;
 
     util.fetchAPI('deleteCart', {
         memberId: user.memberId,
@@ -147,19 +147,19 @@ var deleteCart = function(req, res, next) {
 }
 
 var fetchCart = function(req, res, next) {
-    var id = req.params.id;
-    var user = req.session.user;
-    var cartIndex = req.body.cartIndex;
-    var groupIndex = req.body.groupIndex;
-    var goodsIndex = req.body.goodsIndex;
+    let id = req.params.id;
+    let user = req.session.user;
+    let cartIndex = req.body.cartIndex;
+    let groupIndex = req.body.groupIndex;
+    let goodsIndex = req.body.goodsIndex;
   
     util.fetchAPI("cartByUser",{
         memberId:user.memberId
     },true).then(function(resp){
 
         if(resp.returnCode === 0){
-            var carts = formatCarts(resp.object);
-            var cart = carts[cartIndex];
+            let carts = formatCarts(resp.object);
+            let cart = carts[cartIndex];
  
             res.json({
                 isFetched: true,
