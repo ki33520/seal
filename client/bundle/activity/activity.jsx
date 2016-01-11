@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
-    ReactDOM.render(<ActivityApp initialState={initialState} />,document.getElementById('activity-container'));
+    ReactDOM.render(<ActivityApp initialState={initialState} />,document.getElementById('activity'));
 }
 
 if(typeof window.addEventListener){

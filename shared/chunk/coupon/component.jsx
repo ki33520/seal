@@ -16,6 +16,7 @@ class Coupon extends React.Component{
     render(){
         const {youaCoupons,legueCoupons,invalidCoupons,isFetching} = this.props;
         let Ycoupon,Lcoupon,Icoupon;
+        
         if(youaCoupons.length){
             Ycoupon = youaCoupons.map((item,i)=>{
                 return (
@@ -82,7 +83,8 @@ class YouaCouponRow extends Component{
             "haitao":flag=="haitao"&&!invalid,
             "tepin":flag=="tepin"&&!invalid,
             "hnmall":flag=="hnmall"&&!invalid,
-            "general":flag=="general"&&!invalid
+            "general":flag=="general"&&!invalid,
+            "shop":flag==="shop"&&!invalid
         });
 
         return (

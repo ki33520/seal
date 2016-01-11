@@ -15,7 +15,9 @@ function formatCoupons(originalCoupons) {
     let site={
             tepin:"特品汇www.tepin.com",
             hnmall:"农博汇www.hnmall.com",
-            haitao:"海外购www.tepin.hk"
+            haitao:"海外购www.tepin.hk",
+            general:"",
+            shop:""
         };
     let coupons = originalCoupons.map((v,k)=>{
         //v.validityDate = moment(v.validityDate,'YYYY-MM-DD HH:mm');
@@ -73,20 +75,20 @@ var coupon = function(req, res, next) {
         coupons: couponByUser({
             memberId: memberId,
             isMerchants: 0,
-            status: 5,
+            status: 0,
             pageSize: 10,
             pageIndex: 1
         })
     }).then(function(resp) {
-        console.log(resp.coupons.object.result)
+       // console.log(resp.coupons.object.result)
         if(resp.coupons.returnCode===0){
             let coupons = [];
-            let result = resp.coupons.object.result;
+            let obj = resp.coupons.object;
 
-            if (result && result.length) {
-                coupons = formatCoupons(result);
+            if (obj && obj.result.length) {
+                coupons = formatCoupons(obj.result);
             }
-
+ 
             let initialState = {
                 youaCoupons: coupons,
                 legueCoupons:[],

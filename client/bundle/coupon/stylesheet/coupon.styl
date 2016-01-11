@@ -7,8 +7,13 @@
 @import "../../component/gotop.styl";
 @import "../../component/slidetabs";
  
-.coupon-container {
+.container {
 	height: 100%;
+}
+
+.header {
+	background: #fff;
+	border-bottom: 1px solid #EAEAEA;
 }
 
 .slide-tabs {
@@ -42,7 +47,7 @@
     overflow: hidden;
 }
 
-.tepin,.haitao,.hnmall,.general,.youa-invalid {
+.tepin,.haitao,.hnmall,.general,.shop,.youa-invalid {
 	.left {
 	    padding: 30px 6px 30px 16px;
 	    float: left;
@@ -122,12 +127,23 @@
 }
 
 .general {
-	background-image: url(/client/asset/images/youa_purple.png);
+	background-image: url(/client/asset/images/youa_currency.png);
 	.price {
-	    color: #733c93;
+	    color: #ff8a00;
 	}
 	.kind {
-	    color: #733c93;
+	    color: #ff8a00;
+	    padding: .12rem 0;
+	}
+}
+
+.shop {
+	background-image: url(/client/asset/images/youa_line.png);
+	.price {
+	    color: #00802a;
+	}
+	.kind {
+	    color: #00802a;
 	    padding: .12rem 0;
 	}
 }
