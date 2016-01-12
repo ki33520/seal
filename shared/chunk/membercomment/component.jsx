@@ -64,7 +64,7 @@ class CommentList extends Component{
                     </Header>
                 </div>
                 <div className="tab-content">
-                    <SlideTabs axis="x" activeIndex={this.state.displayFlag} onSelect={this.toggleFlag.bind(this)} >
+                    <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)} >
                         <SlideTabsItem navigator={()=><span><b>全部评论</b></span>}>
                             <Floor comments={allComment} ref="floor"/>
                         </SlideTabsItem>
