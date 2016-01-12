@@ -1,45 +1,80 @@
 'use strict';
 
 import React,{Component} from "react";
-import OrderItem from "./partial/orderitem.jsx";
-import Header from "../common/header.jsx";
+import classNames from "classnames";
+import util,{apiRequest} from "../../lib/util.es6";
+import GoTop from "../../component/gotop.jsx";
+import Refresher from "../../component/refresher.jsx";
+import fetchOrder from "./action.es6";
+
+import Floor from "./partial/floor.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
+import Header from "../common/header.jsx";
+
 
 class OrderList extends Component{
-    renderOrders(){
-        const {pagination} = this.props;
-        // console.log('pagination',pagination.list)
-        if(pagination.result && pagination.result.length > 0){
-            const orders = pagination.result.map((v,i)=>{
-                const key = "order-item-" + i;
-                return (
-                    <OrderItem {...v} key={key}/>
-                )
-            })
-            return orders
+    constructor(props){
+        super(props);
+        this.state = {
+            displayFlag: 0
         }
-        return null;
+    }
+    componentDidMount(){
+        util.registerPullDownEvent(()=>{
+            this.beginRefresh(1);
+        }.bind(this));
+    }
+    beginRefresh(interval){
+        const {orders,isFetching,dispatch} =  this.props;
+        var flag = this.state.displayFlag,
+            order = orders[flag],
+            fetchLink = "/orderlist",
+            pageCount = 1,
+            nextPage = 1;
+        var flag = this.state.displayFlag;
+        if(order){
+            pageCount = Math.ceil(order.totalCount/order.pageSize);
+            nextPage = order.pageIndex + interval;
+        };
+        console.log(pageCount , nextPage)
+        if(pageCount < nextPage || isFetching){
+            return false;
+        }
+        dispatch(fetchOrder(fetchLink,{
+            status: flag,
+            pageIndex:nextPage
+        }));
+    }
+    toggleFlag(flag,e){
+        e && e.preventDefault();
+        const self = this;
+        this.setState({
+            displayFlag:flag
+        },()=>{
+            self.beginRefresh(0);
+        });
     }
     render(){
-        console.log(this.props)
+        var {orders} = this.props;
+        console.log(orders)
         return (
             <div className="order-list-content">
             <Header>我的订单</Header>
-            <SlideTabs axis="x" navbarSlidable={false}>
+            <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                 <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
-                <div className="order-content">{this.renderOrders()}</div>
+                    <Floor orderItem={orders[0]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
-                <div className="order-content">{this.renderOrders()}</div>
+                    <Floor orderItem={orders[1]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
-                <div className="order-content">{this.renderOrders()}</div>
+                    <Floor orderItem={orders[2]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                <div className="order-content">{this.renderOrders()}</div>
+                    <Floor orderItem={orders[3]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
-                <div className="order-content">{this.renderOrders()}</div>
+                    <Floor orderItem={orders[4]} ref="floor"/>
                 </SlideTabsItem>
             </SlideTabs>
             </div>

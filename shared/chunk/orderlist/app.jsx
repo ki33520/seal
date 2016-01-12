@@ -1,37 +1,44 @@
 'use strict'
-import React from "react";
+import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
+import {createStore} from "redux";
 import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import OrderList from "./component.jsx";
 
 function selector(state){
-    const {pagination,isFetched,isFetching} = state.ordersByParam
+    const {orders,isFetched,isFetching} = state.ordersByParam
     return {
-        pagination,
+        orders,
         isFetched,
         isFetching
     };
 }
 
-let OrderListConnected = connect(selector)(OrderList);
+let CommentListConnected = connect(selector)(OrderList);
 
-class OrderListApp extends React.Component{
+function configureStore(initialState){
+    const store = createStoreWithMiddleware(rootReducer, initialState)
+    return store
+}
+
+class OrderListApp extends Component{
     constructor(props){
         super(props);
     }
     render(){
-        const {isFetched,pagination} = this.props.initialState;
-        var store = createStoreWithMiddleware(rootReducer,{
+        const {isFetched,orders} = this.props.initialState;
+        const initialState = {
             ordersByParam:{
                 isFetching:false,
                 isFetched,
-                pagination
+                orders
             }
-        });
+        };
+        var store = configureStore(initialState);
         return (
             <Provider store={store}>
-            <OrderListConnected />
+            <CommentListConnected />
             </Provider>
         )
     }
