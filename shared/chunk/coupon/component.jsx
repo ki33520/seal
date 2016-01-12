@@ -54,7 +54,7 @@ class Coupon extends React.Component{
                 <Header>
                     <span className="title">优惠券</span>
                 </Header>
-                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
+                <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
                     <SlideTabsItem navigator={()=>'友阿优惠券'}>
                         {Ycoupon}
                     </SlideTabsItem>
