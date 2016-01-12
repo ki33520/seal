@@ -5,62 +5,45 @@ var bluebird = require("bluebird");
 var moment = require("moment");
 var util = require("../lib/util");
 var ConfirmOrder = util.getSharedComponent("confirmorder");
+var config = require("../lib/config");
 
-function formatOrder(originResp) {
-    var order = {};
-    order.totalAmount = parseFloat(originResp.price.totalPrice).toFixed(2);
-    order.productFee = parseFloat(originResp.price.originPrice).toFixed(2);
-    order.promoAmount = parseFloat(originResp.price.discountPrice).toFixed(2);
-    order.shipFee = parseFloat(originResp.price.postage).toFixed(2);
-    order.balance = 10;
-    order.ticket = 10;
+function orderFilter(order) {
+    var _order = _.pick(order,[
+        "qtys"
+    ]);
+    _order["totalFee"] = parseFloat(order.totalFee).toFixed(1)
+    _order["productFee"] = parseFloat(order.salesTotalFee).toFixed(1)
+    _order["tariffFee"] = parseFloat(order.promoFee).toFixed(1)
+    _order["abroadFee"] = order.abroadFee?parseFloat(order.abroadFee).toFixed(1):"0.0"
+    _order["shipFee"] = order.logisticsFee?parseFloat(order.logisticsFee).toFixed(1):"0.0"
+    _order["couponFee"] = "0.0"
+    _order["promoFee"] = parseFloat(order.promoFee).toFixed(1)
 
-    var carts = {
-        list: [],
-        sumPrice: 0,
-        discountPrice: 0,
-        totalPrice: 0
-    };
-    _.each(originResp.marketList, function(orginalCart, i) {
-        var cart = {
-            mallName: orginalCart.marketName,
-            mallId: orginalCart.marketId
-        };
-        cart.sumPrice = 0;
-        cart.discountPrice = 0;
-        cart.goods = [];
-        _.each(orginalCart.productList, function(product, j) {
-            cart.sumPrice += (product.salesPrice * product.count);
-            cart.discountPrice += (product.discount * product.count);
-            var props = product.attrMap;
-            cart.goods.push({
-                goodId: product.stock.singleCode,
-                itemId: product.itemCode,
-                brandId: product.brandId,
-                brandName: product.brandName,
-                title: product.title,
-                props: props,
-                originPrice: product.originPrice,
-                salePrice: product.salesPrice,
-                buyed: product.count,
-                totalPrice: product.totalPrice,
-                discountPrice: product.discountPrice,
-                imageUrl: product.pic
+    var promoList = []
+    _.each(order.cartMKTList, function(promo, i) {
+        var _promo = _.pick(promo,["promoType","promoName","promoFee"])
+        _promo.goods = [];
+        _.each(promo.cartProductList, function(product, j) {
+            _promo.goods.push({
+                code:product.singleCode,
+                title:product.title,
+                imageUrl:config.imgServer + product.imageUrl,
+                attrs:product.props,
+                originPrice:product.originPrice,
+                salePrice:product.salesPrice,
+                discount:product.discount,
+                qty:product.qty
             })
         })
-        carts.sumPrice += cart.sumPrice
-        carts.discountPrice += cart.discountPrice
-        carts.totalPrice += (cart.sumPrice - cart.discountPrice)
-        carts.list.push(cart);
+        promoList.push(_promo);
     })
-    order.carts = carts;
-    order.checkedReceiver = _.find(originResp.addressList, {
-        defaultChecked: 1
-    });
-    order.receivers = originResp.addressList;
-
-    order.coupons = formatCoupons(originResp.couponList)
-    return order;
+    _order["promoList"] = promoList
+    _order["receivers"] = order.memberAddrList
+    _order["checkedReceiver"] = order.memberAddrList?order.memberAddrList[0]:null;
+    _order["coupon"] = order.couponList
+    // console.log('order',_order)
+    // order.coupons = formatCoupons(originResp.couponList)
+    return _order;
 }
 
 function formatCoupons(list) {
@@ -109,19 +92,18 @@ function flagOfCoupon(coupon) {
 }
 
 var confirmOrder = function(req, res, next) {
-    // var config = req.app.locals.config;
-    // var cartIds = req.query.cartIds !== undefined ? req.query.cartIds : null;
     var itemIds = req.body.itemIds !== undefined ? req.body.itemIds : null;
     var buyeds = req.body.buyeds !== undefined ? req.body.buyeds : null;
     var user = req.session.user;
+    return next(new Error("confirmorder error"))
     // console.log(itemIds, buyeds)
     util.fetchAPI("confirmOrder", {
-        // memberId: user.memberId,
-        itemIds: itemIds,
-        nums: buyeds
-    }, true).then(function(ret) {
-        if (ret.code === "success") {
-            var order = formatOrder(ret);
+        memberId: "fc6804de51c482730151e8ec0a080023",
+        singleCodes: itemIds,
+        qtys: buyeds
+    }).then(function(ret) {
+        if (ret.returnCode === 0) {
+            var order = orderFilter(ret.object[0]);
             _.extend(order, {
                 itemIds: itemIds,
                 buyeds: buyeds
@@ -141,7 +123,6 @@ var confirmOrder = function(req, res, next) {
         } else {
             next(new Error(ret.msg))
         }
-
     })
 }
 
@@ -150,12 +131,9 @@ var submitOrder = function(req, res, next) {
     var itemIds = req.body.itemIds;
     var buyeds = req.body.buyeds;
     var couponNo = req.body.couponNo;
-    var ticketActive = req.body.ticketActive;
-    var balanceActive = req.body.balanceActive;
-    var payPassword = req.body.payPassword;
-    var logisticTime = req.body.logisticTime;
     var receiverId = req.body.receiverId;
-    var invoiceId = req.body.invoiceId;
+    var couponFee = req.body.couponFee;
+    var totalFee = req.body.totalFee;
     // console.log({
     //     memberId: user.memberId,
     //     itemCodes: receiverId,
@@ -170,24 +148,19 @@ var submitOrder = function(req, res, next) {
     // })
     util.fetchAPI("submitOrder", {
         memberId: user.memberId,
-        itemCodes: itemIds,
+        singleCodes: itemIds,
         qtys: buyeds,
         couponNo: couponNo,
-        payPwd: payPassword,
-        ticketActive: ticketActive,
-        balanceActive: balanceActive,
         memberDlvAddressId: receiverId,
-        logisticTime: logisticTime,
-        invoiceId: invoiceId
-    }, true).then(function(resp) {
-        if (resp.code === "success") {
+        couponFee: couponFee,
+        paymentFee: totalFee
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
             var payObject = resp.payObject;
-            payObject.channel = "WAP";
             res.json({
                 orderSubmited: true,
                 result: {
                     payObject: payObject,
-                    payUrl: resp.payurl
                 }
             });
         } else {

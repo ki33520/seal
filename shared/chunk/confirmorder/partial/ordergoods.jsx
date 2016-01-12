@@ -5,7 +5,7 @@ import LazyLoad from "../../../component/lazyload/lazyload.jsx";
 import Image from "../../../component/lazyload/image.jsx";
 
 class OrderGoods extends Component{
-    renderGood(good,cartIndex,goodIndex){
+    renderGood(good,parentIndex,goodIndex){
         var props = [];
         for(let propName in good.props){
             const propKey = "prop-" + propName
@@ -26,16 +26,15 @@ class OrderGoods extends Component{
             </div>
         )
     }
-    renderGroup(carts){
-        if(carts.list.length > 0){
-            return carts.list.map((cart,i)=>{
-                const cartKey = "cart-" + i;
+    renderGroup(promoList){
+        if(promoList.length > 0){
+            return promoList.map((promo,i)=>{
                 var goods = [];
-                cart.goods.forEach((good,j)=>{
+                promo.goods.forEach((good,j)=>{
                     goods.push(this.renderGood(good,i,j));
                 })
                 return (
-                    <div className="orderConfirm_l_box" key={cartKey}>
+                    <div className="orderConfirm_l_box" key={i}>
                         <div className="orderConfirm_title clearfix">
                         <em>优惠类型</em>
                         <span>组合商品更多优惠</span>
@@ -51,7 +50,7 @@ class OrderGoods extends Component{
         return null
     }
     render(){
-        const {carts} = this.props;
+        const {promoList} = this.props;
         // console.log('carts',carts);
         return (
             <div className="order-list">
@@ -60,7 +59,7 @@ class OrderGoods extends Component{
                 <span>满XXX元减XX元，满XXXX元减XXX元。</span>
             </div>
             <div className="orderConfirm_l clearfix">
-            {this.renderGroup(carts)}
+            {this.renderGroup(promoList)}
             </div>
             </div>
         )

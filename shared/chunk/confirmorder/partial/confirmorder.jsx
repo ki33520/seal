@@ -54,43 +54,40 @@ class ConfirmOrder extends Component{
                 </div>
                 <div className="count-box-line">
                     <div className="label">国际运费：</div>
-                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                    <div className="data"> - &yen;<span>{order.abroadFee}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">关税：</div>
                     <div className="red-box">免税</div>
-                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                    <div className="data"> - &yen;<span>{order.tariffFee}</span></div>
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠活动：</div>
-                    <div className="data"> - &yen;<span>{order.promoAmount}</span></div>
+                    <div className="data"> - &yen;<span>{order.promoFee}</span></div>
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠券：</div>
-                    <div className="data"> - &yen; <span id="coupon_money">{order.promoAmount}</span></div>
+                    <div className="data"> - &yen; <span id="coupon_money">{order.couponFee}</span></div>
                 </div>
                 <div className=" count-box-line no-border">
                     <div className="label">应付金额：</div>
-                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalAmount}</span></div>
+                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalFee}</span></div>
                 </div>
             </div>
         )
     }
     submitOrder(){
-        const {dispatch,order} = this.props;
+        const {order,submitOrder} = this.props;
         const {checkedCoupon,useBalance,useTicket,payPassword,
             checkedDeliveryTime,checkedReceiver,checkedInvoice} = order;
-        dispatch(submitOrder("/submitorder",{
+        submitOrder("/submitorder",{
             itemIds:order.itemIds,
             buyeds:order.buyeds,
             couponNo:checkedCoupon !== undefined?checkedCoupon.couponNo:"",
-            ticketActive:useTicket,
-            balanceActive:useBalance,
-            payPassword:payPassword,
-            logisticTime:checkedDeliveryTime!== null?checkedDeliveryTime:"",
             receiverId:checkedReceiver !== null?checkedReceiver.id:"",
-            invoiceId:checkedInvoice !== undefined?checkedInvoice.id:""
-        }))
+            couponFee:order.couponFee,
+            totalFee:order.totalFee
+        })
     }
     componentDidUpdate(prevProps,prevState){
         const {dispatch,orderSubmited,errMsg} = this.props;

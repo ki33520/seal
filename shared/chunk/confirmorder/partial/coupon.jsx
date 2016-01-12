@@ -12,7 +12,8 @@ class Coupon extends Component{
     }
     renderCouponRow(){
         const {coupons} = this.props;
-        if(coupons.length === 0){
+        console.log('coupons',coupons)
+        if(coupons === null){
             return (
              <div className="empty">
                 <img src="/client/asset/images/empty_selectCoupon.png" />

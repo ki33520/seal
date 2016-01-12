@@ -54,6 +54,7 @@ function goodFilter(good) {
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl
     })
+    _good["productCode"] = good.groupCode
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice
     _good["stock"] = good.stock.localStock
@@ -97,6 +98,7 @@ function goodFilter(good) {
         }
         return attr
     })
+    // _good["isCollected"] = false
     _good["selectedItem"] = selectedItem
     _good["attrs"] = attrs;
     return _good
@@ -154,9 +156,8 @@ var cartCount = function(req,res,next){
     var user = req.session.user
     if(user){
         util.fetchAPI("cartCount", {
-            memberId:"fc6804de51c482730151e8ec0a080023",
+            memberId:user.memberId,
         }).then(function(ret) {
-            console.log('ret',ret)
             if (ret.returnCode === 0) {
                 res.json({
                     result:ret.object,
@@ -177,9 +178,71 @@ var cartCount = function(req,res,next){
     }
 }
 
+var toggleCollected = function(req,res,next){
+    var user = req.session.user
+    var singleCode = req.query.singleCode
+    var productCode = req.query.productCode
+    var status = req.query.status
+    if(user){
+        util.fetchAPI(status?"removeCollected":"addCollected", {
+            memberId:user.memberId,
+            singleCode:singleCode,
+            productCode:productCode
+        }).then(function(ret) {
+            if (ret.returnCode === 0) {
+                res.json({
+                    result:ret.object,
+                    isToggled:true
+                })
+            } else {
+                res.json({
+                    isToggled:false,
+                    errMsg:ret.msg
+                })
+            }
+        })
+    }else{
+        res.json({
+            isToggled:true,
+            result:null
+        })
+    }
+}
+
+var isCollected = function(req,res,next){
+    var user = req.session.user
+    var singleCode = req.query.singleCode
+    if(user){
+        util.fetchAPI("isCollected", {
+            memberId:user.memberId,
+            singleCode:singleCode,
+        }).then(function(ret) {
+            if (ret.returnCode === 0) {
+                res.json({
+                    result:ret.object,
+                    isFetched:true
+                })
+            } else {
+                res.json({
+                    isFetched:false,
+                    errMsg:ret.msg
+                })
+            }
+        })
+    }else{
+        res.json({
+            isFetched:true,
+            result:null
+        })
+    }
+
+}
+
 module.exports = {
     goodDetail:goodDetail,
     addCart:addCart,
+    toggleCollected:toggleCollected,
+    isCollected:isCollected,
     cartCount:cartCount,
     fetchGood:fetchGood
 };
