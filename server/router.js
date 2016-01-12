@@ -30,6 +30,7 @@ router.get("/allorigins", require("./controller/polymer").allOrigins);
 router.get("/gooddetail/:id", require("./controller/gooddetail").goodDetail);
 router.get("/fetchgood/:id", require("./controller/gooddetail").fetchGood);
 router.get("/addcart", require("./controller/gooddetail").addCart);
+router.get("/cartCount", require("./controller/gooddetail").cartCount);
 
 router.get("/goodlist", require("./controller/goodlist"));
 router.get("/activity/:id", require("./controller/activity"));

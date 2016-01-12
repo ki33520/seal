@@ -148,11 +148,38 @@ var addCart = function(req, res, next) {
             })
         }
     })
+}
 
+var cartCount = function(req,res,next){
+    var user = req.session.user
+    if(user){
+        util.fetchAPI("cartCount", {
+            memberId:"fc6804de51c482730151e8ec0a080023",
+        }).then(function(ret) {
+            console.log('ret',ret)
+            if (ret.returnCode === 0) {
+                res.json({
+                    result:ret.object,
+                    isFetched:true
+                })
+            } else {
+                res.json({
+                    isFetched:false,
+                    errMsg:ret.msg
+                })
+            }
+        })
+    }else{
+        res.json({
+            isFetched:true,
+            result:null
+        })
+    }
 }
 
 module.exports = {
     goodDetail:goodDetail,
     addCart:addCart,
+    cartCount:cartCount,
     fetchGood:fetchGood
 };

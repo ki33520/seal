@@ -2,6 +2,7 @@
 import {apiRequest} from "../../lib/util.es6";
 import {
     SELECT_ATTR,
+    REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_GOOD,RESPONSE_GOOD,
     START_ADD_CART,FINISH_ADD_CART,
     START_ADD_FAVORITE,FINISH_ADD_FAVORITE
@@ -12,6 +13,29 @@ export function selectAttr(attr,attrValue){
         type:SELECT_ATTR,
         attr,
         attrValue
+    }
+}
+
+function requestCartCount(){
+    return {
+        type:REQUEST_CARTCOUNT
+    }
+}
+
+function responseCartCount(res){
+    return {
+        type:RESPONSE_CARTCOUNT,
+        res
+    }
+}
+
+export function fetchCartCount(){
+    return (dispatch)=>{
+        dispatch(requestCartCount())
+        return apiRequest("/cartcount").then((res)=>{
+            console.log('responseCartCount')
+            dispatch(responseCartCount(res))
+        })
     }
 }
 

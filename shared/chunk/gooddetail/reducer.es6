@@ -1,7 +1,8 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,START_ADD_CART,FINISH_ADD_CART,
+import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,
+    START_ADD_CART,FINISH_ADD_CART,REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
 START_ADD_FAVORITE,FINISH_ADD_FAVORITE} from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
@@ -107,20 +108,32 @@ function selectAttr(good,selectedAttr,selectedAttrValue){
 
 function cartByUser(state={},action){
     switch(action.type){
+        case REQUEST_CARTCOUNT:
+            return Object.assign({},state,{
+                isFetching:true,
+                isFetched:false,
+            })
+        case RESPONSE_CARTCOUNT:
+            let cartCount = action.res.result
+            return Object.assign({},state,{
+                cartCount,
+                isFetching:false,
+                isFetched:action.res.isFetched
+            })
         case START_ADD_CART:
             return Object.assign({},state,{
                 cartAdding:true,
                 cartAdded:false
             });
         case FINISH_ADD_CART:
-            var cartCount = state.cartCount === ""?0:state.cartCount;
-            const buyed = action.param.qty;
+            var cartCount = state.cartCount;
+            const buyed = action.param.buyed;
             if(action.res.cartAdded === true){
                 cartCount += buyed;
             }
             return Object.assign({},state,{
                 cartAdding:false,
-                cartAdded,
+                cartAdded:action.res.cartAdded,
                 cartCount
             })
         default:

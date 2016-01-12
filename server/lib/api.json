@@ -55,6 +55,13 @@
             "production": "http://product.tepin.hk"
         }
     },
+    "cartCount": {
+        "uri": "/cart/v1/countNumber",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "http://product.tepin.hk"
+        }
+    },
     "cartByUser": {
         "uri": "/cart/v1/findCarts",
         "baseURL": {
@@ -181,13 +188,13 @@
             "production": "marketing.hwg.youayun.cn"
         }
     },
-    "orderByUser":{
+    "orderByUser": {
         "uri": "/order/v1/findOrderList",
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "production": "order.hwg.youayun.cn"
         }
-        
+
     },
     "receiverByUser": {
         "uri": "/address/v1/findAddressList",
@@ -196,42 +203,42 @@
             "production": "http://member.tepin.hk"
         }
     },
-    "receiverById":{
+    "receiverById": {
         "uri": "/address/v1/findAddressById",
         "baseURL": {
             "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://member.tepin.hk"
         }
     },
-    "updateReceiver":{
+    "updateReceiver": {
         "uri": "/address/v1/update",
         "baseURL": {
             "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://member.tepin.hk"
         }
     },
-    "addReceiver":{
+    "addReceiver": {
         "uri": "/address/v1/add",
         "baseURL": {
             "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://member.tepin.hk"
         }
     },
-    "findProvinceMap":{
+    "findProvinceMap": {
         "uri": "/sns/address/v1/findProvinceMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "marketing.hwg.youayun.cn"
         }
     },
-    "findCityMap":{
+    "findCityMap": {
         "uri": "/sns/address/v1/findCityMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "http://sns.e9448.com"
         }
     },
-    "findCountyMap":{
+    "findCountyMap": {
         "uri": "/sns/address/v1/findCountyMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",

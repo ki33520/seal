@@ -34,6 +34,7 @@ class GoodDetail extends Component{
         }
     }
     componentDidMount(){
+        const {fetchCartCount} = this.props;
         const {selectedItem,attrs} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             let selectedAttr = _.findWhere(attrs,{attrName:k})
@@ -42,6 +43,7 @@ class GoodDetail extends Component{
             })
             this.onAttrChange(selectedAttr,selectedAttrValue)
         }) 
+        fetchCartCount()
     }
     componentWillReceiveProps(nextProps){
         const nextSelectedItem = nextProps.goodById.good.selectedItem
