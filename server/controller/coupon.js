@@ -1,6 +1,6 @@
 'use strict';
 
-//var moment = require("moment");
+var moment = require("moment");
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
@@ -12,58 +12,34 @@ function couponByUser(param) {
 }
 
 function formatCoupons(originalCoupons) {
-    let site={
-            tepin:"特品汇www.tepin.com",
-            hnmall:"农博汇www.hnmall.com",
-            haitao:"海外购www.tepin.hk",
-            general:"",
-            shop:""
-        };
-    let coupons = originalCoupons.map((v,k)=>{
-        //v.validityDate = moment(v.validityDate,'YYYY-MM-DD HH:mm');
-        //v.issueDate = moment(v.issueDate,'YYYY-MM-DD HH:mm');
-        let flag = flagOfCoupon(v);
-        let d1 = new Date(v.validityDate);
-        let d2 = new Date(v.issueDate);
-        v.validityDate = d1.getFullYear()+'.'+(d1.getMonth()+1)+'.'+d1.getDay();
-        v.issueDate = d2.getFullYear()+'.'+(d2.getMonth()+1)+'.'+d2.getDay();
-        v.flag = flag;
-        v.site = site[flag];
-        return v;
+    
+    let coupons = [];
+
+    originalCoupons.map((v,k)=>{
+        let code = v.employCode;
+        if (code && code.length) {
+            if(code.indexOf('haiwaigou')!== -1){
+                let validityDate = moment(new Date(v.validityDate)).format('YYYY.MM.DD');
+                let issueDate = moment(new Date(v.issueDate)).format('YYYY.MM.DD');
+                 
+                coupons.push({
+                    expiryDate:issueDate+' - '+validityDate,
+                    couponNo:v.couponNo,
+                    money:v.money,
+                    couponName:v.ruleObject.couponName,
+                    songAccount:v.ruleObject.songAccount,
+                    useRules:v.useRules,
+                    couponDesc:v.couponDesc,
+                    shortName:v.shortName,
+                    description:v.ruleObject.description
+                });
+            }
+        }
     })
     
     return coupons;
 }
-
-function flagOfCoupon(coupon) {
-    var flag;
-    if(coupon.employName === null){
-        return "general";
-    }
-    if (coupon.employName.length > 1) {
-        flag = "general";
-    }
-    if (coupon.employName.length === 1) {
-        switch (coupon.employName[0]) {
-            case "联盟优惠券":
-                flag = "legue";
-                break;
-            case "特品汇":
-                flag = "tepin";
-                break;
-            case "农博汇":
-                flag = "hnmall";
-                break;
-            case "海外购":
-                flag = "haitao";
-                break;
-            case "线下门店":
-                flag = "shop";
-                break;
-        }
-    }
-    return flag;
-}
+ 
 
 var coupon = function(req, res, next) {
     let user = req.session.user;

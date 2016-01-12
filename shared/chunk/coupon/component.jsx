@@ -58,13 +58,13 @@ class Coupon extends React.Component{
                 </Header>
                 <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
                     <SlideTabsItem navigator={()=>'友阿优惠券'}>
-                        {this.renderYouaCoupons(youaCoupons)}
+                        <div>{this.renderYouaCoupons(youaCoupons)}</div>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'联盟优惠券'}>
-                        {this.renderInvalidCoupons(legueCoupons)}
+                        <div>{this.renderInvalidCoupons(legueCoupons)}</div>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>
-                        {this.renderInvalidCoupons(invalidCoupons)}
+                        <div>{this.renderInvalidCoupons(invalidCoupons)}</div>
                     </SlideTabsItem>
                 </SlideTabs>
             </div>
@@ -82,11 +82,7 @@ class YouaCoupon extends Component{
         let flag = coupon.flag;
         let classes = classNames("coupon",{
             "youa-invalid":invalid,
-            "haitao":flag=="haitao"&&!invalid,
-            "tepin":flag=="tepin"&&!invalid,
-            "hnmall":flag=="hnmall"&&!invalid,
-            "general":flag=="general"&&!invalid,
-            "shop":flag==="shop"&&!invalid
+            "haitao":!invalid
         });
 
         return (
@@ -94,12 +90,12 @@ class YouaCoupon extends Component{
                 <a href={"/coupondetail/"+coupon.couponNo}>
                     <div className="left">
                         <div className="price"><em>&yen;</em>{coupon.money}</div>
-                        <div className="term">{coupon.couponDefName}</div>
+                        <div className="term">{coupon.songAccount}</div>
                     </div>
                     <div className="right">
-                        <div className="kind">{coupon.site}</div>
-                        <div className="date">{coupon.issueDate}&nbsp;-&nbsp;{coupon.validityDate}</div>
-                        <div className="explain">可在XXX使用使用使用使用使用使用使用</div>
+                        <div className="kind">海外购www.tepin.hk</div>
+                        <div className="date">{coupon.expiryDate}</div>
+                        <div className="explain">{coupon.couponDesc}</div>
                     </div>
                     <div className={beUsed}></div>
                 </a>
@@ -126,16 +122,16 @@ class LegueCoupon extends Component{
                 <a href={"/coupondetail/"+coupon.couponNo}>
                     <div className="content">
                         <div className="left">
-                            <div className="price"><em>&yen;</em>20</div>
+                            <div className="price">{coupon.shortName}</div>
                         </div>
                         <div className="right">
-                            <div className="company">罗莎蛋糕</div>
-                            <div className="explain">仅可购买蛋糕类商品，奶品除外</div>
+                            <div className="company">{coupon.couponName}</div>
+                            <div className="explain">{coupon.description}</div>
                         </div>
                     </div>
                     <div className="bottom">
-                        <div className="term">满100使用</div>
-                        <div className="date">2015.06.12-2015.07.18</div>
+                        <div className="term">{coupon.useRules}</div>
+                        <div className="date">{coupon.expiryDate}</div>
                     </div>
                     <div className={expired}></div>
                 </a>
