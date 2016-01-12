@@ -40,79 +40,62 @@ function formatCoupons(originalCoupons) {
     return coupons;
 }
  
-
+//优惠券状态:0未使用(包含已生效、未生效)
+//3已失效(包括已使用和已过期)
+//是否联盟 0：非联盟,1：联盟 
 var coupon = function(req, res, next) {
     let user = req.session.user;
-    let memberId = 'fc6804de51c482730151e8ec0a080023';
-    //优惠券状态:0未使用(包含已生效、未生效)
-    //3已失效(包括已使用和已过期)
-    //是否联盟 0：非联盟,1：联盟 
+    let memberId = 'fc6804de51c482730151e8ec0a080023';//user.memberId
+ 
+    let options = _.defaults({
+        memberId:memberId,
+        status:0,
+        pageSize:10,
+        pageIndex:1
+    },req.body);
+ 
     bluebird.props({
-        coupons: couponByUser({
-            memberId: memberId,
-            isMerchants: 0,
-            status: 0,
-            pageSize: 10,
-            pageIndex: 1
-        })
+        coupons: couponByUser(options)
     }).then(function(resp) {
        // console.log(resp.coupons.object.result)
         if(resp.coupons.returnCode===0){
-            let coupons = [];
-            let obj = resp.coupons.object;
-
-            if (obj && obj.result.length) {
-                coupons = formatCoupons(obj.result);
-            }
- 
-            let initialState = {
-                youaCoupons: coupons,
-                legueCoupons:[],
-                invalidCoupons:[]
+            let pagination = {
+                coupons:[],
+                pageIndex:options.pageIndex,
+                total:0
             };
 
-            let markup = util.getMarkupByComponent(CouponApp({
-                initialState: initialState
-            }));
+            let obj = resp.coupons.object;
 
-            res.render('coupon', {
-                markup: markup,
-                initialState: initialState
-            })
+            if (obj && obj.result) {
+                pagination = {
+                    pageIndex:options.pageIndex,
+                    coupons:formatCoupons(obj.result),
+                    totalPage:Math.ceil(obj.totalCount / options.pageSize)
+                }
+            }
+
+            let initialState = {
+                pagination: pagination,
+                isFetching: false
+            };
+
+            if (req.xhr === true) {
+                res.json(initialState);
+            }else{
+                let markup = util.getMarkupByComponent(CouponApp({
+                    initialState: initialState
+                }));
+
+                res.render('coupon', {
+                    markup: markup,
+                    initialState: initialState
+                })
+            }
         }   
         
     });
 
 }
 
-var fetchCoupon = function(req, res, next){
-    let user = req.session.user;
-    let isMerchants = req.body.isMerchants;
-    let status = req.body.status;
-    let pageIndex=req.body.pageIndex;
-    let pageSize = 10;
- 
-    bluebird.props({
-        coupons: couponByUser({
-            memberId:user.memberId,
-            isMerchants,
-            status,
-            pageSize,
-            pageIndex
-        })
-    }).then(function(resp) {
-        if(resp.coupons.returnCode===0){
-            let coupons = formatCoupons(resp.coupons.object.result);
-            res.json({
-                isFetched: true,
-                pageIndex:pageIndex,
-                coupons
-            })
-        }
-    });
-}
-
-module.exports = {
-    coupon,
-    fetchCoupon
-}
+module.exports = coupon;

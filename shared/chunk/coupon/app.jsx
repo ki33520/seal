@@ -26,14 +26,13 @@ function configureStore(initialState){
 class CouponApp extends Component{
     render(){
          
-        const {youaCoupons,legueCoupons,invalidCoupons} = this.props.initialState;
+        const {pagination,isFetching} = this.props.initialState;
 
         const initialState = {
             couponByUser:{
-                youaCoupons,
-                legueCoupons,
-                invalidCoupons,
-                isFetching:false
+                youaCoupons:pagination,
+                legueCoupons:{},
+                invalidCoupons:{}
             }
         };
         let store = configureStore(initialState);

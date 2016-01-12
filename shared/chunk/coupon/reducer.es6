@@ -4,6 +4,7 @@ import {combineReducers} from "redux";
 import {START_FETCH_COUPON,FINISH_YOUA_COUPON,
 	FINISH_UNION_COUPON,FINISH_INVALID_COUPON} from "./action.es6"; 
 function couponByUser(state={},action){
+    let list;
     switch(action.type){
     	case START_FETCH_COUPON:
     		return Object.assign({},state,{
@@ -11,32 +12,32 @@ function couponByUser(state={},action){
                 isFetched:false
             });
     	case FINISH_YOUA_COUPON:
-    		var pageIndex = action.res.pageIndex;
-    		var coupons = action.res.coupons;
+            list = _.union(state.youaCoupons.coupons,action.res.pagination.coupons);
+            action.res.pagination.coupons = list;
+            action.res.pagination.pageIndex = action.param.pageIndex;
     		return Object.assign({},state,{
                 isFetching:false,
                 isFetched:true,
-                enableCoupons:coupons,
-                enableIndex:pageIndex,
+                youaCoupons:action.res.pagination
             });
         case FINISH_UNION_COUPON:
-    		var pageIndex = action.res.pageIndex;
-    		var coupons = action.res.coupons;
+            list = _.union(state.legueCoupons.coupons,action.res.pagination.coupons);
+            action.res.pagination.coupons = list;
+            action.res.pagination.pageIndex = action.param.pageIndex;
     		return Object.assign({},state,{
                 isFetching:false,
                 isFetched:true,
-                legueCoupons:coupons,
-                legueIndex:pageIndex,
+                legueCoupons:action.res.pagination
 
             });
         case FINISH_INVALID_COUPON:
-    		var pageIndex = action.res.pageIndex;
-    		var coupons = action.res.coupons;
+    		list = _.union(state.invalidCoupons.coupons,action.res.pagination.coupons);
+            action.res.pagination.coupons = list;
+            action.res.pagination.pageIndex = action.param.pageIndex;
     		return Object.assign({},state,{
                 isFetching:false,
                 isFetched:true,
-                invalidCoupons:coupons,
-                invalidIndex:pageIndex,
+                invalidCoupons:action.res.pagination
 
             });
         default:

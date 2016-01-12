@@ -70,8 +70,8 @@ router.get("/updatereceiver/:id",mainController.requireAuthorize,require("./cont
 router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 
-router.get("/coupon", require("./controller/coupon").coupon);
-router.post("/fetchCoupon", require("./controller/coupon").fetchCoupon);
+router.get("/coupon", require("./controller/coupon"));
+router.post("/coupon", require("./controller/coupon"));
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
 
 router.all("/mock/api/:api",require("./mock/api").all);
