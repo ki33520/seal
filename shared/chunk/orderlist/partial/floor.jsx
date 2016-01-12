@@ -16,14 +16,81 @@ const orderStatusObj = {
     "STATUS_CANCELED":"已取消"
 };
 
+function formatTime(num){
+    return num >=10 ? num : '0'+ num; 
+};
+
+function MillisecondToDate(msd) {  
+    var time = parseFloat(msd) /1000;
+    var h = "00",
+        m = "00",
+        s = "00";
+    if (null!= time &&""!= time){  
+        if (time >60&& time <60*60) {
+            m = formatTime(parseInt(time /60.0));
+            s = formatTime(parseInt((parseFloat(time /60.0) - parseInt(time /60.0)) *60));
+        }else if (time >=60*60&& time <60*60*24) {
+            h = formatTime(parseInt(parseInt(time /3600.0)));
+            m = formatTime(parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60));
+            s = formatTime(parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) - parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60)); 
+        }else {
+            s = formatTime(parseInt(time));
+        }
+        time = h+" : "+m+" : "+s
+    }else{  
+        time = "00 : 00 : 00";
+    }  
+    return time;
+}  
+
 class Floor extends Component{
-    renderButtons(){
-        return (
-            <div className="order-buttons">
-            <a href="#" className="pop_c">去支付</a>
-            <a href="#" className="view_c">去支付</a>
-            </div>
-        )
+    renderButtons(child){
+        const {orderStatus} = child;
+        switch(orderStatus){
+            case "STATUS_NOT_PAY":
+                return (
+                    <div className="order-buttons">
+                        <a href="javascript:void(null)" className="view_c">去支付</a>
+                    </div>
+                )
+            case "STATUS_CONFIRMED":
+                return (
+                    <div className="order-buttons">
+                    </div>
+                )
+            case "STATUS_OUT_HOUSE":
+                return (
+                    <div className="order-buttons">
+                        <a href="javascript:void(null)" className="pop_c">查看物流</a>
+                        <a href="javascript:void(null)" className="view_c">确认收货</a>
+                    </div>
+                )
+            case "STATUS_SENDED":
+                return (
+                    <div className="order-buttons">
+                        <a href="javascript:void(null)" className="pop_c">查看物流</a>
+                        <a href="javascript:void(null)" className="view_c">确认收货</a>
+                    </div>
+                )
+            case "STATUS_CANCELED":
+                return (
+                    <div className="order-buttons">
+                        <a href="javascript:void(null)" className="pop_c">再次购买</a>
+                    </div>
+                )
+            case "STATUS_FINISHED":
+                return (
+                    <div className="order-buttons">
+                        <a href="javascript:void(null)" className="pop_c">再次购买</a>
+                        <a href="javascript:void(null)" className="view_c">评价晒单</a>
+                    </div>
+                )
+            default:
+                return (
+                    <div className="order-buttons">
+                    </div>
+                )
+        }
     }
     renderGoods(itemList){
         if(itemList.length > 1){
@@ -61,22 +128,32 @@ class Floor extends Component{
             </div>
         )
     }
+    renderOutTime(child){
+        const {orderCrtTime,timeoutTime,orderStatus} = child;
+        var outTime = (new Date(timeoutTime).getTime() - new Date().getTime());
+        var outTimeTag = MillisecondToDate(outTime);
+        if(orderStatus === "STATUS_NOT_PAY" && outTime>0){
+            return <i>{outTimeTag}&nbsp;后自动取消</i>
+        }
+    }
     renderNode(list){
         return list.map((child,i)=>{
-            const {orderCrtTime,id,orderReceiveId,orderNo,itemList,totalFee,orderStatus} = child;
+            const {orderCrtTime,id,orderReceiveId,orderNo,itemList,totalFee,orderStatus,timeoutTime} = child;
+            var crtTime = moment(new Date(orderCrtTime)).format("YYYY-MM-DD");
             return (
                 <div className="order-box" key={i}>
                     <div className="order-up">
-                        <span>{moment(orderCrtTime).format("YYYY-MM-DD")}</span>
+                        <span>{crtTime}</span>
+                        <i>{orderNo}</i>
                         <div className="right">
-                            <i>01:15:47&nbsp;后自动取消</i>
+                            {this.renderOutTime(child)}
                             <em>{orderStatusObj[orderStatus]}</em>
                         </div>
                     </div>
                     <div className="order-list"><a href={"/orderdetail/"+orderReceiveId}>{this.renderGoods(itemList)}</a></div>
                     <div className="order-down">
                         <span>合计：<em>&yen;{totalFee}</em></span>
-                        {this.renderButtons()}
+                        {this.renderButtons(child)}
                     </div>
                 </div>
             )

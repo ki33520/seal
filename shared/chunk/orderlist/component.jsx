@@ -8,11 +8,9 @@ import Refresher from "../../component/refresher.jsx";
 import fetchOrder from "./action.es6";
 
 import Floor from "./partial/floor.jsx";
-
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Header from "../common/header.jsx";
 
-const statusArr = ["a", "b", "c", "d", "e"];
 
 class OrderList extends Component{
     constructor(props){
@@ -29,7 +27,7 @@ class OrderList extends Component{
     beginRefresh(interval){
         const {orders,isFetching,dispatch} =  this.props;
         var flag = this.state.displayFlag,
-            order = orders[statusArr[flag]],
+            order = orders[flag],
             fetchLink = "/orderlist",
             pageCount = 1,
             nextPage = 1;
@@ -38,6 +36,7 @@ class OrderList extends Component{
             pageCount = Math.ceil(order.totalCount/order.pageSize);
             nextPage = order.pageIndex + interval;
         };
+        console.log(pageCount , nextPage)
         if(pageCount < nextPage || isFetching){
             return false;
         }
@@ -57,24 +56,25 @@ class OrderList extends Component{
     }
     render(){
         var {orders} = this.props;
+        console.log(orders)
         return (
             <div className="order-list-content">
             <Header>我的订单</Header>
             <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                 <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
-                    <Floor orderItem={orders['a']} ref="floor"/>
+                    <Floor orderItem={orders[0]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
-                    <Floor orderItem={orders['b']} ref="floor"/>
+                    <Floor orderItem={orders[1]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
-                    <Floor orderItem={orders['c']} ref="floor"/>
+                    <Floor orderItem={orders[2]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                    <Floor orderItem={orders['d']} ref="floor"/>
+                    <Floor orderItem={orders[3]} ref="floor"/>
                 </SlideTabsItem>
                 <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
-                    <Floor orderItem={orders['e']} ref="floor"/>
+                    <Floor orderItem={orders[4]} ref="floor"/>
                 </SlideTabsItem>
             </SlideTabs>
             </div>
