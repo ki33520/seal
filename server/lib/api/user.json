@@ -1,0 +1,23 @@
+{
+    "addCollected": {
+        "uri": "/collect/v1/add",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "removeCollected":{
+        "uri": "/collect/v1/delete",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "isCollected":{
+        "uri": "/collect/v1/isCollect",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "production": "http://product.tepin.hk"
+        }
+    }
+}

@@ -23,23 +23,19 @@ var requireAuthorize = function(req, res, next) {
     }
 }
 
-var errorHandler = function(err, req, res) {
-    if (err) {
-        var initialState = {
-            code: "500",
-            msg: err.message
-        };
-        var markup = util.getMarkupByComponent(ErrorContent({
-            initialState: initialState
-        }));
+var errorHandler = function(err,req,res,next){
+    var initialState = {
+        code: "500",
+        msg: err.message
+    };
+    var markup = util.getMarkupByComponent(ErrorContent({
+        initialState: initialState
+    }));
 
-        res.render('error', {
-            markup: markup,
-            initialState: initialState
-        });
-    } else {
-        res.end();
-    }
+    res.render('error', {
+        markup: markup,
+        initialState: initialState
+    });
 }
 
 var notFoundHandler = function(req, res) {

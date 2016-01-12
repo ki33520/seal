@@ -31,5 +31,6 @@ app.set('view engine', 'html');
 app.set("views", __dirname + '/../view');
 
 app.use(router);
+app.use(require("./controller/main").errorHandler)
 
 module.exports = app;

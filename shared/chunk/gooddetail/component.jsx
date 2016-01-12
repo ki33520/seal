@@ -34,7 +34,7 @@ class GoodDetail extends Component{
         }
     }
     componentDidMount(){
-        const {fetchCartCount} = this.props;
+        const {fetchCartCount,fetchIsCollected} = this.props;
         const {selectedItem,attrs} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             let selectedAttr = _.findWhere(attrs,{attrName:k})
@@ -44,6 +44,7 @@ class GoodDetail extends Component{
             this.onAttrChange(selectedAttr,selectedAttrValue)
         }) 
         fetchCartCount()
+        fetchIsCollected()
     }
     componentWillReceiveProps(nextProps){
         const nextSelectedItem = nextProps.goodById.good.selectedItem
@@ -105,12 +106,14 @@ class GoodDetail extends Component{
             popupActive:!this.state.popupActive
         })
     }
-    toggleFavorite(e){
+    toggleCollected(e){
         e && e.preventDefault();
-        const {addFavorite} = this.props;
-        const {good} = this.props.goodById;
-        addFavorite({
-            id:good.code
+        const {toggleCollected} = this.props;
+        const {good,isCollected} = this.props.goodById;
+        toggleCollected({
+            productCode:good.groupCode,
+            singleCode:good.code,
+            status:!isCollected
         });
     }
     directBuy(e){
@@ -154,7 +157,7 @@ class GoodDetail extends Component{
     }
     render(){
         const {cartCount} = this.props;
-        const {good} = this.props.goodById
+        const {good,isCollected} = this.props.goodById
         const {selectedItem,buyed} = this.state;
 
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
@@ -173,14 +176,21 @@ class GoodDetail extends Component{
         const downClasses = classNames("good-detail-down",{
             visible:this.state.downVisble
         })
+        const isCollectedClasses = classNames("iconfont",{
+            "icon-xinman":isCollected,
+            "icon-xin":!isCollected
+        })
         return (
             <div className="good-detail-content">
-            <Header>商品详情<a className="globa" href="javascript:void(0);"><i></i></a></Header>
+            <Header>商品详情<a className="globa" href="javascript:void(0);"><i></i></a>
+            <a className="goods_share"></a>
+            </Header>
             <div className={upperClasses}>
-                <Slider effect="roll" autoPlay={true} speed={200}>{slides}</Slider>
+                <Slider effect="roll" autoPlay={false} speed={200}>{slides}</Slider>
                 <div className="title clearfix">
                     <span>{good.title}</span>
-                    <a className="goods_share"><i className="iconfont icon-share"></i>分享</a>
+                    <a className="goods_fav" onClick={this.toggleCollected.bind(this)}>
+                    <i className={isCollectedClasses}></i>收藏</a>
                 </div>
                  <div className="price clearfix">
                     <span className="nowPrice">&yen;{good.salePrice}</span>
@@ -210,7 +220,6 @@ class GoodDetail extends Component{
             </div>
             <Toolbar {...this.props} 
             directBuy={this.directBuy.bind(this)} 
-            toggleFavorite={this.toggleFavorite.bind(this)} 
             addToCart={this.togglePopup.bind(this)}>
             </Toolbar>
             <Popup direction="bottom" active={this.state.popupActive}>
@@ -240,7 +249,7 @@ class GoodDetail extends Component{
                 </div>
             </Popup>
             <MaskLayer visible={this.state.popupActive} />
-            <form action="/confirmorder" method="GET" ref="directBuyForm">
+            <form action="/confirmorder" method="POST" ref="directBuyForm">
                 <input type="hidden" value={selectedItem !== null?selectedItem.code:""} name="itemIds"/>
                 <input type="hidden" value={buyed} name="buyeds"/>
             </form>

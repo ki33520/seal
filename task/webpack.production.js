@@ -74,12 +74,12 @@ module.exports = {
         chunkFilename: moduleEntryPath + "[name]/" + env.distFolder + "[id]-[hash].chunk.js"
     },
     plugins: _.union([
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress: {
-        //         warnings: false
-        //     }
-        // }),
-        // new webpack.NoErrorsPlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        }),
+        new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin(moduleEntryPath + "[name]/" + env.distFolder + "[name]-[hash].css")
     ], commonChunks)
 }

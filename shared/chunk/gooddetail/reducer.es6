@@ -2,8 +2,10 @@
 
 import {combineReducers} from "redux";
 import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,
-    START_ADD_CART,FINISH_ADD_CART,REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
-START_ADD_FAVORITE,FINISH_ADD_FAVORITE} from "./constant.es6";
+    START_ADD_CART,FINISH_ADD_CART,
+    REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
+    REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
+START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
 import {alertReducer} from "../common/reducer.es6";
@@ -30,18 +32,31 @@ function goodById(state={},action){
                 isFetched:action.res.isFetched,
                 good
             })
-        case START_ADD_FAVORITE:
+        case REQUEST_ISCOLLECTED:
             return Object.assign({},state,{
-                favoriteAdding:true
+                isFetching:true,
+                isFetched:false,
+            })
+        case RESPONSE_ISCOLLECTED:
+            let result = action.res.result || false
+            return Object.assign({},state,{
+                isCollected:result,
+                isFetching:false,
+                isFetched:action.res.isFetched
+            })
+
+        case START_TOGGLE_COLLECTED:
+            return Object.assign({},state,{
+                isToggling:true
             });
-        case FINISH_ADD_FAVORITE:
-            var favored = state.favored;
-            if(action.res.code === "success"){
-                favored = true
+        case FINISH_TOGGLE_COLLECTED:
+            let isCollected = state.isCollected
+            if(action.res.result === true){
+                isCollected = !isCollected
             }
             return Object.assign({},state,{
-                favoriteAdding:false,
-                favored
+                isToggling:false,
+                isCollected
             })
         case SHOW_ALERT:
         case HIDE_ALERT:

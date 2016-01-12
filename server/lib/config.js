@@ -3,6 +3,8 @@ var _ = require("lodash");
 var api = require("./api.json");
 
 api = _.extend(api,require("./api/index.json"))
+api = _.extend(api,require("./api/order.json"))
+api = _.extend(api,require("./api/user.json"))
 
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
@@ -16,11 +18,11 @@ if (runtime === "develop") {
 }
 
 config.loginUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=tepin-wap&clientId=tepin&channel=wap";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code";
 config.logoutUrl = config.oathServer +
-    "/score/member/v1/logout?skin=tepin-wap&clientId=tepin&channel=wap";
+    "/score/member/v1/logout?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap";
 config.registerUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=tepin-wap&clientId=tepin&channel=wap&startPage=register";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code&startPage=register";
 config.cardUrl = config.oathServer +
     "/score/member/v1/cardInfo?"
 

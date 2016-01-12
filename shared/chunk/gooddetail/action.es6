@@ -3,9 +3,10 @@ import {apiRequest} from "../../lib/util.es6";
 import {
     SELECT_ATTR,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
+    REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_GOOD,RESPONSE_GOOD,
     START_ADD_CART,FINISH_ADD_CART,
-    START_ADD_FAVORITE,FINISH_ADD_FAVORITE
+    START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED
 } from "./constant.es6";
 
 export function selectAttr(attr,attrValue){
@@ -33,7 +34,6 @@ export function fetchCartCount(){
     return (dispatch)=>{
         dispatch(requestCartCount())
         return apiRequest("/cartcount").then((res)=>{
-            console.log('responseCartCount')
             dispatch(responseCartCount(res))
         })
     }
@@ -91,27 +91,51 @@ export function addCart(param){
 }
 
 
-function startAddFavorite(param){
+function startToggleCollected(param){
     return {
-        type:START_ADD_FAVORITE,
+        type:START_TOGGLE_COLLECTED,
         param:param
     }
 }
 
-function finishAddFavorite(param,res){
+function finishToggleCollected(param,res){
     return {
-        type:FINISH_ADD_FAVORITE,
+        type:FINISH_TOGGLE_COLLECTED,
         param,
         res,
         finishAt:Date.now()
     }
 }
 
-export function addFavorite(param){
+export function toggleCollected(param){
     return (dispatch)=>{
-        dispatch(startAddFavorite(param));
-        apiRequest("/addfavorite",param).then((res)=>{
-            dispatch(finishAddFavorite(param,res));
+        dispatch(startToggleCollected(param));
+        apiRequest("/togglecollected",param).then((res)=>{
+            dispatch(finishToggleCollected(param,res));
+        })
+    }
+}
+
+function requestIsCollected(param){
+    return {
+        type:REQUEST_ISCOLLECTED,
+        param
+    }
+}
+
+function responseIsCollected(param,res){
+    return {
+        type:RESPONSE_ISCOLLECTED,
+        param,
+        res
+    }
+}
+
+export function fetchIsCollected(param){
+    return (dispatch)=>{
+        dispatch(requestIsCollected(param))
+        return apiRequest("/iscollected").then((res)=>{
+            dispatch(responseIsCollected(param,res))
         })
     }
 }

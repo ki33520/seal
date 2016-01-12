@@ -10,17 +10,36 @@ body.goods_comment {
 header .globa {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 1.15rem;
     width: 1.15rem;
     height: 1.15rem;
     line-height: 1.15rem;
 }
-header .globa i {
+header .globa:before {
+    content:"";
     width: .65rem;
     height: .53rem;
     display: block;
     margin: 0 auto;
     background: url(/client/asset/images/botNav.png) 0 0 no-repeat;
+    background-size: 100%;
+    margin-top:.3rem;
+}
+.goods_share {
+    position: absolute;
+    top: 0;
+    right:0;
+    width: 1.15rem;
+    height: 1.15rem;
+    line-height: 1.15rem;
+}
+.goods_share:before {
+    content:"";
+    width: .573333rem;
+    height: .56rem;
+    display: block;
+    margin: 0 auto;
+    background: url(/client/asset/images/topShare.png) 0 0 no-repeat;
     background-size: 100%;
     margin-top:.3rem;
 }
@@ -30,7 +49,7 @@ header .globa i {
     margin: 0 auto;
     position: relative;
     overflow: hidden;
-    padding-bottom: 1rem;
+    /*padding-bottom: 1rem;*/
     background-color:#fff;
 }
 .banner .hd {
@@ -85,25 +104,13 @@ header .globa i {
 .banner .bd li a {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /* 取消链接高亮 */
 }
-.banner .goods_fav {
-    position: absolute;
-    right:-.06rem;
-    bottom: .0;
-    font-size:.24rem;
-    z-index: 112;
-    padding:.3rem;
-    text-align: center;
-}
-.banner .goods_fav i {
-    display: block;
-    font-size:.72rem;
-    color: #dd1847;
-}
 .goods_top {
     background-color:#fff;
 }
 .goods_top .title {
-    padding:.32rem .32rem 0;
+    padding-top:.32rem;
+    margin:0 .32rem;
+    border-top:1px solid #d7d7d7;
 }
 .goods_top .title>span {
     width: 80%;
@@ -113,19 +120,22 @@ header .globa i {
     float: left;
     overflow: hidden;
 }
-.goods_top .title a.goods_share {
+
+.goods_fav {
     float: right;
-    font-size:.24rem;
-    position:relative;
-    right:-.32rem;
-    top:-.32rem;
-    padding:.32rem .32rem .16rem .16rem;
-}
-.goods_top .title a.goods_share i {
+    font-size: .24rem;
+    position: relative;
+    top: -.32rem;
+    padding: 0 0 .16rem .16rem;
+    text-align: center;
     display: block;
-    font-size:.6rem;
-    color: #000;
 }
+.goods_fav i {
+    display: block;
+    font-size:.72rem;
+    color: #dd1847;
+}
+
 .goods_top .price {
     clear: both;
     padding:.06rem .32rem .2rem;
@@ -183,20 +193,20 @@ header .globa i {
     float: left;
     width: 80%;
 }
-.promotion dd>p,
-.promotion dd>span{
+.promotion dd p,
+.promotion dd span{
     clear:both;
     padding-bottom:.266667rem;
     display:block;
 }
-.promotion dd>span:after{
+.promotion dd span:after{
     content: " ";
     display: block;
     visibility: hidden;
     height: 0;
     clear: both;
 }
-.promotion dd>span em{
+.promotion dd span em{
     height:.45rem;
     line-height:.45rem;
     background-color:#ed1946;
@@ -207,7 +217,7 @@ header .globa i {
     float:left;
     margin-right:.2rem;
 }
-.promotion dd>span i{
+.promotion dd span i{
     float:left;
     width:82%;
     line-height:.45rem;
@@ -453,7 +463,7 @@ header .globa i {
     z-index: 222;
     display: none;
 }
-.con {
+.goodsDialog .con {
     height: 12rem;
     width: 100%;
     position: absolute;
@@ -461,7 +471,7 @@ header .globa i {
     left: 0;
     background-color: #fff;
 }
-.con > .iconfont {
+.goodsDialog .con > .iconfont {
     position: absolute;
     right:.32rem;
     top:.32rem;
@@ -480,7 +490,7 @@ header .globa i {
     margin-left:.32rem;
     padding-top:.4rem;
 }
-.goodsSure > .left>span {
+.goodsSure > .left span {
     display: block;
     color: #ed1946;
     font-size:.48rem;

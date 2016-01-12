@@ -30,7 +30,9 @@ router.get("/allorigins", require("./controller/polymer").allOrigins);
 router.get("/gooddetail/:id", require("./controller/gooddetail").goodDetail);
 router.get("/fetchgood/:id", require("./controller/gooddetail").fetchGood);
 router.get("/addcart", require("./controller/gooddetail").addCart);
-router.get("/cartCount", require("./controller/gooddetail").cartCount);
+router.get("/cartcount", require("./controller/gooddetail").cartCount);
+router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
+router.get("/iscollected", require("./controller/gooddetail").isCollected);
 
 router.get("/goodlist", require("./controller/goodlist"));
 router.get("/activity/:id", require("./controller/activity"));
@@ -76,6 +78,5 @@ router.get("/coupondetail/:id", require("./controller/coupondetail"));
 
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);
-router.use(mainController.errorHandler);
 
 module.exports = router;

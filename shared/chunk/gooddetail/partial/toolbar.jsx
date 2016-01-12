@@ -33,9 +33,9 @@ class Toolbar extends Component{
     }
     render(){
         const {cartCount} = this.props.cartByUser
-        const {addToCart,toggleFavorite,directBuy} = this.props
+        const {addToCart,directBuy} = this.props
         return (
-            <div className="goodsBtns">
+            <div className="good-detail-toolbar">
             <a href="/cart" className="goods_cart">
                 <i className="iconfont icon-cart">{cartCount === null?null:<em>{cartCount}</em>}</i>
             </a>
