@@ -11,43 +11,45 @@ class Coupon extends React.Component{
     handleClick(i){
 
     }
- 
+    
+    renderYouaCoupons(coupons){
+        if(coupons.length){
+            return coupons.map((item,i)=>{
+                return (
+                    <YouaCoupon coupon={item} invalid={false} key={'y-'+i} />
+                )
+            });
+        }else{
+            return (<NoCoupon message="您目前没有友阿优惠券哟！"/>);
+        }
+    }
+    renderLegueCoupons(coupons){
+        if(coupons.length){
+            return coupons.map((item,i)=>{
+                return (
+                    <LegueCoupon coupon={item} invalid={false} key={'l-'+i} />
+                )
+            });
+        }else{
+            return (<NoCoupon message="您目前没有联盟优惠券哟！"/>);
+        }
+    }  
+    renderInvalidCoupons(coupons){
+        if(coupons.length){
+            return coupons.map((item,i)=>{
+                if(item.flag==='legue'){
+                    return (<LegueCoupon coupon={item} invalid={true} key={'il-'+i} />)
+                }else{
+                    return (<YouaCoupon coupon={item} invalid={true} key={'iy-'+i} />)
+                }
+            });
+        }else{
+            return (<NoCoupon message="您目前没有失效优惠券哟！"/>);
+        }
+    }
 
     render(){
         const {youaCoupons,legueCoupons,invalidCoupons,isFetching} = this.props;
-        let Ycoupon,Lcoupon,Icoupon;
-        
-        if(youaCoupons.length){
-            Ycoupon = youaCoupons.map((item,i)=>{
-                return (
-                    <YouaCouponRow coupon={item} key={'y-'+i} />
-                )
-            });
-        }else{
-            Ycoupon = (<NoCoupon message="您目前没有友阿优惠券哟！"/>);
-        }
-        
-        if(legueCoupons.length){
-            Lcoupon = legueCoupons.map((item,i)=>{
-                return (
-                    <LegueCouponRow coupon={item} key={'l-'+i} />
-                )
-            });
-        }else{
-            Lcoupon = (<NoCoupon message="您目前没有联盟优惠券哟！"/>);
-        }
-        
-        if(invalidCoupons.length){
-            Icoupon = invalidCoupons.map((item,i)=>{
-                if(item.flag==='legue'){
-                    return (<LegueCouponRow coupon={item} invalid={true} key={'l-'+i} />)
-                }else{
-                    return (<YouaCouponRow coupon={item} invalid={true} key={'y-'+i} />)
-                }
-            })
-        }else{
-            Icoupon = (<NoCoupon message="您目前没有失效优惠券哟！"/>);
-        }
         
         return (
             <div>
@@ -56,13 +58,13 @@ class Coupon extends React.Component{
                 </Header>
                 <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
                     <SlideTabsItem navigator={()=>'友阿优惠券'}>
-                        {Ycoupon}
+                        {this.renderYouaCoupons(youaCoupons)}
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'联盟优惠券'}>
-                        {Lcoupon}
+                        {this.renderInvalidCoupons(legueCoupons)}
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>
-                        {Icoupon}
+                        {this.renderInvalidCoupons(invalidCoupons)}
                     </SlideTabsItem>
                 </SlideTabs>
             </div>
@@ -70,7 +72,7 @@ class Coupon extends React.Component{
     }
 }
 
-class YouaCouponRow extends Component{
+class YouaCoupon extends Component{
     render(){
         const {coupon,invalid} = this.props;
         const beUsed = classNames({
@@ -106,7 +108,7 @@ class YouaCouponRow extends Component{
     }
 }
 
-class LegueCouponRow extends Component{
+class LegueCoupon extends Component{
     render(){
         const {coupon,invalid} = this.props;
 
