@@ -11,58 +11,60 @@ class Coupon extends React.Component{
     handleClick(i){
 
     }
- 
+    
+    renderYouaCoupons(coupons){
+        if(coupons.length){
+            return coupons.map((item,i)=>{
+                return (
+                    <YouaCoupon coupon={item} invalid={false} key={'y-'+i} />
+                )
+            });
+        }else{
+            return (<NoCoupon message="您目前没有友阿优惠券哟！"/>);
+        }
+    }
+    renderLegueCoupons(coupons){
+        if(coupons.length){
+            return coupons.map((item,i)=>{
+                return (
+                    <LegueCoupon coupon={item} invalid={false} key={'l-'+i} />
+                )
+            });
+        }else{
+            return (<NoCoupon message="您目前没有联盟优惠券哟！"/>);
+        }
+    }  
+    renderInvalidCoupons(coupons){
+        if(coupons.length){
+            return coupons.map((item,i)=>{
+                if(item.flag==='legue'){
+                    return (<LegueCoupon coupon={item} invalid={true} key={'il-'+i} />)
+                }else{
+                    return (<YouaCoupon coupon={item} invalid={true} key={'iy-'+i} />)
+                }
+            });
+        }else{
+            return (<NoCoupon message="您目前没有失效优惠券哟！"/>);
+        }
+    }
 
     render(){
         const {youaCoupons,legueCoupons,invalidCoupons,isFetching} = this.props;
-        let Ycoupon,Lcoupon,Icoupon;
-        
-        if(youaCoupons.length){
-            Ycoupon = youaCoupons.map((item,i)=>{
-                return (
-                    <YouaCouponRow coupon={item} key={'y-'+i} />
-                )
-            });
-        }else{
-            Ycoupon = (<NoCoupon message="您目前没有友阿优惠券哟！"/>);
-        }
-        
-        if(legueCoupons.length){
-            Lcoupon = legueCoupons.map((item,i)=>{
-                return (
-                    <LegueCouponRow coupon={item} key={'l-'+i} />
-                )
-            });
-        }else{
-            Lcoupon = (<NoCoupon message="您目前没有联盟优惠券哟！"/>);
-        }
-        
-        if(invalidCoupons.length){
-            Icoupon = invalidCoupons.map((item,i)=>{
-                if(item.flag==='legue'){
-                    return (<LegueCouponRow coupon={item} invalid={true} key={'l-'+i} />)
-                }else{
-                    return (<YouaCouponRow coupon={item} invalid={true} key={'y-'+i} />)
-                }
-            })
-        }else{
-            Icoupon = (<NoCoupon message="您目前没有失效优惠券哟！"/>);
-        }
         
         return (
             <div>
                 <Header>
                     <span className="title">优惠券</span>
                 </Header>
-                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
+                <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
                     <SlideTabsItem navigator={()=>'友阿优惠券'}>
-                        {Ycoupon}
+                        <div>{this.renderYouaCoupons(youaCoupons)}</div>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'联盟优惠券'}>
-                        {Lcoupon}
+                        <div>{this.renderInvalidCoupons(legueCoupons)}</div>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>
-                        {Icoupon}
+                        <div>{this.renderInvalidCoupons(invalidCoupons)}</div>
                     </SlideTabsItem>
                 </SlideTabs>
             </div>
@@ -70,7 +72,7 @@ class Coupon extends React.Component{
     }
 }
 
-class YouaCouponRow extends Component{
+class YouaCoupon extends Component{
     render(){
         const {coupon,invalid} = this.props;
         const beUsed = classNames({
@@ -80,11 +82,7 @@ class YouaCouponRow extends Component{
         let flag = coupon.flag;
         let classes = classNames("coupon",{
             "youa-invalid":invalid,
-            "haitao":flag=="haitao"&&!invalid,
-            "tepin":flag=="tepin"&&!invalid,
-            "hnmall":flag=="hnmall"&&!invalid,
-            "general":flag=="general"&&!invalid,
-            "shop":flag==="shop"&&!invalid
+            "haitao":!invalid
         });
 
         return (
@@ -92,12 +90,12 @@ class YouaCouponRow extends Component{
                 <a href={"/coupondetail/"+coupon.couponNo}>
                     <div className="left">
                         <div className="price"><em>&yen;</em>{coupon.money}</div>
-                        <div className="term">{coupon.couponDefName}</div>
+                        <div className="term">{coupon.songAccount}</div>
                     </div>
                     <div className="right">
-                        <div className="kind">{coupon.site}</div>
-                        <div className="date">{coupon.issueDate}&nbsp;-&nbsp;{coupon.validityDate}</div>
-                        <div className="explain">可在XXX使用使用使用使用使用使用使用</div>
+                        <div className="kind">海外购www.tepin.hk</div>
+                        <div className="date">{coupon.expiryDate}</div>
+                        <div className="explain">{coupon.couponDesc}</div>
                     </div>
                     <div className={beUsed}></div>
                 </a>
@@ -106,7 +104,7 @@ class YouaCouponRow extends Component{
     }
 }
 
-class LegueCouponRow extends Component{
+class LegueCoupon extends Component{
     render(){
         const {coupon,invalid} = this.props;
 
@@ -124,16 +122,16 @@ class LegueCouponRow extends Component{
                 <a href={"/coupondetail/"+coupon.couponNo}>
                     <div className="content">
                         <div className="left">
-                            <div className="price"><em>&yen;</em>20</div>
+                            <div className="price">{coupon.shortName}</div>
                         </div>
                         <div className="right">
-                            <div className="company">罗莎蛋糕</div>
-                            <div className="explain">仅可购买蛋糕类商品，奶品除外</div>
+                            <div className="company">{coupon.couponName}</div>
+                            <div className="explain">{coupon.description}</div>
                         </div>
                     </div>
                     <div className="bottom">
-                        <div className="term">满100使用</div>
-                        <div className="date">2015.06.12-2015.07.18</div>
+                        <div className="term">{coupon.useRules}</div>
+                        <div className="date">{coupon.expiryDate}</div>
                     </div>
                     <div className={expired}></div>
                 </a>

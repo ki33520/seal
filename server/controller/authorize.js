@@ -7,9 +7,9 @@ var config = require("../lib/config");
 var loginGateway = function(req, res, next) {
     var code = req.query.code;
     var returnUrl = req.query.returnUrl;
-    util.fetchAPI("loginTokenByCode", {
-        accessCode: code
-    },true).then(function(resp) {
+    util.fetchAPI("loginByCode", {
+        memberCode: code
+    }).then(function(resp) {
         if (resp.code === "success") {
             if (returnUrl === null) {
                 location.replace("/usercenter");

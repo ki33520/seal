@@ -32,10 +32,13 @@ class Toolbar extends Component{
         }
     }
     render(){
+        const {cartCount} = this.props.cartByUser
         const {addToCart,toggleFavorite,directBuy} = this.props
         return (
             <div className="goodsBtns">
-            <a href="/cart" className="goods_cart"><i className="iconfont icon-cart"><em>99+</em></i></a>
+            <a href="/cart" className="goods_cart">
+                <i className="iconfont icon-cart">{cartCount === null?null:<em>{cartCount}</em>}</i>
+            </a>
             <a href="javascript:void(0);" onClick={directBuy} className="goods_buy">立即购买</a>
             <a href="javascript:void(null)" onClick={addToCart} className="goods_add">加入购物车</a>
             </div>
