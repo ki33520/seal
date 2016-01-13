@@ -14,11 +14,10 @@ function goodsByParam(state={},action){
                 isFetching:true
             });
         case RECEIVE_GOODS:
-            var list = _.union(state.pagination.list,action.pagination.list);
-            action.pagination.list = list;
+            let list = _.union(state.list,action.res.list);
             return Object.assign({},state,{
                 isFetching:false,
-                pagination:action.pagination
+                list:list
             });
         default:
             return state;
