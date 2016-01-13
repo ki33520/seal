@@ -132,14 +132,16 @@ function floorFilter(floors) {
     _floors["flashbuys"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_SG"
     }), "activityList")
-    _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList,function(good){
-        return {
-            imageUrl: config.imgServer + good.imageUrl,
-            salePrice:good.salesPrice,
-            originPrice:good.originPrice,
-            title:good.title
-        }
-    })
+    if(_floors["flashbuys"]){
+        _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList,function(good){
+            return {
+                imageUrl: config.imgServer + good.imageUrl,
+                salePrice:good.salesPrice,
+                originPrice:good.originPrice,
+                title:good.title
+            }
+        })
+    }
     _floors["singleRecommend"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_DPTJ"
     }), "activityList")
