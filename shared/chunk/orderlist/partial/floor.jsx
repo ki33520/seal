@@ -50,7 +50,7 @@ class Floor extends Component{
             case "STATUS_NOT_PAY":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="view_c">去支付</a>
+                        <a href="javascript:void(null)" className="pop_c">去支付</a>
                     </div>
                 )
             case "STATUS_CONFIRMED":
@@ -150,7 +150,7 @@ class Floor extends Component{
                             <em>{orderStatusObj[orderStatus]}</em>
                         </div>
                     </div>
-                    <div className="order-list"><a href={"/orderdetail/"+orderReceiveId}>{this.renderGoods(itemList)}</a></div>
+                    <div className="order-list"><a href={"/orderdetail/"+orderNo}>{this.renderGoods(itemList)}</a></div>
                     <div className="order-down">
                         <span>合计：<em>&yen;{totalFee}</em></span>
                         {this.renderButtons(child)}
