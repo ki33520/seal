@@ -29,8 +29,8 @@ class CascadeArea extends Component{
     }
     componentDidUpdate(prevProps,prevState){
         const {receiver,active} = this.props;
-        const province = receiver === null?"":receiver.province;
-        const city = receiver === null?"":receiver.city;
+        const province = receiver === null?"":receiver.provinceCode;
+        const city = receiver === null?"":receiver.cityCode;
         if(prevProps.provinces.length === 1 && 
         this.props.provinces.length > 1 && province){
             this.loadCities(province);
@@ -57,7 +57,7 @@ class CascadeArea extends Component{
     }
     renderProvince(){
         const {provinces,receiver} = this.props;
-        const province = receiver === null?"":receiver.province;
+        const province = receiver === null?"":receiver.provinceCode;
         if(provinces.length > 1){
             return (
                 <Selected options={provinces} 
@@ -69,7 +69,7 @@ class CascadeArea extends Component{
     }
     renderCity(){
         const {cities,receiver} = this.props;
-        const city = receiver === null?"":receiver.city;
+        const city = receiver === null?"":receiver.cityCode;
         return (
             <Selected options={cities} 
                 maxHeight="8rem" 
@@ -78,7 +78,7 @@ class CascadeArea extends Component{
     }
     renderDistrict(){
         const {districts,receiver} = this.props;
-        const district = receiver === null?"":receiver.district;
+        const district = receiver === null?"":receiver.districtCode;
         // console.log('district',districts)
         return (
             <Selected options={districts} 

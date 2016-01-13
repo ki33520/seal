@@ -4,7 +4,6 @@ import React,{Component} from "react";
 import _ from "lodash";
 import Header from "../../common/header.jsx";
 import CascadeArea from "./cascadearea.jsx";
-import {fetchProvinces,fetchCities,fetchDistricts,saveReceiver,changeField} from "../action.es6";
 
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
@@ -17,23 +16,23 @@ class UpdateReceiver extends Component{
     }
     handleSave(e){
         e && e.preventDefault();
-        const {receiver,dispatch,provinces,cities,districts} = this.props
-        const {id,consignee,mobile,zipcode,address,isDefault,
-            province,city,district
+        const {receiver,saveReceiver,provinces,cities,districts} = this.props
+        const {id,consignee,mobileNumber,zipcode,address,isDefault,
+            provinceCode,cityCode,districtCode
         } = receiver;
-        const selectedProvince = _.findWhere(provinces,{value:province});
-        const selectedCity = _.findWhere(cities,{value:city});
-        const selectedDistrict = _.findWhere(districts,{value:district});
-        dispatch(saveReceiver({
-            id,consignee,mobile,zipcode,address,
+        const selectedProvince = _.findWhere(provinces,{value:provinceCode});
+        const selectedCity = _.findWhere(cities,{value:cityCode});
+        const selectedDistrict = _.findWhere(districts,{value:districtCode});
+        saveReceiver({
+            id,consignee,mobileNumber,zipcode,address,
             isdefault:isDefault,
-            province:selectedProvince.label,
+            provinceName:selectedProvince.label,
             provincecode:selectedProvince.value,
-            city:selectedCity.label,
+            cityName:selectedCity.label,
             citycode:selectedCity.value,
-            district:selectedDistrict.label,
+            districtName:selectedDistrict.label,
             districtcode:selectedDistrict.value
-        }))
+        })
     }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props;
@@ -53,14 +52,15 @@ class UpdateReceiver extends Component{
             return null
         }
         const {
-            consignee,mobile,zipcode,address,isDefault,
+            consignee,idCard,mobileNumber,zipcode,address,isDefault,
             province,city,district,
         } = receiver;
+        // console.log('provinces',this.props.provinces)
         return (
             <div className="receiver-form-content">
             <Header>
             <span className="title">修改收货地址</span>
-            <a className="screening" href="javascript:void(0);">保存</a>
+            <a className="screening" href="javascript:void(null)" onClick={this.handleSave.bind(this)}>保存</a>
             </Header>
             <p className="prompt">温馨提示：收件人请使用和身份证号对应的真实姓名，否则您购买的商品将无法通过海关检查！</p>
             <div className="receiver-form">
@@ -76,18 +76,18 @@ class UpdateReceiver extends Component{
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">身份证号</div>
-                <div className="receiver-form-field"><input type="text" value={mobile} 
+                <div className="receiver-form-field"><input type="text" value={idCard} 
                 placeholder="填写后，我们会加密处理" 
-                onChange={this.handleFieldChange.bind(this,"mobile")}/></div>
+                onChange={this.handleFieldChange.bind(this,"idCard")}/></div>
                 </div>
             </div>
             <div className="receiver-form-fieldset">
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">手机号码</div>
-                <div className="receiver-form-field"><input type="text" value={mobile} 
+                <div className="receiver-form-field"><input type="text" value={mobileNumber} 
                 placeholder="请输入您的手机号" 
-                onChange={this.handleFieldChange.bind(this,"mobile")}/></div>
+                onChange={this.handleFieldChange.bind(this,"mobileNumber")}/></div>
                 </div>
                 <div className="receiver-form-row">
                 <i>*</i>

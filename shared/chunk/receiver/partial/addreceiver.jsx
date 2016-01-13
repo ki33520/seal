@@ -5,7 +5,6 @@ import _ from "lodash";
 import Header from "../../common/header.jsx";
 import CascadeArea from "./cascadearea.jsx";
 
-import {fetchProvinces,fetchCities,fetchDistricts,saveReceiver,changeField} from "../action.es6";
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
@@ -17,24 +16,23 @@ class AddReceiver extends Component{
     }
     handleSave(e){
         e && e.preventDefault();
-        const {receiver,dispatch,provinces,cities,districts} = this.props
-        console.log(receiver)
-        const {consignee,idCard,mobile,zipcode,address,isDefault,
-            province,city,district
+        const {receiver,provinces,cities,districts,saveReceiver} = this.props
+        const {consignee,idCard,mobileNumber,zipcode,address,isDefault,
+            provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
-        const selectedProvince = _.findWhere(provinces,{value:province});
-        const selectedCity = _.findWhere(cities,{value:city});
-        const selectedDistrict = _.findWhere(districts,{value:district});
-        dispatch(saveReceiver({
-            consignee,idCard,mobile,zipcode,address,
+        const selectedProvince = _.findWhere(provinces,{value:provinceCode});
+        const selectedCity = _.findWhere(cities,{value:cityCode});
+        const selectedDistrict = _.findWhere(districts,{value:districtCode});
+        saveReceiver({
+            consignee,idCard,mobileNumber,zipcode,address,
             isdefault:isDefault,
-            province:selectedProvince.label,
+            provinceName:selectedProvince.label,
             provincecode:selectedProvince.value,
-            city:selectedCity.label,
+            cityName:selectedCity.label,
             citycode:selectedCity.value,
-            district:selectedDistrict.label,
+            districtName:selectedDistrict.label,
             districtcode:selectedDistrict.value,
-        }))
+        })
     }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props;
@@ -51,7 +49,7 @@ class AddReceiver extends Component{
     render(){
         const {saveSuccess,alertActive,alertContent,receiver} = this.props
         const {
-            consignee,idCard,mobile,zipcode,address,isDefault,
+            consignee,idCard,mobileNumber,zipcode,address,isDefault,
             province,city,district,
         } = (receiver === null?{}:receiver);
         return (
@@ -83,9 +81,9 @@ class AddReceiver extends Component{
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">手机号码</div>
-                <div className="receiver-form-field"><input type="text" value={mobile} 
+                <div className="receiver-form-field"><input type="text" value={mobileNumber} 
                 placeholder="请输入您的手机号" 
-                onChange={this.handleFieldChange.bind(this,"mobile")}/></div>
+                onChange={this.handleFieldChange.bind(this,"mobileNumber")}/></div>
                 </div>
                 <div className="receiver-form-row">
                 <i>*</i>

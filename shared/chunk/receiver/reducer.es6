@@ -21,14 +21,13 @@ function receiverByForm(state={},action){
                 receiverFetching:true
             })
         case RESPONSE_RECEIVER:
-            var receiver = null,receiverFetched = false;
+            let receiver = null
             if(action.res.isFetched === true){
                 receiver = action.res.receiver;
-                receiverFetched = true
             }
             return Object.assign({},state,{
                 receiverFetching:false,
-                receiverFetched,
+                receiverFetched:action.res.isFetched,
                 receiver
             })
         case CHANGE_FIELD:
