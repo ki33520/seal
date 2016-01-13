@@ -490,7 +490,7 @@ header .globa:before {
     margin-left:.32rem;
     padding-top:.4rem;
 }
-.goodsSure > .left span {
+.goodsSure > .left>span {
     display: block;
     color: #ed1946;
     font-size:.48rem;

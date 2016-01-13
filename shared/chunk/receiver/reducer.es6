@@ -2,13 +2,14 @@
 
 import {combineReducers} from "redux";
 
-import {CHANGE_FIELD,
+import {
+    CHANGE_FIELD,
     REQUEST_PROVINCES,RESPONSE_PROVINCES,
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
-    START_SAVE_RECEIVER,FINISH_SAVE_RECEIVER,
-    REQUEST_RECEIVER,RESPONSE_RECEIVER
-} from "./action.es6";
+    REQUEST_RECEIVER,RESPONSE_RECEIVER,
+    START_SAVE_RECEIVER,FINISH_SAVE_RECEIVER
+} from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
 import {alertReducer} from "../common/reducer.es6";

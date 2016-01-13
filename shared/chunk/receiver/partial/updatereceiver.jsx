@@ -3,7 +3,7 @@
 import React,{Component} from "react";
 import _ from "lodash";
 import Header from "../../common/header.jsx";
-import CascadeArea from "../../common/cascadearea.jsx";
+import CascadeArea from "./cascadearea.jsx";
 import {fetchProvinces,fetchCities,fetchDistricts,saveReceiver,changeField} from "../action.es6";
 
 import {alert} from "../../common/action.es6";
@@ -12,29 +12,8 @@ import Alert from "../../../component/alert.jsx";
 class UpdateReceiver extends Component{
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
-        dispatch(changeField(fieldName,e.target.value));
-    }
-    loadProvinces(){
-        const {dispatch} = this.props;
-        dispatch(fetchProvinces("/cascadearea",{
-            code:"",
-            isprovince:true
-        }));
-    }
-    loadCities(province){
-        const {dispatch} = this.props;
-        dispatch(fetchCities("/cascadearea",{
-            code:province,
-            isprovince:false
-        }))
-    }
-    loadDistricts(city){
-        const {dispatch} = this.props;
-        dispatch(fetchDistricts("/cascadearea",{
-            code:city,
-            isprovince:false
-        }))
+        const {changeField} = this.props;
+        changeField(fieldName,e.target.value);
     }
     handleSave(e){
         e && e.preventDefault();
@@ -70,6 +49,9 @@ class UpdateReceiver extends Component{
     }
     render(){
         const {saveSuccess,alertActive,alertContent,receiver} = this.props
+        if(receiver === null){
+            return null
+        }
         const {
             consignee,mobile,zipcode,address,isDefault,
             province,city,district,
@@ -111,11 +93,7 @@ class UpdateReceiver extends Component{
                 <i>*</i>
                 <div className="receiver-form-label">收货地址</div>
                 <div className="receiver-form-field">
-                    <CascadeArea {...this.props} 
-                    changeField={changeField}
-                    loadProvinces={this.loadProvinces.bind(this)} 
-                    loadCities={this.loadCities.bind(this)} 
-                    loadDistricts={this.loadDistricts.bind(this)}/>
+                    <CascadeArea {...this.props} />
                 </div>
                 </div>
                 <div className="receiver-form-row receiver-form-textarea-row">

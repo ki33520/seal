@@ -10,11 +10,11 @@ var Receiver = util.getSharedComponent("receiver");
 var receiver = function(req, res,next) {
     var user = req.session.user;
     util.fetchAPI("receiverByUser", {
-        memberId: 'fc6804de51c482730151e8ec0a080023'
-    },false).then(function(resp) {
-            console.log(resp)
+        memberId: user.memberId
+    }).then(function(resp) {
         if (resp.returnCode === 0) {
             var receivers = resp.object;
+            // console.log('receivers',receivers)
             var initialState = {
                 isFetched: true,
                 receivers: receivers
@@ -67,10 +67,9 @@ var updateReceiver = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
     util.fetchAPI("receiverById", {
-        memberId: 'fc6804de51c482730151e8ec0a080023',
+        memberId: user.memberId,
         recvAddressId:id
     },false).then(function(resp) {
-            console.log(resp)
         if(resp.returnCode === 0){
             var address = resp.object;
             var receiver = {
@@ -116,7 +115,7 @@ var saveReceiver = function(req, res, next) {
     var user = req.session.user;
     var recvAddressId = req.body.recvAddressId;
     var receiver = {
-        memberId: 'fc6804de51c482730151e8ec0a080023',
+        memberId:user.memberId,
         recvLinkman: req.body.consignee,
         idCard: req.body.idCard,
         recvMobile: req.body.mobile,
@@ -130,7 +129,7 @@ var saveReceiver = function(req, res, next) {
             addressId: req.body.recvAddressId
         })
         // console.log('update receiver', receiver)
-        util.fetchAPI("updateReceiver", receiver, false).then(function(resp) {
+        util.fetchAPI("updateReceiver", receiver).then(function(resp) {
             console.log(resp)
             if(resp.returnCode === 0){
                 res.json({
@@ -165,14 +164,10 @@ var cascadeArea = function(req, res) {
     if (req.xhr !== true) {
         return;
     }
-    var findMapUrl = req.query.findMap;
+    var api = req.query.api;
     var code = req.query.code ? req.query.code : '';
-    // if(isProvince === "true"){
-    //     code = "CATALOG_REGION";
-    // }
-    util.fetchAPI(findMapUrl, {
+    util.fetchAPI(api, {
         code: code, //CATALOG_REGION 查询省
-        // isProvice: isProvince
     },false).then(function(resp) {
         if (resp.returnCode === 0) {
             var items = [];
