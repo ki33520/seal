@@ -99,16 +99,15 @@ var saveReceiver = function(req, res, next) {
         recvLinkman: req.body.consignee,
         idCard: req.body.idCard,
         recvMobile: req.body.mobileNumber,
-        areaCode: req.body.districtcode,
+        areaCode: req.body.districtCode,
         address: req.body.address,
-        zipcode: req.body.zipcode,
         defaultChecked: req.body.isdefault == "true"?1:0
     }
     if (id) {
         receiver = _.extend(receiver, {
             recvAddressId: req.body.id
         })
-        // console.log('update receiver', receiver)
+        console.log('update receiver', receiver)
         util.fetchAPI("updateReceiver", receiver).then(function(resp) {
             if(resp.returnCode === 0){
                 res.json({

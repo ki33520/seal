@@ -17,14 +17,14 @@ class AddReceiver extends Component{
     handleSave(e){
         e && e.preventDefault();
         const {receiver,provinces,cities,districts,saveReceiver} = this.props
-        const {consignee,idCard,mobileNumber,zipcode,address,isDefault,
+        const {consignee,idCard,mobileNumber,address,isDefault,
             provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
         const selectedProvince = _.findWhere(provinces,{value:provinceCode});
         const selectedCity = _.findWhere(cities,{value:cityCode});
         const selectedDistrict = _.findWhere(districts,{value:districtCode});
         saveReceiver({
-            consignee,idCard,mobileNumber,zipcode,address,
+            consignee,idCard,mobileNumber,address,
             isdefault:isDefault,
             provinceName:selectedProvince.label,
             provincecode:selectedProvince.value,
