@@ -5,7 +5,7 @@ import Receiver from "./partial/receiver.jsx";
 import AddReceiver from "./partial/addreceiver.jsx";
 import UpdateReceiver from "./partial/updatereceiver.jsx";
 import {Router} from "director";
-import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
+import {Switcher,SwitcherCase} from "../common/switcher.jsx"
 
 import {fetchReceiver} from "./action.es6";
 
@@ -13,7 +13,8 @@ class ReceiverRouter extends Component{
     constructor(props){
         super(props);
         this.state = {
-            currentRoute:"index",
+            currentRoute:null,
+            prevRoute:null,
             currentParam:null
         }
     }
@@ -21,23 +22,27 @@ class ReceiverRouter extends Component{
         Router({
             "/addreceiver":()=>{
                 this.setState({
-                    currentRoute:"addreceiver"
+                    currentRoute:"addreceiver",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/updatereceiver/:id":(id)=>{
                 this.setState({
                     currentRoute:"updatereceiver",
+                    prevRoute:this.state.currentRoute,
                     currentParam:{id}
                 });
             },
             "/receiver":()=>{
                 this.setState({
-                    currentRoute:"index"
+                    currentRoute:"index",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/":()=>{
                 this.setState({
-                    currentRoute:"index"
+                    currentRoute:"index",
+                    prevRoute:this.state.currentRoute
                 });
             }
         }).init("/");
@@ -56,30 +61,20 @@ class ReceiverRouter extends Component{
         return true;
     }
     render(){
-        const {currentRoute,currentParam} = this.state;
+        const {currentRoute,currentParam,prevRoute} = this.state;
         const {dispatch} = this.props;
-        var currentView = null;
-        if(currentRoute === "index"){
-            currentView =  (
-                <Receiver {...this.props.receiverByUser} dispatch={dispatch} key={currentRoute}/>
-            )
-        }else if(currentRoute === "addreceiver"){
-            currentView =  (
-                <AddReceiver {...this.props.receiverByForm} dispatch={dispatch} key={currentRoute}/>
-            )
-        }else if(currentRoute === "updatereceiver"){
-            currentView =  (
-                <UpdateReceiver {...this.props.receiverByForm} {...currentParam} dispatch={dispatch} 
-                key={currentRoute}/>
-            )
-        }
-        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
-            <TransitionGroup component="div" transitionName={transitionName} 
-            transitionLeave={false} 
-            transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-            {currentView}
-            </TransitionGroup>
+            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
+                <SwitcherCase name="index">
+                    <Receiver {...this.props.receiverByUser} {...this.props}/>
+                </SwitcherCase>
+                <SwitcherCase name="addreceiver">
+                    <AddReceiver {...this.props.receiverByForm} {...this.props}/>
+                </SwitcherCase>
+                <SwitcherCase name="updatereceiver">
+                    <UpdateReceiver {...this.props.receiverByForm} {...currentParam} {...this.props}/>
+                </SwitcherCase>
+            </Switcher>
         );
     }
 }

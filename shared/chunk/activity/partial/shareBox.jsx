@@ -14,9 +14,9 @@ class ShareBox extends Component{
         return (
             <div className={shareClass}>
                 <ul>
-                    <li><a href="javascript:void(0);"><img src="client/asset/images/share_1.png" /></a></li>
-                    <li><a href="javascript:void(0);"><img src="client/asset/images/share_2.png" /></a></li>
-                    <li><a href="javascript:void(0);"><img src="client/asset/images/share_3.png" /></a></li>
+                    <li><a href="javascript:void(0);"><img src="/client/asset/images/share_1.png" /></a></li>
+                    <li><a href="javascript:void(0);"><img src="/client/asset/images/share_2.png" /></a></li>
+                    <li><a href="javascript:void(0);"><img src="/client/asset/images/share_3.png" /></a></li>
                 </ul>
                 <a href="javascript:void(0);" className="cancelShare" onClick={cancelShare}>取消</a>
             </div>

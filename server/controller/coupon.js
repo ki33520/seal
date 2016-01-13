@@ -45,38 +45,56 @@ function formatCoupons(originalCoupons) {
 //是否联盟 0：非联盟,1：联盟 
 var coupon = function(req, res, next) {
     let user = req.session.user;
-    let memberId = 'fc6804de51c482730151e8ec0a080023';//user.memberId
- 
-    let options = _.defaults({
-        memberId:memberId,
-        status:0,
-        pageSize:10,
-        pageIndex:1
-    },req.body);
+    let pageSize = 10;
+    let pageIndex = req.body.pageIndex || 1;
+    let type = req.body.type||'youa';
+    let options = {
+        youa:{status:0,isMerchants:0},
+        legue:{status:1,isMerchants:1},
+        invalid:{status:3}
+    };
+    let param = _.merge(options[type],{
+        memberId:'fc6804de51c482730151e8ec0a080023',
+        pageSize:pageSize,
+        pageIndex:pageIndex
+    });
  
     bluebird.props({
-        coupons: couponByUser(options)
+        coupons: couponByUser(param)
     }).then(function(resp) {
-       // console.log(resp.coupons.object.result)
+        //console.log(resp.coupons.object.result)
         if(resp.coupons.returnCode===0){
             let pagination = {
-                coupons:[],
-                pageIndex:options.pageIndex,
-                total:0
+                youa:{
+                    coupons:[],
+                    pageIndex,
+                    totalPage:0
+                },
+                legue:{
+                    coupons:[],
+                    pageIndex,
+                    totalPage:0
+                },
+                invalid:{
+                    coupons:[],
+                    pageIndex,
+                    totalPage:0
+                }
             };
 
             let obj = resp.coupons.object;
 
             if (obj && obj.result) {
-                pagination = {
-                    pageIndex:options.pageIndex,
+                pagination[type] = {
                     coupons:formatCoupons(obj.result),
-                    totalPage:Math.ceil(obj.totalCount / options.pageSize)
+                    pageIndex:pageIndex,
+                    totalPage:Math.ceil(obj.totalCount / pageSize)
                 }
             }
 
             let initialState = {
                 pagination: pagination,
+                couponType:['youa','legue','invalid'],
                 isFetching: false
             };
 

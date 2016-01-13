@@ -12,6 +12,7 @@ var config = {
     "imgServer":"http://imgtest.tepin.com/"
 };
 var runtime = process.env["NODE_ENV"];
+config["runtime"] = runtime;
 if (runtime === "develop") {
     config.apiServer = "http://wsns.tepin.youayun.cn";
     config.oathServer = "https://ssl.e9448.com";

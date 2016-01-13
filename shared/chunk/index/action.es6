@@ -4,29 +4,39 @@ import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
-    REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND
+    REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
+    REQUEST_CHANNEL,RESPONSE_CHANNEL,
 } from "./constant.es6";
 
-function requestHotWord(param){
+function requestChannel(param){
     return {
-        type:REQUEST_HOTWORD,
+        type:REQUEST_CHANNEL,
         param
     }
 }
 
-function responseHotWord(param,res){
+function responseChannel(param,res){
     return {
-        type:RESPONSE_HOTWORD,
+        type:RESPONSE_CHANNEL,
         param,
         res
     }
 }
 
-export function fetchHotWord(param){
+export function fetchChannel(param){
     return (dispatch)=>{
-        dispatch(requestHotWord(param));
-        apiRequest("/searchhotwords",param).then((res)=>{
-            dispatch(responseHotWord(param,res));
+        dispatch(requestChannel(param));
+        apiRequest("/channel",param).then((res)=>{
+            if(res.channelFetched){
+                const {newRecommend,singleRecommend} = res.result
+                if(newRecommend){
+                    dispatch(fetchNewRecommend({activityId:newRecommend.id},param.id))
+                }
+                if(singleRecommend){
+                    dispatch(fetchSingleRecommend({activityId:singleRecommend.id},param.id))
+                }
+            }
+            dispatch(responseChannel(param,res));
         })
     }
 }
@@ -38,22 +48,23 @@ function requestSingleRecommend(param){
     }
 }
 
-function responseSingleRecommend(param,res){
+function responseSingleRecommend(param,channelId,res){
     return {
         type:RESPONSE_SINGLERECOMMEND,
         param,
+        channelId,
         res
     }
 }
 
-export function fetchSingleRecommend(param){
+export function fetchSingleRecommend(param,channelId){
     param = Object.assign({},param,{
         activityType:"ACTIVITY_DPTJ"
     })
     return (dispatch)=>{
         dispatch(requestSingleRecommend(param));
         apiRequest("/activitygood",param).then((res)=>{
-            dispatch(responseSingleRecommend(param,res));
+            dispatch(responseSingleRecommend(param,channelId,res));
         })
     }
 }
@@ -65,22 +76,23 @@ function requestNewRecommend(param){
     }
 }
 
-function responseNewRecommend(param,res){
+function responseNewRecommend(param,channelId,res){
     return {
         type:RESPONSE_NEWRECOMMEND,
         param,
+        channelId,
         res
     }
 }
 
-export function fetchNewRecommend(param){
+export function fetchNewRecommend(param,channelId){
     param = Object.assign({},param,{
         activityType:"ACTIVITY_XPTJ"
     })
     return (dispatch)=>{
         dispatch(requestNewRecommend(param));
         apiRequest("/activitygood",param).then((res)=>{
-            dispatch(responseNewRecommend(param,res));
+            dispatch(responseNewRecommend(param,channelId,res));
         })
     }
 }
@@ -110,3 +122,26 @@ export function fetchAssociateKeywords(param){
     }
 }
 
+function requestHotWord(param){
+    return {
+        type:REQUEST_HOTWORD,
+        param
+    }
+}
+
+function responseHotWord(param,res){
+    return {
+        type:RESPONSE_HOTWORD,
+        param,
+        res
+    }
+}
+
+export function fetchHotWord(param){
+    return (dispatch)=>{
+        dispatch(requestHotWord(param));
+        apiRequest("/searchhotwords",param).then((res)=>{
+            dispatch(responseHotWord(param,res));
+        })
+    }
+}

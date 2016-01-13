@@ -2,9 +2,11 @@
 @import "../../common/iconfont.styl";
 @import "../../common/header.styl";
 @import "../../component/refresher.styl";
-@import "../../component/masklayer.styl";
 @import "../../component/gotop.styl";
 
+.header {
+    background: white;
+}
 .container {
     height: 100%;
 }
@@ -18,24 +20,16 @@
         height:auto;
         width:100%;
         padding-bottom:.32rem;
-    }
-    a{
-        display:block;
-        width:50%;
-        float:left;
-        padding-top:1px;
-        &:nth-child(2n) > div{
-            border-left:1px solid #d7d7d7;
-        }
-        &:last-child > div,
-        &:nth-last-child(2) > div{
-            border-bottom:0;
-        }
-        > div{
+        
+        &>div {
+            display:block;
+            width:50%;
+            float:left;
+            border-right:1px solid #d7d7d7;
             border-bottom:1px solid #d7d7d7;
-            padding:0 .32rem .24rem .32rem;
+            padding:1px .32rem .24rem .32rem;
             position:relative;
-            .flash-sale{
+            .flash-sale {
                 position:absolute;
                 left:.4rem;
                 top:.3rem;
@@ -115,39 +109,39 @@
     background-color:#e0e0e0;
     padding:.56rem;
     z-index:333;
+    .cancelShare{
+        display:block;
+        border:1px solid #666666;
+        color:#232323;
+        height:1.22rem;
+        line-height:1.22rem;
+        width:100%;
+        text-align:center;
+        border-radius:1rem;
+        font-size:.48rem;
+        margin-top:1rem;
+    }
+    ul{
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        position: relative;
+        padding:0 1.2rem;
+
+        li {
+            display: block;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            padding:0 .3rem;
+            text-align: center;
+            img {
+                width:100%;
+            }
+        }
+    }
 }
-.bottomShare .cancelShare{
-    display:block;
-    border:1px solid #666666;
-    color:#232323;
-    height:1.22rem;
-    line-height:1.22rem;
-    width:100%;
-    text-align:center;
-    border-radius:1rem;
-    font-size:.48rem;
-    margin-top:1rem;
-}
-.bottomShare ul{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    position: relative;
-    padding:0 1.2rem;
-}
-.bottomShare li{
-    display: block;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
-    padding:0 .3rem;
-    text-align: center;
-}
-.bottomShare li a{
-}
-.bottomShare li a img{
-    width:100%;
-}
+ 
 
 .showShare {
     bottom: 0;

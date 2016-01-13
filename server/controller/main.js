@@ -24,6 +24,7 @@ var requireAuthorize = function(req, res, next) {
 }
 
 var errorHandler = function(err,req,res,next){
+    console.log(err.stack)
     var initialState = {
         code: "500",
         msg: err.message

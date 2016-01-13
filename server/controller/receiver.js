@@ -10,11 +10,11 @@ var Receiver = util.getSharedComponent("receiver");
 var receiver = function(req, res,next) {
     var user = req.session.user;
     util.fetchAPI("receiverByUser", {
-        memberId: 'fc6804de51c482730151e8ec0a080023'
-    },false).then(function(resp) {
-            console.log(resp)
+        memberId: user.memberId
+    }).then(function(resp) {
         if (resp.returnCode === 0) {
-            var receivers = resp.object;
+            var receivers = receiversFilter(resp.object);
+            // console.log('receivers',receivers)
             var initialState = {
                 isFetched: true,
                 receivers: receivers
@@ -34,69 +34,35 @@ var receiver = function(req, res,next) {
     })
 }
 
+function receiversFilter(receivers){
+    var _receivers = []
+    _.each(receivers,function(receiver){
+        var _receiver = receiverFilter(receiver)
+        _receiver["id"]= receiver.recvAddressId
+        _receivers.push(_receiver)
+    })
+    return _receivers
+}
+
 var addReceiver = function(req, res) {
-    var initialState = {
-        isFetched: true,
-        receiver: {
-            isDefault: true,
-            provinces: [{
-                value: "",
-                label: "请选择"
-            }],
-            cities: [{
-                value: "",
-                label: "请选择"
-            }],
-            districts: [{
-                value: "",
-                label: "请选择"
-            }]
-        },
-    };
     var markup = util.getMarkupByComponent(ReceiverForm({
-        initialState: initialState
+        initialState: {}
     }));
     res.render('receiverform', {
         markup: markup,
         initialState: initialState
     })
-
 }
 
 var updateReceiver = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
     util.fetchAPI("receiverById", {
-        memberId: 'fc6804de51c482730151e8ec0a080023',
+        memberId: user.memberId,
         recvAddressId:id
     },false).then(function(resp) {
-            console.log(resp)
         if(resp.returnCode === 0){
-            var address = resp.object;
-            var receiver = {
-                recvAddressId: address.recvAddressId,
-                consignee: address.recvLinkman,
-                mobile: address.recvMobile,
-                idCard: address.idCard,
-                zipcode: address.zipcode,
-                address: address.address,
-                province: address.provinceCode,
-                city: address.cityCode,
-                district: address.countyCode,
-                provinces: [{
-                    value: "",
-                    label: "请选择"
-                }],
-                cities: [{
-                    value: "",
-                    label: "请选择"
-                }],
-                districts: [{
-                    value: "",
-                    label: "请选择"
-                }],
-                isDefault: address.isDefault === 1
-            };
+            var receiver = receiverFilter(resp.object);
             var initialState = {
                 isFetched: true,
                 receiver: receiver,
@@ -108,30 +74,42 @@ var updateReceiver = function(req, res, next) {
     })
 }
 
+function receiverFilter(receiver){
+    var _receiver = _.pick(receiver,[
+        "cityCode","cityName",
+        "provinceCode","provinceName","isDefault","idCard","address","zipcode"
+    ]);
+    _receiver["districtCode"] = receiver["countyCode"]
+    _receiver["districtName"] = receiver["countyName"]
+    _receiver["id"] = receiver["recvAddressId"]
+    _receiver["consignee"] = receiver["recvLinkman"]
+    _receiver["mobileNumber"] = receiver["recvMobile"]
+    _receiver["isDefault"] = (receiver["isDefault"] === 1)
+    return _receiver
+}
+
 var saveReceiver = function(req, res, next) {
-    console.log(req.xhr)
     if (req.xhr === false) {
         return;
     }
     var user = req.session.user;
-    var recvAddressId = req.body.recvAddressId;
+    var id = req.body.id;
     var receiver = {
-        memberId: 'fc6804de51c482730151e8ec0a080023',
+        memberId:user.memberId,
         recvLinkman: req.body.consignee,
         idCard: req.body.idCard,
-        recvMobile: req.body.mobile,
+        recvMobile: req.body.mobileNumber,
         areaCode: req.body.districtcode,
         address: req.body.address,
         zipcode: req.body.zipcode,
         defaultChecked: req.body.isdefault == "true"?1:0
     }
-    if (recvAddressId) {
+    if (id) {
         receiver = _.extend(receiver, {
-            addressId: req.body.recvAddressId
+            recvAddressId: req.body.id
         })
         // console.log('update receiver', receiver)
-        util.fetchAPI("updateReceiver", receiver, false).then(function(resp) {
-            console.log(resp)
+        util.fetchAPI("updateReceiver", receiver).then(function(resp) {
             if(resp.returnCode === 0){
                 res.json({
                     receiverSaved:true
@@ -145,7 +123,6 @@ var saveReceiver = function(req, res, next) {
         })
     } else {
         util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
-            console.log(resp)
             // console.log('resp', resp)
             if(resp.returnCode === 0){
                 res.json({
@@ -165,14 +142,10 @@ var cascadeArea = function(req, res) {
     if (req.xhr !== true) {
         return;
     }
-    var findMapUrl = req.query.findMap;
+    var api = req.query.api;
     var code = req.query.code ? req.query.code : '';
-    // if(isProvince === "true"){
-    //     code = "CATALOG_REGION";
-    // }
-    util.fetchAPI(findMapUrl, {
+    util.fetchAPI(api, {
         code: code, //CATALOG_REGION 查询省
-        // isProvice: isProvince
     },false).then(function(resp) {
         if (resp.returnCode === 0) {
             var items = [];

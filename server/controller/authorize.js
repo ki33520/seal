@@ -20,6 +20,9 @@ var loginGateway = function(req, res, next) {
                 ])
                 user.memberId = resp.object.id
                 req.session.user = user;
+                if(config.runtime === "develop"){
+                    returnUrl = returnUrl.replace(":3000",":5000")
+                }
                 res.redirect(returnUrl);
             }
         } else {
