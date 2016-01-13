@@ -12,29 +12,8 @@ import Alert from "../../../component/alert.jsx";
 class AddReceiver extends Component{
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
-        dispatch(changeField(fieldName,e.target.value));
-    }
-    loadProvinces(){
-        const {dispatch} = this.props;
-        dispatch(fetchProvinces("/cascadearea",{
-            code:"",
-            findMap: "findProvinceMap"
-        }));
-    }
-    loadCities(province){
-        const {dispatch} = this.props;
-        dispatch(fetchCities("/cascadearea",{
-            code:province,
-            findMap: "findCityMap"
-        }))
-    }
-    loadDistricts(city){
-        const {dispatch} = this.props;
-        dispatch(fetchDistricts("/cascadearea",{
-            code:city,
-            findMap: "findCountyMap"
-        }))
+        const {changeField} = this.props;
+        changeField(fieldName,e.target.value);
     }
     handleSave(e){
         e && e.preventDefault();
@@ -112,11 +91,7 @@ class AddReceiver extends Component{
                 <i>*</i>
                 <div className="receiver-form-label">收货地址</div>
                 <div className="receiver-form-field">
-                    <CascadeArea {...this.props} 
-                    changeField={changeField}
-                    loadProvinces={this.loadProvinces.bind(this)} 
-                    loadCities={this.loadCities.bind(this)} 
-                    loadDistricts={this.loadDistricts.bind(this)}/>
+                    <CascadeArea {...this.props} />
                 </div>
                 </div>
                 <div className="receiver-form-row receiver-form-textarea-row">

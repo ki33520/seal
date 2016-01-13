@@ -224,21 +224,21 @@
             "production": "http://member.tepin.hk"
         }
     },
-    "findProvinceMap": {
+    "findProvince": {
         "uri": "/sns/address/v1/findProvinceMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "marketing.hwg.youayun.cn"
         }
     },
-    "findCityMap": {
+    "findCity": {
         "uri": "/sns/address/v1/findCityMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "http://sns.e9448.com"
         }
     },
-    "findCountyMap": {
+    "findDistrict": {
         "uri": "/sns/address/v1/findCountyMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",

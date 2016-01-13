@@ -44,10 +44,10 @@ class Dropdown extends Component{
         e && e.keyCode === 27 && this.setDropdownState(false);
     }
     handleOuterClick(e){
-        // if(dom.hasNode(e.target,ReactDOM.findDOMNode(this)) === true){
-        //     return false;
-        // }
-        // this.setDropdownState(false);
+        if(dom.hasNode(e.target,ReactDOM.findDOMNode(this)) === true){
+            return false;
+        }
+        this.setDropdownState(false);
     }
     handleClick(e){
         e && e.preventDefault();

@@ -1,18 +1,14 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 
-export const CHANGE_FIELD= "CHANGE_FIELD";
-export const REQUEST_PROVINCES = "REQUEST_PROVINCES";
-export const RESPONSE_PROVINCES = "RESPONSE_PROVINCES";
-export const REQUEST_CITIES = "REQUEST_CITIES";
-export const RESPONSE_CITIES = "RESPONSE_CITIES";
-export const REQUEST_DISTRICTS = "REQUEST_DISTRICTS";
-export const RESPONSE_DISTRICTS = "RESPONSE_DISTRICTS";
-export const CHANGE_AREA = "CHANGE_AREA";
-export const REQUEST_RECEIVER = "REQUEST_RECEIVER";
-export const RESPONSE_RECEIVER = "RESPONSE_RECEIVER";
-export const START_SAVE_RECEIVER = "START_SAVE_RECEIVER";
-export const FINISH_SAVE_RECEIVER = "FINISH_SAVE_RECEIVER";
+import {
+    CHANGE_FIELD,
+    REQUEST_PROVINCES,RESPONSE_PROVINCES,
+    REQUEST_CITIES,RESPONSE_CITIES,
+    REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
+    REQUEST_RECEIVER,RESPONSE_RECEIVER,
+    START_SAVE_RECEIVER,FINISH_SAVE_RECEIVER
+} from "./constant.es6";
 
 import {alert} from "../common/action.es6";
 
@@ -62,11 +58,12 @@ function responseProvinces(param,res){
     }
 }
 
-export function fetchProvinces(url,param){
+export function fetchProvinces(param){
     return (dispatch)=>{
         dispatch(requestProvinces(param));
-        apiRequest(url,param).then((res)=>{
-            // console.log('provinces',res)
+        apiRequest("/cascadearea",Object.assign({},param,{
+            api:"findProvince"
+        })).then((res)=>{
             dispatch(responseProvinces(param,res));
         })
     }
@@ -88,10 +85,12 @@ function responseCities(param,res){
     }
 }
 
-export function fetchCities(url,param){
+export function fetchCities(param){
     return (dispatch)=>{
         dispatch(requestCities(param));
-        apiRequest(url,param).then((res)=>{
+        apiRequest("/cascadearea",Object.assign({},param,{
+            api:"findCity"
+        })).then((res)=>{
             dispatch(responseCities(param,res));
         })
     }
@@ -113,10 +112,12 @@ function responseDistricts(param,res){
     }
 }
 
-export function fetchDistricts(url,param){
+export function fetchDistricts(param){
     return (dispatch)=>{
         dispatch(requestDistricts(param));
-        apiRequest(url,param).then((res)=>{
+        apiRequest("/cascadearea",Object.assign({},param,{
+            api:"findDistrict"
+        })).then((res)=>{
             dispatch(responseDistricts(param,res));
         })
     }

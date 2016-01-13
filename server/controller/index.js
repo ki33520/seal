@@ -14,27 +14,27 @@ var index = function(req, res, next) {
                 return {
                     id: channel.id,
                     sort: channel.sort,
-                    name: channel.manageName
+                    name: channel.manageName,
+                    floors:{}
                 }
+            })
+            channels = _.sortBy(channels,function(channel){
+                return channel.sort
             })
             return channels
         } else {
             next(new Error(ret.msg))
         }
     }).then(function(channels) {
-        var homeChannelId = _.result(_.findWhere(channels, {
-            sort: 1
-        }), "id")
         util.fetchAPI("floorsByChannel", {
             channel: "Mobile",
-            manageId: homeChannelId,
+            manageId: channels[0].id,
             start: 0,
             limit: 3
         }).then(function(ret) {
             if (ret.returnCode === 0) {
+                channels[0].floors = floorFilter(ret.object)
                 var initialState = {
-                    floors: floorFilter(ret.object),
-                    currentChannel:homeChannelId,
                     channels: channels
                 };
                 var markup = util.getMarkupByComponent(Index({
@@ -52,10 +52,10 @@ var index = function(req, res, next) {
 };
 
 var channel = function(req, res, next) {
-    var id = req.param.id
+    var id = req.query.id
     util.fetchAPI("floorsByChannel", {
         channel: "Mobile",
-        manageId: homeChannelId,
+        manageId: id,
         start: 0,
         limit: 3
     }).then(function(ret) {
@@ -145,14 +145,22 @@ function floorFilter(floors) {
     _floors["singleRecommend"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_DPTJ"
     }), "activityList")
-    _floors["singleRecommendId"] = _floors["singleRecommend"][0].id
-        // _floors["singleRecommendType"] = "ACTIVITY_DPTJ"
+    if(_floors["singleRecommend"]){
+        _floors["singleRecommend"] = {
+            id:_floors["singleRecommend"][0].id,
+            goods:_floors["singleRecommend"][0].activityProductList
+        }
+    }
     _floors["newRecommend"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_XPTJ"
     }), "activityList")
-    _floors["newRecommendId"] = _floors["newRecommend"][0].id
-        // _floors["newRecommendType"] = "ACTIVITY_XPTJ"
-        // console.log(floors)
+    if(_floors["newRecommend"]){
+        _floors["newRecommend"] = {
+            id:_floors["newRecommend"][0].id,
+            goods:_floors["newRecommend"][0].activityProductList
+        }
+    }
+    // console.log(floors)
     return _floors
 }
 

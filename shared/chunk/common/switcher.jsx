@@ -27,8 +27,12 @@ export class SwitcherCase extends Component{
             active,
             prev
         })
+        let child = React.Children.only(this.props.children)
+        child = React.cloneElement(child,Object.assign({},child.props,{
+            active
+        }))
         return (
-            <div className={classes} key={key}>{this.props.children}</div>
+            <div className={classes} key={key}>{child}</div>
         )
     }
 }
