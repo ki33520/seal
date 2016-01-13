@@ -24,19 +24,17 @@ class OrderList extends Component{
             this.beginRefresh(1);
         }.bind(this));
     }
-    beginRefresh(interval){
+    beginRefresh(interval,flag){
         const {orders,isFetching,dispatch} =  this.props;
-        var flag = this.state.displayFlag,
+        var flag = flag!= undefined ? flag: this.state.displayFlag,
             order = orders[flag],
             fetchLink = "/orderlist",
             pageCount = 1,
             nextPage = 1;
-        var flag = this.state.displayFlag;
         if(order){
             pageCount = Math.ceil(order.totalCount/order.pageSize);
             nextPage = order.pageIndex + interval;
         };
-        console.log(pageCount , nextPage)
         if(pageCount < nextPage || isFetching){
             return false;
         }
@@ -47,36 +45,38 @@ class OrderList extends Component{
     }
     toggleFlag(flag,e){
         e && e.preventDefault();
-        const self = this;
+        const {orders} = this.props;
         this.setState({
             displayFlag:flag
-        },()=>{
-            self.beginRefresh(0);
         });
+        if(!orders[flag]){
+            this.beginRefresh(0,flag);
+        }
     }
     render(){
-        var {orders} = this.props;
-        console.log(orders)
+        var {orders,isFetching} = this.props;
         return (
             <div className="order-list-content">
-            <Header>我的订单</Header>
-            <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
-                <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
-                    <Floor orderItem={orders[0]} ref="floor"/>
-                </SlideTabsItem>
-                <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
-                    <Floor orderItem={orders[1]} ref="floor"/>
-                </SlideTabsItem>
-                <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
-                    <Floor orderItem={orders[2]} ref="floor"/>
-                </SlideTabsItem>
-                <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                    <Floor orderItem={orders[3]} ref="floor"/>
-                </SlideTabsItem>
-                <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
-                    <Floor orderItem={orders[4]} ref="floor"/>
-                </SlideTabsItem>
-            </SlideTabs>
+                <Header>我的订单</Header>
+                <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
+                    <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
+                        <Floor orderItem={orders[0]} ref="floor"/>
+                    </SlideTabsItem>
+                    <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
+                        <Floor orderItem={orders[1]} ref="floor"/>
+                    </SlideTabsItem>
+                    <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
+                        <Floor orderItem={orders[2]} ref="floor"/>
+                    </SlideTabsItem>
+                    <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
+                        <Floor orderItem={orders[3]} ref="floor"/>
+                    </SlideTabsItem>
+                    <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
+                        <Floor orderItem={orders[4]} ref="floor"/>
+                    </SlideTabsItem>
+                </SlideTabs>
+                <Refresher active={isFetching} />
+                <GoTop />
             </div>
         )
     }

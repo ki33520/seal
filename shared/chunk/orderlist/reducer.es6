@@ -17,8 +17,16 @@ export function ordersByParam(state={},action){
             var status = action.param.status;
             var newOrderList = action.res.orders[status].list;
             var oldOrderList = state.orders[status] ? state.orders[status].list : [];
-            obj.isFetching = false; 
-            obj.orders[status].list = _.union(oldOrderList,newOrderList);
+            obj.isFetching = false;
+            obj.orders.forEach((v,k)=>{
+                if(v){
+                    let oldlist = state.orders[k] && state.orders[k].list ? state.orders[k].list : [];
+                    let newlist = v.list ? v.list : [];
+                    v.list = _.union(oldlist,newlist);
+                }else{
+                    obj.orders[k] = state.orders[k];
+                }
+            })
             return Object.assign({},state,obj);
         case SHOW_ALERT:
         case HIDE_ALERT:
