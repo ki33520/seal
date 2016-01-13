@@ -3,9 +3,10 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
 import Header from "../common/header.jsx";
-import {fetchYouaCoupon,fetchUnionCoupon,fetchInvalidCoupon} from "./action.es6"; 
+import {fetchCoupons} from "./action.es6"; 
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Refresher from "../../component/refresher.jsx";
+import GoTop from "../../component/gotop.jsx";
 
 class Coupon extends React.Component{
     constructor(props){
@@ -15,31 +16,19 @@ class Coupon extends React.Component{
         }
     }
     handleClick(index){
-        const {youaCoupons,legueCoupons,invalidCoupons} = this.props;
-        const pagination = [youaCoupons,legueCoupons,invalidCoupons];
-        const pageIndex = pagination[index].pageIndex;
+        const {pagination,couponType,dispatch} = this.props;
+        const type = couponType[index];
+        const {coupons,pageIndex,totalPage} = pagination[type];
+       
         this.setState({
             activeIndex:index
         });
-        if(pageIndex){
+
+        if(coupons.length>0){
             return false;
         }
-        this.fetchCoupons(index,pageIndex+1);
-    }
 
-    fetchCoupons(index,nextPage){
-        const {dispatch} = this.props;
-        switch(index){
-            case 1:
-                dispatch(fetchUnionCoupon({isMerchants:1,status:0,pageIndex:nextPage}));
-                break;
-            case 2:
-                dispatch(fetchInvalidCoupon({status:3,pageIndex:nextPage}));
-                break;
-            default:
-                dispatch(fetchYouaCoupon({isMerchants:0,status:0,pageIndex:nextPage}));
-                break;
-        }
+        this.fetchCouponsByParam(type,pageIndex);
     }
 
     componentDidMount(){
@@ -48,23 +37,27 @@ class Coupon extends React.Component{
         }.bind(this));
     }
 
+    fetchCouponsByParam(couponType,nextPage){
+        const {dispatch} = this.props;
+        dispatch(fetchCoupons({
+            type:couponType,
+            pageIndex:nextPage
+        }));
+    }
+
     beginRefresh(){
-        const {youaCoupons,legueCoupons,invalidCoupons,isFetching} = this.props;
-        const pagination = [youaCoupons,legueCoupons,invalidCoupons];
+        const {pagination,couponType,isFetching} = this.props;
         const index = this.state.activeIndex;
-        let totalPage = pagination[index].totalPage;
-        let pageIndex = pagination[index].pageIndex;
-        let nextPage = pageIndex + 1;
+        const type = couponType[index];
+        const totalPage = pagination[type].totalPage;
+        const pageIndex = Number(pagination[type].pageIndex);
+        const nextPage = pageIndex + 1;
 
-        if(totalPage < pageIndex){
+        if(totalPage < pageIndex||isFetching === true){
             return false;
         }
 
-        if(isFetching === true){
-            return false;
-        }
-
-        this.fetchCoupons(index,pageIndex+1);
+        this.fetchCouponsByParam(type,nextPage);
     }
  
     renderYouaCoupons(coupons){
@@ -106,7 +99,7 @@ class Coupon extends React.Component{
     }
 
     render(){
-        const {youaCoupons,legueCoupons,invalidCoupons,isFetching} = this.props;
+        const {pagination,isFetching} = this.props;
         
         return (
             <div>
@@ -115,16 +108,17 @@ class Coupon extends React.Component{
                 </Header>
                 <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
                     <SlideTabsItem navigator={()=>'友阿优惠券'}>
-                        <div>{this.renderYouaCoupons(youaCoupons.coupons)}</div>
+                        <div>{this.renderYouaCoupons(pagination.youa.coupons)}</div>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'联盟优惠券'}>
-                        <div>{this.renderLegueCoupons(legueCoupons.coupons)}</div>
+                        <div>{this.renderLegueCoupons(pagination.legue.coupons)}</div>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>
-                        <div>{this.renderInvalidCoupons(invalidCoupons.coupons)}</div>
+                        <div>{this.renderInvalidCoupons(pagination.invalid.coupons)}</div>
                     </SlideTabsItem>
                 </SlideTabs>
                 <Refresher active={isFetching} />
+                <GoTop />
             </div>
         )
     }

@@ -180,7 +180,7 @@ let dom = {
         const initialX = dom.scrollLeft(element)
         var lastY = initialY;
         var lastX = initialX;
-        var delta = asxis === "y" ? targetY - initialY : targetX - initialX;
+        var delta = axis === "y" ? targetY - initialY : targetX - initialX;
         const speed = Math.min(750,Math.min(1500,Math.abs(delta)));
         // var scrollInProgress = true;
         if(delta === 0 ){

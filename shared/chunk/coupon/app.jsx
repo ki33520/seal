@@ -8,11 +8,10 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Coupon from "./component.jsx";
 
 function selector(state){
-    const {youaCoupons,legueCoupons,invalidCoupons,isFetching} = state.couponByUser
+    const {pagination,couponType,isFetching} = state.couponByUser
     return {
-        youaCoupons,
-        legueCoupons,
-        invalidCoupons,
+        pagination,
+        couponType,
         isFetching
     };
 }
@@ -26,13 +25,13 @@ function configureStore(initialState){
 class CouponApp extends Component{
     render(){
          
-        const {pagination,isFetching} = this.props.initialState;
+        const {pagination,couponType,isFetching} = this.props.initialState;
 
         const initialState = {
             couponByUser:{
-                youaCoupons:pagination,
-                legueCoupons:{},
-                invalidCoupons:{}
+                pagination,
+                couponType,
+                isFetching
             }
         };
         let store = configureStore(initialState);
