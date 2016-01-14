@@ -12,31 +12,65 @@ import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 
 class Trendy extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            activeIndex:0
+        }
+    }
 
     handleSearch(){
-        location.href="/search";
+        
     }
 
 
     handleClick(index){
- 
-        const {titles,list,dispatch} = this.props;
+        const {category,totalPages,dispatch} = this.props;
 
-        if(list[index].length){
+        this.setState({
+            activeIndex:index
+        });
+ 
+        if(totalPages[index]){
             return false;
         }
 
         dispatch(fetchGoods('/trendyActivity',{
-            id:titles[index].id,
+            id:category[index].id,
             pageIndex:1,
             index
         }));
     }
 
-    renderContent(list){
+    componentDidMount(){
+        util.registerPullDownEvent(()=>{
+            this.beginRefresh();
+        }.bind(this));
+    }
+
+    beginRefresh(){
+        const {dispatch,totalPages,category,pageIndexs,isFetching} = this.props;
+        const {activeIndex} = this.state;
+        let curentPage = pageIndexs[activeIndex];
+        let totalPage = totalPages[activeIndex];
+        let activeId = category[activeIndex].id;
+        let nextPage = curentPage + 1;
+
+        if(isFetching || totalPage <= curentPage){
+            return false;
+        }
+
+        dispatch(fetchGoods('/trendyActivity',{
+            id:activeId,
+            pageIndex:nextPage,
+            index:activeIndex
+        }));
+    }
+
+    renderContent(goodList){
         var goods = [];
        
-        list.forEach(function(item,i){
+        goodList.forEach(function(item,i){
             goods.push(<GoodItem goods={item} key={"good-" + i} />)
         })
         
@@ -46,12 +80,11 @@ class Trendy extends React.Component{
     }
 
     render(){
-        const {titles,list} = this.props;
- 
-        const tabs = titles.map((item,i)=>{
+        const {category,goodList} = this.props;
+        const tabs = category.map((item,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
-                    {this.renderContent(list[i])}
+                    {this.renderContent(goodList[i])}
                 </SlideTabsItem>
             )
         })

@@ -8,11 +8,13 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Trendy from "./component.jsx";
 
 function selector(state){
-    const {titles,list,isFetching} = state.goodsByParam
+    const {category,goodList,totalPages,pageIndexs,isFetching} = state.goodsByParam
     return {
         isFetching,
-        list,
-        titles
+        goodList,
+        pageIndexs,
+        totalPages,
+        category
     };
 }
 
@@ -25,12 +27,14 @@ function configureStore(initialState){
 
 class TrendyApp extends Component{
     render(){
-        const {titles,list} = this.props.initialState;
+        const {category,goodList,totalPages,pageIndexs} = this.props.initialState;
         const initialState = {
             goodsByParam:{
                 isFetching:false,
-                list,
-                titles
+                goodList,
+                totalPages,
+                pageIndexs,
+                category
             }
         };
         var store = configureStore(initialState);
