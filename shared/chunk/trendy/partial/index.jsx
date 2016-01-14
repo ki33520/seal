@@ -1,11 +1,12 @@
 'use strict'
 import React,{Component} from "react";
 import classNames from "classnames";
-import util from "../../../lib/util.es6";
+import dom from "../../../lib/dom.es6";
 import fetchGoods from "../action.es6";
 
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Icon from "../../../component/icon.jsx";
 import GoodItem from "./goodItem.jsx";
 import Header from "../../common/header.jsx";
@@ -41,13 +42,6 @@ class Trendy extends React.Component{
             index
         }));
     }
-
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh();
-        }.bind(this));
-    }
-
     beginRefresh(){
         const {dispatch,totalPages,category,pageIndexs,isFetching} = this.props;
         const {activeIndex} = this.state;
@@ -75,21 +69,24 @@ class Trendy extends React.Component{
         })
         
         return (
-            <div className="activityGeneral">{goods}</div>
+            <div className="activityGeneral">
+            {goods}
+            </div>
         );
     }
-
     render(){
         const {category,goodList} = this.props;
         const tabs = category.map((item,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
                     {this.renderContent(goodList[i])}
+                    <Refresher active={this.props.isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
+                    <GoTop relative={true}/>
                 </SlideTabsItem>
             )
         })
         return (
-            <div>
+            <div className="trendy-content">
                 <Header canBack="false">
                     <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
                     <div className="btn-right" onClick={this.handleSearch}>
@@ -99,8 +96,6 @@ class Trendy extends React.Component{
                 <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
                     {tabs}
                 </SlideTabs>
-     
-                <Refresher active={this.props.isFetching}/>
                 <Footer activeIndex="2"/>
             </div>
         )

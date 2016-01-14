@@ -53,14 +53,12 @@ function filterList(originalData,pageSize){
 }
 
 var trendy = function(req, res, next) {
-    
     bluebird.props({
         goods: util.fetchAPI("fetchTendyGoods", {
             start: 1,
             Limit: pageSize
         })
     }).then(function(resp) {
- 
         if (resp.goods.returnCode === 0) {
             let result = filterList(resp.goods.object,pageSize);
             

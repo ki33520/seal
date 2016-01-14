@@ -86,6 +86,14 @@ let dom = {
         }
         return scrollNode;
       },
+      computedStyle(element){
+        var computedStyle;
+        if (typeof element.currentStyle != 'undefined')
+          computedStyle = element.currentStyle;
+        else
+          computedStyle = document.defaultView.getComputedStyle(element, null);
+        return computedStyle
+      },
       scrollInView(element,container = window,callback = ()=>{},axis = "y"){
         let top = dom.offset(element).top - dom.offset(container.firstChild).top;
         let left = dom.offset(element).left - dom.offset(container.firstChild).left;
