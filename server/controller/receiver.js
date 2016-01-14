@@ -7,7 +7,7 @@ var util = require("../lib/util");
 var config = require("../lib/config");
 var Receiver = util.getSharedComponent("receiver");
 
-var receiver = function(req, res,next) {
+var receiver = function(req, res, next) {
     var user = req.session.user;
     util.fetchAPI("receiverByUser", {
         memberId: user.memberId
@@ -26,19 +26,19 @@ var receiver = function(req, res,next) {
                 markup: markup,
                 initialState: initialState
             })
-        }else{
+        } else {
             next(new Error(resp.message))
         }
-    }).fail(function(resp){
+    }).fail(function(resp) {
         next(new Error("api response failed"))
     })
 }
 
-function receiversFilter(receivers){
+function receiversFilter(receivers) {
     var _receivers = []
-    _.each(receivers,function(receiver){
+    _.each(receivers, function(receiver) {
         var _receiver = receiverFilter(receiver)
-        _receiver["id"]= receiver.recvAddressId
+        _receiver["id"] = receiver.recvAddressId
         _receivers.push(_receiver)
     })
     return _receivers
@@ -59,9 +59,9 @@ var updateReceiver = function(req, res, next) {
     var user = req.session.user;
     util.fetchAPI("receiverById", {
         memberId: user.memberId,
-        recvAddressId:id
-    },false).then(function(resp) {
-        if(resp.returnCode === 0){
+        recvAddressId: id
+    }, false).then(function(resp) {
+        if (resp.returnCode === 0) {
             var receiver = receiverFilter(resp.object);
             var initialState = {
                 isFetched: true,
@@ -74,10 +74,10 @@ var updateReceiver = function(req, res, next) {
     })
 }
 
-function receiverFilter(receiver){
-    var _receiver = _.pick(receiver,[
-        "cityCode","cityName",
-        "provinceCode","provinceName","isDefault","idCard","address","zipcode"
+function receiverFilter(receiver) {
+    var _receiver = _.pick(receiver, [
+        "cityCode", "cityName",
+        "provinceCode", "provinceName", "isDefault", "idCard", "address", "zipcode"
     ]);
     _receiver["districtCode"] = receiver["countyCode"]
     _receiver["districtName"] = receiver["countyName"]
@@ -95,46 +95,53 @@ var saveReceiver = function(req, res, next) {
     var user = req.session.user;
     var id = req.body.id;
     var receiver = {
-        memberId:user.memberId,
+        id:req.body.id,
+        memberId: user.memberId,
         recvLinkman: req.body.consignee,
         idCard: req.body.idCard,
         recvMobile: req.body.mobileNumber,
         areaCode: req.body.districtCode,
         address: req.body.address,
-        defaultChecked: req.body.isdefault == "true"?1:0
+        defaultChecked: req.body.isdefault == "true" ? 1 : 0
     }
-    if (id) {
-        receiver = _.extend(receiver, {
-            recvAddressId: req.body.id
-        })
-        console.log('update receiver', receiver)
-        util.fetchAPI("updateReceiver", receiver).then(function(resp) {
-            if(resp.returnCode === 0){
-                res.json({
-                    receiverSaved:true
-                })
-            }else{
-                res.json({
-                    receiverSaved:false,
-                    errMsg:resp.message
-                })
-            }
-        })
-    } else {
-        util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
-            // console.log('resp', resp)
-            if(resp.returnCode === 0){
-                res.json({
-                    receiverSaved:true
-                })
-            }else{
-                res.json({
-                    receiverSaved:false,
-                    errMsg:resp.message
-                })
-            }
-        })
+        // console.log('update receiver', receiver)
+    util.fetchAPI("updateReceiver", receiver).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                receiverSaved: true
+            })
+        } else {
+            res.json({
+                receiverSaved: false,
+                errMsg: resp.message
+            })
+        }
+    })
+}
+
+var createReceiver = function(req, res, next) {
+    var user = req.session.user
+    var receiver = {
+        memberId: user.memberId,
+        recvLinkman: req.body.consignee,
+        idCard: req.body.idCard,
+        recvMobile: req.body.mobileNumber,
+        areaCode: req.body.districtCode,
+        address: req.body.address,
+        defaultChecked: req.body.isdefault == "true" ? 1 : 0
     }
+    util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                receiverSaved: true
+            })
+        } else {
+            res.json({
+                receiverSaved: false,
+                errMsg: resp.message
+            })
+        }
+    })
 }
 
 var cascadeArea = function(req, res) {
@@ -145,7 +152,7 @@ var cascadeArea = function(req, res) {
     var code = req.query.code ? req.query.code : '';
     util.fetchAPI(api, {
         code: code, //CATALOG_REGION 查询省
-    },false).then(function(resp) {
+    }, false).then(function(resp) {
         if (resp.returnCode === 0) {
             var items = [];
             _.each(resp.areaList, function(v, k) {
@@ -164,15 +171,15 @@ var cascadeArea = function(req, res) {
                 errMsg: resp.msg
             })
         }
-    }).fail(function(resp){
+    }).fail(function(resp) {
         console.log(resp)
     })
 }
 
 module.exports = {
     receiver: receiver,
-    addReceiver:addReceiver,
-    updateReceiver:updateReceiver,
+    addReceiver: addReceiver,
+    updateReceiver: updateReceiver,
     saveReceiver: saveReceiver,
     cascadeArea: cascadeArea
 };

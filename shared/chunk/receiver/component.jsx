@@ -55,7 +55,7 @@ class ReceiverRouter extends Component{
             return false;
         }
         // start requestReceiver
-        if(this.state.currentRoute === "updatereceiver" && nextProps.receiverByForm.receiver === null){
+        if(this.state.currentRoute === "updatereceiver" && nextProps.updateReceiver.receiver === null){
             return false;
         }
         return true;
@@ -69,10 +69,10 @@ class ReceiverRouter extends Component{
                     <Receiver {...this.props.receiverByUser} {...this.props}/>
                 </SwitcherCase>
                 <SwitcherCase name="addreceiver">
-                    <AddReceiver {...this.props.receiverByForm} {...this.props}/>
+                    <AddReceiver {...this.props.addReceiver} {...this.props}/>
                 </SwitcherCase>
                 <SwitcherCase name="updatereceiver">
-                    <UpdateReceiver {...this.props.receiverByForm} {...currentParam} {...this.props}/>
+                    <UpdateReceiver {...this.props.updateReceiver} {...currentParam} {...this.props}/>
                 </SwitcherCase>
             </Switcher>
         );

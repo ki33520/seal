@@ -8,13 +8,14 @@ import {
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
     REQUEST_RECEIVER,RESPONSE_RECEIVER,
-    START_SAVE_RECEIVER,FINISH_SAVE_RECEIVER
+    START_SAVERECEIVER,FINISH_SAVERECEIVER,
+    START_CREATERECEIVER,FINISH_CREATERECEIVER
 } from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
 import {alertReducer} from "../common/reducer.es6";
 
-function receiverByForm(state={},action){
+function updateReceiver(state={},action){
     switch(action.type){
         case REQUEST_RECEIVER:
             return Object.assign({},state,{
@@ -37,6 +38,73 @@ function receiverByForm(state={},action){
             return Object.assign({},state,{
                 receiver
             });
+        case REQUEST_PROVINCES:
+        case RESPONSE_PROVINCES:
+        case REQUEST_CITIES:
+        case RESPONSE_CITIES:
+        case REQUEST_DISTRICTS:
+        case RESPONSE_DISTRICTS:
+            if(action.scene === "updateReceiver"){
+                return cascadeArea(state,action)
+            }
+            return state
+        case START_SAVERECEIVER:
+            return Object.assign({},state,{
+                receiverSaving:true,
+                receiverSaved:false
+            });
+        case FINISH_SAVERECEIVER:
+            return Object.assign({},state,{
+                receiverSaving:false,
+                ...action.res
+            });
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
+        default:
+            return state;
+    }
+}
+
+function addReceiver(state={},action){
+    switch(action.type){
+        case CHANGE_FIELD:
+            const {name,value} = action;
+            var receiver = {...state.receiver}
+            receiver[name] = value;
+            return Object.assign({},state,{
+                receiver
+            });
+        case START_CREATERECEIVER:
+            return Object.assign({},state,{
+                receiverSaving:true,
+                receiverSaved:false
+            });
+        case FINISH_CREATERECEIVER:
+            return Object.assign({},state,{
+                receiverSaving:false,
+                ...action.res
+            });
+        case REQUEST_PROVINCES:
+        case RESPONSE_PROVINCES:
+        case REQUEST_CITIES:
+        case RESPONSE_CITIES:
+        case REQUEST_DISTRICTS:
+        case RESPONSE_DISTRICTS:
+            if(action.scene === "addReceiver"){
+                return cascadeArea(state,action)
+            }
+            return state
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
+        default:
+            return state;
+    }
+}
+
+function cascadeArea(state,action){
+    switch(action.type){
         case REQUEST_PROVINCES:
             return Object.assign({},state,{
                 provinceFetching:true
@@ -88,21 +156,6 @@ function receiverByForm(state={},action){
                 districtFetching:false,
                 districts
             })
-        case START_SAVE_RECEIVER:
-            return Object.assign({},state,{
-                receiverSaving:true,
-                receiverSaved:false
-            });
-        case FINISH_SAVE_RECEIVER:
-            return Object.assign({},state,{
-                receiverSaving:false,
-                ...action.res
-            });
-        case SHOW_ALERT:
-        case HIDE_ALERT:
-            return alertReducer(state,action)
-        default:
-            return state;
     }
 }
 
@@ -116,7 +169,8 @@ function receiverByUser(state={},action){
 
 const rootReducer = combineReducers({
     receiverByUser,
-    receiverByForm
+    updateReceiver,
+    addReceiver
 });
 
 export default rootReducer;

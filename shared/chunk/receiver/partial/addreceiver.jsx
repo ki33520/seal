@@ -14,18 +14,42 @@ class AddReceiver extends Component{
         const {changeField} = this.props;
         changeField(fieldName,e.target.value);
     }
+    loadProvinces(){
+        const {fetchProvinces} = this.props;
+        fetchProvinces({
+            code:""
+        },"addReceiver")
+    }
+    loadCities(province){
+        const {fetchCities} = this.props;
+        fetchCities({
+            code:province
+        },"addReceiver")
+    }
+    loadDistricts(city){
+        const {fetchDistricts} = this.props;
+        fetchDistricts({
+            code:city
+        },"addReceiver")
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        if(this.props.active === true && prevProps.active === false){
+            this.loadProvinces()
+        }
+    }
     handleSave(e){
         e && e.preventDefault();
-        const {receiver,provinces,cities,districts,saveReceiver} = this.props
+        const {receiver,provinces,cities,districts,createReceiver} = this.props
         const {consignee,idCard,mobileNumber,address,isDefault,
             provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
         const selectedProvince = _.findWhere(provinces,{value:provinceCode});
         const selectedCity = _.findWhere(cities,{value:cityCode});
         const selectedDistrict = _.findWhere(districts,{value:districtCode});
-        saveReceiver({
+        createReceiver({
             consignee,idCard,mobileNumber,address,
-            isdefault:isDefault,
+            isdefault:1,
             provinceName:selectedProvince.label,
             provincecode:selectedProvince.value,
             cityName:selectedCity.label,
@@ -40,7 +64,7 @@ class AddReceiver extends Component{
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
                 dispatch(alert("提交成功!",2000));
-                setTimeout(()=>window.location.replace("/receiver"),2500)
+                // setTimeout(()=>window.location.replace("/receiver"),2500)
             }else{
                 dispatch(alert(nextProps.errMsg,2000))
             }
@@ -89,7 +113,9 @@ class AddReceiver extends Component{
                 <i>*</i>
                 <div className="receiver-form-label">收货地址</div>
                 <div className="receiver-form-field">
-                    <CascadeArea {...this.props} />
+                    <CascadeArea loadCities={this.loadCities.bind(this)} 
+                    loadDistricts={this.loadDistricts.bind(this)} 
+                    {...this.props} />
                 </div>
                 </div>
                 <div className="receiver-form-row receiver-form-textarea-row">

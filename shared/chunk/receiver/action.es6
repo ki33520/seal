@@ -7,7 +7,8 @@ import {
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
     REQUEST_RECEIVER,RESPONSE_RECEIVER,
-    START_SAVE_RECEIVER,FINISH_SAVE_RECEIVER
+    START_SAVERECEIVER,FINISHSAVE_RECEIVER,
+    START_CREATERECEIVER,FINISH_CREATERECEIVER
 } from "./constant.es6";
 
 import {alert} from "../common/action.es6";
@@ -42,97 +43,103 @@ export function changeField(name,value){
     }
 }
 
-function requestProvinces(param){
+function requestProvinces(param,scene){
     return {
         type:REQUEST_PROVINCES,
+        scene,
         param,
     }
 }
 
-function responseProvinces(param,res){
+function responseProvinces(param,res,scene){
     return {
         type:RESPONSE_PROVINCES,
         param,
         res,
+        scene,
         responseAt:Date.now()
     }
 }
 
-export function fetchProvinces(param){
+export function fetchProvinces(param,scene){
     return (dispatch)=>{
-        dispatch(requestProvinces(param));
+        dispatch(requestProvinces(param,scene));
         apiRequest("/cascadearea",Object.assign({},param,{
             api:"findProvince"
         })).then((res)=>{
-            dispatch(responseProvinces(param,res));
+            dispatch(responseProvinces(param,res,scene));
         })
     }
 }
 
-function requestCities(param){
+function requestCities(param,scene){
     return {
         type:REQUEST_CITIES,
+        scene,
         param,
     }
 }
 
-function responseCities(param,res){
+function responseCities(param,res,scene){
     return {
         type:RESPONSE_CITIES,
         param,
         res,
+        scene,
         responseAt:Date.now()
     }
 }
 
-export function fetchCities(param){
+export function fetchCities(param,scene){
     return (dispatch)=>{
-        dispatch(requestCities(param));
+        dispatch(requestCities(param,scene));
         apiRequest("/cascadearea",Object.assign({},param,{
             api:"findCity"
         })).then((res)=>{
-            dispatch(responseCities(param,res));
+            dispatch(responseCities(param,res,scene));
         })
     }
 }
 
-function requestDistricts(param){
+function requestDistricts(param,scene){
     return {
         type:REQUEST_DISTRICTS,
+        scene,
         param,
     }
 }
 
-function responseDistricts(param,res){
+function responseDistricts(param,res,scene){
     return {
         type:RESPONSE_DISTRICTS,
         param,
         res,
+        scene,
         responseAt:Date.now()
     }
 }
 
-export function fetchDistricts(param){
+export function fetchDistricts(param,scene){
     return (dispatch)=>{
-        dispatch(requestDistricts(param));
+        dispatch(requestDistricts(param,scene));
         apiRequest("/cascadearea",Object.assign({},param,{
             api:"findDistrict"
         })).then((res)=>{
-            dispatch(responseDistricts(param,res));
+            dispatch(responseDistricts(param,res,scene));
         })
     }
 }
 
 function startSaveReceiver(param) {
     return {
-        type:START_SAVE_RECEIVER,
+        type:START_SAVERECEIVER,
         param
     }
 }
 
 function finishSaveReceiver(param,res){
     return {
-        type:FINISH_SAVE_RECEIVER,
+        type:FINISH_SAVERECEIVER,
         param,
         res,
         finishAt:Date.now()
@@ -143,10 +150,36 @@ export function saveReceiver(param){
     return (dispatch)=>{
         dispatch(startSaveReceiver(param));
         apiRequest("/savereceiver",param,{
-            method:"post",
-            type:"json"
+            method:"post"
         }).then((res)=>{
             dispatch(finishSaveReceiver(param,res));
+        })
+    }
+}
+
+function startCreateReceiver(param){
+    return {
+        type:START_CREATERECEIVER,
+        param
+    }
+}
+
+function finishCreateReceiver(param,res){
+    return {
+        type:FINISH_CREATERECEIVER,
+        param,
+        res,
+        finishAt:Date.now()
+    }
+}
+
+export function createReceiver(param){
+    return (dispatch)=>{
+        dispatch(startCreateReceiver(param))
+        apiRequest("/createreceiver",param,{
+            method:"POST"
+        }).then((res)=>{
+            dispatch(finishCreateReceiver(param,res))
         })
     }
 }
