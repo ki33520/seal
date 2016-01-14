@@ -44,29 +44,23 @@ class AddReceiver extends Component{
         const {consignee,idCard,mobileNumber,address,isDefault,
             provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
-        const selectedProvince = _.findWhere(provinces,{value:provinceCode});
-        const selectedCity = _.findWhere(cities,{value:cityCode});
-        const selectedDistrict = _.findWhere(districts,{value:districtCode});
         createReceiver({
             consignee,idCard,mobileNumber,address,
             isdefault:1,
-            provinceName:selectedProvince.label,
-            provincecode:selectedProvince.value,
-            cityName:selectedCity.label,
-            citycode:selectedCity.value,
-            districtName:selectedDistrict.label,
-            districtcode:selectedDistrict.value,
+            provinceCode,
+            cityCode,
+            districtCode,
         })
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
+        const {alert} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
-                dispatch(alert("提交成功!",2000));
+                alert("提交成功!",2000);
                 // setTimeout(()=>window.location.replace("/receiver"),2500)
             }else{
-                dispatch(alert(nextProps.errMsg,2000))
+                alert(nextProps.errMsg,2000)
             }
         }
     }

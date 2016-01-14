@@ -24,7 +24,7 @@ class CascadeArea extends Component{
         if(provinces.length > 1){
             return (
                 <Selected options={provinces} 
-                    maxHeight="8rem" 
+                    maxHeight="5rem" 
                     value={province} onChange={this.handleProvinceChange.bind(this)}/>
             )
         }
@@ -35,7 +35,7 @@ class CascadeArea extends Component{
         const city = receiver === null?"":receiver.cityCode;
         return (
             <Selected options={cities} 
-                maxHeight="8rem" 
+                maxHeight="5rem" 
                 value={city} onChange={this.handleCityChange.bind(this)}/>
         )
     }
@@ -45,7 +45,7 @@ class CascadeArea extends Component{
         // console.log('district',districts)
         return (
             <Selected options={districts} 
-                maxHeight="8rem" 
+                maxHeight="5rem" 
                 value={district} onChange={this.handleDistrictChange.bind(this)}/>
         )
     }

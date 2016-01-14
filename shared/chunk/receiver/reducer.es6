@@ -12,7 +12,7 @@ import {
     START_CREATERECEIVER,FINISH_CREATERECEIVER
 } from "./constant.es6";
 
-import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
 function updateReceiver(state={},action){
@@ -60,6 +60,7 @@ function updateReceiver(state={},action){
             });
         case SHOW_ALERT:
         case HIDE_ALERT:
+            console.log('alert',alertReducer(state,action))
             return alertReducer(state,action)
         default:
             return state;

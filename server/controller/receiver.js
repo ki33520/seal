@@ -95,16 +95,14 @@ var saveReceiver = function(req, res, next) {
     var user = req.session.user;
     var id = req.body.id;
     var receiver = {
-        id:req.body.id,
+        recvAddressId:req.body.id,
         memberId: user.memberId,
         recvLinkman: req.body.consignee,
         idCard: req.body.idCard,
         recvMobile: req.body.mobileNumber,
         areaCode: req.body.districtCode,
         address: req.body.address,
-        defaultChecked: req.body.isdefault == "true" ? 1 : 0
     }
-        // console.log('update receiver', receiver)
     util.fetchAPI("updateReceiver", receiver).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({
@@ -128,7 +126,6 @@ var createReceiver = function(req, res, next) {
         recvMobile: req.body.mobileNumber,
         areaCode: req.body.districtCode,
         address: req.body.address,
-        defaultChecked: req.body.isdefault == "true" ? 1 : 0
     }
     util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
         if (resp.returnCode === 0) {
@@ -181,5 +178,6 @@ module.exports = {
     addReceiver: addReceiver,
     updateReceiver: updateReceiver,
     saveReceiver: saveReceiver,
+    createReceiver: createReceiver,
     cascadeArea: cascadeArea
 };

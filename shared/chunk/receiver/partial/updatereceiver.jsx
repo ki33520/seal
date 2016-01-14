@@ -28,7 +28,8 @@ class UpdateReceiver extends Component{
     }
     componentDidUpdate(prevProps,prevState){
         const {receiver,active} = this.props;
-        if(active === true && prevProps.active === false){
+        if(active === true && prevProps.active === false 
+            && this.props.provinces.length === 1){
             this.loadProvinces()
         }
         const province = receiver === null?"":receiver.provinceCode;

@@ -4,6 +4,7 @@
 @import "../../common/switcher";
 @import "./receiver.css";
 @import "../../component/selected";
+@import "../../component/alert";
 body {
     background: #F1F1F1;
 }
@@ -72,29 +73,46 @@ body {
     }
 }
 
+.cascade-area{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
 .receiver-form-field {
     line-height: 0;
     .dropdown {
         position:static;
         button {
-            padding: .1rem 0.5rem;
+            padding:px2rem(5) px2rem(5);
             border: 0 none;
-            width: 60%;
+            width: 100%;
+            .dropdown-status{
+                overflow:hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+            }
+            .status{
+                font-size:px2rem(14);
+            }
         }
         .dropdown-content {
-            bottom:-100%;
+            bottom:0;
+            display:block;
+            visibility:hidden;
+            opacity:0;
+            position:absolute;
             left:0;
             right:0;
-            position:fixed;
             box-shadow: 0 px2rem(2) px2rem(4) px2rem(4) rgba(34, 36, 38, .12),
              0 px2rem(2) px2rem(4) 0 rgba(34, 36, 38, .08);
-            transition: all .2s ease-in-out;
+            // transition: all .3s ease-in-out;
             padding:px2rem(12) 0;
+            overflow:hidden;
             &.active {
-                overflow:visible;
-                transition: all .2s ease-in-out;
-                opacity: 1;
-                bottom: 0;
+                animation: slideUp .3s ease-in-out;
+                visibility:visible;
+                opacity:1;
             }
             &:before,&:after{
                 display:none;
@@ -102,6 +120,7 @@ body {
             .selected-items {
                 li {
                     color: #AAA;
+                    padding:px2rem(5) px2rem(10);
                     .selected-item {
                         text-align: center;
                     }
@@ -114,5 +133,16 @@ body {
                 }
             }
         }
+    }
+}
+
+@keyframes slideUp{
+    from{
+        transform:translateY(100%);
+        opacity:0.5;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
     }
 }

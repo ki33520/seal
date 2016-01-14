@@ -7,11 +7,11 @@ import {
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
     REQUEST_RECEIVER,RESPONSE_RECEIVER,
-    START_SAVERECEIVER,FINISHSAVE_RECEIVER,
+    START_SAVERECEIVER,FINISH_SAVERECEIVER,
     START_CREATERECEIVER,FINISH_CREATERECEIVER
 } from "./constant.es6";
 
-import {alert} from "../common/action.es6";
+export {alert} from "../common/action.es6";
 
 function requestReceiver(){
     return {
