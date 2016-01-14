@@ -4,7 +4,7 @@ var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var config = require("../lib/config.js");
 var GoodListApp = util.getSharedComponent("goodlist");
-
+var pageSize=10;
 function filterGoodsList(result){
     let list = [];
  
@@ -29,66 +29,57 @@ function filterGoodsList(result){
 function filterNames(result){
     let list = [];
     result && result.map((item,i)=>{
-        //test ## ##
-        var tmp = item.split('##');
-        item = {name:tmp[0],id:tmp[1]};
-
         list.push({
             id:item.id,
             name:item.name
         })
     });
+
     return list;
-}
- 
-function filterResult(result){
- 
-    return {
-        areaNames:filterNames(result.areaNames),
-        brandNames:filterNames(result.brandNames),
-        categoryNames:filterNames(result.categoryNames),
-        goodsList:filterGoodsList(result.cbls)
-    }
 }
 
 var goodList = function(req, res, next) {
-    let searchKey = req.query.searchKey||'';
-    let currentPage = req.query.pageIndex||1;
-    let sortType = req.query.sortType||1;
-    let sortViewType = req.query.sortViewType||true;
-    let isHaveGoods = req.query.isHaveGoods||false;
-
+    let keyword = req.params.keyword;
+    
     bluebird.props({
         goods: util.fetchAPI("fetchGoodsList", {
-            searchKey,
-            sortType,
-            sortViewType,
-            currentPage
+            searchKey:keyword,
+            sortType:1,
+            currentPage:1,
+            pageSize:pageSize,
+            sortViewType:false,
+            isHaveGoods:true
         })
     }).then(function(resp) {
+ 
         if (resp.goods.returnCode === 0) {
-            let result = filterResult(resp.goods);
-            if (req.xhr === true) {
-                res.json(result);
-            } else {
-                 
-                let initialState = {
-                    keyword:searchKey,
-                    goodsList:result.goodsList,
-                    areaNames:result.areaNames,
-                    brandNames:result.brandNames,
-                    categorys:result.categoryNames
-                };
+            let goods = resp.goods;
 
-                let markup = util.getMarkupByComponent(GoodListApp({
-                    initialState: initialState
-                }));
+            let sideBar = {
+                areaNames:filterNames(goods.areaNames),
+                brandNames:filterNames(goods.brandNames),
+                categorys:filterNames(goods.categoryNames)
+            };
 
-                res.render('goodlist', {
-                    markup: markup,
-                    initialState: initialState
-                })
-            }
+            let totalPage = Math.ceil(goods.totalsNum/pageSize);
+
+            let initialState = {
+                keyword:keyword,
+                goods:filterGoodsList(goods.cbls),
+                sideBar:sideBar,
+                total:totalPage,
+                page:1
+            };
+
+            let markup = util.getMarkupByComponent(GoodListApp({
+                initialState: initialState
+            }));
+
+            res.render('goodlist', {
+                markup: markup,
+                initialState: initialState
+            })
+             
         } else {
             next(new Error(resp.msg));
         }
@@ -98,6 +89,55 @@ var goodList = function(req, res, next) {
 
 }
 
+var sortList = function(req, res, next){
+    let param = {
+        searchKey:req.body.keyword,
+        page:req.body.page
+    };
+ 
+    
+    if(req.body.sortType !== undefined){
+        param.sortType = req.body.sortType;
+    }
+ 
+    if(req.body.sortViewType!== undefined){
+        param.sortViewType = req.body.sortViewType;
+    }
 
+    if(req.body.isHaveGoods!== undefined){
+        param.isHaveGoods = req.body.isHaveGoods;
+    }
 
-module.exports = goodList;
+    if(req.body.brandName!== undefined){
+        param.brandName = req.body.brandName;
+    }
+
+    if(req.body.categoryName!== undefined){
+        param.categoryName = req.body.categoryName;
+    }
+
+    if(req.body.sourceAreas!== undefined){
+        param.sourceAreas = req.body.sourceAreas;
+    }
+
+    bluebird.props({
+        goods: util.fetchAPI("fetchGoodsList", param)
+    }).then(function(resp) {
+        if (resp.goods.returnCode === 0) {
+            if (req.xhr === true) {
+                res.json({
+                    goods:filterGoodsList(resp.goods.cbls),
+                    page:Number(req.body.page),
+                    isFetching:false
+                });
+            }else{
+                next(new Error(resp.msg));
+            }
+        }
+    });
+}
+
+module.exports = {
+    goodList:goodList,
+    sortList:sortList
+};

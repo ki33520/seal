@@ -161,7 +161,7 @@
         }
     },
     "fetchGoodsList": {
-        "uri": "/search/v1/findListByParams",
+        "uri": "/search/v1/findListByParamsWap",
         "baseURL": {
             "develop": "http://192.168.0.162:7988",
             "production": "http://product.tepin.hk"
@@ -239,6 +239,13 @@
     },
     "addReceiver": {
         "uri": "/address/v1/add",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "deleteReceiver": {
+        "uri": "/address/v1/delete",
         "baseURL": {
             "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://member.tepin.hk"

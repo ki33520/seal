@@ -31,7 +31,22 @@ class ReceiverApp extends React.Component{
                 checkedReceiver,
                 receivers
             },
-            receiverByForm:{
+            updateReceiver:{
+                receiver:null,
+                provinces:[{
+                    value: "",
+                    label: "请选择"
+                }],
+                cities: [{
+                    value: "",
+                    label: "请选择"
+                }],
+                districts: [{
+                    value: "",
+                    label: "请选择"
+                }]
+            },
+            addReceiver:{
                 receiver:null,
                 provinces:[{
                     value: "",

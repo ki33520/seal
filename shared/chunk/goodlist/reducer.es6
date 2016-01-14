@@ -16,8 +16,9 @@ function goodsByParam(state={},action){
             });
         case RECEIVE_GOODS:
             return Object.assign({},state,{
-                isFetching:false,
-                goodsList:action.res
+                isFetching:action.res.isFetching,
+                goods:action.res.goods,
+                page:action.res.page
             });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{

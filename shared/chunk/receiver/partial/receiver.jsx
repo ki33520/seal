@@ -3,12 +3,19 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import Icon from "../../../component/icon.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 
 class Receiver extends Component{
     handleCheck(receiver,checked){
         const {onCheck} = this.props
         onCheck(receiver)
+    }
+    handleDelete(receiver){
+        const {deleteReceiver} = this.props;
+        deleteReceiver({
+            id:receiver.id
+        })
     }
     renderReceivers(){
         const {receivers,checkable,checkedReceiver} = this.props;
@@ -28,7 +35,7 @@ class Receiver extends Component{
                         <p>{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
                         <div className="toolsArea">
                             <span className="pen"><a href={"#/updatereceiver/"+receiver.id}><em></em>修改</a></span>
-                            <span className="del"><em></em>删除</span>
+                            <span className="del" onClick={this.handleDelete.bind(this,receiver)}><em></em>删除</span>
                         </div>
                     </div>
                 )
@@ -52,6 +59,7 @@ class Receiver extends Component{
             <div className="addBtns">
                 <a href="#/addreceiver" className="addBtn">添加新地址</a>
             </div>
+            <GoTop relative={true}/>
             </div>
         )
     }

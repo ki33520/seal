@@ -80,11 +80,19 @@ let dom = {
         let scrollNode = element;
         while(scrollNode !== window){
           scrollNode = scrollNode.parentNode;
-          if(scrollNode.scrollTop > 0){
+          if(scrollNode && scrollNode.scrollHeight > scrollNode.clientHeight){
             break;
           }
         }
         return scrollNode;
+      },
+      computedStyle(element){
+        var computedStyle;
+        if (typeof element.currentStyle != 'undefined')
+          computedStyle = element.currentStyle;
+        else
+          computedStyle = document.defaultView.getComputedStyle(element, null);
+        return computedStyle
       },
       scrollInView(element,container = window,callback = ()=>{},axis = "y"){
         let top = dom.offset(element).top - dom.offset(container.firstChild).top;

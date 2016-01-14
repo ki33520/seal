@@ -5,8 +5,7 @@ import classNames from "classnames";
 class GoodItem extends Component{
     render(){
     	 
-    	var goods = this.props.goods;
-    	//console.log(goods)
+    	let {goods} = this.props;
     	 
     	const statusClass = classNames({
             "sale-out":goods.stock<1

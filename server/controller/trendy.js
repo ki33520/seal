@@ -5,6 +5,7 @@ var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var Trendy = util.getSharedComponent("trendy");
 var config = require("../lib/config.js");
+var pageSize = 10;
 
 function filterItem(originalData){
     let list = [];
@@ -27,58 +28,56 @@ function filterItem(originalData){
     return list;
 }
 
-function filterList(originalData){
+function filterList(originalData,pageSize){
     let data={
-        titles:[],
-        list:[]
+        category:[],
+        goodList:[],
+        totalPages:[]
     }
  
     originalData.map((item,i)=>{
-   
+        let total = Math.ceil(item.totalCount/pageSize)||0;
         let goods = filterItem(item.activityProductList);
 
-        data.titles.push({
+        data.category.push({
             name:item.activityName,
             id:item.id
         });
 
-        data.list.push(goods);
+        data.totalPages.push(total);
+
+        data.goodList.push(goods);
     });
 
     return data;
 }
 
 var trendy = function(req, res, next) {
-
-    var pageIndex = req.query.pageIndex || 1;
     bluebird.props({
         goods: util.fetchAPI("fetchTendyGoods", {
-            start: pageIndex,
-            Limit: 10
+            start: 1,
+            Limit: pageSize
         })
     }).then(function(resp) {
- 
         if (resp.goods.returnCode === 0) {
-            let result = filterList(resp.goods.object);
- 
-            if (req.xhr === true) {
-                res.json(result);
-            } else {
-                 
-                var initialState = {
-                    titles: result.titles,
-                    list : result.list
-                };
+            let result = filterList(resp.goods.object,pageSize);
+            
+            let initialState = {
+                category: result.category,
+                goodList : result.goodList,
+                totalPages:result.totalPages,
+                pageIndexs:[1]
+            };
 
-                var markup = util.getMarkupByComponent(Trendy({
-                    initialState: initialState
-                }));
+            let markup = util.getMarkupByComponent(Trendy({
+                initialState: initialState
+            }));
 
-                res.render('trendy', {
-                    markup: markup,
-                    initialState: initialState
-                })
-            }
+            res.render('trendy', {
+                markup: markup,
+                initialState: initialState
+            })
+            
         } else {
             next(new Error(resp.msg));
         }
@@ -88,7 +87,7 @@ var trendy = function(req, res, next) {
 
 var activity = function(req, res, next) {
 
-    let pageIndex = req.body.pageIndex || 1;
+    let pageIndex = Number(req.body.pageIndex) || 1;
     let id = req.body.id;
 
     bluebird.props({
@@ -96,14 +95,14 @@ var activity = function(req, res, next) {
             activityId:id,
             activityType:'ACTIVITY_BK',
             start: pageIndex,
-            Limit: 10
+            Limit: pageSize
         })
     }).then(function(resp) {
 
         if (resp.goods.returnCode === 0) {
-            let result = filterItem(resp.goods.object.result);
- 
-            res.json(result);
+            let goodList = filterItem(resp.goods.object.result);
+            let totalPage = Math.ceil(resp.goods.object.totalCount / pageSize);
+            res.json({goodList,totalPage,pageIndex});
             
         } else {
             next(new Error(resp.msg));

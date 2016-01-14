@@ -35,41 +35,7 @@ export function urlParam(param){
     }
     return paramStr.join("&");
 }
-export function dispatchEvent(el,event){
-    var e = document.createEvent('Event');
-    e.initEvent(event,true,true);
-    el.dispatchEvent(e);
-}
-export function bindEvent(el,event,listener){
-    if(el.addEventListener){
-        el.addEventListener(event,listener,false);
-    }else if(el.attachEvent){
-        el.attachEvent("on${event}",(e)=>{
-            listener.call(el,e||window.event);
-        });
-    }
-}
-export function unbindEvent(el,event,listener){
-    if(el.removeEventListener){
-        el.removeEventListener(event,listener);
-    }else if(el.detachEvent){
-        el.detachEvent("on${event}",listener);
-    }
-}
-export function scrollTop(value){
-    let isCSS1Compat = (document.compatMode === 'CSS1Compat');
-    let supportPageOffset = window.pageYOffset !== undefined;
-    let scrollTop = supportPageOffset ? window.pageYOffset : 
-                    isCSS1Compat? document.documentElement.scrollTop:
-                    document.body.scrollTop;
-    let scrollLeft = supportPageOffset ? window.pageXOffset : 
-                    isCSS1Compat? document.documentElement.scrollLeft:
-                    document.body.scrollLeft;
-    if(value !== undefined){
-        window.scrollTo(scrollLeft,value);
-    }
-    return scrollTop;
-}
+
 export function registerPullDownEvent(callback) {
     this.bindEvent(window,'scroll',()=>{
         var scrollTop = this.scrollTop();
@@ -78,10 +44,3 @@ export function registerPullDownEvent(callback) {
         }
     });
 }
-const util = {
-    bindEvent,
-    unbindEvent,
-    scrollTop,
-    registerPullDownEvent
-}
-export default util;
