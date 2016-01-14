@@ -8,13 +8,15 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Trendy from "./component.jsx";
 
 function selector(state){
-    const {category,goodList,totalPages,pageIndexs,isFetching} = state.goodsByParam
+    const {category,goodList,totalPages,pageIndexs,hotwords,keyword,isFetching} = state.goodsByParam
     return {
         isFetching,
         goodList,
         pageIndexs,
         totalPages,
-        category
+        category,
+        keyword,
+        hotwords
     };
 }
 
