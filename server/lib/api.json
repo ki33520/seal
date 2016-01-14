@@ -202,6 +202,20 @@
             "production": "order.hwg.youayun.cn"
         }
     },
+    "closedOrderById": {
+        "uri": "/order/v1/closedOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "waitCommentsByUser": {
+        "uri": "/comments/v1/findWaitComments",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
     "receiverByUser": {
         "uri": "/address/v1/findAddressList",
         "baseURL": {
@@ -246,6 +260,13 @@
     },
     "findDistrict": {
         "uri": "/sns/address/v1/findCountyMap",
+        "baseURL": {
+            "develop": "http://sns.e9448.com",
+            "production": "http://sns.e9448.com"
+        }
+    },
+    "timestamp": {
+        "uri": "/sns/system/v1/timestamp",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "http://sns.e9448.com"

@@ -29,6 +29,7 @@ function formatComment(object) {
                 singleTitle: v.singleTitle,
                 skuCode: v.skuCode,
                 tariffFee: v.tariffFee,
+                qty: v.qty,
                 updatedAt: v.updatedAt
             }
         });
@@ -55,37 +56,46 @@ function formatComment(object) {
 
 var orderList = function(req, res,next) {
     var user = req.session.user;
-    var status = req.query.status !== undefined ? Number(req.query.status) : 0 ;
+    var id = req.params.id ? Number(req.params.id) : 0;
+    var status = req.query.status !== undefined ? Number(req.query.status) : id ;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
     var pageSize = 5;
     bluebird.props({
         orderByUser: util.fetchAPI("orderByUser", {
-            memberId: 'fc6804de51c482730151e8ec0a080023',
+            memberId: user.memberId,
             timeType: timeType,
             orderStatus: status,
             pageNo: pageIndex,
             pageSize: pageSize
-        },false)
+        },false),
+        timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp) {
-        if (resp.orderByUser.returnCode === 0){
+        if (resp.orderByUser.returnCode === 0 && resp.timestamp.returnCode === 0){
             var orders = new Array(5),
                 order = {},
-                object = resp.orderByUser.object;
+                object = resp.orderByUser.object,
+                systemTime = resp.timestamp.systemTime;
             order.pageIndex = pageIndex;
             order.pageSize = pageSize;
             order.totalCount = object.totalCount;
             order.pageCount = Math.ceil(order.totalCount/pageSize);
             order.list = object.result ? formatComment(object.result) : [];
             orders[status] = order;
+
             if (req.xhr === true){
                 res.json({
-                    orders
+                    isFetched: true,
+                    orders,
+                    flag: status,
+                    systemTime: systemTime
                 });
             } else {
                 var initialState = {
                     isFetched: true,
-                    orders
+                    orders,
+                    flag: status,
+                    systemTime: systemTime
                 };
                 var markup = util.getMarkupByComponent(OrderListApp({initialState:initialState}));
 
@@ -95,7 +105,12 @@ var orderList = function(req, res,next) {
                 })
             }
         }else{
-            next(new Error(resp.orders.message));
+            if(resp.orderByUser.returnCode !== 0){
+                next(new Error(resp.orderByUser.message));
+            }
+            if(resp.timestamp.returnCode !== 0){
+                next(new Error(resp.timestamp.message));
+            }
         }
     });
 

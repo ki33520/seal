@@ -45,7 +45,7 @@ function MillisecondToDate(msd) {
 
 class Floor extends Component{
     renderButtons(child){
-        const {orderStatus} = child;
+        const {orderStatus,orderNo} = child;
         switch(orderStatus){
             case "STATUS_NOT_PAY":
                 return (
@@ -56,32 +56,31 @@ class Floor extends Component{
             case "STATUS_CONFIRMED":
                 return (
                     <div className="order-buttons">
+                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="pop_c">查看物流</a>
                     </div>
                 )
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">查看物流</a>
-                        <a href="javascript:void(null)" className="view_c">确认收货</a>
+                        <a href="javascript:void(null)" className="pop_c">确认收货</a>
+                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_SENDED":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">查看物流</a>
-                        <a href="javascript:void(null)" className="view_c">确认收货</a>
+                        <a href="javascript:void(null)" className="pop_c">确认收货</a>
+                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_CANCELED":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">再次购买</a>
                     </div>
                 )
             case "STATUS_FINISHED":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">再次购买</a>
                         <a href="javascript:void(null)" className="view_c">评价晒单</a>
                     </div>
                 )
@@ -129,8 +128,9 @@ class Floor extends Component{
         )
     }
     renderOutTime(child){
+        const {systemTime} = this.props;
         const {orderCrtTime,timeoutTime,orderStatus} = child;
-        var outTime = (new Date(timeoutTime).getTime() - new Date().getTime());
+        var outTime = (new Date(timeoutTime).getTime() - systemTime);
         var outTimeTag = MillisecondToDate(outTime);
         if(orderStatus === "STATUS_NOT_PAY" && outTime>0){
             return <i>{outTimeTag}&nbsp;后自动取消</i>
@@ -144,7 +144,6 @@ class Floor extends Component{
                 <div className="order-box" key={i}>
                     <div className="order-up">
                         <span>{crtTime}</span>
-                        <i>{orderNo}</i>
                         <div className="right">
                             {this.renderOutTime(child)}
                             <em>{orderStatusObj[orderStatus]}</em>

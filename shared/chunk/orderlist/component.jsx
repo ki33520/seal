@@ -16,7 +16,7 @@ class OrderList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            displayFlag: 0
+            displayFlag: props.flag
         }
     }
     componentDidMount(){
@@ -32,7 +32,7 @@ class OrderList extends Component{
             pageCount = 1,
             nextPage = 1;
         if(order){
-            pageCount = Math.ceil(order.totalCount/order.pageSize);
+            pageCount = order.pageCount;
             nextPage = order.pageIndex + interval;
         };
         if(pageCount < nextPage || isFetching){
@@ -54,29 +54,29 @@ class OrderList extends Component{
         }
     }
     render(){
-        var {orders,isFetching} = this.props;
+        var {orders,isFetching,systemTime} = this.props;
         return (
             <div className="order-list-content">
                 <Header>我的订单</Header>
                 <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
-                        <Floor orderItem={orders[0]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[0]} ref="floor"/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
-                        <Floor orderItem={orders[1]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[1]} ref="floor"/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
-                        <Floor orderItem={orders[2]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[2]} ref="floor"/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                        <Floor orderItem={orders[3]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[3]} ref="floor"/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
-                        <Floor orderItem={orders[4]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[4]} ref="floor"/>
                     </SlideTabsItem>
                 </SlideTabs>
                 <Refresher active={isFetching} />
-                <GoTop />
+                <GoTop  />
             </div>
         )
     }

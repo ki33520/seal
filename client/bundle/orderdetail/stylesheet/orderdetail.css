@@ -60,6 +60,7 @@
 }
 .orderSpeed .orderNum{
     padding:.32rem;
+    margin-bottom: .32rem;
     border-bottom:1px solid #d7d7d7;
     color:#a0a0a0;
 }
@@ -73,7 +74,8 @@
     font-size:.38rem;
 }
 .orderSpeed .rate{
-    padding:.32rem .32rem;
+    padding: 0 .32rem;
+    margin-bottom: .32rem;
 }
 .orderSpeed .rate img{
     width:100%;

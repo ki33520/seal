@@ -28,7 +28,6 @@ class OrderGoods extends Component{
     }
     render(){
         const {productFee,sendWareHouseName} = this.props;
-        console.log(this.props)
         return (
             <div className="orderConfirm_l clearfix">
                 <div className="orderConfirm_l_box">

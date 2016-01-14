@@ -16,10 +16,10 @@ var memberCenter = function(req, res, next) {
         var user = req.session.user;
         bluebird.props({
             memberMemberInfo: util.fetchAPI("memberMemberInfo", {
-                memberId: 'fc6804de51c482730151e8ec0a080023'
+                memberId: user.memberId
             },false),
             memberCountOrder: util.fetchAPI("memberCountOrder", {
-                memberId: 'fc6804de51c482730151e8ec0a080023'
+                memberId: user.memberId
             },false),
         }).then(function(ret) {
             if (ret.memberMemberInfo.returnCode === 0 && ret.memberCountOrder.returnCode === 0) {
