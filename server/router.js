@@ -52,7 +52,9 @@ router.get("/goodcommentshow/:id",require("./controller/goodcomment").showCommen
 router.post("/confirmorder",require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
+router.get("/orderlist/:id",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
+router.post("/closedOrder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);

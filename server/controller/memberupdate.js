@@ -9,7 +9,7 @@ var update = function(req, res, next) {
     var user = req.session.user;
     bluebird.props({
         memberDetailByUser: util.fetchAPI("memberDetailByUser", {
-            memberId: 'fc6804de51c482730151e8ec0a080023'
+            memberId: user.memberId
         },false)
     }).then(function(ret) {
         console.log(ret)
@@ -36,7 +36,7 @@ var updateBasic = function(req, res, next) {
     var birthdy = req.body.birthdy;
     bluebird.props({
         updateBasicByUser: util.fetchAPI("updateBasicByUser", {
-            memberId: 'fc6804de51c482730151e8ec0a080023',
+            memberId: user.memberId,
             nickName: nickName,
             gender: gender,
             birthday: birthdy
@@ -65,7 +65,7 @@ var updatePassword = function(req, res, next) {
     var repeatPassword = req.body.repeatPassword;
     bluebird.props({
         updatePasswordByUser: util.fetchAPI("updatePasswordByUser", {
-            memberId: 'fc6804de51c482730151e8ec0a080023',
+            memberId: user.memberId,
             opassword: oldPassword,
             password: password,
             rpassword: repeatPassword
@@ -92,7 +92,7 @@ var updateMembercard = function(req, res, next) {
 
     bluebird.props({
         updateMembercardByUser: util.fetchAPI("updateMembercardByUser", {
-            memberId: 'fc6804de51c482730151e8ec0a080023',
+            memberId: user.memberId,
             cardNo: cardNo,
             mobileNumber: mobileNumber,
             verifyCode: verifyCode

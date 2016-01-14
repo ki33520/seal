@@ -110,15 +110,22 @@ function formatComment(object) {
     if (order.orderStatus == 'STATUS_NOT_PAY' || order.orderStatus == 'STATUS_CANCELED') {
         order.canFlow = false;
     }
-    _.each(orderStatus, function(v, k) {
+    var statusArr = [];
+    orderStatus.map((v, k)=>{
+        statusArr[k] = {
+            value: v.value,
+            text: v.text,
+            active: v.active
+        };
+    });
+    statusArr.map((v, k)=>{
         if (v.value === order.orderStatus) {
-            _.map(orderStatus.slice(0, k), function(value) {
+            _.map(statusArr.slice(0, k+1), function(value) {
                 value.active = true
-                return value;
             })
         }
     });
-    order.orderStatusArr = orderStatus;
+    order.orderStatusArr = statusArr;
     _.each(payType, function(v, k) {
         if (v.value === order.payType) {
             order.payType = v.text;
@@ -139,18 +146,22 @@ function formatComment(object) {
 
 var orderDetail = function(req, res) {
     var id = req.params.id;
-    util.fetchAPI("orderById", {
-        orderNo: id
-    },false).then(function(resp) {
-        if (resp.returnCode === 0) {
-            var order = formatComment(resp.object);
-            
+    bluebird.props({
+        orderById: util.fetchAPI("orderById", {
+            orderNo: id
+        },false),
+        timestamp: util.fetchAPI("timestamp",{},false)
+    }).then(function(resp) {
+        if (resp.orderById.returnCode === 0 && resp.timestamp.returnCode === 0){
+            var order = formatComment(resp.orderById.object),
+                systemTime = resp.timestamp.systemTime;
             // if(order.promoTotal > 0){
             //     order.totalFee = order.totalFee + order.promoTotal;
             // }
             var initialState = {
                 isFetched: true,
-                order: order
+                order: order,
+                systemTime: systemTime
             };
             var markup = util.getMarkupByComponent(OrderDetail({
                 initialState: initialState
@@ -160,7 +171,23 @@ var orderDetail = function(req, res) {
                 initialState: initialState
             })
         }else{
-            next(new Error(resp.orders.message));
+            if(resp.orderById.returnCode !== 0){
+                next(new Error(resp.orderById.message));
+            }
+            if(resp.timestamp.returnCode !== 0){
+                next(new Error(resp.timestamp.message));
+            }
+        }
+    })
+}
+var orderClose = function(req, res){
+    var orderNo = req.body.orderNo;
+    util.fetchAPI('closedOrderById', {
+        orderNo: orderNo
+    }).then(function(resp) {
+        console.log(resp)
+        if (resp.returnCode === 0) {
+            res.json(resp);
         }
     })
 }
@@ -182,5 +209,6 @@ var logistics = function(req, res) {
 
 module.exports = {
     orderDetail: orderDetail,
-    logistics: logistics
+    logistics: logistics,
+    orderClose: orderClose
 };
