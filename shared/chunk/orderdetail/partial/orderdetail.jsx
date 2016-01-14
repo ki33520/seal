@@ -17,12 +17,12 @@ const orderStatus = {
 
 class OrderDetail extends Component{
     renderAddress(order){
-        const {receiverName,receiverPhone,
-            receiverProvince,receiverCity,receiverDistrict,receiverAddress} = order.orderAddressPojo;
-        const address = `${receiverProvince}${receiverCity}${receiverDistrict}${receiverAddress}`
+        const {receiverName,receiverMobile,
+            receiverProvince,receiverCity,receiverDistrict,receiverAddress} = order.receiverObject;
+        const address = `${receiverProvince} ${receiverCity} ${receiverDistrict} ${receiverAddress}`
         return (
             <div className="order-time">
-                <p>{receiverName}<span className="mobNum">{receiverPhone}</span></p>
+                <p>{receiverName}<span className="mobNum">{receiverMobile}</span></p>
                 <p className="fs12px">{address}</p>
             </div>
         )
@@ -37,11 +37,14 @@ class OrderDetail extends Component{
     }
     render(){
         const {order} = this.props;
+        var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
+        var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
+        var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
         return (
             <div className="order-detail-content">
             <Header>订单详情</Header>
             <div className="orderSpeed">
-                <div className="orderNum">订单编号:<span>{order.orderNo}</span></div>
+                <div className="orderNum"><i>订单编号:</i><span>{order.orderNo}</span></div>
                 <StatusProgress {...order}/>
                 <span>01:15:47&nbsp;后自动取消</span>
             </div>
@@ -55,38 +58,31 @@ class OrderDetail extends Component{
                 </div>
                 <div className="bottom-line">
                     <div className="label">商品总价：</div>
-                    <div className="data">&yen;<span>448.00</span> </div>
+                    <div className="data"><i>&yen;</i><span>{order.salesTotalFee}</span></div>
                 </div>
                 <div className="bottom-line">
                     <div className="label">国内运费：</div>
-                    <div className="red-box"> 包邮 </div>
-                    <div className="data">&yen;<span>0.00</span> </div>
-                </div>
-                <div className="bottom-line">
-                    <div className="label">国内运费：</div>
-                    <div className="red-box"> 包邮 </div>
-                    <div className="data">&yen;<span>0.00</span> </div>
+                    <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{order.logisticsFee}</span></div>
                 </div>
                 <div className="bottom-line">
                     <div className="label">国际运费：</div>
-                    <div className="data">&yen;<span>65.00</span> </div>
+                    <div className="data">{abroadFeeBox}<i>&yen;</i><span>{order.abroadFee}</span></div>
                 </div>
                 <div className="bottom-line">
                     <div className="label">关税：</div>
-                    <div className="red-box">免税</div>
-                    <div className="data">&yen;<span>0.00</span> </div>
+                    <div className="data">{tariffFeeBox}<i>&yen;</i><span>{order.tariffFee}</span></div>
                 </div>
                 <div className="bottom-line intro">
                     <div className="label">优惠活动：</div>
-                    <div className="data">-&yen;<span>20.00</span> </div>
+                    <div className="data">-<i>&yen;</i><span>{order.promoFee}</span></div>
                 </div>
                 <div className="bottom-line intro">
                     <div className="label">优惠券：</div>
-                    <div className="data">-&yen;<span id="coupon_money">5.00</span> </div>
+                    <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee}</span></div>
                 </div>
                 <div className=" bottom-line no-border">
                     <div className="label">应付金额：</div>
-                    <div className="data red-w">&yen;<span id="total_amount_money">308.00</span> </div>
+                    <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee}</span></div>
                 </div>
             </div>
             {this.renderFooter()}

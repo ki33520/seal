@@ -29,10 +29,7 @@ function filterGoodsList(result){
 function filterNames(result){
     let list = [];
     result && result.map((item,i)=>{
-        //test ## ##
-        var tmp = item.split('##');
-        item = {name:tmp[0],id:tmp[1]};
-
+       
         list.push({
             id:item.id,
             name:item.name
@@ -53,23 +50,29 @@ function filterResult(result){
 
 var goodList = function(req, res, next) {
     let searchKey = req.query.searchKey||'';
-    let currentPage = req.query.pageIndex||1;
+    let currentPage = Number(req.query.pageIndex)||1;
     let sortType = req.query.sortType||1;
     let sortViewType = req.query.sortViewType||true;
     let isHaveGoods = req.query.isHaveGoods||false;
+    let pageSize = 10;
 
     bluebird.props({
         goods: util.fetchAPI("fetchGoodsList", {
             searchKey,
             sortType,
             sortViewType,
-            currentPage
+            currentPage,
+            pageSize
         })
     }).then(function(resp) {
         if (resp.goods.returnCode === 0) {
             let result = filterResult(resp.goods);
             if (req.xhr === true) {
-                res.json(result);
+                res.json({
+                    goodsList:result.goodsList,
+                    isFetching:false,
+                    pageIndex:currentPage
+                });
             } else {
                  
                 let initialState = {
@@ -77,7 +80,9 @@ var goodList = function(req, res, next) {
                     goodsList:result.goodsList,
                     areaNames:result.areaNames,
                     brandNames:result.brandNames,
-                    categorys:result.categoryNames
+                    categorys:result.categoryNames,
+                    totalPage:Math.ceil(resp.goods.totalsNum/pageSize),
+                    pageIndex:currentPage
                 };
 
                 let markup = util.getMarkupByComponent(GoodListApp({

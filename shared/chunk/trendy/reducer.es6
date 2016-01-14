@@ -1,8 +1,11 @@
 'use strict'
-import {REQUEST_GOODS,RECEIVE_GOODS} from "./action.es6";
 import {combineReducers} from "redux";
 import _ from "lodash";
-
+import {
+    REQUEST_GOODS,RECEIVE_GOODS,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,CHANGE_FIELD,
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
+} from "./constant.es6";
 
 function goodsByParam(state={},action){
     switch(action.type){
@@ -11,12 +14,52 @@ function goodsByParam(state={},action){
                 isFetching:true
             });
         case RECEIVE_GOODS:
-            const {list} = state;
+            const {goodList,totalPages,pageIndexs} = state;
             const {index} = action.param;
-            list[index]=action.res;
+            goodList[index]= _.union(goodList[index],action.res.goodList);
+            totalPages[index] = action.res.totalPage;
+            pageIndexs[index] = action.res.pageIndex;
             return Object.assign({},state,{
                 isFetching:false,
-                list:list
+                goodList:goodList,
+                totalPages:totalPages,
+                pageIndexs:pageIndexs
+            });
+        case REQUEST_HOTWORD:
+            return Object.assign({},state,{
+                hotwordFetched:false,
+                hotwordFetching:true
+            });
+        case RESPONSE_HOTWORD:
+            const hotwords = action.res.result;
+            const hotwordFetched = action.res.hotwordFetched;
+            return Object.assign({},state,{
+                hotwords,
+                hotwordFetched,
+                hotwordFetching:false
+            });
+        case REQUEST_ASSOICATEWORD:
+            return Object.assign({},state,{
+                associateWordFetched:false,
+                associateWordFetching:true
+            });
+        case RESPONSE_ASSOICATEWORD:
+            const associatewords = action.res.result;
+            const associateWordFetched = action.res.associateWordFetched;
+            
+            search = {
+                keyword:action.param.keyword,
+                hotwords:associatewords
+            }
+            return Object.assign({},state,{
+                keyword:action.param.keyword,
+                hotwords:associatewords,
+                associateWordFetched,
+                associateWordFetching:false
+            });
+        case CHANGE_FIELD:
+            return Object.assign({},state,{
+                keyword:action.param.keyword
             });
         default:
             return state;

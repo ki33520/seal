@@ -26,11 +26,30 @@ class GoodListApp extends React.Component{
     }
 
     handleGoBack(){
-        location.href='/';
+        window.history.back();
     }
 
     handClick(){
-        location.href="#/search";
+        window.location.href="#/search";
+    }
+
+    componentDidMount(){
+        util.registerPullDownEvent(()=>{
+            this.beginRefresh();
+        }.bind(this));
+    }
+
+    beginRefresh(){
+        const {dispatch,pageIndex,totalPage,isFetching} = this.props;
+        const nextPage = pageIndex + 1;
+
+        if(totalPage <= pageIndex || isFetching){
+            return false;
+        }
+
+        dispatch(fetchGoods(window.location.href,{
+            pageIndex:nextPage
+        }));
     }
 
     closeAllPopups(){

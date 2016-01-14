@@ -4,6 +4,8 @@
 @import "../../common/footer.styl";
 @import "../../component/refresher.styl";
 @import "../../component/slidetabs";
+@import "../../common/switcher";
+@import "../../common/search";
 @import "./explo.css";
 
 .container {
@@ -21,7 +23,10 @@
 			line-height: 1.16rem;
 			border: none;
 			&.active {
-				background-color: transparent;
+				i {
+					color: #801da1;
+    				border-bottom:.053333rem solid #801da1;
+				}
 			}
 		}
 	}

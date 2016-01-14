@@ -38,11 +38,6 @@ body{
 	text-align: center;
 }
  
-.active i{
-	color: #801da1;
-    border-bottom:.053333rem solid #801da1;
-}
-
 .activityGeneral{
 	padding:.266rem .32rem 0;
 	border-bottom:.2666rem solid #f7f7f7;
