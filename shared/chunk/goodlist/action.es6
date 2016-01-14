@@ -25,7 +25,7 @@ export default function fetchGoods(url,param){
     return (dispath)=>{
         dispath(requestGoods(param));
         return apiRequest(url,param).then((res)=>{
-            dispath(receiveGoods(param,res.goodsList))
+            dispath(receiveGoods(param,res))
         })
     }
 }
