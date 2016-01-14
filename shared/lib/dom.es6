@@ -80,7 +80,7 @@ let dom = {
         let scrollNode = element;
         while(scrollNode !== window){
           scrollNode = scrollNode.parentNode;
-          if(scrollNode.scrollTop > 0){
+          if(scrollNode && scrollNode.scrollHeight > scrollNode.clientHeight){
             break;
           }
         }

@@ -141,6 +141,26 @@ var createReceiver = function(req, res, next) {
     })
 }
 
+var deleteReceiver = function(req,res,next){
+    var user = req.session.user
+    var id = req.body.id
+    util.fetchAPI('deleteReceiver',{
+        recvAddressId:id,
+        memberId:user.memberId
+    }).then(function(ret){
+        if(ret.returnCode === 0){
+            res.json({
+                receiverDeleted:true
+            })
+        }else{
+            res.json({
+                receiverDeleted:false,
+                errMsg:ret.msg
+            })
+        }
+    })
+}
+
 var cascadeArea = function(req, res) {
     if (req.xhr !== true) {
         return;
@@ -179,5 +199,6 @@ module.exports = {
     updateReceiver: updateReceiver,
     saveReceiver: saveReceiver,
     createReceiver: createReceiver,
+    deleteReceiver:deleteReceiver,
     cascadeArea: cascadeArea
 };

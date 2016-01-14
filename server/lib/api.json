@@ -224,6 +224,13 @@
             "production": "http://member.tepin.hk"
         }
     },
+    "deleteReceiver": {
+        "uri": "/address/v1/delete",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "production": "http://member.tepin.hk"
+        }
+    },
     "findProvince": {
         "uri": "/sns/address/v1/findProvinceMap",
         "baseURL": {

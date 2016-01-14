@@ -8,7 +8,8 @@ import {
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
     REQUEST_RECEIVER,RESPONSE_RECEIVER,
     START_SAVERECEIVER,FINISH_SAVERECEIVER,
-    START_CREATERECEIVER,FINISH_CREATERECEIVER
+    START_CREATERECEIVER,FINISH_CREATERECEIVER,
+    START_DELETERECEIVER,FINISH_DELETERECEIVER
 } from "./constant.es6";
 
 export {alert} from "../common/action.es6";
@@ -180,6 +181,33 @@ export function createReceiver(param){
             method:"POST"
         }).then((res)=>{
             dispatch(finishCreateReceiver(param,res))
+        })
+    }
+}
+
+function startDeleteReceiver(param){
+    return {
+        type:START_DELETERECEIVER,
+        param
+    }
+}
+
+function finishDeleteReceiver(param,res){
+    return {
+        type:FINISH_DELETERECEIVER,
+        param,
+        res,
+        finishAt:Date.now()
+    }
+}
+
+export function deleteReceiver(param){
+    return (dispatch)=>{
+        dispatch(startDeleteReceiver(param))
+        apiRequest("/deletereceiver",param,{
+            method:"POST"
+        }).then((res)=>{
+            dispatch(finishDeleteReceiver(param,res))
         })
     }
 }

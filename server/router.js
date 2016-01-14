@@ -73,6 +73,7 @@ router.get("/updatereceiver/:id",mainController.requireAuthorize,require("./cont
 router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 router.post("/createreceiver",mainController.requireAuthorize,require("./controller/receiver").createReceiver);
+router.post("/deletereceiver",mainController.requireAuthorize,require("./controller/receiver").deleteReceiver);
 
 router.get("/coupon", require("./controller/coupon"));
 router.post("/coupon", require("./controller/coupon"));

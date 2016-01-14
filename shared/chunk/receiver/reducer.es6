@@ -1,6 +1,7 @@
 'use strict';
 
 import {combineReducers} from "redux";
+import _ from "lodash"
 
 import {
     CHANGE_FIELD,
@@ -9,7 +10,8 @@ import {
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
     REQUEST_RECEIVER,RESPONSE_RECEIVER,
     START_SAVERECEIVER,FINISH_SAVERECEIVER,
-    START_CREATERECEIVER,FINISH_CREATERECEIVER
+    START_CREATERECEIVER,FINISH_CREATERECEIVER,
+    START_DELETERECEIVER,FINISH_DELETERECEIVER
 } from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -161,7 +163,25 @@ function cascadeArea(state,action){
 }
 
 function receiverByUser(state={},action){
+    let receivers = state.receivers
     switch(action.type){
+        case START_DELETERECEIVER:
+            return Object.assign({},state,{
+                receiverDeleting:true,
+                receiverDeleted:false
+            })
+        case FINISH_DELETERECEIVER:
+            let receiverDeleted = action.res.receiverDeleted
+            if(receiverDeleted){
+                receivers = _.reject(receivers,(receiver)=>{
+                    return receiver.id === action.param.id
+                })
+            }
+            return Object.assign({},state,{
+                receivers,
+                receiverDeleting:false,
+                receiverDeleted
+            })
         default:
             return state;
     }
