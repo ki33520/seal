@@ -35,7 +35,9 @@ router.get("/cartcount", require("./controller/gooddetail").cartCount);
 router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
 
-router.get("/goodlist", require("./controller/goodlist"));
+router.get("/goodlist/:keyword", require("./controller/goodlist").goodList);
+router.post("/goodlist", require("./controller/goodlist").sortList);
+
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
 router.post("/trendyActivity",require("./controller/trendy").activity);

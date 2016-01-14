@@ -15,11 +15,10 @@ function goodsByParam(state={},action){
                 isFetching:true
             });
         case RECEIVE_GOODS:
-            let goodsList = _.union(state.goodsList,action.res.goodsList)
             return Object.assign({},state,{
-                isFetching:false,
-                goodsList:goodsList,
-                pageIndex:action.res.pageIndex
+                isFetching:action.res.isFetching,
+                goods:action.res.goods,
+                page:action.res.page
             });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{
