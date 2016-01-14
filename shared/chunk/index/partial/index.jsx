@@ -29,10 +29,12 @@ class Index extends Component{
             "index-content":true
         })
         const tabs = channels.map((channel,i)=>{
-            // console.log('channel',channel.floors)
+            let props = Object.assign({},this.props,{
+                active: i === this.state.activeChannel
+            })
             return (
                 <SlideTabsItem navigator={()=><span><b>{channel.name}</b></span>} key={i}>
-                <Floor channel={channel} active={i===this.state.activeChannel} {...this.props}/>
+                <Floor channel={channel} {...props}/>
                 </SlideTabsItem>
             )
         })

@@ -2,7 +2,7 @@
 
 import {
     SHOW_ALERT,HIDE_ALERT
-} from "./action.es6";
+} from "./constant.es6";
 
 export function alertReducer(state={},action){
     switch(action.type){
