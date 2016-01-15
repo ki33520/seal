@@ -3,6 +3,8 @@
 @import "../../common/iconfont";
 @import "../../common/header";
 @import "../../common/ordergoods";
+@import "../../component/gotop";
+@import "../../component/slidetabs";
 @import "./orderdetail.css";
 
 .order-detail-container{
@@ -13,4 +15,44 @@
 }
 .order-detail-content{
     padding-bottom:px2rem(45);
+    background-color: #f5f5f5;
+    &.logistics-content{
+    	padding-bottom: 0;
+    }
+}
+.container {
+	height: 100%;
+	.trendy-content{
+		height:100%;
+		overflow:hidden;
+	}
+}
+
+.back-to-top{
+	bottom:px2rem(50);
+}
+
+.slide-tabs {
+	.slide-tabs-navbar {
+		height: 1.16rem;
+		width: 100%;
+		background-color:white;
+	    border-bottom: 1px solid #d7d7d7;
+	    .slide-tabs-navbar-item {
+			line-height: 1.16rem;
+			border: none;
+			&.active {
+				i {
+					color: #801da1;
+    				border-bottom:.053333rem solid #801da1;
+				}
+			}
+		}
+	}
+	.slide-tabs-content{
+		padding-bottom: 0;
+		.slide-tabs-item{
+			// overflow-y:scroll;
+		}
+	}
 }
