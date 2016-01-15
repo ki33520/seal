@@ -8,7 +8,7 @@ api = _.extend(api,require("./api/user.json"))
 
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
-    "oathServer": "https://login.tepin.com",
+    "oathServer": "https://ssl.e9448.com",
     "imgServer":"http://imgtest.tepin.com/"
 };
 var runtime = process.env["NODE_ENV"];

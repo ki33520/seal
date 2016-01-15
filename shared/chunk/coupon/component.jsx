@@ -30,13 +30,6 @@ class Coupon extends React.Component{
 
         this.fetchCouponsByParam(type,pageIndex);
     }
-
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh();
-        }.bind(this));
-    }
-
     fetchCouponsByParam(couponType,nextPage){
         const {dispatch} = this.props;
         dispatch(fetchCoupons({
@@ -117,7 +110,7 @@ class Coupon extends React.Component{
                         <div>{this.renderInvalidCoupons(pagination.invalid.coupons)}</div>
                     </SlideTabsItem>
                 </SlideTabs>
-                <Refresher active={isFetching} />
+                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
                 <GoTop />
             </div>
         )
