@@ -2,7 +2,7 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import util,{apiRequest} from "../../lib/util.es6";
+import dom from "../../lib/dom.es6";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
 import fetchOrder from "./action.es6";
@@ -18,11 +18,6 @@ class OrderList extends Component{
         this.state = {
             displayFlag: props.flag
         }
-    }
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh(1);
-        }.bind(this));
     }
     beginRefresh(interval,flag){
         const {orders,isFetching,dispatch} =  this.props;
@@ -75,7 +70,7 @@ class OrderList extends Component{
                         <Floor systemTime={systemTime} orderItem={orders[4]} ref="floor"/>
                     </SlideTabsItem>
                 </SlideTabs>
-                <Refresher active={isFetching} />
+                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                 <GoTop  />
             </div>
         )
