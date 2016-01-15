@@ -5,6 +5,13 @@ var util = require("../lib/util.js");
 var config = require("../lib/config.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 var pageSize=10;
+var PARAMS = {
+        sortType:1,
+        pageSize:pageSize,
+        sortViewType:false,
+        isHaveGoods:false
+    };
+
 function filterGoodsList(result){
     let list = [];
  
@@ -31,7 +38,8 @@ function filterNames(result){
     result && result.map((item,i)=>{
         list.push({
             id:item.id,
-            name:item.name
+            name:item.name,
+            isChecked:false
         })
     });
 
@@ -40,16 +48,17 @@ function filterNames(result){
 
 var goodList = function(req, res, next) {
     let keyword = req.params.keyword;
+    let newParam = Object.assign({
+        keyword:keyword,
+        pageIndex:1
+    },PARAMS);
     
+    let queryParam = Object.assign({
+        searchKey:keyword,currentPage:1
+    },PARAMS);
+
     bluebird.props({
-        goods: util.fetchAPI("fetchGoodsList", {
-            searchKey:keyword,
-            sortType:1,
-            currentPage:1,
-            pageSize:pageSize,
-            sortViewType:false,
-            isHaveGoods:true
-        })
+        goods: util.fetchAPI("fetchGoodsList", queryParam)
     }).then(function(resp) {
  
         if (resp.goods.returnCode === 0) {
@@ -58,17 +67,17 @@ var goodList = function(req, res, next) {
             let sideBar = {
                 areaNames:filterNames(goods.areaNames),
                 brandNames:filterNames(goods.brandNames),
-                categorys:filterNames(goods.categoryNames)
+                categoryNames:filterNames(goods.categoryNames)
             };
 
             let totalPage = Math.ceil(goods.totalsNum/pageSize);
 
             let initialState = {
-                keyword:keyword,
                 goods:filterGoodsList(goods.cbls),
                 sideBar:sideBar,
                 total:totalPage,
-                page:1
+                params:newParam,
+                pageIndex:1
             };
 
             let markup = util.getMarkupByComponent(GoodListApp({
@@ -90,44 +99,43 @@ var goodList = function(req, res, next) {
 }
 
 var sortList = function(req, res, next){
-    let param = {
+    let options = {
         searchKey:req.body.keyword,
-        page:req.body.page
+        currentPage:req.body.pageIndex
     };
- 
     
     if(req.body.sortType !== undefined){
-        param.sortType = req.body.sortType;
+        options.sortType = req.body.sortType;
     }
  
     if(req.body.sortViewType!== undefined){
-        param.sortViewType = req.body.sortViewType;
+        options.sortViewType = req.body.sortViewType;
     }
 
     if(req.body.isHaveGoods!== undefined){
-        param.isHaveGoods = req.body.isHaveGoods;
+        options.isHaveGoods = req.body.isHaveGoods;
     }
 
-    if(req.body.brandName!== undefined){
-        param.brandName = req.body.brandName;
+    if(req.body.brandNames){
+        options.brandName = req.body.brandNames;
     }
 
-    if(req.body.categoryName!== undefined){
-        param.categoryName = req.body.categoryName;
+    if(req.body.categoryNames){
+        options.categoryName = req.body.categoryNames;
     }
 
-    if(req.body.sourceAreas!== undefined){
-        param.sourceAreas = req.body.sourceAreas;
+    if(req.body.areaNames){
+        options.sourceAreas = req.body.areaNames;
     }
 
+    let queryParam = Object.assign(options,PARAMS);
     bluebird.props({
-        goods: util.fetchAPI("fetchGoodsList", param)
+        goods: util.fetchAPI("fetchGoodsList", queryParam)
     }).then(function(resp) {
         if (resp.goods.returnCode === 0) {
             if (req.xhr === true) {
                 res.json({
                     goods:filterGoodsList(resp.goods.cbls),
-                    page:Number(req.body.page),
                     isFetching:false
                 });
             }else{

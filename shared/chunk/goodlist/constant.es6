@@ -8,6 +8,7 @@ export const SORT_SALES = 4;
 export const SORT_ASC = true;
 export const SORT_DESC = false;
 
+export const CAN_BUY = "CAN_BUY";
 export const REQUEST_HOTWORD = 'REQUEST_HOTWORD';
 export const RESPONSE_HOTWORD = 'RESPONSE_HOTWORD';
 export const REQUEST_GOODS = "REQUEST_GOODS";
