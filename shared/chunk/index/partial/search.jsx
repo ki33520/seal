@@ -15,7 +15,7 @@ class SearchBox extends Component{
         let {hotwords} = this.props.search;
         if(hotwords){
             return hotwords.map((hotword,i)=>{
-                return <a href="/goodlist" key={i}>{hotword.name}</a>
+                return <a href={"/goodlist/"+hotword.name} key={i}>{hotword.name}</a>
             })
         }
         return null
@@ -56,7 +56,7 @@ class SearchBox extends Component{
         const {keyword} = this.props.search;
         return (
             <div className="searchOut">
-                <a href={"/goodlist?searchKey="+keyword}>{keyword}</a>
+                <a href={"/goodlist/"+keyword}>{keyword}</a>
             </div>
         )
     }

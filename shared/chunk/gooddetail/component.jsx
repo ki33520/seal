@@ -176,7 +176,7 @@ class GoodDetail extends Component{
         })
         return (
             <div className="good-detail-content">
-            <Header>商品详情<a className="globa" href="javascript:void(0);"><i></i></a>
+            <Header>商品详情<a className="globa" href="/"><i></i></a>
             <a className="goods_share"></a>
             </Header>
             <div className={upperClasses}>

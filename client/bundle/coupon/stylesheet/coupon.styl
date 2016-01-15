@@ -11,6 +11,10 @@
 
 .container {
 	height: 100%;
+	&>div{
+		height:100%;
+		overflow:hidden;
+	}
 }
 
 .header {
@@ -19,7 +23,6 @@
 }
 
 .slide-tabs {
-	padding-bottom: 1.38rem;
 	background-color: #f3f3f3;
 	.slide-tabs-navbar {
 		height: 1.16rem;
@@ -35,6 +38,10 @@
 				color: #801da1;
 			}
 		}
+	}
+	.slide-tabs-content{
+		overflow:hidden;
+        padding-bottom:px2rem(30);
 	}
 }
 

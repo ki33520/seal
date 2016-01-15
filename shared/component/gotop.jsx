@@ -16,7 +16,7 @@ class GoTop extends Component{
     }
     toggleVisble(){
         const {relative} = this.props;
-        const scrollTop = relative?dom.scrollTop(this.relativeElement)
+        const scrollTop = relative?dom.scrollTop(dom.scrollNode(ReactDOM.findDOMNode(this)))
         :dom.scrollTop();
         if(scrollTop > 50){
             this.setState({active:true});
@@ -26,7 +26,7 @@ class GoTop extends Component{
     }
     componentDidMount(){
         const {relative} = this.props;
-        this.relativeElement = relative?ReactDOM.findDOMNode(this).parentNode:window;
+        this.relativeElement = relative?dom.scrollNode(ReactDOM.findDOMNode(this)):window;
         dom.bindEvent(this.relativeElement,'scroll',_.debounce(this.toggleVisble.bind(this),100))
     }
     componentWillUnmount(){
