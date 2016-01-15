@@ -19,11 +19,6 @@ class MembercollectList extends Component{
         super(props);
         const {collect,isFetching,isFetched} = props;
     }
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh();
-        }.bind(this));
-    }
     beginRefresh(){
         const {dispatch} = this.props;
         const {collect,isFetching} = this.props;
@@ -51,7 +46,7 @@ class MembercollectList extends Component{
                 </Header>
                 <Node {...collect} />
                 <GoTop />
-                <Refresher active={isFetching} />
+                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
             </div>
         );
     }
