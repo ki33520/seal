@@ -81,7 +81,6 @@ class Trendy extends React.Component{
                 <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
                     {this.renderContent(goodList[i])}
                     <Refresher active={this.props.isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
-                    <GoTop relative={true}/>
                 </SlideTabsItem>
             )
         })

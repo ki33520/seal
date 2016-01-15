@@ -19,11 +19,6 @@ class OrderList extends Component{
             displayFlag: 0
         }
     }
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh(1);
-        }.bind(this));
-    }
     beginRefresh(interval,flag){
         const {orders,isFetching,dispatch} =  this.props;
         var flag = flag!= undefined ? flag: this.state.displayFlag,

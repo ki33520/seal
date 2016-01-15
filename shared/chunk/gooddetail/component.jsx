@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
+import {urlParam,base64Encode} from "../../lib/util.es6";
 import Slider from "../../component/slider/slider.jsx";
 import Slide from "../../component/slider/slide.jsx";
 import PullHook from "../../component/pullhook.jsx";
@@ -106,7 +107,6 @@ class GoodDetail extends Component{
         });
     }
     directBuy(e){
-        console.log('directBuy')
         e && e.preventDefault();
         const {alert} = this.props
         const {good} = this.props.goodById;
@@ -123,8 +123,12 @@ class GoodDetail extends Component{
             alert('购买数量必须大于0',3000);
             return;
         }else if(selectedItem !== null && buyed > 0){
-            const directBuyForm = ReactDOM.findDOMNode(this.refs.directBuyForm);
-            directBuyForm.submit();
+            let singleCode = selectedItem.code
+            let queryParam = base64Encode(urlParam({
+                itemIds:singleCode,
+                buyeds:buyed
+            }))
+            window.location.assign(`/confirmorder/${queryParam}`)
         }
     }
     handlePullUp(e){
@@ -215,10 +219,6 @@ class GoodDetail extends Component{
             directBuy={this.directBuy.bind(this)} 
             addToCart={this.addToCart.bind(this)}>
             </Toolbar>
-            <form action="/confirmorder" method="POST" ref="directBuyForm">
-                <input type="hidden" value={selectedItem !== null?selectedItem.code:""} name="itemIds"/>
-                <input type="hidden" value={buyed} name="buyeds"/>
-            </form>
             <div className={downClasses}>
                 <PullHook 
                 className="teyla" 

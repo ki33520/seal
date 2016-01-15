@@ -1,6 +1,7 @@
 'use strict'
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import Icon from "../../../component/icon.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
@@ -9,7 +10,6 @@ import Header from "../../common/header.jsx";
 import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";
 
-import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 import {submitOrder,changeDeliveryTime,toggleTicket,toggleBalance,changePaypassword} from "../action.es6";
@@ -29,7 +29,7 @@ class ConfirmOrder extends Component{
         return (
             <a href="#/receiver">
             <div className="order-time">
-            <p>{receiver.name}<span className="mobNum">{receiver.mobileNumber}</span></p>
+            <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span></p>
             <p>433101**********1011<em>实名</em></p>
             <p className="fs12px">{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
             <span className="order-icpe"><i className="iconfont icon-right"></i></span>
@@ -94,12 +94,9 @@ class ConfirmOrder extends Component{
         if(prevProps.orderSubmiting === true && 
             this.props.orderSubmiting === false){
             if(orderSubmited === true){
-                dispatch(alert("提交成功!",2000));
                 setTimeout(()=>{
-                    React.findDOMNode(this.refs.submitForm).submit();
+                    // ReactDOM.findDOMNode(this.refs.submitForm).submit();
                 },2400)
-            }else{
-                dispatch(alert(errMsg,2000))
             }
         }
     }
