@@ -28,13 +28,12 @@ var index = function(req, res, next) {
     var pageSize = 5;
     bluebird.props({
         allComment: util.fetchAPI("memberCommentByUser", {
-            memberId: 'fc6804de51c482730151e8ec0a080023',
+            memberId: user.memberId,
             status: 2,
             pageIndex: pageIndex,
             pageSize: pageSize
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
                 object = ret.allComment.object;
@@ -70,7 +69,7 @@ var showComment = function(req, res, next) {
     var pageSize = 5;
     bluebird.props({
         showComment: util.fetchAPI("memberCommentByUser", {
-            memberId: 'fc6804de51c482730151e8ec0a080023',
+            memberId: user.memberId,
             status: 2,
             pageIndex: pageIndex,
             pageSize: pageSize

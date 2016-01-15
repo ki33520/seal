@@ -35,7 +35,9 @@ router.get("/cartcount", require("./controller/gooddetail").cartCount);
 router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
 
-router.get("/goodlist", require("./controller/goodlist"));
+router.get("/goodlist/:keyword", require("./controller/goodlist").goodList);
+router.post("/goodlist", require("./controller/goodlist").sortList);
+
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
 router.post("/trendyActivity",require("./controller/trendy").activity);
@@ -50,7 +52,9 @@ router.get("/goodcommentshow/:id",require("./controller/goodcomment").showCommen
 router.get("/confirmorder/:param",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
+router.get("/orderlist/:id",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
+router.post("/closedOrder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);

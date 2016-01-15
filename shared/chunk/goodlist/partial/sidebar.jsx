@@ -3,19 +3,18 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import classNames from "classnames";
-import{isHaveGoods} from "../constant.es6";
 
 class Sidebar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            isHaveGoods:isHaveGoods
+            isHaveGoods:true
         }
     }
 
     handleSave(){
         this.props.handleCanBuy({
-            isHaveGoods:this.state.isHaveGood
+            isHaveGoods:this.state.isHaveGoods
         });
         this.props.handleClose();
     }

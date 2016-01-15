@@ -187,6 +187,11 @@ body{
 .order-down a:last-child{
     margin-left: 0;
 }
+.order-down a:hover,
+.order-down a:active,
+.order-down a:visited{
+    color: #fff;
+}
 .order-down a.view_c{
     background-color:#fff;
     color:#ed1946;

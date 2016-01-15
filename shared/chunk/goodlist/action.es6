@@ -21,10 +21,10 @@ function requestGoods (param) {
     }
 }
 
-export default function fetchGoods(url,param){
+export default function fetchGoods(param){
     return (dispath)=>{
         dispath(requestGoods(param));
-        return apiRequest(url,param).then((res)=>{
+        return apiRequest('/goodlist',param,{method:"POST"}).then((res)=>{
             dispath(receiveGoods(param,res))
         })
     }

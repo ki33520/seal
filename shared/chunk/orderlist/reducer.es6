@@ -10,6 +10,7 @@ export function ordersByParam(state={},action){
     switch(action.type){
         case REQUEST_ORDER:
             return Object.assign({},state,{
+            	isFetched:false,
                 isFetching:true
             })
         case RECEIVE_ORDER:

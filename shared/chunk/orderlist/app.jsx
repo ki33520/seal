@@ -7,9 +7,11 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import OrderList from "./component.jsx";
 
 function selector(state){
-    const {orders,isFetched,isFetching} = state.ordersByParam
+    const {orders,systemTime,flag,isFetched,isFetching} = state.ordersByParam
     return {
         orders,
+        flag,
+        systemTime,
         isFetched,
         isFetching
     };
@@ -27,12 +29,14 @@ class OrderListApp extends Component{
         super(props);
     }
     render(){
-        const {isFetched,orders} = this.props.initialState;
+        const {isFetched,orders,flag,systemTime} = this.props.initialState;
         const initialState = {
             ordersByParam:{
                 isFetching:false,
                 isFetched,
-                orders
+                flag,
+                orders,
+                systemTime
             }
         };
         var store = configureStore(initialState);
