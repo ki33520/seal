@@ -1,12 +1,43 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
+import {
+    SELECT_ATTR,
+    REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
+    REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
+    REQUEST_GOOD,RESPONSE_GOOD,
+    START_ADD_CART,FINISH_ADD_CART,
+    START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED
+} from "./constant.es6";
 
-export const REQUEST_GOOD = "REQUEST_GOOD";
-export const RECEIVE_GOOD = "RECEIVE_GOOD";
-export const START_ADD_CART = "START_ADD_CART";
-export const FINISH_ADD_CART = "FINISH_ADD_CART";
-export const START_ADD_FAVORITE = "START_ADD_FAVORITE";
-export const FINISH_ADD_FAVORITE = "FINISH_ADD_FAVORITE";
+export function selectAttr(attr,attrValue){
+    return {
+        type:SELECT_ATTR,
+        attr,
+        attrValue
+    }
+}
+
+function requestCartCount(){
+    return {
+        type:REQUEST_CARTCOUNT
+    }
+}
+
+function responseCartCount(res){
+    return {
+        type:RESPONSE_CARTCOUNT,
+        res
+    }
+}
+
+export function fetchCartCount(){
+    return (dispatch)=>{
+        dispatch(requestCartCount())
+        return apiRequest("/cartcount").then((res)=>{
+            dispatch(responseCartCount(res))
+        })
+    }
+}
 
 function requestGood(param){
     return {
@@ -15,23 +46,22 @@ function requestGood(param){
     }
 }
 
-function receiveGood(param,res){
+function responseGood(param,res){
     return {
-        type:RECEIVE_GOOD,
-        receiveAt:Date.now(),
+        type:RESPONSE_GOOD,
         param,
         res
     }
 }
 
-export default function fetchGood(url,param){
+import {alert} from "../common/action.es6";
+export {alert} from "../common/action.es6";
+
+export function fetchGood(param){
     return (dispatch)=>{
         dispatch(requestGood(param));
-        return apiRequest(url,param,{
-            type:"jsonp",
-            jsonpcallback:"jsoncallback"
-        }).then((res)=>{
-            dispatch(receiveGood(param,res));
+        return apiRequest("/fetchgood/"+param.id,{}).then((res)=>{
+            dispatch(responseGood(param,res));
         });
     }
 }
@@ -52,37 +82,66 @@ function finishAddCart(param,res){
     }
 }
 
-export function addCart(url,param){
+export function addCart(param){
     return (dispatch)=>{
         dispatch(startAddCart(param));
-        apiRequest(url,param).then((res)=>{
+        apiRequest("/addcart",param).then((res)=>{
+            if(res.cartAdded){
+                dispatch(alert("添加购物车成功!",3000))
+            }else{
+                dispatch(alert("添加购物车失败!",3000))
+            }
             dispatch(finishAddCart(param,res));
         })
     }
 }
 
 
-function startAddFavorite(param){
+function startToggleCollected(param){
     return {
-        type:START_ADD_FAVORITE,
+        type:START_TOGGLE_COLLECTED,
         param:param
     }
 }
 
-function finishAddFavorite(param,res){
+function finishToggleCollected(param,res){
     return {
-        type:FINISH_ADD_FAVORITE,
+        type:FINISH_TOGGLE_COLLECTED,
         param,
         res,
         finishAt:Date.now()
     }
 }
 
-export function addFavorite(url,param){
+export function toggleCollected(param){
     return (dispatch)=>{
-        dispatch(startAddFavorite(param));
-        apiRequest(url,param).then((res)=>{
-            dispatch(finishAddFavorite(param,res));
+        dispatch(startToggleCollected(param));
+        apiRequest("/togglecollected",param).then((res)=>{
+            dispatch(finishToggleCollected(param,res));
+        })
+    }
+}
+
+function requestIsCollected(param){
+    return {
+        type:REQUEST_ISCOLLECTED,
+        param
+    }
+}
+
+function responseIsCollected(param,res){
+    return {
+        type:RESPONSE_ISCOLLECTED,
+        param,
+        res
+    }
+}
+
+export function fetchIsCollected(param){
+    return (dispatch)=>{
+        dispatch(requestIsCollected(param))
+        return apiRequest("/iscollected").then((res)=>{
+            dispatch(responseIsCollected(param,res))
         })
     }
 }

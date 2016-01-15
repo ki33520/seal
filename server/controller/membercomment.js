@@ -34,7 +34,6 @@ var index = function(req, res, next) {
             pageSize: pageSize
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
                 object = ret.allComment.object;

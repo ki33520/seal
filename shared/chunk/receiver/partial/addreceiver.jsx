@@ -5,74 +5,70 @@ import _ from "lodash";
 import Header from "../../common/header.jsx";
 import CascadeArea from "./cascadearea.jsx";
 
-import {fetchProvinces,fetchCities,fetchDistricts,saveReceiver,changeField} from "../action.es6";
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 class AddReceiver extends Component{
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
-        dispatch(changeField(fieldName,e.target.value));
+        const {changeField} = this.props;
+        changeField(fieldName,e.target.value);
     }
     loadProvinces(){
-        const {dispatch} = this.props;
-        dispatch(fetchProvinces("/cascadearea",{
-            code:"",
-            findMap: "findProvinceMap"
-        }));
+        const {fetchProvinces} = this.props;
+        fetchProvinces({
+            code:""
+        },"addReceiver")
     }
     loadCities(province){
-        const {dispatch} = this.props;
-        dispatch(fetchCities("/cascadearea",{
-            code:province,
-            findMap: "findCityMap"
-        }))
+        const {fetchCities} = this.props;
+        fetchCities({
+            code:province
+        },"addReceiver")
     }
     loadDistricts(city){
-        const {dispatch} = this.props;
-        dispatch(fetchDistricts("/cascadearea",{
-            code:city,
-            findMap: "findCountyMap"
-        }))
+        const {fetchDistricts} = this.props;
+        fetchDistricts({
+            code:city
+        },"addReceiver")
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        if(this.props.active === true && prevProps.active === false &&
+            this.props.provinces.length === 1){
+            this.loadProvinces()
+        }
     }
     handleSave(e){
         e && e.preventDefault();
-        const {receiver,dispatch,provinces,cities,districts} = this.props
-        console.log(receiver)
-        const {consignee,idCard,mobile,zipcode,address,isDefault,
-            province,city,district
+        const {receiver,provinces,cities,districts,createReceiver} = this.props
+        const {consignee,idCard,mobileNumber,address,isDefault,
+            provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
-        const selectedProvince = _.findWhere(provinces,{value:province});
-        const selectedCity = _.findWhere(cities,{value:city});
-        const selectedDistrict = _.findWhere(districts,{value:district});
-        dispatch(saveReceiver({
-            consignee,idCard,mobile,zipcode,address,
-            isdefault:isDefault,
-            province:selectedProvince.label,
-            provincecode:selectedProvince.value,
-            city:selectedCity.label,
-            citycode:selectedCity.value,
-            district:selectedDistrict.label,
-            districtcode:selectedDistrict.value,
-        }))
+        createReceiver({
+            consignee,idCard,mobileNumber,address,
+            isdefault:1,
+            provinceCode,
+            cityCode,
+            districtCode,
+        })
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
+        const {alert} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
-                dispatch(alert("提交成功!",2000));
-                setTimeout(()=>window.location.replace("/receiver"),2500)
+                alert("提交成功!",2000);
+                // setTimeout(()=>window.location.replace("/receiver"),2500)
             }else{
-                dispatch(alert(nextProps.errMsg,2000))
+                alert(nextProps.errMsg,2000)
             }
         }
     }
     render(){
         const {saveSuccess,alertActive,alertContent,receiver} = this.props
         const {
-            consignee,idCard,mobile,zipcode,address,isDefault,
+            consignee,idCard,mobileNumber,zipcode,address,isDefault,
             province,city,district,
         } = (receiver === null?{}:receiver);
         return (
@@ -104,19 +100,17 @@ class AddReceiver extends Component{
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">手机号码</div>
-                <div className="receiver-form-field"><input type="text" value={mobile} 
+                <div className="receiver-form-field"><input type="text" value={mobileNumber} 
                 placeholder="请输入您的手机号" 
-                onChange={this.handleFieldChange.bind(this,"mobile")}/></div>
+                onChange={this.handleFieldChange.bind(this,"mobileNumber")}/></div>
                 </div>
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">收货地址</div>
                 <div className="receiver-form-field">
-                    <CascadeArea {...this.props} 
-                    changeField={changeField}
-                    loadProvinces={this.loadProvinces.bind(this)} 
-                    loadCities={this.loadCities.bind(this)} 
-                    loadDistricts={this.loadDistricts.bind(this)}/>
+                    <CascadeArea loadCities={this.loadCities.bind(this)} 
+                    loadDistricts={this.loadDistricts.bind(this)} 
+                    {...this.props} />
                 </div>
                 </div>
                 <div className="receiver-form-row receiver-form-textarea-row">

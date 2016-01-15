@@ -1,0 +1,16 @@
+{
+    "confirmOrder": {
+        "uri": "/cart/v1/confirmOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "saveOrder":{
+        "uri": "/order/v1/createOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "http://product.tepin.hk"
+        }
+    }
+}

@@ -4,127 +4,80 @@ var _ = require("lodash");
 var bluebird = require("bluebird");
 var moment = require("moment");
 var util = require("../lib/util");
+var sharedUtil = require("../../shared/lib/util.es6");
 var ConfirmOrder = util.getSharedComponent("confirmorder");
+var config = require("../lib/config");
+var receiversFilter = require("./receiver").receiversFilter;
 
-function formatOrder(originResp) {
-    var order = {};
-    order.totalAmount = parseFloat(originResp.price.totalPrice).toFixed(2);
-    order.productFee = parseFloat(originResp.price.originPrice).toFixed(2);
-    order.promoAmount = parseFloat(originResp.price.discountPrice).toFixed(2);
-    order.shipFee = parseFloat(originResp.price.postage).toFixed(2);
-    order.balance = 10;
-    order.ticket = 10;
+function orderFilter(order) {
+    var _order = _.pick(order,[
+        "qtys"
+    ]);
+    _order["totalFee"] = order.totalFee
+    _order["productFee"] = order.salesTotalFee
+    _order["tariffFee"] = order.promoFee
+    _order["abroadFee"] = order.abroadFee?order.abroadFee:"0.0"
+    _order["shipFee"] = order.logisticsFee?order.logisticsFee:"0.0"
+    _order["couponFee"] = "0.0"
+    _order["promoFee"] = order.promoFee
 
-    var carts = {
-        list: [],
-        sumPrice: 0,
-        discountPrice: 0,
-        totalPrice: 0
-    };
-    _.each(originResp.marketList, function(orginalCart, i) {
-        var cart = {
-            mallName: orginalCart.marketName,
-            mallId: orginalCart.marketId
-        };
-        cart.sumPrice = 0;
-        cart.discountPrice = 0;
-        cart.goods = [];
-        _.each(orginalCart.productList, function(product, j) {
-            cart.sumPrice += (product.salesPrice * product.count);
-            cart.discountPrice += (product.discount * product.count);
-            var props = product.attrMap;
-            cart.goods.push({
-                goodId: product.stock.singleCode,
-                itemId: product.itemCode,
-                brandId: product.brandId,
-                brandName: product.brandName,
-                title: product.title,
-                props: props,
-                originPrice: product.originPrice,
-                salePrice: product.salesPrice,
-                buyed: product.count,
-                totalPrice: product.totalPrice,
-                discountPrice: product.discountPrice,
-                imageUrl: product.pic
+    var promoList = []
+    _.each(order.cartMKTList, function(promo, i) {
+        var _promo = _.pick(promo,["promoType","promoName","promoFee"])
+        _promo.goods = [];
+        _.each(promo.cartProductList, function(product, j) {
+            _promo.goods.push({
+                code:product.singleCode,
+                title:product.title,
+                imageUrl:config.imgServer + product.imageUrl,
+                attrs:product.props,
+                originPrice:product.originPrice,
+                salePrice:product.salesPrice,
+                discount:product.discount,
+                qty:product.qty
             })
         })
-        carts.sumPrice += cart.sumPrice
-        carts.discountPrice += cart.discountPrice
-        carts.totalPrice += (cart.sumPrice - cart.discountPrice)
-        carts.list.push(cart);
+        promoList.push(_promo);
     })
-    order.carts = carts;
-    order.checkedReceiver = _.find(originResp.addressList, {
-        defaultChecked: 1
-    });
-    order.receivers = originResp.addressList;
-
-    order.coupons = formatCoupons(originResp.couponList)
-    return order;
+    _order["promoList"] = promoList
+    _order["receivers"] = receiversFilter(order.memberAddrList)
+    var checkedReceiver = _.findWhere(_order["receivers"],{isDefault:1})
+    checkedReceiver = (_order["receivers"].length > 0 && checkedReceiver === undefined) && _order["receivers"][0]
+    _order["checkedReceiver"] = checkedReceiver?checkedReceiver:null
+    _order["coupons"] = formatCoupons(order.couponList)
+    // console.log('order',_order)
+    // order.coupons = formatCoupons(originResp.couponList)
+    return _order;
 }
 
-function formatCoupons(list) {
-    var sortedCoupons = _.sortBy(list, function(v) {
-        return -v.issueDate
-    });
-    _.map(sortedCoupons, function(v, k) {
-        v.validityDate = moment(v.validityDate).format('YYYY-MM-DD');
-        v.useDate = moment(v.useDate).format('YYYY-MM-DD');
-        v.issueDate = moment(v.issueDate).format('YYYY-MM-DD');
-        v.assertion = null;
-        if (v.curEntity !== null) {
-            v.assertion = v.curEntity.songAccount
-        }
-        v.flag = flagOfCoupon(v);
-        return v;
+function formatCoupons(coupons) {
+    var _coupons = []
+    coupons = _.sortBy(coupons,function(coupon){
+        return moment(new Date(coupon["startTime"])).format("X")
     })
-    return sortedCoupons;
-}
-
-function flagOfCoupon(coupon) {
-    var flag;
-    if (coupon.employName.length > 1) {
-        flag = "general";
-    }
-    if (coupon.employName.length === 1) {
-        switch (coupon.employName[0]) {
-            case "联盟优惠券":
-                flag = "legue";
-                break;
-            case "特品汇":
-                flag = "tepin";
-                break;
-            case "农博汇":
-                flag = "hnmall";
-                break;
-            case "海外购":
-                flag = "oversea";
-                break;
-            case "线下门店":
-                flag = "offline";
-                break;
-        }
-    }
-    return flag;
+    _.each(coupons, function(v, k) {
+        v["startTime"] = moment(new Date(v["startTime"])).format("YYYY.M.D")
+        v["endTime"] = moment(new Date(v["endTime"])).format("YYYY.M.D")
+        _coupons.push(v)
+    })
+    // console.log('coupons',_coupons)
+    return _coupons;
 }
 
 var confirmOrder = function(req, res, next) {
-    // var config = req.app.locals.config;
-    // var cartIds = req.query.cartIds !== undefined ? req.query.cartIds : null;
-    var itemIds = req.body.itemIds !== undefined ? req.body.itemIds : null;
-    var buyeds = req.body.buyeds !== undefined ? req.body.buyeds : null;
+    var param = util.decodeURLParam(req.params["param"])
     var user = req.session.user;
     // console.log(itemIds, buyeds)
     util.fetchAPI("confirmOrder", {
-        // memberId: user.memberId,
-        itemIds: itemIds,
-        nums: buyeds
-    }, true).then(function(ret) {
-        if (ret.code === "success") {
-            var order = formatOrder(ret);
+        memberId: user.memberId,
+        singleCodes: param.itemIds,
+        qtys: param.buyeds
+    }).then(function(ret) {
+        if (ret.returnCode === 0) {
+            var order = orderFilter(ret.object);
             _.extend(order, {
-                itemIds: itemIds,
-                buyeds: buyeds
+                itemIds: param.itemIds,
+                buyeds: param.buyeds
             })
             var initialState = {
                 isFetched: true,
@@ -141,7 +94,6 @@ var confirmOrder = function(req, res, next) {
         } else {
             next(new Error(ret.msg))
         }
-
     })
 }
 
@@ -150,12 +102,9 @@ var submitOrder = function(req, res, next) {
     var itemIds = req.body.itemIds;
     var buyeds = req.body.buyeds;
     var couponNo = req.body.couponNo;
-    var ticketActive = req.body.ticketActive;
-    var balanceActive = req.body.balanceActive;
-    var payPassword = req.body.payPassword;
-    var logisticTime = req.body.logisticTime;
     var receiverId = req.body.receiverId;
-    var invoiceId = req.body.invoiceId;
+    var couponFee = req.body.couponFee;
+    var totalFee = req.body.totalFee;
     // console.log({
     //     memberId: user.memberId,
     //     itemCodes: receiverId,
@@ -168,26 +117,21 @@ var submitOrder = function(req, res, next) {
     //     logisticTime:logisticTime,
     //     invoiceId:invoiceId
     // })
-    util.fetchAPI("submitOrder", {
+    util.fetchAPI("saveOrder", {
         memberId: user.memberId,
-        itemCodes: itemIds,
+        singleCodes: itemIds,
         qtys: buyeds,
         couponNo: couponNo,
-        payPwd: payPassword,
-        ticketActive: ticketActive,
-        balanceActive: balanceActive,
         memberDlvAddressId: receiverId,
-        logisticTime: logisticTime,
-        invoiceId: invoiceId
-    }, true).then(function(resp) {
-        if (resp.code === "success") {
+        couponFee: couponFee,
+        paymentFee: totalFee
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
             var payObject = resp.payObject;
-            payObject.channel = "WAP";
             res.json({
                 orderSubmited: true,
                 result: {
                     payObject: payObject,
-                    payUrl: resp.payurl
                 }
             });
         } else {

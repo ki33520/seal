@@ -1,6 +1,7 @@
 'use strict'
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import Icon from "../../../component/icon.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
@@ -9,7 +10,6 @@ import Header from "../../common/header.jsx";
 import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";
 
-import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 import {submitOrder,changeDeliveryTime,toggleTicket,toggleBalance,changePaypassword} from "../action.es6";
@@ -29,7 +29,7 @@ class ConfirmOrder extends Component{
         return (
             <a href="#/receiver">
             <div className="order-time">
-            <p>{receiver.name}<span className="mobNum">{receiver.mobileNumber}</span></p>
+            <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span></p>
             <p>433101**********1011<em>实名</em></p>
             <p className="fs12px">{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
             <span className="order-icpe"><i className="iconfont icon-right"></i></span>
@@ -54,55 +54,50 @@ class ConfirmOrder extends Component{
                 </div>
                 <div className="count-box-line">
                     <div className="label">国际运费：</div>
-                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                    <div className="data"> - &yen;<span>{order.abroadFee}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">关税：</div>
                     <div className="red-box">免税</div>
-                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                    <div className="data"> - &yen;<span>{order.tariffFee}</span></div>
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠活动：</div>
-                    <div className="data"> - &yen;<span>{order.promoAmount}</span></div>
+                    <div className="data"> - &yen;<span>{order.promoFee}</span></div>
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠券：</div>
-                    <div className="data"> - &yen; <span id="coupon_money">{order.promoAmount}</span></div>
+                    <div className="data"> - &yen; <span id="coupon_money">{order.couponFee}</span></div>
                 </div>
                 <div className=" count-box-line no-border">
                     <div className="label">应付金额：</div>
-                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalAmount}</span></div>
+                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalFee}</span></div>
                 </div>
             </div>
         )
     }
     submitOrder(){
-        const {dispatch,order} = this.props;
+        const {order,submitOrder} = this.props;
         const {checkedCoupon,useBalance,useTicket,payPassword,
             checkedDeliveryTime,checkedReceiver,checkedInvoice} = order;
-        dispatch(submitOrder("/submitorder",{
+        submitOrder("/submitorder",{
             itemIds:order.itemIds,
             buyeds:order.buyeds,
             couponNo:checkedCoupon !== undefined?checkedCoupon.couponNo:"",
-            ticketActive:useTicket,
-            balanceActive:useBalance,
-            payPassword:payPassword,
-            logisticTime:checkedDeliveryTime!== null?checkedDeliveryTime:"",
             receiverId:checkedReceiver !== null?checkedReceiver.id:"",
-            invoiceId:checkedInvoice !== undefined?checkedInvoice.id:""
-        }))
+            couponFee:order.couponFee,
+            totalFee:order.totalFee
+        })
     }
     componentDidUpdate(prevProps,prevState){
         const {dispatch,orderSubmited,errMsg} = this.props;
         if(prevProps.orderSubmiting === true && 
             this.props.orderSubmiting === false){
             if(orderSubmited === true){
-                dispatch(alert("提交成功!",2000));
                 setTimeout(()=>{
-                    React.findDOMNode(this.refs.submitForm).submit();
+                    window.location.assign("/orderlist")
+                    // ReactDOM.findDOMNode(this.refs.submitForm).submit();
                 },2400)
-            }else{
-                dispatch(alert(errMsg,2000))
             }
         }
     }

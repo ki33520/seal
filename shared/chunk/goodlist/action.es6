@@ -1,7 +1,10 @@
 'use strict'
 import {apiRequest} from "../../lib/util.es6";
-export const REQUEST_GOODS = "REQUEST_GOODS";
-export const RECEIVE_GOODS = "RECEIVE_GOODS";
+import {
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
+    RECEIVE_GOODS,REQUEST_GOODS,CHANGE_FIELD
+} from "./constant.es6";
 
 function receiveGoods(param,res){
     return {
@@ -18,11 +21,68 @@ function requestGoods (param) {
     }
 }
 
-export default function fetchGoods(url,param){
+export default function fetchGoods(param){
     return (dispath)=>{
         dispath(requestGoods(param));
-        return apiRequest(url,param).then((res)=>{
-            dispath(receiveGoods(param,res.goodsList))
+        return apiRequest('/goodlist',param,{method:"POST"}).then((res)=>{
+            dispath(receiveGoods(param,res))
+        })
+    }
+}
+
+function requestHotWord(param){
+    return {
+        type:REQUEST_HOTWORD,
+        param
+    }
+}
+
+function responseHotWord(param,res){
+    return {
+        type:RESPONSE_HOTWORD,
+        param,
+        res
+    }
+}
+
+export function fetchHotWord(param){
+    return (dispatch)=>{
+        dispatch(requestHotWord(param));
+        apiRequest("/searchhotwords",param).then((res)=>{
+            dispatch(responseHotWord(param,res));
+        })
+    }
+}
+
+function requestAssociateWord(param){
+    return {
+        type:REQUEST_ASSOICATEWORD,
+        param
+    }
+}
+
+function responseAssociateWord(param,res){
+    return {
+        type:RESPONSE_ASSOICATEWORD,
+        param,
+        res
+    }
+}
+
+export function fetchAssociateKeywords(param){
+    return (dispatch)=>{
+        dispatch(requestAssociateWord(param));
+        apiRequest("/searchassociate",param,{method:"POST"}).then((res)=>{
+            dispatch(responseAssociateWord(param,res));
+        })
+    }
+}
+
+export function changeField(param){
+    return (dispatch)=>{
+        dispatch({
+            type:CHANGE_FIELD,
+            param
         })
     }
 }

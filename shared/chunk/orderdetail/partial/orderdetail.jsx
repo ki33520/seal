@@ -6,44 +6,88 @@ import Header from "../../common/header.jsx";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
 
-const orderStatus = {
-    "STATUS_NOT_PAY":"待付款",
-    "STATUS_WAIT_CONFIRM":"待审核",
-    "STATUS_CONFIRMED":"待发货",
-    "STATUS_OUT_HOUSE":"待收货",
-    "STATUS_SENDED":"已签收",
-    "STATUS_FINISHED":"已完成"
+import {fetchCloseOrder} from "../action.es6";
+
+
+function formatTime(num){
+    return num >=10 ? num : '0'+ num; 
 };
+
+function MillisecondToDate(msd) {  
+    var time = parseFloat(msd) /1000;
+    var h = "00",
+        m = "00",
+        s = "00";
+    if (null!= time &&""!= time){  
+        if (time >60&& time <60*60) {
+            m = formatTime(parseInt(time /60.0));
+            s = formatTime(parseInt((parseFloat(time /60.0) - parseInt(time /60.0)) *60));
+        }else if (time >=60*60&& time <60*60*24) {
+            h = formatTime(parseInt(parseInt(time /3600.0)));
+            m = formatTime(parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60));
+            s = formatTime(parseInt((parseFloat((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60) - parseInt((parseFloat(time /3600.0) - parseInt(time /3600.0)) *60)) *60)); 
+        }else {
+            s = formatTime(parseInt(time));
+        }
+        time = h+" : "+m+" : "+s
+    }else{  
+        time = "00 : 00 : 00";
+    }  
+    return time;
+}  
 
 class OrderDetail extends Component{
     renderAddress(order){
-        const {receiverName,receiverPhone,
-            receiverProvince,receiverCity,receiverDistrict,receiverAddress} = order.orderAddressPojo;
-        const address = `${receiverProvince}${receiverCity}${receiverDistrict}${receiverAddress}`
+        const {receiverName,receiverMobile,
+            receiverProvince,receiverCity,receiverDistrict,receiverAddress} = order.receiverObject;
+        const address = `${receiverProvince} ${receiverCity} ${receiverDistrict} ${receiverAddress}`
         return (
             <div className="order-time">
-                <p>{receiverName}<span className="mobNum">{receiverPhone}</span></p>
+                <p>{receiverName}<span className="mobNum">{receiverMobile}</span></p>
                 <p className="fs12px">{address}</p>
             </div>
         )
     }
+    handleCloseOrder(e){
+        e && e.preventDefault();
+        const {dispatch,order} = this.props;
+        const {orderNo} = order;
+        dispatch(fetchCloseOrder("/closedOrder",{
+            orderNo
+        }));
+    }
     renderFooter(){
         return (
             <div className="confirmBtns">
-                <a href="javascript:void(0);" className="confirm_btn confirmBorder_btn">取消订单</a>
+                <a href="javascript:void(0);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
                 <a href="javascript:void(0);" className="confirm_btn">立即支付</a>
             </div>
         )
     }
+    renderOutTime(){
+        const {order,systemTime} = this.props;
+        const {orderCrtTime,timeoutTime,orderStatus} = order;
+        var outTime = (new Date(timeoutTime).getTime() - systemTime);
+        var outTimeTag = MillisecondToDate(outTime);
+        if(orderStatus === "STATUS_NOT_PAY" && outTime>0){
+            return <span>{outTimeTag}&nbsp;后自动取消</span>
+        }
+        if(orderStatus === "STATUS_CANCELED"){
+            return <span>订单已取消</span>
+        }
+    }
     render(){
         const {order} = this.props;
+        var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
+        var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
+        var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
         return (
             <div className="order-detail-content">
             <Header>订单详情</Header>
             <div className="orderSpeed">
-                <div className="orderNum">订单编号:<span>{order.orderNo}</span></div>
+                <div className="orderNum"><i>订单编号:</i><span>{order.orderNo}</span></div>
                 <StatusProgress {...order}/>
-                <span>01:15:47&nbsp;后自动取消</span>
+                {this.renderOutTime()}
             </div>
             {this.renderAddress(order)}
             <div className="order-list">
@@ -55,38 +99,31 @@ class OrderDetail extends Component{
                 </div>
                 <div className="bottom-line">
                     <div className="label">商品总价：</div>
-                    <div className="data">&yen;<span>448.00</span> </div>
+                    <div className="data"><i>&yen;</i><span>{order.salesTotalFee}</span></div>
                 </div>
                 <div className="bottom-line">
                     <div className="label">国内运费：</div>
-                    <div className="red-box"> 包邮 </div>
-                    <div className="data">&yen;<span>0.00</span> </div>
-                </div>
-                <div className="bottom-line">
-                    <div className="label">国内运费：</div>
-                    <div className="red-box"> 包邮 </div>
-                    <div className="data">&yen;<span>0.00</span> </div>
+                    <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{order.logisticsFee}</span></div>
                 </div>
                 <div className="bottom-line">
                     <div className="label">国际运费：</div>
-                    <div className="data">&yen;<span>65.00</span> </div>
+                    <div className="data">{abroadFeeBox}<i>&yen;</i><span>{order.abroadFee}</span></div>
                 </div>
                 <div className="bottom-line">
                     <div className="label">关税：</div>
-                    <div className="red-box">免税</div>
-                    <div className="data">&yen;<span>0.00</span> </div>
+                    <div className="data">{tariffFeeBox}<i>&yen;</i><span>{order.tariffFee}</span></div>
                 </div>
                 <div className="bottom-line intro">
                     <div className="label">优惠活动：</div>
-                    <div className="data">-&yen;<span>20.00</span> </div>
+                    <div className="data">-<i>&yen;</i><span>{order.promoFee}</span></div>
                 </div>
                 <div className="bottom-line intro">
                     <div className="label">优惠券：</div>
-                    <div className="data">-&yen;<span id="coupon_money">5.00</span> </div>
+                    <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee}</span></div>
                 </div>
                 <div className=" bottom-line no-border">
                     <div className="label">应付金额：</div>
-                    <div className="data red-w">&yen;<span id="total_amount_money">308.00</span> </div>
+                    <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee}</span></div>
                 </div>
             </div>
             {this.renderFooter()}

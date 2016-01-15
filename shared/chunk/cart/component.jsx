@@ -110,7 +110,7 @@ class Cart extends Component {
 
     renderForm(cart,cartIndex){
         return (
-            <form action="/confirmorder" method="POST" ref={"checkoutForm"+cartIndex}>
+            <form action="/confirmorder" method="GET" ref={"checkoutForm"+cartIndex}>
                 <input type="hidden" name="itemIds" value={cart.itemIds.join(",")}/>
                 <input type="hidden" name="buyeds" value={cart.buyeds.join(",")}/>
             </form>

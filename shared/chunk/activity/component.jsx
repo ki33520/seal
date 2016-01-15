@@ -4,23 +4,44 @@ import classNames from "classnames";
 import util from "../../lib/util.es6";
 
 import Refresher from "../../component/refresher.jsx";
-import MaskLayer from "../../component/masklayer.jsx";
 import GoTop from "../../component/gotop.jsx";
 import Icon from "../../component/icon.jsx";
 import Header from "../common/header.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import ShareBox from "./partial/shareBox.jsx";
+import fetchGoods from "./action.es6"; 
 
 class Activity extends React.Component{
     constructor(props){
         super(props);
         this.state = {
             maskActive:false,
-            shareActive:false
+            shareActive:false,
+            pageIndex:1
         }
     }
     componentDidMount(){
-       
+        util.registerPullDownEvent(()=>{
+            this.beginRefresh();
+        }.bind(this));
+    }
+
+    beginRefresh(){
+        const {dispatch,totalPage,isFetching} = this.props;
+        let {pageIndex} = this.state;
+        let nextPage = pageIndex + 1;
+
+        if(isFetching || totalPage < pageIndex){
+            return false;
+        }
+
+        this.setState({
+            pageIndex:nextPage
+        })
+
+        dispatch(fetchGoods(window.location.href,{
+            pageIndex:nextPage
+        }));
     }
 
     handleShare(){
@@ -39,20 +60,12 @@ class Activity extends React.Component{
   
 
     render(){
-        const {isFetching,pagination,isFetched,title} = this.props;
-         
-        var goods = [];
-        if(isFetched === true){
-            if(pagination.list.length > 0){
-                pagination.list.forEach(function(item,i){
-                    const key = "good-" + i;
-                    //item.salePrice = item.salePrice.toFixed(2);
-                    //item.standardPrice = item.standardPrice.toFixed(2);
-                    goods.push(<GoodItem goods={item} key={key} />)
-                })
-            }
-        }
+        const {isFetching,list,imageUrl,title} = this.props;
+        let goods = [];
  
+        list.forEach(function(item,i){
+            goods.push(<GoodItem goods={item} key={"good-"+i} />)
+        });
 
         return (
             <div>
@@ -65,14 +78,13 @@ class Activity extends React.Component{
                  
                 <div className="specialActivity">
                     <div className="banner">
-                      <img src="client/asset/images/pic20.gif" alt="" />
+                      <img src={imageUrl} alt="" />
                     </div>
                     <div className="specialActivity_list clearfix">
                         {goods}
                     </div>
                 </div>
                 <ShareBox visible={this.state.shareActive} cancelShare={this.cancelShare.bind(this)} />
-                <MaskLayer visible={this.state.maskActive}  handleClick={this.cancelShare.bind(this)}/>
                 <Refresher active={isFetching}/>
                 <GoTop />
             </div>

@@ -2,63 +2,29 @@
 import {apiRequest} from "../../lib/util.es6";
 
 export const START_FETCH_COUPON = "START_FETCH_COUPON";
-export const FINISH_YOUA_COUPON = "FINISH_YOUA_COUPON";
-export const FINISH_UNION_COUPON = "FINISH_UNION_COUPON";
-export const FINISH_INVALID_COUPON = "FINISH_INVALID_COUPON";
+export const FINISH_FETCH_COUPON = "FINISH_FETCH_COUPON";
 
-function startFetchCoupon(){
+function requestCoupon(param){
     return {
-        type:START_FETCH_COUPON
+        type:START_FETCH_COUPON,
+        param
     }
 }
 
-function finishYouaCoupon(param,res){
+function receiveCoupon(param,res){
 	return {
-        type:FINISH_YOUA_COUPON,
+        type:FINISH_FETCH_COUPON,
+        pagination:res.pagination,
         param,
-        res
     }
 }
 
-function finishUnionCoupon(param,res){
-	return {
-        type:FINISH_UNION_COUPON,
-        param,
-        res
-    }
-}
 
-function finishInvalidCoupon(param,res){
-	return {
-        type:FINISH_INVALID_COUPON,
-        param,
-        res
-    }
-}
-
-export function fetchYouaCoupons(param){
+export function fetchCoupons(param){
 	return (dispatch)=>{
-        dispatch(startFetchCoupon());
-        apiRequest('/fetchCoupon',param,{method:"POST"}).then((res)=>{
-            dispatch(finishYouaCoupon(param,res));
-        })
-    }
-}
-
-export function fetchUnionCoupons(param){
-	return (dispatch)=>{
-        dispatch(startFetchCoupon());
-        apiRequest('/fetchCoupon',param,{method:"POST"}).then((res)=>{
-            dispatch(finishUnionCoupon(param,res));
-        })
-    }
-}
-
-export function fetchInvalidCoupons(param){
-	return (dispatch)=>{
-        dispatch(startFetchCoupon());
-        apiRequest('/fetchCoupon',param,{method:"POST"}).then((res)=>{
-            dispatch(finishInvalidCoupon(param,res));
+        dispatch(requestCoupon(param));
+        apiRequest('/coupon',param,{method:"POST"}).then((res)=>{
+            dispatch(receiveCoupon(param,res));
         })
     }
 }

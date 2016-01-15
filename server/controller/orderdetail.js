@@ -3,35 +3,31 @@
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util");
+var config = require("../lib/config.js");
 var OrderDetail = util.getSharedComponent("orderdetail");
 
 var orderStatus = [
-    // {value:"STATUS_NOT_PAY",text:"待付款",active:false}
     {
-        value: "STATUS_WAIT_CONFIRM",
-        text: '待审核',
-        active: false
+        value: "STATUS_NOT_PAY",
+        text:"待付款",
+        active:false
     }, {
         value: "STATUS_CONFIRMED",
-        text: '待发货',
+        text: "待发货",
         active: false
     }, {
         value: "STATUS_OUT_HOUSE",
-        text: '待收货',
-        active: false
-    }, {
-        value: "STATUS_SENDED",
-        text: '已签收',
+        text: "待收货",
         active: false
     }, {
         value: "STATUS_FINISHED",
-        text: '已完成',
+        text: "已完成",
         active: false
     }
-]
+];
 
 var payType = [{
-    value: "1",
+    value: "ALIPAYGLOBAL",
     text: "支付宝"
 }, {
     value: "2",
@@ -62,56 +58,110 @@ var payType = [{
     text: "微信支付"
 }]
 
+function formatComment(object) {
+    var itemList = object.itemList.map((v,k)=>{
+        return {
+            id: v.id,
+            singleTitle: v.singleTitle,
+            singleCode: v.singleCode,
+            salesPrice: v.salesPrice,
+            originPrice: v.originPrice,
+            discount: v.discount,
+            qty: v.qty,
+            abroadFee: v.abroadFee,
+            tariffFee: v.tariffFee,
+            salesTotalFee: v.salesTotalFee,
+            couponFee: v.couponFee,
+            singleImageUrl: config.imgServer+v.singleImageUrl
+        }
+    });
+    var receiverObject = {
+        receiverName: object.receiverObject.receiverName,
+        receiverMobile: object.receiverObject.receiverMobile,
+        receiverProvince: object.receiverObject.receiverProvince,
+        receiverCity: object.receiverObject.receiverCity,
+        receiverDistrict: object.receiverObject.receiverDistrict,
+        receiverAddress: object.receiverObject.receiverAddress,
+        completeAddress: object.receiverObject.completeAddress
+    }
+    var order = {
+        orderId: object.id,
+        orderNo: object.orderNo,
+        orderCrtTime: object.orderCrtTime,
+        timeoutTime: object.timeoutTime,
+        sendTime: object.sendTime,
+        takeTime: object.takeTime,
+        orderStatus: object.orderStatus,
+        sendWareHouseName: object.sendWarehouseName,
+        completeAddress: object.completeAddress,
+        payType: object.payType,
+        timeoutTime: object.timeoutTime,
+        salesTotalFee: object.salesTotalFee,
+        promoFee: object.promoFee,
+        abroadFee: object.abroadFee,
+        logisticsFee: object.logisticsFee,
+        tariffFee: object.tariffFee,
+        couponFee: object.couponFee,
+        paymentFee: object.paymentFee,
+        itemList: itemList,
+        receiverObject: receiverObject,
+        supplierName: object.supplierName
+    }
+    if (order.orderStatus == 'STATUS_NOT_PAY' || order.orderStatus == 'STATUS_CANCELED') {
+        order.canFlow = false;
+    }
+    var statusArr = [];
+    orderStatus.map((v, k)=>{
+        statusArr[k] = {
+            value: v.value,
+            text: v.text,
+            active: v.active
+        };
+    });
+    statusArr.map((v, k)=>{
+        if (v.value === order.orderStatus) {
+            _.map(statusArr.slice(0, k+1), function(value) {
+                value.active = true
+            })
+        }
+    });
+    order.orderStatusArr = statusArr;
+    _.each(payType, function(v, k) {
+        if (v.value === order.payType) {
+            order.payType = v.text;
+        }
+    });
+    switch (order.logisticsTime) {
+        case "NOLIMIT":
+            order.shiptime = "工作日,双休日及节假日均可送货";
+        case "WORKDAY":
+            order.shiptime = "仅周一至周五送货";
+        case "EXCEPTWORKDAY":
+            order.shiptime = "仅双休日及节假日送货";
+    }
+    order.productFee = order.salesTotalFee;
+
+    return order;
+}
 
 var orderDetail = function(req, res) {
     var id = req.params.id;
-    util.fetchAPI("orderById", {
-        orderId: id
-    },true).then(function(resp) {
-        if (resp.code === "success") {
-            var order = resp.object;
-            // _.map(order.orderItemList, function(v, k) {
-            //     var props = v.skuProps.split(';');
-            //     v.size = props[0] ? props[0] : '';
-            //     v.color = props[1] ? props[1] : '';
-            //     return v;
-            // })
-            if (order.statusCode == 'STATUS_NOT_PAY' ||
-                order.statusCode == 'STATUS_CANCELED') {
-                order.canFlow = false;
-            }
-            _.each(orderStatus, function(v, k) {
-                if (v.value === order.statusCode) {
-                    _.map(orderStatus.slice(0, k), function(value) {
-                        value.active = true
-                        return value;
-                    })
-                }
-            });
-            order.orderStatus = orderStatus
-
-            _.each(payType, function(v, k) {
-                if (v.value === order.mainPayType) {
-                    order.paymentType = v.text;
-                }
-            });
-
-            switch (order.logisticsTime) {
-                case "NOLIMIT":
-                    order.shiptime = "工作日,双休日及节假日均可送货";
-                case "WORKDAY":
-                    order.shiptime = "仅周一至周五送货";
-                case "EXCEPTWORKDAY":
-                    order.shiptime = "仅双休日及节假日送货";
-            }
-
-            order.productFee = order.salesTotalFee;
+    bluebird.props({
+        orderById: util.fetchAPI("orderById", {
+            orderNo: id
+        },false),
+        timestamp: util.fetchAPI("timestamp",{},false)
+    }).then(function(resp) {
+        if (resp.orderById.returnCode === 0 && resp.timestamp.returnCode === 0){
+            var order = formatComment(resp.orderById.object),
+                systemTime = resp.timestamp.systemTime;
             // if(order.promoTotal > 0){
             //     order.totalFee = order.totalFee + order.promoTotal;
             // }
             var initialState = {
                 isFetched: true,
-                order: order
+                order: order,
+                systemTime: systemTime
             };
             var markup = util.getMarkupByComponent(OrderDetail({
                 initialState: initialState
@@ -120,6 +170,24 @@ var orderDetail = function(req, res) {
                 markup: markup,
                 initialState: initialState
             })
+        }else{
+            if(resp.orderById.returnCode !== 0){
+                next(new Error(resp.orderById.message));
+            }
+            if(resp.timestamp.returnCode !== 0){
+                next(new Error(resp.timestamp.message));
+            }
+        }
+    })
+}
+var orderClose = function(req, res){
+    var orderNo = req.body.orderNo;
+    util.fetchAPI('closedOrderById', {
+        orderNo: orderNo
+    }).then(function(resp) {
+        console.log(resp)
+        if (resp.returnCode === 0) {
+            res.json(resp);
         }
     })
 }
@@ -141,5 +209,6 @@ var logistics = function(req, res) {
 
 module.exports = {
     orderDetail: orderDetail,
-    logistics: logistics
+    logistics: logistics,
+    orderClose: orderClose
 };

@@ -72,22 +72,22 @@ class MemberCenter extends Component{
                     </div>
                     
                     <div className="userGoods">
-                        <a href="/orderlist?status=STATUS_NOT_PAY" className="userGoods_1">
+                        <a href="/orderlist/1" className="userGoods_1">
                             <em></em>
                             <span>待付款</span>
                             <i>{countOrder.paymentNum}</i>
                         </a>
-                        <a href="/orderlist?status=STATUS_NOT_SEND" className="userGoods_2">
+                        <a href="/orderlist/2" className="userGoods_2">
                             <em></em>
                             <span>待发货</span>
                             <i>{countOrder.sendNum}</i>
                         </a>
-                        <a href="/orderlist?status=STATUS_SEND" className="userGoods_3">
+                        <a href="/orderlist/3" className="userGoods_3">
                             <em></em>
                             <span>待收货</span>
                             <i>{countOrder.signNum}</i>
                         </a>
-                        <a href="/orderlist?status=STATUS_NOT_COMMENT" className="userGoods_4">
+                        <a href="/orderlist/4" className="userGoods_4">
                             <em></em>
                             <span>待评价</span>
                             <i>{countOrder.commentNum}</i>

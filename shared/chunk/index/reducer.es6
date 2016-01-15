@@ -4,7 +4,8 @@ import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
-    REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND
+    REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
+    REQUEST_CHANNEL,RESPONSE_CHANNEL
 } from "./constant.es6";
 import {CHANGE_FIELD} from "../common/constant.es6";
 import {combineReducers} from "redux";
@@ -48,6 +49,7 @@ function search(state={},action){
 }
 
 function index(state={},action){
+    let channels = state.channels
     switch(action.type){
         case REQUEST_SINGLERECOMMEND:
             return Object.assign({},state,{
@@ -55,11 +57,17 @@ function index(state={},action){
                 singleRecommendFetching:true
             });
         case RESPONSE_SINGLERECOMMEND:
-            const singleRecommend = action.res.result;
-            const singleRecommendFetched = action.res.goodFetched;
+            if(action.res.goodFetched){
+                channels = channels.map((channel)=>{
+                    if(channel.id === action.channelId){
+                        channel["floors"].singleRecommend.goods = action.res.result
+                    }
+                    return channel
+                })
+            }
             return Object.assign({},state,{
-                singleRecommend,
-                singleRecommendFetched,
+                channels,
+                singleRecommendFetched:action.res.goodFetched,
                 singleRecommendFetching:false
             })
         case REQUEST_NEWRECOMMEND:
@@ -68,12 +76,38 @@ function index(state={},action){
                 newRecommendFetching:true
             });
         case RESPONSE_NEWRECOMMEND:
-            const newRecommend = action.res.result;
-            const newRecommendFetched = action.res.goodFetched;
+            if(action.res.goodFetched){
+                channels = channels.map((channel)=>{
+                    if(channel.id === action.channelId){
+                        channel["floors"].newRecommend.goods = action.res.result
+                    }
+                    return channel
+                })
+            }
             return Object.assign({},state,{
-                newRecommend,
-                newRecommendFetched,
+                channels,
+                newRecommendFetched:action.res.goodFetched,
                 newRecommendFetching:false
+            })
+        case REQUEST_CHANNEL:
+            return Object.assign({},state,{
+                channelFetched:false,
+                channelFetching:true
+            });
+        case RESPONSE_CHANNEL:
+            const {channelFetched,result} = action.res
+            if(channelFetched){
+                channels = channels.map((channel)=>{
+                    if(channel.id === action.param.id){
+                        channel.floors = result
+                    }
+                    return channel
+                })
+            }
+            return Object.assign({},state,{
+                channels,
+                channelFetched,
+                channelFetching:false
             })
         default:
             return state

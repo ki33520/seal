@@ -14,7 +14,6 @@ var memberCenter = function(req, res, next) {
     var authorized = req.session.user !== undefined;
     if (authorized === true) {
         var user = req.session.user;
-        console.log(user)
         bluebird.props({
             memberMemberInfo: util.fetchAPI("memberMemberInfo", {
                 memberId: user.memberId
@@ -23,7 +22,6 @@ var memberCenter = function(req, res, next) {
                 memberId: user.memberId
             },false),
         }).then(function(ret) {
-            console.log(ret)
             if (ret.memberMemberInfo.returnCode === 0 && ret.memberCountOrder.returnCode === 0) {
                 var member = ret.memberMemberInfo.object;
                 var countOrder = ret.memberCountOrder.object;
@@ -44,10 +42,10 @@ var memberCenter = function(req, res, next) {
                     initialState: initialState
                 })
             }else{
-                if(!ret.memberMemberInfo.returnCode){
+                if(ret.memberMemberInfo.returnCode !== 0){
                     next(new Error(ret.memberMemberInfo.message));
                 }
-                if(!ret.memberCountOrder.returnCode){
+                if(ret.memberCountOrder.returnCode !== 0){
                     next(new Error(ret.memberCountOrder.message));
                 }
             }

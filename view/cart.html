@@ -6,7 +6,7 @@
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
-<div id="cart-container">{{ markup|safe }}</div>
+<div id="cart" class="container">{{ markup|safe }}</div>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}

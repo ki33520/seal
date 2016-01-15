@@ -8,11 +8,12 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Activity from "./component.jsx";
 
 function selector(state){
-    const {pagination,isFetched,isFetching,title} = state.goodsByParam
+    const {isFetching,list,imageUrl,title,totalPage} = state.goodsByParam
     return {
-        pagination,
-        isFetched,
+        list,
         title,
+        imageUrl,
+        totalPage,
         isFetching
     };
 }
@@ -26,13 +27,14 @@ function configureStore(initialState){
 
 class ActivityApp extends Component{
     render(){
-        const {isFetched,pagination,title} = this.props.initialState;
+        const {isFetching,list,imageUrl,title,totalPage} = this.props.initialState;
         const initialState = {
             goodsByParam:{
-                isFetching:false,
-                isFetched,
+                isFetching,
+                list,
+                imageUrl,
                 title,
-                pagination
+                totalPage
             }
         };
         var store = configureStore(initialState);

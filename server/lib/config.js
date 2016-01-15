@@ -3,6 +3,8 @@ var _ = require("lodash");
 var api = require("./api.json");
 
 api = _.extend(api,require("./api/index.json"))
+api = _.extend(api,require("./api/order.json"))
+api = _.extend(api,require("./api/user.json"))
 
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
@@ -10,17 +12,18 @@ var config = {
     "imgServer":"http://imgtest.tepin.com/"
 };
 var runtime = process.env["NODE_ENV"];
+config["runtime"] = runtime;
 if (runtime === "develop") {
     config.apiServer = "http://wsns.tepin.youayun.cn";
     config.oathServer = "https://ssl.e9448.com";
 }
 
 config.loginUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=tepin-wap&clientId=tepin&channel=wap";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code";
 config.logoutUrl = config.oathServer +
-    "/score/member/v1/logout?skin=tepin-wap&clientId=tepin&channel=wap";
+    "/score/member/v1/logout?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap";
 config.registerUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=tepin-wap&clientId=tepin&channel=wap&startPage=register";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code&startPage=register";
 config.cardUrl = config.oathServer +
     "/score/member/v1/cardInfo?"
 

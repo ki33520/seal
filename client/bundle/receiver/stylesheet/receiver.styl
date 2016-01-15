@@ -1,12 +1,30 @@
 @import "../../common/common";
 @import "../../common/iconfont";
 @import "../../common/header";
-@import "../../common/router";
+@import "../../common/switcher";
 @import "./receiver.css";
 @import "../../component/selected";
+@import "../../component/alert";
+@import "../../component/gotop";
 body {
     background: #F1F1F1;
 }
+
+.receiver-container{
+    height:100%;
+    &>div{
+        height:100%;
+    }
+}
+
+.receiver-content{
+    overflow:hidden;
+}
+
+.selectArea{
+    padding-bottom:px2rem(38);
+}
+
 .receiver-panel {
     background: #FFF;
     margin-bottom:px2rem(8);
@@ -64,19 +82,54 @@ body {
     }
 }
 
+.cascade-area{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
 .receiver-form-field {
     line-height: 0;
     .dropdown {
+        position:static;
         button {
-            padding: .1rem 0.5rem;
+            padding:px2rem(5) px2rem(5);
             border: 0 none;
-            width: 60%;
+            width: 100%;
+            .dropdown-status{
+                overflow:hidden;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+            }
+            .status{
+                font-size:px2rem(14);
+            }
         }
         .dropdown-content {
+            bottom:0;
+            display:block;
+            visibility:hidden;
+            opacity:0;
+            position:absolute;
+            left:0;
+            right:0;
+            box-shadow: 0 px2rem(2) px2rem(4) px2rem(4) rgba(34, 36, 38, .12),
+             0 px2rem(2) px2rem(4) 0 rgba(34, 36, 38, .08);
+            // transition: all .3s ease-in-out;
+            padding:px2rem(12) 0;
+            overflow:hidden;
+            &.active {
+                animation: slideUp .3s ease-in-out;
+                visibility:visible;
+                opacity:1;
+            }
+            &:before,&:after{
+                display:none;
+            }
             .selected-items {
                 li {
-                    padding: 0.4rem 1rem;
                     color: #AAA;
+                    padding:px2rem(5) px2rem(10);
                     .selected-item {
                         text-align: center;
                     }
@@ -84,10 +137,21 @@ body {
                         border-top: .05rem solid #DDD;
                         border-bottom: .05rem solid #DDD;
                         color: #333;
-                        background: #FFF;
+                        background: #F8F8F8;
                     }
                 }
             }
         }
+    }
+}
+
+@keyframes slideUp{
+    from{
+        transform:translateY(100%);
+        opacity:0.5;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
     }
 }

@@ -24,7 +24,8 @@ class Header extends Component{
 
 Header.defaultProps = {
     canBack:true,
-    handleGoBack:function(){
+    handleGoBack:function(e){
+        e.preventDefault();
         window.history.back();
     }
 }

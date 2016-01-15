@@ -3,82 +3,93 @@
 import React,{Component} from "react";
 import _ from "lodash";
 import Header from "../../common/header.jsx";
-import CascadeArea from "../../common/cascadearea.jsx";
-import {fetchProvinces,fetchCities,fetchDistricts,saveReceiver,changeField} from "../action.es6";
+import CascadeArea from "./cascadearea.jsx";
 
-import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 class UpdateReceiver extends Component{
-    handleFieldChange(fieldName,e){
-        e && e.preventDefault();
-        const {dispatch} = this.props;
-        dispatch(changeField(fieldName,e.target.value));
-    }
     loadProvinces(){
-        const {dispatch} = this.props;
-        dispatch(fetchProvinces("/cascadearea",{
-            code:"",
-            isprovince:true
-        }));
+        const {fetchProvinces} = this.props;
+        fetchProvinces({
+            code:""
+        },"updateReceiver")
     }
     loadCities(province){
-        const {dispatch} = this.props;
-        dispatch(fetchCities("/cascadearea",{
-            code:province,
-            isprovince:false
-        }))
+        const {fetchCities} = this.props;
+        fetchCities({
+            code:province
+        },"updateReceiver")
     }
     loadDistricts(city){
-        const {dispatch} = this.props;
-        dispatch(fetchDistricts("/cascadearea",{
-            code:city,
-            isprovince:false
-        }))
+        const {fetchDistricts} = this.props;
+        fetchDistricts({
+            code:city
+        },"updateReceiver")
+    }
+    componentDidUpdate(prevProps,prevState){
+        const {receiver,active} = this.props;
+        if(active === true && prevProps.active === false 
+            && this.props.provinces.length === 1){
+            this.loadProvinces()
+        }
+        const province = receiver === null?"":receiver.provinceCode;
+        const city = receiver === null?"":receiver.cityCode;
+        if(prevProps.provinces.length === 1 && 
+        this.props.provinces.length > 1 && province){
+            this.loadCities(province);
+            // console.log(prevProps.provinces,province)
+        }
+        if(prevProps.cities.length === 1 && 
+        this.props.cities.length > 1 && city){
+            this.loadDistricts(city);
+        }
+    }
+
+    handleFieldChange(fieldName,e){
+        e && e.preventDefault();
+        const {changeField} = this.props;
+        changeField(fieldName,e.target.value);
     }
     handleSave(e){
         e && e.preventDefault();
-        const {receiver,dispatch,provinces,cities,districts} = this.props
-        const {id,consignee,mobile,zipcode,address,isDefault,
-            province,city,district
+        const {receiver,saveReceiver,provinces,cities,districts} = this.props
+        const {id,consignee,mobileNumber,idCard,address,isDefault,
+            provinceCode,cityCode,districtCode
         } = receiver;
-        const selectedProvince = _.findWhere(provinces,{value:province});
-        const selectedCity = _.findWhere(cities,{value:city});
-        const selectedDistrict = _.findWhere(districts,{value:district});
-        dispatch(saveReceiver({
-            id,consignee,mobile,zipcode,address,
+        saveReceiver({
+            id,consignee,mobileNumber,idCard,address,
             isdefault:isDefault,
-            province:selectedProvince.label,
-            provincecode:selectedProvince.value,
-            city:selectedCity.label,
-            citycode:selectedCity.value,
-            district:selectedDistrict.label,
-            districtcode:selectedDistrict.value
-        }))
+            provinceCode,
+            cityCode,
+            districtCode
+        })
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
+        const {alert} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
-                dispatch(alert("提交成功!",2000));
-                setTimeout(()=>window.location.replace("/receiver"),2500)
+                alert("提交成功!",2000);
+                // setTimeout(()=>window.location.replace("/receiver"),2500)
             }else{
-                dispatch(alert(nextProps.errMsg,2000))
+                alert(nextProps.errMsg,2000)
             }
         }
     }
     render(){
         const {saveSuccess,alertActive,alertContent,receiver} = this.props
+        if(receiver === null){
+            return null
+        }
         const {
-            consignee,mobile,zipcode,address,isDefault,
+            consignee,idCard,mobileNumber,zipcode,address,isDefault,
             province,city,district,
         } = receiver;
         return (
             <div className="receiver-form-content">
             <Header>
             <span className="title">修改收货地址</span>
-            <a className="screening" href="javascript:void(0);">保存</a>
+            <a className="screening" href="javascript:void(null)" onClick={this.handleSave.bind(this)}>保存</a>
             </Header>
             <p className="prompt">温馨提示：收件人请使用和身份证号对应的真实姓名，否则您购买的商品将无法通过海关检查！</p>
             <div className="receiver-form">
@@ -94,28 +105,26 @@ class UpdateReceiver extends Component{
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">身份证号</div>
-                <div className="receiver-form-field"><input type="text" value={mobile} 
+                <div className="receiver-form-field"><input type="text" value={idCard} 
                 placeholder="填写后，我们会加密处理" 
-                onChange={this.handleFieldChange.bind(this,"mobile")}/></div>
+                onChange={this.handleFieldChange.bind(this,"idCard")}/></div>
                 </div>
             </div>
             <div className="receiver-form-fieldset">
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">手机号码</div>
-                <div className="receiver-form-field"><input type="text" value={mobile} 
+                <div className="receiver-form-field"><input type="text" value={mobileNumber} 
                 placeholder="请输入您的手机号" 
-                onChange={this.handleFieldChange.bind(this,"mobile")}/></div>
+                onChange={this.handleFieldChange.bind(this,"mobileNumber")}/></div>
                 </div>
                 <div className="receiver-form-row">
                 <i>*</i>
                 <div className="receiver-form-label">收货地址</div>
                 <div className="receiver-form-field">
-                    <CascadeArea {...this.props} 
-                    changeField={changeField}
-                    loadProvinces={this.loadProvinces.bind(this)} 
-                    loadCities={this.loadCities.bind(this)} 
-                    loadDistricts={this.loadDistricts.bind(this)}/>
+                    <CascadeArea loadCities={this.loadCities.bind(this)} 
+                    loadDistricts={this.loadDistricts.bind(this)} 
+                    {...this.props}/>
                 </div>
                 </div>
                 <div className="receiver-form-row receiver-form-textarea-row">

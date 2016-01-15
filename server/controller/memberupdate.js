@@ -7,7 +7,6 @@ var MemberupdateApp = util.getSharedComponent("memberupdate");
 
 var update = function(req, res, next) {
     var user = req.session.user;
-    console.log(req.session)
     bluebird.props({
         memberDetailByUser: util.fetchAPI("memberDetailByUser", {
             memberId: user.memberId
@@ -72,7 +71,6 @@ var updatePassword = function(req, res, next) {
             rpassword: repeatPassword
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true

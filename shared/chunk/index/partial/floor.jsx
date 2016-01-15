@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import _ from "lodash"
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 
@@ -10,19 +11,33 @@ class Floor extends Component{
         super(props);
     }
     componentDidMount(){
-        const {fetchSingleRecommend,fetchNewRecommend} = this.props;
-        const {newRecommendId,singleRecommendId} = this.props.floors;
+        // const {fetchSingleRecommend,fetchNewRecommend} = this.props;
+        // const {newRecommendId,singleRecommendId} = this.props.floors;
         // fetchSingleRecommend({
         //     activityId:singleRecommendId,
         // })
-        fetchNewRecommend({
-            activityId:newRecommendId
+        // fetchNewRecommend({
+        //     activityId:newRecommendId
+        // })
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.active && !this.props.active){
+            if(_.isEmpty(this.props.floors)){
+                this.handleActive()
+            }
+        }
+    }
+    handleActive(){
+        // const {fetchSingleRecommend,fetchNewRecommend} = this.props;
+        const {fetchChannel,channel} = this.props;
+        fetchChannel({
+            id:channel.id
         })
     }
     renderSingleRecommend(){
-        let {singleRecommend} = this.props.index;
-        if(singleRecommend){
-            return singleRecommend.map((good,i)=>{
+        let {singleRecommend} = this.props.channel.floors;
+        if(singleRecommend && singleRecommend.goods){
+            let goods = singleRecommend.goods.map((good,i)=>{
                 return (
                     <a href="#" className="clearfix" key={i}>
                         <img src={good.imageUrl} />
@@ -36,13 +51,21 @@ class Floor extends Component{
                     </a>
                 )
             })
+            return (
+                <div className="indexSingle">
+                    <div className="title">
+                        <span><i></i>单品推荐</span>
+                    </div>
+                    {goods}
+                </div>
+            )
         }
         return null
     }
     renderNewRecommend(){
-        let {newRecommend} = this.props.index;
-        if(newRecommend){
-            return newRecommend.map((good,i)=>{
+        let {newRecommend} = this.props.channel.floors;
+        if(newRecommend && newRecommend.goods){
+            return newRecommend.goods.map((good,i)=>{
                 return (
                     <a href="/gooddetail/1" className="clearfix" key={i}>
                         <img src={good.imageUrl} />
@@ -56,9 +79,10 @@ class Floor extends Component{
                 )   
             })
         }
+        return null
     }
     renderSlider(){
-        let {slides} = this.props.floors;
+        let {slides} = this.props.channel.floors;
         if(slides){
             slides = slides.map((slide,i)=>{
                 return (
@@ -78,75 +102,93 @@ class Floor extends Component{
         return null
     }
     renderBadges(){
-        let {badges} = this.props.floors;
-        return badges.map((badge,i)=>{
-            return <span key={i}>{badge.title}</span>
-        })
+        let {badges} = this.props.channel.floors;
+        if(badges && badges.length > 0){
+            badges = badges.map((badge,i)=>{
+                return <span key={i}>{badge.title}</span>
+            })
+            return <div className="m-entry">{badges}</div>
+        }
+        return null
     }
     renderRushBuy(){
-        let {rushbuys} = this.props.floors;
-        if(rushbuys === null){
-            return null
+        let {rushbuys} = this.props.channel.floors;
+        if(rushbuys){
+            return rushbuys.map((rushbuy,i)=>{
+                return <a href={"/activity/"+rushbuy.id} key={i}>
+                    <img src={rushbuy.imageUrl} />
+                    <span><i><img src="/client/asset/images/flashClock.png" /></i>距本期活动结束：01天34时10分46秒</span>
+                </a>
+            })
         }
-        return rushbuys.map((rushbuy,i)=>{
-            return <a href={"/activity/"+rushbuy.id} key={i}>
-                <img src={rushbuy.imageUrl} />
-                <span><i><img src="/client/asset/images/flashClock.png" /></i>距本期活动结束：01天34时10分46秒</span>
-            </a>
-        })
+        return null
     }
     renderFlashBuy(){
-        let {flashbuys} = this.props.floors;
-        if(flashbuys === null){
-            return null
-        }
-        return flashbuys.map((good,i)=>{
+        let {flashbuys} = this.props.channel.floors;
+        if(flashbuys){
+            flashbuys = flashbuys.map((good,i)=>{
+                return (
+                <a href="/gooddetail/1" className="clearfix" key={i}>
+                    <img src="/client/asset/images/pic8.gif" />
+                    <div className="right">
+                        <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10分</i><i>46秒</i></em></p>
+                        <div className="flashDot"></div>
+                        <span className="name">{good.title}</span>
+                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
+                        <span className="nowPrice">&yen;{good.salePrice}</span>
+                        <span className="oldPrice">&yen;{good.originPrice}</span>
+                    </div>
+                </a>
+                )
+            })
             return (
-            <a href="/gooddetail/1" className="clearfix" key={i}>
-                <img src="/client/asset/images/pic8.gif" />
-                <div className="right">
-                    <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10分</i><i>46秒</i></em></p>
-                    <div className="flashDot"></div>
-                    <span className="name">{good.title}</span>
-                    <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                    <span className="nowPrice">&yen;{good.salePrice}</span>
-                    <span className="oldPrice">&yen;{good.originPrice}</span>
+                <div className="flashBuy">
+                    <div className="title">
+                        <span><i></i>闪购精选</span>
+                        <a href={"/flashbuy/"+this.props.index.currentChannel}>更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
+                    </div>
+                    {flashbuys}
                 </div>
-            </a>
-            )
-        })
-    }
-    renderActivityOne(){
-        let {activityOne} = this.props.floors;
-        if(activityOne){
-            let mobileonly = activityOne["手机专享"];
-            let finest = activityOne["海外精选"];
-            let stockup = activityOne["今日海囤"];
-            return (
-                <ul className="clearfix">
-                    <li>
-                        <a href={"/mobileonly/"+mobileonly.id}>
-                            <img src={mobileonly.imageUrl} alt="" />
-                            <span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href={"/finest/"+finest.id}>
-                            <img src={finest.imageUrl} alt="" />
-                            <span></span>
-                        </a>
-                        <a href={"/stockup/"+stockup.id}>
-                            <img src={stockup.imageUrl} alt="" />
-                            <span></span>
-                        </a>
-                    </li>
-                </ul>
             )
         }
         return null
     }
+    renderActivityOne(){
+        let {activityOne} = this.props.channel.floors;
+        if(activityOne){
+            let mobileonly = activityOne["手机专享"];
+            let finest = activityOne["海外精选"];
+            let stockup = activityOne["今日海囤"];
+            if(mobileonly && finest && stockup){
+                return (
+                    <div className="activity">
+                    <ul className="clearfix">
+                        <li>
+                            <a href={"/mobileonly/"+mobileonly.id}>
+                                <img src={mobileonly.imageUrl} alt="" />
+                                <span></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href={"/finest/"+finest.id}>
+                                <img src={finest.imageUrl} alt="" />
+                                <span></span>
+                            </a>
+                            <a href={"/stockup/"+stockup.id}>
+                                <img src={stockup.imageUrl} alt="" />
+                                <span></span>
+                            </a>
+                        </li>
+                    </ul>
+                    </div>
+                )
+            }
+            return null
+        }
+        return null
+    }
     renderActivityTwo(){
-        let {activityTwo} = this.props.floors;
+        let {activityTwo} = this.props.channel.floors;
         if(activityTwo){
             return activityTwo.map((activity,i)=>{
                 return (
@@ -162,7 +204,7 @@ class Floor extends Component{
         return null
     }
     renderActivityThree(){
-        let {activityThree} = this.props.floors;
+        let {activityThree} = this.props.channel.floors;
         if(activityThree){
             return (
                 <ul className="clearfix">
@@ -194,30 +236,17 @@ class Floor extends Component{
         return (
             <div className="floor-content">
                 {this.renderSlider()}
-                <div className="m-entry">
                 {this.renderBadges()}
-                </div>
                 <div className="panic">
                 {this.renderRushBuy()}
                 </div>
-                <div className="activity">{this.renderActivityOne()}</div>
+                {this.renderActivityOne()}
                 <div className="activity_2">
                     <ul className="clearfix">{this.renderActivityTwo()}</ul>
                 </div>
-                <div className="flashBuy">
-                    <div className="title">
-                        <span><i></i>闪购精选</span>
-                        <a href={"/flashbuy/"+this.props.index.currentChannel}>更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
-                    </div>
-                    {this.renderFlashBuy()}
-                </div>
+                {this.renderFlashBuy()}
                 <div className="activity_3">{this.renderActivityThree()}</div>
-                <div className="indexSingle">
-                    <div className="title">
-                        <span><i></i>单品推荐</span>
-                    </div>
-                    {this.renderSingleRecommend()}
-                </div>
+                {this.renderSingleRecommend()}
                 <div className="activityGeneral">
                     <div className="title">
                         <span><i></i>新品推荐</span>

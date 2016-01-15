@@ -1,20 +1,18 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 
-export const CHANGE_FIELD= "CHANGE_FIELD";
-export const REQUEST_PROVINCES = "REQUEST_PROVINCES";
-export const RESPONSE_PROVINCES = "RESPONSE_PROVINCES";
-export const REQUEST_CITIES = "REQUEST_CITIES";
-export const RESPONSE_CITIES = "RESPONSE_CITIES";
-export const REQUEST_DISTRICTS = "REQUEST_DISTRICTS";
-export const RESPONSE_DISTRICTS = "RESPONSE_DISTRICTS";
-export const CHANGE_AREA = "CHANGE_AREA";
-export const REQUEST_RECEIVER = "REQUEST_RECEIVER";
-export const RESPONSE_RECEIVER = "RESPONSE_RECEIVER";
-export const START_SAVE_RECEIVER = "START_SAVE_RECEIVER";
-export const FINISH_SAVE_RECEIVER = "FINISH_SAVE_RECEIVER";
+import {
+    CHANGE_FIELD,
+    REQUEST_PROVINCES,RESPONSE_PROVINCES,
+    REQUEST_CITIES,RESPONSE_CITIES,
+    REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
+    REQUEST_RECEIVER,RESPONSE_RECEIVER,
+    START_SAVERECEIVER,FINISH_SAVERECEIVER,
+    START_CREATERECEIVER,FINISH_CREATERECEIVER,
+    START_DELETERECEIVER,FINISH_DELETERECEIVER
+} from "./constant.es6";
 
-import {alert} from "../common/action.es6";
+export {alert} from "../common/action.es6";
 
 function requestReceiver(){
     return {
@@ -46,92 +44,103 @@ export function changeField(name,value){
     }
 }
 
-function requestProvinces(param){
+function requestProvinces(param,scene){
     return {
         type:REQUEST_PROVINCES,
+        scene,
         param,
     }
 }
 
-function responseProvinces(param,res){
+function responseProvinces(param,res,scene){
     return {
         type:RESPONSE_PROVINCES,
         param,
         res,
+        scene,
         responseAt:Date.now()
     }
 }
 
-export function fetchProvinces(url,param){
+export function fetchProvinces(param,scene){
     return (dispatch)=>{
-        dispatch(requestProvinces(param));
-        apiRequest(url,param).then((res)=>{
-            // console.log('provinces',res)
-            dispatch(responseProvinces(param,res));
+        dispatch(requestProvinces(param,scene));
+        apiRequest("/cascadearea",Object.assign({},param,{
+            api:"findProvince"
+        })).then((res)=>{
+            dispatch(responseProvinces(param,res,scene));
         })
     }
 }
 
-function requestCities(param){
+function requestCities(param,scene){
     return {
         type:REQUEST_CITIES,
+        scene,
         param,
     }
 }
 
-function responseCities(param,res){
+function responseCities(param,res,scene){
     return {
         type:RESPONSE_CITIES,
         param,
         res,
+        scene,
         responseAt:Date.now()
     }
 }
 
-export function fetchCities(url,param){
+export function fetchCities(param,scene){
     return (dispatch)=>{
-        dispatch(requestCities(param));
-        apiRequest(url,param).then((res)=>{
-            dispatch(responseCities(param,res));
+        dispatch(requestCities(param,scene));
+        apiRequest("/cascadearea",Object.assign({},param,{
+            api:"findCity"
+        })).then((res)=>{
+            dispatch(responseCities(param,res,scene));
         })
     }
 }
 
-function requestDistricts(param){
+function requestDistricts(param,scene){
     return {
         type:REQUEST_DISTRICTS,
+        scene,
         param,
     }
 }
 
-function responseDistricts(param,res){
+function responseDistricts(param,res,scene){
     return {
         type:RESPONSE_DISTRICTS,
         param,
         res,
+        scene,
         responseAt:Date.now()
     }
 }
 
-export function fetchDistricts(url,param){
+export function fetchDistricts(param,scene){
     return (dispatch)=>{
-        dispatch(requestDistricts(param));
-        apiRequest(url,param).then((res)=>{
-            dispatch(responseDistricts(param,res));
+        dispatch(requestDistricts(param,scene));
+        apiRequest("/cascadearea",Object.assign({},param,{
+            api:"findDistrict"
+        })).then((res)=>{
+            dispatch(responseDistricts(param,res,scene));
         })
     }
 }
 
 function startSaveReceiver(param) {
     return {
-        type:START_SAVE_RECEIVER,
+        type:START_SAVERECEIVER,
         param
     }
 }
 
 function finishSaveReceiver(param,res){
     return {
-        type:FINISH_SAVE_RECEIVER,
+        type:FINISH_SAVERECEIVER,
         param,
         res,
         finishAt:Date.now()
@@ -142,10 +151,63 @@ export function saveReceiver(param){
     return (dispatch)=>{
         dispatch(startSaveReceiver(param));
         apiRequest("/savereceiver",param,{
-            method:"post",
-            type:"json"
+            method:"post"
         }).then((res)=>{
             dispatch(finishSaveReceiver(param,res));
+        })
+    }
+}
+
+function startCreateReceiver(param){
+    return {
+        type:START_CREATERECEIVER,
+        param
+    }
+}
+
+function finishCreateReceiver(param,res){
+    return {
+        type:FINISH_CREATERECEIVER,
+        param,
+        res,
+        finishAt:Date.now()
+    }
+}
+
+export function createReceiver(param){
+    return (dispatch)=>{
+        dispatch(startCreateReceiver(param))
+        apiRequest("/createreceiver",param,{
+            method:"POST"
+        }).then((res)=>{
+            dispatch(finishCreateReceiver(param,res))
+        })
+    }
+}
+
+function startDeleteReceiver(param){
+    return {
+        type:START_DELETERECEIVER,
+        param
+    }
+}
+
+function finishDeleteReceiver(param,res){
+    return {
+        type:FINISH_DELETERECEIVER,
+        param,
+        res,
+        finishAt:Date.now()
+    }
+}
+
+export function deleteReceiver(param){
+    return (dispatch)=>{
+        dispatch(startDeleteReceiver(param))
+        apiRequest("/deletereceiver",param,{
+            method:"POST"
+        }).then((res)=>{
+            dispatch(finishDeleteReceiver(param,res))
         })
     }
 }

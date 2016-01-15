@@ -15,6 +15,7 @@ router.get("/logingateway",require("./controller/authorize").loginGateway);
 router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
 router.get("/", require("./controller/index.js").index);
+router.get("/channel", require("./controller/index.js").channel);
 router.get("/searchhotwords", require("./controller/index.js").searchHotWords);
 router.post("/searchassociate", require("./controller/index.js").searchAssociate);
 router.get("/activitygood", require("./controller/index.js").activityGood);
@@ -27,8 +28,16 @@ router.get("/categorybrands", require("./controller/polymer").categoryBrands);
 router.get("/allbrands", require("./controller/polymer").allBrands);
 router.get("/allorigins", require("./controller/polymer").allOrigins);
 
-router.get("/gooddetail/:id", require("./controller/gooddetail"));
-router.get("/goodlist", require("./controller/goodlist"));
+router.get("/gooddetail/:id", require("./controller/gooddetail").goodDetail);
+router.get("/fetchgood/:id", require("./controller/gooddetail").fetchGood);
+router.get("/addcart", require("./controller/gooddetail").addCart);
+router.get("/cartcount", require("./controller/gooddetail").cartCount);
+router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
+router.get("/iscollected", require("./controller/gooddetail").isCollected);
+
+router.get("/goodlist/:keyword", require("./controller/goodlist").goodList);
+router.post("/goodlist", require("./controller/goodlist").sortList);
+
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
 router.post("/trendyActivity",require("./controller/trendy").activity);
@@ -40,10 +49,12 @@ router.post("/fetchCart", mainController.requireAuthorize,require("./controller/
 router.get("/goodcomment/:id", require("./controller/goodcomment").index);
 router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 
-router.post("/confirmorder",require("./controller/confirmorder").confirmOrder);
+router.get("/confirmorder/:param",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
+router.get("/orderlist/:id",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
+router.post("/closedOrder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
@@ -65,14 +76,14 @@ router.get("/addreceiver",mainController.requireAuthorize,require("./controller/
 router.get("/updatereceiver/:id",mainController.requireAuthorize,require("./controller/receiver").updateReceiver);
 router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
+router.post("/createreceiver",mainController.requireAuthorize,require("./controller/receiver").createReceiver);
+router.post("/deletereceiver",mainController.requireAuthorize,require("./controller/receiver").deleteReceiver);
 
-router.get("/coupon", require("./controller/coupon").coupon);
-router.post("/fetchCoupon", require("./controller/coupon").fetchCoupon);
+router.get("/coupon", require("./controller/coupon"));
+router.post("/coupon", require("./controller/coupon"));
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
-router.get("/search", require("./controller/search").index);
 
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);
-router.use(mainController.errorHandler);
 
 module.exports = router;

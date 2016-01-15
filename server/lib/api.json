@@ -55,6 +55,13 @@
             "production": "http://product.tepin.hk"
         }
     },
+    "cartCount": {
+        "uri": "/cart/v1/countNumber",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "http://product.tepin.hk"
+        }
+    },
     "cartByUser": {
         "uri": "/cart/v1/findCarts",
         "baseURL": {
@@ -65,7 +72,7 @@
     "updateCart": {
         "uri": "/cart/v1/saveOrUpdateCart",
         "baseURL": {
-            "develop": "http://order.hwg.youayun.cn:7989",
+            "develop": "http://order.hwg.youayun.cn:7986",
             "production": "http://product.tepin.hk"
         }
     },
@@ -132,10 +139,10 @@
             "production": "http://member.tepin.hk"
         }
     },
-    "loginTokenByCode": {
-        "uri": "/security/WAP/newLoginForWAP.bdo",
+    "loginByCode": {
+        "uri": "/member/v1/regiestOrLogin",
         "baseURL": {
-            "develop": "http://product.hwg.youayun.cn:7989",
+            "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://product.tepin.hk"
         }
     },
@@ -149,12 +156,12 @@
     "couponByUser": {
         "uri": "/coupon/v1/findUserCouponList",
         "baseURL": {
-            "develop": "http://product.hwg.youayun.cn:7989",
+            "develop": "http://product.hwg.youayun.cn:7985",
             "production": "http://product.tepin.hk"
         }
     },
     "fetchGoodsList": {
-        "uri": "/search/v1/findListByParams",
+        "uri": "/search/v1/findListByParamsWap",
         "baseURL": {
             "develop": "http://192.168.0.162:7988",
             "production": "http://product.tepin.hk"
@@ -181,13 +188,33 @@
             "production": "marketing.hwg.youayun.cn"
         }
     },
-    "orderByUser":{
+    "orderByUser": {
         "uri": "/order/v1/findOrderList",
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "production": "order.hwg.youayun.cn"
         }
-        
+    },
+    "orderById": {
+        "uri": "/order/v1/findOrderDetail",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "closedOrderById": {
+        "uri": "/order/v1/closedOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "waitCommentsByUser": {
+        "uri": "/comments/v1/findWaitComments",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
     },
     "receiverByUser": {
         "uri": "/address/v1/findAddressList",
@@ -196,43 +223,57 @@
             "production": "http://member.tepin.hk"
         }
     },
-    "receiverById":{
+    "receiverById": {
         "uri": "/address/v1/findAddressById",
         "baseURL": {
             "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://member.tepin.hk"
         }
     },
-    "updateReceiver":{
+    "updateReceiver": {
         "uri": "/address/v1/update",
         "baseURL": {
             "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://member.tepin.hk"
         }
     },
-    "addReceiver":{
+    "addReceiver": {
         "uri": "/address/v1/add",
         "baseURL": {
             "develop": "http://member.hwg.youayun.cn:7987",
             "production": "http://member.tepin.hk"
         }
     },
-    "findProvinceMap":{
+    "deleteReceiver": {
+        "uri": "/address/v1/delete",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "findProvince": {
         "uri": "/sns/address/v1/findProvinceMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "marketing.hwg.youayun.cn"
         }
     },
-    "findCityMap":{
+    "findCity": {
         "uri": "/sns/address/v1/findCityMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "http://sns.e9448.com"
         }
     },
-    "findCountyMap":{
+    "findDistrict": {
         "uri": "/sns/address/v1/findCountyMap",
+        "baseURL": {
+            "develop": "http://sns.e9448.com",
+            "production": "http://sns.e9448.com"
+        }
+    },
+    "timestamp": {
+        "uri": "/sns/system/v1/timestamp",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "production": "http://sns.e9448.com"

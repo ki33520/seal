@@ -80,11 +80,19 @@ let dom = {
         let scrollNode = element;
         while(scrollNode !== window){
           scrollNode = scrollNode.parentNode;
-          if(scrollNode.scrollTop > 0){
+          if(scrollNode && scrollNode.scrollHeight > scrollNode.clientHeight){
             break;
           }
         }
         return scrollNode;
+      },
+      computedStyle(element){
+        var computedStyle;
+        if (typeof element.currentStyle != 'undefined')
+          computedStyle = element.currentStyle;
+        else
+          computedStyle = document.defaultView.getComputedStyle(element, null);
+        return computedStyle
       },
       scrollInView(element,container = window,callback = ()=>{},axis = "y"){
         let top = dom.offset(element).top - dom.offset(container.firstChild).top;
@@ -180,7 +188,7 @@ let dom = {
         const initialX = dom.scrollLeft(element)
         var lastY = initialY;
         var lastX = initialX;
-        var delta = asxis === "y" ? targetY - initialY : targetX - initialX;
+        var delta = axis === "y" ? targetY - initialY : targetX - initialX;
         const speed = Math.min(750,Math.min(1500,Math.abs(delta)));
         // var scrollInProgress = true;
         if(delta === 0 ){

@@ -3,13 +3,28 @@
 @import "../../common/header.styl";
 @import "../../common/footer.styl";
 @import "../../component/refresher.styl";
+@import "../../component/gotop";
 @import "../../component/slidetabs";
-@import "../../component/slider";
+@import "../../common/switcher";
+@import "../../common/search";
 @import "./explo.css";
 
- 
+body{
+	padding:0;
+}
+.container {
+	height: 100%;
+	.trendy-content{
+		height:100%;
+		overflow:hidden;
+	}
+}
+
+.back-to-top{
+	bottom:px2rem(50);
+}
+
 .slide-tabs {
-	padding-bottom: 1.38rem;
 	.slide-tabs-navbar {
 		height: 1.16rem;
 		width: 100%;
@@ -19,8 +34,17 @@
 			line-height: 1.16rem;
 			border: none;
 			&.active {
-				background-color: transparent;
+				i {
+					color: #801da1;
+    				border-bottom:.053333rem solid #801da1;
+				}
 			}
+		}
+	}
+	.slide-tabs-content{
+		padding-bottom:px2rem(83);
+		.slide-tabs-item{
+			// overflow-y:scroll;
 		}
 	}
 }

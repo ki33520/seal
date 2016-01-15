@@ -1,9 +1,11 @@
 'use strict'
 import React,{Component} from "react";
-import util from "../lib/util.es6";
+import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
+import dom from "../lib/dom.es6";
 import {smoothScroll} from "../lib/dom.es6";
+import Icon from "./icon.jsx";
 
 class GoTop extends Component{
     constructor(props){
@@ -13,7 +15,9 @@ class GoTop extends Component{
         };
     }
     toggleVisble(){
-        const scrollTop = util.scrollTop();
+        const {relative} = this.props;
+        const scrollTop = relative?dom.scrollTop(this.relativeElement)
+        :dom.scrollTop();
         if(scrollTop > 50){
             this.setState({active:true});
         }else{
@@ -21,13 +25,15 @@ class GoTop extends Component{
         }
     }
     componentDidMount(){
-        //util.bindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
+        const {relative} = this.props;
+        this.relativeElement = relative?ReactDOM.findDOMNode(this).parentNode:window;
+        dom.bindEvent(this.relativeElement,'scroll',_.debounce(this.toggleVisble.bind(this),100))
     }
     componentWillUnmount(){
-        //util.unbindEvent(window,'scroll',_.debounce(this.toggleVisble.bind(this),100))
+        dom.unbindEvent(this.relativeElement,'scroll',_.debounce(this.toggleVisble.bind(this),100))
     }
     backToTop(){
-        smoothScroll(window,0);
+        smoothScroll(this.relativeElement);
     }
     render(){
         const classes = classNames({
@@ -37,10 +43,16 @@ class GoTop extends Component{
 
         return (
             <div className={classes}>
-                <a href={null} onClick={this.backToTop}><span className="iconfont icon-up-big"></span></a>
+                <a href={null} onClick={this.backToTop.bind(this)}>
+                <Icon icon="up"/>
+                </a>
             </div>
         )
     }
+}
+
+GoTop.defaultProps = {
+    relative:false
 }
 
 export default GoTop;

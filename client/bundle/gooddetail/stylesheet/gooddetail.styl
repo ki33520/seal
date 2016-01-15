@@ -3,6 +3,7 @@
 @import "../../common/header.styl"
 @import "../../component/dropdown.styl"
 @import "../../component/popover.styl"
+@import "../../component/alert.styl"
 @import "../../component/numberpicker.styl"
 @import "../../component/slidetabs.styl"
 @import "../../component/slider.styl"
@@ -27,6 +28,7 @@ body{
     position:fixed;
     height:auto;
     bottom:-100%;
+    z-index:101;
 }
 
 .slider .control-nav{
@@ -247,6 +249,58 @@ $pink-color = #ED1946;
                 padding:0 0 0 .25rem;
             }
         }
+    }
+}
+
+.good-detail-btn{
+    height:px2rem(34);
+    border-top:px2rem(1) solid  #D7D7D7;
+    background:#FFF;
+    position:fixed;
+    bottom:0;
+    left:0;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    width:100%;
+    &>a:first-child{
+        flex:1;
+        text-align:center;
+        .iconfont{
+            font-size:px2rem(24);
+            position:relative;
+            em{ 
+                position:absolute;
+                top:px2rem(-2);
+                right:px2rem(-7);
+                line-height:.24rem;
+                background:#dd1847;
+                color:#FFF;
+                font-size:px2rem(12);
+                border-radius:px2rem(10);
+                padding:px2rem(2) px2rem(3);
+            }
+        }
+    }
+    &>a.goods_buy{
+        width:37.5%;
+        margin-right:px2rem(6);
+        background:#dd1847;
+        border-radius:px2rem(20);
+        color:#FFF;
+        text-align:center;
+        line-height:px2rem(20);
+        border:1px solid #dd1847;
+    }
+    &>a.goods_add{
+        width:37.5%;
+        margin-right:px2rem(6);
+        background:#FFF;
+        border-radius:px2rem(20);
+        color:#dd1847;
+        text-align:center;
+        line-height:px2rem(20);
+        border:1px solid #dd1847;
     }
 }
 

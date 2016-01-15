@@ -10,11 +10,16 @@ class Receiver extends Component{
         const {onCheck} = this.props
         onCheck(receiver)
     }
+    handleDelete(receiver){
+        const {deleteReceiver} = this.props;
+        deleteReceiver({
+            id:receiver.id
+        })
+    }
     renderReceivers(){
         const {receivers,checkable,checkedReceiver} = this.props;
-        if(receivers !== null){
-            var receiversContent;
-            receiversContent = receivers.map((receiver,i)=>{
+        if(receivers){
+            return receivers.map((receiver,i)=>{
                 const key = "receiver-"+i;
                 const checked = checkedReceiver !== null?(checkedReceiver.id === receiver.id):false;
                 const checkbox = checkable?(<Checkbox checked={checked} 
@@ -22,19 +27,18 @@ class Receiver extends Component{
                 const isDefault = receiver.isDefault === 1 ? <i>【默认】</i> : <i></i>;
                 return (
                     <div className="order-time" key={key}>
-                        <p>{receiver.recvLinkman}<span className="mobNum">{receiver.recvMobile}</span>
+                        <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span>
                         {isDefault}
                         </p>
                         <p>{receiver.idCard}<em>实名</em></p>
-                        <p>{receiver.provinceName+receiver.cityName+receiver.countyName+receiver.address}</p>
+                        <p>{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
                         <div className="toolsArea">
-                            <span className="pen"><a href={"#/updatereceiver/"+receiver.recvAddressId}><em></em>修改</a></span>
-                            <span className="del"><em></em>删除</span>
+                            <span className="pen"><a href={"#/updatereceiver/"+receiver.id}><em></em>修改</a></span>
+                            <span className="del" onClick={this.handleDelete.bind(this,receiver)}><em></em>删除</span>
                         </div>
                     </div>
                 )
             });
-            return receiversContent;
         }
         return (
             <div className="empty">
