@@ -3,7 +3,7 @@ import {apiRequest} from "../../lib/util.es6";
 import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
-    RECEIVE_GOODS,REQUEST_GOODS,CHANGE_FIELD
+    RECEIVE_GOODS,REQUEST_GOODS,CHANGE_FIELD,CAN_BUY
 } from "./constant.es6";
 
 function receiveGoods(param,res){
@@ -27,6 +27,13 @@ export default function fetchGoods(param){
         return apiRequest('/goodlist',param,{method:"POST"}).then((res)=>{
             dispath(receiveGoods(param,res))
         })
+    }
+}
+
+export function toggleCanBuy(param){
+    return {
+        type:CAN_BUY,
+        param
     }
 }
 

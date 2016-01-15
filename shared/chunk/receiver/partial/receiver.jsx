@@ -3,7 +3,6 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import Icon from "../../../component/icon.jsx";
-import GoTop from "../../../component/gotop.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 
 class Receiver extends Component{
@@ -59,7 +58,6 @@ class Receiver extends Component{
             <div className="addBtns">
                 <a href="#/addreceiver" className="addBtn">添加新地址</a>
             </div>
-            <GoTop relative={true}/>
             </div>
         )
     }

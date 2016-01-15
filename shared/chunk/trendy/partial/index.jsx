@@ -7,6 +7,7 @@ import fetchGoods from "../action.es6";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import GoTop from "../../../component/gotop.jsx";
+import Sticky from "../../../component/sticky.jsx";
 import Icon from "../../../component/icon.jsx";
 import GoodItem from "./goodItem.jsx";
 import Header from "../../common/header.jsx";

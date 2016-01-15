@@ -49,7 +49,7 @@ router.post("/fetchCart", mainController.requireAuthorize,require("./controller/
 router.get("/goodcomment/:id", require("./controller/goodcomment").index);
 router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 
-router.post("/confirmorder",require("./controller/confirmorder").confirmOrder);
+router.get("/confirmorder/:param",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderlist/:id",mainController.requireAuthorize,require("./controller/orderlist"));

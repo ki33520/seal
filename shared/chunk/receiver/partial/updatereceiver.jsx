@@ -70,7 +70,7 @@ class UpdateReceiver extends Component{
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
                 alert("提交成功!",2000);
-                // setTimeout(()=>window.location.replace("/receiver"),2500)
+                setTimeout(()=>window.location.replace("/receiver"),2500)
             }else{
                 alert(nextProps.errMsg,2000)
             }

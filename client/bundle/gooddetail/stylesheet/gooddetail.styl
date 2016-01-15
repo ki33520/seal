@@ -3,6 +3,7 @@
 @import "../../common/header.styl"
 @import "../../component/dropdown.styl"
 @import "../../component/popover.styl"
+@import "../../component/alert.styl"
 @import "../../component/numberpicker.styl"
 @import "../../component/slidetabs.styl"
 @import "../../component/slider.styl"
@@ -27,6 +28,7 @@ body{
     position:fixed;
     height:auto;
     bottom:-100%;
+    z-index:101;
 }
 
 .slider .control-nav{
@@ -250,7 +252,7 @@ $pink-color = #ED1946;
     }
 }
 
-.good-detail-toolbar{
+.good-detail-btn{
     height:px2rem(34);
     border-top:px2rem(1) solid  #D7D7D7;
     background:#FFF;

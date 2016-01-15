@@ -7,7 +7,7 @@ START_SUBMITORDER,FINISH_SUBMITORDER,
 CHANGE_RECEIVER,CHANGE_DELIVERYTIME,CHANGE_COUPON,CHANGE_INVOICE,
 TOGGLE_TICKET,TOGGLE_BALANCE,CHANGE_PAYPASSWORD} from "./action.es6";
 
-import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
 function orderByParam(state={},action){

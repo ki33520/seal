@@ -65,6 +65,17 @@ var util = {
          // console.log("paramList",paramList)
         paramList = paramList.join("&")
         return md5(paramList)
+    },
+    decodeURLParam(param){
+        param = sharedUtil.base64Decode(param)
+        var _param = {}
+        _.each(param.split("&"),function(v){
+            v = v.split("=")
+            var _v = {}
+            _v[v[0]] = v[1]
+            _.extend(_param,_v)
+        })
+        return _param
     }
 }
 

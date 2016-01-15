@@ -20,9 +20,6 @@ body{
 	}
 }
 
-.back-to-top{
-	bottom:px2rem(50);
-}
 
 .slide-tabs {
 	.slide-tabs-navbar {
@@ -44,6 +41,11 @@ body{
 	.slide-tabs-content{
 		padding-bottom:px2rem(83);
 		.slide-tabs-item{
+			position:relative;
+			.back-to-top{
+				position:absolute;
+				top:px2rem(30);
+			}
 			// overflow-y:scroll;
 		}
 	}

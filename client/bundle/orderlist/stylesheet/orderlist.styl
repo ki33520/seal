@@ -9,6 +9,7 @@
 $gray-color = #555
 body {
     background: #F1F1F1;
+    padding:0;
 }
 
 .right{
@@ -23,13 +24,18 @@ body {
 
 .order-list-container{
     height:100%;
+    &>div{
+        height:100%;
+    }
 }
 .order-list-content{
+    height:100%;
+    overflow:hidden;
 }
 
 .slide-tabs{
-    overflow:hidden;
     .slide-tabs-navbar{
+        height: 1.16rem;
         border:0 none;
         .slide-tabs-navbar-item{
             background:#FFF;
@@ -44,11 +50,6 @@ body {
     }
     .slide-tabs-content{
         overflow:hidden;
-        padding-bottom: 0;
-        .slide-tabs-item{
-            overflow-y:auto;
-            overflow-x:hidden;
-            -webkit-overflow-scrolling: touch;
-        }
+        padding-bottom:px2rem(30);
     }
 }

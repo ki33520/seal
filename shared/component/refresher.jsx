@@ -6,7 +6,7 @@ import dom from "../lib/dom.es6";
 
 class Refresher extends React.Component{
     componentDidMount(){
-        this.scrollNode = dom.scrollNode(ReactDOM.findDOMNode(this))
+        this.scrollNode = ReactDOM.findDOMNode(this).parentNode
         // console.log('scrollNode',this.scrollNode)
         dom.bindEvent(this.scrollNode,"scroll",(e)=>{
             this.handleScroll(this.scrollNode)

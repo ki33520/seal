@@ -5,7 +5,7 @@ import _ from "lodash";
 import {
     REQUEST_GOODS,RECEIVE_GOODS,
     REQUEST_HOTWORD,RESPONSE_HOTWORD,CHANGE_FIELD,
-    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,CAN_BUY
 } from "./constant.es6";
 
 function goodsByParam(state={},action){
@@ -14,11 +14,17 @@ function goodsByParam(state={},action){
             return Object.assign({},state,{
                 isFetching:true
             });
+        case CAN_BUY:
+            
+            return Object.assign({},state,{
+                params:action.param
+            });
         case RECEIVE_GOODS:
             return Object.assign({},state,{
                 isFetching:action.res.isFetching,
                 goods:action.res.goods,
-                page:action.res.page
+                pageIndex:action.param.pageIndex,
+                params:action.param
             });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{

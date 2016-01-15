@@ -200,5 +200,6 @@ module.exports = {
     saveReceiver: saveReceiver,
     createReceiver: createReceiver,
     deleteReceiver:deleteReceiver,
-    cascadeArea: cascadeArea
+    cascadeArea: cascadeArea,
+    receiversFilter:receiversFilter
 };

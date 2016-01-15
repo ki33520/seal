@@ -7,7 +7,7 @@ import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
 START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
 
-import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 import _ from "lodash";
 
@@ -58,9 +58,6 @@ function goodById(state={},action){
                 isToggling:false,
                 isCollected
             })
-        case SHOW_ALERT:
-        case HIDE_ALERT:
-            return alertReducer(state,action)
         default:
             return state;
     }
@@ -151,6 +148,9 @@ function cartByUser(state={},action){
                 cartAdded:action.res.cartAdded,
                 cartCount
             })
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
         default:
             return state;
     }
