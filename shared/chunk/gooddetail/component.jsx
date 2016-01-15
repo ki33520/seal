@@ -1,22 +1,18 @@
 'use strict'
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
-import {apiRequest} from "../../lib/util.es6";
 import Slider from "../../component/slider/slider.jsx";
 import Slide from "../../component/slider/slide.jsx";
-import NumberPicker from "../../component/numberpicker.jsx";
 import PullHook from "../../component/pullhook.jsx";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
-import Popup from "../../component/popup.jsx";
-import MaskLayer from "../../component/masklayer.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 
 import Promotions from "./partial/promotions.jsx";
-import Attributes from "./partial/attributes.jsx";
 import Origin from "./partial/origin.jsx";
 import Specification from "./partial/specification.jsx";
 import Toolbar from "./partial/toolbar.jsx";
@@ -29,8 +25,7 @@ class GoodDetail extends Component{
             buyed:1,
             selectedItem:props.goodById.good.selectedItem,
             upperVisble:true,
-            downVisble:false,
-            popupActive:false
+            downVisble:false
         }
     }
     componentDidMount(){
@@ -41,7 +36,7 @@ class GoodDetail extends Component{
             let selectedAttrValue = _.findWhere(selectedAttr.attrValues,{
                 value:v
             })
-            this.onAttrChange(selectedAttr,selectedAttrValue)
+            this.handleAttrChange(selectedAttr,selectedAttrValue)
         }) 
         fetchCartCount()
         fetchIsCollected()
@@ -59,7 +54,7 @@ class GoodDetail extends Component{
             })
         }
     }
-    onAttrChange(selectedAttr,selectedAttrValue,e){
+    handleAttrChange(selectedAttr,selectedAttrValue,e){
         e && e.preventDefault();
         const {fetchGood,selectAttr} = this.props;
         if(selectedAttrValue.disabled){
@@ -100,12 +95,6 @@ class GoodDetail extends Component{
             });
         }
     }
-    togglePopup(e){
-        e && e.preventDefault();
-        this.setState({
-            popupActive:!this.state.popupActive
-        })
-    }
     toggleCollected(e){
         e && e.preventDefault();
         const {toggleCollected} = this.props;
@@ -117,6 +106,7 @@ class GoodDetail extends Component{
         });
     }
     directBuy(e){
+        console.log('directBuy')
         e && e.preventDefault();
         const {alert} = this.props
         const {good} = this.props.goodById;
@@ -133,7 +123,7 @@ class GoodDetail extends Component{
             alert('购买数量必须大于0',3000);
             return;
         }else if(selectedItem !== null && buyed > 0){
-            const directBuyForm = React.findDOMNode(this.refs.directBuyForm);
+            const directBuyForm = ReactDOM.findDOMNode(this.refs.directBuyForm);
             directBuyForm.submit();
         }
     }
@@ -158,7 +148,7 @@ class GoodDetail extends Component{
     render(){
         const {cartCount} = this.props;
         const {good,isCollected} = this.props.goodById
-        const {selectedItem,buyed} = this.state;
+        const {selectedItem,buyed,selectedAttr} = this.state;
 
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
@@ -218,37 +208,13 @@ class GoodDetail extends Component{
                 onPullEnd={this.handlePullUp.bind(this)}
                 >上拉显示商品详情</PullHook>
             </div>
-            <Toolbar {...this.props} 
+            <Toolbar cartCount={cartCount} good={good} 
+            selectedAttr={selectedAttr} buyed={buyed}
+            handleAttrChange={this.handleAttrChange.bind(this)}
+            handleBuyedChanged={this.handleBuyedChanged.bind(this)}
             directBuy={this.directBuy.bind(this)} 
-            addToCart={this.togglePopup.bind(this)}>
+            addToCart={this.addToCart.bind(this)}>
             </Toolbar>
-            <Popup direction="bottom" active={this.state.popupActive}>
-                <div className="con">
-                    <div className="goodsSure">
-                        <img src={good.mainImageUrl} alt="" />
-                        <div className="left">
-                            <span>&yen;{good.salePrice}</span>
-                            <em>库存<i>{good.stock}</i>件</em>
-                        </div>
-                        <i className="iconfont icon-close-circled" onClick={this.togglePopup.bind(this)}></i>
-                    </div>
-                    <Attributes attrs={good.attrs}
-                    stock={good.stock}
-                    selectedAttr={this.state.selectedAttr}
-                    onAttrChange={this.onAttrChange.bind(this)} />
-                    <div className="pro clearfix">
-                        <div className="pro-name">
-                            <span>购买数量</span>
-                            <em>（限购{good.buyLimit}件）</em>
-                        </div>
-                        <div className="good-buyed">
-                        <NumberPicker value={this.state.buyed} onChange={this.handleBuyedChanged.bind(this)}/>
-                        </div>
-                    </div>
-                    <a href="javascript:void(0);" onClick={this.addToCart.bind(this)} className="goodsSureBtn">确定</a>
-                </div>
-            </Popup>
-            <MaskLayer visible={this.state.popupActive} />
             <form action="/confirmorder" method="POST" ref="directBuyForm">
                 <input type="hidden" value={selectedItem !== null?selectedItem.code:""} name="itemIds"/>
                 <input type="hidden" value={buyed} name="buyeds"/>
@@ -270,6 +236,7 @@ class GoodDetail extends Component{
                 </SlideTabsItem>
                 </SlideTabs>
             </div>
+            <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             </div>
         )
     }

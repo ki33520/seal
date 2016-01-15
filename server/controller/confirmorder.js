@@ -95,7 +95,6 @@ var confirmOrder = function(req, res, next) {
     var itemIds = req.body.itemIds !== undefined ? req.body.itemIds : null;
     var buyeds = req.body.buyeds !== undefined ? req.body.buyeds : null;
     var user = req.session.user;
-    return next(new Error("confirmorder error"))
     // console.log(itemIds, buyeds)
     util.fetchAPI("confirmOrder", {
         memberId: "fc6804de51c482730151e8ec0a080023",

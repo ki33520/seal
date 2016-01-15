@@ -54,6 +54,7 @@ function responseGood(param,res){
     }
 }
 
+import {alert} from "../common/action.es6";
 export {alert} from "../common/action.es6";
 
 export function fetchGood(param){
@@ -85,6 +86,11 @@ export function addCart(param){
     return (dispatch)=>{
         dispatch(startAddCart(param));
         apiRequest("/addcart",param).then((res)=>{
+            if(res.cartAdded){
+                dispatch(alert("添加购物车成功!",3000))
+            }else{
+                dispatch(alert("添加购物车失败!",3000))
+            }
             dispatch(finishAddCart(param,res));
         })
     }
