@@ -54,7 +54,9 @@ router.post("/submitorder",mainController.requireAuthorize,require("./controller
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderlist/:id",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
-router.post("/closedOrder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
+router.post("/closedorder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
+router.post("/deliveryorder",mainController.requireAuthorize,require("./controller/orderdetail").orderDelivery);
+router.get("/logistics",mainController.requireAuthorize,require("./controller/orderdetail").logistics);
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
