@@ -1,6 +1,6 @@
 {
     "confirmOrder": {
-        "uri": "/cart/v1/findCarts",
+        "uri": "/cart/v1/confirmOrder",
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "production": "http://product.tepin.hk"

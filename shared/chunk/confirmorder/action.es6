@@ -105,12 +105,19 @@ function finishSubmitOrder(param,res){
     }
 }
 
+import {alert} from "../common/action.es6";
+
 export function submitOrder(url,param){
     return (dispatch)=>{
         dispatch(startSubmitOrder(param));
         apiRequest(url,param,{
             method:"POST"
         }).then((res)=>{
+            if(res.orderSubmited){
+                dispatch(alert("提交成功!",3000))
+            }else{
+                dispatch(alert(res.errMsg,3000))
+            }
             dispatch(finishSubmitOrder(param,res));
         })
     }

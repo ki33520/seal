@@ -12,32 +12,31 @@ class Coupon extends Component{
     }
     renderCouponRow(){
         const {coupons} = this.props;
-        console.log('coupons',coupons)
-        if(coupons === null){
-            return (
-             <div className="empty">
-                <img src="/client/asset/images/empty_selectCoupon.png" />
-                <span>您目前没有可用优惠券哟~</span>
-            </div>
-            )
+        if(coupons){
+            return coupons.map((coupon,i)=>{
+                const key = "coupon-" + i;
+                return (
+                    <div className="coupon haitao hover" key={key}>
+                        <div className="left">
+                            <div className="price"><em>&yen;</em>{coupon.couponFee}</div>
+                            <div className="term">{coupon.couponRule}</div>
+                        </div>
+                        <div className="right">
+                            <div className="kind">{coupon.couponName}</div>
+                            <div className="date">{coupon.startTime}-{coupon.endTime}</div>
+                            <div className="explain">{coupon.couponDesc}</div>
+                        </div>
+                        <div className="selected" onClick={this.handleCheck.bind(this,coupon)}></div>
+                    </div>
+                )
+            })
         }
-        return coupons.map((coupon,i)=>{
-            const key = "coupon-" + i;
-            return (
-                <div className="coupon haitao hover">
-                    <div className="left">
-                        <div className="price"><em>&yen;</em>{coupon.shortName}</div>
-                        <div className="term">{coupon.assertion}</div>
-                    </div>
-                    <div className="right">
-                        <div className="kind">海外购www.tepin.hk</div>
-                        <div className="date">{coupon.useDate}-{coupon.validityDate}</div>
-                        <div className="explain">{coupon.couponDesc}</div>
-                    </div>
-                    <div className="selected" onClick={this.handleCheck.bind(this,coupon)}></div>
-                </div>
-            )
-        })
+        return (
+         <div className="empty">
+            <img src="/client/asset/images/empty_selectCoupon.png" />
+            <span>您目前没有可用优惠券哟~</span>
+        </div>
+        )
     }
     render(){
         return (

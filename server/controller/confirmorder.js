@@ -4,20 +4,22 @@ var _ = require("lodash");
 var bluebird = require("bluebird");
 var moment = require("moment");
 var util = require("../lib/util");
+var sharedUtil = require("../../shared/lib/util.es6");
 var ConfirmOrder = util.getSharedComponent("confirmorder");
 var config = require("../lib/config");
+var receiversFilter = require("./receiver").receiversFilter;
 
 function orderFilter(order) {
     var _order = _.pick(order,[
         "qtys"
     ]);
-    _order["totalFee"] = parseFloat(order.totalFee).toFixed(1)
-    _order["productFee"] = parseFloat(order.salesTotalFee).toFixed(1)
-    _order["tariffFee"] = parseFloat(order.promoFee).toFixed(1)
-    _order["abroadFee"] = order.abroadFee?parseFloat(order.abroadFee).toFixed(1):"0.0"
-    _order["shipFee"] = order.logisticsFee?parseFloat(order.logisticsFee).toFixed(1):"0.0"
+    _order["totalFee"] = order.totalFee
+    _order["productFee"] = order.salesTotalFee
+    _order["tariffFee"] = order.promoFee
+    _order["abroadFee"] = order.abroadFee?order.abroadFee:"0.0"
+    _order["shipFee"] = order.logisticsFee?order.logisticsFee:"0.0"
     _order["couponFee"] = "0.0"
-    _order["promoFee"] = parseFloat(order.promoFee).toFixed(1)
+    _order["promoFee"] = order.promoFee
 
     var promoList = []
     _.each(order.cartMKTList, function(promo, i) {
@@ -38,75 +40,44 @@ function orderFilter(order) {
         promoList.push(_promo);
     })
     _order["promoList"] = promoList
-    _order["receivers"] = order.memberAddrList
-    _order["checkedReceiver"] = order.memberAddrList?order.memberAddrList[0]:null;
-    _order["coupon"] = order.couponList
+    _order["receivers"] = receiversFilter(order.memberAddrList)
+    var checkedReceiver = _.findWhere(_order["receivers"],{isDefault:1})
+    checkedReceiver = (_order["receivers"].length > 0 && checkedReceiver === undefined) && _order["receivers"][0]
+    _order["checkedReceiver"] = checkedReceiver?checkedReceiver:null
+    _order["coupons"] = formatCoupons(order.couponList)
     // console.log('order',_order)
     // order.coupons = formatCoupons(originResp.couponList)
     return _order;
 }
 
-function formatCoupons(list) {
-    var sortedCoupons = _.sortBy(list, function(v) {
-        return -v.issueDate
-    });
-    _.map(sortedCoupons, function(v, k) {
-        v.validityDate = moment(v.validityDate).format('YYYY-MM-DD');
-        v.useDate = moment(v.useDate).format('YYYY-MM-DD');
-        v.issueDate = moment(v.issueDate).format('YYYY-MM-DD');
-        v.assertion = null;
-        if (v.curEntity !== null) {
-            v.assertion = v.curEntity.songAccount
-        }
-        v.flag = flagOfCoupon(v);
-        return v;
+function formatCoupons(coupons) {
+    var _coupons = []
+    coupons = _.sortBy(coupons,function(coupon){
+        return moment(new Date(coupon["startTime"])).format("X")
     })
-    return sortedCoupons;
-}
-
-function flagOfCoupon(coupon) {
-    var flag;
-    if (coupon.employName.length > 1) {
-        flag = "general";
-    }
-    if (coupon.employName.length === 1) {
-        switch (coupon.employName[0]) {
-            case "联盟优惠券":
-                flag = "legue";
-                break;
-            case "特品汇":
-                flag = "tepin";
-                break;
-            case "农博汇":
-                flag = "hnmall";
-                break;
-            case "海外购":
-                flag = "oversea";
-                break;
-            case "线下门店":
-                flag = "offline";
-                break;
-        }
-    }
-    return flag;
+    _.each(coupons, function(v, k) {
+        v["startTime"] = moment(new Date(v["startTime"])).format("YYYY.M.D")
+        v["endTime"] = moment(new Date(v["endTime"])).format("YYYY.M.D")
+        _coupons.push(v)
+    })
+    // console.log('coupons',_coupons)
+    return _coupons;
 }
 
 var confirmOrder = function(req, res, next) {
-    var itemIds = req.body.itemIds !== undefined ? req.body.itemIds : null;
-    var buyeds = req.body.buyeds !== undefined ? req.body.buyeds : null;
+    var param = util.decodeURLParam(req.params["param"])
     var user = req.session.user;
-    return next(new Error("confirmorder error"))
     // console.log(itemIds, buyeds)
     util.fetchAPI("confirmOrder", {
-        memberId: "fc6804de51c482730151e8ec0a080023",
-        singleCodes: itemIds,
-        qtys: buyeds
+        memberId: user.memberId,
+        singleCodes: param.itemIds,
+        qtys: param.buyeds
     }).then(function(ret) {
         if (ret.returnCode === 0) {
-            var order = orderFilter(ret.object[0]);
+            var order = orderFilter(ret.object);
             _.extend(order, {
-                itemIds: itemIds,
-                buyeds: buyeds
+                itemIds: param.itemIds,
+                buyeds: param.buyeds
             })
             var initialState = {
                 isFetched: true,
@@ -146,7 +117,7 @@ var submitOrder = function(req, res, next) {
     //     logisticTime:logisticTime,
     //     invoiceId:invoiceId
     // })
-    util.fetchAPI("submitOrder", {
+    util.fetchAPI("saveOrder", {
         memberId: user.memberId,
         singleCodes: itemIds,
         qtys: buyeds,
