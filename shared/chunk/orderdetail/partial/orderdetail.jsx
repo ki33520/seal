@@ -6,7 +6,7 @@ import Header from "../../common/header.jsx";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
 
-import {fetchCloseOrder,fetchDeliveryOrder} from "../action.es6";
+import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics} from "../action.es6";
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
@@ -68,23 +68,21 @@ class OrderDetail extends Component{
     }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props;
-        console.log(this.props.orderByParam)
-        if(nextProps.orderByParam.closeOrderChanging === false &&
-           this.props.orderByParam.closeOrderChanging === true){
-            if(nextProps.orderByParam.closeOrderChanged === true){
-                dispatch(alert("保存成功!",2000));
-                setTimeout(()=>window.history.back(),2500);
+        if(nextProps.closeOrderChanging === false &&
+           this.props.closeOrderChanging === true){
+            if(nextProps.closeOrderChanged === true){
+                dispatch(alert(nextProps.msg,2000));
             }else{
-                dispatch(alert(nextProps.orderByParam.errMsg,2000));
+                dispatch(alert(nextProps.msg,2000));
             }
         }
         
-        if(nextProps.orderByParam.deliveryOrderChanging === false &&
-           this.props.orderByParam.deliveryOrderChanging === true){
-            if(nextProps.orderByParam.deliveryOrderChanged === true){
-                dispatch(alert("验证码发送成功!",2000));
+        if(nextProps.deliveryOrderChanging === false &&
+           this.props.deliveryOrderChanging === true){
+            if(nextProps.deliveryOrderChanged === true){
+                dispatch(alert(nextProps.msg,2000));
             }else{
-                dispatch(alert(nextProps.orderByParam.errMsg,2000));
+                dispatch(alert(nextProps.msg,2000));
             }
         }
     }
@@ -97,7 +95,7 @@ class OrderDetail extends Component{
                 return (
                     <div className="confirmBtns">
                         <a href="javascript:void(0);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
-                        <a href="javascript:void(0);" className="confirm_btn">立即支付</a>
+                        <a href="javascript:void(0);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">立即支付</a>
                     </div>
                 )
             case "STATUS_OUT_HOUSE":
