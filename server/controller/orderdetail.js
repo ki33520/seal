@@ -183,10 +183,9 @@ var orderDetail = function(req, res, next) {
 }
 var orderClose = function(req, res, next) {
     var orderNo = req.body.orderNo;
-    
-    util.fetchAPI("updateBasicByUser", {
+    util.fetchAPI('closedOrderById', {
         orderNo: orderNo
-    },true).then(function(resp) {
+    }).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({
                 isChanged: true,
@@ -195,33 +194,19 @@ var orderClose = function(req, res, next) {
             })
         }else{
             res.json({
-                receiverSaved: false,
+                isChanged: false,
                 msg: resp.message
             })
         }
     })
-    // util.fetchAPI('closedOrderById', {
-    //     orderNo: orderNo
-    // }).then(function(resp) {
-    //     if (resp.returnCode === 0) {
-    //         res.json({
-    //             isChanged: true,
-    //             orderStatus: "STATUS_CANCELED",
-    //             msg: resp.message
-    //         })
-    //     }else{
-    //         res.json({
-    //             isChanged: false,
-    //             msg: resp.message
-    //         })
-    //     }
-    // })
 }
 var orderDelivery = function(req, res, next) {
+    var user = req.session.user;
     var orderNo = req.body.orderNo;
-    util.fetchAPI("updateBasicByUser", {
+    util.fetchAPI('deliveryOrderById', {
+        memberId: user.memberId,
         orderNo: orderNo
-    },true).then(function(resp) {
+    }).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({
                 isChanged: true,
@@ -230,27 +215,11 @@ var orderDelivery = function(req, res, next) {
             })
         }else{
             res.json({
-                receiverSaved: false,
+                isChanged: false,
                 msg: resp.message
             })
         }
     })
-    // util.fetchAPI('deliveryOrderById', {
-    //     orderNo: orderNo
-    // }).then(function(resp) {
-    //     if (resp.returnCode === 0) {
-    //         res.json({
-    //             isChanged: true,
-    //             orderStatus: "STATUS_FINISHED",
-    //             msg: resp.message
-    //         })
-    //     }else{
-    //         res.json({
-    //             isChanged: false,
-    //             msg: resp.message
-    //         })
-    //     }
-    // })
 }
 
 var logistics = function(req, res, next) {
