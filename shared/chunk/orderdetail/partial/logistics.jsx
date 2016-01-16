@@ -1,60 +1,111 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
 import Header from "../../common/header.jsx";
 import StatusProgress from "./statusprogress.jsx";
+import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import GoTop from "../../../component/gotop.jsx";
 
 import {fetchLogistics} from "../action.es6";
 
 class Logistics extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            activeIndex:0
+        }
+    }
     componentDidMount(){
         const {dispatch,order} = this.props;
         dispatch(fetchLogistics("/logistics",{
-            orderno:order.orderNo
+            orderNo:order.orderNo
         }))
     }
-    renderTrace(){
+    renderTrace(routes){
+        if(routes.length>0){
+            return (
+                <div className="org-wuliuStatusList">
+                    {
+                        routes.map((v,k)=>{
+                            const classes = classNames({
+                                "org-wuliuStatus":true,
+                                "org-curBg": k===0,
+                                "org-midBg": k!==0 || k!==(routes.length-1),
+                                "org-starBg": k===(routes.length-1)
+                            });
+                            return (
+                                <div className={classes} key={k}>
+                                    <div className="org-wuLiuLeft">
+                                        <em className="org-middle"></em>
+                                    </div>
+                                    <p className="org-wuLiuFont org-wuLiuCur">
+                                        <span>{v.context}</span>
+                                        <span className="org-wuLiuTime">{v.eventTime}</span>
+                                    </p>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            )
+        }else{
+            return (
+                <div className="org-wuliuStatusList">
+                    <div className="org-wuliuStatus org-curBg">
+                        <div className="org-wuLiuLeft">
+                            <em className="org-middle"></em>
+                        </div>
+                        <p className="org-wuLiuFont org-wuLiuCur">
+                            <span>暂无物流动态信息</span>
+                        </p>
+                    </div>
+                </div>
+            )
+        }
+    }
+    handleClick(index){
+
+    }
+    renderContent(item){
         return (
-            <div className="logistics-traces">
-                <div className="logistics-trace active">
-                    <div className="logistics-trace-status">
-                        <span><em></em></span>
-                    </div>
-                    <div className="logistics-trace-desc">
-                        <p>您已签收本次订单包裹，本次配送完成。感谢您在特品汇购物，祝您生活愉快！</p>
-                        <p>2015-02-26 18:24:39</p>
-                    </div>
+            <div className="logistics page-0 page-current">
+                <div className="info">
+                    <h2>物流详情</h2>
+                    <p><i>物流公司：</i>{item.expressName}</p>
+                    <p>物流编号：{item.mailNumber}</p>
                 </div>
-                <div className="logistics-trace active">
-                    <div className="logistics-trace-status">
-                        <span><em></em></span>
-                    </div>
-                    <div className="logistics-trace-desc">
-                        <p>您已签收本次订单包裹，本次配送完成。感谢您在特品汇购物，祝您生活愉快！</p>
-                        <p>2015-02-26 18:24:39</p>
-                    </div>
+                
+                <div className="rate">
+                    <h2>物流动态</h2>
+                    {this.renderTrace(item.routes)}
+                    <h2 className="source">信息来源：{item.expressName}</h2>
                 </div>
+                
             </div>
         )
     }
     render(){
-        const {order} = this.props;
+        const {logistics,order} = this.props;
+        var parcel = [];
+        for(var i in logistics){
+            if(i === "dispatchs"){
+                parcel = logistics[i];
+            }
+        }
+        const tabs = parcel.map((item,i)=>{
+            return (
+                <SlideTabsItem navigator={()=><i>{"包裹"+i}</i>} key={i}>
+                    {this.renderContent(item)}
+                </SlideTabsItem>
+            )
+        })
         return (
             <div className="order-detail-content logistics-content">
-                <Header title="物流详情"/>
-                <div className="order-status">
-                <p>订单编号:<em>{order.orderNo}</em></p>
-                <StatusProgress {...this.props.order}/>
-                </div>
-                <div className="order-brief">
-                    <h3>物流详情</h3>
-                    <p>物流公司:<em>{order.createdAt}</em></p>
-                    <p>运单号码:<em>{order.status}</em></p>
-                </div>
-                <div className="order-goods">
-                    <h3>物流追踪</h3>
-                    {this.renderTrace()}
-                </div>
+                <Header>物流信息</Header>
+                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
+                    {tabs}
+                </SlideTabs>
             </div>
         )
     }

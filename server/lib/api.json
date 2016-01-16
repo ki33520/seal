@@ -202,8 +202,22 @@
             "production": "order.hwg.youayun.cn"
         }
     },
-    "closedOrderById": {
+    "closedOrderById":{
         "uri": "/order/v1/closedOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "deliveryOrderById":{
+        "uri": "/order/v1/orderDelivery",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "logisticsByOrder":{
+        "uri": "/order/v1/searchRoute",
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "production": "order.hwg.youayun.cn"

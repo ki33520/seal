@@ -5,6 +5,8 @@ export const REQUEST_LOGISTICS = "REQUEST_LOGISTICS";
 export const RESPONSE_LOGISTICS= "RESPONSE_LOGISTICS";
 export const REQUEST_ClOSEORDER = "REQUEST_ClOSEORDER";
 export const RESPONSE_ClOSEORDER= "RESPONSE_ClOSEORDER";
+export const REQUEST_DELIVERYORDER = "REQUEST_DELIVERYORDER";
+export const RESPONSE_DELIVERYORDER= "RESPONSE_DELIVERYORDER";
 
 function requestLogistics(param){
     return {
@@ -51,6 +53,31 @@ export function fetchCloseOrder(url,param){
         dispatch(requestCloseOrder(param));
         apiRequest(url,param,{method:"POST"}).then((res)=>{
             dispatch(responseCloseOrder(param,res));
+        })
+    }
+}
+
+function requestDeliveryOrder(param){
+    return {
+        type:REQUEST_DELIVERYORDER,
+        param
+    }
+}
+
+function responseDeliveryOrder(param,res){
+    return {
+        type:RESPONSE_DELIVERYORDER,
+        res,
+        param,
+        finishAt:Date.now()
+    }
+}
+
+export function fetchDeliveryOrder(url,param){
+    return (dispatch)=>{
+        dispatch(requestDeliveryOrder(param));
+        apiRequest(url,param,{method:"POST"}).then((res)=>{
+            dispatch(responseDeliveryOrder(param,res));
         })
     }
 }

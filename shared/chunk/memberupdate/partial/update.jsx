@@ -15,8 +15,8 @@ class Update extends Component{
                 </Header>
                 <ul className="userInfo">
                     <li>nickname: {memberInfo.nickName}</li>
-                    <li>email: {memberInfo.email}</li>
                     <li>mobileNumber: {memberInfo.mobileNumber}</li>
+                    <li>birthday: {memberInfo.birthday}</li>
                 </ul>
                 <ul className="list">
                     <li><a href="#/basic">基本信息</a></li>

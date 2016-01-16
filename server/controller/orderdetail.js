@@ -144,7 +144,7 @@ function formatComment(object) {
     return order;
 }
 
-var orderDetail = function(req, res) {
+var orderDetail = function(req, res, next) {
     var id = req.params.id;
     bluebird.props({
         orderById: util.fetchAPI("orderById", {
@@ -180,29 +180,39 @@ var orderDetail = function(req, res) {
         }
     })
 }
-var orderClose = function(req, res){
+var orderClose = function(req, res, next) {
     var orderNo = req.body.orderNo;
-    util.fetchAPI('closedOrderById', {
+    res.json({
+        isChanged: true
+    })
+    // util.fetchAPI('closedOrderById', {
+    //     orderNo: orderNo
+    // }).then(function(resp) {
+    //     if (resp.returnCode === 0) {
+    //         res.json(resp.object);
+    //     }
+    // })
+}
+var orderDelivery = function(req, res, next) {
+    var orderNo = req.body.orderNo;
+    util.fetchAPI('deliveryOrderById', {
         orderNo: orderNo
     }).then(function(resp) {
-        console.log(resp)
         if (resp.returnCode === 0) {
-            res.json(resp);
+            res.json(resp.object);
         }
     })
 }
 
-var logistics = function(req, res) {
+var logistics = function(req, res, next) {
     var config = req.app.locals.config;
     var user = req.session.user;
-    var orderNo = req.query.orderno;
-
-    util.apiRequest(config.api.logisticsByOrder.url, {
-        loginToken: user.memberId,
+    var orderNo = req.query.orderNo;
+    util.fetchAPI("logisticsByOrder", {
         orderNo: orderNo
     }).then(function(resp) {
-        if (resp.code === "success") {
-            res.json(resp)
+        if (resp.returnCode === 0) {
+            res.json(resp.object)
         }
     })
 }
@@ -210,5 +220,6 @@ var logistics = function(req, res) {
 module.exports = {
     orderDetail: orderDetail,
     logistics: logistics,
-    orderClose: orderClose
+    orderClose: orderClose,
+    orderDelivery: orderDelivery
 };
