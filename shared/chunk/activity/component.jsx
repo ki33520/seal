@@ -20,12 +20,6 @@ class Activity extends React.Component{
             pageIndex:1
         }
     }
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh();
-        }.bind(this));
-    }
-
     beginRefresh(){
         const {dispatch,totalPage,isFetching} = this.props;
         let {pageIndex} = this.state;

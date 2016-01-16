@@ -39,7 +39,8 @@ class Brand extends Component{
     render(){
         return (
             <div className="poly_2">
-                <a href="#/allbrands" className="allBrand">全部品牌<i className="iconfont icon-right"></i></a>
+                <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"allbrands")} 
+                className="allBrand">全部品牌<i className="iconfont icon-right"></i></a>
                 <div className="title">推荐品牌</div>
                 <div className="brandList clearfix">{this.renderRecommendBrands()}</div>
                 {this.renderCategory()}

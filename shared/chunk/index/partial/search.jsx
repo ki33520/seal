@@ -7,10 +7,6 @@ class SearchBox extends Component{
     constructor(props){
         super(props);
     }
-    componentDidMount(){
-        const {dispatch} = this.props
-        dispatch(fetchHotWord())
-    }
     renderHotWord(){
         let {hotwords} = this.props.search;
         if(hotwords){
@@ -72,7 +68,8 @@ class SearchBox extends Component{
                         <span></span>
                         <div className="reset" onClick={this.handleReset.bind(this)}><i className="iconfont icon-close-fill"></i></div>
                     </div>
-                    <div className="search-btn"><a href="#/">取消</a></div>
+                    <div className="search-btn"><a href="javascript:void(null)" 
+                    onClick={this.props.changeScene.bind(this,"index")}>取消</a></div>
                 </div>
                 {keyword?this.renderAssociate():this.renderSearchList()}
             </div>

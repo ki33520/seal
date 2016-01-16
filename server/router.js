@@ -75,7 +75,8 @@ router.post("/updatemembercardverifycode",mainController.requireAuthorize,requir
 
 router.get("/receiver",mainController.requireAuthorize,require("./controller/receiver").receiver);
 router.get("/addreceiver",mainController.requireAuthorize,require("./controller/receiver").addReceiver);
-router.get("/updatereceiver/:id",mainController.requireAuthorize,require("./controller/receiver").updateReceiver);
+router.get("/receiver/:id",mainController.requireAuthorize,require("./controller/receiver").receiverById);
+router.get("/receivers",mainController.requireAuthorize,require("./controller/receiver").receiverByUser);
 router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 router.post("/createreceiver",mainController.requireAuthorize,require("./controller/receiver").createReceiver);

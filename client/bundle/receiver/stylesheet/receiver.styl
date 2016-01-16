@@ -2,10 +2,12 @@
 @import "../../common/iconfont";
 @import "../../common/header";
 @import "../../common/switcher";
+@import "../../common/scene";
 @import "./receivers.css";
 @import "../../component/selected";
 @import "../../component/alert";
 @import "../../component/gotop";
+@import "../../component/form";
 body {
     background: #F1F1F1;
 }
@@ -23,6 +25,17 @@ body {
 
 .selectArea{
     padding-bottom:px2rem(38);
+    .radio{
+        position:absolute;
+        top:.38rem;
+        right:.38rem;
+        .checked{
+            color:#27c241;
+        }
+        .unchecked{
+            color:#999;
+        }
+    }
 }
 
 .receiver-panel {

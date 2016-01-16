@@ -59,7 +59,7 @@ class AddReceiver extends Component{
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
                 alert("提交成功!",2000);
-                // setTimeout(()=>window.location.replace("/receiver"),2500)
+                setTimeout(()=>this.props.changeScene("index"),2500)
             }else{
                 alert(nextProps.errMsg,2000)
             }
@@ -73,7 +73,7 @@ class AddReceiver extends Component{
         } = (receiver === null?{}:receiver);
         return (
             <div className="receiver-form-content">
-            <Header>
+            <Header onGoBack={this.props.changeScene.bind(this,"index")}>
             <span className="title">添加新地址</span>
             <a className="screening" href="javascript:void(0);" onClick={this.handleSave.bind(this)}>保存</a>
             </Header>

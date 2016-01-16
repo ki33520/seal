@@ -4,77 +4,33 @@ import React,{Component} from "react";
 import Receiver from "./partial/receiver.jsx";
 import AddReceiver from "./partial/addreceiver.jsx";
 import UpdateReceiver from "./partial/updatereceiver.jsx";
-import {Router} from "director";
-import {Switcher,SwitcherCase} from "../common/switcher.jsx"
+import {SceneGroup,Scene} from "../common/scene.jsx"
 
 import {fetchReceiver} from "./action.es6";
 
 class ReceiverRouter extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            currentRoute:null,
-            prevRoute:null,
-            currentParam:null
+    handleSceneChange(currentScene,param,prevScene){
+        const {fetchReceiver,fetchReceivers} = this.props
+        switch(currentScene){
+            case "updatereceiver":
+                !this.props.updateReceiver.receiverFetched && fetchReceiver("/receiver/"+param.id)
+            case "index":
+                prevScene !== null && fetchReceivers()
         }
-    }
-    componentDidMount(){
-        Router({
-            "/addreceiver":()=>{
-                this.setState({
-                    currentRoute:"addreceiver",
-                    prevRoute:this.state.currentRoute
-                });
-            },
-            "/updatereceiver/:id":(id)=>{
-                this.setState({
-                    currentRoute:"updatereceiver",
-                    prevRoute:this.state.currentRoute,
-                    currentParam:{id}
-                });
-            },
-            "/receiver":()=>{
-                this.setState({
-                    currentRoute:"index",
-                    prevRoute:this.state.currentRoute
-                });
-            },
-            "/":()=>{
-                this.setState({
-                    currentRoute:"index",
-                    prevRoute:this.state.currentRoute
-                });
-            }
-        }).init("/");
-    }
-    shouldComponentUpdate(nextProps,nextState){
-        if(nextState.currentRoute === "updatereceiver" 
-            && this.state.currentRoute !== "updatereceiver"){
-            const {dispatch} = this.props;
-            dispatch(fetchReceiver("/updatereceiver/" + nextState.currentParam.id))
-            return false;
-        }
-        // start requestReceiver
-        if(this.state.currentRoute === "updatereceiver" && nextProps.updateReceiver.receiver === null){
-            return false;
-        }
-        return true;
     }
     render(){
-        const {currentRoute,currentParam,prevRoute} = this.state;
-        const {dispatch} = this.props;
         return (
-            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
-                <SwitcherCase name="index">
+            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
+                <Scene name="index">
                     <Receiver {...this.props.receiverByUser} {...this.props}/>
-                </SwitcherCase>
-                <SwitcherCase name="addreceiver">
+                </Scene>
+                <Scene name="addreceiver">
                     <AddReceiver {...this.props.addReceiver} {...this.props}/>
-                </SwitcherCase>
-                <SwitcherCase name="updatereceiver">
-                    <UpdateReceiver {...this.props.updateReceiver} {...currentParam} {...this.props}/>
-                </SwitcherCase>
-            </Switcher>
+                </Scene>
+                <Scene name="updatereceiver">
+                    <UpdateReceiver {...this.props.updateReceiver} {...this.props}/>
+                </Scene>
+            </SceneGroup>
         );
     }
 }
