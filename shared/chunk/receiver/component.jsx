@@ -13,7 +13,7 @@ class ReceiverRouter extends Component{
         const {fetchReceiver,fetchReceivers} = this.props
         switch(currentScene){
             case "updatereceiver":
-                !this.props.updateReceiver.receiverFetched && fetchReceiver("/receiver/"+param.id)
+                !this.props.updateReceiver.receiverFetching && fetchReceiver("/receiver/"+param.id)
             case "index":
                 prevScene !== null && fetchReceivers()
         }
