@@ -22,12 +22,13 @@ class Polymer extends Component{
         }
     }
     render(){
+        const {changeScene} = this.props
         return (
             <div className="polymer-content">
                 <Header>
                     <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
                     <div className="btn-right">
-                        <a href="#/search"><Icon icon="search"/></a>
+                        <a href="javascript:void(null)" onClick={changeScene.bind(this,"search")}><Icon icon="search"/></a>
                     </div>
                 </Header>
                 <div className="polymer-list">

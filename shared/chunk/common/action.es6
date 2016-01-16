@@ -1,6 +1,7 @@
 'use strict';
 import {
     CHANGE_FIELD,
+    CHANGE_SCENE,
     SHOW_ALERT,HIDE_ALERT
 } from "./constant.es6"
 
@@ -32,5 +33,12 @@ export function alert(content="",delay=3000){
         setTimeout(()=>{
             dispatch(hideAlert(content));
         },delay)
+    }
+}
+
+export function changeScene(param){
+    return {
+        type:CHANGE_SCENE,
+        param
     }
 }

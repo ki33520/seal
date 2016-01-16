@@ -7,10 +7,6 @@ class SearchBox extends Component{
     constructor(props){
         super(props);
     }
-    componentDidMount(){
-        const {dispatch} = this.props
-        dispatch(fetchHotWord())
-    }
     renderHotWord(){
         let {hotwords} = this.props.search;
         if(hotwords){
@@ -21,6 +17,7 @@ class SearchBox extends Component{
         return null
     }
     render(){
+        const {changeScene} = this.props;
         return (
             <div className="search-wrap">
                 <div className="search-header">
@@ -29,7 +26,7 @@ class SearchBox extends Component{
                         <span></span>
                         <div className="reset"><i className="iconfont icon-closefill"></i></div>
                     </div>
-                    <div className="search-btn"><a href="#/">取消</a></div>
+                    <div className="search-btn"><a href="javascript:void(null)" onClick={changeScene.bind(this,"index")}>取消</a></div>
                 </div>
                 <div className="searchHot clearfix">
                     <span>热搜</span>

@@ -34,6 +34,28 @@ var receiver = function(req, res, next) {
     })
 }
 
+var receiverByUser = function(req,res,next){
+    var id = req.params.id;
+    var user = req.session.user;
+    util.fetchAPI("receiverByUser", {
+        memberId: user.memberId,
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            var receivers = receiversFilter(resp.object);
+            var initialState = {
+                isFetched: true,
+                result: receivers,
+            };
+            res.json(initialState);
+        } else {
+            res.json({
+                isFetched:false,
+                errMsg:resp.errMsg
+            })
+        }
+    })
+}
+
 function receiversFilter(receivers) {
     var _receivers = []
     _.each(receivers, function(receiver) {
@@ -54,13 +76,13 @@ var addReceiver = function(req, res) {
     })
 }
 
-var updateReceiver = function(req, res, next) {
+var receiverById = function(req, res, next) {
     var id = req.params.id;
     var user = req.session.user;
     util.fetchAPI("receiverById", {
         memberId: user.memberId,
         recvAddressId: id
-    }, false).then(function(resp) {
+    }).then(function(resp) {
         if (resp.returnCode === 0) {
             var receiver = receiverFilter(resp.object);
             var initialState = {
@@ -69,7 +91,10 @@ var updateReceiver = function(req, res, next) {
             };
             res.json(initialState);
         } else {
-            next(new Error(resp.message));
+            res.json({
+                isFetched:false,
+                errMsg:resp.errMsg
+            });
         }
     })
 }
@@ -196,7 +221,8 @@ var cascadeArea = function(req, res) {
 module.exports = {
     receiver: receiver,
     addReceiver: addReceiver,
-    updateReceiver: updateReceiver,
+    receiverById: receiverById,
+    receiverByUser: receiverByUser,
     saveReceiver: saveReceiver,
     createReceiver: createReceiver,
     deleteReceiver:deleteReceiver,

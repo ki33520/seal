@@ -4,56 +4,16 @@ import React,{Component} from "react";
 import classNames from "classnames";
 
 class Footer extends Component{
-    
-    constructor(props){
-        super(props);
-        this.state = {
-            activeIndex: props.activeIndex
-        }
-    }
-
-    handleClick(index){
-        this.setState({
-            activeIndex:index
-        });
-        switch(index){
-            case 1:
-                window.location.href='/polymer';
-                break;
-            case 2:
-                window.location.href='/trendy';
-                break;
-            case 3:
-                window.location.href='/cart';
-                break;
-            case 4:
-                window.location.href='/membercenter';
-                break;
-            default:
-                window.location.href='/';
-                break;
-        }
-    }
-
     render(){
-
-        var it = this;
-        var list = [];
-
-        const items = ["海外购","分类","爆款","购物车","个人中心"];
-
-        items.map(function(item,i){
-            const key = 'item-'+i;
-            const hoverClass = classNames({
-                "nav-hover":i==it.state.activeIndex
-            });
-            list.push(<li key={key} onClick={it.handleClick.bind(it,i)}><a href="#"  className={hoverClass}><i></i>{item}</a></li>)
-        });
-
+        const {activeIndex} = this.props;
         return (
             <footer className="bottom-nav">
                 <ul className="clearfix">
-                    {list}
+                    <li><a href="/" className={activeIndex==="0"?"nav-hover":null}><i></i>海外购</a></li>
+                    <li><a href="/polymer" className={activeIndex==="1"?"nav-hover":null}><i></i>分类</a></li>
+                    <li><a href="/trendy" className={activeIndex==="2"?"nav-hover":null}><i></i>爆款</a></li>
+                    <li><a href="/cart" className={activeIndex==="3"?"nav-hover":null}><i></i>购物车</a></li>
+                    <li><a href="/membercenter" className={activeIndex==="4"?"nav-hover":null}><i></i>个人中心</a></li>
                 </ul>
             </footer>
         );

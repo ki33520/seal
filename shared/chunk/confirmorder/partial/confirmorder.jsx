@@ -27,7 +27,7 @@ class ConfirmOrder extends Component{
             )
         }
         return (
-            <a href="#/receiver">
+            <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"receiver")}>
             <div className="order-time">
             <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span></p>
             <p>433101**********1011<em>实名</em></p>
@@ -124,7 +124,7 @@ class ConfirmOrder extends Component{
             {this.renderReceiver(order.checkedReceiver)}
             <OrderGoods {...this.props.order}/>
             <div className="ckTo-box clearfix">
-                <a href="#/coupon">
+                <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"coupon")}>
                 <div className="intro">
                 <span>优惠券</span>
                 <span><em><i>券</i>新人5元券</em><i className="iconfont icon-right"></i></span>

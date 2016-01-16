@@ -7,7 +7,7 @@
         width:100%;
         z-index:100;
         &>span{
-            font-size:px2rem(17);
+            // font-size:px2rem(17);
         }
     }
     .all-brands-inner{
@@ -23,11 +23,9 @@
             padding: 0 0 0 px2rem(15);
         }
         h5 {
-            background: $list-background;
             line-height: px2rem(17);
             padding: 0 0 0 px2rem(10);
             background:#e5e5e5;
-            font-size:px2rem(12);
         }
         ul {
             width: 100%;
@@ -37,18 +35,16 @@
             li {
                 padding: 0 0 0 px2rem(10);
                 border-bottom: 1px solid #d7d7d7;
+                font-size:14px;
                 &:last-child {
                     border-bottom: 0 none;
                 }
-                color: $font-gray;
                 &.active {
-                    color: $pink-color;
                     display: flex;
                     &>span {
                         flex: none;
                         width: px2rem(60);
                         font-weight: 400;
-                        font-size: px2rem(12);
                     }
                     &>b {
                         font-weight: 400;
@@ -58,4 +54,8 @@
             }
         }
     }
+}
+
+.scroll-nav .scroll-navbar .scroll-navbar-anchor{
+    font-size:14px;
 }

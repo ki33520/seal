@@ -9,10 +9,6 @@ class AllBrands extends Component{
     constructor(props){
         super(props);
     }
-    componentDidMount(){
-        const {fetchAllBrands} = this.props;
-        fetchAllBrands()
-    }
     renderBrand(){
         let {brands} = this.props.allBrand;
         if(brands){
@@ -44,7 +40,7 @@ class AllBrands extends Component{
         }
         return (
             <div className="all-brands">
-                <Header>全部品牌</Header>
+                <Header onGoBack={this.props.changeScene.bind(this,"index")}>全部品牌</Header>
                 <div className="all-brands-inner">
                 <ScrollNav className="all-brands-list" navbarRenderer={navbarRenderer}>
                 {this.renderBrand()}
