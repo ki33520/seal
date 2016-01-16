@@ -3,7 +3,8 @@ import {
     REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER
 } from "./action.es6";
 import {combineReducers} from "redux";
-import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
+
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
 function orderByParam(state={},action){
@@ -20,25 +21,29 @@ function orderByParam(state={},action){
         case REQUEST_ClOSEORDER:
             return Object.assign({},state,{
                 closeOrderChanging:true,
-                closeOrderChanged:false
-            });
+                closeOrderChanged:false,
+                msg:action.res?action.res.msg: null
+            })
         case RESPONSE_ClOSEORDER:
+            state.order.orderStatus = action.res.orderStatus ? action.res.orderStatus : state.order.orderStatus;
             return Object.assign({},state,{
                 closeOrderChanging:false,
                 closeOrderChanged: action.res.isChanged,
-                errMsg: action.res.errMsg
-            });
+                msg:action.res?action.res.msg: null
+            })
         case REQUEST_DELIVERYORDER:
             return Object.assign({},state,{
                 deliveryOrderChanging:true,
-                deliveryOrderChanged:false
-            });
+                deliveryOrderChanged:false,
+                msg:action.res?action.res.msg: null
+            })
         case RESPONSE_DELIVERYORDER:
+            state.order.orderStatus = action.res.orderStatus ? action.res.orderStatus : state.order.orderStatus;
             return Object.assign({},state,{
                 deliveryOrderChanging:false,
                 deliveryOrderChanged: action.res.isChanged,
-                errMsg: action.res.errMsg
-            });
+                msg:action.res?action.res.msg: null
+            })
         case SHOW_ALERT:
         case HIDE_ALERT:
             return alertReducer(state,action)

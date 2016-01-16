@@ -202,6 +202,13 @@
             "production": "order.hwg.youayun.cn"
         }
     },
+    "orderItemList":{
+        "uri": "/comments/v1/findOrderItemList",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
     "closedOrderById":{
         "uri": "/order/v1/closedOrder",
         "baseURL": {
