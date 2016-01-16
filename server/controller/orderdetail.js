@@ -71,6 +71,7 @@ function formatComment(object) {
             abroadFee: v.abroadFee,
             tariffFee: v.tariffFee,
             salesTotalFee: v.salesTotalFee,
+            payableFee: v.payableFee,
             couponFee: v.couponFee,
             singleImageUrl: config.imgServer+v.singleImageUrl
         }
@@ -182,24 +183,41 @@ var orderDetail = function(req, res, next) {
 }
 var orderClose = function(req, res, next) {
     var orderNo = req.body.orderNo;
-    res.json({
-        isChanged: true
-    })
-    // util.fetchAPI('closedOrderById', {
-    //     orderNo: orderNo
-    // }).then(function(resp) {
-    //     if (resp.returnCode === 0) {
-    //         res.json(resp.object);
-    //     }
-    // })
-}
-var orderDelivery = function(req, res, next) {
-    var orderNo = req.body.orderNo;
-    util.fetchAPI('deliveryOrderById', {
+    util.fetchAPI('closedOrderById', {
         orderNo: orderNo
     }).then(function(resp) {
         if (resp.returnCode === 0) {
-            res.json(resp.object);
+            res.json({
+                isChanged: true,
+                orderStatus: "STATUS_CANCELED",
+                msg: resp.message
+            })
+        }else{
+            res.json({
+                isChanged: false,
+                msg: resp.message
+            })
+        }
+    })
+}
+var orderDelivery = function(req, res, next) {
+    var user = req.session.user;
+    var orderNo = req.body.orderNo;
+    util.fetchAPI('deliveryOrderById', {
+        memberId: user.memberId,
+        orderNo: orderNo
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                isChanged: true,
+                orderStatus: "STATUS_FINISHED",
+                msg: resp.message
+            })
+        }else{
+            res.json({
+                isChanged: false,
+                msg: resp.message
+            })
         }
     })
 }
@@ -213,6 +231,8 @@ var logistics = function(req, res, next) {
     }).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json(resp.object)
+        }else{
+            res.json({});
         }
     })
 }
