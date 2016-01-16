@@ -3,7 +3,9 @@ import {apiRequest} from "../../lib/util.es6";
 import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
-    RECEIVE_GOODS,REQUEST_GOODS,CHANGE_FIELD,CAN_BUY
+    RECEIVE_GOODS,REQUEST_GOODS,CHANGE_FIELD,
+    CHANGE_PARAM,CHANGE_ClASS_ITEM,CHANGE_BRAND_ITEM,CHANGE_AREA_ITEM,
+    RESET_ALL_ITEM
 } from "./constant.es6";
 
 function receiveGoods(param,res){
@@ -21,7 +23,7 @@ function requestGoods (param) {
     }
 }
 
-export default function fetchGoods(param){
+export function fetchGoods(param){
     return (dispath)=>{
         dispath(requestGoods(param));
         return apiRequest('/goodlist',param,{method:"POST"}).then((res)=>{
@@ -30,9 +32,23 @@ export default function fetchGoods(param){
     }
 }
 
-export function toggleCanBuy(param){
+export function changeParam(param){
     return {
-        type:CAN_BUY,
+        type:CHANGE_PARAM,
+        param
+    }
+}
+
+export function changeClassItem(param){
+    return {
+        type:CHANGE_ClASS_ITEM,
+        param
+    }
+}
+
+export function resetAll(param){
+    return {
+        type:RESET_ALL_ITEM,
         param
     }
 }

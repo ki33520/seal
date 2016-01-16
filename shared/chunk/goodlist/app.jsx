@@ -7,14 +7,14 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import GoodList from "./component.jsx";
 
 function selector(state){
-    const {goods,sideBar,total,pageIndex,params,hotwords,isFetching} = state.goodsByParam
+    const {queryParams,totalPage,filters,goods,hotwords,isFetching} = state.goodsByParam
     return {
         isFetching,
-        params,
+        queryParams,
+        totalPage,
+        filters,
         goods,
-        sideBar,
-        total,
-        pageIndex
+        hotwords
     };
 }
 
@@ -27,15 +27,14 @@ function configureStore(initialState){
 
 class GoodListApp extends Component{
     render(){
-        const {goods,sideBar,total,pageIndex,params} = this.props.initialState;
+        const {queryParams,totalPage,filters,goods} = this.props.initialState;
         const initialState = {
             goodsByParam:{
                 isFetching:false,
-                params,
-                goods,
-                sideBar,
-                total,
-                pageIndex
+                queryParams,
+                totalPage,
+                filters,
+                goods
             }
         };
         var store = configureStore(initialState);

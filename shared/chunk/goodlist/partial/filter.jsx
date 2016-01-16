@@ -5,22 +5,21 @@ import Header from "../../common/header.jsx";
 import classNames from "classnames";
 
 class Filter extends Component{
-    handleSave(){
-        this.props.closePanel();
-    }
+
 
     handleCheck(index){
-        const {names,changeParam} = this.props;
-        names[index].isChecked = !names[index].isChecked;
-        changeParam(names);
+        const {list,toggleChecked} = this.props;
+        list[index].isChecked = !list[index].isChecked;
+        toggleChecked(list);
     }
 
-    renderNav(names){
+    renderNav(items){
 
-        if(!names || names.length<1){
+        if(!items || items.length<1){
             return '暂无分类';
         }
-        var menu = names.map((item,i)=>{
+
+        let menu = items.map((item,i)=>{
             const key="nav-"+i;
             const checked = classNames("iconfont",{
                 "icon-check": item.isChecked
@@ -42,7 +41,7 @@ class Filter extends Component{
     }
 
     render(){
-        const {active,names,closePanel} = this.props;
+        const {list,active,handleGoBack} = this.props;
         const classess = classNames({
             "second-slider":true,
             "rollIn-animate":true,
@@ -51,10 +50,10 @@ class Filter extends Component{
  
         return (
             <div className={classess}>
-            	<Header handleGoBack={closePanel.bind(this)}>
-                    <span className="btn-right" onClick={this.handleSave.bind(this)}>确定</span>
+            	<Header handleGoBack={handleGoBack.bind(this)}>
+                    <span className="btn-right" onClick={handleGoBack.bind(this)}>确定</span>
                 </Header>
-                {this.renderNav(names)}
+                {this.renderNav(list)}
             </div>
         );
     }

@@ -2,7 +2,7 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../../lib/util.es6";
-import {fetchGoods,toggleCanBuy} from "../action.es6";
+import {fetchGoods,changeParam,changeClassItem,resetAll} from "../action.es6";
 import MaskLayer from "../../../component/masklayer.jsx";
 import Header from "../../common/header.jsx";
 import Sidebar from "./sidebar.jsx";
@@ -28,18 +28,47 @@ class GoodListApp extends React.Component{
     }
 
     handleReset(){
-        const {dispatch,pageIndex,params} = this.props;
-        let newParam = {
-            keyword:params.keyword,
-            pageIndex:pageIndex
-        }
-        dispatch(fetchGoods(newParam));
+        const {dispatch,filters,queryParams} = this.props;
+        const {categoryNames,brandNames,areaNames} = filters;
+
+        let category = [];
+        let brands = [];
+        let areas = [];
+        let params = Object.assign({},queryParams);
+
+        params.isHaveGoods = false;
+
+        categoryNames.forEach((item,i)=>{
+            item.isChecked = false;
+            category.push(item);
+        });
+
+        brandNames.forEach((item,i)=>{
+            item.isChecked = false;
+            brands.push(item);
+        });
+
+        areaNames.forEach((item,i)=>{
+            item.isChecked = false;
+            areas.push(item);
+        })
+        
+        
+
+        dispatch(resetAll({
+            queryParams:params,
+            filters:{
+                categoryNames:category,
+                brandNames:brands,
+                areaNames:areas
+            }
+        }));
     }
 
-    toggleCanBuy(){
-        const {dispatch,params} = this.props;
-        params.isHaveGoods = !params.isHaveGoods;
-        dispatch(toggleCanBuy(params));
+    toggleCanBuy(isHaveGoods){
+        const {dispatch,queryParams} = this.props;
+        const param = Object.assign({},queryParams,{isHaveGoods});
+        dispatch(changeParam(param));
     }
 
     togglePopupActive(){
@@ -49,71 +78,85 @@ class GoodListApp extends React.Component{
             maskActive:popupActive
         });
     }
- 
-
-    togglePopupCategory(){
-        const {classActive} = this.state;
-        this.setState({
-            classActive:!classActive
-        })
-    }
-
-    togglePopupArea(){
-        const {areaActive} = this.state;
-        this.setState({
-            areaActive:!areaActive
-        })
-    }
     
-    togglePopupBrand(){
-        const {brandActive} = this.state;
-         this.setState({
-            brandActive:!brandActive
-        })
-    }
-
-    toggleSortByParam(param){
-        const {dispatch} = this.props;
-        dispatch(fetchGoods(param));
-    }
-
-    changeParam(orderParam){
-        const {param} = this.state;
-        const newParam = _.extend(param,orderParam);
+    toggleClassActive(){
+        console.log(this.state.classActive)
         this.setState({
-            param:newParam
+            classActive:!this.state.classActive
         });
     }
 
-    toggleCategory(values){
-        this.changeParam({
+    toggleBrandActive(){
+        this.setState({
+            brandActive:!this.state.brandActive
+        });
+    }
+
+    toggleAreaActive(){
+        this.setState({
+            areaActive:!this.state.areaActive
+        });
+    }
+ 
+    toggleCheckedClass(values){
+        const {dispatch,filters} = this.props;
+        let newFilters = Object.assign({},filters,{
             categoryNames:values
-        })
+        });
+        dispatch(changeClassItem(newFilters))
     }
 
-    toggleBrandName(values){
-        this.changeParam({
+    toggleCheckedBrand(values){
+        const {dispatch,filters} = this.props;
+        let newFilters = Object.assign({},filters,{
             brandNames:values
-        })
-    }
-
-    toggleAreaName(values){
-        this.changeParam({
-            areaNames:values
-        })
+        });
+        dispatch(changeClassItem(newFilters))
     }
 
     handlerSave(){
-        //const {dispatch,params} = this.props;
-        //dispatch(fetchGoods(params));
+        const {dispatch,filters,queryParams} = this.props;
+        const {categoryNames,brandNames,areaNames} = filters;
+
+        let category = [];
+        let brands = [];
+        let areas = [];
+
+        categoryNames.forEach((item,i)=>{
+            item.isChecked && category.push(item.id);
+        });
+
+        brandNames.forEach((item,i)=>{
+            item.isChecked && brands.push(item);
+        });
+
+        areaNames.forEach((item,i)=>{
+            item.isChecked && areas.push(item);
+        });
+
+        let params = Object.assign({},queryParams,{
+            categoryNames:category.join(','),
+            areaNames:areas.join(','),
+            brandNames:brands.join(',')
+        });
+ 
+        dispatch(fetchGoods(params));
+
         this.togglePopupActive();
     }
 
+    toggleSortByParam(sortParam){
+        const {dispatch,queryParams} = this.props;
+        let newParams = Object.assign({},queryParams,sortParam);
+        dispatch(fetchGoods(newParams))
+    }
+
     render(){
-        const {goods,params,isFetching,sideBar} = this.props;
-        const {areaNames,brandNames,categoryNames}=sideBar;
-        let keyword = params.keyword;
-       
+        const {queryParams,filters,goods,isFetching} = this.props;
+        const {keyword,isHaveGoods} = queryParams;
+        const {categoryNames,brandNames,areaNames} = filters;
+        const goodList = [];
+ 
         if(goods.length<1){
             return (
                 <div className="empty noPadTop">
@@ -126,13 +169,11 @@ class GoodListApp extends React.Component{
             )
         }
 
-        let goodList = [];
-       
         goods.forEach(function(item,i){
             let key = 'good-'+i;
             goodList.push(<GoodItem goods={item} key={key} />)
         });
-
+ 
         const classes=classNames({
             "rollOut-animate":true,
             "good-list-content":true,
@@ -158,39 +199,38 @@ class GoodListApp extends React.Component{
                         </div>
                         <div className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</div>
                     </Header>
-                    <GoodSorter 
-                        handleSort={this.toggleSortByParam.bind(this)}
-                        params={params} />
+                    <GoodSorter
+                        queryParams = {queryParams}
+                        toggleSort={this.toggleSortByParam.bind(this)} />
                     <div className="special-activity-list clearfix">
                         {goodList}
                     </div>
                 </div>
 
-                <Sidebar 
-                    params={params}
+                <Sidebar
+                    isHaveGoods={isHaveGoods}
                     popupActive={this.state.popupActive}
                     toggleCanBuy={this.toggleCanBuy.bind(this)}
-                    popupClass = {this.togglePopupCategory.bind(this)}
-                    popupArea = {this.togglePopupArea.bind(this)}
-                    popupBrand = {this.togglePopupBrand.bind(this)}
+                    toggleClass = {this.toggleClassActive.bind(this)}
+                    toggleBrand = {this.toggleBrandActive.bind(this)}
+                    toggleArea= {this.toggleAreaActive.bind(this)}
                     handleReset = {this.handleReset.bind(this)}
                     save ={this.handlerSave.bind(this)} />
                 <Filter 
-                    names={categoryNames}
+                    list={categoryNames}
                     active={this.state.classActive}
-                    changeParam={this.toggleCategory.bind(this)}
-                    closePanel ={this.togglePopupCategory.bind(this)} />
+                    toggleChecked={this.toggleCheckedClass.bind(this)}
+                    handleGoBack ={this.toggleClassActive.bind(this)} />
                 <Filter 
-                    names={brandNames}
+                    list={brandNames}
                     active={this.state.brandActive}
-                    changeParam={this.toggleBrandName.bind(this)}
-                    closePanel ={this.togglePopupBrand.bind(this)} />
+                    toggleChecked={this.toggleCheckedBrand.bind(this)}
+                    handleGoBack ={this.toggleBrandActive.bind(this)} />
                 <Filter 
-                    names={areaNames}
+                    list={areaNames}
                     active={this.state.areaActive}
-                    changeParam={this.toggleAreaName.bind(this)}
-                    closePanel ={this.togglePopupArea.bind(this)} />
-              
+                    toggleChecked={this.toggleCheckedBrand.bind(this)}
+                    handleGoBack ={this.toggleAreaActive.bind(this)} />
                 <MaskLayer visible={this.state.maskActive} />
                  
             </div>

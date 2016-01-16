@@ -5,7 +5,9 @@ import _ from "lodash";
 import {
     REQUEST_GOODS,RECEIVE_GOODS,
     REQUEST_HOTWORD,RESPONSE_HOTWORD,CHANGE_FIELD,
-    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,CAN_BUY
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
+    CHANGE_PARAM,CHANGE_ClASS_ITEM,CHANGE_BRAND_ITEM,CHANGE_AREA_ITEM,
+    RESET_ALL_ITEM
 } from "./constant.es6";
 
 function goodsByParam(state={},action){
@@ -14,17 +16,25 @@ function goodsByParam(state={},action){
             return Object.assign({},state,{
                 isFetching:true
             });
-        case CAN_BUY:
-            
+        case CHANGE_PARAM:
             return Object.assign({},state,{
-                params:action.param
+                queryParams:action.param
             });
+        case CHANGE_ClASS_ITEM:
+            return Object.assign({},state,{
+                filters:action.param
+            });
+        case RESET_ALL_ITEM:
+            return Object.assign({},state,{
+                queryParams:action.param.queryParams,
+                filters:action.param.filters
+            })
         case RECEIVE_GOODS:
             return Object.assign({},state,{
                 isFetching:action.res.isFetching,
                 goods:action.res.goods,
-                pageIndex:action.param.pageIndex,
-                params:action.param
+                queryParams:action.param,
+                pageIndex:action.param.pageIndex
             });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{
