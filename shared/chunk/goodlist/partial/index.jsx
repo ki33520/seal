@@ -23,18 +23,14 @@ class GoodListApp extends React.Component{
         }
     }
 
-    handClick(){
-        window.location.href="#/search";
-    }
-
     handleReset(){
-        const {dispatch,filters,queryParams} = this.props;
+        const {dispatch,filters,search} = this.props;
         const {categoryNames,brandNames,areaNames} = filters;
 
         let category = [];
         let brands = [];
         let areas = [];
-        let params = Object.assign({},queryParams);
+        let params = Object.assign({},search);
 
         params.isHaveGoods = false;
 
@@ -56,7 +52,7 @@ class GoodListApp extends React.Component{
         
 
         dispatch(resetAll({
-            queryParams:params,
+            search:params,
             filters:{
                 categoryNames:category,
                 brandNames:brands,
@@ -66,8 +62,8 @@ class GoodListApp extends React.Component{
     }
 
     toggleCanBuy(isHaveGoods){
-        const {dispatch,queryParams} = this.props;
-        const param = Object.assign({},queryParams,{isHaveGoods});
+        const {dispatch,search} = this.props;
+        const param = Object.assign({},search,{isHaveGoods});
         dispatch(changeParam(param));
     }
 
@@ -115,7 +111,7 @@ class GoodListApp extends React.Component{
     }
 
     handlerSave(){
-        const {dispatch,filters,queryParams} = this.props;
+        const {dispatch,filters,search} = this.props;
         const {categoryNames,brandNames,areaNames} = filters;
 
         let category = [];
@@ -134,7 +130,7 @@ class GoodListApp extends React.Component{
             item.isChecked && areas.push(item);
         });
 
-        let params = Object.assign({},queryParams,{
+        let params = Object.assign({},search,{
             categoryNames:category.join(','),
             areaNames:areas.join(','),
             brandNames:brands.join(',')
@@ -146,14 +142,14 @@ class GoodListApp extends React.Component{
     }
 
     toggleSortByParam(sortParam){
-        const {dispatch,queryParams} = this.props;
-        let newParams = Object.assign({},queryParams,sortParam);
+        const {dispatch,search} = this.props;
+        let newParams = Object.assign({},search,sortParam);
         dispatch(fetchGoods(newParams))
     }
 
     render(){
-        const {queryParams,filters,goods,isFetching} = this.props;
-        const {keyword,isHaveGoods} = queryParams;
+        const {search,filters,goods,isFetching} = this.props;
+        const {keyword,isHaveGoods} = search;
         const {categoryNames,brandNames,areaNames} = filters;
         const goodList = [];
  
@@ -194,13 +190,14 @@ class GoodListApp extends React.Component{
                 <div className={classes}>
                     <Header>
                         <div className={searchBox}>
-                            <input type="search" defaultValue={keyword} onClick={this.handClick}/>
+                            <input type="search" defaultValue={keyword} 
+                            onClick={this.props.changeScene.bind(this,"search")}/>
                             <span></span>
                         </div>
                         <div className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</div>
                     </Header>
                     <GoodSorter
-                        queryParams = {queryParams}
+                        search = {search}
                         toggleSort={this.toggleSortByParam.bind(this)} />
                     <div className="special-activity-list clearfix">
                         {goodList}

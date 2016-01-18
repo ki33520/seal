@@ -4,7 +4,7 @@ import _ from "lodash";
  
 import {
     REQUEST_GOODS,RECEIVE_GOODS,
-    REQUEST_HOTWORD,RESPONSE_HOTWORD,CHANGE_FIELD,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     CHANGE_PARAM,CHANGE_ClASS_ITEM,CHANGE_BRAND_ITEM,CHANGE_AREA_ITEM,
     RESET_ALL_ITEM
@@ -18,7 +18,7 @@ function goodsByParam(state={},action){
             });
         case CHANGE_PARAM:
             return Object.assign({},state,{
-                queryParams:action.param
+                search:action.param
             });
         case CHANGE_ClASS_ITEM:
             return Object.assign({},state,{
@@ -26,14 +26,14 @@ function goodsByParam(state={},action){
             });
         case RESET_ALL_ITEM:
             return Object.assign({},state,{
-                queryParams:action.param.queryParams,
+                search:action.param.queryParams,
                 filters:action.param.filters
             })
         case RECEIVE_GOODS:
             return Object.assign({},state,{
                 isFetching:action.res.isFetching,
                 goods:action.res.goods,
-                queryParams:action.param,
+                search:action.param,
                 pageIndex:action.param.pageIndex
             });
         case REQUEST_HOTWORD:
@@ -57,20 +57,10 @@ function goodsByParam(state={},action){
         case RESPONSE_ASSOICATEWORD:
             const associatewords = action.res.result;
             const associateWordFetched = action.res.associateWordFetched;
-            
-            search = {
-                keyword:action.param.keyword,
-                hotwords:associatewords
-            }
             return Object.assign({},state,{
-                keyword:action.param.keyword,
-                hotwords:associatewords,
+                associatewords,
                 associateWordFetched,
                 associateWordFetching:false
-            });
-        case CHANGE_FIELD:
-            return Object.assign({},state,{
-                keyword:action.param.keyword
             });
         default:
             return state;

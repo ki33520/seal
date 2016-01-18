@@ -3,7 +3,7 @@ import {apiRequest} from "../../lib/util.es6";
 import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
-    RECEIVE_GOODS,REQUEST_GOODS,CHANGE_FIELD,
+    RECEIVE_GOODS,REQUEST_GOODS,
     CHANGE_PARAM,CHANGE_ClASS_ITEM,CHANGE_BRAND_ITEM,CHANGE_AREA_ITEM,
     RESET_ALL_ITEM
 } from "./constant.es6";
@@ -100,12 +100,4 @@ export function fetchAssociateKeywords(param){
         })
     }
 }
-
-export function changeField(param){
-    return (dispatch)=>{
-        dispatch({
-            type:CHANGE_FIELD,
-            param
-        })
-    }
-}
+ 

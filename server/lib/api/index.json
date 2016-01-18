@@ -9,7 +9,7 @@
     "fetchAssociateKeywords":{
         "uri":  "/search/v1/findListByAssociateWAP",
         "baseURL": {
-            "develop": "http://192.168.0.161:7988",
+            "develop": "http://192.168.0.162:7988",
             "production": "http://product.tepin.hk"
         }
     }

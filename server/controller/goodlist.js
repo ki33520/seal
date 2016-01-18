@@ -67,7 +67,7 @@ var goodList = function(req, res, next) {
             let initialState = {
                 goods:filterGoodsList(goods.cbls),
                 filters:{categoryNames,brandNames,areaNames},
-                queryParams:{keyword,pageIndex,pageSize,sortType,sortViewType,isHaveGoods},
+                search:{keyword,pageIndex,pageSize,sortType,sortViewType,isHaveGoods},
                 totalPage
             };
 
