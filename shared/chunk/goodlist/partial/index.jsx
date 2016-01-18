@@ -76,7 +76,6 @@ class GoodListApp extends React.Component{
     }
     
     toggleClassActive(){
-        console.log(this.state.classActive)
         this.setState({
             classActive:!this.state.classActive
         });

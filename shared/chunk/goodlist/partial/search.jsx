@@ -58,8 +58,8 @@ class SearchBox extends Component{
     }
     renderAssociate(){
         let {associatewords} = this.props;
-        let result = [];
-        if(associatewords){
+        let result = []
+        if(associatewords && associatewords.length){
             associatewords.map((word,i)=>{
                 result.push(<a href={"/goodlist/"+word.name} key={i}>{word.name}</a>);
             })
