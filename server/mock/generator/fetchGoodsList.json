@@ -1,170 +1,210 @@
 {
-    "areaNames": [
-        {
-            "name": "英国直采",
-            "id": "402880a55123a227015123a230060002"
-        },
-        {
-            "name": " 英国直采",
-            "id": "402880a55123a2e2015123a2ec8c0002"
-        },
-        {
-            "name": " 英国直采",
-            "id": "402880a55123ae71015123ae7a5a0002"
-        },
-        {
-            "name": " 泰国junit",
-            "id": "402880f550ffe14a0150ffe156f40000"
-        },
-        {
-            "name": " 英国直采",
-            "id": "402880a551240c440151240c4c190002"
-        },
-        {
-            "name": " 法国",
-            "id": "fc6804de51d824a50151e794b1d6001b"
-        },
-        {
-            "name": " 美国",
-            "id": "fc6804de51d824a50151e792d3b5001a"
-        }
+  "returnCode": 0,
+  "message": "成功",
+  "object": {
+    "totalsNum": 3,
+    "cbls": [
+      {
+        "areaID": "fc6804de51d824a50151e792d3b5001a",
+        "areaName": "美国",
+        "areaLogo": "null/tepin-test/4/6/v/145189143579020.jpg",
+        "areaNameTemp": "美国##fc6804de51d824a50151e792d3b5001a##null/tepin-test/4/6/v/145189143579020.jpg",
+        "id": "402880cb522e77b501522e9f69b2001a",
+        "brandID": "fc6804de520a926801520b7b80e30042",
+        "brandName": "维安喜",
+        "brandNameTemp": "维安喜##fc6804de520a926801520b7b80e30042##null/tepin-test/u/e/i/1452138151665611.gif##GLA",
+        "categoryID": "0",
+        "categoryName": "",
+        "categoryNameTemp": "youa##0",
+        "sortAttrs": "瓶:两瓶,粒:500粒",
+        "materTitle": "美国进口 维安喜 Omega3+GLA阿拉斯加鳕鱼油 180粒/瓶",
+        "secondTitle": "",
+        "originPrice": "844.00",
+        "salesPrice": "704.00",
+        "mobilePrice": "700.00",
+        "collectFlag": 0,
+        "singleCode": "S798000000184",
+        "ERPCode": "A123456788",
+        "SKU": "SKUS798000000184",
+        "groupCode": "T355000000209",
+        "discounts": "8.00",
+        "picUrl": "null/prt/s/1/m/1452479904508118.jpg",
+        "salesCount": "0",
+        "collections": "0",
+        "localStock": "120",
+        "updateAt": "Jan 11, 2016 3:50:52 AM",
+        "updateAtStr": "2016-01-11 03:50:52",
+        "urls": "detail-402880cb522e77b501522e9f69b2001a.html",
+        "ismain": "0",
+        "imageUrlWeb": "null/tepin-test/c/j/y/1452138151061522.gif",
+        "imageUrlWap": "null/tepin-test/x/a/f/1452138151362703.gif",
+        "logoImageUrl": "null/tepin-test/u/e/i/1452138151665611.gif",
+        "Channel": "WEB,Mobile"
+      },
+      {
+        "areaID": "402880a55123a227015123a230060002",
+        "areaName": "英国直采",
+        "areaLogo": "null/tepin-test/9/q/5/1451486197865929.png",
+        "areaNameTemp": "英国直采##402880a55123a227015123a230060002##null/tepin-test/9/q/5/1451486197865929.png",
+        "id": "402880a551f133fc0151f18b45090067",
+        "brandID": "fc6804de51e796dc0151e7a094130003",
+        "brandName": "惠氏",
+        "brandNameTemp": "惠氏##fc6804de51e796dc0151e7a094130003##null/tepin-test/j/y/9/1451290033733932.png##Wyeth",
+        "categoryID": "0",
+        "categoryName": "",
+        "categoryNameTemp": "youa##0",
+        "sortAttrs": "尺码:大,颜色:纯白",
+        "materTitle": "3件装 | Wyeth 惠氏 金装S26系列婴儿奶粉3段 900克 1-3岁",
+        "secondTitle": "",
+        "originPrice": "200.00",
+        "salesPrice": "198.00",
+        "mobilePrice": "198.00",
+        "collectFlag": 0,
+        "singleCode": "S764000000143",
+        "ERPCode": "ES764000000143",
+        "SKU": "SKUS764000000143",
+        "groupCode": "T00022132a",
+        "discounts": "2.00",
+        "picUrl": "null/prt/6/i/l/1451456082709383.png",
+        "salesCount": "0",
+        "collections": "0",
+        "localStock": "0",
+        "updateAt": "Dec 30, 2015 6:20:15 AM",
+        "updateAtStr": "2015-12-30 06:20:15",
+        "urls": "detail-402880a551f133fc0151f18b45090067.html",
+        "ismain": "0",
+        "imageUrlWeb": "null/tepin-test/q/v/7/1452138311293533.gif",
+        "imageUrlWap": "null/tepin-test/q/i/d/1452138311637404.gif",
+        "logoImageUrl": "null/tepin-test/j/y/9/1451290033733932.png",
+        "Channel": "WEB,Mobile"
+      },
+      {
+        "areaID": "fc6804de51d824a50151e792d3b5001a",
+        "areaName": "美国",
+        "areaLogo": "null/tepin-test/4/6/v/145189143579020.jpg",
+        "areaNameTemp": "美国##fc6804de51d824a50151e792d3b5001a##null/tepin-test/4/6/v/145189143579020.jpg",
+        "id": "402880a551f133fc0151f17d58d70031",
+        "brandID": "fc6804de51e796dc0151e79ee4a60002",
+        "brandName": "爱他美",
+        "brandNameTemp": "爱他美##fc6804de51e796dc0151e79ee4a60002##null/tepin-test/f/i/1/1451289927749648.png##Aptamil",
+        "categoryID": "0",
+        "categoryName": "",
+        "categoryNameTemp": "youa##0",
+        "sortAttrs": "尺码:大,颜色:纯白",
+        "materTitle": "Aptamil 德国爱他美 婴儿奶粉 3段 800克/罐 10-12个月",
+        "secondTitle": "",
+        "originPrice": "200.00",
+        "salesPrice": "200.00",
+        "mobilePrice": "200.00",
+        "collectFlag": 0,
+        "singleCode": "S563000000136",
+        "ERPCode": "ES563000000136",
+        "SKU": "SKUS563000000136",
+        "groupCode": "T00022132",
+        "discounts": "1.00",
+        "picUrl": "null/prt/1/0/0/1451454416769102.png",
+        "salesCount": "0",
+        "collections": "0",
+        "localStock": "0",
+        "updateAt": "Dec 30, 2015 6:05:03 AM",
+        "updateAtStr": "2015-12-30 06:05:03",
+        "urls": "detail-402880a551f133fc0151f17d58d70031.html",
+        "ismain": "0",
+        "imageUrlWeb": "null/tepin-test/5/w/4/1452138294283418.gif",
+        "imageUrlWap": "null/tepin-test/1/3/g/1452138297380677.gif",
+        "logoImageUrl": "null/tepin-test/f/i/1/1451289927749648.png",
+        "Channel": "WEB,Mobile"
+      }
     ],
     "brandNames": [
-        {
-            "name": "121",
-            "id": "402880e1516aa6c701516ae06a370001"
-        },
-        {
-            "name": " 爱他美",
-            "id": "fc6804de51e796dc0151e79ee4a60002"
-        },
-        {
-            "name": " 耐克junit",
-            "id": "402880f550ffe8900150ffe896810000"
-        },
-        {
-            "name": " 惠氏",
-            "id": "fc6804de51e796dc0151e7a094130003"
-        },
-        {
-            "name": " 荷兰牛栏",
-            "id": "fc6804de51e7a33f0151e7a3d7340000"
-        },
-        {
-            "name": " 甘尼克",
-            "id": "402880a55123a2e2015123a2ecf60003"
-        }
+      {
+        "id": "fc6804de51e796dc0151e7a094130003",
+        "name": "惠氏",
+        "engName": "Wyeth",
+        "logoUrl": "null/tepin-test/j/y/9/1451290033733932.png"
+      },
+      {
+        "id": "fc6804de51e796dc0151e79ee4a60002",
+        "name": "爱他美",
+        "engName": "Aptamil",
+        "logoUrl": "null/tepin-test/f/i/1/1451289927749648.png"
+      },
+      {
+        "id": "fc6804de520a926801520b7b80e30042",
+        "name": "维安喜",
+        "engName": "GLA",
+        "logoUrl": "null/tepin-test/u/e/i/1452138151665611.gif"
+      },
+      {
+        "id": "402880e1516aa6c701516ae06a370001",
+        "name": "121",
+        "engName": "333",
+        "logoUrl": "null/tepin-test/8/4/n/1452138331759587.gif"
+      },
+      {
+        "id": "402880a55123a2e2015123a2ecf60003",
+        "name": "甘尼克",
+        "engName": "babyganics",
+        "logoUrl": "null/tepin-test/r/t/8/1452138234559174.gif"
+      },
+      {
+        "id": "402880f550ffe8900150ffe896810000",
+        "name": "耐克junit",
+        "engName": "nike",
+        "logoUrl": "null/tepin-test/s/b/o/1452138136451680.gif"
+      }
     ],
     "categoryNames": [
-        {
-            "name": "youa",
-            "id": "0 (13)"
-        },
-        {
-            "name": " 母婴3",
-            "id": "402880e1515b832101515b8336870000 (0)"
-        }
+      {
+        "id": "0",
+        "name": "youa"
+      },
+      {
+        "id": "402880e1515b832101515b8336870000",
+        "name": "爱他美"
+      }
     ],
-    "goodsList": [
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/",
-            "salesPrice": "1.00",
-            "originPrice": "1.00",
-            "discounts": "1.00",
-            "stock": false,
-            "id": "S454000000090",
-            "materTitle": "111",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/devfiles/tepin-test/v/n/1/1449197069989840.jpg",
-            "salesPrice": "1.00",
-            "originPrice": "1.00",
-            "discounts": "1.00",
-            "stock": false,
-            "id": "S634000000097",
-            "materTitle": "2345",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/",
-            "salesPrice": "188.00",
-            "originPrice": "200.00",
-            "discounts": "2.00",
-            "stock": true,
-            "id": "S618000000138",
-            "materTitle": "adidas 阿迪达斯 男士针织拉链连帽卫衣",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/",
-            "salesPrice": "198.00",
-            "originPrice": "200.00",
-            "discounts": "1.00",
-            "stock": true,
-            "id": "S814000000139",
-            "materTitle": "adidas 阿迪达斯 男士针织拉链连帽卫衣",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/",
-            "salesPrice": "198.00",
-            "originPrice": "200.00",
-            "discounts": "2.00",
-            "stock": true,
-            "id": "S764000000143",
-            "materTitle": "3件装 | Wyeth 惠氏 金装S26系列婴儿奶粉3段 900克 1-3岁",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/imageWapUrl",
-            "salesPrice": "198.00",
-            "originPrice": "200.00",
-            "discounts": "2.00",
-            "stock": true,
-            "id": "S314000000142",
-            "materTitle": "NII 中性款素描毛圈布卫衣 小麦色",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/",
-            "salesPrice": "198.00",
-            "originPrice": "200.00",
-            "discounts": "2.00",
-            "stock": true,
-            "id": "S709000000147",
-            "materTitle": "innisfree 悦诗风吟 香榧祛痘洗面奶 150毫升",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/",
-            "salesPrice": "198.00",
-            "originPrice": "200.00",
-            "discounts": "2.00",
-            "stock": true,
-            "id": "S667000000146",
-            "materTitle": "Sukin 苏芊 敏感肌肤适用洗面奶 125毫升",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/imageWapUrl",
-            "salesPrice": "70.00",
-            "originPrice": "100.00",
-            "discounts": "0.70",
-            "stock": true,
-            "id": "S0002938124",
-            "materTitle": "美国进口babyganics甘尼克果蔬奶瓶清洗液柑橘香型补充装946ml",
-            "flag": "http://imgtest.tepin.com/undefined"
-        },
-        {
-            "smallImageUrl": "http://imgtest.tepin.com/devfiles/tepin-test/v/n/1/1449197069989840.jpg",
-            "salesPrice": "70.00",
-            "originPrice": "100.00",
-            "discounts": "0.70",
-            "stock": true,
-            "id": "S00029381236",
-            "materTitle": "美国进口babyganics甘尼克果蔬奶瓶清洗液柑橘香型补充装946ml",
-            "flag": "http://imgtest.tepin.com/undefined"
-        }
+    "areaNames": [
+      {
+        "id": "fc6804de51d824a50151e792d3b5001a",
+        "name": "美国",
+        "imageUrl": "null/tepin-test/4/6/v/145189143579020.jpg"
+      },
+      {
+        "id": "402880a55123a227015123a230060002",
+        "name": "英国直采",
+        "imageUrl": "null/tepin-test/9/q/5/1451486197865929.png"
+      },
+      {
+        "id": "402880e15165d164015165d47da50001",
+        "name": "法国",
+        "imageUrl": "null/tepin-test/t/j/o/1451486342119492.png"
+      },
+      {
+        "id": "fc6804de51d824a50151e794b1d6001b",
+        "name": "法国",
+        "imageUrl": "null/tepin-test/k/p/8/1451289258652776.png"
+      },
+      {
+        "id": "402880f550ffe14a0150ffe156f40000",
+        "name": "泰国junit",
+        "imageUrl": "null/tepin-test/c/4/a/1451486281691154.png"
+      },
+      {
+        "id": "402880a55123a2e2015123a2ec8c0002",
+        "name": "英国直采",
+        "imageUrl": "null/tepin-test/8/r/8/1451486236767548.png"
+      },
+      {
+        "id": "402880a55123ae71015123ae7a5a0002",
+        "name": "英国直采",
+        "imageUrl": "null/tepin-test/u/b/0/1451486246257661.png"
+      },
+      {
+        "id": "402880a551240c440151240c4c190002",
+        "name": "英国直采",
+        "imageUrl": "null/tepin-test/n/3/n/1451486264331243.png"
+      }
     ]
+  }
 }

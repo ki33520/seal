@@ -27,7 +27,8 @@ var errorHandler = function(err,req,res,next){
     console.log(err.stack)
     var initialState = {
         code: "500",
-        msg: err.message
+        msg:"啊噢~您访问的页面连接出错咯..."
+        // msg: err.message
     };
     var markup = util.getMarkupByComponent(ErrorContent({
         initialState: initialState

@@ -42,24 +42,20 @@ var activity = function(req, res, next) {
     }).then(function(resp) {
         if (resp.goods.returnCode === 0) {
             let obj = resp.goods.object;
-            let list = [];
-            let initialState = {};
-           
-            if(obj && obj.activityProductList){
-                let totalPage = Math.ceil(obj.totalCount / pageSize);
-                initialState = {
-                    isFetching:false,
-                    list:filterResult(obj.activityProductList),
-                    imageUrl:config.imgServer + obj.imageUrl,
-                    title:obj.activityName,
-                    totalPage
-                }
-            }
+            let activityProductList = obj ? obj.activityProductList : [];
+            let list = filterResult(activityProductList);
 
             if (req.xhr === true) {
                 res.json({list,isFetching:false});
-            } else {
-            
+            }else{
+                let totalPage = Math.ceil(obj.totalCount / pageSize);
+                let initialState = {
+                    list,
+                    totalPage,
+                    imageUrl:config.imgServer + obj.imageUrl,
+                    title:obj.activityName,
+                    isFetching:false
+                };
                 let markup = util.getMarkupByComponent(ActivityApp({
                     initialState: initialState
                 }));
@@ -67,10 +63,23 @@ var activity = function(req, res, next) {
                 res.render('activity', {
                     markup: markup,
                     initialState: initialState
-                })
+                });
             }
         } else {
-            next(new Error(resp.msg));
+            let ErrorContent = util.getSharedComponent("common","error.jsx");
+            let initialState = {
+                code: "500",
+                msg: resp.goods.message
+            };
+            let markup = util.getMarkupByComponent(ErrorContent({
+                initialState: initialState
+            }));
+
+            res.render('error', {
+                markup: markup,
+                initialState: initialState
+            });
+            //next(new Error(resp.message));
         }
     },function(){
        console.log('error')

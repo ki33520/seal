@@ -3,40 +3,24 @@
 import React,{Component} from "react";
 import Index from "./partial/index.jsx";
 import SearchBox from "./partial/search.jsx";
-import {Router} from "director";
-import {Switcher,SwitcherCase} from "../common/switcher.jsx"
+import {SceneGroup,Scene} from "../common/scene.jsx";
+import {fetchHotWord} from "./action.es6";
 
 class TrendyRouter extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            currentRoute:null,
-            prevRoute:null
+    handleSceneChange(currentScene,prevScene){
+        const {dispatch} = this.props
+        switch(currentScene){
+            case "search":
+                dispatch(fetchHotWord());
+                break;
         }
     }
-    componentDidMount(){
-        Router({
-            "/search":()=>{
-                this.setState({
-                    currentRoute:"search",
-                    prevRoute:this.state.currentRoute
-                });
-            },
-            "/":()=>{
-                this.setState({
-                    currentRoute:"index",
-                    prevState:this.state.currentRoute
-                });
-            }
-        }).init("/");
-    }
     render(){
-        const {currentRoute,prevRoute} = this.state;
         return (
-            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
-                <SwitcherCase name="index"><Index {...this.props}/></SwitcherCase>
-                <SwitcherCase name="search"><SearchBox {...this.props} /></SwitcherCase>
-            </Switcher>
+            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
+                <Scene name="index"><Index {...this.props}/></Scene>
+                <Scene name="search"><SearchBox {...this.props}/></Scene>
+            </SceneGroup>
         );
     }
 }

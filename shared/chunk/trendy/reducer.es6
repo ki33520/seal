@@ -3,7 +3,7 @@ import {combineReducers} from "redux";
 import _ from "lodash";
 import {
     REQUEST_GOODS,RECEIVE_GOODS,
-    REQUEST_HOTWORD,RESPONSE_HOTWORD,CHANGE_FIELD,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
 } from "./constant.es6";
 
@@ -14,16 +14,18 @@ function goodsByParam(state={},action){
                 isFetching:true
             });
         case RECEIVE_GOODS:
-            const {goodList,totalPages,pageIndexs} = state;
-            const {index} = action.param;
-            goodList[index]= _.union(goodList[index],action.res.goodList);
+            let totalPages = state.totalPages.slice();
+            let pageIndexs = state.pageIndexs.slice();
+            let category = state.category.slice();
+            let {index} = action.param;
+            category[index].list = _.union(action.res.goodList,category[index].list);
             totalPages[index] = action.res.totalPage;
             pageIndexs[index] = action.res.pageIndex;
             return Object.assign({},state,{
                 isFetching:false,
-                goodList:goodList,
-                totalPages:totalPages,
-                pageIndexs:pageIndexs
+                category,
+                totalPages,
+                pageIndexs
             });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{
@@ -46,20 +48,10 @@ function goodsByParam(state={},action){
         case RESPONSE_ASSOICATEWORD:
             const associatewords = action.res.result;
             const associateWordFetched = action.res.associateWordFetched;
-            
-            search = {
-                keyword:action.param.keyword,
-                hotwords:associatewords
-            }
             return Object.assign({},state,{
-                keyword:action.param.keyword,
-                hotwords:associatewords,
+                associatewords,
                 associateWordFetched,
                 associateWordFetching:false
-            });
-        case CHANGE_FIELD:
-            return Object.assign({},state,{
-                keyword:action.param.keyword
             });
         default:
             return state;

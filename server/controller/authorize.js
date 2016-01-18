@@ -16,7 +16,7 @@ var loginGateway = function(req, res, next) {
             } else {
                 returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
                 var user = _.pick(resp.object,[
-                    "nickName","userName","mobileNumber","openId","lastLoginTime"
+                    "nickName","userName","mobileNumber","openId","lastLoginTime","wxOpenId"
                 ])
                 user.memberId = resp.object.id
                 req.session.user = user;

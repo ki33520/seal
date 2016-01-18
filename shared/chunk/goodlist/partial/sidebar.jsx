@@ -5,25 +5,22 @@ import Header from "../../common/header.jsx";
 import classNames from "classnames";
 
 class Sidebar extends Component{
-
-    toggleCanBuy(){
-        const {isHaveGoods} = this.props.params;
-        const param = {
-            isHaveGoods : !isHaveGoods
-        }
-        this.setState(param);
-        this.props.changeParam(param);
+ 
+    canBuy(){
+        const {isHaveGoods,toggleCanBuy} = this.props;
+        let have = !isHaveGoods;
+        toggleCanBuy(have);
     }
 
     render(){
-        const {popupActive,params,toggleCanBuy,save,popupBrand,popupArea,popupClass,handleReset} = this.props;
+        const {popupActive,isHaveGoods,save,handleReset} = this.props;
         const classes=classNames({
             "menu-slider":true,
             "rollIn-animate":true,
             "rollIn-slideLeft":popupActive
         });
         const exist = classNames({
-            onShow:params.isHaveGoods
+            onShow:isHaveGoods
         })
        
         return (
@@ -36,20 +33,20 @@ class Sidebar extends Component{
                 <div className="showHave">
                 	<dl>
                         <dt>只显示有货</dt>
-                        <dd className={exist} onClick={toggleCanBuy.bind(this)}><i></i></dd>
+                        <dd className={exist} onClick={this.canBuy.bind(this)}><i></i></dd>
                     </dl>
                 </div>
                 
                 <div className="helpList">
-                    <dl onClick={popupClass.bind(this)}>
+                    <dl onClick={this.props.toggleClass.bind(this)}>
                         <dt>类别</dt>
                         <dd className="iconfont icon-right"></dd>
                     </dl>
-                    <dl onClick={popupBrand.bind(this)}>
+                    <dl onClick={this.props.toggleBrand.bind(this)}>
                         <dt>品牌</dt>
                         <dd className="iconfont icon-right"></dd>
                     </dl>
-                    <dl onClick={popupArea.bind(this)}>
+                    <dl onClick={this.props.toggleArea.bind(this)}>
                         <dt>产地</dt>
                         <dd className="iconfont icon-right"></dd>
                     </dl>

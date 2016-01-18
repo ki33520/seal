@@ -3,6 +3,7 @@
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var moment = require("moment");
+var url = require("url");
 var util = require("../lib/util");
 var sharedUtil = require("../../shared/lib/util.es6");
 var ConfirmOrder = util.getSharedComponent("confirmorder");
@@ -67,7 +68,9 @@ function formatCoupons(coupons) {
 var confirmOrder = function(req, res, next) {
     var param = util.decodeURLParam(req.params["param"])
     var user = req.session.user;
-    // console.log(itemIds, buyeds)
+    console.log("user",util.getAPIURL("orderStatus",{
+                orderNo:"660278292"
+            }))
     util.fetchAPI("confirmOrder", {
         memberId: user.memberId,
         singleCodes: param.itemIds,
@@ -127,17 +130,33 @@ var submitOrder = function(req, res, next) {
         paymentFee: totalFee
     }).then(function(resp) {
         if (resp.returnCode === 0) {
-            var payObject = resp.payObject;
+            var orderNo = resp.object;
+            var orderStatusURL = util.getAPIURL("orderStatus",{
+                orderNo:orderNo
+            })
+            var urlObj = {
+                protocol: req.protocol,
+                host: req.headers.host,
+                pathname: "/"
+            }
+            var homeURL = url.format(urlObj)
+            urlObj["pathname"] = "/orderdetail/" + orderNo;
+            var orderDtailURL = url.format(urlObj)
+            var order = {
+                orderNo:resp.object,
+                wxOpenId:user.wxOpenId,
+                orderStatusURL:orderStatusURL,
+                homeURL:homeURL,
+                orderDtailURL:orderDtailURL
+            }
             res.json({
-                orderSubmited: true,
-                result: {
-                    payObject: payObject,
-                }
+                orderSubmited:true,
+                result:order
             });
         } else {
             res.json({
                 orderSubmited: false,
-                errMsg: resp.msg
+                errMsg:resp.message
             });
         }
     })

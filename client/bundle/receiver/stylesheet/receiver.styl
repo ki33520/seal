@@ -44,11 +44,15 @@ body {
 }
 
 .receiver-form-content {
+    background:#EDEDED;
     .receiver-form {
         .receiver-form-fieldset {
             @extend .receiver-panel;
             &:last-child .receiver-form-row:first-child{
                 border:0 none;
+            }
+            &>.cascade-area .receiver-form-row:first-child{
+                border-top:px2rem(1) solid #D7D7D7;
             }
             .receiver-form-row {
                 display: flex;
@@ -61,6 +65,7 @@ body {
                 &>i{
                     width:px2rem(6);
                     color:#dd1847;
+                    line-height:px2rem(28);
                 }
                 .receiver-form-label {
                     width:px2rem(65);
@@ -95,18 +100,13 @@ body {
     }
 }
 
-.cascade-area{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
 .receiver-form-field {
     line-height: 0;
     .dropdown {
         position:static;
         button {
-            padding:px2rem(5) px2rem(5);
+            padding:px2rem(3) px2rem(5);
+            line-height:px2rem(18);
             border: 0 none;
             width: 100%;
             .dropdown-status{
@@ -115,7 +115,7 @@ body {
                 text-overflow:ellipsis;
             }
             .status{
-                font-size:px2rem(14);
+                font-size:14px;
             }
         }
         .dropdown-content {

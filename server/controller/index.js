@@ -135,6 +135,7 @@ function floorFilter(floors) {
     if(_floors["flashbuys"]){
         _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList,function(good){
             return {
+                singleCode:good.singleCode,
                 imageUrl: config.imgServer + good.imageUrl,
                 salePrice:good.salesPrice,
                 originPrice:good.originPrice,
@@ -196,8 +197,8 @@ var searchAssociate = function(req, res, next) {
             var associateWords = ret.object
             associateWords = _.map(associateWords, function(associateWord) {
                 return {
-                    id: associateWord.id,
-                    name: associateWord.wordName
+                    // id: associateWord.singleCode,
+                    name: associateWord.name
                 }
             })
             res.json({

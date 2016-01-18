@@ -8,6 +8,8 @@ function bootstrap(){
         ReactDOM.render(<TrendyApp initialState={initialState} />,document.getElementById('trendy'));
 }
 
+Object.assign = Object.assign || require('object-assign')
+
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

@@ -12,6 +12,7 @@ import PullHook from "../../component/pullhook.jsx";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
+import MaskLayer from "../../component/masklayer.jsx";
 
 import Promotions from "./partial/promotions.jsx";
 import Origin from "./partial/origin.jsx";
@@ -25,9 +26,18 @@ class GoodDetail extends Component{
             selectedAttr:null,
             buyed:1,
             selectedItem:props.goodById.good.selectedItem,
+            popupActive:false,
+            trigger:null,
             upperVisble:true,
             downVisble:false
         }
+    }
+    togglePopup(trigger,e){
+        e && e.preventDefault();
+        this.setState({
+            trigger,
+            popupActive:!this.state.popupActive
+        })
     }
     componentDidMount(){
         const {fetchCartCount,fetchIsCollected} = this.props;
@@ -90,6 +100,7 @@ class GoodDetail extends Component{
             alert('购买数量必须大于0',3000);
             return;
         }else if(selectedItem !== null && buyed > 0){
+            this.togglePopup("addToCart")
             addCart({
                 buyed:buyed,
                 itemId:selectedItem.code
@@ -150,7 +161,7 @@ class GoodDetail extends Component{
         })
     }
     render(){
-        const {cartCount} = this.props;
+        const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
         const {selectedItem,buyed,selectedAttr} = this.state;
 
@@ -213,6 +224,7 @@ class GoodDetail extends Component{
                 >上拉显示商品详情</PullHook>
             </div>
             <Toolbar cartCount={cartCount} good={good} 
+            popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
             selectedAttr={selectedAttr} buyed={buyed}
             handleAttrChange={this.handleAttrChange.bind(this)}
             handleBuyedChanged={this.handleBuyedChanged.bind(this)}
@@ -237,6 +249,7 @@ class GoodDetail extends Component{
                 </SlideTabs>
             </div>
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
+            <MaskLayer visible={this.state.popupActive} />
             </div>
         )
     }

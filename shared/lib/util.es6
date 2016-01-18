@@ -1,6 +1,8 @@
 'use strict'
 import reqwest from "reqwest";
 import {base64} from "./crypto";
+import _ from "lodash";
+import md5 from "md5";
 
 export function apiRequest(url,param={}, options = {
     method:"GET",
@@ -34,6 +36,23 @@ export function urlParam(param){
         paramStr.push(`${key}=${param[key]}`);
     }
     return paramStr.join("&");
+}
+
+export function getSignatureByParam(param,appKey){
+        var keys = _.keys(param);
+        var sortedKeys = _.sortBy(keys,function(key){ 
+            return key
+        })
+        var paramList = [];
+        _.each(sortedKeys,function(key){
+            if(param[key] !== ""){
+                paramList.push(key + "=" + param[key])
+            }
+        })
+        paramList.push("appKey=" + appKey)
+         // console.log("paramList",paramList)
+        paramList = paramList.join("&")
+        return md5(paramList)
 }
 
 export function registerPullDownEvent(callback) {

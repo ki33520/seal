@@ -12,7 +12,7 @@ class Coupon extends Component{
     }
     renderCouponRow(){
         const {coupons,checkedCoupon} = this.props;
-        if(coupons){
+        if(coupons.length > 0){
             return coupons.map((coupon,i)=>{
                 const key = "coupon-" + i;
                 return (
