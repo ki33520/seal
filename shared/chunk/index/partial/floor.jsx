@@ -11,14 +11,11 @@ class Floor extends Component{
         super(props);
     }
     componentDidMount(){
-        // const {fetchSingleRecommend,fetchNewRecommend} = this.props;
-        // const {newRecommendId,singleRecommendId} = this.props.floors;
-        // fetchSingleRecommend({
-        //     activityId:singleRecommendId,
-        // })
-        // fetchNewRecommend({
-        //     activityId:newRecommendId
-        // })
+        if(this.props.active){
+            if(_.isEmpty(this.props.floors)){
+                this.handleActive()
+            }
+        }
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.active && !this.props.active){
@@ -39,7 +36,7 @@ class Floor extends Component{
         if(singleRecommend && singleRecommend.goods){
             let goods = singleRecommend.goods.map((good,i)=>{
                 return (
-                    <a href="#" className="clearfix" key={i}>
+                    <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                         <img src={good.imageUrl} />
                         <span className="name">{good.title}</span>
                         <p>{good.subTitle}</p>
@@ -67,7 +64,7 @@ class Floor extends Component{
         if(newRecommend && newRecommend.goods){
             return newRecommend.goods.map((good,i)=>{
                 return (
-                    <a href="/gooddetail/1" className="clearfix" key={i}>
+                    <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                         <img src={good.imageUrl} />
                         <div className="right">
                             <span className="name">{good.title}</span>
@@ -128,7 +125,7 @@ class Floor extends Component{
         if(flashbuys){
             flashbuys = flashbuys.map((good,i)=>{
                 return (
-                <a href="/gooddetail/1" className="clearfix" key={i}>
+                <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                     <img src="/client/asset/images/pic8.gif" />
                     <div className="right">
                         <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10分</i><i>46秒</i></em></p>

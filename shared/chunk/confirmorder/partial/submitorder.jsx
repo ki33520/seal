@@ -10,7 +10,8 @@ class SubmitOrder extends Component{
     }
     render(){
         let t = moment().format("X")
-        const {orderNo,totalFee,checkedReceiver,promoList} = this.props.order
+        const {orderNo,totalFee,checkedReceiver,promoList,
+            homeURL,orderDtailURL,orderStatusURL} = this.props.order
         let productList = []
         promoList.forEach((promo)=>{
             promo.goods.forEach((good)=>{
@@ -25,14 +26,14 @@ class SubmitOrder extends Component{
             totalFee:totalFee,
             subject:"haiwaigouH5",
             wxOpenId:"wxOpenId",
-            orderDtailURL:"/orderdetail",
-            createTime:"2015",
+            orderDtailURL:orderDtailURL,
+            createTime:Date.now(),
             address:checkedReceiver.provinceName+checkedReceiver.cityName+checkedReceiver.districtName+checkedReceiver.address,
             userName:checkedReceiver.consignee,
             mobile:checkedReceiver.mobileNumber,
             appName:"haiwaigou",
-            homeURL:"http://www.tepin.hk",
-            orderStatusURL:"orderStatusURL",
+            homeURL:homeURL,
+            orderStatusURL:orderStatusURL,
             version:"NEW",
             productList:productList
         }

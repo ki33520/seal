@@ -12,5 +12,12 @@
             "develop": "http://order.hwg.youayun.cn:7986",
             "production": "http://product.tepin.hk"
         }
+    },
+    "orderStatus":{
+        "uri": "/pay/v1/findOrderStatus",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "http://product.tepin.hk"
+        }
     }
 }

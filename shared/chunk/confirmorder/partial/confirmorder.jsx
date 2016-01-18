@@ -94,6 +94,7 @@ class ConfirmOrder extends Component{
             this.props.orderSubmiting === false){
             if(orderSubmited === true){
                 setTimeout(()=>{
+                    console.log('submitOrder')
                     // window.location.assign("/orderlist")
                     ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
                 },2400)

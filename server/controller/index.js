@@ -135,6 +135,7 @@ function floorFilter(floors) {
     if(_floors["flashbuys"]){
         _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList,function(good){
             return {
+                singleCode:good.singleCode,
                 imageUrl: config.imgServer + good.imageUrl,
                 salePrice:good.salesPrice,
                 originPrice:good.originPrice,
