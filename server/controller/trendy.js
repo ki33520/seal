@@ -76,7 +76,19 @@ var trendy = function(req, res, next) {
             })
             
         } else {
-            next(new Error(resp.msg));
+            let ErrorContent = util.getSharedComponent("common","error.jsx");
+            let initialState = {
+                code: "500",
+                msg: resp.goods.message
+            };
+            let markup = util.getMarkupByComponent(ErrorContent({
+                initialState: initialState
+            }));
+
+            res.render('error', {
+                markup: markup,
+                initialState: initialState
+            });
         }
     });
 

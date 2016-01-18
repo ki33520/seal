@@ -23,7 +23,19 @@ var polymer = function(req, res, next) {
                 initialState: initialState
             });
         }else{
-            next(new Error(resp.category.msg))
+            let ErrorContent = util.getSharedComponent("common","error.jsx");
+            let initialState = {
+                code: "500",
+                msg: resp.category.message
+            };
+            let markup = util.getMarkupByComponent(ErrorContent({
+                initialState: initialState
+            }));
+
+            res.render('error', {
+                markup: markup,
+                initialState: initialState
+            });
         } 
     });
 }
