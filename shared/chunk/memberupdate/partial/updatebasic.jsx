@@ -73,6 +73,7 @@ class UpdateBasic extends Component{
     }
     render(){
         const {dispatch,basicByForm} = this.props;
+        console.log(dispatch)
         const {nickName,gender,birthday,alertContent,alertActive} = basicByForm;
         return (
             <div className="basic-content">
