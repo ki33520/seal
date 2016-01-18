@@ -62,8 +62,9 @@ function orderByParam(state={},action){
                 orderSubmited:false
             })
         case FINISH_SUBMITORDER:
+            let orderNo = action.res.object;
             return Object.assign({},state,{
-                ...action.res,
+                order:{...state.order,orderNo},
                 orderSubmiting:false,
             })
         case SHOW_ALERT:

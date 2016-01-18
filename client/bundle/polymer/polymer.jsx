@@ -7,6 +7,7 @@ function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
     ReactDOM.render(<PolymerApp initialState={initialState} />,document.getElementById('polymer'));
 }
+Object.assign = Object.assign || require('object-assign')
 
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
