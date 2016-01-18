@@ -27,7 +27,7 @@ class Receiver extends Component{
     }
     renderReceivers(){
         const {receivers,checkable,checkedReceiver} = this.props;
-        if(receivers){
+        if(receivers.length > 0){
             return receivers.map((receiver,i)=>{
                 const key = "receiver-"+i;
                 const checked = checkedReceiver !== null?(checkedReceiver.id === receiver.id):false;
