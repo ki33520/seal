@@ -127,17 +127,15 @@ var submitOrder = function(req, res, next) {
         paymentFee: totalFee
     }).then(function(resp) {
         if (resp.returnCode === 0) {
-            var payObject = resp.payObject;
+            var orderNo = resp.object;
             res.json({
                 orderSubmited: true,
-                result: {
-                    payObject: payObject,
-                }
+                orderNo:orderNo
             });
         } else {
             res.json({
                 orderSubmited: false,
-                errMsg: resp.msg
+                errMsg:resp.message
             });
         }
     })

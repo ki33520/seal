@@ -50,7 +50,7 @@ var util = {
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
     },
-    getSignatureByParam(param,salt){
+    getSignatureByParam(param,appKey){
         var keys = _.keys(param);
         var sortedKeys = _.sortBy(keys,function(key){ 
             return key
@@ -61,7 +61,7 @@ var util = {
                 paramList.push(key + "=" + param[key])
             }
         })
-        paramList.push("appKey=" + salt)
+        paramList.push("appKey=" + appKey)
          // console.log("paramList",paramList)
         paramList = paramList.join("&")
         return md5(paramList)

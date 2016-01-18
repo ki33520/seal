@@ -196,8 +196,8 @@ var searchAssociate = function(req, res, next) {
             var associateWords = ret.object
             associateWords = _.map(associateWords, function(associateWord) {
                 return {
-                    id: associateWord.id,
-                    name: associateWord.wordName
+                    // id: associateWord.singleCode,
+                    name: associateWord.name
                 }
             })
             res.json({
