@@ -31,7 +31,6 @@ function filterItem(originalData){
 function filterList(originalData,pageSize){
     let data={
         category:[],
-        goodList:[],
         totalPages:[]
     }
  
@@ -41,12 +40,11 @@ function filterList(originalData,pageSize){
 
         data.category.push({
             name:item.activityName,
-            id:item.id
+            id:item.id,
+            list:goods
         });
 
         data.totalPages.push(total);
-
-        data.goodList.push(goods);
     });
 
     return data;
@@ -64,7 +62,6 @@ var trendy = function(req, res, next) {
             
             let initialState = {
                 category: result.category,
-                goodList : result.goodList,
                 totalPages:result.totalPages,
                 pageIndexs:[1]
             };
@@ -103,7 +100,6 @@ var activity = function(req, res, next) {
             let goodList = filterItem(resp.goods.object.result);
             let totalPage = Math.ceil(resp.goods.object.totalCount / pageSize);
             res.json({goodList,totalPage,pageIndex});
-            
         } else {
             next(new Error(resp.msg));
         }

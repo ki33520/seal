@@ -3,35 +3,34 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import fetchGoods from "../action.es6";
-
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
-import GoTop from "../../../component/gotop.jsx";
 import Sticky from "../../../component/sticky.jsx";
 import Icon from "../../../component/icon.jsx";
-import GoodItem from "./goodItem.jsx";
+import GoodList from "./goodList.jsx";
 import Header from "../../common/header.jsx";
 import Footer from "../../common/footer.jsx";
 
 class Trendy extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            activeIndex:0
+ 
+    beginRefresh(i){
+        const {dispatch,category,totalPages,pageIndexs,isFetching} = this.props;
+        let curentPage = pageIndexs[i];
+        let totalPage = totalPages[i];
+        let nextPage = curentPage + 1;
+
+        if(isFetching || totalPage <= curentPage){
+            return false;
         }
+
+        dispatch(fetchGoods('/trendyActivity',{
+            id:category[i].id,
+            pageIndex:nextPage,
+            index:i
+        }));
     }
-
-    handleSearch(){
-        location.href="#/search";
-    }
-
-
     handleClick(index){
         const {category,totalPages,dispatch} = this.props;
-
-        this.setState({
-            activeIndex:index
-        });
  
         if(totalPages[index]){
             return false;
@@ -43,54 +42,21 @@ class Trendy extends React.Component{
             index
         }));
     }
-    beginRefresh(){
-        const {dispatch,totalPages,category,pageIndexs,isFetching} = this.props;
-        const {activeIndex} = this.state;
-        let curentPage = pageIndexs[activeIndex];
-        let totalPage = totalPages[activeIndex];
-        let activeId = category[activeIndex].id;
-        let nextPage = curentPage + 1;
-
-        if(isFetching || totalPage <= curentPage){
-            return false;
-        }
-
-        dispatch(fetchGoods('/trendyActivity',{
-            id:activeId,
-            pageIndex:nextPage,
-            index:activeIndex
-        }));
-    }
-
-    renderContent(goodList){
-        var goods = [];
-       
-        goodList.forEach(function(item,i){
-            goods.push(<GoodItem goods={item} key={"good-" + i} />)
-        })
-        
-        return (
-            <div className="activityGeneral">
-            {goods}
-            </div>
-        );
-    }
     render(){
-        const {category,goodList} = this.props;
-        const tabs = category.map((item,i)=>{
+        const {category} = this.props;
+        const tabs = category.map((channel,i)=>{
             return (
-                <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
-                    {this.renderContent(goodList[i])}
-                    <Refresher active={this.props.isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
-                    <GoTop relative={true}/>
+                <SlideTabsItem navigator={()=><i>{channel.name}</i>} key={i}>
+                    <GoodList channel={channel} />
+                    <Refresher active={this.props.isFetching} handleRefresh={this.beginRefresh.bind(this,i)}/>
                 </SlideTabsItem>
             )
-        })
+        });
         return (
             <div className="trendy-content">
                 <Header canBack="false">
                     <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
-                    <div className="btn-right" onClick={this.handleSearch}>
+                    <div className="btn-right" onClick={this.props.changeScene.bind(this,"search")}>
                         <Icon icon="search"/>
                     </div>
                 </Header> 
