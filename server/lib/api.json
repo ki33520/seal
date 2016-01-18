@@ -105,9 +105,9 @@
         }
     },
     "memberCommentByUser": {
-        "uri": "/comments/v1/findCommentList",
+        "uri": "/comments/v1/findDoneComments",
         "baseURL": {
-            "develop": "http://member.hwg.youayun.cn:7987",
+            "develop": "http://member.hwg.youayun.cn:7986",
             "production": "http://member.tepin.hk"
         }
     },

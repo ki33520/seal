@@ -33,8 +33,16 @@ var util = {
     },
     fetchAPI: function(apiName, param, isMock) {
         isMock = isMock || false;
-        param = this.getSignatureParam(param,"b320de0549a24ff6995dc0e2c38ff491")
-         // console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
+        param = _.extend(param,{
+            appId:"haiwaigou",
+            channel:"Mobile",
+            terminalType:"H5",
+            t:moment().format("X")
+        })
+        var signature = this.getSignatureByParam(param,"b320de0549a24ff6995dc0e2c38ff491")
+        // console.log('signature',signature)
+        param = _.extend(param,{h:signature})
+         console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param)
         } else {
@@ -42,18 +50,7 @@ var util = {
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
     },
-    getAPIURL(apiName,param){
-        param = this.getSignatureParam(param,"b320de0549a24ff6995dc0e2c38ff491")
-        return config.api[apiName].url +"?"+ sharedUtil.urlParam(param)
-    },
-    getSignatureParam(param,appKey){
-        param = _.extend(param,{
-            appId:"haiwaigou",
-            channel:"Mobile",
-            terminalType:"H5",
-            t:moment().format("X")
-        })
-
+    getSignatureByParam(param,salt){
         var keys = _.keys(param);
         var sortedKeys = _.sortBy(keys,function(key){ 
             return key
@@ -64,11 +61,10 @@ var util = {
                 paramList.push(key + "=" + param[key])
             }
         })
-        paramList.push("appKey=" + appKey)
+        paramList.push("appKey=" + salt)
          // console.log("paramList",paramList)
-        var signature = md5(paramList.join("&"))
-        param = _.extend(param,{h:signature})
-        return param
+        paramList = paramList.join("&")
+        return md5(paramList)
     },
     decodeURLParam(param){
         param = sharedUtil.base64Decode(param)

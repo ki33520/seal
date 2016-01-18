@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import OrderDetail from "./partial/orderdetail.jsx";
 import Logistics from "./partial/logistics.jsx";
+import Comment from "./partial/comment.jsx";
 import {Router} from "director";
 import {Switcher,SwitcherCase} from "../common/switcher.jsx";
 
@@ -22,6 +23,12 @@ class OrderDetailRouter extends Component{
                     prevRoute:this.state.currentRoute
                 });
             },
+            "/comment":()=>{
+                this.setState({
+                    currentRoute:"comment",
+                    prevRoute:this.state.currentRoute
+                });
+            },
             "/":()=>{
                 this.setState({
                     currentRoute:"index",
@@ -36,6 +43,7 @@ class OrderDetailRouter extends Component{
             <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
             <SwitcherCase name="index"><OrderDetail {...this.props}/></SwitcherCase>
             <SwitcherCase name="logistics"><Logistics {...this.props}/></SwitcherCase>
+            <SwitcherCase name="comment"><Comment {...this.props}/></SwitcherCase>
             </Switcher>
         );
     }

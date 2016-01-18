@@ -1,6 +1,6 @@
 'use strict';
 import {
-    REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER
+    CHANGE_FIELD,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER
 } from "./action.es6";
 import {combineReducers} from "redux";
 
@@ -9,6 +9,29 @@ import {alertReducer} from "../common/reducer.es6";
 
 function orderByParam(state={},action){
     switch(action.type){
+        case CHANGE_FIELD:
+            const {name,value,key} = action;
+            var order = {...state.order};
+            if(key!==undefined){
+                order.itemList[key][name] = value;
+            }else{
+                state[name] = value;
+            }
+            return Object.assign({},state,{
+                order
+            });
+        case REQUEST_SAVECOMMENT:
+            return Object.assign({},state,{
+                saveCommentFetching:true,
+                closeOrderChanged:false,
+                msg:action.res?action.res.msg: null
+            })
+        case RESPONSE_SAVECOMMENT:
+            return Object.assign({},state,{
+                saveCommentFetching:false,
+                closeOrderChanged: action.res.isChanged,
+                msg:action.res?action.res.msg: null
+            })
         case REQUEST_LOGISTICS:
             return Object.assign({},state,{
                 logisticsFetching:true

@@ -71,6 +71,7 @@ var orderList = function(req, res,next) {
         },false),
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp) {
+        console.log(resp)
         if (resp.orderByUser.returnCode === 0 && resp.timestamp.returnCode === 0){
             var orders = new Array(5),
                 order = {},

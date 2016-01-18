@@ -1,12 +1,48 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 
+export const CHANGE_FIELD= "CHANGE_FIELD";
+export const REQUEST_SAVECOMMENT = "REQUEST_SAVECOMMENT";
+export const RESPONSE_SAVECOMMENT= "RESPONSE_SAVECOMMENT";
 export const REQUEST_LOGISTICS = "REQUEST_LOGISTICS";
 export const RESPONSE_LOGISTICS= "RESPONSE_LOGISTICS";
 export const REQUEST_ClOSEORDER = "REQUEST_ClOSEORDER";
 export const RESPONSE_ClOSEORDER= "RESPONSE_ClOSEORDER";
 export const REQUEST_DELIVERYORDER = "REQUEST_DELIVERYORDER";
 export const RESPONSE_DELIVERYORDER= "RESPONSE_DELIVERYORDER";
+
+export function changeField(name,value,key){
+    return {
+        type:CHANGE_FIELD,
+        name,
+        value,
+        key
+    }
+}
+
+function requestSavaComment(param){
+    return {
+        type:REQUEST_SAVECOMMENT,
+        param
+    }
+}
+
+function responseSavaComment(param,res){
+    return {
+        type:RESPONSE_SAVECOMMENT,
+        param,
+        res
+    }
+}
+
+export function savaComment(url,param){
+    return (dispatch)=>{
+        dispatch(requestLogistics(param));
+        apiRequest(url,param,{method:"POST"}).then((res)=>{
+            dispatch(responseLogistics(param,res));
+        })
+    }
+}
 
 function requestLogistics(param){
     return {
