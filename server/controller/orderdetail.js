@@ -221,6 +221,28 @@ var orderDelivery = function(req, res, next) {
         }
     })
 }
+var comments = function(req, res, next) {
+    var user = req.session.user;
+    console.log(typeof req.body.commentsJson)
+    util.fetchAPI("commentsOrderById", {
+        memberId: user.memberId,
+        commentsJson: "[{rate:4,content:xxx,isOpen:1,itemId:fc6804de524365000152445681eb0048}]"
+        //JSON.stringify(req.body.commentsJson)
+    }).then(function(resp) {
+        console.log(resp)
+        if (resp.returnCode === 0) {
+            res.json({
+                isChanged: true,
+                msg: resp.message
+            })
+        }else{
+            res.json({
+                isChanged: false,
+                msg: resp.message
+            })
+        }
+    })
+}
 
 var logistics = function(req, res, next) {
     var config = req.app.locals.config;
@@ -241,5 +263,6 @@ module.exports = {
     orderDetail: orderDetail,
     logistics: logistics,
     orderClose: orderClose,
+    comments: comments,
     orderDelivery: orderDelivery
 };

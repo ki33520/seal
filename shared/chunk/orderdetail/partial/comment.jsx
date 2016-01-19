@@ -8,6 +8,8 @@ import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import GoTop from "../../../component/gotop.jsx";
 
 import {changeField,saveComment} from "../action.es6";
+import {alert} from "../../common/action.es6";
+import Alert from "../../../component/alert.jsx";
 
 class Comment extends Component{
     handleStar(name,arrKey,val,e){
@@ -25,11 +27,31 @@ class Comment extends Component{
     }
     handleSave(e){
         e && e.preventDefault();
-        const {dispatch,order,isOpen} = this.props;
-        console.log(order,isOpen)
-        // dispatch(changeBasic("/savecomment",{
-        //     nickName,gender,birthday
-        // }));
+        var {dispatch,order,isOpen} = this.props;
+        var obj = order.itemList.map((v,k)=>{
+            v.isOpen = isOpen === undefined ? 1 : isOpen;
+            const {rate,id,content,isOpen} = v;
+            return {
+                rate: rate ? rate : 5,
+                content: content ? content : "",
+                isOpen,
+                itemId: id,
+            }
+        })
+        dispatch(saveComment("/savecomment",{
+            commentsJson: obj
+        }));
+    }
+    componentWillReceiveProps(nextProps){
+        const {dispatch} = this.props;
+        if(nextProps.saveCommentChanging === false &&
+           this.props.saveCommentChanging === true){
+            if(nextProps.saveCommentChanged === true){
+                dispatch(alert(nextProps.msg,2000));
+            }else{
+                dispatch(alert(nextProps.msg,2000));
+            }
+        }
     }
     renderItems(items){
         return items.map((v,k)=>{
@@ -78,7 +100,7 @@ class Comment extends Component{
         });
     }
     render(){
-        const {logistics,order} = this.props;
+        const {logistics,order,alertActive,alertContent} = this.props;
         const {itemList} = order;
         return (
             <div className="order-detail-content comment-content">
@@ -97,6 +119,7 @@ class Comment extends Component{
                     </div>
                     <a href="javascript:void(0);" onClick={this.handleSave.bind(this)} className="confirm_btn">提交评论</a>
                 </div>
+                <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
     }

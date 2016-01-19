@@ -22,14 +22,14 @@ function orderByParam(state={},action){
             });
         case REQUEST_SAVECOMMENT:
             return Object.assign({},state,{
-                saveCommentFetching:true,
-                closeOrderChanged:false,
+                saveCommentChanging:true,
+                saveCommentChanged:false,
                 msg:action.res?action.res.msg: null
             })
         case RESPONSE_SAVECOMMENT:
             return Object.assign({},state,{
-                saveCommentFetching:false,
-                closeOrderChanged: action.res.isChanged,
+                saveCommentChanging:false,
+                saveCommentChanged: action.res.isChanged,
                 msg:action.res?action.res.msg: null
             })
         case REQUEST_LOGISTICS:
