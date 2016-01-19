@@ -142,7 +142,7 @@ class Floor extends Component{
                 <div className="flashBuy">
                     <div className="title">
                         <span><i></i>闪购精选</span>
-                        <a href={"/flashbuy/"+this.props.index.currentChannel}>更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
+                        <a href={"/flashbuy/"+this.props.channel.id}>更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
                     </div>
                     {flashbuys}
                 </div>
