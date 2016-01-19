@@ -56,13 +56,15 @@ router.get("/orderlist/:id",mainController.requireAuthorize,require("./controlle
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
 router.post("/closedorder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
 router.post("/deliveryorder",mainController.requireAuthorize,require("./controller/orderdetail").orderDelivery);
+router.post("/savecomment",mainController.requireAuthorize,require("./controller/orderdetail").comments);
 router.get("/logistics",mainController.requireAuthorize,require("./controller/orderdetail").logistics);
+
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
 router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
-router.get("/membercenter",mainController.requireAuthorize,require("./controller/membercenter"));
+router.get("/membercenter",mainController.authorizeLocals,require("./controller/membercenter"));
 router.get("/membercenter/collect",mainController.requireAuthorize,require("./controller/membercollect"));
 router.get("/membercenter/comment",mainController.requireAuthorize,require("./controller/membercomment").index);
 router.get("/membercenter/showcomment",mainController.requireAuthorize,require("./controller/membercomment").showComment);
