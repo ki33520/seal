@@ -3,17 +3,26 @@ var util = require("../lib/util");
 var FlashBuy = util.getSharedComponent("flashbuy");
 var config = require("../lib/config");
 var _ = require("lodash");
+var bluebird = require("bluebird");
+var sharedUtil = require("../../shared/lib/util.es6");
+var snsUrl = "http://sns.e9448.com/sns/system/v1/timestamp";
+
 
 var flashBuy = function(req,res,next) {
-    var id = req.params.id
-    util.fetchAPI("flashBuy",{
-        manageId:id,
-        start:0,
-        limit:10
+    var id = req.params.id;
+    bluebird.props({
+        goods:util.fetchAPI("flashBuy",{
+            manageId:id,
+            start:0,
+            limit:10
+        }),
+        snsTime:sharedUtil.apiRequest(snsUrl)
     }).then(function(ret){
-        if(ret.returnCode === 0){
+        var goods = ret.goods;
+        var snsTime = ret.snsTime;
+        if(goods.returnCode === 0 && snsTime.returnCode===0){
             var initialState = {
-                groupGoods:ret.object
+                groupGoods:flashBuyFilter(goods.object,snsTime.systemTime)
             };
             var markup = util.getMarkupByComponent(FlashBuy({
                 initialState:initialState
@@ -26,23 +35,55 @@ var flashBuy = function(req,res,next) {
         }else{
             next(new Error(ret.msg))
         }
-    },function(){
-        next(new Error("api request failed"))
-    })
+    });
+     
 };
 
-function flashBuyFilter(flashbuys){
-    var _flashbuys = _.map(flashbuys,function(flashbuy){
-        return {
-            imageUrl:config.imgServer + flashbuy.imageUrl,
-            startTime:flashbuy.startTime,
-            endTime:flashbuy.endTime,
+function flashBuyFilter(flashbuys,systemTime){
+    var flashGoods = [];
+    var preFlashGoods =  [];
+    _.map(flashbuys,function(flashbuy){
+        var beginTime = new Date(flashbuy.startTime).getTime();
+        var overTime = new Date(flashbuy.endTime).getTime();
+
+        if(overTime > systemTime) {
+            var list = {
+                startTime:beginTime,
+                endTime:overTime,
+                goodsList:goodsFilter(flashbuy.activityProductList)
+            }
+            if(beginTime < systemTime){
+                flashGoods.push(list)
+            }else{
+                preFlashGoods.push(list)
+            }
         }
-    })
-    _flashbuys = _.groupBy(_flashbuys,function(flashbuy){
-        return flashbuy.startTime == null
-    })
-    return _flashbuys
+
+    });
+
+    flashGoods = flashGoods.sort(function(a,b){
+        return a.startTime - b.startTime
+    });
+
+    preFlashGoods = preFlashGoods.sort(function(a,b){
+        return a.startTime - b.startTime
+    });
+
+    return {flashGoods,preFlashGoods}
 }
 
-module.exports = flashBuy
+function goodsFilter(goodsList){
+    return _.map(goodsList,function(goods,i){
+        return {
+            id:goods.singleCode,
+            imageUrl:config.imgServer + goods.imageUrl,
+            originPrice:goods.originPrice,
+            salePrice:goods.salesPrice,
+            title:goods.title,
+            sourceName:goods.sourceName,
+            flag:config.imgServer + goods.sourceImageUrl
+        }
+    });
+}
+
+module.exports = flashBuy;
