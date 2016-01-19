@@ -1,60 +1,72 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames";
-import dom from "../../lib/dom.es6";
-import util from "../../lib/util.es6";
+import dom from "../lib/dom.es6";
 
 class ScrollSpy extends Component{
-    componentDidMount(){
-        this.initialize();
-    }
-    initialize(){
-        this.linkedNodes = React.findDOMNode(this).querySelectorAll(".anchor-point"),
-        this.anchorNodes = [];
-        Array.prototype.forEach.call(this.linkedNodes,(linkedNode)=>{
-            const anchor = document.getElementById(linkedNode.dataset.anchor);
-            if(anchor){
-                this.anchorNodes.push(anchor);
-            }
-        });
-    }
-    checkVisible(element,relativeElement){
-        // console.log(element.dataset.anchor)
-        // console.log('scrollTop',relativeElement.scrollTop)
-        // console.log('offsetTop',element.offsetTop)
-        // console.log('height',element.offsetHeight)
-        const offsetTop = element.offsetTop - 40;
-        return offsetTop <= relativeElement.scrollTop && 
-                (offsetTop + element.offsetHeight) >= relativeElement.scrollTop
-    }
-    handleScroll(){
-        var visibleNodes = [],targetNodes = [];
-        Array.prototype.forEach.call(this.linkedNodes,(linkedNode,i)=>{
-            if(this.checkVisible(linkedNode,React.findDOMNode(this)) === true){
-                visibleNodes.push(linkedNode);
-                targetNodes.push(this.anchorNodes[i])
-            }
-        });
-        if(visibleNodes.length === 0){
-            return;
+    constructor(props,context){
+        super(props,context);
+        this.state = {
+            inViewport:false
         }
-        // console.log('visibleNodes',visibleNodes)
-        const targetNode = targetNodes[0];
-        Array.prototype.forEach.call(this.anchorNodes,(anchorNode)=>{
-            dom.removeClass(anchorNode,"active");
-        });
-        dom.addClass(targetNode,"active");        
-        // util.dispatchEvent(targetNode,'click');
+    }
+    getScrollElement(){
+        return this.props.scrollBy === null ? window : document.querySelector(this.props.scrollBy);
+    }
+    componentDidMount(){
+        this.checkVisble();
+        // console.log('scrollElement',this.getScrollElement())
+        dom.bindEvent(this.getScrollElement(),"scroll",this.checkVisble.bind(this));
+    }
+    componentWillUnmount(){
+        dom.unbindEvent(this.getScrollElement(),"scroll",this.checkVisble.bind(this));
+        if(this._timer){
+            clearTimeout(this._timer)
+        }
+    }
+    checkVisble(){
+        // if(this.isMounted){
+            const {diffInViewport,scrollBy} = this.props;
+            const checkNode = ReactDOM.findDOMNode(this);
+            const scrollNode = document.querySelector(scrollBy);
+            let isVisible = dom.inViewport(checkNode,scrollNode,diffInViewport)
+            // console.log('isVisible',isVisible)
+            if(isVisible && !this.state.inViewport){
+                if(this._timer){
+                    clearTimeout(this._timer);
+                }
+                this._timer = setTimeout(()=>{
+                    this.setState({
+                        inViewport:true
+                    })
+                },this.props.delay)
+            }
+            if(this.repeat && !isVisible){
+                this.setState({
+                    inViewport:false
+                })
+            }
+        // }
     }
     render(){
-        const classes = classNames(this.props.className,{
-            "scroll-spy":true
-        });
-        return (
-            <div className={classes} onScroll={this.handleScroll.bind(this)}>{this.props.children}</div>
-        );
+        const animation = this.state.inViewport ? this.props.animation:null
+        let child = React.Children.only(this.props.children);
+        return React.cloneElement(child,Object.assign({},child.props,{
+            className:classNames(child.props.className,animation),
+            delay:this.props.delay,
+            inViewport:this.state.inViewport
+        }))
     }
+}   
+
+ScrollSpy.defaultProps = {
+    scrollBy:null,
+    delay:100,
+    diffInViewport:0,
+    animation:"fade",
+    repeat:false
 }
 
 export default ScrollSpy;

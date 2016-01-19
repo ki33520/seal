@@ -8,6 +8,8 @@ var _ = require("lodash");
 var md5 = require("md5");
 var moment = require("moment");
 var reqwest = require("reqwest");
+var fs = require("fs");
+var path = require('path');
 
 var util = {
     getAuthGatewayUrl: function(req, authPath) {
@@ -50,6 +52,9 @@ var util = {
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
     },
+    getAPIURL(apiName,param){
+        return config.api[apiName].url +"?"+sharedUtil.urlParam(param)
+    },
     getSignatureByParam(param,salt){
         var keys = _.keys(param);
         var sortedKeys = _.sortBy(keys,function(key){ 
@@ -76,6 +81,33 @@ var util = {
             _.extend(_param,_v)
         })
         return _param
+    },
+    writePage(url,html){
+        var pageName = md5(url);
+        var pagePath = path.resolve("client/page/"+pageName+".html")
+        console.log('writePage',url)
+        fs.writeFileSync(pagePath,html)
+    },
+    readPage(url){
+        var pageName = md5(url);
+        var pagePath = path.resolve("client/page/"+pageName+".html")
+        var stat;
+        try{
+            stat = fs.statSync(pagePath)
+        }catch(e){
+            return false
+        }
+        if(stat.isFile()){
+            var expire = (60000 * 3)
+            if((Date.now() - stat.atime.getTime()) > expire){
+                console.log('deprecate',Date.now() - stat.atime.getTime())
+                return false
+            }
+            // console.log('stat',stat.atime.getTime(),Date.now())
+            var pageContent = fs.readFileSync(pagePath,"utf8")
+            return pageContent
+        }
+        return false
     }
 }
 

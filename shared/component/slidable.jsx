@@ -101,7 +101,6 @@ class Slidable extends Component{
         e && e.stopPropagation();
         const {clientY,clientX} = e.changedTouches[0];
         const {axis} = this.props;
-        this.startTouchTime = Date.now()
         this.startTouchY = clientY;
         this.startTouchX = clientX;
         this.lastY = this.startTouchY;
@@ -162,6 +161,8 @@ class Slidable extends Component{
             this.checkEdge()
             // console.log('this.translateX',Math.abs(this.endTouchX - this.startTouchX),Math.abs(this.endTouchY - this.startTouchY))
             // console.log('translateY',this.translateY)
+            // this.transitionTouch(this.props.animateDuration)
+            // if(this.touchDirection() === axis){
             rAF(this.transitionTouch.bind(this,animateDuration))
             dom.removeClass(ReactDOM.findDOMNode(this),"sliding")
         }
@@ -175,12 +176,9 @@ class Slidable extends Component{
         if(this.props.onlyInside && !inTouchableRegion){
             return;
         }
-        if((Date.now() - this.startTouchTime) < 300 && this.moveDirection === null){
-            return;
-        }
         let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
-        if(this.moveDirection && moveDirection !== this.moveDirection){
-            return;
+        if(this.moveDirection && this.moveDirection !== moveDirection){
+            return
         }
         this.moveDirection = moveDirection
         if(this.moveDirection === axis){
@@ -227,10 +225,6 @@ class Slidable extends Component{
             this.translateY = - maxBeyondY
         }else if(maxBeyondX <= (- this.translateX) && maxBeyondX > 0 && axis === "x"){
             this.translateX = - maxBeyondX
-        }else if(translateNode.offsetHeight < translateNode.parentNode.offsetHeight){
-            this.translateY = 0
-        }else if(translateNode.offsetWidth < translateNode.parentNode.offsetWidth && axis === "x"){
-            this.translateX = 0;
         }else{
             onEdge()
         }

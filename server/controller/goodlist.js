@@ -56,7 +56,6 @@ var goodList = function(req, res, next) {
             pageSize
         })
     }).then(function(resp) {
- 
         if (resp.goods.returnCode === 0) {
             let goods = resp.goods.object;
             let categoryNames = filterNames(goods.categoryNames);

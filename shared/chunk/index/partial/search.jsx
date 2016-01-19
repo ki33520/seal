@@ -41,15 +41,21 @@ class SearchBox extends Component{
                         <em>历史搜索</em>
                         <i>清空记录</i>
                     </span>
-                    <a href="/goodlist">洗衣液</a>
-                    <a href="/goodlist">洗衣液</a>
-                    <a href="/goodlist">洗衣液</a>
                 </div>
             </div>
         )
     }
     renderAssociate(){
-        const {keyword} = this.props.search;
+        const {keyword,associateWords} = this.props.search;
+        if(associateWords.length > 0){
+            return associateWords.map((associateWord,i)=>{
+                return (
+                <div className="searchOut" key={i}>
+                    <a href={"/goodlist/"+associateWord.name}>{associateWord.name}</a>
+                </div>
+                )
+            })
+        }
         return (
             <div className="searchOut">
                 <a href={"/goodlist/"+keyword}>{keyword}</a>
