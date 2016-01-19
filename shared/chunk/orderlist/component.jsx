@@ -21,7 +21,8 @@ class OrderList extends Component{
     }
     beginRefresh(interval,flag){
         const {orders,isFetching,dispatch} =  this.props;
-        var flag = flag!= undefined ? flag: this.state.displayFlag,
+        var flag = flag !== undefined ? flag: this.state.displayFlag,
+            interval = interval !== undefined ? interval : 1,
             order = orders[flag],
             fetchLink = "/orderlist",
             pageCount = 1,
@@ -56,22 +57,30 @@ class OrderList extends Component{
                 <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
                         <Floor systemTime={systemTime} orderItem={orders[0]} ref="floor"/>
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                        <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
                         <Floor systemTime={systemTime} orderItem={orders[1]} ref="floor"/>
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                        <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
                         <Floor systemTime={systemTime} orderItem={orders[2]} ref="floor"/>
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                        <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
                         <Floor systemTime={systemTime} orderItem={orders[3]} ref="floor"/>
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                        <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
                         <Floor systemTime={systemTime} orderItem={orders[4]} ref="floor"/>
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                        <GoTop relative={true}/>
                     </SlideTabsItem>
                 </SlideTabs>
-                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
-                <GoTop  />
             </div>
         )
     }

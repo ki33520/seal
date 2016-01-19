@@ -31,7 +31,7 @@ var index = function(req, res, next) {
             productCode: goodId,
             pageIndex: pageIndex,
             pageSize: pageSize
-        },false)
+        },true)
     }).then(function(ret) {
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
