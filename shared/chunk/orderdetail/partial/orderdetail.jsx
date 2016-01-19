@@ -88,8 +88,13 @@ class OrderDetail extends Component{
     }
     renderFooter(){
         const {order} = this.props;
-        const {orderStatus,orderNo} = order;
-        var btn = [];
+        const {orderStatus,orderNo,itemList} = order;
+        var hasComment = false;
+        itemList.map((v,k)=>{
+            if(v.hasComment === true){
+                hasComment = true;
+            }
+        })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
                 return (
@@ -106,11 +111,15 @@ class OrderDetail extends Component{
                     </div>
                 )
             case "STATUS_FINISHED":
-                return (
-                    <div className="confirmBtns">
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="confirm_btn confirmBorder_btn">评价晒单</a>
-                    </div>
-                )
+                if(hasComment){
+                    return null
+                }else{
+                    return (
+                        <div className="confirmBtns">
+                            <a href={"/orderdetail/"+orderNo+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
+                        </div>
+                    )
+                }
             default:
                 return null
         }

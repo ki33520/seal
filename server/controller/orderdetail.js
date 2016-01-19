@@ -62,6 +62,7 @@ function formatComment(object) {
     var itemList = object.itemList.map((v,k)=>{
         return {
             id: v.id,
+            hasComment: v.hasComment,
             singleTitle: v.singleTitle,
             singleCode: v.singleCode,
             salesPrice: v.salesPrice,
