@@ -223,6 +223,13 @@
             "production": "order.hwg.youayun.cn"
         }
     },
+    "commentsOrderById":{
+        "uri": "/comments/v1/batchAdd",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
     "logisticsByOrder":{
         "uri": "/order/v1/searchRoute",
         "baseURL": {

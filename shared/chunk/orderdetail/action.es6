@@ -20,14 +20,14 @@ export function changeField(name,value,key){
     }
 }
 
-function requestSavaComment(param){
+function requestSaveComment(param){
     return {
         type:REQUEST_SAVECOMMENT,
         param
     }
 }
 
-function responseSavaComment(param,res){
+function responseSaveComment(param,res){
     return {
         type:RESPONSE_SAVECOMMENT,
         param,
@@ -35,11 +35,11 @@ function responseSavaComment(param,res){
     }
 }
 
-export function savaComment(url,param){
+export function saveComment(url,param){
     return (dispatch)=>{
-        dispatch(requestLogistics(param));
+        dispatch(requestSaveComment(param));
         apiRequest(url,param,{method:"POST"}).then((res)=>{
-            dispatch(responseLogistics(param,res));
+            dispatch(responseSaveComment(param,res));
         })
     }
 }
