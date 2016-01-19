@@ -11,6 +11,7 @@ class SubmitOrder extends Component{
     render(){
         let t = moment().format("X")
         const {orderNo,totalFee,checkedReceiver,promoList,
+            openId,wxOpenId,
             homeURL,orderDtailURL,orderStatusURL} = this.props.order
         let productList = []
         promoList.forEach((promo)=>{
@@ -27,7 +28,8 @@ class SubmitOrder extends Component{
             subject:"haiwaigouH5",
             wxOpenId:"wxOpenId",
             orderDtailURL:orderDtailURL,
-            createTime:Date.now(),
+            createTime:moment().format("YYYY-MM-DD HH:mm:ss"),
+            endTime:moment().add(2,"h").format("YYYY-MM-DD HH:mm:ss"),
             address:checkedReceiver.provinceName+checkedReceiver.cityName+checkedReceiver.districtName+checkedReceiver.address,
             userName:checkedReceiver.consignee,
             mobile:checkedReceiver.mobileNumber,
@@ -37,24 +39,26 @@ class SubmitOrder extends Component{
             version:"NEW",
             productList:productList
         }
+        message = JSON.stringify({"message":message})
         let param = {
-            appId:"haiwaigou",
+            appId:"hwg",
             channel:"Mobile",
-            openId:"tepin",
+            openId:openId,
+            t,
             terminalType:"H5",
-            message:JSON.stringify(message)
+            message
         }
         let h = getSignatureByParam(param)
         return (
             <div className="confirmBtns">
                 <a href="javascript:void(0);" className="confirm_btn" 
                 onClick={this.props.onSubmit}>提交订单</a>
-                <form action="cashier/v1/cashier" method="POST" ref="submitForm">
-                    <input type="hidden" name="appId" value="haiwaigou" />
+                <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                    <input type="hidden" name="appId" value="hwg" />
                     <input type="hidden" name="channel" value="Mobile" />
-                    <input type="hidden" name="openId" value="tepin" />
+                    <input type="hidden" name="openId" value={openId} />
                     <input type="hidden" name="terminalType" value="H5" />
-                    <input type="hidden" name="message" value={JSON.stringify(message)} />
+                    <input type="hidden" name="message" value={message} />
                     <input type="hidden" name="t" value={t} />
                     <input type="hidden" name="h" value={h} />
                 </form>

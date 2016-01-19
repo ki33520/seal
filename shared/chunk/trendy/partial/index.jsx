@@ -10,6 +10,7 @@ import Icon from "../../../component/icon.jsx";
 import GoodList from "./goodList.jsx";
 import Header from "../../common/header.jsx";
 import Footer from "../../common/footer.jsx";
+import Loading from "../../common/loading.jsx";
 
 class Trendy extends React.Component{
  
@@ -35,7 +36,6 @@ class Trendy extends React.Component{
         if(totalPages[index]){
             return false;
         }
-
         dispatch(fetchGoods('/trendyActivity',{
             id:category[index].id,
             pageIndex:1,
@@ -48,7 +48,8 @@ class Trendy extends React.Component{
             return (
                 <SlideTabsItem navigator={()=><i>{channel.name}</i>} key={i}>
                     <GoodList channel={channel} />
-                    <Refresher active={this.props.isFetching} handleRefresh={this.beginRefresh.bind(this,i)}/>
+                    <Refresher handleRefresh={this.beginRefresh.bind(this,i)}/>
+                    <Loading active={this.props.isFetching}/>
                 </SlideTabsItem>
             )
         });

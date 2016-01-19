@@ -68,9 +68,6 @@ function formatCoupons(coupons) {
 var confirmOrder = function(req, res, next) {
     var param = util.decodeURLParam(req.params["param"])
     var user = req.session.user;
-    console.log("user",util.getAPIURL("orderStatus",{
-                orderNo:"660278292"
-            }))
     util.fetchAPI("confirmOrder", {
         memberId: user.memberId,
         singleCodes: param.itemIds,
@@ -144,6 +141,7 @@ var submitOrder = function(req, res, next) {
             var orderDtailURL = url.format(urlObj)
             var order = {
                 orderNo:resp.object,
+                openId:user.openId,
                 wxOpenId:user.wxOpenId,
                 orderStatusURL:orderStatusURL,
                 homeURL:homeURL,

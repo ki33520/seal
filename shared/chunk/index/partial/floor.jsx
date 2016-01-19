@@ -5,6 +5,9 @@ import ReactDOM from "react-dom";
 import _ from "lodash"
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
+import Image from "../../../component/image.jsx";
+import ScrollSpy from "../../../component/scrollspy.jsx";
+import Loading from "../../common/loading.jsx";
 
 class Floor extends Component{
     constructor(props){
@@ -12,14 +15,19 @@ class Floor extends Component{
     }
     componentDidMount(){
         if(this.props.active){
-            if(_.isEmpty(this.props.floors)){
-                this.handleActive()
+            const {fetchNewRecommend,fetchSingleRecommend} = this.props;
+            const {newRecommend,singleRecommend} = this.props.channel.floors
+            if(newRecommend.goods === null){
+                fetchNewRecommend({activityId:newRecommend.id},this.props.channel.id)
+            }
+            if(singleRecommend.goods === null){
+                fetchSingleRecommend({activityId:singleRecommend.id},this.props.channel.id)
             }
         }
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.active && !this.props.active){
-            if(_.isEmpty(this.props.floors)){
+            if(_.isEmpty(this.props.channel.floors)){
                 this.handleActive()
             }
         }
@@ -84,7 +92,7 @@ class Floor extends Component{
             slides = slides.map((slide,i)=>{
                 return (
                     <Slide key={i}>
-                        <a href={"/activity/"+slide.id}>
+                        <a href={slide.jumpUrl}>
                             <img src={slide.imageUrl} alt=""/>
                         </a>
                     </Slide>
@@ -112,8 +120,8 @@ class Floor extends Component{
         let {rushbuys} = this.props.channel.floors;
         if(rushbuys){
             return rushbuys.map((rushbuy,i)=>{
-                return <a href={"/activity/"+rushbuy.id} key={i}>
-                    <img src={rushbuy.imageUrl} />
+                return <a href={rushbuy.jumpUrl} key={i}>
+                    <image src={rushbuy.imageUrl} />
                     <span><i><img src="/client/asset/images/flashClock.png" /></i>距本期活动结束：01天34时10分46秒</span>
                 </a>
             })
@@ -126,7 +134,7 @@ class Floor extends Component{
             flashbuys = flashbuys.map((good,i)=>{
                 return (
                 <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
-                    <img src="/client/asset/images/pic8.gif" />
+                    <img src={good.imageUrl}/>
                     <div className="right">
                         <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10分</i><i>46秒</i></em></p>
                         <div className="flashDot"></div>
@@ -161,17 +169,17 @@ class Floor extends Component{
                     <div className="activity">
                     <ul className="clearfix">
                         <li>
-                            <a href={"/mobileonly/"+mobileonly.id}>
+                            <a href={mobileonly.jumpUrl}>
                                 <img src={mobileonly.imageUrl} alt="" />
                                 <span></span>
                             </a>
                         </li>
                         <li>
-                            <a href={"/finest/"+finest.id}>
+                            <a href={finest.jumpUrl}>
                                 <img src={finest.imageUrl} alt="" />
                                 <span></span>
                             </a>
-                            <a href={"/stockup/"+stockup.id}>
+                            <a href={stockup.jumpUrl}>
                                 <img src={stockup.imageUrl} alt="" />
                                 <span></span>
                             </a>
@@ -190,7 +198,7 @@ class Floor extends Component{
             return activityTwo.map((activity,i)=>{
                 return (
                     <li key={i}>
-                        <a href={"/activity/"+activity.id}>
+                        <a href={activity.jumpUrl}>
                             <img src={activity.imageUrl} alt="" />
                             <span></span>
                         </a>
@@ -206,21 +214,21 @@ class Floor extends Component{
             return (
                 <ul className="clearfix">
                     <li>
-                        <a href={"/activity/"+activityThree[0].id}>
+                        <a href={activityThree[0].jumpUrl}>
                             <img src={activityThree[0].imageUrl} alt="" />
                             <span></span>
                         </a>
                     </li>
                     <li>
                         <div className="clearfix">
-                        <a href={"/activity/"+activityThree[1].id}>
+                        <a href={activityThree[1].jumpUrl}>
                             <img src={activityThree[1].imageUrl} alt=""/>
                         </a>
-                        <a href={"/activity/"+activityThree[2].id}>
+                        <a href={activityThree[2].jumpUrl}>
                             <img src={activityThree[2].imageUrl} alt=""/>
                         </a>
                         </div>
-                        <a href={"/activity/"+activityThree[3].id}>
+                        <a href={activityThree[3].jumpUrl}>
                             <img src={activityThree[3].imageUrl} alt=""/>
                         </a>
                     </li>
@@ -230,6 +238,10 @@ class Floor extends Component{
         return null
     }
     render(){
+        let {channelFetching}  = this.props.channel
+        if(!this.props.active && _.isEmpty(this.props.channel.floors)){
+            channelFetching = channelFetching || true
+        }
         return (
             <div className="floor-content">
                 {this.renderSlider()}
@@ -250,6 +262,7 @@ class Floor extends Component{
                     </div>
                     {this.renderNewRecommend()}
                 </div>
+                <Loading active={channelFetching}/>
             </div>
         )
     }

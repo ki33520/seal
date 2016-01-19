@@ -51,6 +51,19 @@ class GoodDetail extends Component{
         }) 
         fetchCartCount()
         fetchIsCollected()
+
+        dom.bindEvent(window,"scroll",(e)=>{
+            var scrollTop = dom.scrollTop(window);
+            if (document.documentElement.clientHeight + scrollTop >= document.documentElement.scrollHeight) {
+                if(this.state.upperVisble){
+                    setTimeout(()=>{
+                        this.setState({
+                            downVisble:true
+                        })
+                    },1200)
+                }
+            }
+        })
     }
     componentWillReceiveProps(nextProps){
         const nextSelectedItem = nextProps.goodById.good.selectedItem
@@ -142,24 +155,6 @@ class GoodDetail extends Component{
             window.location.assign(`/confirmorder/${queryParam}`)
         }
     }
-    handlePullUp(e){
-        e && e.preventDefault();
-        this.setState({
-            downVisble:true,
-            upperVisble:false
-        },()=>{
-            // console.log('handlePullUp')
-            dom.scrollTop(window,0);
-            // this.refs["slidetabs"].initialize()
-        })
-    }
-    handlePullDown(e){
-        e && e.preventDefault();
-        this.setState({
-            downVisble:false,
-            upperVisble:true
-        })
-    }
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
@@ -191,7 +186,9 @@ class GoodDetail extends Component{
             <a className="goods_share"></a>
             </Header>
             <div className={upperClasses}>
+                {good.slides.length > 0?(
                 <Slider effect="roll" autoPlay={false} speed={200}>{slides}</Slider>
+                ):null}
                 <div className="title clearfix">
                     <span>{good.title}</span>
                     <a className="goods_fav" onClick={this.toggleCollected.bind(this)}>
@@ -217,11 +214,7 @@ class GoodDetail extends Component{
                 <div className="assure">
                     <img src="/client/asset/images/assure.gif" />
                 </div>
-                <PullHook 
-                className="teyla" 
-                oriention="BOTTOM_TO_TOP"
-                onPullEnd={this.handlePullUp.bind(this)}
-                >上拉显示商品详情</PullHook>
+                {this.state.downVisble?null:<div className="teyla">上拉显示商品详情</div>}
             </div>
             <Toolbar cartCount={cartCount} good={good} 
             popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
@@ -232,11 +225,6 @@ class GoodDetail extends Component{
             addToCart={this.addToCart.bind(this)}>
             </Toolbar>
             <div className={downClasses}>
-                <PullHook 
-                className="teyla" 
-                oriention="TOP_TO_BOTTOM"
-                onPullEnd={this.handlePullDown.bind(this)}
-                >下拉返回详情顶部</PullHook>
                 <SlideTabs axis="x" navbarSlidable={false} ref="slidetabs">
                 <SlideTabsItem navigator={()=><span>图文详情</span>}>
                 <div className="good-desc" dangerouslySetInnerHTML={{__html:good.detail}}></div>
