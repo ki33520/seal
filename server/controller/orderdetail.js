@@ -62,6 +62,7 @@ function formatComment(object) {
     var itemList = object.itemList.map((v,k)=>{
         return {
             id: v.id,
+            hasComment: v.hasComment,
             singleTitle: v.singleTitle,
             singleCode: v.singleCode,
             salesPrice: v.salesPrice,
@@ -226,8 +227,7 @@ var comments = function(req, res, next) {
     console.log(typeof req.body.commentsJson)
     util.fetchAPI("commentsOrderById", {
         memberId: user.memberId,
-        commentsJson: "[{rate:4,content:xxx,isOpen:1,itemId:fc6804de524365000152445681eb0048}]"
-        //JSON.stringify(req.body.commentsJson)
+        commentsJson: JSON.stringify(req.body.commentsJson)
     }).then(function(resp) {
         console.log(resp)
         if (resp.returnCode === 0) {
