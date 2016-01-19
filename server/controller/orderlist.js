@@ -11,6 +11,7 @@ function formatComment(object) {
         var itemList = child.itemList.map((v,k)=>{
             return {
                 discount: v.discount,
+                hasComment: v.hasComment,
                 id: v.id,
                 logisticsFee: v.logisticsFee,
                 orderId: v.orderId,
@@ -43,7 +44,10 @@ function formatComment(object) {
             orderStatus: child.orderStatus,
             payableFee: child.payableFee,
             paymentFee: child.paymentFee,
+            payType: child.payType,
             promoFee: child.promoFee,
+            promoName: child.promoName,
+            promoType: child.promoType,
             salesTotalFee: child.salesTotalFee,
             sendWarehouseId: child.sendWarehouseId,
             sendWarehouseName: child.sendWarehouseName,
@@ -60,7 +64,7 @@ var orderList = function(req, res,next) {
     var status = req.query.status !== undefined ? Number(req.query.status) : id ;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
-    var pageSize = 5;
+    var pageSize = 2;
     bluebird.props({
         orderByUser: util.fetchAPI("orderByUser", {
             memberId: user.memberId,
@@ -71,7 +75,6 @@ var orderList = function(req, res,next) {
         },false),
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp) {
-        console.log(resp)
         if (resp.orderByUser.returnCode === 0 && resp.timestamp.returnCode === 0){
             var orders = new Array(5),
                 order = {},
