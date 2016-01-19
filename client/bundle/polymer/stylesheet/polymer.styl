@@ -76,12 +76,29 @@
         }
         .slide-tabs-content{
             background:#FFF;
+            position:relative;
+            .slide-tabs-item{
+                position:absolute;
+                top:0;
+                left:0;
+                z-index:20;
+                opacity:0;
+                background:#FFF;
+                overflow-y:auto;
+                &.active{
+                    position:static;
+                    z-index:1;
+                    opacity:1;
+                    transition:opacity .3s ease-in;
+                }
+            }
         }
     }
     
     .rightCon{
         float:none;
         width:100%;
+        height:100%;
         padding:px2rem(10);
         box-sizing:border-box;
         &>div{

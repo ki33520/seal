@@ -3,6 +3,7 @@
 var _ = require("lodash");
 var util = require("../lib/util");
 var CartApp = util.getSharedComponent("cart");
+var config = require("../lib/config.js");
 
 function formatCarts(originalCarts) {
     let carts = [];
@@ -34,7 +35,7 @@ function formatCarts(originalCarts) {
 
             _.each(promoList.cartProductList,function(productList,k){
                 var goods = {
-                    imageUrl:productList.imageUrl,
+                    imageUrl:config.imgServer + productList.imageUrl,
                     id:productList.singleCode,
                     title:productList.title,
                     props:productList.props,
@@ -68,7 +69,7 @@ var cart = function(req, res, next) {
 
     util.fetchAPI("cartByUser",{
         memberId:user.memberId
-    },true).then(function(resp){
+    }).then(function(resp){
 
         if(resp.returnCode === 0){
             let carts = formatCarts(resp.object);
@@ -174,9 +175,32 @@ var fetchCart = function(req, res, next) {
     });
 }
 
+var queryCart = function(req, res, next) {
+    let id = req.body.id;
+    let number = req.body.number;
+
+    util.fetchAPI('queryCart', {
+        singleCodes: id,
+        qtys: number
+    }).then(function(resp) {
+        if(resp.returnCode === 0){
+            let carts = formatCarts(resp.object);
+            res.json({
+                isFetched: true,
+                carts
+            })
+        }
+    }, function() {
+        res.json({
+            apiResponded: false
+        })
+    })
+}
+
 module.exports = {
     cart: cart,
     updateCart: updateCart,
+    queryCart:queryCart,
     deleteCart:deleteCart,
     fetchCart:fetchCart
 };

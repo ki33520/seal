@@ -38,7 +38,7 @@ export function urlParam(param){
     return paramStr.join("&");
 }
 
-export function getSignatureByParam(param,appKey){
+export function getSignatureByParam(param){
         var keys = _.keys(param);
         var sortedKeys = _.sortBy(keys,function(key){ 
             return key
@@ -49,7 +49,7 @@ export function getSignatureByParam(param,appKey){
                 paramList.push(key + "=" + param[key])
             }
         })
-        paramList.push("appKey=" + appKey)
+        paramList.push("appKey=" + "0236fe7659864b1b881cb6e94709de3f")
          // console.log("paramList",paramList)
         paramList = paramList.join("&")
         return md5(paramList)

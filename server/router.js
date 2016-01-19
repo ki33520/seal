@@ -14,7 +14,7 @@ var mainController = require("./controller/main");
 router.get("/logingateway",require("./controller/authorize").loginGateway);
 router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
-router.get("/", require("./controller/index.js").index);
+router.get("/",mainController.staticize,require("./controller/index.js").index);
 router.get("/channel", require("./controller/index.js").channel);
 router.get("/searchhotwords", require("./controller/index.js").searchHotWords);
 router.post("/searchassociate", require("./controller/index.js").searchAssociate);
@@ -23,7 +23,7 @@ router.get("/mobileonly/:id", require("./controller/topic.js").mobileOnly);
 router.get("/finest/:id", require("./controller/topic.js").finest);
 router.get("/stockup/:id", require("./controller/topic.js").stockup);
 router.get("/flashbuy/:id", require("./controller/flashbuy.js"));
-router.get("/polymer", require("./controller/polymer").polymer);
+router.get("/polymer",mainController.staticize,require("./controller/polymer").polymer);
 router.get("/categorybrands", require("./controller/polymer").categoryBrands);
 router.get("/allbrands", require("./controller/polymer").allBrands);
 router.get("/allorigins", require("./controller/polymer").allOrigins);
@@ -46,6 +46,8 @@ router.get("/cart",mainController.requireAuthorize,require("./controller/cart").
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
 router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
 router.post("/fetchCart", mainController.requireAuthorize,require("./controller/cart").fetchCart);
+router.post("/queryCart",require("./controller/cart").queryCart);
+
 router.get("/goodcomment/:id", require("./controller/goodcomment").index);
 router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 

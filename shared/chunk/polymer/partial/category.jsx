@@ -10,16 +10,16 @@ class Category extends Component{
     renderCategory(category){
         let children = category.children.map((child,i)=>{
             return (
-            <a href="/" className="cg" key={i}>
-                <img src="/client/asset/images/965_G_1445533723842.gif"/>
-                <div>{child.fullName}</div>
+            <a href="/goodlist" className="cg" key={i}>
+                <img src={child.imageUrl}/>
+                <div>{child.name}</div>
             </a>
             )
         })
         return (
             <div className="rightCon">
                 <a href="#" className="ad">
-                    <img src="/client/asset/images/pic24.gif"/>
+                    <img src={category.imageUrl}/>
                 </a>
                 <div className="content">
                     <div className="title">热门分类</div>

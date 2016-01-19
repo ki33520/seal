@@ -4,7 +4,8 @@ import {combineReducers} from "redux";
 import _ from "lodash";
 import {START_UPDATE_CART,FINISH_UPDATE_CART,
     FINISH_DELETE_CART,FINISH_TOGGLE_CART,
-FINISH_TOGGLE_ALL,FINISH_TOGGLE_NOT} from "./action.es6";
+FINISH_TOGGLE_ALL,FINISH_TOGGLE_NOT,
+FINISH_QUERY_CART} from "./action.es6";
 
 function cartByUser(state={},action){
     switch(action.type){
@@ -87,6 +88,14 @@ function cartByUser(state={},action){
                     goods.checked=false
                 })
             })
+            return Object.assign({},state,{
+                carts
+            });
+        case FINISH_QUERY_CART:
+            var {cartIndex} = action.param;
+            var carts = state.carts.slice();
+            carts[cartIndex] = action.res.carts;
+
             return Object.assign({},state,{
                 carts
             });

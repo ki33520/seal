@@ -36,10 +36,10 @@ function search(state={},action){
                 associateWordFetching:true
             });
         case RESPONSE_ASSOICATEWORD:
-            const associatewords = action.res.result;
+            const associateWords = action.res.result;
             const associateWordFetched = action.res.associateWordFetched;
             return Object.assign({},state,{
-                associatewords,
+                associateWords,
                 associateWordFetched,
                 associateWordFetching:false
             })
@@ -90,24 +90,30 @@ function index(state={},action){
                 newRecommendFetching:false
             })
         case REQUEST_CHANNEL:
+            channels = channels.map((channel)=>{
+                if(channel.id === action.param.id){
+                    channel.channelFetching = true
+                    channel.channelFetched = false
+                }
+                return channel
+            })
             return Object.assign({},state,{
-                channelFetched:false,
-                channelFetching:true
+                channels
             });
         case RESPONSE_CHANNEL:
             const {channelFetched,result} = action.res
-            if(channelFetched){
-                channels = channels.map((channel)=>{
-                    if(channel.id === action.param.id){
+            channels = channels.map((channel)=>{
+                if(channel.id === action.param.id){
+                    if(channelFetched){
                         channel.floors = result
                     }
-                    return channel
-                })
-            }
+                    channel.channelFetched = channelFetched
+                    channel.channelFetching = false
+                }
+                return channel
+            })
             return Object.assign({},state,{
                 channels,
-                channelFetched,
-                channelFetching:false
             })
         default:
             return state
