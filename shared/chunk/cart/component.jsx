@@ -7,15 +7,18 @@ import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
-import {updateCart,toggleCart,toggleAll,deleteCart} from "./action.es6";
+import {updateCart,toggleCart,toggleAll,deleteCart,queryCart} from "./action.es6";
 import Checkbox from "../../component/form/checkbox.jsx";
+import {urlParam,base64Encode} from "../../lib/util.es6";
 
 
 class Cart extends Component {
-    checkout(cartIndex,e){
-        e && e.preventDefault();
-        const checkoutForm = ReactDOM.findDOMNode(this.refs["checkoutForm"+cartIndex]);
-        checkoutForm.submit();
+    checkout(cart,cartIndex){
+        let queryParam = base64Encode(urlParam({
+            itemIds:cart.itemIds.join(","),
+            buyeds:cart.buyeds.join(",")
+        }));
+        window.location.assign(`/confirmorder/${queryParam}`)
     }
 
     handleChangeBuyed(goods,cartIndex,number) {
@@ -23,11 +26,10 @@ class Cart extends Component {
         if(goods.checked===false){
             return false;
         }
-        dispatch(updateCart({
+        dispatch(queryCart({
             id:goods.id,
             number,
-            cartIndex,
-            isCumulation:false
+            cartIndex
         }));
     }
 
@@ -95,26 +97,19 @@ class Cart extends Component {
 
     renderRow(rows,cartIndex,groupIndex){
         let goods = [];
-
+        let manjian = classNames("manjian",{
+            hide:!rows.promoName
+        });
         rows.productList.map((item,k)=>{
             goods.push(this.renderGoods(item,cartIndex,groupIndex,k))
         })
 
         return(
             <div className="J_item" key={"row-" + groupIndex}>
-                <div className="manjian"><em>满减</em>{rows.promoName}</div>
+                <div className={manjian}><em>满减</em>{rows.promoName}</div>
                 {goods}
             </div>
         );
-    }
-
-    renderForm(cart,cartIndex){
-        return (
-            <form action="/confirmorder" method="GET" ref={"checkoutForm"+cartIndex}>
-                <input type="hidden" name="itemIds" value={cart.itemIds.join(",")}/>
-                <input type="hidden" name="buyeds" value={cart.buyeds.join(",")}/>
-            </form>
-        )
     }
 
     renderTips(money){
@@ -137,7 +132,7 @@ class Cart extends Component {
             )
         }
  
-        return '';
+        return null;
     }
 
     renderGroup(carts){
@@ -150,8 +145,10 @@ class Cart extends Component {
             let btnClass = classNames({
                 "btn_buy":true,
                 "unable_buy":cart.itemIds.length===0
+            });
+            let depot = classNames("depot_bot",{
+                hide:!cart.promoName
             })
-
             return(
                 <div className="onlyList clearfix" key={"cart-" + i}>
                     <div className="J_store clearfix">
@@ -160,7 +157,7 @@ class Cart extends Component {
                         onChange={this.toggleCartItemsChecked.bind(this,i)}/>
                         <div className="depot">
                             <span>{cart.warehouseName}</span>
-                            <div className="depot_bot"><em></em>{cart.promoName}</div>
+                            <div className={depot}><em></em>{cart.promoName}</div>
                         </div>
                     </div>
                     {rows}
@@ -177,11 +174,10 @@ class Cart extends Component {
                                 <span>总计(不含运费、税金)：<em>&yen;{cart.pay}</em></span>
                             </p>
                             <p>
-                                <input type="button"  className={btnClass} value="结算" onClick={this.checkout.bind(this,i)}/>
+                                <input type="button"  className={btnClass} value="结算" onClick={this.checkout.bind(this,cart)}/>
                             </p>
                         </div>
                         {this.renderTips(cart.pay)}
-                        {this.renderForm(cart,i)}
                     </div>
                 </div>
             )
