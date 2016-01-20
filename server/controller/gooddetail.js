@@ -131,8 +131,9 @@ var fetchGood = function(req, res, next) {
 var addCart = function(req, res, next) {
     var itemId = req.query.itemId;
     var buyed = req.query.buyed;
+    var user = req.session.user;
     util.fetchAPI("updateCart", {
-        memberId:"fc6804de51c482730151e8ec0a080023",
+        memberId:user.memberId,
         singleCode: itemId,
         qty:buyed,
         figureUpFlag:true,
