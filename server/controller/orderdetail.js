@@ -230,7 +230,6 @@ var comments = function(req, res, next) {
         commentsJson: req.body.commentsJson
         //'[{rate:5,content:nice,isOpen:1,itemId:S732000000195}]'
     }).then(function(resp) {
-        console.log(resp)
         if (resp.returnCode === 0) {
             res.json({
                 isChanged: true,
