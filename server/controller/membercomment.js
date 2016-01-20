@@ -89,7 +89,7 @@ var showComment = function(req, res, next) {
                 showComment
             });
         }else{
-            next(new Error(ret.message));
+            next(new Error(ret.showComment.message));
         }
     });
 }
