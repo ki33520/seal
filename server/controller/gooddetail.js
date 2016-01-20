@@ -39,7 +39,7 @@ var goodDetail = function(req, res, next) {
                 initialState: initialState
             })
         } else {
-            next(new Error(ret.msg));
+            next(new Error(ret.message));
         }
     })
 }
@@ -121,7 +121,7 @@ var fetchGood = function(req, res, next) {
         } else {
             res.json({
                 isFetched:false,
-                errMsg:ret.msg
+                errMsg:ret.message
             })
         }
     })
@@ -132,25 +132,32 @@ var addCart = function(req, res, next) {
     var itemId = req.query.itemId;
     var buyed = req.query.buyed;
     var user = req.session.user;
-    util.fetchAPI("updateCart", {
-        memberId:user.memberId,
-        singleCode: itemId,
-        qty:buyed,
-        figureUpFlag:true,
-        channel: "Mobile"
-    }).then(function(ret) {
-        // console.log('ret',ret)
-        if (ret.returnCode === 0) {
-            res.json({
-                cartAdded:true
-            })
-        } else {
-            res.json({
-                cartAdded:false,
-                errMsg:ret.msg
-            })
-        }
-    })
+    if(user){
+        util.fetchAPI("updateCart", {
+            memberId:user.memberId,
+            singleCode: itemId,
+            qty:buyed,
+            figureUpFlag:true,
+            channel: "Mobile"
+        }).then(function(ret) {
+            // console.log('ret',ret)
+            if (ret.returnCode === 0) {
+                res.json({
+                    cartAdded:true
+                })
+            } else {
+                res.json({
+                    cartAdded:false,
+                    errMsg:ret.message
+                })
+            }
+        })
+    }else{
+        res.json({
+            cartAdded:false,
+            errMsg:"请先登录"
+        })
+    }
 }
 
 var cartCount = function(req,res,next){
@@ -167,7 +174,7 @@ var cartCount = function(req,res,next){
             } else {
                 res.json({
                     isFetched:false,
-                    errMsg:ret.msg
+                    errMsg:ret.message
                 })
             }
         })
@@ -185,27 +192,33 @@ var toggleCollected = function(req,res,next){
     var productCode = req.query.productCode
     var status = req.query.status
     if(user){
-        util.fetchAPI(status?"removeCollected":"addCollected", {
-            memberId:user.memberId,
-            singleCode:singleCode,
-            productCode:productCode
-        }).then(function(ret) {
+        var toggleCollectedRequest = (status === "true")?util.fetchAPI("addCollected",{
+                memberId:user.memberId,
+                singleCode:singleCode,
+                productCode:productCode,
+                inserter:user.nickName
+            }):util.fetchAPI("removeCollected",{
+                memberId:user.memberId,
+                singleCode:singleCode,
+                operatorName:user.nickName
+            })
+        toggleCollectedRequest.then(function(ret) {
             if (ret.returnCode === 0) {
                 res.json({
-                    result:ret.object,
+                    result:true,
                     isToggled:true
                 })
             } else {
                 res.json({
                     isToggled:false,
-                    errMsg:ret.msg
+                    errMsg:ret.message
                 })
             }
         })
     }else{
         res.json({
-            isToggled:true,
-            result:null
+            isToggled:false,
+            errMsg:"请先登录"
         })
     }
 }
@@ -226,7 +239,7 @@ var isCollected = function(req,res,next){
             } else {
                 res.json({
                     isFetched:false,
-                    errMsg:ret.msg
+                    errMsg:ret.message
                 })
             }
         })

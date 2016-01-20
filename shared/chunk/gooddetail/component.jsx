@@ -41,7 +41,7 @@ class GoodDetail extends Component{
     }
     componentDidMount(){
         const {fetchCartCount,fetchIsCollected} = this.props;
-        const {selectedItem,attrs} = this.props.goodById.good
+        const {selectedItem,attrs,code} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             let selectedAttr = _.findWhere(attrs,{attrName:k})
             let selectedAttrValue = _.findWhere(selectedAttr.attrValues,{
@@ -50,7 +50,9 @@ class GoodDetail extends Component{
             this.handleAttrChange(selectedAttr,selectedAttrValue)
         }) 
         fetchCartCount()
-        fetchIsCollected()
+        fetchIsCollected({
+            singleCode:code
+        })
 
         dom.bindEvent(window,"scroll",(e)=>{
             var scrollTop = dom.scrollTop(window);
@@ -125,7 +127,7 @@ class GoodDetail extends Component{
         const {toggleCollected} = this.props;
         const {good,isCollected} = this.props.goodById;
         toggleCollected({
-            productCode:good.groupCode,
+            productCode:good.productCode,
             singleCode:good.code,
             status:!isCollected
         });
@@ -206,7 +208,7 @@ class GoodDetail extends Component{
                         <dd><Promotions promotions={good.marketing}/></dd>
                     </dl>
                 </div>
-                 <a href="/goodcomment/1" className="goComment clearfix">
+                 <a href="javascript:void(null)" className="goComment clearfix">
                     <div className="left"><i className="iconfont icon-comment"></i>用户评论<em>(29)</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>

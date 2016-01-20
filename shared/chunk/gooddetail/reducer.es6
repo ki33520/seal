@@ -44,7 +44,6 @@ function goodById(state={},action){
                 isFetching:false,
                 isFetched:action.res.isFetched
             })
-
         case START_TOGGLE_COLLECTED:
             return Object.assign({},state,{
                 isToggling:true
