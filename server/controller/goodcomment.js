@@ -26,12 +26,13 @@ var index = function(req, res, next) {
     var goodId = req.params.id;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var pageSize = 5;
+    console.log('goodId',goodId)
     bluebird.props({
-        allComment: util.fetchAPI("goodCommentByUser", {
+        allComment: util.fetchAPI("commentByGood", {
             productCode: goodId,
             pageIndex: pageIndex,
             pageSize: pageSize
-        },true)
+        })
     }).then(function(ret) {
         if (ret.allComment.returnCode === 0) {
             var allComment = {},

@@ -117,6 +117,13 @@ export function toggleCollected(param){
     return (dispatch)=>{
         dispatch(startToggleCollected(param));
         apiRequest("/togglecollected",param).then((res)=>{
+            let alertMsg = "";
+            if(res.isToggled){
+                alertMsg = param.status ? "添加收藏成功!":"取消收藏成功!"
+                dispatch(alert(alertMsg,3000))
+            }else{
+                dispatch(alert(res.errMsg,3000))
+            }
             dispatch(finishToggleCollected(param,res));
         })
     }
@@ -140,7 +147,7 @@ function responseIsCollected(param,res){
 export function fetchIsCollected(param){
     return (dispatch)=>{
         dispatch(requestIsCollected(param))
-        return apiRequest("/iscollected").then((res)=>{
+        return apiRequest("/iscollected",param).then((res)=>{
             dispatch(responseIsCollected(param,res))
         })
     }
