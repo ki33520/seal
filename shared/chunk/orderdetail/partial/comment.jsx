@@ -48,6 +48,7 @@ class Comment extends Component{
            this.props.saveCommentChanging === true){
             if(nextProps.saveCommentChanged === true){
                 dispatch(alert(nextProps.msg,2000));
+                setTimeout(()=>window.history.back(),2500);
             }else{
                 dispatch(alert(nextProps.msg,2000));
             }

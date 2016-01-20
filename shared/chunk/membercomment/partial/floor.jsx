@@ -2,16 +2,20 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
+import moment from "moment";
 
 class Floor extends Component{
     renderNode(list){
         return list.map((child,i)=>{
             const key = "comment-" + i;
+            const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:MM:SS");
             var stars = [],
                 imagesList = child.imageUrlList,
                 picList = [];
-            for(let i=0;i<imagesList.length;i++){
-                picList.push(<li key={i}><img src={imagesList[i]} /></li>);
+            if(imagesList){
+                picList = imagesList.map((v,k)=>{
+                    return <li key={i}><img src={imagesList[i]} /></li>;
+                });
             };
             const listclass = classNames({
                 "pic-list": true,
@@ -30,18 +34,20 @@ class Floor extends Component{
                 <li key={key}>
                     <div className="product">
                         <div className="col col-left">
-                            <img src={imagesList[0]} />
+                            <a href={"/gooddetail/"+child.singleCode}><img src={child.singleImage} /></a>
                         </div>
                         <div className="col col-right">
-                            <div className="origin"><img src={child.originImageUrl} />{child.origin}</div>
-                            <div className="title">{child.productName}</div>
+                            <div className="title">{child.singleTitle}</div>
+                            <div className="price">
+                                <span><i>￥</i>{child.salesPrice}</span>
+                            </div>
                         </div>
                     </div>
                     <div className="stars-culm">
-                        <div className={"stars stars-"+child.stars}>
+                        <div className={"stars stars-"+child.rate}>
                             {stars}
                         </div>
-                        <div className="date">{child.createdAt}</div>
+                        <div className="date">{crtTime}</div>
                     </div>
                     <div className="content">{child.content}</div>
                     <ul className={listclass}>
