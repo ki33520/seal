@@ -61,7 +61,6 @@ var updatePassword = function(req, res, next) {
     var oldPassword = req.body.oldPassword;
     var password = req.body.password;
     var repeatPassword = req.body.repeatPassword;
-    console.log(req.body)
     bluebird.props({
         updatePasswordByUser: util.fetchAPI("updatePasswordByUser", {
             memberId: user.memberId,
