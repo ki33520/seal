@@ -23,7 +23,7 @@ var index = function(req, res, next) {
             })
             return channels
         } else {
-            next(new Error(ret.msg))
+            next(new Error(ret.message))
         }
     }).then(function(channels) {
         util.fetchAPI("floorsByChannel", {
@@ -48,7 +48,7 @@ var index = function(req, res, next) {
                     res.send(html)
                 });
             } else {
-                next(new Error(ret.msg))
+                next(new Error(ret.message))
             }
         })
     })

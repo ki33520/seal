@@ -78,3 +78,5 @@ export function fetchAssociateKeywords(param){
         })
     }
 }
+
+export {changeField} from "../common/action.es6";

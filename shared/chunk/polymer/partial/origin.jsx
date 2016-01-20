@@ -12,7 +12,7 @@ class Origin extends Component{
         let {origins} = this.props.allOrigin
         if(origins){
             return origins.map((origin,i)=>{
-                return <a href="#" key={i}><img src={origin.backgroundImageUrl}/></a>
+                return <a href={"/goodlist/"+origin.name} key={i}><img src={origin.backgroundImageUrl}/></a>
             })
         }
         return null        

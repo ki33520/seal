@@ -4,8 +4,10 @@ import {
     REQUEST_CATEGORYBRANDS,RESPONSE_CATEGORYBRANDS,
     REQUEST_ALLBRANDS,RESPONSE_ALLBRANDS,
     REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS,
-    REQUEST_HOTWORD,RESPONSE_HOTWORD
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
 } from "./constants.es6";
+import {CHANGE_FIELD} from "../common/constant.es6";
 
 function allCategory(state={},action){
     switch(action.type){
@@ -76,6 +78,11 @@ function allOrigin(state={},action){
 
 function search(state={},action){
     switch(action.type){
+        case CHANGE_FIELD:
+            const {name,value} = action;
+            return Object.assign({},state,{
+                [name]:value
+            });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{
                 hotwordFetched:false,
@@ -88,6 +95,19 @@ function search(state={},action){
                 hotwords,
                 hotwordFetched,
                 hotwordFetching:false
+            })
+        case REQUEST_ASSOICATEWORD:
+            return Object.assign({},state,{
+                associateWordFetched:false,
+                associateWordFetching:true
+            });
+        case RESPONSE_ASSOICATEWORD:
+            const associateWords = action.res.result;
+            const associateWordFetched = action.res.associateWordFetched;
+            return Object.assign({},state,{
+                associateWords,
+                associateWordFetched,
+                associateWordFetching:false
             })
         default:
             return state;

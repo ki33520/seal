@@ -13,9 +13,16 @@
             width:px2rem(13);
             height:px2rem(17);
             display:block;
+            visibility:hidden;
+            opacity:0;
             color:#999;
             vertical-align:middle;
             top:px2rem(5);
+            &.active{
+                visibility:visible;
+                opacity:1;
+                transition:opacity .3s ease-in;
+            }
         }
     }
     .searchOut{

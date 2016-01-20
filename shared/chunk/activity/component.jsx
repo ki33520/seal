@@ -4,7 +4,6 @@ import classNames from "classnames";
 import util from "../../lib/util.es6";
 
 import Refresher from "../../component/refresher.jsx";
-import GoTop from "../../component/gotop.jsx";
 import Icon from "../../component/icon.jsx";
 import Header from "../common/header.jsx";
 import GoodItem from "./partial/goodItem.jsx";
@@ -80,7 +79,6 @@ class Activity extends React.Component{
                 </div>
                 <ShareBox visible={this.state.shareActive} cancelShare={this.cancelShare.bind(this)} />
                 <Refresher active={isFetching}/>
-                <GoTop />
             </div>
         )
     }

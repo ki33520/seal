@@ -49,7 +49,7 @@ class Toolbar extends Component{
                             <em>（限购{good.buyLimit}件）</em>
                         </div>
                         <div className="good-buyed">
-                        <NumberPicker value={buyed} onChange={handleBuyedChanged}/>
+                        <NumberPicker value={buyed} onChange={handleBuyedChanged} maximum={good.buyLimit}/>
                         </div>
                     </div>
                     <a href="javascript:void(0);" onClick={handleConfirm} className="goodsSureBtn">确定</a>

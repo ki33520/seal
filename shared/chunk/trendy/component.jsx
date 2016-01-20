@@ -8,10 +8,10 @@ import {fetchHotWord} from "./action.es6";
 
 class TrendyRouter extends Component{
     handleSceneChange(currentScene,prevScene){
-        const {dispatch} = this.props
+        const {fetchHotWord} = this.props
         switch(currentScene){
             case "search":
-                dispatch(fetchHotWord());
+                fetchHotWord();
                 break;
         }
     }
