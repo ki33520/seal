@@ -178,7 +178,7 @@ class Slidable extends Component{
             return;
         }
         if((Date.now() - this.startTouchTime) < 300){
-            return;
+            // return;
         }
         let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
         if(this.moveDirection && this.moveDirection !== moveDirection){
