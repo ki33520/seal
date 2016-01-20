@@ -68,7 +68,13 @@ class UpdateBasic extends Component{
         var obj = Object.assign({},this.state,object);
         object.max = (new Date(obj.year,obj.month, 0)).getDate();
         this.setState(object);
-        const birthday = obj.year+"-"+obj.month+'-'+obj.day;
+        let birthday;
+        if(obj.year === "-1" || obj.month === "-1" || obj.day === "-1"){
+            birthday = null;
+        }else{
+            birthday = obj.year+"-"+obj.month+'-'+obj.day;
+        }
+        
         dispatch(changeField(fieldName,birthday));
     }
     render(){

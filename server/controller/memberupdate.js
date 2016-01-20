@@ -33,13 +33,16 @@ var updateBasic = function(req, res, next) {
     var nickName = req.body.nickName;
     var gender = req.body.gender;
     var birthday = req.body.birthday;
+    var fetchObj = {
+        memberId: user.memberId,
+        nickName: nickName,
+        gender: gender
+    };
+    if(birthday){
+        fetchObj.birthday = birthday;
+    }
     bluebird.props({
-        updateBasicByUser: util.fetchAPI("updateBasicByUser", {
-            memberId: user.memberId,
-            nickName: nickName,
-            gender: gender,
-            birthday: birthday
-        },false)
+        updateBasicByUser: util.fetchAPI("updateBasicByUser",fetchObj,false)
     }).then(function(ret) {
         if (ret.updateBasicByUser.returnCode === 0) {
             var basicInfo = ret.updateBasicByUser.object;
