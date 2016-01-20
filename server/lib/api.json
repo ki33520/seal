@@ -231,6 +231,13 @@
             "production": "order.hwg.youayun.cn"
         }
     },
+    "orderWaitComments": {
+        "uri": "/comments/v1/findMobileWaitComments",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
     "orderById": {
         "uri": "/order/v1/findOrderDetail",
         "baseURL": {
@@ -331,7 +338,7 @@
         "uri": "/sns/address/v1/findProvinceMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
-            "production": "marketing.hwg.youayun.cn"
+            "production": "http://sns.e9448.com"
         }
     },
     "findCity": {
