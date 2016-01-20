@@ -98,7 +98,7 @@ var util = {
             return false
         }
         if(stat.isFile()){
-            var expire = (60000 * 3)
+            var expire = (60000 * 10)
             if((Date.now() - stat.atime.getTime()) > expire){
                 console.log('deprecate',Date.now() - stat.atime.getTime())
                 return false
