@@ -23,34 +23,36 @@ var index = function(req, res, next) {
             })
             return channels
         } else {
-            next(new Error("request channel fail"))
+            return next(new Error(ret.message))
         }
     }).then(function(channels) {
-        util.fetchAPI("floorsByChannel", {
-            channel: "Mobile",
-            manageId: channels[0].id,
-            start: 0,
-            limit: 3
-        }).then(function(ret) {
-            if (ret.returnCode === 0) {
-                channels[0].floors = floorFilter(ret.object)
-                var initialState = {
-                    channels: channels
-                };
-                var markup = util.getMarkupByComponent(Index({
-                    initialState: initialState
-                }));
-                res.render("index", {
-                    markup: markup,
-                    initialState: initialState
-                }, function(err, html) {
-                    util.writePage(req.originalUrl, html)
-                    res.send(html)
-                });
-            } else {
-                next(new Error("request floors fail"))
-            }
-        })
+        if(channels && channels.length > 0){
+            util.fetchAPI("floorsByChannel", {
+                channel: "Mobile",
+                manageId: channels[0].id,
+                start: 0,
+                limit: 3
+            }).then(function(ret) {
+                if (ret.returnCode === 0) {
+                    channels[0].floors = floorFilter(ret.object)
+                    var initialState = {
+                        channels: channels
+                    };
+                    var markup = util.getMarkupByComponent(Index({
+                        initialState: initialState
+                    }));
+                    res.render("index", {
+                        markup: markup,
+                        initialState: initialState
+                    }, function(err, html) {
+                        util.writePage(req.originalUrl, html)
+                        res.send(html)
+                    });
+                } else {
+                    return next(new Error(ret.message))
+                }
+            })
+        }
     })
 };
 
@@ -222,7 +224,6 @@ var searchAssociate = function(req, res, next) {
     util.fetchAPI("fetchAssociateKeywords", {
         searchKey: keyword
     }).then(function(ret) {
-        console.log('ret')
         if (ret.returnCode === 0) {
             var associateWords = ret.object
             associateWords = _.map(associateWords, function(associateWord) {

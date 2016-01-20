@@ -17,10 +17,10 @@ class Floor extends Component{
         if(this.props.active){
             const {fetchNewRecommend,fetchSingleRecommend} = this.props;
             const {newRecommend,singleRecommend} = this.props.channel.floors
-            if(newRecommend.goods === null){
+            if(newRecommend && newRecommend.goods === null){
                 fetchNewRecommend({activityId:newRecommend.id},this.props.channel.id)
             }
-            if(singleRecommend.goods === null){
+            if(singleRecommend && singleRecommend.goods === null){
                 fetchSingleRecommend({activityId:singleRecommend.id},this.props.channel.id)
             }
         }
@@ -210,7 +210,7 @@ class Floor extends Component{
     }
     renderActivityThree(){
         let {activityThree} = this.props.channel.floors;
-        if(activityThree){
+        if(activityThree && activityThree.length > 0){
             return (
                 <ul className="clearfix">
                     <li>
