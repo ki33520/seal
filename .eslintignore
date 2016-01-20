@@ -2,6 +2,7 @@ node_modules/
 task/
 client/**/dist/
 client/**/build/
+client/page/
 vendor/
 .git/
 client/__coverage__/
