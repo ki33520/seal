@@ -148,7 +148,7 @@ class GoodListApp extends React.Component{
 
     render(){
         const {search,filters,goods,isFetching} = this.props;
-        const {keyword,isHaveGoods} = search;
+        const {searchKey,isHaveGoods} = search;
         const {categoryNames,brandNames,areaNames} = filters;
         const goodList = [];
  
@@ -156,10 +156,10 @@ class GoodListApp extends React.Component{
             return (
                 <div className="empty noPadTop">
                     <Header>
-                        <span className="title">{keyword}</span>
+                        <span className="title">{searchKey}</span>
                     </Header>
                     <img src="/client/asset/images/empty_search.png" />
-                    <div className="tips">抱歉，没有找到与“{keyword}”相关的商品，<br/>您可以换个词再试试~！</div>
+                    <div className="tips">抱歉，没有找到与“{searchKey}”相关的商品，<br/>您可以换个词再试试~！</div>
                 </div>
             )
         }
@@ -189,7 +189,7 @@ class GoodListApp extends React.Component{
                 <div className={classes}>
                     <Header>
                         <div className={searchBox}>
-                            <input type="search" defaultValue={keyword} 
+                            <input type="search" defaultValue={searchKey} 
                             onClick={this.props.changeScene.bind(this,"search")}/>
                             <span></span>
                         </div>

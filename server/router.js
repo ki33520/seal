@@ -33,8 +33,7 @@ router.get("/fetchgood/:id", require("./controller/gooddetail").fetchGood);
 router.get("/addcart", require("./controller/gooddetail").addCart);
 router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
-router.get("/goodlist/:keyword", require("./controller/goodlist").goodList);
-router.post("/goodlist", require("./controller/goodlist").sortList);
+router.get("/search", require("./controller/goodlist"));
 
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);

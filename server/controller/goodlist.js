@@ -6,7 +6,7 @@ var config = require("../lib/config.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 
 function filterGoodsList(result){
-    let list = [];
+    var list = [];
  
     result && result.map((v)=>{
         list.push({
@@ -27,7 +27,7 @@ function filterGoodsList(result){
 }
 
 function filterNames(result){
-    let list = [];
+    var list = [];
     result && result.map((item,i)=>{
         list.push({
             id:item.id,
@@ -39,53 +39,86 @@ function filterNames(result){
     return list;
 }
 
-var goodList = function(req, res, next) {
-    let keyword = req.params.keyword;
-    let pageIndex = 1;
-    let pageSize = 10;
-    let sortType=1;
-    let sortViewType=false;
-    let isHaveGoods=false;
+var search = function(req, res, next) {
+    var query = req.query;
+    var pageIndex = query.pageIndex || 1;
+    var pageSize = query.pageSize || 10;
+    var keyword = query.k;
+    var options = {
+        searchKey:keyword,
+        currentPage:pageIndex,
+        sortType:1,
+        sortViewType:false,
+        pageSize
+    };
+    
+    if(query.sortType !== undefined){
+        options.sortType = query.sortType;
+    }
+ 
+    if(query.sortViewType!== undefined){
+        options.sortViewType = query.sortViewType;
+    }
+
+    if(query.isHaveGoods!== undefined){
+        options.isHaveGoods = query.isHaveGoods;
+    }
+
+    if(query.brandNames){
+        options.brandName = query.brandNames;
+    }
+
+    if(query.categoryNames){
+        options.categoryName = query.categoryNames;
+    }
+
+    if(query.areaNames){
+        options.sourceAreas = query.areaNames;
+    }
+
+    var params = Object.assign({},options);
+ 
     bluebird.props({
-        goods: util.fetchAPI("fetchGoodsList", {
-            searchKey:keyword,
-            currentPage:pageIndex,
-            sortType,
-            sortViewType,
-            isHaveGoods,
-            pageSize
-        })
+        goods: util.fetchAPI("fetchGoodsList", options)
     }).then(function(resp) {
         if (resp.goods.returnCode === 0) {
-            let goods = resp.goods.object;
-            let categoryNames = filterNames(goods.categoryNames);
-            let brandNames = filterNames(goods.brandNames);
-            let areaNames = filterNames(goods.areaNames);
-            let totalPage = Math.ceil(goods.totalsNum/pageSize);
+            var goods = resp.goods.object;
+            var list = filterGoodsList(goods.cbls);
+            
+            if(req.xhr===true){
+                res.json({
+                    goods:list,
+                    isFetching:false
+                });
+            }else{
+                var categoryNames = filterNames(goods.categoryNames);
+                var brandNames = filterNames(goods.brandNames);
+                var areaNames = filterNames(goods.areaNames);
+                var totalPage = Math.ceil(goods.totalsNum/pageSize);
 
-            let initialState = {
-                goods:filterGoodsList(goods.cbls),
-                filters:{categoryNames,brandNames,areaNames},
-                search:{keyword,pageIndex,pageSize,sortType,sortViewType,isHaveGoods},
-                totalPage
-            };
+                var initialState = {
+                    goods:list,
+                    filters:{categoryNames,brandNames,areaNames},
+                    search:params,
+                    totalPage:totalPage
+                };
 
-            let markup = util.getMarkupByComponent(GoodListApp({
-                initialState: initialState
-            }));
+                var markup = util.getMarkupByComponent(GoodListApp({
+                    initialState: initialState
+                }));
 
-            res.render('goodlist', {
-                markup: markup,
-                initialState: initialState
-            })
-             
+                res.render('goodlist', {
+                    markup: markup,
+                    initialState: initialState
+                })
+            }
         } else {
-            let ErrorContent = util.getSharedComponent("common","error.jsx");
-            let initialState = {
+            var ErrorContent = util.getSharedComponent("common","error.jsx");
+            var initialState = {
                 code: "500",
                 msg: resp.goods.message
             };
-            let markup = util.getMarkupByComponent(ErrorContent({
+            var markup = util.getMarkupByComponent(ErrorContent({
                 initialState: initialState
             }));
 
@@ -100,63 +133,4 @@ var goodList = function(req, res, next) {
 
 }
 
-var sortList = function(req, res, next){
-    let params = req.body;
-    let pageIndex = req.body.pageIndex || 1;
-    let pageSize = req.body.pageSize || 10;
-    let keyword = req.body.keyword;
-    let options = {
-        searchKey:keyword,
-        currentPage:pageIndex,
-        pageSize
-    };
-    
-    if(params.sortType !== undefined){
-        options.sortType = params.sortType;
-    }
- 
-    if(params.sortViewType!== undefined){
-        options.sortViewType = params.sortViewType;
-    }
-
-    if(params.isHaveGoods!== undefined){
-        options.isHaveGoods = params.isHaveGoods;
-    }
-
-    if(params.brandNames){
-        options.brandName = params.brandNames;
-    }
-
-    if(params.categoryNames){
-        options.categoryName = params.categoryNames;
-    }
-
-    if(params.areaNames){
-        options.sourceAreas = params.areaNames;
-    }
-
-    let queryParams = Object.assign({},{
-            sortType:1,
-            sortViewType:false,
-            isHaveGoods:false
-        },options);
-    bluebird.props({
-        goods: util.fetchAPI("fetchGoodsList", options)
-    }).then(function(resp) {
-        if (resp.goods.returnCode === 0) {
-            if (req.xhr === true) {
-                res.json({
-                    goods:filterGoodsList(resp.goods.object.cbls),
-                    isFetching:false
-                });
-            }else{
-                next(new Error(resp.msg));
-            }
-        }
-    });
-}
-
-module.exports = {
-    goodList:goodList,
-    sortList:sortList
-};
+module.exports = search;
