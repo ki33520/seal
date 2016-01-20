@@ -82,7 +82,7 @@ var orderList = function(req, res,next) {
     var status = req.query.status !== undefined ? Number(req.query.status) : id ;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
-    var pageSize = 5;
+    var pageSize = 2;
     var fetchString,
         fetchObj;
     if(status === 4){
@@ -106,7 +106,6 @@ var orderList = function(req, res,next) {
         orderByUser: util.fetchAPI(fetchString, fetchObj,false),
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp) {
-        console.log(resp)
         if (resp.orderByUser.returnCode === 0 && resp.timestamp.returnCode === 0){
             var orders = new Array(5),
                 order = {},
