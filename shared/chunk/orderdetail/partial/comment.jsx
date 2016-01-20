@@ -33,7 +33,7 @@ class Comment extends Component{
             const {rate,id,content,isOpen} = v;
             return {
                 rate: rate ? rate : 5,
-                content: content ? content : "",
+                content: content ? encodeURIComponent(content) : "",
                 isOpen,
                 itemId: id,
             }
