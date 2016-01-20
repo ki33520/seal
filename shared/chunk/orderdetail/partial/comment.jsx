@@ -30,12 +30,12 @@ class Comment extends Component{
         var {dispatch,order,isOpen} = this.props;
         var obj = order.itemList.map((v,k)=>{
             v.isOpen = isOpen === undefined ? 1 : isOpen;
-            const {rate,id,content,isOpen} = v;
+            const {rate,singleCode,content,isOpen} = v;
             return {
                 rate: rate ? rate : 5,
                 content: content ? encodeURIComponent(content) : "",
                 isOpen,
-                itemId: id,
+                itemId: singleCode,
             }
         })
         dispatch(saveComment("/savecomment",{
