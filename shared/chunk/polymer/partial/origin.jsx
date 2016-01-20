@@ -1,6 +1,8 @@
 'use strict';
 
 import React,{Component} from "react";
+import Loading from "../../common/loading.jsx";
+import _ from "lodash";
 
 class Origin extends Component{
     constructor(props){
@@ -16,11 +18,14 @@ class Origin extends Component{
         return null        
     }
     render(){
+        const isFetching = _.isEmpty(this.props.allOrigin) ? true
+            :this.props.allOrigin.originFetching
         return (
             <div>
                 <div className="kindArea">
                 {this.renderOrigin()}
                 </div>
+                <Loading active={isFetching}/>
             </div>
         )
     }
