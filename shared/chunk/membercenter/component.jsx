@@ -54,6 +54,26 @@ class MemberCenter extends Component{
             )
         }
     }
+    renderLogout(){
+        const {isLogined} = this.props;
+        const {logoutUrl} = this.props.api;
+        if(isLogined === false){
+            return null;
+        }else{
+            return (
+                <div className="helpList">
+                    <a className="logoutBtn" href={logoutUrl}>
+                        <dl>
+                            <dt>
+                                退出登录
+                            </dt>
+                        </dl>
+                    </a>
+                </div>
+            )
+        }
+        
+    }
     renderOrderBanner(){
         const {isLogined,countOrder} = this.props;
         if(isLogined === false){
@@ -242,6 +262,7 @@ class MemberCenter extends Component{
                         </dl>
                     </a>
                 </div>
+                {this.renderLogout()}
                 <Footer activeIndex="4" />
                 <MaskLayer visible={this.state.maskActive} handleClick={this.closeAllPopups.bind(this)}/>
                 {this.renderPopQr()}
