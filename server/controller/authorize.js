@@ -26,7 +26,7 @@ var loginGateway = function(req, res, next) {
                 res.redirect(returnUrl);
             }
         } else {
-            return next(new Error(resp.msg));
+            return next(new Error(resp.message));
         }
     }, function(err) {
         return next(new Error("api request failed"))

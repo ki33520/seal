@@ -16,13 +16,11 @@ export function ordersByParam(state={},action){
         case RECEIVE_ORDER:
             var obj = action.res;
             var status = action.param.status;
-            var newOrderList = action.res.orders[status].list;
-            var oldOrderList = state.orders[status] ? state.orders[status].list : [];
             obj.isFetching = false;
             obj.orders.forEach((v,k)=>{
                 if(v){
-                    let oldlist = state.orders[k] && state.orders[k].list ? state.orders[k].list : [];
-                    let newlist = v.list ? v.list : [];
+                    const oldlist = state.orders[k] && state.orders[k].list || [];
+                    const newlist = v.list || [];
                     v.list = _.union(oldlist,newlist);
                 }else{
                     obj.orders[k] = state.orders[k];

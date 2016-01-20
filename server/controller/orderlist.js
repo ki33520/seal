@@ -82,7 +82,7 @@ var orderList = function(req, res,next) {
     var status = req.query.status !== undefined ? Number(req.query.status) : id ;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
-    var pageSize = 5;
+    var pageSize = 2;
     var fetchString,
         fetchObj;
     if(status === 4){
