@@ -224,7 +224,6 @@ var orderDelivery = function(req, res, next) {
 }
 var comments = function(req, res, next) {
     var user = req.session.user;
-    console.log(typeof req.body.commentsJson)
     util.fetchAPI("commentsOrderById", {
         memberId: user.memberId,
         commentsJson: JSON.stringify(req.body.commentsJson)
