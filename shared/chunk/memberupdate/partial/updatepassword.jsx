@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import _ from "lodash";
+import Hashes from "jshashes";
 import classNames from "classnames";
 import Header from "../../common/header.jsx";
 
@@ -63,11 +64,14 @@ class UpdatePassword extends Component{
         e && e.preventDefault();
         const {dispatch,passwordByForm} = this.props;
         const {oldPassword,password,repeatPassword} = passwordByForm;
+        const SHA1 = new Hashes.SHA1;
         this.formVerify({
             oldPassword,password,repeatPassword,
             callback: function(){
                 dispatch(changePassword("/updatepassword",{
-                    oldPassword,password,repeatPassword
+                    oldPassword: SHA1.hex(oldPassword),
+                    password: SHA1.hex(password),
+                    repeatPassword: SHA1.hex(repeatPassword)
                 }));
             }
         },e);

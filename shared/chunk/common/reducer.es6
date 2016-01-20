@@ -20,3 +20,16 @@ export function alertReducer(state={},action){
             return state;
     }
 }
+
+export function sceneReducer(state={},action){
+    switch(action.type){
+        case CHANGE_SCENE:
+            let prevScene = state.currentScene || null
+            let currentScene = action.scene;
+            return Object.assign({},state,{
+                prevScene,currentScene
+            })
+        default:
+            return state;
+    }
+}

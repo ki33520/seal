@@ -6,8 +6,8 @@ import Icon from "../icon.jsx";
 
 class Radio extends Component{
     render(){
-        const checkedIcon = "dot-circled";
-        const uncheckIcon = "circle-empty";
+        const checkedIcon = this.props.checkedIcon || "dot-circled";
+        const uncheckIcon = this.props.uncheckIcon || "circle-empty";
         const {checked,name,onChange} = this.props;
         const classes = classNames("radio",this.props.className)
         return (

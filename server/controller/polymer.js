@@ -11,7 +11,7 @@ var polymer = function(req, res, next) {
         category: util.fetchAPI("allCategory",{})
     }).then(function(resp) {
         if(resp.category.returnCode===0){
-            let categories = resp.category.object
+            let categories = categoryFilter(resp.category.object)
             var initialState = {
                 categories: categories
             }; 
@@ -21,11 +21,34 @@ var polymer = function(req, res, next) {
             res.render('polymer', {
                 markup: markup,
                 initialState: initialState
+            },function(err,html){
+                util.writePage(req.originalUrl,html)
+                res.send(html)
             });
         }else{
-            next(new Error(resp.category.msg))
+            next(new Error("polymer error"))
         } 
     });
+}
+
+function categoryFilter(categories){
+    var _categories = [];
+    _.each(categories,function(category){
+        var _category = {
+            name:category.name,
+            imageUrl:config.imgServer + category.imageUrl,
+            children:[]
+        }
+        _.each(category.children,function(child){
+            _category["children"].push({
+                name:child.name,
+                imageUrl:config.imgServer + child.imageUrl,
+                id:child.id
+            })
+        })
+        _categories.push(_category)
+    })
+    return _categories;
 }
 
 var categoryBrands = function(req,res,next){

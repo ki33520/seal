@@ -9,10 +9,9 @@ import Header from "../../common/header.jsx";
 
 import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";
+import SubmitOrder from "./submitorder.jsx";
 
 import Alert from "../../../component/alert.jsx";
-
-import {submitOrder,changeDeliveryTime,toggleTicket,toggleBalance,changePaypassword} from "../action.es6";
 
 class ConfirmOrder extends Component{
     renderReceiver(receiver){
@@ -27,7 +26,7 @@ class ConfirmOrder extends Component{
             )
         }
         return (
-            <a href="#/receiver">
+            <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"receiver")}>
             <div className="order-time">
             <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span></p>
             <p>433101**********1011<em>实名</em></p>
@@ -95,26 +94,12 @@ class ConfirmOrder extends Component{
             this.props.orderSubmiting === false){
             if(orderSubmited === true){
                 setTimeout(()=>{
-                    window.location.assign("/orderlist")
-                    // ReactDOM.findDOMNode(this.refs.submitForm).submit();
+                    console.log('submitOrder')
+                    // window.location.assign("/orderlist")
+                    ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
                 },2400)
             }
         }
-    }
-    renderSubmitForm(){
-        if(this.props.orderSubmited === true){
-            const {payObject,payUrl} = this.props.result;
-            var payInputs = [];
-            for(let name in payObject){
-                payInputs.push((
-                    <input type="hidden" name={name} value={payObject[name]}/>
-                ))
-            }
-            return (
-                <form action={payUrl} method="POST" ref="submitForm">{payInputs}</form>
-            )
-        }
-        return null;
     }
     render(){
         const {order,alertActive,alertContent} = this.props;
@@ -124,7 +109,7 @@ class ConfirmOrder extends Component{
             {this.renderReceiver(order.checkedReceiver)}
             <OrderGoods {...this.props.order}/>
             <div className="ckTo-box clearfix">
-                <a href="#/coupon">
+                <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"coupon")}>
                 <div className="intro">
                 <span>优惠券</span>
                 <span><em><i>券</i>新人5元券</em><i className="iconfont icon-right"></i></span>
@@ -132,11 +117,7 @@ class ConfirmOrder extends Component{
                 </a>
             </div>
             {this.renderTotal(order)}
-            <div className="confirmBtns">
-                <a href="javascript:void(0);" className="confirm_btn" 
-                onClick={this.submitOrder.bind(this)}>提交订单</a>
-                {this.renderSubmitForm()}
-            </div>
+            <SubmitOrder order={order} onSubmit={this.submitOrder.bind(this)} ref="SubmitOrder"/>
             <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )

@@ -1,42 +1,34 @@
 'use strict';
 
 import React,{Component} from "react";
-import {fetchHotWord,changeField,fetchAssociateKeywords} from "../action.es6"
+import classNames from "classnames";
+import {fetchHotWord} from "../action.es6"
 
 class SearchBox extends Component{
     constructor(props){
         super(props);
     }
-    componentDidMount(){
-        const {dispatch} = this.props
-        dispatch(fetchHotWord())
-    }
     renderHotWord(){
-        let {hotwords} = this.props;
+        let {hotwords} = this.props.search;
         if(hotwords){
             return hotwords.map((hotword,i)=>{
-                return <a href={"/goodlist?searchKey="+hotword.name} key={i}>{hotword.name}</a>
+                return <a href={"/goodlist/"+hotword.name} key={i}>{hotword.name}</a>
             })
         }
         return null
     }
     handleSearch(e){
-        e && e.preventDefault();
-        const keyword = e.target.value;
-        const {dispatch} = this.props;
-        dispatch(changeField({
-            keyword
-        }));
-        dispatch(fetchAssociateKeywords({
-            keyword
-        }));
+        e && e.preventDefault()
+        const {changeField,fetchAssociateKeywords} = this.props;
+        changeField("keyword",e.target.value)
+        fetchAssociateKeywords({
+            keyword:e.target.value
+        })
     }
     handleReset(e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
-        dispatch(changeField({
-            keyword:null
-        }));
+        const {changeField} = this.props;
+        changeField('keyword',null)
     }
     renderSearchList(){
         return (
@@ -50,23 +42,32 @@ class SearchBox extends Component{
                         <em>历史搜索</em>
                         <i>清空记录</i>
                     </span>
-                    <a href="/goodlist">洗衣液</a>
-                    <a href="/goodlist">洗衣液</a>
-                    <a href="/goodlist">洗衣液</a>
                 </div>
             </div>
         )
     }
     renderAssociate(){
-        const {keyword} = this.props;
+        const {keyword,associateWords} = this.props.search;
+        if(associateWords && associateWords.length > 0){
+            return associateWords.map((associateWord,i)=>{
+                return (
+                <div className="searchOut" key={i}>
+                    <a href={"/goodlist/"+associateWord.name}>{associateWord.name}</a>
+                </div>
+                )
+            })
+        }
         return (
             <div className="searchOut">
-                <a href={"/goodlist?searchKey="+keyword}>{keyword}</a>
+                <a href={"/goodlist/"+keyword}>{keyword}</a>
             </div>
         )
     }
     render(){
-        const {keyword} = this.props;
+        const {keyword} = this.props.search;
+        const resetClasses = classNames("reset",{
+            active:!!keyword
+        })
         return (
             <div className="search-wrap">
                 <div className="search-header">
@@ -75,11 +76,10 @@ class SearchBox extends Component{
                         value={keyword} 
                         onChange={this.handleSearch.bind(this)}/>
                         <span></span>
-                        <div className="reset" onClick={this.handleReset.bind(this)}>
-                            <i className="iconfont icon-close-fill"></i>
-                        </div>
+                        <div className={resetClasses} onClick={this.handleReset.bind(this)}><i className="iconfont icon-close-fill"></i></div>
                     </div>
-                    <div className="search-btn"><a href="#/">取消</a></div>
+                    <div className="search-btn"><a href="javascript:void(null)" 
+                    onClick={this.props.changeScene.bind(this,"index")}>取消</a></div>
                 </div>
                 {keyword?this.renderAssociate():this.renderSearchList()}
             </div>

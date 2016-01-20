@@ -22,19 +22,26 @@ class Polymer extends Component{
         }
     }
     render(){
+        const {changeScene} = this.props
         return (
             <div className="polymer-content">
                 <Header>
                     <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
                     <div className="btn-right">
-                        <a href="#/search"><Icon icon="search"/></a>
+                        <a href="javascript:void(null)" onClick={changeScene.bind(this,"search")}><Icon icon="search"/></a>
                     </div>
                 </Header>
                 <div className="polymer-list">
                     <SlideTabs navbarSlidable={false} onSelect={this.handleSelect.bind(this)}>
-                        <SlideTabsItem navigator={()=><i>类别</i>}><Category {...this.props.allCategory}/></SlideTabsItem>
-                        <SlideTabsItem navigator={()=><i>品牌</i>}><Brand {...this.props}/></SlideTabsItem>
-                        <SlideTabsItem navigator={()=><i>产地</i>}><Origin {...this.props}/></SlideTabsItem>
+                        <SlideTabsItem navigator={()=><i>类别</i>}>
+                            <Category {...this.props.allCategory}/>
+                        </SlideTabsItem>
+                        <SlideTabsItem navigator={()=><i>品牌</i>}>
+                            <Brand {...this.props}/>
+                        </SlideTabsItem>
+                        <SlideTabsItem navigator={()=><i>产地</i>}>
+                            <Origin {...this.props}/>
+                        </SlideTabsItem>
                     </SlideTabs>
                 </div>
                 <Footer activeIndex="1"/>

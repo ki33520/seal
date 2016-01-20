@@ -6,7 +6,9 @@ import Header from "../../common/header.jsx";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
 
-import {fetchCloseOrder} from "../action.es6";
+import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics} from "../action.es6";
+import {alert} from "../../common/action.es6";
+import Alert from "../../../component/alert.jsx";
 
 
 function formatTime(num){
@@ -48,21 +50,79 @@ class OrderDetail extends Component{
             </div>
         )
     }
+    handleDeliveryOrder(e){
+        e && e.preventDefault();
+        const {dispatch,order} = this.props;
+        const {orderNo} = order;
+        dispatch(fetchDeliveryOrder("/deliveryorder",{
+            orderNo
+        }));
+    }
     handleCloseOrder(e){
         e && e.preventDefault();
         const {dispatch,order} = this.props;
         const {orderNo} = order;
-        dispatch(fetchCloseOrder("/closedOrder",{
+        dispatch(fetchCloseOrder("/closedorder",{
             orderNo
         }));
     }
+    componentWillReceiveProps(nextProps){
+        const {dispatch} = this.props;
+        if(nextProps.closeOrderChanging === false &&
+           this.props.closeOrderChanging === true){
+            if(nextProps.closeOrderChanged === true){
+                dispatch(alert(nextProps.msg,2000));
+            }else{
+                dispatch(alert(nextProps.msg,2000));
+            }
+        }
+        
+        if(nextProps.deliveryOrderChanging === false &&
+           this.props.deliveryOrderChanging === true){
+            if(nextProps.deliveryOrderChanged === true){
+                dispatch(alert(nextProps.msg,2000));
+            }else{
+                dispatch(alert(nextProps.msg,2000));
+            }
+        }
+    }
     renderFooter(){
-        return (
-            <div className="confirmBtns">
-                <a href="javascript:void(0);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
-                <a href="javascript:void(0);" className="confirm_btn">立即支付</a>
-            </div>
-        )
+        const {order} = this.props;
+        const {orderStatus,orderNo,itemList} = order;
+        var hasComment = false;
+        itemList.map((v,k)=>{
+            if(v.hasComment === true){
+                hasComment = true;
+            }
+        })
+        switch(orderStatus){
+            case "STATUS_NOT_PAY":
+                return (
+                    <div className="confirmBtns">
+                        <a href="javascript:void(0);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
+                        <a href="javascript:void(0);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">立即支付</a>
+                    </div>
+                )
+            case "STATUS_OUT_HOUSE":
+                return (
+                    <div className="confirmBtns">
+                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="confirm_btn confirmBorder_btn">查看物流</a>
+                        <a href="javascript:void(0);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">确认收货</a>
+                    </div>
+                )
+            case "STATUS_FINISHED":
+                if(hasComment){
+                    return null
+                }else{
+                    return (
+                        <div className="confirmBtns">
+                            <a href={"/orderdetail/"+orderNo+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
+                        </div>
+                    )
+                }
+            default:
+                return null
+        }
     }
     renderOutTime(){
         const {order,systemTime} = this.props;
@@ -77,7 +137,7 @@ class OrderDetail extends Component{
         }
     }
     render(){
-        const {order} = this.props;
+        const {order,alertActive,alertContent} = this.props;
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
@@ -127,6 +187,7 @@ class OrderDetail extends Component{
                 </div>
             </div>
             {this.renderFooter()}
+            <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
     }

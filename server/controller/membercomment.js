@@ -4,20 +4,25 @@ var _ = require("lodash");
 var util = require("../lib/util");
 var bluebird = require("bluebird");
 var CommentApp = util.getSharedComponent("membercomment");
+var config = require("../lib/config.js");
 
 function formatComment(object) {
    return object.map((child,i)=>{
         return {
-            productName: child.productName,
             content: child.content,
-            rate: child.rate,
             imageUrlList: child.imageUrlList,
-            origin: child.origin,
-            originImageUrl: child.originImageUrl,
+            imagesUrl: child.imagesUrl,
+            createdAt: child.createdAt,
+            id: child.id,
+            orderItemId: child.orderItemId,
+            orderTime: child.orderTime,
             isOpen: child.isOpen,
             isView: child.isView,
-            id: child.id,
-            createdAt: child.createdAt
+            productName: child.productName,
+            singleCode: child.singleCode,
+            singleImage: config.imgServer+child.singleImage,
+            singleTitle: child.singleTitle,
+            rate: child.rate
         };
     });
 }
@@ -29,8 +34,7 @@ var index = function(req, res, next) {
     bluebird.props({
         allComment: util.fetchAPI("memberCommentByUser", {
             memberId: user.memberId,
-            status: 2,
-            pageIndex: pageIndex,
+            pageNo: pageIndex,
             pageSize: pageSize
         },false)
     }).then(function(ret) {
@@ -70,17 +74,15 @@ var showComment = function(req, res, next) {
     bluebird.props({
         showComment: util.fetchAPI("memberCommentByUser", {
             memberId: user.memberId,
-            status: 2,
-            pageIndex: pageIndex,
+            pageNo: pageIndex,
             pageSize: pageSize
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.showComment.returnCode === 0) {
             var showComment = {},
                 object = ret.showComment.object;
             showComment.totalCount = object.totalCount;
-            showComment.list = _.slice(object.result,0,pageIndex*pageSize);
+            showComment.list = object.result ? _.slice(formatComment(object.result),0,pageIndex*pageSize) : [];
             showComment.pageIndex = pageIndex;
             showComment.pageSize = pageSize;
             res.json({

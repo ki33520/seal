@@ -13,8 +13,8 @@ import Alert from "../../../component/alert.jsx";
 class UpdateBasic extends Component{
     constructor(props){
         super(props);
-        const {createdAt} = props.basicByForm;
-        var date = new Date(createdAt),
+        const {birthday} = props.basicByForm;
+        var date = new Date(birthday),
             year = date.getFullYear(),
             month = date.getMonth()+1,
             day = date.getDate();
@@ -23,14 +23,14 @@ class UpdateBasic extends Component{
         this.state = {
             year: year,
             month: month< 10 ? '0'+month : month,
-            day: day,
+            day: day< 10 ? '0'+day : day,
             max: max
         }
     }
     componentDidMount(){
         const {dispatch} = this.props;
-        const birthdy = this.state.year+"-"+this.state.month+'-'+this.state.day;
-        dispatch(changeField('birthdy',birthdy));
+        const birthday = this.state.year+"-"+this.state.month+'-'+this.state.day;
+        dispatch(changeField('birthday',birthday));
     }
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
@@ -40,9 +40,9 @@ class UpdateBasic extends Component{
     handleChangeBasic(e){
         e && e.preventDefault();
         const {dispatch,basicByForm} = this.props;
-        const {nickName,gender,birthdy} = basicByForm;
+        const {nickName,gender,birthday} = basicByForm;
         dispatch(changeBasic("/updatebasic",{
-            nickName,gender,birthdy
+            nickName,gender,birthday
         }));
     }
     componentWillReceiveProps(nextProps){
@@ -57,7 +57,7 @@ class UpdateBasic extends Component{
             }
         }
     }
-    birthdyChange(fieldName,e){
+    birthdayChange(fieldName,e){
         e && e.preventDefault();
         const {dispatch} = this.props;
 
@@ -68,12 +68,12 @@ class UpdateBasic extends Component{
         var obj = Object.assign({},this.state,object);
         object.max = (new Date(obj.year,obj.month, 0)).getDate();
         this.setState(object);
-        const birthdy = obj.year+"-"+obj.month+'-'+obj.day;
-        dispatch(changeField(fieldName,birthdy));
+        const birthday = obj.year+"-"+obj.month+'-'+obj.day;
+        dispatch(changeField(fieldName,birthday));
     }
     render(){
         const {dispatch,basicByForm} = this.props;
-        const {nickName,gender,birthdy,alertContent,alertActive} = basicByForm;
+        const {nickName,gender,birthday,alertContent,alertActive} = basicByForm;
         return (
             <div className="basic-content">
                 <Header>
@@ -101,7 +101,7 @@ class UpdateBasic extends Component{
                     </div>
                 </div>
                 <div className="form-item">
-                    <Datepicker {...this.state} birthdyChange={this.birthdyChange.bind(this)} />
+                    <Datepicker {...this.state} birthdayChange={this.birthdayChange.bind(this)} />
                     <div className="tips">填生日有惊喜哦！</div>
                 </div>
 

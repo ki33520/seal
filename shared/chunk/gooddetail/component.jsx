@@ -12,6 +12,7 @@ import PullHook from "../../component/pullhook.jsx";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
+import MaskLayer from "../../component/masklayer.jsx";
 
 import Promotions from "./partial/promotions.jsx";
 import Origin from "./partial/origin.jsx";
@@ -25,9 +26,18 @@ class GoodDetail extends Component{
             selectedAttr:null,
             buyed:1,
             selectedItem:props.goodById.good.selectedItem,
+            popupActive:false,
+            trigger:null,
             upperVisble:true,
             downVisble:false
         }
+    }
+    togglePopup(trigger,e){
+        e && e.preventDefault();
+        this.setState({
+            trigger,
+            popupActive:!this.state.popupActive
+        })
     }
     componentDidMount(){
         const {fetchCartCount,fetchIsCollected} = this.props;
@@ -41,6 +51,19 @@ class GoodDetail extends Component{
         }) 
         fetchCartCount()
         fetchIsCollected()
+
+        dom.bindEvent(window,"scroll",(e)=>{
+            var scrollTop = dom.scrollTop(window);
+            if (document.documentElement.clientHeight + scrollTop >= document.documentElement.scrollHeight) {
+                if(this.state.upperVisble){
+                    setTimeout(()=>{
+                        this.setState({
+                            downVisble:true
+                        })
+                    },1200)
+                }
+            }
+        })
     }
     componentWillReceiveProps(nextProps){
         const nextSelectedItem = nextProps.goodById.good.selectedItem
@@ -90,6 +113,7 @@ class GoodDetail extends Component{
             alert('购买数量必须大于0',3000);
             return;
         }else if(selectedItem !== null && buyed > 0){
+            this.togglePopup("addToCart")
             addCart({
                 buyed:buyed,
                 itemId:selectedItem.code
@@ -131,26 +155,8 @@ class GoodDetail extends Component{
             window.location.assign(`/confirmorder/${queryParam}`)
         }
     }
-    handlePullUp(e){
-        e && e.preventDefault();
-        this.setState({
-            downVisble:true,
-            upperVisble:false
-        },()=>{
-            // console.log('handlePullUp')
-            dom.scrollTop(window,0);
-            // this.refs["slidetabs"].initialize()
-        })
-    }
-    handlePullDown(e){
-        e && e.preventDefault();
-        this.setState({
-            downVisble:false,
-            upperVisble:true
-        })
-    }
     render(){
-        const {cartCount} = this.props;
+        const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
         const {selectedItem,buyed,selectedAttr} = this.state;
 
@@ -176,11 +182,13 @@ class GoodDetail extends Component{
         })
         return (
             <div className="good-detail-content">
-            <Header>商品详情<a className="globa" href="javascript:void(0);"><i></i></a>
+            <Header>商品详情<a className="globa" href="/"><i></i></a>
             <a className="goods_share"></a>
             </Header>
             <div className={upperClasses}>
+                {good.slides.length > 0?(
                 <Slider effect="roll" autoPlay={false} speed={200}>{slides}</Slider>
+                ):null}
                 <div className="title clearfix">
                     <span>{good.title}</span>
                     <a className="goods_fav" onClick={this.toggleCollected.bind(this)}>
@@ -206,13 +214,10 @@ class GoodDetail extends Component{
                 <div className="assure">
                     <img src="/client/asset/images/assure.gif" />
                 </div>
-                <PullHook 
-                className="teyla" 
-                oriention="BOTTOM_TO_TOP"
-                onPullEnd={this.handlePullUp.bind(this)}
-                >上拉显示商品详情</PullHook>
+                {this.state.downVisble?null:<div className="teyla">上拉显示商品详情</div>}
             </div>
             <Toolbar cartCount={cartCount} good={good} 
+            popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
             selectedAttr={selectedAttr} buyed={buyed}
             handleAttrChange={this.handleAttrChange.bind(this)}
             handleBuyedChanged={this.handleBuyedChanged.bind(this)}
@@ -220,11 +225,6 @@ class GoodDetail extends Component{
             addToCart={this.addToCart.bind(this)}>
             </Toolbar>
             <div className={downClasses}>
-                <PullHook 
-                className="teyla" 
-                oriention="TOP_TO_BOTTOM"
-                onPullEnd={this.handlePullDown.bind(this)}
-                >下拉返回详情顶部</PullHook>
                 <SlideTabs axis="x" navbarSlidable={false} ref="slidetabs">
                 <SlideTabsItem navigator={()=><span>图文详情</span>}>
                 <div className="good-desc" dangerouslySetInnerHTML={{__html:good.detail}}></div>
@@ -237,6 +237,7 @@ class GoodDetail extends Component{
                 </SlideTabs>
             </div>
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
+            <MaskLayer visible={this.state.popupActive} />
             </div>
         )
     }

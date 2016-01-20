@@ -62,6 +62,8 @@ function formatComment(object) {
     var itemList = object.itemList.map((v,k)=>{
         return {
             id: v.id,
+            orderId: v.orderId,
+            hasComment: v.hasComment,
             singleTitle: v.singleTitle,
             singleCode: v.singleCode,
             salesPrice: v.salesPrice,
@@ -71,6 +73,7 @@ function formatComment(object) {
             abroadFee: v.abroadFee,
             tariffFee: v.tariffFee,
             salesTotalFee: v.salesTotalFee,
+            payableFee: v.payableFee,
             couponFee: v.couponFee,
             singleImageUrl: config.imgServer+v.singleImageUrl
         }
@@ -144,7 +147,7 @@ function formatComment(object) {
     return order;
 }
 
-var orderDetail = function(req, res) {
+var orderDetail = function(req, res, next) {
     var id = req.params.id;
     bluebird.props({
         orderById: util.fetchAPI("orderById", {
@@ -180,29 +183,79 @@ var orderDetail = function(req, res) {
         }
     })
 }
-var orderClose = function(req, res){
+var orderClose = function(req, res, next) {
     var orderNo = req.body.orderNo;
     util.fetchAPI('closedOrderById', {
         orderNo: orderNo
     }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                isChanged: true,
+                orderStatus: "STATUS_CANCELED",
+                msg: resp.message
+            })
+        }else{
+            res.json({
+                isChanged: false,
+                msg: resp.message
+            })
+        }
+    })
+}
+var orderDelivery = function(req, res, next) {
+    var user = req.session.user;
+    var orderNo = req.body.orderNo;
+    util.fetchAPI('deliveryOrderById', {
+        memberId: user.memberId,
+        orderNo: orderNo
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                isChanged: true,
+                orderStatus: "STATUS_FINISHED",
+                msg: resp.message
+            })
+        }else{
+            res.json({
+                isChanged: false,
+                msg: resp.message
+            })
+        }
+    })
+}
+var comments = function(req, res, next) {
+    var user = req.session.user;
+    util.fetchAPI("commentsOrderById", {
+        memberId: user.memberId,
+        commentsJson: JSON.stringify(req.body.commentsJson)
+        //'[{rate:5,content:nice,isOpen:1,itemId:S732000000195}]'
+    }).then(function(resp) {
         console.log(resp)
         if (resp.returnCode === 0) {
-            res.json(resp);
+            res.json({
+                isChanged: true,
+                msg: resp.message
+            })
+        }else{
+            res.json({
+                isChanged: false,
+                msg: resp.message
+            })
         }
     })
 }
 
-var logistics = function(req, res) {
+var logistics = function(req, res, next) {
     var config = req.app.locals.config;
     var user = req.session.user;
-    var orderNo = req.query.orderno;
-
-    util.apiRequest(config.api.logisticsByOrder.url, {
-        loginToken: user.memberId,
+    var orderNo = req.query.orderNo;
+    util.fetchAPI("logisticsByOrder", {
         orderNo: orderNo
     }).then(function(resp) {
-        if (resp.code === "success") {
-            res.json(resp)
+        if (resp.returnCode === 0) {
+            res.json(resp.object)
+        }else{
+            res.json({});
         }
     })
 }
@@ -210,5 +263,7 @@ var logistics = function(req, res) {
 module.exports = {
     orderDetail: orderDetail,
     logistics: logistics,
-    orderClose: orderClose
+    orderClose: orderClose,
+    comments: comments,
+    orderDelivery: orderDelivery
 };

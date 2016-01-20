@@ -12,7 +12,6 @@ var update = function(req, res, next) {
             memberId: user.memberId
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.memberDetailByUser.returnCode === 0) {
             var memberInfo = ret.memberDetailByUser.object;
             var initialState = {
@@ -33,16 +32,15 @@ var updateBasic = function(req, res, next) {
     var user = req.session.user;
     var nickName = req.body.nickName;
     var gender = req.body.gender;
-    var birthdy = req.body.birthdy;
+    var birthday = req.body.birthday;
     bluebird.props({
         updateBasicByUser: util.fetchAPI("updateBasicByUser", {
             memberId: user.memberId,
             nickName: nickName,
             gender: gender,
-            birthday: birthdy
+            birthday: birthday
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.updateBasicByUser.returnCode === 0) {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
@@ -63,6 +61,7 @@ var updatePassword = function(req, res, next) {
     var oldPassword = req.body.oldPassword;
     var password = req.body.password;
     var repeatPassword = req.body.repeatPassword;
+    console.log(req.body)
     bluebird.props({
         updatePasswordByUser: util.fetchAPI("updatePasswordByUser", {
             memberId: user.memberId,
@@ -71,6 +70,7 @@ var updatePassword = function(req, res, next) {
             rpassword: repeatPassword
         },false)
     }).then(function(ret) {
+        console.log(ret)
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true

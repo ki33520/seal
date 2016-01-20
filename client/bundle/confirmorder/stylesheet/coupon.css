@@ -116,3 +116,14 @@
     width:100%;
     font-size:.266667rem;
 }
+
+.listMain .list_youa .coupon>.selected{
+    width:1rem;
+    height:1rem;
+    background:url(/client/asset/images/selectCoupon.png) no-repeat;
+    background-size:100%;
+    position:absolute;
+    right:0;
+    top:0;
+    display:block;
+}

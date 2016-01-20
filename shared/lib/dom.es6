@@ -86,14 +86,6 @@ let dom = {
         }
         return scrollNode;
       },
-      computedStyle(element){
-        var computedStyle;
-        if (typeof element.currentStyle != 'undefined')
-          computedStyle = element.currentStyle;
-        else
-          computedStyle = document.defaultView.getComputedStyle(element, null);
-        return computedStyle
-      },
       scrollInView(element,container = window,callback = ()=>{},axis = "y"){
         let top = dom.offset(element).top - dom.offset(container.firstChild).top;
         let left = dom.offset(element).left - dom.offset(container.firstChild).left;
@@ -307,7 +299,16 @@ let dom = {
             return true;
         }
         return false;
-    }
+      },
+      registerPullDownEvent(callback) {
+        var self 
+        this.bindEvent(window,'scroll',()=>{
+            var scrollTop = this.scrollTop(window);
+            if (document.documentElement.clientHeight + scrollTop >= document.documentElement.scrollHeight) {
+                callback();
+            }
+        });
+      }
 }
 
 export default dom;

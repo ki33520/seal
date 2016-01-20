@@ -2,11 +2,13 @@
 @import "../../common/iconfont.styl";
 @import "../../common/header.styl";
 @import "../../common/footer.styl";
+@import "../../common/error.styl";
+@import "../../common/loading.styl";
 @import "../../component/refresher.styl";
-@import "../../component/gotop";
-@import "../../component/slidetabs";
-@import "../../common/switcher";
-@import "../../common/search";
+@import "../../component/gotop.styl";
+@import "../../component/slidetabs.styl";
+@import "../../common/scene.styl";
+@import "../../common/search.styl";
 @import "./explo.css";
 
 body{
@@ -20,9 +22,6 @@ body{
 	}
 }
 
-.back-to-top{
-	bottom:px2rem(50);
-}
 
 .slide-tabs {
 	.slide-tabs-navbar {
@@ -44,6 +43,11 @@ body{
 	.slide-tabs-content{
 		padding-bottom:px2rem(83);
 		.slide-tabs-item{
+			position:relative;
+			.back-to-top{
+				position:absolute;
+				top:px2rem(30);
+			}
 			// overflow-y:scroll;
 		}
 	}

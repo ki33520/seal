@@ -3,97 +3,63 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import fetchGoods from "../action.es6";
-
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
-import GoTop from "../../../component/gotop.jsx";
+import Sticky from "../../../component/sticky.jsx";
 import Icon from "../../../component/icon.jsx";
-import GoodItem from "./goodItem.jsx";
+import GoodList from "./goodlist.jsx";
 import Header from "../../common/header.jsx";
 import Footer from "../../common/footer.jsx";
+import Loading from "../../common/loading.jsx";
 
 class Trendy extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            activeIndex:0
-        }
-    }
-
-    handleSearch(){
-        location.href="#/search";
-    }
-
-
-    handleClick(index){
-        const {category,totalPages,dispatch} = this.props;
-
-        this.setState({
-            activeIndex:index
-        });
- 
-        if(totalPages[index]){
-            return false;
-        }
-
-        dispatch(fetchGoods('/trendyActivity',{
-            id:category[index].id,
-            pageIndex:1,
-            index
-        }));
-    }
-    beginRefresh(){
-        const {dispatch,totalPages,category,pageIndexs,isFetching} = this.props;
-        const {activeIndex} = this.state;
-        let curentPage = pageIndexs[activeIndex];
-        let totalPage = totalPages[activeIndex];
-        let activeId = category[activeIndex].id;
-        let nextPage = curentPage + 1;
-
+    beginRefresh(index){
+        const {categories} = this.props.trendy;
+        let curentPage = categories[index].pageIndex
+        let totalPage = categories[index].totalPage
+        let nextPage = curentPage + 1
+        let isFetching = categories[index].isFetching
         if(isFetching || totalPage <= curentPage){
             return false;
         }
 
-        dispatch(fetchGoods('/trendyActivity',{
-            id:activeId,
+        this.props.fetchGoods({
+            id:categories[index].id,
             pageIndex:nextPage,
-            index:activeIndex
-        }));
+            index:index
+        });
     }
-
-    renderContent(goodList){
-        var goods = [];
-       
-        goodList.forEach(function(item,i){
-            goods.push(<GoodItem goods={item} key={"good-" + i} />)
-        })
-        
-        return (
-            <div className="activityGeneral">
-            {goods}
-            </div>
-        );
+    handleSelect(index){
+        const {categories} = this.props.trendy;
+        if(categories[index].list.length === 0){
+            this.props.fetchGoods({
+                id:categories[index].id,
+                pageIndex:1,
+                index
+            });
+        }
     }
     render(){
-        const {category,goodList} = this.props;
-        const tabs = category.map((item,i)=>{
+        const {categories} = this.props.trendy;
+        const tabs = categories.map((category,i)=>{
             return (
-                <SlideTabsItem navigator={()=><i>{item.name}</i>} key={i}>
-                    {this.renderContent(goodList[i])}
-                    <Refresher active={this.props.isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
+                <SlideTabsItem navigator={()=><i>{category.name}</i>} key={i}>
+                    <GoodList category={category} />
+                    <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={category.isFetching}/>
+                    <Loading active={category.list.length === 0}/>
                 </SlideTabsItem>
             )
-        })
+        });
         return (
             <div className="trendy-content">
                 <Header canBack="false">
                     <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
-                    <div className="btn-right" onClick={this.handleSearch}>
+                    <div className="btn-right" onClick={this.props.changeScene.bind(this,"search")}>
                         <Icon icon="search"/>
                     </div>
                 </Header> 
-                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
-                    {tabs}
+                <SlideTabs axis="x" onSelect={this.handleSelect.bind(this)}>
+                {tabs}
                 </SlideTabs>
                 <Footer activeIndex="2"/>
             </div>

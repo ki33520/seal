@@ -7,12 +7,35 @@ import {
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
     REQUEST_RECEIVER,RESPONSE_RECEIVER,
+    REQUEST_RECEIVERS,RESPONSE_RECEIVERS,
     START_SAVERECEIVER,FINISH_SAVERECEIVER,
     START_CREATERECEIVER,FINISH_CREATERECEIVER,
     START_DELETERECEIVER,FINISH_DELETERECEIVER
 } from "./constant.es6";
 
 export {alert} from "../common/action.es6";
+
+function requestReceivers(){
+    return {
+        type:REQUEST_RECEIVERS,
+    }
+}
+
+function responseReceivers(res){
+    return {
+        type:RESPONSE_RECEIVERS,
+        res
+    }
+}
+
+export function fetchReceivers(){
+    return (dispatch)=>{
+        dispatch(requestReceivers());
+        apiRequest("/receivers").then((res)=>{
+            dispatch(responseReceivers(res));
+        })
+    }
+}
 
 function requestReceiver(){
     return {

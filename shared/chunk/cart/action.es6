@@ -7,6 +7,7 @@ export const FINISH_DELETE_CART = "FINISH_DELETE_CART";
 export const FINISH_TOGGLE_CART = "FINISH_TOGGLE_CART";
 export const FINISH_TOGGLE_ALL = "FINISH_TOGGLE_ALL";
 export const FINISH_TOGGLE_NOT = "FINISH_TOGGLE_NOT";
+export const FINISH_QUERY_CART = "FINISH_QUERY_CART";
 
 function startUpdateCart(){
     return {
@@ -66,6 +67,14 @@ function toggleAllChecked(dispatch,param){
     });
 }
 
+function finishQueryCart(dispatch,param,res){
+    dispatch({
+        type:FINISH_QUERY_CART,
+        param,
+        res
+    })
+}
+
 export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
@@ -101,5 +110,13 @@ export function toggleAll(param){
             dispatch(startUpdateCart());
             finishToggleAllChecked(dispatch,param);
         }
+    }
+}
+export function queryCart(param){
+    return (dispatch)=>{
+        dispatch(startUpdateCart());
+        apiRequest('/queryCart',param,{method:"POST"}).then((res)=>{
+            finishQueryCart(dispatch,param,res);
+        })
     }
 }

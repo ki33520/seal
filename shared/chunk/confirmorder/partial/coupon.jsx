@@ -8,15 +8,16 @@ class Coupon extends Component{
     handleCheck(coupon){
         const {onCheck} = this.props;
         onCheck(coupon)
-        window.history.back();
+        this.props.changeScene("index")
     }
     renderCouponRow(){
-        const {coupons} = this.props;
-        if(coupons){
+        const {coupons,checkedCoupon} = this.props;
+        if(coupons.length > 0){
             return coupons.map((coupon,i)=>{
                 const key = "coupon-" + i;
                 return (
-                    <div className="coupon haitao hover" key={key}>
+                    <div className="coupon haitao hover" key={key} 
+                    onClick={this.handleCheck.bind(this,coupon)}>
                         <div className="left">
                             <div className="price"><em>&yen;</em>{coupon.couponFee}</div>
                             <div className="term">{coupon.couponRule}</div>
@@ -26,7 +27,9 @@ class Coupon extends Component{
                             <div className="date">{coupon.startTime}-{coupon.endTime}</div>
                             <div className="explain">{coupon.couponDesc}</div>
                         </div>
-                        <div className="selected" onClick={this.handleCheck.bind(this,coupon)}></div>
+                        {checkedCoupon.couponNo === coupon.couponNo?(
+                            <div className="selected"></div>
+                        ):null}
                     </div>
                 )
             })
@@ -41,7 +44,7 @@ class Coupon extends Component{
     render(){
         return (
             <div className="coupon-content">
-            <Header>选择优惠券</Header>
+            <Header onGoBack={this.props.changeScene.bind(this,"index")}>选择优惠券</Header>
             <div className="listMain">
             <div className="list_youa">
             {this.renderCouponRow()}

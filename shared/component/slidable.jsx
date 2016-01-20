@@ -101,6 +101,7 @@ class Slidable extends Component{
         e && e.stopPropagation();
         const {clientY,clientX} = e.changedTouches[0];
         const {axis} = this.props;
+        this.startTouchTime = Date.now();
         this.startTouchY = clientY;
         this.startTouchX = clientX;
         this.lastY = this.startTouchY;
@@ -174,6 +175,9 @@ class Slidable extends Component{
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = dom.inTouchableRegion(clientX,clientY,e.currentTarget);
         if(this.props.onlyInside && !inTouchableRegion){
+            return;
+        }
+        if((Date.now() - this.startTouchTime) < 300){
             return;
         }
         let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"

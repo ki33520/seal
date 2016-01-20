@@ -1,7 +1,7 @@
 'use strict'
 import React,{Component} from "react";
-import util from "../../lib/util.es6";
-import dom from "../../lib/dom.es6";
+import ReactDOM from "react-dom";
+import dom from "../lib/dom.es6";
 
 class Sticky extends Component{
     constructor(props){
@@ -11,7 +11,6 @@ class Sticky extends Component{
             initialized:false,
             stickerStyle:null
         }
-
     }
     checkPosition(){
         const scrollTop = dom.scrollTop(this.scrollEl);
@@ -29,7 +28,7 @@ class Sticky extends Component{
         offsets = right !== undefined ? Object.assign({},offsets,{
             right
         }):offsets;
-        const holder = React.findDOMNode(this.refs.holder);
+        const holder = ReactDOM.findDOMNode(this.refs.holder);
         const checkResult = (scrollTop > 0);
         var stickerStyle = Object.assign({},offsets,{
             position:"absolute",
@@ -50,14 +49,14 @@ class Sticky extends Component{
         });
     }
     componentDidMount(){
-        this.scrollEl = this.props.target === undefined ? React.findDOMNode(this).parentNode
-         :React.findDOMNode(this.props.target);
+        this.scrollEl = this.props.target === undefined ? ReactDOM.findDOMNode(this).parentNode
+         :ReactDOM.findDOMNode(this.props.target);
         this.checkPosition();
         // const ownerWindow = dom.ownerWindow(React.findDOMNode(this.refs.sticker));
-        util.bindEvent(this.scrollEl,"scroll",this.checkPosition.bind(this));
+        dom.bindEvent(this.scrollEl,"scroll",this.checkPosition.bind(this));
     }
     componentWillUnmount(){
-        util.unbindEvent(this.scrollEl,"scroll",this.checkPosition.bind(this));
+        dom.unbindEvent(this.scrollEl,"scroll",this.checkPosition.bind(this));
     }
     render(){
         var child = React.Children.only(this.props.children);

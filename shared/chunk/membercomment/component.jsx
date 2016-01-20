@@ -20,18 +20,14 @@ class CommentList extends Component{
             displayFlag: 0
         }
     }
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh(1);
-        }.bind(this));
-    }
     beginRefresh(interval,flag){
         const {allComment,showComment,isFetching,dispatch} =  this.props;
         var comments = allComment,
             fetchLink = "/membercenter/comment",
             pageCount = 1,
             nextPage = 1;
-        var flag = flag!= undefined ? flag: this.state.displayFlag;
+        var flag = flag !== undefined ? flag: this.state.displayFlag,
+            interval = interval !== undefined ? interval : 1;
         if(flag === 1){
             fetchLink = "/membercenter/showcomment";
             comments = showComment;
@@ -67,14 +63,16 @@ class CommentList extends Component{
                     <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)} >
                         <SlideTabsItem navigator={()=><span><b>全部评论</b></span>}>
                             <Floor comments={allComment} ref="floor"/>
+                            <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                            <GoTop relative={true}/>
                         </SlideTabsItem>
                         <SlideTabsItem navigator={()=><span><b>晒单</b></span>}>
                             <Floor comments={showComment} ref="floor"/>
+                            <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                            <GoTop relative={true}/>
                         </SlideTabsItem>
                     </SlideTabs>
                 </div>
-                <GoTop />
-                <Refresher active={isFetching} />
             </div>
         )
     }

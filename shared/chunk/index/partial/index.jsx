@@ -40,7 +40,7 @@ class Index extends Component{
         })
         return (
             <div className={classes}>
-            <Header/>
+            <Header {...this.props}/>
             <SlideTabs axis="x" onSelect={this.handleSelect.bind(this)}>
             {tabs}
             </SlideTabs>

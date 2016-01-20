@@ -23,12 +23,13 @@ function configureStore(initialState){
 
 class ReceiverApp extends React.Component{
     render(){
-        const {receivers,onCheck,checkedReceiver} = this.props.initialState;
+        const {receivers,onCheck,checkable,checkedReceiver} = this.props.initialState;
         var store = configureStore({
             receiverByUser:{
-                isFetching:false,
                 onCheck,
+                checkable,
                 checkedReceiver,
+                changeScene:this.props.changeScene,
                 receivers
             },
             updateReceiver:{

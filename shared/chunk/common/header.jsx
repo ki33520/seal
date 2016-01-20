@@ -4,10 +4,10 @@ import React,{Component} from "react";
 
 class Header extends Component{
     renderBackButton(){
-        const {canBack,handleGoBack} = this.props;
+        const {canBack,onGoBack} = this.props;
         if(canBack === true){
             return (
-                <a href="javascript:;" onClick={handleGoBack} className="iconfont icon-back"></a>
+                <a href="javascript:;" onClick={onGoBack} className="iconfont icon-back"></a>
             )
         }
         return null
@@ -24,7 +24,7 @@ class Header extends Component{
 
 Header.defaultProps = {
     canBack:true,
-    handleGoBack:function(e){
+    onGoBack:function(e){
         e.preventDefault();
         window.history.back();
     }

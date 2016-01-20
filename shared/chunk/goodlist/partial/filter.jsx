@@ -5,47 +5,27 @@ import Header from "../../common/header.jsx";
 import classNames from "classnames";
 
 class Filter extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            checked:{},
-            values:[]
-        }
-    }
- 
-    handleSave(){
-        let {values} = this.state;
-        this.props.handleClose(values);
+
+
+    handleCheck(index){
+        const {list,toggleChecked} = this.props;
+        list[index].isChecked = !list[index].isChecked;
+        toggleChecked(list);
     }
 
-    handleCheck(key,value){
-        let {checked,values} = this.state;
-        let index = values.indexOf(value);
-        checked[key] = !checked[key];
+    renderNav(items){
 
-        if(index === -1){
-            values.push(value);
-        }else{
-            values.splice(index,1);
-        }
-        
-        this.setState({
-            checked,
-            values
-        });
-    }
-
-    renderNav(names){
-        if(!names || names.length<1){
+        if(!items || items.length<1){
             return '暂无分类';
         }
-        var menu = names.map((item,i)=>{
+
+        let menu = items.map((item,i)=>{
             const key="nav-"+i;
             const checked = classNames("iconfont",{
-                "icon-check": this.state.checked[key]
+                "icon-check": item.isChecked
             });
             return (
-                <dl onClick={this.handleCheck.bind(this,key,item.id)} key={key}>
+                <dl onClick={this.handleCheck.bind(this,i)} key={key}>
                     <dt>{item.name}</dt>
                     <dd className={checked}></dd>
                 </dl>
@@ -61,7 +41,7 @@ class Filter extends Component{
     }
 
     render(){
-        const {active,names,handleClose} = this.props;
+        const {list,active,handleGoBack} = this.props;
         const classess = classNames({
             "second-slider":true,
             "rollIn-animate":true,
@@ -70,10 +50,10 @@ class Filter extends Component{
  
         return (
             <div className={classess}>
-            	<Header handleGoBack={handleClose.bind(this)}>
-                    <span className="btn-right" onClick={this.handleSave.bind(this)}>确定</span>
+            	<Header handleGoBack={handleGoBack.bind(this)}>
+                    <span className="btn-right" onClick={handleGoBack.bind(this)}>确定</span>
                 </Header>
-                {this.renderNav(names)}
+                {this.renderNav(list)}
             </div>
         );
     }

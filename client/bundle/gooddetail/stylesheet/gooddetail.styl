@@ -10,7 +10,7 @@
 @import "../../component/popup.styl"
 @import "./goods.css"
 
-body{
+html,body{
     height:100%;
     -webkit-overflow-scrolling: touch;
 }
@@ -19,7 +19,7 @@ body{
     #good-detail{
         height:100%;
         .good-detail-content{
-            height:100%;
+            // height:100%;
         }
     }
 }
@@ -132,6 +132,7 @@ $pink-color = #ED1946;
     position:static;
     height:auto;
     padding:0 0 px2rem(8) 0;
+    background:#FFF;
     &>a{
         color:#FFF;
     }
@@ -150,6 +151,11 @@ $pink-color = #ED1946;
             width:px2rem(22);
             color:#999;
         }
+    }
+    .properties{
+        max-height:px2rem(200);
+        overflow:hidden;
+        overflow-y:auto;
     }
     .select{
         padding:0 px2rem(10);
@@ -197,7 +203,6 @@ $pink-color = #ED1946;
         line-height:1.15rem;
         border-left:0 none;
         border-bottom:px2rem(1) solid #D7D7D7;
-        
         &.active{
             border-bottom:px2rem(2) solid #801da1;
             color:#801da1;
@@ -209,13 +214,13 @@ $pink-color = #ED1946;
 }
 
 .good-detail-content{
+    padding-bottom:1.12rem;
     .good-detail-upper{
         display:none;
         // visibility:hidden
         &.visible{
             // visibility:visible;
             display:block;
-            padding-bottom:1.12rem;
         }
     }
     .good-detail-down{
@@ -248,6 +253,9 @@ $pink-color = #ED1946;
                 display:inline-block;
                 padding:0 0 0 .25rem;
             }
+        }
+        img{
+            width:100%;
         }
     }
 }

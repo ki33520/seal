@@ -32,19 +32,17 @@ class UpdateReceiver extends Component{
             && this.props.provinces.length === 1){
             this.loadProvinces()
         }
-        const province = receiver === null?"":receiver.provinceCode;
-        const city = receiver === null?"":receiver.cityCode;
-        if(prevProps.provinces.length === 1 && 
-        this.props.provinces.length > 1 && province){
-            this.loadCities(province);
-            // console.log(prevProps.provinces,province)
+        if(receiver && this.props.provinces.length > 1){
+            if(this.props.cities.length === 1 && !this.props.cityFetching){
+                this.loadCities(receiver.provinceCode)
+            }
         }
-        if(prevProps.cities.length === 1 && 
-        this.props.cities.length > 1 && city){
-            this.loadDistricts(city);
+        if(receiver && this.props.cities.length > 1){
+            if(this.props.districts.length === 1 && !this.props.districtFetching){
+                this.loadDistricts(receiver.cityCode)
+            }
         }
     }
-
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
         const {changeField} = this.props;
@@ -70,7 +68,7 @@ class UpdateReceiver extends Component{
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
                 alert("提交成功!",2000);
-                setTimeout(()=>window.location.replace("/receiver"),2500)
+                setTimeout(()=>this.props.changeScene("index"),2500)
             }else{
                 alert(nextProps.errMsg,2000)
             }
@@ -78,16 +76,12 @@ class UpdateReceiver extends Component{
     }
     render(){
         const {saveSuccess,alertActive,alertContent,receiver} = this.props
-        if(receiver === null){
-            return null
-        }
         const {
-            consignee,idCard,mobileNumber,zipcode,address,isDefault,
-            province,city,district,
-        } = receiver;
+            consignee,idCard,mobileNumber,address,isDefault,
+        } = (receiver === null?{}:receiver);
         return (
             <div className="receiver-form-content">
-            <Header>
+            <Header onGoBack={this.props.changeScene.bind(this,"index")}>
             <span className="title">修改收货地址</span>
             <a className="screening" href="javascript:void(null)" onClick={this.handleSave.bind(this)}>保存</a>
             </Header>
@@ -118,28 +112,15 @@ class UpdateReceiver extends Component{
                 placeholder="请输入您的手机号" 
                 onChange={this.handleFieldChange.bind(this,"mobileNumber")}/></div>
                 </div>
-                <div className="receiver-form-row">
-                <i>*</i>
-                <div className="receiver-form-label">收货地址</div>
-                <div className="receiver-form-field">
-                    <CascadeArea loadCities={this.loadCities.bind(this)} 
-                    loadDistricts={this.loadDistricts.bind(this)} 
-                    {...this.props}/>
-                </div>
-                </div>
+                <CascadeArea loadCities={this.loadCities.bind(this)} 
+                loadDistricts={this.loadDistricts.bind(this)} 
+                {...this.props}/>
                 <div className="receiver-form-row receiver-form-textarea-row">
                 <i>*</i>
                 <div className="receiver-form-label">详细地址</div>
                 <div className="receiver-form-field"><textarea value={address}
                 onChange={this.handleFieldChange.bind(this,"address")} 
                 placeholder="请输入详细地址"/></div>
-                </div>
-                <div className="receiver-form-row">
-                <i>*</i>
-                <div className="receiver-form-label">邮编</div>
-                <div className="receiver-form-field"><input type="text" value={zipcode}
-                onChange={this.handleFieldChange.bind(this,"zipcode")} 
-                placeholder="请输入邮编"/></div>
                 </div>
             </div>
             </div>

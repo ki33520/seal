@@ -4,7 +4,8 @@ import {
     REQUEST_CATEGORYBRANDS,RESPONSE_CATEGORYBRANDS,
     REQUEST_ALLBRANDS,RESPONSE_ALLBRANDS,
     REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS,
-    REQUEST_HOTWORD,RESPONSE_HOTWORD
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
 } from "./constants.es6";
 
 function responseCategoryBrands(param,res){
@@ -102,3 +103,29 @@ export function fetchHotWord(param){
         })
     }
 }
+
+function requestAssociateWord(param){
+    return {
+        type:REQUEST_ASSOICATEWORD,
+        param
+    }
+}
+
+function responseAssociateWord(param,res){
+    return {
+        type:RESPONSE_ASSOICATEWORD,
+        param,
+        res
+    }
+}
+
+export function fetchAssociateKeywords(param){
+    return (dispatch)=>{
+        dispatch(requestAssociateWord(param));
+        apiRequest("/searchassociate",param,{method:"POST"}).then((res)=>{
+            dispatch(responseAssociateWord(param,res));
+        })
+    }
+}
+
+export {changeField} from "../common/action.es6";

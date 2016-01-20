@@ -62,8 +62,12 @@ function orderByParam(state={},action){
                 orderSubmited:false
             })
         case FINISH_SUBMITORDER:
+            const {orderNo,homeURL,orderDtailURL,orderStatusURL,
+                openId,wxOpenId} = action.res.result;
             return Object.assign({},state,{
-                ...action.res,
+                order:{...state.order,orderNo,orderDtailURL,orderStatusURL,homeURL,
+                    openId,wxOpenId},
+                orderSubmited:action.res.orderSubmited,
                 orderSubmiting:false,
             })
         case SHOW_ALERT:

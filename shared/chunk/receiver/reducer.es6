@@ -9,6 +9,7 @@ import {
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
     REQUEST_RECEIVER,RESPONSE_RECEIVER,
+    REQUEST_RECEIVERS,RESPONSE_RECEIVERS,
     START_SAVERECEIVER,FINISH_SAVERECEIVER,
     START_CREATERECEIVER,FINISH_CREATERECEIVER,
     START_DELETERECEIVER,FINISH_DELETERECEIVER
@@ -62,7 +63,6 @@ function updateReceiver(state={},action){
             });
         case SHOW_ALERT:
         case HIDE_ALERT:
-            console.log('alert',alertReducer(state,action))
             return alertReducer(state,action)
         default:
             return state;
@@ -165,6 +165,21 @@ function cascadeArea(state,action){
 function receiverByUser(state={},action){
     let receivers = state.receivers
     switch(action.type){
+        case REQUEST_RECEIVERS:
+            return Object.assign({},state,{
+                receiversFetching:true,
+                receiversFetched:false
+            })
+        case RESPONSE_RECEIVERS:
+            let receivers = null
+            if(action.res.isFetched === true){
+                receivers = action.res.result;
+            }
+            return Object.assign({},state,{
+                receiversFetching:false,
+                receiversFetched:action.res.isFetched,
+                receivers
+            })
         case START_DELETERECEIVER:
             return Object.assign({},state,{
                 receiverDeleting:true,

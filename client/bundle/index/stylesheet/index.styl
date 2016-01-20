@@ -1,11 +1,13 @@
 @import "../../common/common";
 @import "../../common/iconfont";
 @import "../../common/router";
-@import "../../common/switcher";
+@import "../../common/scene";
 @import "../../common/search";
 @import "../../common/footer";
+@import "../../common/loading";
 @import "../../component/slidetabs";
 @import "../../component/slider";
+@import "../../component/image";
 @import "./index.css";
 
 html,body{
@@ -63,6 +65,9 @@ body{
     }
     .slide-tabs-content{
         padding-bottom:px2rem(81);
+        .slide-tabs-item{
+            position:relative;
+        }
     }
     
 }

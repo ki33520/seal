@@ -15,15 +15,15 @@ var index = function(req, res, next) {
                     id: channel.id,
                     sort: channel.sort,
                     name: channel.manageName,
-                    floors:{}
+                    floors: {}
                 }
             })
-            channels = _.sortBy(channels,function(channel){
+            channels = _.sortBy(channels, function(channel) {
                 return channel.sort
             })
             return channels
         } else {
-            next(new Error(ret.msg))
+            next(new Error(ret.message))
         }
     }).then(function(channels) {
         util.fetchAPI("floorsByChannel", {
@@ -43,9 +43,12 @@ var index = function(req, res, next) {
                 res.render("index", {
                     markup: markup,
                     initialState: initialState
+                }, function(err, html) {
+                    util.writePage(req.originalUrl, html)
+                    res.send(html)
                 });
             } else {
-                next(new Error(ret.msg))
+                next(new Error(ret.message))
             }
         })
     })
@@ -60,11 +63,33 @@ var channel = function(req, res, next) {
         limit: 3
     }).then(function(ret) {
         if (ret.returnCode === 0) {
-            res.json({result:floorFilter(ret.object),channelFetched:true})
+            res.json({
+                result: floorFilter(ret.object),
+                channelFetched: true
+            })
         } else {
-            res.json({channelFetched:false,errMsg:ret.msg})
+            res.json({
+                channelFetched: false,
+                errMsg: ret.msg
+            })
         }
     })
+}
+
+function getJumpUrl(activity) {
+    var jumpUrl = null;
+    switch (activity.hasTemplate) {
+        case "2":
+            jumpUrl = activity.activityUrl
+            break;
+        case "3":
+            var singleCode = activity.activityProductList[0]["singleCode"]
+            jumpUrl = "/gooddetail/" + singleCode
+            break;
+        default:
+            jumpUrl = "/activity/" + activity.id;
+    }
+    return jumpUrl
 }
 
 function floorFilter(floors) {
@@ -75,6 +100,7 @@ function floorFilter(floors) {
     _floors["slides"] = _.map(_floors["slides"], function(slide) {
         return {
             id: slide.id,
+            jumpUrl: getJumpUrl(slide),
             imageUrl: config.imgServer + slide.imageUrl
         }
     })
@@ -94,6 +120,7 @@ function floorFilter(floors) {
     _floors["rushbuys"] = _.map(_floors["rushbuys"], function(rushbuy) {
         return {
             id: rushbuy.id,
+            jumpUrl: getJumpUrl(rushbuy),
             imageUrl: config.imgServer + rushbuy.imageUrl,
         }
     })
@@ -106,6 +133,7 @@ function floorFilter(floors) {
         return {
             id: v.id,
             name: v.activityName,
+            jumpUrl: getJumpUrl(v),
             imageUrl: config.imgServer + v.imageUrl,
         }
     })
@@ -116,6 +144,7 @@ function floorFilter(floors) {
         return {
             id: v.id,
             name: v.activityName,
+            jumpUrl: getJumpUrl(v),
             imageUrl: config.imgServer + v.imageUrl,
         }
     })
@@ -126,38 +155,40 @@ function floorFilter(floors) {
         return {
             id: v.id,
             name: v.activityName,
+            jumpUrl: getJumpUrl(v),
             imageUrl: config.imgServer + v.imageUrl,
         }
     })
     _floors["flashbuys"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_SG"
     }), "activityList")
-    if(_floors["flashbuys"]){
-        _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList,function(good){
+    if (_floors["flashbuys"]) {
+        _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList, function(good) {
             return {
+                singleCode: good.singleCode,
                 imageUrl: config.imgServer + good.imageUrl,
-                salePrice:good.salesPrice,
-                originPrice:good.originPrice,
-                title:good.title
+                salePrice: good.salesPrice,
+                originPrice: good.originPrice,
+                title: good.title
             }
         })
     }
     _floors["singleRecommend"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_DPTJ"
     }), "activityList")
-    if(_floors["singleRecommend"]){
+    if (_floors["singleRecommend"]) {
         _floors["singleRecommend"] = {
-            id:_floors["singleRecommend"][0].id,
-            goods:_floors["singleRecommend"][0].activityProductList
+            id: _floors["singleRecommend"][0].id,
+            goods: _floors["singleRecommend"][0].activityProductList
         }
     }
     _floors["newRecommend"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_XPTJ"
     }), "activityList")
-    if(_floors["newRecommend"]){
+    if (_floors["newRecommend"]) {
         _floors["newRecommend"] = {
-            id:_floors["newRecommend"][0].id,
-            goods:_floors["newRecommend"][0].activityProductList
+            id: _floors["newRecommend"][0].id,
+            goods: _floors["newRecommend"][0].activityProductList
         }
     }
     // console.log(floors)
@@ -189,15 +220,15 @@ var searchHotWords = function(req, res, next) {
 var searchAssociate = function(req, res, next) {
     var keyword = req.body.keyword
     util.fetchAPI("fetchAssociateKeywords", {
-        searchKey:keyword
+        searchKey: keyword
     }).then(function(ret) {
         console.log('ret')
         if (ret.returnCode === 0) {
             var associateWords = ret.object
             associateWords = _.map(associateWords, function(associateWord) {
                 return {
-                    id: associateWord.id,
-                    name: associateWord.wordName
+                    // id: associateWord.singleCode,
+                    name: associateWord.name
                 }
             })
             res.json({
@@ -256,8 +287,8 @@ function activityGoodFilter(goods) {
 
 module.exports = {
     index: index,
-    channel:channel,
+    channel: channel,
     searchHotWords: searchHotWords,
-    searchAssociate:searchAssociate,
+    searchAssociate: searchAssociate,
     activityGood: activityGood
 }

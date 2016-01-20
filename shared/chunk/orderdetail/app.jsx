@@ -6,29 +6,30 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import OrderDetail from "./component.jsx";
 
 function selector(state){
-    const {order,systemTime,logistics,isFetched,isFetching} = state.orderByParam
-    return {
-        order,
-        systemTime,
-        logistics,
-        isFetched,
-        isFetching
-    };
+    //const {isFetching,isFetched,logistics,order,systemTime,msg,closeOrderChanged,closeOrderChanging,alertActive,alertContent} = state.orderByParam;
+    return state.orderByParam;
 }
 
 let OrderDetailConnected = connect(selector)(OrderDetail);
 
+function configureStore(initialState){
+    const store = createStoreWithMiddleware(rootReducer, initialState)
+    return store
+}
+
 class OrderDetailApp extends React.Component{
     render(){
         const {isFetched,order,systemTime} = this.props.initialState;
-        var store = createStoreWithMiddleware(rootReducer,{
+        const initialState = {
             orderByParam:{
                 isFetching:false,
                 isFetched,
                 order,
                 systemTime
             }
-        });
+        }
+        var store = configureStore(initialState);
+
         return (
             <Provider store={store}>
             <OrderDetailConnected />

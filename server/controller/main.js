@@ -2,6 +2,8 @@
 var util = require("../lib/util");
 var ErrorContent = util.getSharedComponent("common", "error.jsx");
 var config = require("../lib/config");
+var fs = require("fs");
+var path = require("path");
 
 var authorizeLocals = function(req, res, next) {
     var loginRedirectUrl = util.getAuthGatewayUrl(req, "/logingateway", true);
@@ -23,11 +25,24 @@ var requireAuthorize = function(req, res, next) {
     }
 }
 
+var staticize = function(req,res,next){
+    // var pageName =
+    var pageContent = util.readPage(req.originalUrl)
+        // console.log('pageContent',pageContent)
+    if(pageContent){
+        res.send(pageContent)
+    }else{
+        next()
+    }
+    // console.log(fs.statSync(path.resolve("client/page/index.html")))
+}
+
 var errorHandler = function(err,req,res,next){
     console.log(err.stack)
     var initialState = {
         code: "500",
-        msg: err.message
+        msg:"啊噢~您访问的页面连接出错咯..."
+        // msg: err.message
     };
     var markup = util.getMarkupByComponent(ErrorContent({
         initialState: initialState
@@ -57,6 +72,7 @@ var notFoundHandler = function(req, res) {
 module.exports = {
     authorizeLocals: authorizeLocals,
     requireAuthorize: requireAuthorize,
+    staticize:staticize,
     notFoundHandler: notFoundHandler,
     errorHandler: errorHandler
 };

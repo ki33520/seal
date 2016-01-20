@@ -4,7 +4,7 @@ import React,{Component} from "react";
 
 class Datepicker extends Component{
     render(){
-        const {year,month,day,max,birthdyChange} = this.props;
+        const {year,month,day,max,birthdayChange} = this.props;
         var optionYear = [],
             optionMonth = [],
             optionDay = [];
@@ -30,17 +30,17 @@ class Datepicker extends Component{
         return (
             <div className="label-item">
                 <label>生日</label>
-                <select value={year} name="year" onChange={birthdyChange.bind(this,"birthdy")}>
+                <select value={year} name="year" onChange={birthdayChange.bind(this,"birthday")}>
                     <option value="-1">请选择</option>
                     {optionYear}
                 </select>
                 <span>年</span>
-                <select value={month} name="month" onChange={birthdyChange.bind(this,"birthdy")}>
+                <select value={month} name="month" onChange={birthdayChange.bind(this,"birthday")}>
                     <option value="-1">请选择</option>
                     {optionMonth}
                 </select>
                 <span>月</span>
-                <select value={day} name="day" onChange={birthdyChange.bind(this,"birthdy")}>
+                <select value={day} name="day" onChange={birthdayChange.bind(this,"birthday")}>
                     <option value="-1">请选择</option>
                     {optionDay}
                 </select>

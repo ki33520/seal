@@ -6,7 +6,7 @@
 @import "../../component/slider";
 @import "../../component/refresher.styl";
 @import "../../component/masklayer.styl";
-@import "../../component/gotop.styl";
+@import "../../component/gotop";
 
 body{
 	background-color: #f1f1f1;
@@ -146,33 +146,24 @@ body{
 			}
 		}
 	}
-	.back-to-top {
-		position: fixed;
-		bottom: 2rem;
-		right: .5rem;
-		background: rgba(0, 0, 0, .75);
-		width: 2rem;
-		height:2rem;
-		border-radius: 2rem;
-		z-index: 100;
-		text-align: center;
-		opacity:0;
-		transition:opacity .3s ease-in;
-		&.active{
-			opacity:1;
-			transition:opacity .3s ease-in;
-		}
-		a {
-			width:100%;
-			height:100%;
-			display:flex;
-			justify-content:center;
-			align-items:center;
-			span {
-				font-size: .9rem;
-				color: #FFF;
-			}
-		}
-	}
+}
 
+.slide-tabs{
+    .slide-tabs-navbar{
+        height: 1.16rem;
+        border:0 none;
+        .slide-tabs-navbar-item{
+            background:#FFF;
+            border:0 none;
+            border-bottom:px2rem(1) solid #D7D7D7;
+            line-height:px2rem(36);
+            &.active{
+                color:#801da1;
+                border-color:#801da1;
+            }
+        }
+    }
+    .slide-tabs-content{
+        overflow:hidden;
+    }
 }

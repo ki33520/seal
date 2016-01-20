@@ -14,7 +14,7 @@ var mainController = require("./controller/main");
 router.get("/logingateway",require("./controller/authorize").loginGateway);
 router.get("/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
-router.get("/", require("./controller/index.js").index);
+router.get("/",mainController.staticize,require("./controller/index.js").index);
 router.get("/channel", require("./controller/index.js").channel);
 router.get("/searchhotwords", require("./controller/index.js").searchHotWords);
 router.post("/searchassociate", require("./controller/index.js").searchAssociate);
@@ -23,7 +23,7 @@ router.get("/mobileonly/:id", require("./controller/topic.js").mobileOnly);
 router.get("/finest/:id", require("./controller/topic.js").finest);
 router.get("/stockup/:id", require("./controller/topic.js").stockup);
 router.get("/flashbuy/:id", require("./controller/flashbuy.js"));
-router.get("/polymer", require("./controller/polymer").polymer);
+router.get("/polymer",mainController.staticize,require("./controller/polymer").polymer);
 router.get("/categorybrands", require("./controller/polymer").categoryBrands);
 router.get("/allbrands", require("./controller/polymer").allBrands);
 router.get("/allorigins", require("./controller/polymer").allOrigins);
@@ -46,6 +46,8 @@ router.get("/cart",mainController.requireAuthorize,require("./controller/cart").
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
 router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
 router.post("/fetchCart", mainController.requireAuthorize,require("./controller/cart").fetchCart);
+router.post("/queryCart",require("./controller/cart").queryCart);
+
 router.get("/goodcomment/:id", require("./controller/goodcomment").index);
 router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 
@@ -54,13 +56,17 @@ router.post("/submitorder",mainController.requireAuthorize,require("./controller
 router.get("/orderlist",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderlist/:id",mainController.requireAuthorize,require("./controller/orderlist"));
 router.get("/orderdetail/:id",mainController.requireAuthorize,require("./controller/orderdetail").orderDetail);
-router.post("/closedOrder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
+router.post("/closedorder",mainController.requireAuthorize,require("./controller/orderdetail").orderClose);
+router.post("/deliveryorder",mainController.requireAuthorize,require("./controller/orderdetail").orderDelivery);
+router.post("/savecomment",mainController.requireAuthorize,require("./controller/orderdetail").comments);
+router.get("/logistics",mainController.requireAuthorize,require("./controller/orderdetail").logistics);
+
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
 router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
-router.get("/membercenter",mainController.requireAuthorize,require("./controller/membercenter"));
+router.get("/membercenter",mainController.authorizeLocals,require("./controller/membercenter"));
 router.get("/membercenter/collect",mainController.requireAuthorize,require("./controller/membercollect"));
 router.get("/membercenter/comment",mainController.requireAuthorize,require("./controller/membercomment").index);
 router.get("/membercenter/showcomment",mainController.requireAuthorize,require("./controller/membercomment").showComment);
@@ -73,7 +79,8 @@ router.post("/updatemembercardverifycode",mainController.requireAuthorize,requir
 
 router.get("/receiver",mainController.requireAuthorize,require("./controller/receiver").receiver);
 router.get("/addreceiver",mainController.requireAuthorize,require("./controller/receiver").addReceiver);
-router.get("/updatereceiver/:id",mainController.requireAuthorize,require("./controller/receiver").updateReceiver);
+router.get("/receiver/:id",mainController.requireAuthorize,require("./controller/receiver").receiverById);
+router.get("/receivers",mainController.requireAuthorize,require("./controller/receiver").receiverByUser);
 router.get("/cascadearea",mainController.requireAuthorize,require("./controller/receiver").cascadeArea);
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 router.post("/createreceiver",mainController.requireAuthorize,require("./controller/receiver").createReceiver);

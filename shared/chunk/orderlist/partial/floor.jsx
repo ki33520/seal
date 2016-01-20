@@ -56,7 +56,6 @@ class Floor extends Component{
             case "STATUS_CONFIRMED":
                 return (
                     <div className="order-buttons">
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="pop_c">查看物流</a>
                     </div>
                 )
             case "STATUS_OUT_HOUSE":
@@ -81,7 +80,7 @@ class Floor extends Component{
             case "STATUS_FINISHED":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="view_c">评价晒单</a>
+                        <a href={"/orderdetail/"+orderNo+"#/comment"} className="view_c">评价晒单</a>
                     </div>
                 )
             default:

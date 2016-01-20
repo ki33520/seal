@@ -3,7 +3,7 @@
 import {combineReducers} from "redux";
 import {CHANGE_FIELD,START_CHANGE_BASIC,FINISH_CHANGE_BASIC,START_CHANGE_PASSWORD,FINISH_CHANGE_PASSWORD,START_BIND_MEMBERCARD,FINISH_BIND_MEMBERCARD,START_SEND_VERIFYCODE,FINISH_SEND_VERIFYCODE} from "./action.es6";
 
-import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
 function detailByUser(state={},action){

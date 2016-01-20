@@ -3,6 +3,9 @@
 @import "../../common/iconfont";
 @import "../../common/header";
 @import "../../common/ordergoods";
+@import "../../component/gotop";
+@import "../../component/slidetabs";
+@import "../../component/alert";
 @import "./orderdetail.css";
 
 .order-detail-container{
@@ -13,4 +16,64 @@
 }
 .order-detail-content{
     padding-bottom:px2rem(45);
+    background-color: #f5f5f5;
+    &.logistics-content{
+    	padding-bottom: 0;
+    }
+    &.comment-content{
+	    background-color: #fff;
+	}
+}
+.container {
+	height: 100%;
+	.trendy-content{
+		height:100%;
+		overflow:hidden;
+	}
+}
+
+.back-to-top{
+	bottom:px2rem(50);
+}
+.stars-culm{
+	float: right;
+	display: flex;
+	margin-bottom: .25rem;
+	padding: 0 .2rem;
+	line-height: .5rem;
+	.stars{
+		flex: 4;
+		display: flex;
+		text-align: left;
+		color: #ffdd00;
+		.iconfont{
+			flex: 1;
+			padding: 0 .1rem;
+			font-size: .6rem;
+		}
+	}
+}
+.slide-tabs {
+	.slide-tabs-navbar {
+		height: 1.16rem;
+		width: 100%;
+		background-color:white;
+	    border-bottom: 1px solid #d7d7d7;
+	    .slide-tabs-navbar-item {
+			line-height: 1.16rem;
+			border: none;
+			&.active {
+				i {
+					color: #801da1;
+    				border-bottom:.053333rem solid #801da1;
+				}
+			}
+		}
+	}
+	.slide-tabs-content{
+		padding-bottom: 0;
+		.slide-tabs-item{
+			// overflow-y:scroll;
+		}
+	}
 }

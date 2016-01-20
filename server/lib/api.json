@@ -76,6 +76,13 @@
             "production": "http://product.tepin.hk"
         }
     },
+    "queryCart":{
+        "uri": "/cart/v1/findCartsNotLogin",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "http://product.tepin.hk"
+        }
+    },
     "regiestOrLogin": {
         "uri": "/member/v1/regiestOrLogin",
         "baseURL": {
@@ -105,9 +112,9 @@
         }
     },
     "memberCommentByUser": {
-        "uri": "/comments/v1/findCommentList",
+        "uri": "/comments/v1/findDoneComments",
         "baseURL": {
-            "develop": "http://member.hwg.youayun.cn:7987",
+            "develop": "http://member.hwg.youayun.cn:7986",
             "production": "http://member.tepin.hk"
         }
     },
@@ -202,8 +209,36 @@
             "production": "order.hwg.youayun.cn"
         }
     },
-    "closedOrderById": {
+    "orderItemList":{
+        "uri": "/comments/v1/findOrderItemList",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "closedOrderById":{
         "uri": "/order/v1/closedOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "deliveryOrderById":{
+        "uri": "/order/v1/orderDelivery",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "commentsOrderById":{
+        "uri": "/comments/v1/batchAdd",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "logisticsByOrder":{
+        "uri": "/order/v1/searchRoute",
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "production": "order.hwg.youayun.cn"

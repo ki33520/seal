@@ -46,7 +46,7 @@ class MemberCenter extends Component{
             return (
                 <div className="userInfo">
                     <div className="userInfo_con">
-                        <img title={member.nickname} src={member.imageUrl} />
+                        <img title={member.nickName} src={member.imageUrl} />
                         <a className="user-qr iconfont icon-erweima" href="javascript:void(0);" onClick={this.togglePopupActive.bind(this)}></a>
                     </div>
                     <span>{member.mobileNumber}</span>
@@ -54,13 +54,83 @@ class MemberCenter extends Component{
             )
         }
     }
-    render(){
-        const {isFetched, member, isLogined, api,countOrder} = this.props;
-
+    renderOrderBanner(){
+        const {isLogined,countOrder} = this.props;
+        if(isLogined === false){
+            return (
+                <div className="userGoods">
+                    <a className="userGoods_1">
+                        <em></em>
+                        <span>待付款</span>
+                    </a>
+                    <a className="userGoods_2">
+                        <em></em>
+                        <span>待发货</span>
+                    </a>
+                    <a className="userGoods_3">
+                        <em></em>
+                        <span>待收货</span>
+                    </a>
+                    <a className="userGoods_4">
+                        <em></em>
+                        <span>待评价</span>
+                    </a>
+                </div>
+            )
+        }else{
+            const paymentNum = countOrder.paymentNum > 0 ? <i>{countOrder.paymentNum}</i> : null;
+            const sendNum = countOrder.sendNum > 0 ? <i>{countOrder.sendNum}</i> : null;
+            const signNum = countOrder.signNum > 0 ? <i>{countOrder.signNum}</i> : null;
+            const commentNum = countOrder.commentNum > 0 ? <i>{countOrder.commentNum}</i> : null;
+            return (
+                <div className="userGoods">
+                    <a href="/orderlist" className="userGoods_1">
+                        <em></em>
+                        <span>待付款</span>
+                        {paymentNum}
+                    </a>
+                    <a href="/orderlist" className="userGoods_2">
+                        <em></em>
+                        <span>待发货</span>
+                        {sendNum}
+                    </a>
+                    <a href="/orderlist" className="userGoods_3">
+                        <em></em>
+                        <span>待收货</span>
+                        {signNum}
+                    </a>
+                    <a href="/orderlist" className="userGoods_4">
+                        <em></em>
+                        <span>待评价</span>
+                        {commentNum}
+                    </a>
+                </div>
+            )
+        }
+        
+    }
+    renderPopQr(){
+        const {member, isLogined} = this.props;
         const classes = classNames({
             "pop-qr":true,
             "active":this.state.popupActive
         });
+        if(isLogined === false){
+            return null;
+        }else{
+            return (
+                <div className={classes}>
+                    <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>
+                    <div className="top">扫码分享</div>
+                    <div className="center"><img src={member.cardUrl} /></div>
+                    <div className="bottom">邀请小伙伴扫一扫分享给TA</div>
+                </div>
+            )
+        }
+        
+    }
+    render(){
+        const {isFetched, member, isLogined, api,countOrder} = this.props;
         return (
             <div className="user">
                 <header>
@@ -70,29 +140,7 @@ class MemberCenter extends Component{
                     <div className="userBanner">
                         {this.renderBanner()}
                     </div>
-                    
-                    <div className="userGoods">
-                        <a href="/orderlist/1" className="userGoods_1">
-                            <em></em>
-                            <span>待付款</span>
-                            <i>{countOrder.paymentNum}</i>
-                        </a>
-                        <a href="/orderlist/2" className="userGoods_2">
-                            <em></em>
-                            <span>待发货</span>
-                            <i>{countOrder.sendNum}</i>
-                        </a>
-                        <a href="/orderlist/3" className="userGoods_3">
-                            <em></em>
-                            <span>待收货</span>
-                            <i>{countOrder.signNum}</i>
-                        </a>
-                        <a href="/orderlist/4" className="userGoods_4">
-                            <em></em>
-                            <span>待评价</span>
-                            <i>{countOrder.commentNum}</i>
-                        </a>
-                    </div>
+                    {this.renderOrderBanner()}
                 </header>
                 
                 <div className="helpList">
@@ -196,12 +244,7 @@ class MemberCenter extends Component{
                 </div>
                 <Footer activeIndex="4" />
                 <MaskLayer visible={this.state.maskActive} handleClick={this.closeAllPopups.bind(this)}/>
-                <div className={classes}>
-                    <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>
-                    <div className="top">扫码分享</div>
-                    <div className="center"><img src={member.cardUrl} /></div>
-                    <div className="bottom">邀请小伙伴扫一扫分享给TA</div>
-                </div>
+                {this.renderPopQr()}
             </div>
         );
     }
