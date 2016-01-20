@@ -6,7 +6,7 @@ import Dropdown from "../../../component/dropdown.jsx";
 class Promotions extends Component{
     render(){
         var promotions = [],promotionBriefs = [];
-        if(this.props.promotions !== null){
+        if(this.props.promotions){
             var i = 0;
             for(let k in this.props.promotions){
                 i++;
@@ -19,17 +19,26 @@ class Promotions extends Component{
                 ))
                 promotionBriefs.push((<span key={key}>{k}</span>));
             }
+        }else{
+            return null
         }
         return (
-            <div className="good-promotions">
-                <Dropdown showStatus={false} 
-                foldIcon="up" unfoldIcon="down">
-                <div className="promotions-brief">{promotionBriefs}</div>
-                <div className="promotions">
-                <p>可享受以下促销</p>
-                {promotions}
-                </div>
-                </Dropdown>
+            <div className="promotion clearfix">
+                <dl>
+                    <dt>促销：</dt>
+                    <dd>
+                    <div className="good-promotions">
+                        <Dropdown showStatus={false} 
+                        foldIcon="up" unfoldIcon="down">
+                        <div className="promotions-brief">{promotionBriefs}</div>
+                        <div className="promotions">
+                        <p>可享受以下促销</p>
+                        {promotions}
+                        </div>
+                        </Dropdown>
+                    </div>
+                    </dd>
+                </dl>
             </div>
         )
     }

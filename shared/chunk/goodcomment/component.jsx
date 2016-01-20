@@ -19,11 +19,6 @@ class CommentList extends Component{
             displayFlag: 0
         }
     }
-    componentDidMount(){
-        util.registerPullDownEvent(()=>{
-            this.beginRefresh(1);
-        }.bind(this));
-    }
     beginRefresh(interval,flag){
         const {allComment,showComment,isFetching,dispatch,goodId} =  this.props;
         var comments,

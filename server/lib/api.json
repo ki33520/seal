@@ -138,8 +138,8 @@
     "commentByGood": {
         "uri": "/comments/v1/findByProductCode",
         "baseURL": {
-            "develop":"http://member.hwg.youayun.cn:7987",
-            "test": "http://member.hwg.youayun.cn",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
             "production": "http://member.tepin.hk"
         }
     },
