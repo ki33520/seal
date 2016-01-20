@@ -201,14 +201,8 @@ class GoodDetail extends Component{
                     <span className="oldPrice">市场价&yen;{good.originPrice}</span>
                     <span className="countdown"><i className="iconfont icon-time"></i>距本期结束<em>04:34:10</em></span>
                 </div>
-
-                <div className="promotion clearfix">
-                    <dl>
-                        <dt>促销：</dt>
-                        <dd><Promotions promotions={good.marketing}/></dd>
-                    </dl>
-                </div>
-                 <a href="javascript:void(null)" className="goComment clearfix">
+                <Promotions promotions={good.marketing}/>
+                 <a href={"/goodcomment/"+good.productCode} className="goComment clearfix">
                     <div className="left"><i className="iconfont icon-comment"></i>用户评论<em>(29)</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
