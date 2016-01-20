@@ -39,7 +39,7 @@ class Comment extends Component{
             }
         })
         dispatch(saveComment("/savecomment",{
-            commentsJson: obj
+            commentsJson: JSON.stringify(obj)
         }));
     }
     componentWillReceiveProps(nextProps){

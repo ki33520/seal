@@ -227,7 +227,7 @@ var comments = function(req, res, next) {
     var user = req.session.user;
     util.fetchAPI("commentsOrderById", {
         memberId: user.memberId,
-        commentsJson: JSON.stringify(req.body.commentsJson)
+        commentsJson: req.body.commentsJson
         //'[{rate:5,content:nice,isOpen:1,itemId:S732000000195}]'
     }).then(function(resp) {
         console.log(resp)
