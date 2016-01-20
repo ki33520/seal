@@ -22,10 +22,10 @@ function requestGoods (param) {
     }
 }
 
-export default function fetchGoods(url,param){
+export function fetchGoods(param){
     return (dispath)=>{
         dispath(requestGoods(param));
-        return apiRequest(url,param,{method:"POST"}).then((res)=>{
+        return apiRequest("/trendyActivity",param,{method:"POST"}).then((res)=>{
             dispath(receiveGoods(param,res))
         })
     }

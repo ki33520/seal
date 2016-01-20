@@ -4,6 +4,7 @@ import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import ScrollNav from "../../../component/scrollnav.jsx";
 import _ from "lodash";
+import Loading from "../../common/loading.jsx";
 
 class AllBrands extends Component{
     constructor(props){
@@ -46,6 +47,7 @@ class AllBrands extends Component{
                 {this.renderBrand()}
                 </ScrollNav>
                 </div>
+                <Loading active={this.props.allBrand.brandsFetching}/>
             </div>
         )
     }

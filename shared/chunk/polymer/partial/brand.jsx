@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
+import Loading from "../../common/loading.jsx";
 
 class Brand extends Component{
     constructor(props){
@@ -37,6 +38,8 @@ class Brand extends Component{
         return null
     }
     render(){
+        const isFetching = _.isEmpty(this.props.categoryBrands) ? true
+            :this.props.categoryBrands.categoryBrandsFetching
         return (
             <div className="poly_2">
                 <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"allbrands")} 
@@ -44,6 +47,7 @@ class Brand extends Component{
                 <div className="title">推荐品牌</div>
                 <div className="brandList clearfix">{this.renderRecommendBrands()}</div>
                 {this.renderCategory()}
+                <Loading active={isFetching}/>
             </div>
         )
     }

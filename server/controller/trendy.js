@@ -8,46 +8,38 @@ var config = require("../lib/config.js");
 var pageSize = 10;
 
 function filterItem(originalData){
-    let list = [];
-    if(originalData && originalData.length){
-        originalData.map((g,i)=>{
+    var list = [];
+    if(originalData && originalData.length > 0){
+        _.each(originalData,function(v,i){
             list.push({
-                id:g.singleCode,
-                title:g.title,
-                imageUrl:config.imgServer+g.imageUrl,
-                salePrice:g.salesPrice,
-                originPrice:g.originPrice,
-                stock:g.localStock<1,
-                country:g.sourceName,
-                flag:g.sourceImageUrl,
-                isQuick:g.wapPrice>0
-            });
-        });
+                id:v.singleCode,
+                title:v.title,
+                imageUrl:config.imgServer+v.imageUrl,
+                salePrice:v.salesPrice,
+                originPrice:v.originPrice,
+                stock:v.localStock<1,
+                country:v.sourceName,
+                flag:v.sourceImageUrl,
+                isQuick:v.wapPrice>0
+            })
+        })
     }
-    
     return list;
 }
 
 function filterList(originalData,pageSize){
-    let data={
-        category:[],
-        totalPages:[]
-    }
- 
-    originalData.map((item,i)=>{
-        let total = Math.ceil(item.totalCount/pageSize)||0;
-        let goods = filterItem(item.activityProductList);
-
-        data.category.push({
+    var categories = [] 
+    _.each(originalData,function(item,i){
+        var category = {
             name:item.activityName,
+            totalPage:Math.ceil(item.totalCount/pageSize)||0,
             id:item.id,
-            list:goods
-        });
-
-        data.totalPages.push(total);
-    });
-
-    return data;
+            pageIndex:1,
+            list:filterItem(item.activityProductList)
+        }
+        categories.push(category)
+    })
+    return categories;
 }
 
 var trendy = function(req, res, next) {
@@ -58,44 +50,25 @@ var trendy = function(req, res, next) {
         })
     }).then(function(resp) {
         if (resp.goods.returnCode === 0) {
-            let result = filterList(resp.goods.object,pageSize);
-            
+            let categories = filterList(resp.goods.object,pageSize);
             let initialState = {
-                category: result.category,
-                totalPages:result.totalPages,
-                pageIndexs:[1]
+                categories
             };
-
             let markup = util.getMarkupByComponent(Trendy({
                 initialState: initialState
             }));
-
             res.render('trendy', {
                 markup: markup,
                 initialState: initialState
             })
-            
         } else {
-            let ErrorContent = util.getSharedComponent("common","error.jsx");
-            let initialState = {
-                code: "500",
-                msg: resp.goods.message
-            };
-            let markup = util.getMarkupByComponent(ErrorContent({
-                initialState: initialState
-            }));
-
-            res.render('error', {
-                markup: markup,
-                initialState: initialState
-            });
+            next(new Error(resp.goods.message))
         }
     });
 
 }
 
 var activity = function(req, res, next) {
-
     let pageIndex = Number(req.body.pageIndex) || 1;
     let id = req.body.id;
 
@@ -107,13 +80,22 @@ var activity = function(req, res, next) {
             Limit: pageSize
         })
     }).then(function(resp) {
-
         if (resp.goods.returnCode === 0) {
             let goodList = filterItem(resp.goods.object.result);
             let totalPage = Math.ceil(resp.goods.object.totalCount / pageSize);
-            res.json({goodList,totalPage,pageIndex});
+            res.json({
+                pagination:{
+                    goodList:goodList,
+                    totalPage:totalPage,
+                    pageIndex:pageIndex
+                },
+                isFetched:true
+            });
         } else {
-            next(new Error(resp.msg));
+            res.json({
+                isFetched:false,
+                errMsg:resp.goods.message
+            })
         }
     });
 
