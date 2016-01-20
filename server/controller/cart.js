@@ -6,55 +6,54 @@ var CartApp = util.getSharedComponent("cart");
 var config = require("../lib/config.js");
 
 function formatCarts(originalCarts) {
-    let carts = [];
+    var carts = [];
 
      _.each(originalCarts, function(originalCart, i) {
         let cart = {
             warehouseName: originalCart.warehouseName,
             warehouseId: originalCart.warehouseId,
-            price:originalCart.salesTotalFee,
-            save:originalCart.promoFee,
-            pay:originalCart.totalFee,
-            number:originalCart.qtys,
-            saveType:originalCart.promoType,
+            promoType:originalCart.promoType,
             promoName:originalCart.promoName,
+            salesTotal:originalCart.salesTotalFee,
+            promoTotal:originalCart.promoFee,
+            total:originalCart.totalFee,
+            qtys:originalCart.qtys,
             checked:true,
             itemIds:[],
             buyeds:[],
-            groupList:[]
+            list:[]
         };
 
-        let len = 0;
         _.each(originalCart.cartMKTList, function(promoList, j){
             var group = {
-                saveType:promoList.promoType,
+                promoType:promoList.promoType,
                 promoName:promoList.promoName,
-                savePrice:promoList.promoFee,
-                productList:[]
+                promoFee:promoList.promoFee,
+                list:[]
             }
 
-            _.each(promoList.cartProductList,function(productList,k){
+            _.each(promoList.cartProductList,function(product,k){
                 var goods = {
-                    imageUrl:config.imgServer + productList.imageUrl,
-                    id:productList.singleCode,
-                    title:productList.title,
-                    props:productList.props,
-                    originPrice:productList.originPrice,
-                    price:productList.salesPrice,
-                    discount:productList.discount,
-                    number:productList.qty,
-                    stock:productList.stockFlag,
-                    limit:productList.buyLimit,
+                    cartId:product.cartId,
+                    imageUrl:config.imgServer + product.imageUrl,
+                    id:product.singleCode,
+                    title:product.title,
+                    props:product.props,
+                    originPrice:product.originPrice,
+                    salePrice:product.salesPrice,
+                    discount:product.discount,
+                    qty:product.qty,
+                    stockFlag:product.stockFlag,
+                    buyLimit:product.buyLimit,
                     checked:true
                 }
-                len++;
-                group.productList.push(goods);
-                cart.itemIds.push(productList.singleCode);
-                cart.buyeds.push(productList.qty);
+
+                group.list.push(goods);
+                cart.itemIds.push(product.singleCode);
+                cart.buyeds.push(product.qty);
             });
 
-            cart.groupList.push(group);
-            cart.len = len;
+            cart.list.push(group);
         });
 
         carts.push(cart);
@@ -64,30 +63,33 @@ function formatCarts(originalCarts) {
 }
  
 var cart = function(req, res, next) {
-    let id = req.params.id;
     let user = req.session.user;
-
     util.fetchAPI("cartByUser",{
         memberId:user.memberId
     }).then(function(resp){
 
         if(resp.returnCode === 0){
-            let carts = formatCarts(resp.object);
-            let initialState = {
-                carts
-            };
+            var carts = formatCarts(resp.object);
+            if (req.xhr === true) {
+                res.json({
+                    carts:carts,
+                    isFetched:true
+                });
+            }else{
+                let initialState = {
+                    carts:carts
+                };
 
-            let markup = util.getMarkupByComponent(CartApp({
-                initialState: initialState
-            }));
+                let markup = util.getMarkupByComponent(CartApp({
+                    initialState: initialState
+                }));
 
-            res.render('cart', {
-                markup,
-                initialState
-            });
-        
+                res.render('cart', {
+                    markup:markup,
+                    initialState:initialState
+                });
+            }
         }else{
-
             next(new Error(ret.msg));
         }
     })
@@ -95,31 +97,27 @@ var cart = function(req, res, next) {
 
 var updateCart = function(req, res, next) {
     let user = req.session.user;
-    let id = req.body.id;
-    let number = req.body.number;
-    let isCumulation = req.body.cumulation;
+    let singleCode = req.body.singleCode;
+    let qty = req.body.qty;
+    let figureUpFlag = req.body.figureUpFlag;
 
     util.fetchAPI('updateCart', {
         memberId: user.memberId,
-        singleCode: id,
-        qty: number,
-        figureUpFlag: isCumulation
-    },true).then(function(resp) {
+        singleCode:singleCode,
+        qty: qty,
+        figureUpFlag: figureUpFlag
+    }).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({
                 isUpdated: true
             })
         } else {
             res.json({
-                isUpdated: true,
+                isUpdated: false,
                 errMsg: resp.msg
             })
         }
-    }, function() {
-        res.json({
-            apiResponded: false
-        })
-    })
+    });
 }
 
 var deleteCart = function(req, res, next) {
@@ -129,14 +127,15 @@ var deleteCart = function(req, res, next) {
     util.fetchAPI('deleteCart', {
         memberId: user.memberId,
         cartId: cartId
-    },true).then(function(resp) {
+    }).then(function(resp) {
+        console.log(resp)
         if(resp.returnCode === 0){
             res.json({
                 isDeleted: true
             })
         } else {
             res.json({
-                isDeleted: true,
+                isDeleted: false,
                 errMsg: resp.msg
             })
         }
@@ -146,48 +145,19 @@ var deleteCart = function(req, res, next) {
         })
     })
 }
-
-var fetchCart = function(req, res, next) {
-    let id = req.params.id;
-    let user = req.session.user;
-    let cartIndex = req.body.cartIndex;
-    let groupIndex = req.body.groupIndex;
-    let goodsIndex = req.body.goodsIndex;
-  
-    util.fetchAPI("cartByUser",{
-        memberId:user.memberId
-    },true).then(function(resp){
-
-        if(resp.returnCode === 0){
-            let carts = formatCarts(resp.object);
-            let cart = carts[cartIndex];
  
-            res.json({
-                isFetched: true,
-                cart:cart
-            });
-        }else{
-            res.json({
-                isFetched:false,
-                errMsg:resp.msg
-            });
-        }
-    });
-}
+var calculatePrice = function(req, res, next) {
+    let singleCodes = req.body.singleCodes;
+    let qtys = req.body.qtys;
 
-var queryCart = function(req, res, next) {
-    let id = req.body.id;
-    let number = req.body.number;
-
-    util.fetchAPI('queryCart', {
-        singleCodes: id,
-        qtys: number
+    util.fetchAPI('calculatePrice', {
+        singleCodes,
+        qtys
     }).then(function(resp) {
         if(resp.returnCode === 0){
-            let carts = formatCarts(resp.object);
             res.json({
                 isFetched: true,
-                carts
+                cart:formatCarts(resp.object)
             })
         }
     }, function() {
@@ -197,10 +167,10 @@ var queryCart = function(req, res, next) {
     })
 }
 
+
 module.exports = {
     cart: cart,
     updateCart: updateCart,
-    queryCart:queryCart,
-    deleteCart:deleteCart,
-    fetchCart:fetchCart
+    calculatePrice:calculatePrice,
+    deleteCart:deleteCart
 };

@@ -76,7 +76,7 @@
             "production": "http://product.tepin.hk"
         }
     },
-    "queryCart":{
+    "calculatePrice":{
         "uri": "/cart/v1/findCartsNotLogin",
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
@@ -156,7 +156,7 @@
     "deleteCart": {
         "uri": "/cart/v1/deleteCartById",
         "baseURL": {
-            "develop": "http://order.hwg.youayun.cn:7989",
+            "develop": "http://order.hwg.youayun.cn:7986",
             "production": "http://product.tepin.hk"
         }
     },
