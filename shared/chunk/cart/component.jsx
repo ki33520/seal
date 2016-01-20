@@ -7,67 +7,84 @@ import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
-import {updateCart,toggleCart,toggleAll,deleteCart,queryCart} from "./action.es6";
+import {updateCart,toggleCart,toggleAllChecked,deleteCart,toggleAllNotChecked} from "./action.es6";
 import Checkbox from "../../component/form/checkbox.jsx";
 import {urlParam,base64Encode} from "../../lib/util.es6";
 
 
+
 class Cart extends Component {
-    checkout(cart,cartIndex){
+    checkout(cart){
+        let {itemIds,buyeds} = cart;
+        for(let i=0,n=buyeds.length;i<n;i++){
+            if(buyeds[i]===0){
+                buyeds.splice(i,1);
+                itemIds.splice(i,1);
+            }
+        }
+
         let queryParam = base64Encode(urlParam({
-            itemIds:cart.itemIds.join(","),
-            buyeds:cart.buyeds.join(",")
+            itemIds:itemIds.join(","),
+            buyeds:buyeds.join(",")
         }));
+
         window.location.assign(`/confirmorder/${queryParam}`)
     }
 
-    handleChangeBuyed(goods,cartIndex,number) {
+    handleChangeBuyed(goods,number) {
         const {dispatch} = this.props;
         if(goods.checked===false){
             return false;
         }
-        dispatch(queryCart({
-            id:goods.id,
-            number,
-            cartIndex
+        if(goods.buyLimit<number){
+            return false;
+        }
+        dispatch(updateCart({
+            singleCode:goods.id,
+            qty:number,
+            figureUpFlag:false
         }));
     }
 
     toggleCartItemsChecked(cartIndex,checked){
-        const {dispatch} = this.props;
-  
-        dispatch(toggleAll({
+        const {dispatch,carts} = this.props;
+        if(checked){
+            dispatch(toggleAllChecked());
+        }else{
+            dispatch(toggleAllNotChecked({
+                cartIndex
+            }));
+        }
+        
+    }
+
+    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
+        const {dispatch,carts} = this.props;
+        let {itemIds,buyeds} = carts[cartIndex];
+        let index = itemIds.indexOf(goods.id);
+        buyeds[index]= checked ? goods.qty : 0;
+         
+        dispatch(toggleCart({
+            singleCodes:itemIds.join(','),
+            qtys:buyeds.join(','),
             cartIndex,
+            groupIndex,
+            goodsIndex,
             checked
         }));
     }
 
-    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
-        const {dispatch} = this.props;
-        const number = checked ? goods.number : 0;
-       
-        dispatch(toggleCart({
-            id:goods.id,
-            isCumulation:false,
-            number,
-            checked,
-            cartIndex,
-            groupIndex,
-            goodsIndex
-        }));
-    }
-
-    handleDeleteCart(id){
+    handleDeleteCart(cartId){
         const {dispatch} = this.props;
         dispatch(deleteCart({
-            id
+            cartId:cartId
         }));
     }
  
     renderGoods(goods,cartIndex,groupIndex,goodsIndex) {
         return(
             <div className="group" key={"goods-"+goodsIndex}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.id)}></a>
+                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId)}></a>
                 <div className="J_moveRight">
                      
                     <Checkbox checked={goods.checked}
@@ -75,18 +92,18 @@ class Cart extends Component {
                     onChange={this.toggleItemChecked.bind(this,goods,cartIndex,groupIndex,goodsIndex)} />
                     <div>
                         <div className="img_wrap">
-                            <a className="J_ytag cartlist" href="goods.php?id=878">
+                            <a className="J_ytag cartlist" href={"/gooddetail/"+goods.id}>
                             <img width="100%" src={goods.imageUrl} /></a>
-                            <span className="limitBuy">限购{goods.limit}件</span>
+                            <span className="limitBuy">限购{goods.buyLimit}件</span>
                         </div>
                         <div className="gd_info">
                             <p className="name">
                               <b>{goods.title}</b>
-                              <span>&yen;{goods.price}</span>
-                              <em>x{goods.number}</em>
+                              <span>&yen;{goods.salePrice}</span>
+                              <em>x{goods.qty}</em>
                             </p>
                             <div className="act_wrap"> 
-                                <NumberPicker value={goods.number} onChange={this.handleChangeBuyed.bind(this,goods,cartIndex)}/>
+                                <NumberPicker value={goods.qty} minimum={1} maximum={goods.buyLimit} onChange={this.handleChangeBuyed.bind(this,goods)}/>
                             </div>
                         </div>
                     </div>
@@ -95,30 +112,30 @@ class Cart extends Component {
         );
     }
 
-    renderRow(rows,cartIndex,groupIndex){
-        let goods = [];
+    renderListRow(group,cartIndex,groupIndex){
+        let list = [];
         let manjian = classNames("manjian",{
-            hide:!rows.promoName
+            hide:!group.promoType
         });
-        rows.productList.map((item,k)=>{
-            goods.push(this.renderGoods(item,cartIndex,groupIndex,k))
+        group.list.map((goods,k)=>{
+            list.push(this.renderGoods(goods,cartIndex,groupIndex,k))
         })
 
         return(
             <div className="J_item" key={"row-" + groupIndex}>
-                <div className={manjian}><em>满减</em>{rows.promoName}</div>
-                {goods}
+                <div className={manjian}><em>满减</em>{group.promoName}</div>
+                {list}
             </div>
         );
     }
 
-    renderTips(money){
+    renderTips(money,buyLimit,dutyFree){
         let message = null;
 
-        if(money>=50){
-            message = "省钱贴士：单笔订单税金50元以内，可以免税哦！"
-        }else if(money >1000){
-            message = "啊哦，海关规定购买多件的总价（不含税）不能超过&yen;1000哦，请您分多次购买。";
+        if(money>=dutyFree){
+            message = "省钱贴士：单笔订单税金"+dutyFree+"元以内，可以免税哦！"
+        }else if(money >buyLimit){
+            message = "啊哦，海关规定购买多件的总价（不含税）不能超过&yen;"+buyLimit+"哦，请您分多次购买。";
         }
 
         if(message){
@@ -135,20 +152,25 @@ class Cart extends Component {
         return null;
     }
 
-    renderGroup(carts){
+    renderListGroup(carts){
 
         return carts.map((cart,i)=>{
             let rows = [];
-            cart.groupList.forEach((list,j)=>{
-                rows.push(this.renderRow(list,i,j));
+            let buyeds = [];
+            cart.buyeds.map((item)=>{
+                item && buyeds.push(item);
             });
-            let btnClass = classNames({
-                "btn_buy":true,
-                "unable_buy":cart.itemIds.length===0
+            
+            cart.list.forEach((list,j)=>{
+                rows.push(this.renderListRow(list,i,j));
+            });
+            let btnClass = classNames("btn_buy",{
+                "unable_buy":buyeds.length===0
             });
             let depot = classNames("depot_bot",{
-                hide:!cart.promoName
-            })
+                hide:!cart.promoType
+            });
+             
             return(
                 <div className="onlyList clearfix" key={"cart-" + i}>
                     <div className="J_store clearfix">
@@ -163,21 +185,21 @@ class Cart extends Component {
                     {rows}
                     <div className="section_wrap cart_buy">
                         <div className="cartFirst clearfix">
-                            <span>已选商品{cart.number}件</span>
+                            <span>已选商品{cart.qtys}件</span>
                             <div className="cartFirst_two">
-                                <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{cart.price}</p>
-                                <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.save}</p>
+                                <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{cart.salesTotal}</p>
+                                <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.promoTotal}</p>
                             </div>
                         </div>
                         <div id="J_wrapperCartTop">
                             <p>
-                                <span>总计(不含运费、税金)：<em>&yen;{cart.pay}</em></span>
+                                <span>总计(不含运费、税金)：<em>&yen;{cart.total}</em></span>
                             </p>
                             <p>
                                 <input type="button"  className={btnClass} value="结算" onClick={this.checkout.bind(this,cart)}/>
                             </p>
                         </div>
-                        {this.renderTips(cart.pay)}
+                        {this.renderTips(cart.total,cart.buyLimit,cart.dutyFree)}
                     </div>
                 </div>
             )
@@ -185,17 +207,21 @@ class Cart extends Component {
         
     }
 
-    cartBody(){
+    renderCart(){
         const {carts} = this.props;
         if(carts.length){
             return  (
                 <div className="cart">
-                    {this.renderGroup(carts)}
+                    {this.renderListGroup(carts)}
                 </div>
             )
         }else{
             return (
-                <Empty />
+                <div className="empty">
+                    <img src="/client/asset/images/empty_cart.png" />
+                    <span>购物车还空着呢，快去挑选商品吧！</span>
+                    <a href="/" className="empty_btn">挑选商品</a>
+                </div>
             )
         }
     }
@@ -208,22 +234,9 @@ class Cart extends Component {
                     <span className="title">购物车</span>
                 </Header>
                 
-                {this.cartBody()}
+                {this.renderCart()}
     
                 <Footer activeIndex="3"/>
-                <MaskLayer visible={false} />
-            </div>
-        )
-    }
-}
-
-class Empty extends Component {
-    render(){
-        return (
-            <div className="empty">
-                <img src="/client/asset/images/empty_cart.png" />
-                <span>购物车还空着呢，快去挑选商品吧！</span>
-                <a href="/" className="empty_btn">挑选商品</a>
             </div>
         )
     }

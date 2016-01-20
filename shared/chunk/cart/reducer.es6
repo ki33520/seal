@@ -2,10 +2,13 @@
 
 import {combineReducers} from "redux";
 import _ from "lodash";
-import {START_UPDATE_CART,FINISH_UPDATE_CART,
-    FINISH_DELETE_CART,FINISH_TOGGLE_CART,
-FINISH_TOGGLE_ALL,FINISH_TOGGLE_NOT,
-FINISH_QUERY_CART} from "./action.es6";
+import {
+    START_DELETE_CART,FINISH_DELETE_CART,
+    START_UPDATE_CART,FINISH_UPDATE_CART,
+    START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
+    START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
+    TOGGLE_ALL_NOT
+} from "./constant.es6";
 
 function cartByUser(state={},action){
     switch(action.type){
@@ -13,90 +16,65 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isFetching:true
             });
-
         case FINISH_UPDATE_CART:
-            var carts = state.carts.slice();
-            var {cartIndex,groupIndex,goodsIndex,number} = action.param;
-            //var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
-            
-
-            carts[cartIndex]=action.res.cart;
- 
             return Object.assign({},state,{
                 isFetching:false,
-                carts
+                carts:action.res.carts
             });
-
-        case FINISH_TOGGLE_CART:
-            var carts = state.carts.slice();
-            var {id,cartIndex,groupIndex,goodsIndex,checked} = action.param;
-            var goods = carts[cartIndex].groupList[groupIndex].productList[goodsIndex];
-
-            goods.checked = checked;
-
-            if(checked){
-                carts[cartIndex].itemIds.push(id);
-                carts[cartIndex].buyeds.push(goods.number);
-                carts[cartIndex].checked = carts[cartIndex].len === carts[cartIndex].itemIds.length;
-            }else{
-                var index = carts[cartIndex].itemIds.indexOf(id);
-                carts[cartIndex].itemIds.splice(index,1);
-                carts[cartIndex].buyeds.splice(index,1);
-                carts[cartIndex].checked = false;
+        case START_TOGGLE_ITEM:
+            return Object.assign({},state,{
+                isFetched:false
+            });
+        case FINISH_TOGGLE_ITEM:
+            var {cartIndex,groupIndex,goodsIndex,checked} = action.param;
+            var carts = action.res.cart;
+            carts[cartIndex].list[groupIndex].list[goodsIndex].qty=state.carts[cartIndex].list[groupIndex].list[goodsIndex].qty;
+            carts[cartIndex].list[groupIndex].list[goodsIndex].checked = checked;
+            if(carts[cartIndex].buyeds.length===1){
+                carts[cartIndex].checked = checked;
             }
-            
+
             return Object.assign({},state,{
-                isFetching:false,
-                carts
+                isFetched:action.res.isFetched,
+                carts:carts
             });
-
-
+        case START_DELETE_CART:
+            return Object.assign({},state,{
+                isDeleted:false
+            });
         case FINISH_DELETE_CART:
-            var carts = state.carts.slice();
-            var {cartIndex} = action.param;
-            if(action.res.isFetched){
-                carts[cartIndex]=action.res.cart;
-                return Object.assign({},state,{
-                    isFetching:false,
-                    carts
-                });
-            }
-            
+            return Object.assign({},state,{
+                isDeleted:action.res.isDeleted,
+                carts:action.res.carts
+            });
         case FINISH_TOGGLE_ALL:
-            var carts = state.carts.slice();
-            var {cartIndex,checked} = action.param;
-            carts[cartIndex].checked=checked;
-            carts[cartIndex] =  action.res.cart;
-            
+            var carts = action.res.carts; 
             return Object.assign({},state,{
                 isFetching:false,
+                isFetched:action.res.isFetched,
                 carts
             });
-
-        case FINISH_TOGGLE_NOT:
+        case TOGGLE_ALL_NOT:
+            var cartIndex = action.param.cartIndex;
             var carts = state.carts.slice();
-            var {cartIndex,checked} = action.param;
-            carts[cartIndex].checked=false;
-            carts[cartIndex].itemIds=[];
-            carts[cartIndex].buyeds=[];
-            carts[cartIndex].number = 0;
-            carts[cartIndex].pay = 0;
-            carts[cartIndex].save = 0;
-            carts[cartIndex].price = 0;
-            carts[cartIndex].groupList.map((cart,i)=>{
-                cart.productList.map((goods,j)=>{
-                    goods.checked=false
+            var cart = Object.assign({},carts[cartIndex]);
+            cart.checked = false;
+            cart.buyeds.forEach((item,i)=>{
+                cart.buyeds[i] = 0;
+            });
+            cart.total = 0;
+            cart.promoTotal = 0;
+            cart.qtys = 0;
+            cart.salesTotal = 0;
+            cart.list.forEach((group,i)=>{
+                group.list.forEach((goods,j)=>{
+                    cart.list[i].list[j].checked = false;
                 })
-            })
-            return Object.assign({},state,{
-                carts
             });
-        case FINISH_QUERY_CART:
-            var {cartIndex} = action.param;
-            var carts = state.carts.slice();
-            carts[cartIndex] = action.res.carts;
-
+            carts[cartIndex] = cart;
             return Object.assign({},state,{
+                isFetching:false,
+                isFetched:true,
                 carts
             });
         default:

@@ -4,7 +4,7 @@ import classNames from "classnames";
 
 class GoodList extends Component{
     renderGoods(){
-    	const {list} = this.props.category;
+        const {list} = this.props.category;
         if(list.length > 0){
             return list.map((good,i)=>{
                 const statusClass = classNames({
@@ -27,7 +27,7 @@ class GoodList extends Component{
         return null
     }
     render(){
-    	return (
+        return (
             <div className="activityGeneral">
             {this.renderGoods()}
             </div>

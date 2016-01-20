@@ -16,8 +16,15 @@ config["runtime"] = runtime;
 if (runtime === "develop") {
     config.apiServer = "http://wsns.tepin.youayun.cn";
     config.oathServer = "https://ssl.e9448.com";
+    config.appKey = "b320de0549a24ff6995dc0e2c38ff491";
+    config.appId = "haiwaigou";
 }
-
+if(runtime === "test"){
+    config.apiServer = "http://wsns.tepin.youayun.cn";
+    config.oathServer = "https://ssl.e9448.com";
+    config.appKey = "0236fe7659864b1b881cb6e94709de3f";
+    config.appId = "hwg";
+}
 config.loginUrl = config.oathServer +
     "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code";
 config.logoutUrl = config.oathServer +

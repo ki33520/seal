@@ -2,14 +2,16 @@
     "flashBuy": {
         "uri": "/content/v1/activitysg/list",
         "baseURL": {
-            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "develop":"http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
     },
     "fetchAssociateKeywords":{
         "uri":  "/search/v1/findListByAssociateWAP",
         "baseURL": {
-            "develop": "http://192.168.0.162:7988",
+            "develop": "http://solr.hwg.youayun.cn:7988",
+            "test": "http://solr.hwg.youayun.cn:7988",
             "production": "http://product.tepin.hk"
         }
     }

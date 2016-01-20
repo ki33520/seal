@@ -2,21 +2,24 @@
     "confirmOrder": {
         "uri": "/cart/v1/confirmOrder",
         "baseURL": {
-            "develop": "http://order.hwg.youayun.cn:7986",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
     },
     "saveOrder":{
         "uri": "/order/v1/createOrder",
         "baseURL": {
-            "develop": "http://order.hwg.youayun.cn:7986",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
     },
     "orderStatus":{
         "uri": "/pay/v1/findOrderStatus",
         "baseURL": {
-            "develop": "http://order.hwg.youayun.cn:7986",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
     }
