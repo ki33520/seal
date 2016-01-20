@@ -7,7 +7,7 @@ import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import Sticky from "../../../component/sticky.jsx";
 import Icon from "../../../component/icon.jsx";
-import GoodList from "./goodList.jsx";
+import GoodList from "./goodlist.jsx";
 import Header from "../../common/header.jsx";
 import Footer from "../../common/footer.jsx";
 import Loading from "../../common/loading.jsx";

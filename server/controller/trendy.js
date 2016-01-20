@@ -12,14 +12,14 @@ function filterItem(originalData){
     if(originalData && originalData.length > 0){
         _.each(originalData,function(v,i){
             list.push({
-                id:v.singleCode,
+                singleCode:v.singleCode,
                 title:v.title,
-                imageUrl:config.imgServer+v.imageUrl,
+                imageUrl:config.imgServer + v.imageUrl,
                 salePrice:v.salesPrice,
                 originPrice:v.originPrice,
                 stock:v.localStock<1,
                 country:v.sourceName,
-                flag:v.sourceImageUrl,
+                flag:config.imgServer + v.sourceImageUrl,
                 isQuick:v.wapPrice>0
             })
         })

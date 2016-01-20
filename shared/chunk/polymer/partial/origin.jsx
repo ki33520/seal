@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import Loading from "../../common/loading.jsx";
+import _ from "lodash";
 
 class Origin extends Component{
     constructor(props){

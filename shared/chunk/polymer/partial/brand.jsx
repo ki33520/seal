@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import Loading from "../../common/loading.jsx";
+import _ from "lodash";
 
 class Brand extends Component{
     constructor(props){
