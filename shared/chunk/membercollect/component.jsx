@@ -19,10 +19,15 @@ class MembercollectList extends Component{
         super(props);
         const {collect,isFetching,isFetched} = props;
     }
+    componentDidMount(){
+        dom.registerPullDownEvent(()=>{
+            this.beginRefresh();
+        }.bind(this));
+    }
     beginRefresh(){
         const {dispatch} = this.props;
         const {collect,isFetching} = this.props;
-        var pageCount = Math.ceil(collect.totalCount/collect.pageSize);
+        var pageCount = collect.pageCount;
         var pageIndex = collect.pageIndex;
         var nextPage = pageIndex + 1;
         if(pageCount < nextPage){
@@ -37,7 +42,6 @@ class MembercollectList extends Component{
         }))
     }
     render(){
-        console.log(this.props)
         const {collect,isFetching} = this.props;
         return (
             <div className="collect-content">
@@ -45,8 +49,8 @@ class MembercollectList extends Component{
                     <span className="title">我的收藏</span>
                 </Header>
                 <Node {...collect} />
-                <GoTop />
-                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
+                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                <GoTop relative={true}/>
             </div>
         );
     }

@@ -299,7 +299,16 @@ let dom = {
             return true;
         }
         return false;
-    }
+      },
+      registerPullDownEvent(callback) {
+        var self 
+        this.bindEvent(window,'scroll',()=>{
+            var scrollTop = this.scrollTop(window);
+            if (document.documentElement.clientHeight + scrollTop >= document.documentElement.scrollHeight) {
+                callback();
+            }
+        });
+      }
 }
 
 export default dom;

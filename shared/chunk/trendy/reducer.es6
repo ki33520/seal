@@ -6,26 +6,39 @@ import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
 } from "./constant.es6";
+import {CHANGE_FIELD} from "../common/constant.es6";
 
-function goodsByParam(state={},action){
+function trendy(state={},action){
+    let categories = state.categories
     switch(action.type){
         case REQUEST_GOODS:
+            categories[action.param.index]["isFetching"] = true
             return Object.assign({},state,{
-                isFetching:true
+                categories
             });
         case RECEIVE_GOODS:
-            let totalPages = state.totalPages.slice();
-            let pageIndexs = state.pageIndexs.slice();
-            let category = state.category.slice();
-            let {index} = action.param;
-            category[index].list = _.union(action.res.goodList,category[index].list);
-            totalPages[index] = action.res.totalPage;
-            pageIndexs[index] = action.res.pageIndex;
+            categories[action.param.index]["isFetching"] = false
+            categories[action.param.index]["isFetched"] = action.res.isFetched
+            if(action.res.isFetched){
+                categories[action.param.index]["list"] = _.union(categories[action.param.index]["list"],
+                    action.res.pagination.goodList)
+                categories[action.param.index]["totalPage"] = action.res.pagination.totalPage
+                categories[action.param.index]["pageIndex"] = action.res.pagination.pageIndex
+            }
             return Object.assign({},state,{
-                isFetching:false,
-                category,
-                totalPages,
-                pageIndexs
+                categories
+            });
+        default:
+            return state;
+    }
+}
+
+function search(state={},action){
+    switch(action.type){
+        case CHANGE_FIELD:
+            const {name,value} = action;
+            return Object.assign({},state,{
+                [name]:value
             });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{
@@ -39,27 +52,28 @@ function goodsByParam(state={},action){
                 hotwords,
                 hotwordFetched,
                 hotwordFetching:false
-            });
+            })
         case REQUEST_ASSOICATEWORD:
             return Object.assign({},state,{
                 associateWordFetched:false,
                 associateWordFetching:true
             });
         case RESPONSE_ASSOICATEWORD:
-            const associatewords = action.res.result;
+            const associateWords = action.res.result;
             const associateWordFetched = action.res.associateWordFetched;
             return Object.assign({},state,{
-                associatewords,
+                associateWords,
                 associateWordFetched,
                 associateWordFetching:false
-            });
+            })
         default:
             return state;
     }
 }
 
 const rootReducer = combineReducers({
-    goodsByParam
+    trendy,
+    search
 });
 
 export default rootReducer;

@@ -2,6 +2,8 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
+import Loading from "../../common/loading.jsx";
+import _ from "lodash";
 
 class Brand extends Component{
     constructor(props){
@@ -11,7 +13,7 @@ class Brand extends Component{
         let {recommendBrands} = this.props.categoryBrands
         if(recommendBrands){
             return recommendBrands.map((brand,i)=>{
-                return <a href="#" key={i}><div><img src={brand.imageUrl}/></div></a>
+                return <a href={"/goodlist/"+brand.englishName} key={i}><div><img src={brand.imageUrl}/></div></a>
             })
         }
         return null
@@ -21,7 +23,7 @@ class Brand extends Component{
         if(categories){
             return categories.map((category,i)=>{
                 let brands = category.brands.map((brand,k)=>{
-                    return <a href="#" key={k}><div><img src={brand.imageUrl}/></div></a>
+                    return <a href={"/goodlist/"+brand.englishName} key={k}><div><img src={brand.imageUrl}/></div></a>
                 })
                 if(brands){
                     return (
@@ -37,6 +39,8 @@ class Brand extends Component{
         return null
     }
     render(){
+        const isFetching = _.isEmpty(this.props.categoryBrands) ? true
+            :this.props.categoryBrands.categoryBrandsFetching
         return (
             <div className="poly_2">
                 <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"allbrands")} 
@@ -44,6 +48,7 @@ class Brand extends Component{
                 <div className="title">推荐品牌</div>
                 <div className="brandList clearfix">{this.renderRecommendBrands()}</div>
                 {this.renderCategory()}
+                <Loading active={isFetching}/>
             </div>
         )
     }

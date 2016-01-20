@@ -56,7 +56,6 @@ class Floor extends Component{
             case "STATUS_CONFIRMED":
                 return (
                     <div className="order-buttons">
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="pop_c">查看物流</a>
                     </div>
                 )
             case "STATUS_OUT_HOUSE":

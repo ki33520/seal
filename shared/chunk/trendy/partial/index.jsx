@@ -7,49 +7,46 @@ import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import Sticky from "../../../component/sticky.jsx";
 import Icon from "../../../component/icon.jsx";
-import GoodList from "./goodList.jsx";
+import GoodList from "./goodlist.jsx";
 import Header from "../../common/header.jsx";
 import Footer from "../../common/footer.jsx";
 import Loading from "../../common/loading.jsx";
 
 class Trendy extends React.Component{
- 
-    beginRefresh(i){
-        const {dispatch,category,totalPages,pageIndexs,isFetching} = this.props;
-        let curentPage = pageIndexs[i];
-        let totalPage = totalPages[i];
-        let nextPage = curentPage + 1;
-
+    beginRefresh(index){
+        const {categories} = this.props.trendy;
+        let curentPage = categories[index].pageIndex
+        let totalPage = categories[index].totalPage
+        let nextPage = curentPage + 1
+        let isFetching = categories[index].isFetching
         if(isFetching || totalPage <= curentPage){
             return false;
         }
 
-        dispatch(fetchGoods('/trendyActivity',{
-            id:category[i].id,
+        this.props.fetchGoods({
+            id:categories[index].id,
             pageIndex:nextPage,
-            index:i
-        }));
+            index:index
+        });
     }
-    handleClick(index){
-        const {category,totalPages,dispatch} = this.props;
- 
-        if(totalPages[index]){
-            return false;
+    handleSelect(index){
+        const {categories} = this.props.trendy;
+        if(categories[index].list.length === 0){
+            this.props.fetchGoods({
+                id:categories[index].id,
+                pageIndex:1,
+                index
+            });
         }
-        dispatch(fetchGoods('/trendyActivity',{
-            id:category[index].id,
-            pageIndex:1,
-            index
-        }));
     }
     render(){
-        const {category} = this.props;
-        const tabs = category.map((channel,i)=>{
+        const {categories} = this.props.trendy;
+        const tabs = categories.map((category,i)=>{
             return (
-                <SlideTabsItem navigator={()=><i>{channel.name}</i>} key={i}>
-                    <GoodList channel={channel} />
-                    <Refresher handleRefresh={this.beginRefresh.bind(this,i)}/>
-                    <Loading active={this.props.isFetching}/>
+                <SlideTabsItem navigator={()=><i>{category.name}</i>} key={i}>
+                    <GoodList category={category} />
+                    <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={category.isFetching}/>
+                    <Loading active={category.list.length === 0}/>
                 </SlideTabsItem>
             )
         });
@@ -61,8 +58,8 @@ class Trendy extends React.Component{
                         <Icon icon="search"/>
                     </div>
                 </Header> 
-                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
-                    {tabs}
+                <SlideTabs axis="x" onSelect={this.handleSelect.bind(this)}>
+                {tabs}
                 </SlideTabs>
                 <Footer activeIndex="2"/>
             </div>

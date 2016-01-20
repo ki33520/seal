@@ -14,6 +14,8 @@ function memberCollectByUser(state={},action){
                 isFetching:true
             })
         case RECEIVE_COLLECT:
+            var collect = {...state.collect};
+            action.res.list = _.union(collect.list,action.res.list);
             return Object.assign({},state,{
                 isFetched:true,
                 isFetching:false,
