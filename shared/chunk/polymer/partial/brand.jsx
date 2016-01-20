@@ -13,7 +13,7 @@ class Brand extends Component{
         let {recommendBrands} = this.props.categoryBrands
         if(recommendBrands){
             return recommendBrands.map((brand,i)=>{
-                return <a href="#" key={i}><div><img src={brand.imageUrl}/></div></a>
+                return <a href={"/goodlist/"+brand.englishName} key={i}><div><img src={brand.imageUrl}/></div></a>
             })
         }
         return null
@@ -23,7 +23,7 @@ class Brand extends Component{
         if(categories){
             return categories.map((category,i)=>{
                 let brands = category.brands.map((brand,k)=>{
-                    return <a href="#" key={k}><div><img src={brand.imageUrl}/></div></a>
+                    return <a href={"/goodlist/"+brand.englishName} key={k}><div><img src={brand.imageUrl}/></div></a>
                 })
                 if(brands){
                     return (

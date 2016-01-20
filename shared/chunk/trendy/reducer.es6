@@ -6,6 +6,7 @@ import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
 } from "./constant.es6";
+import {CHANGE_FIELD} from "../common/constant.es6";
 
 function trendy(state={},action){
     let categories = state.categories
@@ -27,6 +28,18 @@ function trendy(state={},action){
             return Object.assign({},state,{
                 categories
             });
+        default:
+            return state;
+    }
+}
+
+function search(state={},action){
+    switch(action.type){
+        case CHANGE_FIELD:
+            const {name,value} = action;
+            return Object.assign({},state,{
+                [name]:value
+            });
         case REQUEST_HOTWORD:
             return Object.assign({},state,{
                 hotwordFetched:false,
@@ -39,27 +52,28 @@ function trendy(state={},action){
                 hotwords,
                 hotwordFetched,
                 hotwordFetching:false
-            });
+            })
         case REQUEST_ASSOICATEWORD:
             return Object.assign({},state,{
                 associateWordFetched:false,
                 associateWordFetching:true
             });
         case RESPONSE_ASSOICATEWORD:
-            const associatewords = action.res.result;
+            const associateWords = action.res.result;
             const associateWordFetched = action.res.associateWordFetched;
             return Object.assign({},state,{
-                associatewords,
+                associateWords,
                 associateWordFetched,
                 associateWordFetching:false
-            });
+            })
         default:
             return state;
     }
 }
 
 const rootReducer = combineReducers({
-    trendy
+    trendy,
+    search
 });
 
 export default rootReducer;

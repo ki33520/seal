@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
 import {fetchHotWord} from "../action.es6"
 
 class SearchBox extends Component{
@@ -47,7 +48,7 @@ class SearchBox extends Component{
     }
     renderAssociate(){
         const {keyword,associateWords} = this.props.search;
-        if(associateWords.length > 0){
+        if(associateWords && associateWords.length > 0){
             return associateWords.map((associateWord,i)=>{
                 return (
                 <div className="searchOut" key={i}>
@@ -64,6 +65,9 @@ class SearchBox extends Component{
     }
     render(){
         const {keyword} = this.props.search;
+        const resetClasses = classNames("reset",{
+            active:!!keyword
+        })
         return (
             <div className="search-wrap">
                 <div className="search-header">
@@ -72,7 +76,7 @@ class SearchBox extends Component{
                         value={keyword} 
                         onChange={this.handleSearch.bind(this)}/>
                         <span></span>
-                        <div className="reset" onClick={this.handleReset.bind(this)}><i className="iconfont icon-close-fill"></i></div>
+                        <div className={resetClasses} onClick={this.handleReset.bind(this)}><i className="iconfont icon-close-fill"></i></div>
                     </div>
                     <div className="search-btn"><a href="javascript:void(null)" 
                     onClick={this.props.changeScene.bind(this,"index")}>取消</a></div>

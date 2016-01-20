@@ -1,4 +1,4 @@
-
+'use strict';
 export const REQUEST_HOTWORD = 'REQUEST_HOTWORD';
 export const RESPONSE_HOTWORD = 'RESPONSE_HOTWORD';
 export const REQUEST_GOODS = "REQUEST_GOODS";

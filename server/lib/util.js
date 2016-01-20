@@ -33,7 +33,7 @@ var util = {
     getMarkupByComponent: function(component) {
         return ReactDOMServer.renderToString(component);
     },
-    fetchAPI: function(apiName, param, isMock) {
+    fetchAPI: function(apiName, param, isMock,options) {
         isMock = isMock || false;
         param = _.extend(param,{
             appId:"haiwaigou",
@@ -44,9 +44,9 @@ var util = {
         var signature = this.getSignatureByParam(param,"b320de0549a24ff6995dc0e2c38ff491")
         // console.log('signature',signature)
         param = _.extend(param,{h:signature})
-         console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
+         // console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
-            return sharedUtil.apiRequest(config.api[apiName].url, param)
+            return sharedUtil.apiRequest(config.api[apiName].url, param,options)
         } else {
             var listenPort = process.env.LISTEN_PORT || 3000;
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
