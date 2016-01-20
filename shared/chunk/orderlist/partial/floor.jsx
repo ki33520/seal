@@ -91,40 +91,25 @@ class Floor extends Component{
         }
     }
     renderGoods(itemList){
-        if(itemList.length > 1){
-            itemList = itemList.map((good,i)=>{
-                return (
-                    <div className="clearfix" key={i}>
-                        <span className="img_wrap J_ytag cartlist">
-                        <Image placeholder={good.singleImageUrl} />
-                        </span>
-                        <div className="gd_info">
-                            <p className="name">{good.singleTitle}</p>
-                            <p className="value">&yen;{good.salesTotalFee}</p>
-                        </div>
-                    </div>
-                )
-            })
             return (
                 <div className="J_moveRight">
-                    {itemList}
+                    {
+                        itemList.map((good,i)=>{
+                            return (
+                                <div className="clearfix" key={i}>
+                                    <span className="img_wrap J_ytag cartlist">
+                                    <Image placeholder={good.singleImageUrl} />
+                                    </span>
+                                    <div className="gd_info">
+                                        <p className="name">{good.singleTitle}</p>
+                                        <p className="value">&yen;{good.salesPrice}</p>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
-            )
-        }
-        let good = itemList[0];
-        return (
-            <div className="J_moveRight">
-                <div className="clearfix">
-                    <span className="img_wrap J_ytag cartlist">
-                        <Image placeholder={good.singleImageUrl} />
-                    </span>
-                    <div className="gd_info">
-                        <p className="name">{good.singleTitle}</p>
-                        <p className="value">&yen;{good.salesTotalFee}</p>
-                    </div>
-                </div>
-            </div>
-        )
+            );
     }
     renderOutTime(child){
         const {systemTime} = this.props;
