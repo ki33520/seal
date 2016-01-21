@@ -35,7 +35,7 @@ var util = {
     },
     fetchAPI: function(apiName, param, isMock,options) {
         isMock = isMock || false;
-        // console.log('runtime',config.runtime)
+        console.log('runtime',config.runtime)
         param = _.extend(param,{
             appId:config.appId,
             channel:"Mobile",
