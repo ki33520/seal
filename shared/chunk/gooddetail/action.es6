@@ -6,7 +6,8 @@ import {
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_GOOD,RESPONSE_GOOD,
     START_ADD_CART,FINISH_ADD_CART,
-    START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED
+    START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED,
+    REQUEST_COMMENTS,RESPONSE_COMMENTS
 } from "./constant.es6";
 
 export function selectAttr(attr,attrValue){
@@ -117,6 +118,13 @@ export function toggleCollected(param){
     return (dispatch)=>{
         dispatch(startToggleCollected(param));
         apiRequest("/togglecollected",param).then((res)=>{
+            let alertMsg = "";
+            if(res.isToggled){
+                alertMsg = param.status ? "添加收藏成功!":"取消收藏成功!"
+                dispatch(alert(alertMsg,3000))
+            }else{
+                dispatch(alert(res.errMsg,3000))
+            }
             dispatch(finishToggleCollected(param,res));
         })
     }
@@ -140,8 +148,32 @@ function responseIsCollected(param,res){
 export function fetchIsCollected(param){
     return (dispatch)=>{
         dispatch(requestIsCollected(param))
-        return apiRequest("/iscollected").then((res)=>{
+        return apiRequest("/iscollected",param).then((res)=>{
             dispatch(responseIsCollected(param,res))
+        })
+    }
+}
+
+function requestComments(param){
+    return {
+        type:REQUEST_COMMENTS,
+        param
+    }
+}
+
+function responseComments(param,res){
+    return {
+        type:RESPONSE_COMMENTS,
+        param,
+        res
+    }
+}
+
+export function fetchComments(param){
+    return (dispatch)=>{
+        dispatch(requestComments(param))
+        return apiRequest("/goodcomments",param).then((res)=>{
+            dispatch(responseComments(param,res))
         })
     }
 }

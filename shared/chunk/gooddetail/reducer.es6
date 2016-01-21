@@ -5,6 +5,7 @@ import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,
     START_ADD_CART,FINISH_ADD_CART,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
+    REQUEST_COMMENTS,RESPONSE_COMMENTS,
 START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -44,7 +45,6 @@ function goodById(state={},action){
                 isFetching:false,
                 isFetched:action.res.isFetched
             })
-
         case START_TOGGLE_COLLECTED:
             return Object.assign({},state,{
                 isToggling:true
@@ -57,6 +57,20 @@ function goodById(state={},action){
             return Object.assign({},state,{
                 isToggling:false,
                 isCollected
+            })
+        case REQUEST_COMMENTS:
+            return Object.assign({},state,{
+                commentsFetching:true,
+                commentsFetched:false,
+            })
+        case RESPONSE_COMMENTS:
+            if(action.res.isFetched){
+                good.comments = action.res.result
+            }
+            return Object.assign({},state,{
+                good,
+                commentsFetched:action.res.isFetched,
+                commentsFetching:false
             })
         default:
             return state;

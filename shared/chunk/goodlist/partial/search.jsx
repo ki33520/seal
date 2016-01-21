@@ -7,14 +7,14 @@ class SearchBox extends Component{
     constructor(props){
         super(props);
         this.state = {
-            keyword:props.search.keyword
+            keyword:''
         }
     }
     renderHotWord(){
         let {hotwords} = this.props;
         if(hotwords){
             return hotwords.map((hotword,i)=>{
-                return <a href={"/goodlist/"+hotword.name} key={i}>{hotword.name}</a>
+                return <a href={"/search?k="+hotword.name} key={i}>{hotword.name}</a>
             })
         }
         return null
@@ -49,9 +49,9 @@ class SearchBox extends Component{
                         <em>历史搜索</em>
                         <i>清空记录</i>
                     </span>
-                    <a href="/goodlist">洗衣液</a>
-                    <a href="/goodlist">洗衣液</a>
-                    <a href="/goodlist">洗衣液</a>
+                    <a href="/search?k=洗衣液">洗衣液</a>
+                    <a href="/search?k=洗衣液">洗衣液</a>
+                    <a href="/search?k=洗衣液">洗衣液</a>
                 </div>
             </div>
         )
@@ -61,11 +61,11 @@ class SearchBox extends Component{
         let result = []
         if(associatewords && associatewords.length){
             associatewords.map((word,i)=>{
-                result.push(<a href={"/goodlist/"+word.name} key={i}>{word.name}</a>);
+                result.push(<a href={"/search?k="+word.name} key={i}>{word.name}</a>);
             })
         }else{
             let {keyword} = this.state;
-            result = (<a href={"/goodlist/"+keyword}>{keyword}</a>)
+            result = (<a href={"/search?k="+keyword}>{keyword}</a>)
         }
         return (
             <div className="searchOut">

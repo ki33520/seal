@@ -26,7 +26,10 @@ function requestGoods (param) {
 export function fetchGoods(param){
     return (dispath)=>{
         dispath(requestGoods(param));
-        return apiRequest('/goodlist',param,{method:"POST"}).then((res)=>{
+        var params = Object.assign({},param);
+        var k = params.searchKey;
+        delete params.searchKey;
+        return apiRequest('/search?k='+k,param).then((res)=>{
             dispath(receiveGoods(param,res))
         })
     }

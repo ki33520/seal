@@ -87,7 +87,7 @@
             "production": "http://product.tepin.hk"
         }
     },
-    "queryCart":{
+    "calculatePrice":{
         "uri": "/cart/v1/findCartsNotLogin",
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
@@ -130,16 +130,16 @@
     "memberCommentByUser": {
         "uri": "/comments/v1/findDoneComments",
         "baseURL": {
-            "develop":"http://member.hwg.youayun.cn:7987",
+            "develop":"http://member.hwg.youayun.cn:7986",
             "test": "http://member.hwg.youayun.cn",
             "production": "http://member.tepin.hk"
         }
     },
-    "goodCommentByUser": {
+    "commentByGood": {
         "uri": "/comments/v1/findByProductCode",
         "baseURL": {
-            "develop":"http://member.hwg.youayun.cn:7987",
-            "test": "http://member.hwg.youayun.cn",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
             "production": "http://member.tepin.hk"
         }
     },
@@ -178,7 +178,7 @@
     "deleteCart": {
         "uri": "/cart/v1/deleteCartById",
         "baseURL": {
-            "develop":"http://order.hwg.youayun.cn:7986",
+            "develop":"http://order.hwg.youayun.cn:7989",
             "test": "http://order.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
@@ -227,6 +227,14 @@
         "uri": "/order/v1/findOrderList",
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "orderWaitComments": {
+        "uri": "/comments/v1/findMobileWaitComments",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
             "production": "order.hwg.youayun.cn"
         }
@@ -331,7 +339,7 @@
         "uri": "/sns/address/v1/findProvinceMap",
         "baseURL": {
             "develop": "http://sns.e9448.com",
-            "production": "marketing.hwg.youayun.cn"
+            "production": "http://sns.e9448.com"
         }
     },
     "findCity": {

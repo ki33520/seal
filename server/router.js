@@ -31,12 +31,9 @@ router.get("/allorigins", require("./controller/polymer").allOrigins);
 router.get("/gooddetail/:id", require("./controller/gooddetail").goodDetail);
 router.get("/fetchgood/:id", require("./controller/gooddetail").fetchGood);
 router.get("/addcart", require("./controller/gooddetail").addCart);
-router.get("/cartcount", require("./controller/gooddetail").cartCount);
 router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
-
-router.get("/goodlist/:keyword", require("./controller/goodlist").goodList);
-router.post("/goodlist", require("./controller/goodlist").sortList);
+router.get("/search", require("./controller/goodlist"));
 
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
@@ -45,8 +42,7 @@ router.post("/trendyActivity",require("./controller/trendy").activity);
 router.get("/cart",mainController.requireAuthorize,require("./controller/cart").cart);
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
 router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
-router.post("/fetchCart", mainController.requireAuthorize,require("./controller/cart").fetchCart);
-router.post("/queryCart",require("./controller/cart").queryCart);
+router.post("/calculatePrice",require("./controller/cart").calculatePrice);
 
 router.get("/goodcomment/:id", require("./controller/goodcomment").index);
 router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);

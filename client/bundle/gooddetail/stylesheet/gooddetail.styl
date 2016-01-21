@@ -1,6 +1,7 @@
 @import "../../common/common.styl"
 @import "../../common/iconfont.styl"
 @import "../../common/header.styl"
+@import "../../common/scene.styl"
 @import "../../component/dropdown.styl"
 @import "../../component/popover.styl"
 @import "../../component/alert.styl"
@@ -260,17 +261,21 @@ $pink-color = #ED1946;
     }
 }
 
-.good-detail-btn{
-    height:px2rem(34);
-    border-top:px2rem(1) solid  #D7D7D7;
-    background:#FFF;
+.good-detail-toolbar{
     position:fixed;
     bottom:0;
     left:0;
+    height:px2rem(34);
+    width:100%;
+    z-index:102;
+}
+.good-detail-btn{
+    border-top:px2rem(1) solid  #D7D7D7;
+    height:px2rem(34);
+    background:#FFF;
     display:flex;
     align-items:center;
     justify-content:space-around;
-    width:100%;
     &>a:first-child{
         flex:1;
         text-align:center;

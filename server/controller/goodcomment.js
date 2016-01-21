@@ -27,17 +27,17 @@ var index = function(req, res, next) {
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var pageSize = 5;
     bluebird.props({
-        allComment: util.fetchAPI("goodCommentByUser", {
+        allComment: util.fetchAPI("commentByGood", {
             productCode: goodId,
-            pageIndex: pageIndex,
+            pageNo: pageIndex,
             pageSize: pageSize
-        },true)
+        })
     }).then(function(ret) {
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
                 object = ret.allComment.object;
             allComment.totalCount = object.totalCount;
-            allComment.list = _.slice(formatComment(object.result),0,pageIndex*pageSize);
+            allComment.list = object.result?_.slice(formatComment(object.result),0,pageIndex*pageSize):[];
             allComment.pageIndex = pageIndex;
             allComment.pageSize = pageSize;
             if (req.xhr === true) {

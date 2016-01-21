@@ -6,7 +6,7 @@ var util = require("../lib/util");
 var config = require("../lib/config.js");
 var OrderListApp = util.getSharedComponent("orderlist");
 
-function formatComment(object) {
+function formatOrder(object) {
    return object.map((child,i)=>{
         var itemList = child.itemList.map((v,k)=>{
             return {
@@ -57,6 +57,24 @@ function formatComment(object) {
         };
     });
 }
+function formatComment(object) {
+   return object.map((child,i)=>{
+        var itemList = child.itemList.map((v,k)=>{
+            return {
+                singleImageUrl: config.imgServer+v.singleImageUrl,
+                singleTitle: v.singleTitle,
+                salesPrice: v.salesPrice
+            }
+        });
+        return {
+            orderStatus: child.orderStatus,
+            salesTotalFee: child.salesTotalFee,
+            id: child.id,
+            createdAt: child.createdAt,
+            itemList: itemList
+        };
+    });
+}
 
 var orderList = function(req, res,next) {
     var user = req.session.user;
@@ -65,14 +83,27 @@ var orderList = function(req, res,next) {
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
     var pageSize = 2;
-    bluebird.props({
-        orderByUser: util.fetchAPI("orderByUser", {
+    var fetchString,
+        fetchObj;
+    if(status === 4){
+        fetchString = "orderWaitComments";
+        fetchObj = {
+            memberId: user.memberId,
+            pageNo: pageIndex,
+            pageSize: pageSize
+        }
+    }else{
+        fetchString = "orderByUser";
+        fetchObj = {
             memberId: user.memberId,
             timeType: timeType,
             orderStatus: status,
             pageNo: pageIndex,
             pageSize: pageSize
-        },false),
+        }
+    }
+    bluebird.props({
+        orderByUser: util.fetchAPI(fetchString, fetchObj,false),
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp) {
         if (resp.orderByUser.returnCode === 0 && resp.timestamp.returnCode === 0){
@@ -84,7 +115,12 @@ var orderList = function(req, res,next) {
             order.pageSize = pageSize;
             order.totalCount = object.totalCount;
             order.pageCount = Math.ceil(order.totalCount/pageSize);
-            order.list = object.result ? formatComment(object.result) : [];
+            if(status === 4){
+                order.list = object.result ? formatComment(object.result) : [];
+            }else{
+                order.list = object.result ? formatOrder(object.result) : [];
+            }
+            
             orders[status] = order;
 
             if (req.xhr === true){

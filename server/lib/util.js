@@ -35,7 +35,7 @@ var util = {
     },
     fetchAPI: function(apiName, param, isMock,options) {
         isMock = isMock || false;
-        console.log('runtime',config.runtime)
+        // console.log('runtime',config.runtime)
         param = _.extend(param,{
             appId:config.appId,
             channel:"Mobile",
@@ -45,7 +45,7 @@ var util = {
         var signature = this.getSignatureByParam(param,config.appKey)
         // console.log('signature',signature)
         param = _.extend(param,{h:signature})
-         console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
+        console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param,options)
         } else {
@@ -86,7 +86,12 @@ var util = {
     writePage(url,html){
         var pageName = md5(url);
         var pagePath = path.resolve("client/page/"+pageName+".html")
-        console.log('writePage',url)
+        try{
+            fs.statSync(path.resolve("client/page"))
+        }catch(e){
+            fs.mkdirSync(path.resolve("client/page"))
+        }
+        // console.log('writePage',fs.mkdirSync(path.resolve("client/page")))
         fs.writeFileSync(pagePath,html)
     },
     readPage(url){
