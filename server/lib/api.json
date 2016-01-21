@@ -195,7 +195,7 @@
         "uri": "/search/v1/findListByParamsWap",
         "baseURL": {
             "develop": "http://solr.hwg.youayun.cn:7988",
-            "test": "http://solr.hwg.youayun.cn:7988",
+            "test": "http://search.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
     },
@@ -242,8 +242,8 @@
     "orderById": {
         "uri": "/order/v1/findOrderDetail",
         "baseURL": {
-            "develop":"http://marketing.hwg.youayun.cn:7986",
-            "test": "http://marketing.hwg.youayun.cn",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
             "production": "order.hwg.youayun.cn"
         }
     },
