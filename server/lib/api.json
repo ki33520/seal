@@ -183,6 +183,14 @@
             "production": "marketing.hwg.youayun.cn"
         }
     },
+    "questionList": {
+        "uri": "/content/v1/question/list",
+        "baseURL": {
+            "develop":"http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    },
     "orderByUser": {
         "uri": "/order/v1/findOrderList",
         "baseURL": {

@@ -6,7 +6,7 @@ import {CHANGE_FIELD,START_CHANGE_FEEDBACK,FINISH_CHANGE_FEEDBACK} from "./actio
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
 import {alertReducer} from "../common/reducer.es6";
 
-function helpInfo(state={},action){
+function questionList(state={},action){
     switch(action.type){
         default:
             return state;
@@ -40,7 +40,7 @@ function feedbackByForm(state={},action){
 }
 
 const rootReducer = combineReducers({
-    helpInfo,
+    questionList,
     feedbackByForm
 });
 
