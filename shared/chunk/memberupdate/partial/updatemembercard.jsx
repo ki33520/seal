@@ -93,7 +93,7 @@ class UpdateMemberCard extends Component{
                 dispatch(alert("保存成功!",2000));
                 setTimeout(()=>window.history.back(),2500);
             }else{
-                dispatch(alert(nextProps.membercardByForm.errMsg,2000));
+                dispatch(alert(nextProps.membercardByForm.msg,2000));
             }
         }
         
@@ -102,7 +102,7 @@ class UpdateMemberCard extends Component{
             if(nextProps.membercardByForm.verifyCodeSended === true){
                 dispatch(alert("验证码发送成功!",2000));
             }else{
-                dispatch(alert(nextProps.membercardByForm.errMsg,2000));
+                dispatch(alert(nextProps.membercardByForm.msg,2000));
             }
         }
     }
