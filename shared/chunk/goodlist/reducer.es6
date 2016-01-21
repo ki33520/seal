@@ -26,11 +26,9 @@ function goodsByParam(state={},action){
             });
         case RESET_ALL_ITEM:
             return Object.assign({},state,{
-                isFetching:action.res.isFetching,
-                goods:action.res.goods,
-                searchParams:action.param,
-                pageIndex:action.param.pageIndex
-            });
+                searchParams:action.param.searchParams,
+                filters:action.param.filters
+            })
         case RECEIVE_GOODS:
             return Object.assign({},state,{
                 isFetching:action.res.isFetching,
