@@ -12,11 +12,11 @@ class Origin extends Component{
             <div className="overView">
                 <dl>
                   <dt>原产地：</dt>
-                  <dd><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</dd>
+                  <dd><i><img src={good.originFlag} alt="" /></i>{good.originName}</dd>
                 </dl>
                 <dl>
                   <dt>发货仓：</dt>
-                  <dd>{good.warehouse}</dd>
+                  <dd>{good.warehouseName}</dd>
                 </dl>
                 <dl>
                   <dt>关税：</dt>

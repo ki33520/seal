@@ -8,6 +8,7 @@ import Slide from "../../../component/slider/slide.jsx";
 import Image from "../../../component/image.jsx";
 import ScrollSpy from "../../../component/scrollspy.jsx";
 import Loading from "../../common/loading.jsx";
+import Timer from "../../common/timer.jsx";
 
 class Floor extends Component{
     constructor(props){
@@ -122,7 +123,9 @@ class Floor extends Component{
             return rushbuys.map((rushbuy,i)=>{
                 return <a href={rushbuy.jumpUrl} key={i}>
                     <image src={rushbuy.imageUrl} />
-                    <span><i><img src="/client/asset/images/flashClock.png" /></i>距本期活动结束：01天34时10分46秒</span>
+                    <span><i><img src="/client/asset/images/flashClock.png" />
+                    </i>距本期活动结束：<Timer endTime="2016-01-25 12:00:00" 
+                    template="<%= hour %>时<%= minute %>分<%= second %>秒"/></span>
                 </a>
             })
         }

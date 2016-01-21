@@ -6,8 +6,12 @@ import GoodComment from "./partial/comment.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
 class GoodDetailRouter extends Component{
-    handleSceneChange(currentScene,prevScene){
-
+    handleSceneChange(currentScene,param){
+        const {fetchComments} = this.props
+        switch(currentScene){
+            case "comment":
+                // !this.props.commentsFetched && fetchComments(param)
+        }
     }
     render(){
         return (

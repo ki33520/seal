@@ -112,8 +112,17 @@ var allBrands = function(req,res,next){
 
 function allBrandsFilter(allbrands){
     var _allbrands = {}
-    _.each(allbrands[0],function(v,k){
-        _allbrands[k] = v.split(",")
+    _.each(allbrands,function(v,k){
+        var brandGroup = []
+        _.each(v,function(brand){
+            brandGroup.push({
+                id:brand.id,
+                chineseName:brand.name,
+                englishName:brand.engName,
+                shortcut:brand.firstLetter
+            })
+        })
+        _allbrands[k] = brandGroup
     })
     return _allbrands
 }
