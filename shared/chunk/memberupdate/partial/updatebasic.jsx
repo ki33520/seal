@@ -50,10 +50,10 @@ class UpdateBasic extends Component{
         if(nextProps.basicByForm.basicChanging === false &&
            this.props.basicByForm.basicChanging === true){
             if(nextProps.basicByForm.basicChanged === true){
-                dispatch(alert("保存成功!",2000));
+                dispatch(alert(nextProps.basicByForm.msg,2000));
                 setTimeout(()=>window.history.back(),2500);
             }else{
-                dispatch(alert(nextProps.basicByForm.errMsg,2000));
+                dispatch(alert(nextProps.basicByForm.msg,2000));
             }
         }
     }
