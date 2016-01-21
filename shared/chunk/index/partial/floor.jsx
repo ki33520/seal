@@ -124,8 +124,8 @@ class Floor extends Component{
                 return <a href={rushbuy.jumpUrl} key={i}>
                     <image src={rushbuy.imageUrl} />
                     <span><i><img src="/client/asset/images/flashClock.png" />
-                    </i>距本期活动结束：<Timer endTime="2016-01-25 12:00:00" 
-                    template="<%= hour %>时<%= minute %>分<%= second %>秒"/></span>
+                    </i>距本期活动结束：<Timer endTime="2016-01-25 20:00:00" dayEnable={true} 
+                    template="<%= day %>天<%= hour %>时<%= minute %>分<%= second %>秒"/></span>
                 </a>
             })
         }

@@ -23,12 +23,19 @@ class Timer extends Component{
         let minutes = Math.floor(seconds / 60)
         let hours = Math.floor(minutes / 60)
         let CHour = hours
+        let CDay,days;
+        if(this.props.dayEnable){
+            days = Math.floor(hours / 24)
+            CDay = days
+            CHour = hours % 24
+        }
         CHour = CHour < 10 ? ("0" + CHour) : CHour
         let CMinute = minutes % 60
         CMinute = CMinute < 10 ? ("0" + CMinute) : CMinute
         let CSecond = Math.floor(seconds % 60)
         CSecond = CSecond < 10 ? ("0" + CSecond) : CSecond
         return {
+            day:CDay,
             hour:CHour,minute:CMinute,second:CSecond
         }
     }
@@ -64,10 +71,10 @@ class Timer extends Component{
     }
     render(){
         const {duration} = this.state
-        let {hour,minute,second} = this.restOfTime(duration)
+        let {day,hour,minute,second} = this.restOfTime(duration)
         let compiled = _.template(this.props.template);
         let durationContent = compiled({
-            hour,minute,second
+            day,hour,minute,second
         })
         return (
             <span className="timer">{durationContent}</span>
@@ -78,6 +85,7 @@ class Timer extends Component{
 Timer.defaultProps = {
     referTime:null,
     endTime:null,
+    dayEnable:false,
     format:"YYYY-MM-DD HH:mm:ss",
     template:`<%= hour %>:<%= minute %>:<%= second %>`
 }
