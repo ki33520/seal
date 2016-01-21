@@ -4,7 +4,6 @@ import React,{Component} from "react";
 import ConfirmOrder from "./partial/confirmorder.jsx";
 import Receiver from "../receiver/app.jsx";
 import Coupon from "./partial/coupon.jsx";
-import {Router} from "director";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
 import {changeReceiver,changeCoupon} from "./action.es6";

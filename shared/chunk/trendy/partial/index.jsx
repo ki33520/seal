@@ -2,7 +2,6 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
-import fetchGoods from "../action.es6";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import Sticky from "../../../component/sticky.jsx";
@@ -44,9 +43,10 @@ class Trendy extends React.Component{
         const tabs = categories.map((category,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{category.name}</i>} key={i}>
-                    <GoodList category={category} />
+                    <div><GoodList category={category} />
                     <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={category.isFetching}/>
                     <Loading active={category.list.length === 0}/>
+                    </div>
                 </SlideTabsItem>
             )
         });

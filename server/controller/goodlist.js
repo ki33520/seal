@@ -4,7 +4,8 @@ var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var config = require("../lib/config.js");
 var GoodListApp = util.getSharedComponent("goodlist");
-
+var DEFT = require("../../shared/chunk/goodlist/constant.es6");
+ 
 function filterGoodsList(result){
     var list = [];
  
@@ -41,17 +42,22 @@ function filterNames(result){
 
 var search = function(req, res, next) {
     var query = req.query;
-    var pageIndex = query.pageIndex || 1;
     var pageSize = query.pageSize || 10;
-    var keyword = query.k;
     var options = {
-        searchKey:keyword,
-        currentPage:pageIndex,
-        sortType:1,
-        sortViewType:false,
-        pageSize
+        currentPage:1,
+        sortType:DEFT.SORT_NORMAL,
+        sortViewType:DEFT.SORT_DESC,
+        pageSize:pageSize
     };
-    
+
+    if(query.k){
+        options.searchKey=query.k;
+    }
+
+    if(query.pageIndex){
+        options.currentPage = query.pageIndex;
+    }
+
     if(query.sortType !== undefined){
         options.sortType = query.sortType;
     }
@@ -77,6 +83,14 @@ var search = function(req, res, next) {
     }
 
     var params = Object.assign({},options);
+
+    if(params.searchKey){
+        params.searchKey=null;
+        params.k = options.searchKey;
+    }
+
+    params.currentPage = null;
+    params.pageIndex = options.currentPage;
  
     bluebird.props({
         goods: util.fetchAPI("fetchGoodsList", options)
@@ -99,7 +113,7 @@ var search = function(req, res, next) {
                 var initialState = {
                     goods:list,
                     filters:{categoryNames,brandNames,areaNames},
-                    search:params,
+                    searchParams:params,
                     totalPage:totalPage
                 };
 

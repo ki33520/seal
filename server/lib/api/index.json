@@ -11,7 +11,7 @@
         "uri":  "/search/v1/findListByAssociateWAP",
         "baseURL": {
             "develop": "http://solr.hwg.youayun.cn:7988",
-            "test": "http://solr.hwg.youayun.cn:7988",
+            "test": "http://search.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
     }

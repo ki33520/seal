@@ -2,9 +2,10 @@
 var _ = require("lodash");
 var api = require("./api.json");
 
-api = _.extend(api,require("./api/index.json"))
-api = _.extend(api,require("./api/order.json"))
-api = _.extend(api,require("./api/user.json"))
+api = _.extend(api,require("./api/index.json"));
+api = _.extend(api,require("./api/order.json"));
+api = _.extend(api,require("./api/user.json"));
+api = _.extend(api,require("./api/cart.json"));
 
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
@@ -37,6 +38,8 @@ config.cardUrl = config.oathServer +
 config.api = _.mapValues(api, function(v) {
     if(runtime === "develop"){
         v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
+    }else if(runtime === "test"){
+        v.url = v.baseURL["test"]?v.baseURL["test"] + v.uri:config.apiServer
     }else{
         v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
     }

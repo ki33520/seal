@@ -63,38 +63,6 @@
             "production": "http://product.tepin.hk"
         }
     },
-    "cartCount": {
-        "uri": "/cart/v1/countNumber",
-        "baseURL": {
-            "develop":"http://order.hwg.youayun.cn:7986",
-            "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
-        }
-    },
-    "cartByUser": {
-        "uri": "/cart/v1/findCarts",
-        "baseURL": {
-            "develop":"http://order.hwg.youayun.cn:7986",
-            "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
-        }
-    },
-    "updateCart": {
-        "uri": "/cart/v1/saveOrUpdateCart",
-        "baseURL": {
-            "develop":"http://order.hwg.youayun.cn:7986",
-            "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
-        }
-    },
-    "calculatePrice":{
-        "uri": "/cart/v1/findCartsNotLogin",
-        "baseURL": {
-            "develop":"http://order.hwg.youayun.cn:7986",
-            "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
-        }
-    },
     "regiestOrLogin": {
         "uri": "/member/v1/regiestOrLogin",
         "baseURL": {
@@ -175,14 +143,6 @@
             "production": "http://product.tepin.hk"
         }
     },
-    "deleteCart": {
-        "uri": "/cart/v1/deleteCartById",
-        "baseURL": {
-            "develop":"http://order.hwg.youayun.cn:7989",
-            "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
-        }
-    },
     "couponByUser": {
         "uri": "/coupon/v1/findUserCouponList",
         "baseURL": {
@@ -195,7 +155,7 @@
         "uri": "/search/v1/findListByParamsWap",
         "baseURL": {
             "develop": "http://solr.hwg.youayun.cn:7988",
-            "test": "http://solr.hwg.youayun.cn:7988",
+            "test": "http://search.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
     },
@@ -242,8 +202,8 @@
     "orderById": {
         "uri": "/order/v1/findOrderDetailById",
         "baseURL": {
-            "develop":"http://marketing.hwg.youayun.cn:7986",
-            "test": "http://marketing.hwg.youayun.cn",
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
             "production": "order.hwg.youayun.cn"
         }
     },

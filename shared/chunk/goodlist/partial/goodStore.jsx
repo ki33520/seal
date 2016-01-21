@@ -20,8 +20,8 @@ class GoodSorter extends Component{
     }
 
     sortPrice(){
-        const {toggleSort,search} = this.props;
-        let sortViewType =  search.sortViewType;
+        const {toggleSort,params} = this.props;
+        let sortViewType =  params.sortViewType;
         sortViewType = sortViewType === SORT_ASC ? SORT_DESC :SORT_ASC;
         toggleSort({
             sortType:SORT_PRICE,
@@ -39,7 +39,7 @@ class GoodSorter extends Component{
     }
 
     render(){
-        const {sortType,sortViewType} = this.props.search;
+        const {sortType,sortViewType} = this.props.params;
         const normalClass=classNames('normal',{
             "active":sortType===SORT_NORMAL
         });
