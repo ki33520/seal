@@ -37,6 +37,8 @@ config.cardUrl = config.oathServer +
 config.api = _.mapValues(api, function(v) {
     if(runtime === "develop"){
         v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
+    }else if(runtime === "test"){
+        v.url = v.baseURL["test"]?v.baseURL["test"] + v.uri:config.apiServer
     }else{
         v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
     }
