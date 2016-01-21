@@ -26,10 +26,7 @@ function requestGoods (param) {
 export function fetchGoods(param){
     return (dispath)=>{
         dispath(requestGoods(param));
-        var params = Object.assign({},param);
-        var k = params.searchKey;
-        delete params.searchKey;
-        return apiRequest('/search?k='+k,param).then((res)=>{
+        return apiRequest('/search',param).then((res)=>{
             dispath(receiveGoods(param,res))
         })
     }
@@ -49,10 +46,19 @@ export function changeClassItem(param){
     }
 }
 
-export function resetAll(param){
+function finishResetAll(param,res){
     return {
         type:RESET_ALL_ITEM,
-        param
+        param,
+        res
+    }
+}
+
+export function resetAll(param){
+    return (dispath)=>{
+        return apiRequest('/search',param).then((res)=>{
+            dispath(finishResetAll(param,res))
+        })
     }
 }
 
