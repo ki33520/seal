@@ -6,65 +6,53 @@ import UpdateBasic from "./partial/updatebasic.jsx";
 import UpdatePassword from "./partial/updatepassword.jsx";
 import UpdateMemberCard from "./partial/updatemembercard.jsx";
 import {Router} from "director";
-import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
+import {Switcher,SwitcherCase} from "../common/switcher.jsx";
 
 class MemberUpdate extends Component{
     constructor(props){
         super(props);
         this.state = {
-            memberInfo: props.memberInfo,
-            currentRoute: "index"
+            currentRoute:null,
+            prevRoute:null
         }
     }
     componentDidMount(){
         Router({
             "/basic":()=>{
                 this.setState({
-                    currentRoute:"updatebasic"
+                    currentRoute:"basic",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/password":()=>{
                 this.setState({
-                    currentRoute:"updatepassword"
+                    currentRoute:"password",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/membercard":()=>{
                 this.setState({
-                    currentRoute:"updatemembercard"
+                    currentRoute:"membercard",
+                    prevRoute:this.state.currentRoute
                 });
             },
             "/":()=>{
                 this.setState({
-                    currentRoute:"index"
+                    currentRoute:"index",
+                    prevRoute:this.state.currentRoute
                 });
             }
         }).init("/");
     }
     render(){
-        const {currentRoute} = this.state;
-        var currentView = null;
-        if(currentRoute === "index"){
-            currentView =  (
-                <Update {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "updatebasic"){
-            currentView =  (
-                <UpdateBasic {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "updatepassword"){
-            currentView =  (
-                <UpdatePassword {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "updatemembercard"){
-            currentView =  (
-                <UpdateMemberCard {...this.props} key={currentRoute}/>
-            )
-        }
-        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
+        const {currentRoute,prevRoute} = this.state;
         return (
-            <TransitionGroup component="div" transitionName={transitionName} transitionLeave={false}>
-                {currentView}
-            </TransitionGroup>
+            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
+                <SwitcherCase name="index"><Update {...this.props}/></SwitcherCase>
+                <SwitcherCase name="basic"><UpdateBasic {...this.props}/></SwitcherCase>
+                <SwitcherCase name="password"><UpdatePassword {...this.props}/></SwitcherCase>
+                <SwitcherCase name="membercard"><UpdateMemberCard {...this.props}/></SwitcherCase>
+            </Switcher>
         );
     }
 }

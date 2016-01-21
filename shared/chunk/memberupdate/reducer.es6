@@ -29,7 +29,7 @@ function basicByForm(state={},action){
             return Object.assign({},state,{
                 basicChanging:false,
                 basicChanged:action.res.isChanged,
-                errMsg:action.res.errMsg
+                msg:action.res.msg
             },action.res.result);
         case SHOW_ALERT:
         case HIDE_ALERT:
@@ -55,7 +55,7 @@ function passwordByForm(state={},action){
             return Object.assign({},state,{
                 passwordChanging:false,
                 passwordChanged:action.res.isChanged,
-                errMsg:action.res.errMsg
+                msg:action.res.msg
             });
         case SHOW_ALERT:
         case HIDE_ALERT:
@@ -81,7 +81,7 @@ function membercardByForm(state={},action){
             return Object.assign({},state,{
                 membercardChanging:false,
                 membercardChanged:action.res.isChanged,
-                errMsg:action.res.errMsg
+                msg:action.res.msg
             });
         case START_SEND_VERIFYCODE:
             return Object.assign({},state,{
@@ -92,7 +92,7 @@ function membercardByForm(state={},action){
             return Object.assign({},state,{
                 verifyCodeSending:false,
                 verifyCodeSended:action.res.isSend,
-                errMsg:action.res.errMsg
+                msg:action.res.msg
             })
         case SHOW_ALERT:
         case HIDE_ALERT:

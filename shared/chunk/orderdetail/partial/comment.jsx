@@ -30,12 +30,12 @@ class Comment extends Component{
         var {dispatch,order,isOpen} = this.props;
         var obj = order.itemList.map((v,k)=>{
             v.isOpen = isOpen === undefined ? 1 : isOpen;
-            const {rate,singleCode,content,isOpen} = v;
+            const {rate,id,content,isOpen} = v;
             return {
                 rate: rate ? rate : 5,
-                content: content ? encodeURIComponent(content) : "",
+                content: content ? content : "",
                 isOpen,
-                itemId: singleCode,
+                itemId: id,
             }
         })
         dispatch(saveComment("/savecomment",{
@@ -94,7 +94,6 @@ class Comment extends Component{
                         <div className="textArea">
                             <textarea name="form-content" onChange={this.handleContent.bind(this,"content",k)} placeholder="亲~留下此次购物的宝贵意见吧！"></textarea>
                         </div>
-                        <a href="javascript:void(0);"><i></i></a>
                     </div>
                 </div>
             )

@@ -45,7 +45,13 @@ function MillisecondToDate(msd) {
 
 class Floor extends Component{
     renderButtons(child){
-        const {orderStatus,orderNo} = child;
+        const {orderStatus,orderId,itemList} = child;
+        var hasComment = false;
+        itemList.map((v,k)=>{
+            if(v.hasComment === true){
+                hasComment = true;
+            }
+        })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
                 return (
@@ -62,14 +68,14 @@ class Floor extends Component{
                 return (
                     <div className="order-buttons">
                         <a href="javascript:void(null)" className="pop_c">确认收货</a>
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="view_c">查看物流</a>
+                        <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_SENDED":
                 return (
                     <div className="order-buttons">
                         <a href="javascript:void(null)" className="pop_c">确认收货</a>
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="view_c">查看物流</a>
+                        <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_CANCELED":
@@ -78,11 +84,15 @@ class Floor extends Component{
                     </div>
                 )
             case "STATUS_FINISHED":
-                return (
-                    <div className="order-buttons">
-                        <a href={"/orderdetail/"+orderNo+"#/comment"} className="view_c">评价晒单</a>
-                    </div>
-                )
+                if(hasComment){
+                    return null
+                }else{
+                    return (
+                        <div className="order-buttons">
+                            <a href={"/orderdetail/"+orderId+"#/comment"} className="view_c">评价晒单</a>
+                        </div>
+                    )
+                }
             default:
                 return (
                     <div className="order-buttons">
@@ -113,7 +123,7 @@ class Floor extends Component{
     }
     renderOutTime(child){
         const {systemTime} = this.props;
-        const {orderCrtTime,timeoutTime,orderStatus} = child;
+        const {createdAt,timeoutTime,orderStatus} = child;
         var outTime = (new Date(timeoutTime).getTime() - systemTime);
         var outTimeTag = MillisecondToDate(outTime);
         if(orderStatus === "STATUS_NOT_PAY" && outTime>0){
@@ -122,8 +132,8 @@ class Floor extends Component{
     }
     renderNode(list){
         return list.map((child,i)=>{
-            const {orderCrtTime,id,orderReceiveId,orderNo,itemList,totalFee,orderStatus,timeoutTime} = child;
-            var crtTime = moment(new Date(orderCrtTime)).format("YYYY-MM-DD");
+            const {createdAt,id,orderReceiveId,orderId,itemList,salesTotalFee,orderStatus,timeoutTime} = child;
+            var crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
             return (
                 <div className="order-box" key={i}>
                     <div className="order-up">
@@ -133,9 +143,9 @@ class Floor extends Component{
                             <em>{orderStatusObj[orderStatus]}</em>
                         </div>
                     </div>
-                    <div className="order-list"><a href={"/orderdetail/"+orderNo}>{this.renderGoods(itemList)}</a></div>
+                    <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                     <div className="order-down">
-                        <span>合计：<em>&yen;{totalFee}</em></span>
+                        <span>合计：<em>&yen;{salesTotalFee}</em></span>
                         {this.renderButtons(child)}
                     </div>
                 </div>
