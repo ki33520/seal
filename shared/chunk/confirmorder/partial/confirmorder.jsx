@@ -6,6 +6,7 @@ import Icon from "../../../component/icon.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
 import Header from "../../common/header.jsx";
+import {urlParam,base64Encode} from "../../../lib/util.es6";
 
 import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";
@@ -89,15 +90,36 @@ class ConfirmOrder extends Component{
         })
     }
     componentDidUpdate(prevProps,prevState){
-        const {dispatch,orderSubmited,errMsg} = this.props;
+        const {dispatch,orderSubmited,paygatewayFetched,fetchPayGateway} = this.props;
         if(prevProps.orderSubmiting === true && 
             this.props.orderSubmiting === false){
             if(orderSubmited === true){
-                setTimeout(()=>{
-                    console.log('submitOrder')
-                    // window.location.assign("/orderlist")
-                    ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
-                },2400)
+                if(paygatewayFetched){
+                    setTimeout(()=>{
+                        // console.log('submitOrder')
+                        ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
+                    },1000)
+                }else{
+                    const {orderNo,totalFee,checkedReceiver,promoList} = this.props.order
+                    let productList = []
+                    promoList.forEach((promo)=>{
+                        promo.goods.forEach((good)=>{
+                            productList.push({
+                                goodsName:good.title,
+                                goodsColorAndSize:good.attrs
+                            })
+                        })
+                    })
+                    let message = {
+                        orderNo:orderNo,
+                        totalFee:totalFee,
+                        address:checkedReceiver.provinceName+checkedReceiver.cityName+checkedReceiver.districtName+checkedReceiver.address,
+                        userName:checkedReceiver.consignee,
+                        mobile:checkedReceiver.mobileNumber,
+                        productList:productList
+                    }
+                    fetchPayGateway(base64Encode(urlParam(message)))
+                }
             }
         }
     }
@@ -117,7 +139,8 @@ class ConfirmOrder extends Component{
                 </a>
             </div>
             {this.renderTotal(order)}
-            <SubmitOrder order={order} onSubmit={this.submitOrder.bind(this)} ref="SubmitOrder"/>
+            <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
+            onSubmit={this.submitOrder.bind(this)} ref="SubmitOrder"/>
             <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
