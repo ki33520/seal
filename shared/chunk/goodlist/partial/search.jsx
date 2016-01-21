@@ -49,9 +49,6 @@ class SearchBox extends Component{
                         <em>历史搜索</em>
                         <i>清空记录</i>
                     </span>
-                    <a href="/search?k=洗衣液">洗衣液</a>
-                    <a href="/search?k=洗衣液">洗衣液</a>
-                    <a href="/search?k=洗衣液">洗衣液</a>
                 </div>
             </div>
         )

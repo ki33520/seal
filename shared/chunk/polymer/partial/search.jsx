@@ -12,7 +12,7 @@ class SearchBox extends Component{
         let {hotwords} = this.props.search;
         if(hotwords){
             return hotwords.map((hotword,i)=>{
-                return <a href={"/goodlist/"+hotword.name} key={i}>{hotword.name}</a>
+                return <a href={"/search?k="+hotword.name} key={i}>{hotword.name}</a>
             })
         }
         return null
@@ -52,14 +52,14 @@ class SearchBox extends Component{
             return associateWords.map((associateWord,i)=>{
                 return (
                 <div className="searchOut" key={i}>
-                    <a href={"/goodlist/"+associateWord.name}>{associateWord.name}</a>
+                    <a href={"/search?k="+associateWord.name}>{associateWord.name}</a>
                 </div>
                 )
             })
         }
         return (
             <div className="searchOut">
-                <a href={"/goodlist/"+keyword}>{keyword}</a>
+                <a href={"/search?k="+keyword}>{keyword}</a>
             </div>
         )
     }

@@ -16,7 +16,7 @@ class AllBrands extends Component{
             let brandGroup = []
             for(let key in brands){
                 let brandGroupItems = brands[key].map((brand,i)=>{
-                    return  <li key={i}><a href={"/goodlist/"+brand}>{brand}</a></li>
+                    return  <li key={i}><a href={"/search?brandName="+brand}>{brand}</a></li>
                 })
                 brandGroup.push(
                     <div className="anchor-point" data-anchor="anchor-a" key={key}>
