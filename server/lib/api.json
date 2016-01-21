@@ -240,7 +240,7 @@
         }
     },
     "orderById": {
-        "uri": "/order/v1/findOrderDetail",
+        "uri": "/order/v1/findOrderDetailById",
         "baseURL": {
             "develop":"http://marketing.hwg.youayun.cn:7986",
             "test": "http://marketing.hwg.youayun.cn",

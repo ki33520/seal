@@ -151,7 +151,7 @@ var orderDetail = function(req, res, next) {
     var id = req.params.id;
     bluebird.props({
         orderById: util.fetchAPI("orderById", {
-            orderNo: id
+            orderId: id
         },false),
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp) {
