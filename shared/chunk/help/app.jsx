@@ -7,9 +7,9 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import HelpList from "./component.jsx";
 
 function selector(state){
-    const {helpInfo,feedbackByForm} = state;
+    const {questionList,feedbackByForm} = state;
     return {
-        helpInfo,
+        questionList,
         feedbackByForm
     };
 }
@@ -23,9 +23,9 @@ function configureStore(initialState){
 
 class HelpApp extends Component{
     render(){
-        const {helpInfo} = this.props.initialState;
+        const {questionList} = this.props.initialState;
         const initialState = {
-            helpInfo
+            questionList
         };
         var store = configureStore(initialState);
         return (

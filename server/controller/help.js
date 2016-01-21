@@ -7,18 +7,29 @@ var HelpApp = util.getSharedComponent("help");
 
 var index = function(req, res, next) {
     var user = req.session.user;
-    var initialState = {
-        helpInfo: {
-        	isFetched: true
+
+    bluebird.props({
+        questionList: util.fetchAPI("questionList", {
+        },false)
+    }).then(function(ret) {
+        if (ret.questionList.returnCode === 0) {
+            console.log(ret.questionList.object)
+            var questionList = ret.questionList.object;
+            var initialState = {
+                questionList : questionList
+            };
+
+            var markup = util.getMarkupByComponent(HelpApp({
+                initialState: initialState
+            }));
+            res.render('help', {
+                markup: markup,
+                initialState: initialState
+            })
+        }else{
+            next(new Error(resp.questionList.message));
         }
-    };
-    
-    var markup = util.getMarkupByComponent(HelpApp({initialState:initialState}));
-    
-    res.render('help', {
-        markup: markup,
-        initialState: initialState
-    })
+    });
 }
 var sendFeedback = function(req, res, next) {
     var feedback = req.body.feedback;

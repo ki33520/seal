@@ -15,6 +15,7 @@ class IndexRouter extends Component{
         }
     }
     render(){
+        console.log(this.props)
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
                 <Scene name="index"><Index {...this.props}/></Scene>
