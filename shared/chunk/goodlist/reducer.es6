@@ -18,7 +18,7 @@ function goodsByParam(state={},action){
             });
         case CHANGE_PARAM:
             return Object.assign({},state,{
-                search:action.param
+                searchParams:action.param
             });
         case CHANGE_ClASS_ITEM:
             return Object.assign({},state,{
@@ -26,14 +26,16 @@ function goodsByParam(state={},action){
             });
         case RESET_ALL_ITEM:
             return Object.assign({},state,{
-                search:action.param.queryParams,
-                filters:action.param.filters
-            })
+                isFetching:action.res.isFetching,
+                goods:action.res.goods,
+                searchParams:action.param,
+                pageIndex:action.param.pageIndex
+            });
         case RECEIVE_GOODS:
             return Object.assign({},state,{
                 isFetching:action.res.isFetching,
                 goods:action.res.goods,
-                search:action.param,
+                searchParams:action.param,
                 pageIndex:action.param.pageIndex
             });
         case REQUEST_HOTWORD:
