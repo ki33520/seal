@@ -58,16 +58,18 @@ var goodDetail = function(req, res, next) {
         } else {
             next(new Error(message))
         }
-    }).fail(function(){
+    }).error(function(){
         next(new Error('api request failed'))
     })
 }
 
 function flashbuyFilter(flashbuy) {
     var _flashbuy = {};
-    _flashbuy["price"] = flashbuy.wapPrice
-    _flashbuy["startTime"] = moment(new Date(flashbuy.beginDate)).format("YYYY-MM-DD HH:mm:ss")
-    _flashbuy["endTime"] = moment(new Date(flashbuy.endDate)).format("YYYY-MM-DD HH:mm:ss")
+    if(flashbuy){
+        _flashbuy["price"] = flashbuy.wapPrice
+        _flashbuy["startTime"] = moment(new Date(flashbuy.beginDate)).format("YYYY-MM-DD HH:mm:ss")
+        _flashbuy["endTime"] = moment(new Date(flashbuy.endDate)).format("YYYY-MM-DD HH:mm:ss")
+    }
     return _flashbuy
 }
 
