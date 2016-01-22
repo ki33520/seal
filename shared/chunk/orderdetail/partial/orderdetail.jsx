@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import Header from "../../common/header.jsx";
 
 import StatusProgress from "./statusprogress.jsx";
@@ -70,7 +71,7 @@ class OrderDetail extends Component{
     handlePayGateway(order,e){
         e && e.preventDefault();
         const {dispatch} = this.props;
-        const {orderNo,totalFee,receiverObject,itemList} = order;
+        const {orderNo,paymentFee,receiverObject,itemList} = order;
         let productList = []
         itemList.forEach((item)=>{
             productList.push({
@@ -80,11 +81,11 @@ class OrderDetail extends Component{
         })
         let message = {
             orderNo:orderNo,
-            totalFee:totalFee,
-            address:receiverObject.provinceName+receiverObject.cityName+receiverObject.districtName+receiverObject.address,
-            userName:receiverObject.consignee,
-            mobile:receiverObject.mobileNumber,
-            productList:productList
+            totalFee:paymentFee,
+            address:receiverObject.completeAddress,
+            userName:receiverObject.receiverName,
+            mobile:receiverObject.receiverMobile,
+            productList:JSON.stringify(productList)
         }
         dispatch(
             fetchPayGateway(base64Encode(urlParam(message)))
@@ -110,6 +111,13 @@ class OrderDetail extends Component{
             }
         }
     }
+    componentDidUpdate(prevProps,prevState){
+        if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
+            setTimeout(()=>{
+                ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
+            },1000)
+        }
+    }
     renderFooter(){
         const {order} = this.props;
         const {orderStatus,orderId,itemList} = order;
@@ -121,7 +129,7 @@ class OrderDetail extends Component{
         })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
-                let {cashierParam} = this.props;
+                let {cashierParam} = this.props.order;
                 cashierParam = cashierParam || {}
                 return (
                     <div className="confirmBtns">

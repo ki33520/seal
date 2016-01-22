@@ -147,7 +147,7 @@ function responsePayGateway(param,res){
 export function fetchPayGateway(param){
     return (dispatch)=>{
         dispatch(requestPayGateway(param))
-        apiRequest("/paygateway/"+ param,(res)=>{
+        apiRequest("/paygateway/"+ param,{}).then((res)=>{
             dispatch(responsePayGateway(param,res))
         })
     }
