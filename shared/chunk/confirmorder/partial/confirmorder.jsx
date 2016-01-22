@@ -6,7 +6,7 @@ import Icon from "../../../component/icon.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
 import Header from "../../common/header.jsx";
-import {urlParam,base64Encode} from "../../../lib/util.es6";
+import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 
 import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";
@@ -112,7 +112,7 @@ class ConfirmOrder extends Component{
                     mobile:checkedReceiver.mobileNumber,
                     productList:JSON.stringify(productList)
                 }
-                fetchPayGateway(base64Encode(urlParam(message)))
+                fetchPayGateway(base64EncodeForURL(urlParam(message)))
             }
         }
         if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
