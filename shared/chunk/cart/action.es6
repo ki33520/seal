@@ -4,7 +4,8 @@ import {
     START_DELETE_CART,FINISH_DELETE_CART,
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
-    START_TOGGLE_ALL,FINISH_TOGGLE_ALL
+    START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
+    CHANGE_CART_NUM
 } from "./constant.es6";
 
 
@@ -60,10 +61,11 @@ function startDeleteCart(){
     }
 }
 
-function finishDeleteCart(dispatch){
+function finishDeleteCart(dispatch,param){
     apiRequest('/cart').then((res)=>{
         dispatch({
             type:FINISH_DELETE_CART,
+            param,
             res
         });
     });
@@ -83,7 +85,7 @@ export function deleteCart(param){
         dispatch(startDeleteCart());
         apiRequest('/deleteCart',param,{method:"POST"}).then((res)=>{
             if(res.isDeleted){
-                finishDeleteCart(dispatch);
+                finishDeleteCart(dispatch,param);
             }
         })
     }
@@ -104,5 +106,12 @@ export function toggleCartAll(param){
         apiRequest('/calculatePrice',param,{method:"POST"}).then((res)=>{
             finishCheckedAll(dispatch,param,res);
         })
+    }
+}
+
+export function updateCartNumber(param){
+    return {
+        type:CHANGE_CART_NUM,
+        param
     }
 }
