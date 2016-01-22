@@ -10,6 +10,8 @@ import fetchOrder from "./action.es6";
 import Floor from "./partial/floor.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Header from "../common/header.jsx";
+import {alert} from "../common/action.es6";
+import Alert from "../../component/alert.jsx";
 
 
 class OrderList extends Component{
@@ -17,6 +19,17 @@ class OrderList extends Component{
         super(props);
         this.state = {
             displayFlag: props.flag
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        const {dispatch} = this.props;
+        if(nextProps.deliveryOrderChanging === false &&
+           this.props.deliveryOrderChanging === true){
+            if(nextProps.deliveryOrderChanged === true){
+                dispatch(alert(nextProps.msg,2000));
+            }else{
+                dispatch(alert(nextProps.msg,2000));
+            }
         }
     }
     beginRefresh(interval,flag){
@@ -50,37 +63,38 @@ class OrderList extends Component{
         }
     }
     render(){
-        var {orders,isFetching,systemTime} = this.props;
+        var {orders,isFetching,systemTime,alertActive,alertContent} = this.props;
         return (
             <div className="order-list-content">
                 <Header>我的订单</Header>
                 <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[0]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[0]} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[1]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[1]} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[2]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[2]} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[3]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[3]} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[4]} ref="floor"/>
+                        <Floor systemTime={systemTime} orderItem={orders[4]} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                 </SlideTabs>
+                <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
     }

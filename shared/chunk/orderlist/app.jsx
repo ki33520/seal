@@ -7,14 +7,8 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import OrderList from "./component.jsx";
 
 function selector(state){
-    const {orders,systemTime,flag,isFetched,isFetching} = state.ordersByParam
-    return {
-        orders,
-        flag,
-        systemTime,
-        isFetched,
-        isFetching
-    };
+    //const {orders,systemTime,flag,isFetched,isFetching} = state.ordersByParam
+    return state.ordersByParam;
 }
 
 let CommentListConnected = connect(selector)(OrderList);

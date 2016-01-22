@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
+import {fetchDeliveryOrder} from "../action.es6";
 
 const orderStatusObj = {
     "STATUS_NOT_PAY":"待付款",
@@ -44,7 +45,22 @@ function MillisecondToDate(msd) {
 }  
 
 class Floor extends Component{
-    renderButtons(child){
+    constructor(props){
+        super(props);
+    }
+    handleDeliveryOrder(child,i,e){
+        e && e.preventDefault();
+        const {dispatch} = this.props;
+        const {orderNo} = child;
+        dispatch(fetchDeliveryOrder("/deliveryorder",{
+            orderNo,
+            index: i
+        }));
+    }
+    handlePayGateway(){
+
+    }
+    renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
         var hasComment = false;
         itemList.map((v,k)=>{
@@ -54,9 +70,20 @@ class Floor extends Component{
         })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
+                let {cashierParam} = this.props.orderItem;
+                cashierParam = cashierParam || {}
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">去支付</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">去支付</a>
+                        <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                            <input type="hidden" name="appId" value={cashierParam.appId} />
+                            <input type="hidden" name="channel" value={cashierParam.channel} />
+                            <input type="hidden" name="openId" value={cashierParam.openId} />
+                            <input type="hidden" name="terminalType" value={cashierParam.terminalType} />
+                            <input type="hidden" name="message" value={cashierParam.message} />
+                            <input type="hidden" name="t" value={cashierParam.t} />
+                            <input type="hidden" name="h" value={cashierParam.h} />
+                        </form>
                     </div>
                 )
             case "STATUS_CONFIRMED":
@@ -67,7 +94,7 @@ class Floor extends Component{
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">确认收货</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child)} className="pop_c">确认收货</a>
                         <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
@@ -146,7 +173,7 @@ class Floor extends Component{
                     <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                     <div className="order-down">
                         <span>合计：<em>&yen;{salesTotalFee}</em></span>
-                        {this.renderButtons(child)}
+                        {this.renderButtons(child,i)}
                     </div>
                 </div>
             )
