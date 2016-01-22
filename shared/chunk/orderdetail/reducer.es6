@@ -1,6 +1,6 @@
 'use strict';
 import {
-    CHANGE_FIELD,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER
+    CHANGE_FIELD,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY
 } from "./action.es6";
 import {combineReducers} from "redux";
 
@@ -66,6 +66,19 @@ function orderByParam(state={},action){
                 deliveryOrderChanging:false,
                 deliveryOrderChanged: action.res.isChanged,
                 msg:action.res?action.res.msg: null
+            })
+        case REQUEST_PAYGATEWAY:
+            return Object.assign({},state,{
+                paygatewayFetching:true,
+                paygatewayFetched:false
+            })
+        case RESPONSE_PAYGATEWAY:
+            let cashierParam = action.res.isFetched?action.res.result:{}
+            var order = {...state.order,cashierParam}
+            return Object.assign({},state,{
+                order,
+                paygatewayFetching:false,
+                paygatewayFetched:action.res.isFetched
             })
         case SHOW_ALERT:
         case HIDE_ALERT:

@@ -5,7 +5,8 @@ import classNames from "classnames";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
-import {fetchDeliveryOrder} from "../action.es6";
+import {fetchDeliveryOrder,fetchPayGateway} from "../action.es6";
+import {urlParam,base64Encode} from "../../../lib/util.es6";
 
 const orderStatusObj = {
     "STATUS_NOT_PAY":"待付款",
@@ -57,8 +58,28 @@ class Floor extends Component{
             index: i
         }));
     }
-    handlePayGateway(){
-
+    handlePayGateway(child,e){
+        e && e.preventDefault();
+        const {dispatch} = this.props;
+        const {orderNo,totalFee,checkedReceiver,itemList} = child;
+        let productList = []
+        itemList.forEach((item)=>{
+            productList.push({
+                goodsName: item.singleTitle,
+                goodsColorAndSize: item.singleProps
+            });
+        })
+        let message = {
+            orderNo:orderNo,
+            totalFee:totalFee,
+            address:"北京市辖区东城区平安大道1号",
+            userName:"王朗",
+            mobile:"13112341234",
+            productList:productList
+        }
+        dispatch(
+            fetchPayGateway(base64Encode(urlParam(message)))
+        )
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
@@ -70,11 +91,11 @@ class Floor extends Component{
         })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
-                let {cashierParam} = this.props.orderItem;
+                let {cashierParam} = this.props;
                 cashierParam = cashierParam || {}
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">去支付</a>
+                        <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this,child)} className="pop_c">去支付</a>
                         <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
                             <input type="hidden" name="appId" value={cashierParam.appId} />
                             <input type="hidden" name="channel" value={cashierParam.channel} />
