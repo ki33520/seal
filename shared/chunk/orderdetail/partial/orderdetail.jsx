@@ -10,7 +10,7 @@ import OrderGoods from "./ordergoods.jsx";
 import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
-import {urlParam,base64Encode} from "../../../lib/util.es6";
+import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 
 
 function formatTime(num){
@@ -88,7 +88,7 @@ class OrderDetail extends Component{
             productList:JSON.stringify(productList)
         }
         dispatch(
-            fetchPayGateway(base64Encode(urlParam(message)))
+            fetchPayGateway(base64EncodeForURL(urlParam(message)))
         )
     }
     componentWillReceiveProps(nextProps){
