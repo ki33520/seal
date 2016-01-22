@@ -36,6 +36,8 @@ class HelpList extends Component{
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
                 <Scene name="index"><HelpMain {...this.props}/></Scene>
                 <Scene name="question"><Question currentQuestion={this.state.currentQuestion} {...this.props}/></Scene>
+                <Scene name="onlineservice"><Onlineservice {...this.props}/></Scene>
+                <Scene name="feedback"><Feedback {...this.props}/></Scene>
             </SceneGroup>
         );
     }

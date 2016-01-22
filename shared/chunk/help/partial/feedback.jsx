@@ -39,13 +39,15 @@ class Normal extends Component{
         }
     }
     render(){
+        const {changeScene} = this.props;
         const {feedback,alertContent,alertActive} = this.props.feedbackByForm;
         return (
             <div className="help-content">
-                <Header>
+                <header className="header">
+                    <a href="javascript:void(null)" onClick={changeScene.bind(this,"index")} className="iconfont icon-back"></a>
                     <span className="title">意见反馈</span>
                     <span className="btn-right" onClick={this.handleChangeFeedback.bind(this)}><a>保存</a></span>
-                </Header>
+                </header>
                 <div className="form-item">
                     <div className="feedback">
                         <textarea value={feedback} onChange={this.handleFieldChange.bind(this,"feedback")} placeholder="请输入您反馈的内容，我们将不断改进"></textarea>

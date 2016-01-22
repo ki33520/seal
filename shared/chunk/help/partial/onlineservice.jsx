@@ -7,12 +7,13 @@ import Header from "../../common/header.jsx";
 
 class Normal extends Component{
     render(){
-        const {helpInfo} = this.props;
+        const {changeScene} = this.props;
         return (
             <div className="help-content">
-                <Header>
+                <header className="header">
+                    <a href="javascript:void(null)" onClick={changeScene.bind(this,"index")} className="iconfont icon-back"></a>
                     <span className="title">在线客服</span>
-                </Header>
+                </header>
             </div>
         );
     }
