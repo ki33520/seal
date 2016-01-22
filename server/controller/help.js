@@ -13,12 +13,10 @@ var index = function(req, res, next) {
         },false)
     }).then(function(ret) {
         if (ret.questionList.returnCode === 0) {
-            console.log(ret.questionList.object)
             var questionList = ret.questionList.object;
             var initialState = {
                 questionList : questionList
             };
-
             var markup = util.getMarkupByComponent(HelpApp({
                 initialState: initialState
             }));
