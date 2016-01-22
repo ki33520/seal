@@ -12,7 +12,7 @@ class OrderGoods extends Component{
                 const key = "group-" + i
                 return (
                     <div className="clearfix" key={key}>
-                        <a className="img_wrap J_ytag cartlist" href={"/gooddetail/"+good.id}>
+                        <a className="img_wrap J_ytag cartlist" href={"/gooddetail/"+good.singleCode}>
                             <img src={good.singleImageUrl}/>
                         </a>
                         <div className="gd_info">

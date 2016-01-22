@@ -19,21 +19,21 @@ class HelpMain extends Component{
                         })
                     }
                 </ul>
-                <ul className="list">
-                    <li><a href="javascript:void(null)" onClick={changeScene.bind(this,"onlineservice")}>没有解决问题？咨询在线客服</a></li>
-                    <li><a href="javascript:void(null)" onClick={changeScene.bind(this,"feedback")}>意见反馈<span className="tips">(产品建议、系统问题等)</span></a></li>
-                    <li>
-                        <a>
-                            <div className="left-col"><span className="iconfont icon-phone">400-848-9448</span></div>
-                            <div className="right-col">
-                                <span>客服电话</span>
-                                <span>09:00-21:30</span>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
             </div>
         )
+        // <ul className="list">
+        //             <li><a href="javascript:void(null)" onClick={changeScene.bind(this,"onlineservice")}>没有解决问题？咨询在线客服</a></li>
+        //             <li><a href="javascript:void(null)" onClick={changeScene.bind(this,"feedback")}>意见反馈<span className="tips">(产品建议、系统问题等)</span></a></li>
+        //             <li>
+        //                 <a>
+        //                     <div className="left-col"><span className="iconfont icon-phone">400-848-9448</span></div>
+        //                     <div className="right-col">
+        //                         <span>客服电话</span>
+        //                         <span>09:00-21:30</span>
+        //                     </div>
+        //                 </a>
+        //             </li>
+        //         </ul>
     }
     render(){
         return (

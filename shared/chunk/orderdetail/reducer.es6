@@ -6,6 +6,7 @@ import {combineReducers} from "redux";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
+console.log(SHOW_ALERT,HIDE_ALERT)
 
 function orderByParam(state={},action){
     switch(action.type){
