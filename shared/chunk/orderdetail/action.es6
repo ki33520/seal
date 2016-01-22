@@ -10,6 +10,8 @@ export const REQUEST_ClOSEORDER = "REQUEST_ClOSEORDER";
 export const RESPONSE_ClOSEORDER= "RESPONSE_ClOSEORDER";
 export const REQUEST_DELIVERYORDER = "REQUEST_DELIVERYORDER";
 export const RESPONSE_DELIVERYORDER= "RESPONSE_DELIVERYORDER";
+export const REQUEST_PAYGATEWAY = "REQUEST_PAYGATEWAY";
+export const RESPONSE_PAYGATEWAY = "RESPONSE_PAYGATEWAY";
 
 export function changeField(name,value,key){
     return {
@@ -114,6 +116,39 @@ export function fetchDeliveryOrder(url,param){
         dispatch(requestDeliveryOrder(param));
         apiRequest(url,param,{method:"POST"}).then((res)=>{
             dispatch(responseDeliveryOrder(param,res));
+        })
+    }
+}
+export function fetchDeliveryOrder(url,param){
+    return (dispatch)=>{
+        dispatch(requestDeliveryOrder(param));
+        apiRequest(url,param,{method:"POST"}).then((res)=>{
+            dispatch(responseDeliveryOrder(param,res));
+        })
+    }
+}
+
+function requestPayGateway(param){
+    return {
+        type:REQUEST_PAYGATEWAY,
+        param
+    }
+}
+
+function responsePayGateway(param,res){
+    return {
+        type:RESPONSE_PAYGATEWAY,
+        param,
+        res,
+        responseAt:Date.now()
+    }
+}
+
+export function fetchPayGateway(param){
+    return (dispatch)=>{
+        dispatch(requestPayGateway(param))
+        apiRequest("/paygateway/"+ param,(res)=>{
+            dispatch(responsePayGateway(param,res))
         })
     }
 }

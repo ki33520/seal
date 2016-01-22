@@ -6,9 +6,10 @@ import Header from "../../common/header.jsx";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
 
-import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics} from "../action.es6";
+import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
+import {urlParam,base64Encode} from "../../../lib/util.es6";
 
 
 function formatTime(num){
@@ -66,6 +67,29 @@ class OrderDetail extends Component{
             orderNo
         }));
     }
+    handlePayGateway(order,e){
+        e && e.preventDefault();
+        const {dispatch} = this.props;
+        const {orderNo,totalFee,receiverObject,itemList} = order;
+        let productList = []
+        itemList.forEach((item)=>{
+            productList.push({
+                goodsName: item.singleTitle,
+                goodsColorAndSize: item.singleProps
+            });
+        })
+        let message = {
+            orderNo:orderNo,
+            totalFee:totalFee,
+            address:receiverObject.provinceName+receiverObject.cityName+receiverObject.districtName+receiverObject.address,
+            userName:receiverObject.consignee,
+            mobile:receiverObject.mobileNumber,
+            productList:productList
+        }
+        dispatch(
+            fetchPayGateway(base64Encode(urlParam(message)))
+        )
+    }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props;
         if(nextProps.closeOrderChanging === false &&
@@ -97,17 +121,34 @@ class OrderDetail extends Component{
         })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
+                let {cashierParam} = this.props;
+                cashierParam = cashierParam || {}
                 return (
                     <div className="confirmBtns">
-                        <a href="javascript:void(0);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
-                        <a href="javascript:void(0);" className="confirm_btn">立即支付</a>
+                        <a href="javascript:void(null);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
+                        <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this,order)} className="confirm_btn">立即支付</a>
+                        <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                            <input type="hidden" name="appId" value={cashierParam.appId} />
+                            <input type="hidden" name="channel" value={cashierParam.channel} />
+                            <input type="hidden" name="openId" value={cashierParam.openId} />
+                            <input type="hidden" name="terminalType" value={cashierParam.terminalType} />
+                            <input type="hidden" name="message" value={cashierParam.message} />
+                            <input type="hidden" name="t" value={cashierParam.t} />
+                            <input type="hidden" name="h" value={cashierParam.h} />
+                        </form>
+                    </div>
+                )
+                return (
+                    <div className="confirmBtns">
+                        <a href="javascript:void(null);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
+                        <a href="javascript:void(null);" className="confirm_btn">立即支付</a>
                     </div>
                 )
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="confirmBtns">
                         <a href={"/orderdetail/"+orderId+"#/logistics"} className="confirm_btn confirmBorder_btn">查看物流</a>
-                        <a href="javascript:void(0);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">确认收货</a>
+                        <a href="javascript:void(null);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">确认收货</a>
                     </div>
                 )
             case "STATUS_FINISHED":
