@@ -6,7 +6,8 @@ import {
     START_DELETE_CART,FINISH_DELETE_CART,
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
-    START_TOGGLE_ALL,FINISH_TOGGLE_ALL
+    START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
+    CHANGE_CART_NUM
 } from "./constant.es6";
 
 function cartByUser(state={},action){
@@ -35,7 +36,7 @@ function cartByUser(state={},action){
             var carts = state.carts;
             var cart = action.res.carts[0];
             cart.group = carts[cartIndex].group;
-            cart.checked = cart.qtys ? true : false;
+            cart.checked = cart.qtys > 0 ? true : false;
             cart.group.forEach((group)=>{
                 group.list.forEach((item)=>{
                     if(item.id===id){
@@ -82,6 +83,19 @@ function cartByUser(state={},action){
                 isDeleted:action.res.isDeleted,
                 carts:action.res.carts
             });
+        case CHANGE_CART_NUM:
+            var carts = state.carts;
+            var {cartIndex,id,qty} = action.param;
+            carts[cartIndex].group.forEach((group)=>{
+                group.list.forEach((item)=>{
+                    if(item.id===id){
+                        item.qty = qty;
+                    }
+                })
+            });
+            return Object.assign({},state,{
+                carts
+            })
         default:
             return state;
     }

@@ -40,10 +40,15 @@ class Cart extends Component {
     }
 
     handleChangeBuyed(goods,cartIndex,number) {
-        if(goods.checked===false){
+        if(goods.buyLimit<number){
             return false;
         }
-        if(goods.buyLimit<number){
+        if(goods.checked===false){
+            this.props.updateCartNumber({
+                id:goods.id,
+                qty:number,
+                cartIndex
+            });
             return false;
         }
         const {carts} = this.props.cartByUser;
@@ -112,13 +117,13 @@ class Cart extends Component {
             dialogActive:!this.state.dialogActive
         })
     }
-    handleDeleteCart(cartId){
+    handleDeleteCart(cartId,cartIndex){
         const {deleteCart} = this.props;
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
                 this.toggleDialog()
-                deleteCart({cartId});
+                deleteCart({cartId,cartIndex});
             }
         });
     }
@@ -126,7 +131,7 @@ class Cart extends Component {
     renderGoods(goods,i,j,k) {
         return(
             <div className="group" key={"g-"+i+j+k}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId)}></a>
+                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId,i)}></a>
                 <div className="J_moveRight">
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
