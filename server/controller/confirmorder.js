@@ -12,8 +12,9 @@ var receiversFilter = require("./receiver").receiversFilter;
 
 function orderFilter(order) {
     var _order = _.pick(order, [
-        "qtys"
+        "qtys","promoName"
     ]);
+    _order["warehouse"] = order.warehouseName
     _order["totalFee"] = order.totalFee
     _order["productFee"] = order.salesTotalFee
     _order["tariffFee"] = order.promoFee

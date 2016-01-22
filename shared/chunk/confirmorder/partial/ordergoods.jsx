@@ -21,7 +21,7 @@ class OrderGoods extends Component{
                 </a>
                 <div className="gd_info">
                     <p className="name"><span>{good.title}</span></p>
-                    <p className="value"> <span>&yen;{good.salePrice}</span><b>X{good.buyed}</b> </p>
+                    <p className="value"> <span>&yen;{good.salePrice}</span><b>X{good.qty}</b> </p>
                 </div>
             </div>
         )
@@ -33,13 +33,19 @@ class OrderGoods extends Component{
                 promo.goods.forEach((good,j)=>{
                     goods.push(this.renderGood(good,i,j));
                 })
-                return (
-                    <div className="orderConfirm_l_box" key={i}>
+                let promoTitle = null
+                if(promo.promoType && promo.promoName){
+                    return (
                         <div className="orderConfirm_title clearfix">
-                        <em>优惠类型</em>
-                        <span>组合商品更多优惠</span>
+                        <em>{promo.promoType}</em>
+                        <span>{promo.promoName}</span>
                         <i className="iconfont icon-right"></i>
                         </div>
+                    )
+                }
+                return (
+                    <div className="orderConfirm_l_box" key={i}>
+                        {promoTitle}
                         <div className="J_moveRight">
                         {goods}
                         </div>
@@ -55,8 +61,8 @@ class OrderGoods extends Component{
         return (
             <div className="order-list">
             <div className="order-info">
-                <span>广州保税区一号仓</span>
-                <span>满XXX元减XX元，满XXXX元减XXX元。</span>
+                <span>{this.props.warehouse}</span>
+                <span>{this.props.promoName}</span>
             </div>
             <div className="orderConfirm_l clearfix">
             {this.renderGroup(promoList)}

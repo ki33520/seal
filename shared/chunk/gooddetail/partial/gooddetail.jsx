@@ -41,7 +41,7 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
-        const {fetchCartCount,fetchIsCollected,fetchPromotions,fetchComments} = this.props;
+        const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             let selectedAttr = _.findWhere(attrs,{attrName:k})
@@ -52,9 +52,6 @@ class GoodDetail extends Component{
         }) 
         fetchCartCount()
         fetchIsCollected({
-            singleCode:code
-        })
-        fetchPromotions({
             singleCode:code
         })
         fetchComments({
@@ -164,6 +161,17 @@ class GoodDetail extends Component{
             window.location.assign(`/confirmorder/${queryParam}`)
         }
     }
+    renderCountdown(){
+        const {good} = this.props.goodById;
+        if(good.flashbuy['active']){
+            return (
+                <span className="countdown">
+                <i className="iconfont icon-time"></i>距本期结束<em><Timer endTime={good.flashbuy['endTime']}/></em>
+                </span>
+            )
+        }
+        return null
+    }
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
@@ -206,8 +214,7 @@ class GoodDetail extends Component{
                  <div className="price clearfix">
                     <span className="nowPrice">&yen;{good.salePrice}</span>
                     <span className="oldPrice">市场价&yen;{good.originPrice}</span>
-                    <span className="countdown">
-                    <i className="iconfont icon-time"></i>距本期结束<em><Timer endTime="2016-01-22 12:00:00"/></em></span>
+                    {this.renderCountdown()}
                 </div>
                 <Promotions promotions={good.marketing}/>
                  <a onClick={this.props.changeScene.bind(this,"comment",{productCode:good.productCode})} 

@@ -30,7 +30,7 @@ class ConfirmOrder extends Component{
             <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"receiver")}>
             <div className="order-time">
             <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span></p>
-            <p>433101**********1011<em>实名</em></p>
+            <p>{receiver.idCard}<em>实名</em></p>
             <p className="fs12px">{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
             <span className="order-icpe"><i className="iconfont icon-right"></i></span>
             </div>
@@ -134,7 +134,7 @@ class ConfirmOrder extends Component{
                 <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"coupon")}>
                 <div className="intro">
                 <span>优惠券</span>
-                <span><em><i>券</i>新人5元券</em><i className="iconfont icon-right"></i></span>
+                <span>{order.checkedCoupon?<em><i>券</i>{order.checkedCoupon["couponName"]}</em>:null}<i className="iconfont icon-right"></i></span>
                 </div>
                 </a>
             </div>

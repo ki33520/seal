@@ -8,6 +8,8 @@ class Origin extends Component{
     }
     render(){
         const {good} = this.props;
+        const {useOutlandLogistics,outlandLogisticsFee} = good
+        let logistics = useOutlandLogistics?<em>&yen;{outlandLogisticsFee}</em>:"包邮"
         return (
             <div className="overView">
                 <dl>
@@ -31,11 +33,11 @@ class Origin extends Component{
                 <div className="smallLine"></div> 
                 <dl>
                   <dt>税费：</dt>
-                  <dd>10% <a href="#" className="iconfont icon-ask"></a></dd>
+                  <dd>{good.showTaxRate}<a href="#" className="iconfont icon-ask"></a></dd>
                 </dl>
                 <dl>
                   <dt>运费：</dt>
-                  <dd>包邮</dd>
+                  <dd>{logistics}</dd>
                 </dl>   
             </div>
         )

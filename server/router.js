@@ -35,7 +35,6 @@ router.get("/togglecollected", require("./controller/gooddetail").toggleCollecte
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
 router.get("/search", require("./controller/goodlist"));
 router.get("/goodcomment", require("./controller/gooddetail").goodComments);
-router.get("/goodpromotions", require("./controller/gooddetail").goodPromotions);
 
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
