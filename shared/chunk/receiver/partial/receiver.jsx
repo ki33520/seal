@@ -3,19 +3,36 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import Icon from "../../../component/icon.jsx";
+import Dialog from "../../../component/dialog.jsx";
 import Radio from "../../../component/form/radio.jsx";
 import _ from "lodash";
 
 class Receiver extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            dialogActive:false,
+            dialogOnConfirm:null
+        }
+    }
     handleCheck(receiver){
         const {onCheck} = this.props
         onCheck(receiver)
         this.props.receiverByUser.changeScene("index")
     }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        })
+    }
     handleDelete(receiver){
         const {deleteReceiver} = this.props;
-        deleteReceiver({
-            id:receiver.id
+        this.setState({
+            dialogActive:true,
+            dialogOnConfirm:()=>{
+                this.toggleDialog()
+                deleteReceiver({id:receiver.id})
+            }
         })
     }
     handleCheckableGoBack(){
@@ -53,7 +70,7 @@ class Receiver extends Component{
         }
         return (
             <div className="empty">
-                <img src="/client/images/empty_address.png" />
+                <img src="/client/asset/images/empty_address.png" />
                 <span>快来添加您的收货地址吧！</span>
                 <a href="javascript:void(null)" className="empty_btn"
                 onClick={this.props.changeScene.bind(this,"addreceiver")}>添加新地址</a>
@@ -68,6 +85,10 @@ class Receiver extends Component{
             <div className="selectArea">
             {this.renderReceivers()}
             </div>
+            <Dialog active={this.state.dialogActive} 
+            onCancel={this.toggleDialog.bind(this)}
+            onConfrim={this.state.dialogOnConfirm} 
+            >确定要删除吗?</Dialog>
             <div className="addBtns">
                 <a href="javascript:void(null)" 
                 onClick={this.props.changeScene.bind(this,"addreceiver")} className="addBtn">添加新地址</a>

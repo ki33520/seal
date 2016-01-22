@@ -8,47 +8,78 @@ var GoodDetailApp = util.getSharedComponent("gooddetail");
 var config = require("../lib/config");
 
 var goodDetail = function(req, res, next) {
-    var id = req.params.id;
-    util.fetchAPI("goodById", {
-        code: id,
-        channel: "Mobile"
+    var singleCode = req.params.id;
+    bluebird.props({
+        "goodById": util.fetchAPI("goodById", {
+            code: singleCode,
+            channel: "Mobile"
+        }),
+        "flashbuyByGood": util.fetchAPI("flashbuyByGood", {
+            singleCode: singleCode,
+            channel: "Mobile"
+        }),
+        "promotionsByGood": util.fetchAPI("goodPromotions", {
+            singleCode: singleCode,
+            channel: "Mobile"
+        })
     }).then(function(ret) {
-        if (ret.returnCode === 0) {
-            var good = goodFilter(ret.object);
+        if (ret["goodById"].returnCode === 0) {
+            var good = goodFilter(ret["goodById"].object);
             var slides = good.imageUrl;
-            // slides = slides.map(function(slide) {
-            //     return slide.replace("imgtest.", "img.") + "@500w_500h_4e";
-            // })
             good.slides = slides;
             good.mainImageUrl = good.imageUrl[0]
-            var cartCount = "";
-            // if(resp.cartByUser !== false && resp.cartByUser.code === "ok"){
-            //     cartCount = resp.cartByUser.page.totalCount > 0?
-            //     serverUtil.calculateCart(resp.cartByUser):"";
-            // }
+
+            var flashbuy = {active:false}
+            if (ret["flashbuyByGood"].returnCode === 0) {
+                flashbuy = flashbuyFilter(ret["flashbuyByGood"].object)
+                if(moment().isBetween(moment(flashbuy["startTime"]),moment(flashbuy["endTime"]))){
+                    // console.log('start')
+                    flashbuy["active"] = true
+                }
+            }
+            good.flashbuy = flashbuy;
+
+            var promotions = {}
+            if(ret["promotionsByGood"].returnCode === 0){
+                promotions = promotionsFilter(ret["promotionsByGood"].object)
+            }
+            good.promotions = promotions
 
             var initialState = {
-                good: good,
-                cartCount: cartCount
-            };
+                good
+            }
             var markup = util.getMarkupByComponent(GoodDetailApp({
                 initialState: initialState
             }));
-
             res.render('gooddetail', {
                 markup: markup,
                 initialState: initialState
             })
         } else {
-            next(new Error(ret.message));
+            next(new Error(message))
         }
+    }).fail(function(){
+        next(new Error('api request failed'))
     })
+}
+
+function flashbuyFilter(flashbuy) {
+    var _flashbuy = {};
+    _flashbuy["price"] = flashbuy.wapPrice
+    _flashbuy["startTime"] = moment(new Date(flashbuy.beginDate)).format("YYYY-MM-DD HH:mm:ss")
+    _flashbuy["endTime"] = moment(new Date(flashbuy.endDate)).format("YYYY-MM-DD HH:mm:ss")
+    return _flashbuy
+}
+
+function promotionsFilter(promotions){
+    var _promotions = {};
+    return promotions
 }
 
 function goodFilter(good) {
     var _good = _.pick(good, [
         "code", "discount", "isMain", "title", "subTitle", "detail",
-        "buyLimit", "taxRate", "sourceAreaId",
+        "buyLimit", "sourceAreaId",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
         "description", "showTaxRate", "addCount"
     ]);
@@ -264,73 +295,48 @@ var goodComments = function(req, res, next) {
         productCode: productCode,
         pageNo: pageIndex,
         pageSize: pageSize
-    }).then(function(ret){
-        if(ret.returnCode === 0){
+    }).then(function(ret) {
+        if (ret.returnCode === 0) {
             res.json({
-                commentsFetched:true,
-                result:commentsFilter(ret.object)
+                commentsFetched: true,
+                result: commentsFilter(ret.object)
             })
-        }else{
+        } else {
             res.json({
-                commentsFetched:false,
-                errMsg:ret.message
+                commentsFetched: false,
+                errMsg: ret.message
             })
         }
-    },function(){
+    }, function() {
         res.json({
-            commentsFetched:false,
-            errMsg:"api request failed"
+            commentsFetched: false,
+            errMsg: "api request failed"
         })
     })
 }
 
-function commentsFilter(comments){
-    var _comments = _.pick(comments,["totalCount"])
+function commentsFilter(comments) {
+    var _comments = _.pick(comments, ["totalCount"])
     _comments["list"] = []
-    _.each(comments.result,function(comment,i){
-        var _comment = _.pick(comment,[
-            "memberId","productCode","productName",
+    _.each(comments.result, function(comment, i) {
+        var _comment = _.pick(comment, [
+            "memberId", "productCode", "productName",
             "singleCode",
-            "content","rate","isView","isOpen","nickName"
+            "content", "rate", "isView", "isOpen", "nickName"
         ])
         _comment["avatar"] = comment["imagesUrl"]
-        _comment["commentImages"] = comment["imageUrlList"] ? _.map(comment["imageUrlList"],function(v,i){
+        _comment["commentImages"] = comment["imageUrlList"] ? _.map(comment["imageUrlList"], function(v, i) {
             return config.imgServer + v
-        }):[]
+        }) : []
         _comment["productImage"] = config.imgServer + comment.singleImage;
         _comment["createdAt"] = moment(new Date(comment.createdAt).getTime()).format("YYYY-MM-DD HH:mm:ss")
-        // console.log('createAt',comment["createdAt"])
+            // console.log('createAt',comment["createdAt"])
         _comments["list"].push(_comment)
     })
-    _comments["showup"] = _.filter(_comments["list"],function(v){
+    _comments["showup"] = _.filter(_comments["list"], function(v) {
         return v["commentImages"].length > 0
     })
     return _comments
-}
-
-var goodPromotions = function(req,res,next){
-    var singleCode = req.query.singleCode;
-    util.fetchAPI("goodPromotions",{
-        singleCode:singleCode,
-        channel:"Mobile"
-    }).then(function(ret){
-        if(ret.returnCode === 0){
-            res.json({
-                promotionsFetched:true,
-                result:ret.object
-            })
-        }else{
-            res.json({
-                promotionsFetched:false,
-                errMsg:ret.message
-            })
-        }
-    },function(){
-        res.json({
-            promotionsFetched:false,
-            errMsg:"api request failed"
-        })
-    })
 }
 
 module.exports = {
@@ -340,6 +346,5 @@ module.exports = {
     isCollected: isCollected,
     cartCount: cartCount,
     fetchGood: fetchGood,
-    goodComments:goodComments,
-    goodPromotions:goodPromotions
+    goodComments: goodComments
 };

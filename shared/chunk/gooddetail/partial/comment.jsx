@@ -28,7 +28,6 @@ class GoodComment extends Component{
                 const commentImages = comment["commentImages"].map((img,i)=>{
                     return <a href="javascript:void(null)" key={i}><img src={img}/></a>
                 })
-                console.log(comment)
                 return (
                     <div className="comList" key={i}>
                         <div className="comList_title">

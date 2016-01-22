@@ -7,6 +7,7 @@ import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_COMMENTS,RESPONSE_COMMENTS,
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
+    REQUEST_FLASHBUY,RESPONSE_FLASHBUY,
 START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -72,20 +73,6 @@ function goodById(state={},action){
                 good,
                 commentsFetched:action.res.commentsFetched,
                 commentsFetching:false
-            })
-        case REQUEST_PROMOTIONS:
-            return Object.assign({},state,{
-                promotionsFetching:true,
-                promotionsFetched:false,
-            })
-        case RESPONSE_PROMOTIONS:
-            if(action.res.promotionsFetched){
-                good.promotions = action.res.result
-            }
-            return Object.assign({},state,{
-                good,
-                promotionsFetched:action.res.promotionsFetched,
-                promotionsFetching:false
             })
         default:
             return state;
