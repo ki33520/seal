@@ -7,89 +7,130 @@ import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
-import {updateCart,toggleCart,toggleAllChecked,deleteCart,toggleAllNotChecked} from "./action.es6";
 import Checkbox from "../../component/form/checkbox.jsx";
+import Dialog from "../../component/dialog.jsx";
 import {urlParam,base64Encode} from "../../lib/util.es6";
 
-
-
 class Cart extends Component {
-    checkout(cart){
-        let {itemIds,buyeds} = cart;
-        for(let i=0,n=buyeds.length;i<n;i++){
-            if(buyeds[i]===0){
-                buyeds.splice(i,1);
-                itemIds.splice(i,1);
-            }
+    constructor(props){
+        super(props);
+        this.state = {
+            dialogActive:false,
+            dialogOnConfirm:null
         }
+    }
+    checkout(cart){
+        let ids = [];
+        let qtys = [];
+        cart.group.forEach((group)=>{
+            group.list.forEach((item)=>{
+                if(item.qty>0){
+                    ids.push(item.id);
+                    qtys.push(item.qty); 
+                }
+            })
+        });
 
         let queryParam = base64Encode(urlParam({
-            itemIds:itemIds.join(","),
-            buyeds:buyeds.join(",")
+            itemIds:ids.join(","),
+            buyeds:qtys.join(",")
         }));
 
         window.location.assign(`/confirmorder/${queryParam}`)
     }
 
-    handleChangeBuyed(goods,number) {
-        const {dispatch} = this.props;
+    handleChangeBuyed(goods,cartIndex,number) {
         if(goods.checked===false){
             return false;
         }
         if(goods.buyLimit<number){
             return false;
         }
-        dispatch(updateCart({
+        const {carts} = this.props.cartByUser;
+        let ids = [];
+        let qtys = [];
+        carts[cartIndex].group.forEach((group)=>{
+            group.list.forEach((item)=>{
+                ids.push(item.id);
+                qtys.push(goods.id==item.id?number:item.qty);
+            })
+        });
+        this.props.updateCart({
             singleCode:goods.id,
             qty:number,
-            figureUpFlag:false
-        }));
-    }
-
-    toggleCartItemsChecked(cartIndex,checked){
-        const {dispatch,carts} = this.props;
-        if(checked){
-            dispatch(toggleAllChecked());
-        }else{
-            dispatch(toggleAllNotChecked({
-                cartIndex
-            }));
-        }
-        
-    }
-
-    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
-        const {dispatch,carts} = this.props;
-        let {itemIds,buyeds} = carts[cartIndex];
-        let index = itemIds.indexOf(goods.id);
-        buyeds[index]= checked ? goods.qty : 0;
-         
-        dispatch(toggleCart({
-            singleCodes:itemIds.join(','),
-            qtys:buyeds.join(','),
+            figureUpFlag:false,
             cartIndex,
-            groupIndex,
-            goodsIndex,
-            checked
-        }));
+            singleCodes:ids.join(','),
+            qtys:qtys.join(',')
+        });
     }
 
+    toggleAllChecked(cartIndex,checked){
+        const {carts} = this.props.cartByUser;
+        let ids = [];
+        let qtys = [];
+        carts[cartIndex].group.forEach((group)=>{
+            group.list.forEach((item)=>{
+                ids.push(item.id);
+                qtys.push(checked?item.qty:0);
+            })
+        });
+
+        this.props.toggleCartAll({
+            singleCodes:ids.join(','),
+            qtys:qtys.join(','),
+            cartIndex,
+            checked
+        });
+    }
+
+    toggleItemChecked(id,cartIndex,checked){
+        const {carts} = this.props.cartByUser;
+        let ids = [];
+        let qtys = [];
+        carts[cartIndex].group.forEach((group)=>{
+            group.list.forEach((item)=>{
+                ids.push(item.id);
+                if(id===item.id){
+                    qtys.push(checked?item.qty:0);
+                }else{
+                    qtys.push(item.checked?item.qty:0); 
+                }
+            })
+        });
+        
+        this.props.toggleCartItem({
+            singleCodes:ids.join(','),
+            qtys:qtys.join(','),
+            cartIndex,
+            id,
+            checked
+        });
+    }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        })
+    }
     handleDeleteCart(cartId){
-        const {dispatch} = this.props;
-        dispatch(deleteCart({
-            cartId:cartId
-        }));
+        const {deleteCart} = this.props;
+        this.setState({
+            dialogActive:true,
+            dialogOnConfirm:()=>{
+                this.toggleDialog()
+                deleteCart({cartId});
+            }
+        });
     }
  
-    renderGoods(goods,cartIndex,groupIndex,goodsIndex) {
+    renderGoods(goods,i,j,k) {
         return(
-            <div className="group" key={"goods-"+goodsIndex}>
+            <div className="group" key={"g-"+i+j+k}>
                 <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId)}></a>
                 <div className="J_moveRight">
-                     
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
-                    onChange={this.toggleItemChecked.bind(this,goods,cartIndex,groupIndex,goodsIndex)} />
+                    onChange={this.toggleItemChecked.bind(this,goods.id,i)} />
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href={"/gooddetail/"+goods.id}>
@@ -103,7 +144,8 @@ class Cart extends Component {
                               <em>x{goods.qty}</em>
                             </p>
                             <div className="act_wrap"> 
-                                <NumberPicker value={goods.qty} minimum={1} maximum={goods.buyLimit} onChange={this.handleChangeBuyed.bind(this,goods)}/>
+                                <NumberPicker value={goods.qty} minimum={1} maximum={goods.buyLimit} 
+                                onChange={this.handleChangeBuyed.bind(this,goods,i)} />
                             </div>
                         </div>
                     </div>
@@ -112,107 +154,102 @@ class Cart extends Component {
         );
     }
 
-    renderListRow(group,cartIndex,groupIndex){
-        let list = [];
+    renderGroup(group,i,j){
+        let goodsList = [];
         let manjian = classNames("manjian",{
             hide:!group.promoType
         });
         group.list.map((goods,k)=>{
-            list.push(this.renderGoods(goods,cartIndex,groupIndex,k))
+            goodsList.push(this.renderGoods(goods,i,j,k))
         })
 
         return(
-            <div className="J_item" key={"row-" + groupIndex}>
+            <div className="J_item" key={"gp-" + i+j}>
                 <div className={manjian}><em>满减</em>{group.promoName}</div>
-                {list}
+                {goodsList}
             </div>
         );
     }
 
-    renderTips(money,buyLimit,dutyFree){
+    renderInfo(total,tax, limitTax,limitMoney){
+        let notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
+        let warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
         let message = null;
 
-        if(money>=dutyFree){
-            message = "省钱贴士：单笔订单税金"+dutyFree+"元以内，可以免税哦！"
-        }else if(money >buyLimit){
-            message = "啊哦，海关规定购买多件的总价（不含税）不能超过&yen;"+buyLimit+"哦，请您分多次购买。";
+        if(total > limitMoney){
+            message = warning;
+        }else if(tax > limitTax){
+            message = notice;
         }
 
-        if(message){
-            return(
-                <div className="cart-tips">
-                    <div className="arrow"></div>
-                    <div className="con">
-                        {message}
-                    </div>
+        if(message===null) return null;
+
+        return(
+            <div className="cart-tips">
+                <div className="arrow"></div>
+                <div className="con">
+                    {message}
                 </div>
-            )
-        }
- 
-        return null;
+            </div>
+        )
     }
 
-    renderListGroup(carts){
-
-        return carts.map((cart,i)=>{
-            let rows = [];
-            let buyeds = [];
-            cart.buyeds.map((item)=>{
-                item && buyeds.push(item);
-            });
-            
-            cart.list.forEach((list,j)=>{
-                rows.push(this.renderListRow(list,i,j));
-            });
-            let btnClass = classNames("btn_buy",{
-                "unable_buy":buyeds.length===0
-            });
-            let depot = classNames("depot_bot",{
-                hide:!cart.promoType
-            });
-             
-            return(
-                <div className="onlyList clearfix" key={"cart-" + i}>
-                    <div className="J_store clearfix">
-                        <Checkbox checked={cart.checked}
-                        checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
-                        onChange={this.toggleCartItemsChecked.bind(this,i)}/>
-                        <div className="depot">
-                            <span>{cart.warehouseName}</span>
-                            <div className={depot}><em></em>{cart.promoName}</div>
-                        </div>
-                    </div>
-                    {rows}
-                    <div className="section_wrap cart_buy">
-                        <div className="cartFirst clearfix">
-                            <span>已选商品{cart.qtys}件</span>
-                            <div className="cartFirst_two">
-                                <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{cart.salesTotal}</p>
-                                <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.promoTotal}</p>
-                            </div>
-                        </div>
-                        <div id="J_wrapperCartTop">
-                            <p>
-                                <span>总计(不含运费、税金)：<em>&yen;{cart.total}</em></span>
-                            </p>
-                            <p>
-                                <input type="button"  className={btnClass} value="结算" onClick={this.checkout.bind(this,cart)}/>
-                            </p>
-                        </div>
-                        {this.renderTips(cart.total,cart.buyLimit,cart.dutyFree)}
-                    </div>
-                </div>
-            )
+    renderCart(cart,i){
+        let groupList = [];
+        cart.group.forEach((group,j)=>{
+            groupList.push(this.renderGroup(group,i,j));
         });
-        
+        let button = classNames("btn_buy",{
+            "unable_buy":!cart.checked
+        });
+        let promo = classNames("depot_bot",{
+            hide:!cart.promoType
+        });
+         
+        return(
+            <div className="onlyList clearfix" key={"cart-" + i}>
+                <div className="J_store clearfix">
+                    <Checkbox checked={cart.checked}
+                    checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
+                    onChange={this.toggleAllChecked.bind(this,i)}/>
+                    <div className="depot">
+                        <span>{cart.warehouseName}</span>
+                        <div className={promo}><em></em>{cart.promoName}</div>
+                    </div>
+                </div>
+                {groupList}
+                <div className="section_wrap cart_buy">
+                    <div className="cartFirst clearfix">
+                        <span>已选商品{cart.qtys}件</span>
+                        <div className="cartFirst_two">
+                            <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{cart.salesTotal}</p>
+                            <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.promoTotal}</p>
+                        </div>
+                    </div>
+                    <div id="J_wrapperCartTop">
+                        <p>
+                            <span>总计(不含运费、税金)：<em>&yen;{cart.total}</em></span>
+                        </p>
+                        <p>
+                            <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart)}/>
+                        </p>
+                    </div>
+                    {this.renderInfo(cart.total,cart.tax,cart.dutyFree,cart.buyLimit)}
+                </div>
+            </div>
+        )
     }
 
-    renderCart(){
-        const {carts} = this.props;
+    renderCarts(){
+        const {carts} = this.props.cartByUser;
         if(carts.length){
+            let cartList = [];
+            carts.forEach((cart,i)=>{
+                cartList.push(this.renderCart(cart,i));
+            })
             return  (
                 <div className="cart">
-                    {this.renderListGroup(carts)}
+                    {cartList}
                 </div>
             )
         }else{
@@ -227,15 +264,15 @@ class Cart extends Component {
     }
 
     render() {
-
         return (
             <div>
                 <Header>
                     <span className="title">购物车</span>
                 </Header>
-                
-                {this.renderCart()}
-    
+                {this.renderCarts()}
+                <Dialog active={this.state.dialogActive} 
+                    onCancel={this.toggleDialog.bind(this)}
+                    onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
                 <Footer activeIndex="3"/>
             </div>
         )
