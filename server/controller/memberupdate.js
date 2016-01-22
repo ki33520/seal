@@ -15,6 +15,7 @@ var update = function(req, res, next) {
         if (ret.memberDetailByUser.returnCode === 0) {
             var memberInfo = ret.memberDetailByUser.object;
             var initialState = {
+                isFetched: true,
                 memberInfo: memberInfo
             };
             var markup = util.getMarkupByComponent(MemberupdateApp({initialState:initialState}));
@@ -48,12 +49,12 @@ var updateBasic = function(req, res, next) {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
                 isChanged: true,
-                result:basicInfo
+                msg:ret.updateBasicByUser.message
             })
         }else{
             res.json({
                 isChanged:false,
-                errMsg:ret.updateBasicByUser.message
+                msg:ret.updateBasicByUser.message
             })
         }
     });
@@ -75,12 +76,13 @@ var updatePassword = function(req, res, next) {
         console.log(ret)
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
-                isChanged: true
+                isChanged: true,
+                msg:ret.updatePasswordByUser.message
             })
         }else{
             res.json({
                 isChanged:false,
-                errMsg:ret.updatePasswordByUser.message
+                msg:ret.updatePasswordByUser.message
             })
         }
     });
@@ -102,12 +104,13 @@ var updateMembercard = function(req, res, next) {
     }).then(function(ret) {
         if (ret.updateMembercardByUser.returnCode === 0) {
             res.json({
-                isChanged: true
+                isChanged: true,
+                msg:ret.updateMembercardByUser.message
             })
         }else{
             res.json({
                 isChanged:false,
-                errMsg:ret.updateMembercardByUser.message
+                msg:ret.updateMembercardByUser.message
             })
         }
     });
@@ -124,14 +127,15 @@ var updateMemberCardVerifyCode = function(req, res, next) {
             mobileNumber: mobileNumber
         },true)
     }).then(function(ret) {
-        if (ret.updateMemberCardVerifyCode.code === "success") {
+        if (ret.updateMemberCardVerifyCode.returnCode === 0) {
             res.json({
-                isSend: true
+                isSend: true,
+                msg:ret.updateMemberCardVerifyCode.message
             })
         }else{
             res.json({
                 isSend:false,
-                errMsg:ret.updateMemberCardVerifyCode.message
+                msg:ret.updateMemberCardVerifyCode.message
             })
         }
     });

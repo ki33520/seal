@@ -56,9 +56,9 @@ class Selected extends Component{
             this.setValue(values.join(this.props.delimiter));
         }else{
             this.setValue(selectedValue);
-            // if(this.refs.dropdown.isMounted){
+            if(this.props.closeOnSelect){
                 this.refs.dropdown.setDropdownState(false);
-            // }
+            }
         }
     }
     handleFilterInput(e){
@@ -160,6 +160,7 @@ Selected.defaultProps = {
     maxHeight:null,
     minWidth:null,
     multiple:false,
+    closeOnSelect:true,
     onChange:function(){},
     optionFilter:(filterText,option)=>{
         return (option.label.toLowerCase().indexOf(filterText) > -1);

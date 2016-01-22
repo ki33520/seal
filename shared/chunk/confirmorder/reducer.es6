@@ -4,6 +4,7 @@ import {combineReducers} from "redux";
 import {VERIFY_PAYPASSWORD_REQUEST,
     VERIFY_PAYPASSWORD_RESPONSE,
 START_SUBMITORDER,FINISH_SUBMITORDER,
+REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY,
 CHANGE_RECEIVER,CHANGE_DELIVERYTIME,CHANGE_COUPON,CHANGE_INVOICE,
 TOGGLE_TICKET,TOGGLE_BALANCE,CHANGE_PAYPASSWORD} from "./action.es6";
 
@@ -64,17 +65,29 @@ function orderByParam(state={},action){
         case FINISH_SUBMITORDER:
             order = {...state.order}
             if(action.res.orderSubmited){
-                const {orderNo,homeURL,orderDtailURL,orderStatusURL,
-                    openId,wxOpenId} = action.res.result;
+                const {orderNo} = action.res.result;
                 order = Object.assign({},order,{
-                    orderNo,orderDtailURL,orderStatusURL,homeURL,
-                    openId,wxOpenId
+                    orderNo
                 })
             }
             return Object.assign({},state,{
                 order,
                 orderSubmited:action.res.orderSubmited,
                 orderSubmiting:false,
+            })
+        case REQUEST_PAYGATEWAY:
+            return Object.assign({},state,{
+                paygatewayFetching:true,
+                paygatewayFetched:false
+            })
+        case RESPONSE_PAYGATEWAY:
+            order = Object.assign({},order,{
+                cashierParam:action.res.result
+            })
+            return Object.assign({},state,{
+                order,
+                paygatewayFetching:false,
+                paygatewayFetched:action.res.isFetched
             })
         case SHOW_ALERT:
         case HIDE_ALERT:

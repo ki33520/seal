@@ -46,19 +46,10 @@ export function changeClassItem(param){
     }
 }
 
-function finishResetAll(param,res){
+export function resetAll(param){
     return {
         type:RESET_ALL_ITEM,
-        param,
-        res
-    }
-}
-
-export function resetAll(param){
-    return (dispath)=>{
-        return apiRequest('/search',param).then((res)=>{
-            dispath(finishResetAll(param,res))
-        })
+        param
     }
 }
 

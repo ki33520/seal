@@ -9,7 +9,7 @@ function formatCarts(originalCarts) {
     var carts = [];
 
      _.each(originalCarts, function(originalCart, i) {
-        let cart = {
+        var cart = {
             warehouseName: originalCart.warehouseName,
             warehouseId: originalCart.warehouseId,
             promoType:originalCart.promoType,
@@ -63,7 +63,7 @@ function formatCarts(originalCarts) {
 }
  
 var cart = function(req, res, next) {
-    let user = req.session.user;
+    var user = req.session.user;
     util.fetchAPI("cartByUser",{
         memberId:user.memberId
     }).then(function(resp){
@@ -76,11 +76,11 @@ var cart = function(req, res, next) {
                     isFetched:true
                 });
             }else{
-                let initialState = {
+                var initialState = {
                     carts:carts
                 };
 
-                let markup = util.getMarkupByComponent(CartApp({
+                var markup = util.getMarkupByComponent(CartApp({
                     initialState: initialState
                 }));
 
@@ -96,10 +96,10 @@ var cart = function(req, res, next) {
 }
 
 var updateCart = function(req, res, next) {
-    let user = req.session.user;
-    let singleCode = req.body.singleCode;
-    let qty = req.body.qty;
-    let figureUpFlag = req.body.figureUpFlag;
+    var user = req.session.user;
+    var singleCode = req.body.singleCode;
+    var qty = req.body.qty;
+    var figureUpFlag = req.body.figureUpFlag;
 
     util.fetchAPI('updateCart', {
         memberId: user.memberId,
@@ -121,8 +121,8 @@ var updateCart = function(req, res, next) {
 }
 
 var deleteCart = function(req, res, next) {
-    let cartId = req.body.cartId;
-    let user = req.session.user;
+    var cartId = req.body.cartId;
+    var user = req.session.user;
 
     util.fetchAPI('deleteCart', {
         memberId: user.memberId,
@@ -147,8 +147,8 @@ var deleteCart = function(req, res, next) {
 }
  
 var calculatePrice = function(req, res, next) {
-    let singleCodes = req.body.singleCodes;
-    let qtys = req.body.qtys;
+    var singleCodes = req.body.singleCodes;
+    var qtys = req.body.qtys;
 
     util.fetchAPI('calculatePrice', {
         singleCodes,

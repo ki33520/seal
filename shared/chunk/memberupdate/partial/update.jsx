@@ -14,9 +14,9 @@ class Update extends Component{
                     <span className="title">账户设置</span>
                 </Header>
                 <ul className="userInfo">
-                    <li>会员昵称: {memberInfo.nickName}</li>
-                    <li>手机号码: {memberInfo.mobileNumber}</li>
-                    <li>会员生日: {memberInfo.birthday}</li>
+                    <li><label>会员昵称: </label><span>{memberInfo.nickName}</span></li>
+                    <li><label>手机号码: </label><span>{memberInfo.mobileNumber}</span></li>
+                    <li><label>会员生日: </label><span>{memberInfo.birthday}</span></li>
                 </ul>
                 <ul className="list">
                     <li><a href="#/basic">基本信息</a></li>

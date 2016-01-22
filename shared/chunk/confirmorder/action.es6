@@ -12,6 +12,8 @@ export const CHANGE_INVOICE = "CHANGE_INVOICE";
 export const TOGGLE_BALANCE = "TOGGLE_BALANCE";
 export const TOGGLE_TICKET = "TOGGLE_TICKET";
 export const CHANGE_PAYPASSWORD = "CHANGE_PAYPASSWORD";
+export const REQUEST_PAYGATEWAY = "REQUEST_PAYGATEWAY";
+export const RESPONSE_PAYGATEWAY = "RESPONSE_PAYGATEWAY";
 
 export function changeReceiver(checkedReceiver){
     return {
@@ -119,6 +121,31 @@ export function submitOrder(url,param){
                 dispatch(alert(res.errMsg,3000))
             }
             dispatch(finishSubmitOrder(param,res));
+        })
+    }
+}
+
+function requestPayGateway(param){
+    return {
+        type:REQUEST_PAYGATEWAY,
+        param
+    }
+}
+
+function responsePayGateway(param,res){
+    return {
+        type:RESPONSE_PAYGATEWAY,
+        param,
+        res,
+        responseAt:Date.now()
+    }
+}
+
+export function fetchPayGateway(param){
+    return (dispatch)=>{
+        dispatch(requestPayGateway(param))
+        apiRequest("/paygateway/"+ param,(res)=>{
+            dispatch(responsePayGateway(param,res))
         })
     }
 }

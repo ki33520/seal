@@ -35,7 +35,7 @@ function formatOrder(object) {
             }
         });
         return {
-            id: child.id,
+            orderId: child.id,
             itemList: itemList,
             memberId: child.memberId,
             orderCrtTime: child.orderCrtTime,
@@ -53,6 +53,7 @@ function formatOrder(object) {
             sendWarehouseName: child.sendWarehouseName,
             tariffFee: child.tariffFee,
             totalFee: child.totalFee,
+            createdAt: child.createdAt,
             timeoutTime: child.timeoutTime
         };
     });
@@ -69,7 +70,7 @@ function formatComment(object) {
         return {
             orderStatus: child.orderStatus,
             salesTotalFee: child.salesTotalFee,
-            id: child.id,
+            orderId: child.id,
             createdAt: child.createdAt,
             itemList: itemList
         };
@@ -82,7 +83,7 @@ var orderList = function(req, res,next) {
     var status = req.query.status !== undefined ? Number(req.query.status) : id ;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
-    var pageSize = 2;
+    var pageSize = 5;
     var fetchString,
         fetchObj;
     if(status === 4){

@@ -2,9 +2,10 @@
 var _ = require("lodash");
 var api = require("./api.json");
 
-api = _.extend(api,require("./api/index.json"))
-api = _.extend(api,require("./api/order.json"))
-api = _.extend(api,require("./api/user.json"))
+api = _.extend(api,require("./api/index.json"));
+api = _.extend(api,require("./api/order.json"));
+api = _.extend(api,require("./api/user.json"));
+api = _.extend(api,require("./api/cart.json"));
 
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
@@ -12,6 +13,7 @@ var config = {
     "imgServer":"http://imgtest.tepin.com/"
 };
 var runtime = process.env["NODE_ENV"];
+// runtime = "test"
 config["runtime"] = runtime;
 if (runtime === "develop") {
     config.apiServer = "http://wsns.tepin.youayun.cn";

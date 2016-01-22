@@ -88,7 +88,7 @@ class OrderDetail extends Component{
     }
     renderFooter(){
         const {order} = this.props;
-        const {orderStatus,orderNo,itemList} = order;
+        const {orderStatus,orderId,itemList} = order;
         var hasComment = false;
         itemList.map((v,k)=>{
             if(v.hasComment === true){
@@ -100,13 +100,13 @@ class OrderDetail extends Component{
                 return (
                     <div className="confirmBtns">
                         <a href="javascript:void(0);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
-                        <a href="javascript:void(0);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">立即支付</a>
+                        <a href="javascript:void(0);" className="confirm_btn">立即支付</a>
                     </div>
                 )
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="confirmBtns">
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="confirm_btn confirmBorder_btn">查看物流</a>
+                        <a href={"/orderdetail/"+orderId+"#/logistics"} className="confirm_btn confirmBorder_btn">查看物流</a>
                         <a href="javascript:void(0);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">确认收货</a>
                     </div>
                 )
@@ -116,7 +116,7 @@ class OrderDetail extends Component{
                 }else{
                     return (
                         <div className="confirmBtns">
-                            <a href={"/orderdetail/"+orderNo+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
+                            <a href={"/orderdetail/"+orderId+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
                         </div>
                     )
                 }

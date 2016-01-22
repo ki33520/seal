@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
+import {fetchDeliveryOrder} from "../action.es6";
 
 const orderStatusObj = {
     "STATUS_NOT_PAY":"待付款",
@@ -44,13 +45,45 @@ function MillisecondToDate(msd) {
 }  
 
 class Floor extends Component{
-    renderButtons(child){
-        const {orderStatus,orderNo} = child;
+    constructor(props){
+        super(props);
+    }
+    handleDeliveryOrder(child,i,e){
+        e && e.preventDefault();
+        const {dispatch} = this.props;
+        const {orderNo} = child;
+        dispatch(fetchDeliveryOrder("/deliveryorder",{
+            orderNo,
+            index: i
+        }));
+    }
+    handlePayGateway(){
+
+    }
+    renderButtons(child,i){
+        const {orderStatus,orderId,itemList} = child;
+        var hasComment = false;
+        itemList.map((v,k)=>{
+            if(v.hasComment === true){
+                hasComment = true;
+            }
+        })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
+                let {cashierParam} = this.props.orderItem;
+                cashierParam = cashierParam || {}
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">去支付</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">去支付</a>
+                        <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                            <input type="hidden" name="appId" value={cashierParam.appId} />
+                            <input type="hidden" name="channel" value={cashierParam.channel} />
+                            <input type="hidden" name="openId" value={cashierParam.openId} />
+                            <input type="hidden" name="terminalType" value={cashierParam.terminalType} />
+                            <input type="hidden" name="message" value={cashierParam.message} />
+                            <input type="hidden" name="t" value={cashierParam.t} />
+                            <input type="hidden" name="h" value={cashierParam.h} />
+                        </form>
                     </div>
                 )
             case "STATUS_CONFIRMED":
@@ -61,15 +94,15 @@ class Floor extends Component{
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">确认收货</a>
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="view_c">查看物流</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child)} className="pop_c">确认收货</a>
+                        <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_SENDED":
                 return (
                     <div className="order-buttons">
                         <a href="javascript:void(null)" className="pop_c">确认收货</a>
-                        <a href={"/orderdetail/"+orderNo+"#/logistics"} className="view_c">查看物流</a>
+                        <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_CANCELED":
@@ -78,11 +111,15 @@ class Floor extends Component{
                     </div>
                 )
             case "STATUS_FINISHED":
-                return (
-                    <div className="order-buttons">
-                        <a href={"/orderdetail/"+orderNo+"#/comment"} className="view_c">评价晒单</a>
-                    </div>
-                )
+                if(hasComment){
+                    return null
+                }else{
+                    return (
+                        <div className="order-buttons">
+                            <a href={"/orderdetail/"+orderId+"#/comment"} className="view_c">评价晒单</a>
+                        </div>
+                    )
+                }
             default:
                 return (
                     <div className="order-buttons">
@@ -113,7 +150,7 @@ class Floor extends Component{
     }
     renderOutTime(child){
         const {systemTime} = this.props;
-        const {orderCrtTime,timeoutTime,orderStatus} = child;
+        const {createdAt,timeoutTime,orderStatus} = child;
         var outTime = (new Date(timeoutTime).getTime() - systemTime);
         var outTimeTag = MillisecondToDate(outTime);
         if(orderStatus === "STATUS_NOT_PAY" && outTime>0){
@@ -122,8 +159,8 @@ class Floor extends Component{
     }
     renderNode(list){
         return list.map((child,i)=>{
-            const {orderCrtTime,id,orderReceiveId,orderNo,itemList,totalFee,orderStatus,timeoutTime} = child;
-            var crtTime = moment(new Date(orderCrtTime)).format("YYYY-MM-DD");
+            const {createdAt,id,orderReceiveId,orderId,itemList,salesTotalFee,orderStatus,timeoutTime} = child;
+            var crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
             return (
                 <div className="order-box" key={i}>
                     <div className="order-up">
@@ -133,10 +170,10 @@ class Floor extends Component{
                             <em>{orderStatusObj[orderStatus]}</em>
                         </div>
                     </div>
-                    <div className="order-list"><a href={"/orderdetail/"+orderNo}>{this.renderGoods(itemList)}</a></div>
+                    <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                     <div className="order-down">
-                        <span>合计：<em>&yen;{totalFee}</em></span>
-                        {this.renderButtons(child)}
+                        <span>合计：<em>&yen;{salesTotalFee}</em></span>
+                        {this.renderButtons(child,i)}
                     </div>
                 </div>
             )

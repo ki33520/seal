@@ -24,11 +24,39 @@ class GoodListApp extends React.Component{
     }
 
     handleReset(){
-        const {dispatch,searchParams} = this.props;
-         
+        const {dispatch,searchParams,filters} = this.props;
+        const {categoryNames,brandNames,areaNames} = filters;
+
+        let categories = [];
+        let brands = [];
+        let areas = [];
+        let params = Object.assign({},searchParams);
+
+        params.isHaveGoods = false;
+
+
+        categoryNames.forEach((item,i)=>{
+            item.isChecked = false;
+            categories.push(item);
+        });
+
+        brandNames.forEach((item,i)=>{
+            item.isChecked = false;
+            brands.push(item);
+        });
+
+        areaNames.forEach((item,i)=>{
+            item.isChecked = false;
+            areas.push(item);
+        })
+
         dispatch(resetAll({
-            k:searchParams.k,
-            pageIndex:searchParams.pageIndex
+            searchParams:params,
+            filters:{
+                categoryNames:categories,
+                brandNames:brands,
+                areaNames:areas
+            }
         }));
     }
 
@@ -110,14 +138,20 @@ class GoodListApp extends React.Component{
 
         if(categories.length){
             searchParams.categoryNames = categories.join(',');
+        }else{
+            searchParams.categoryNames = null;
         }
 
         if(areas.length){
             searchParams.areaNames=areas.join(',');
+        }else{
+            searchParams.areaNames=null;
         }
 
         if(brands.length){
             searchParams.brandNames=brands.join(',');
+        }else{
+            searchParams.brandNames=null;
         }
  
         dispatch(fetchGoods(searchParams));

@@ -2,14 +2,12 @@
 
 import React,{Component} from "react";
 import HelpMain from "./partial/main.jsx";
-import Normal from "./partial/normal.jsx";
-import Shipment from "./partial/shipment.jsx";
-import Tariff from "./partial/tariff.jsx";
-import Parcel from "./partial/parcel.jsx";
+import Question from "./partial/question.jsx";
 import Onlineservice from "./partial/onlineservice.jsx";
 import Feedback from "./partial/feedback.jsx";
 import {Router} from "director";
-import TransitionGroup from "react/lib/ReactCSSTransitionGroup";
+import {Switcher,SwitcherCase} from "../common/switcher.jsx";
+import {SceneGroup,Scene} from "../common/scene.jsx"
 
 import {alert} from "../common/action.es6";
 
@@ -17,89 +15,29 @@ class HelpList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            helpInfo: props.helpInfo,
-            currentRoute: "index"
+            currentQuestion: 0
         }
     }
-    componentDidMount(){
-        Router({
-            "normal":()=>{
+    handleSceneChange(currentScene,key){
+        const {fetchHotWord} = this.props
+        switch(currentScene){
+            case "question":
                 this.setState({
-                    currentRoute:"normal"
-                })
-            },
-            "shipment":()=>{
-                this.setState({
-                    currentRoute:"shipment"
-                })
-            },
-            "tariff":()=>{
-                this.setState({
-                    currentRoute:"tariff"
-                })
-            },
-            "parcel":()=>{
-                this.setState({
-                    currentRoute:"parcel"
-                })
-            },
-            "onlineservice":()=>{
-                this.setState({
-                    currentRoute:"onlineservice"
-                })
-            },
-            "feedback":()=>{
-                this.setState({
-                    currentRoute:"feedback"
-                })
-            },
-            "/":()=>{
-                this.setState({
-                    currentRoute:"index"
+                    currentQuestion: key
                 });
-            }
-        }).init("/");
+        }
     }
     render(){
-        const {currentRoute} = this.state;
-        var currentView = null;
-        if(currentRoute === "index"){
-            currentView =  (
-                <HelpMain {...this.props} key={currentRoute}/>
-            )
-        }else if(currentRoute === "normal"){
-            currentView = (
-                <Normal {...this.props} key={currentRoute} />
-            )
-        }else if(currentRoute === "shipment"){
-            currentView = (
-                <Shipment {...this.props} key={currentRoute} />
-            )
-        }else if(currentRoute === "tariff"){
-            currentView = (
-                <Tariff {...this.props} key={currentRoute} />
-            )
-        }else if(currentRoute === "parcel"){
-            currentView = (
-                <Parcel {...this.props} key={currentRoute} />
-            )
-        }else if(currentRoute === "onlineservice"){
-            currentView = (
-                <Onlineservice {...this.props} key={currentRoute} />
-            )
-        }else if(currentRoute === "feedback"){
-            currentView = (
-                <Feedback {...this.props} key={currentRoute} />
-            )
-        }
-        
-        const transitionName = currentRoute !== 'index'?'moveRight':'moveLeft';
         return (
-            <TransitionGroup component="div" transitionName={transitionName} transitionLeave={false}>
-                {currentView}
-            </TransitionGroup>
+            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
+                <Scene name="index"><HelpMain {...this.props}/></Scene>
+                <Scene name="question"><Question currentQuestion={this.state.currentQuestion} {...this.props}/></Scene>
+                <Scene name="onlineservice"><Onlineservice {...this.props}/></Scene>
+                <Scene name="feedback"><Feedback {...this.props}/></Scene>
+            </SceneGroup>
         );
     }
+
 }
 
 

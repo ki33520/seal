@@ -177,14 +177,15 @@ class Slidable extends Component{
         if(this.props.onlyInside && !inTouchableRegion){
             return;
         }
-        if((Date.now() - this.startTouchTime) < 300){
-            // return;
+        if((Date.now() - this.startTouchTime) < 100){
+            return;
         }
         let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
         if(this.moveDirection && this.moveDirection !== moveDirection){
             return
         }
         this.moveDirection = moveDirection
+        // console.log('moveDirection',this.moveDirection)
         if(this.moveDirection === axis){
             dom.addClass(ReactDOM.findDOMNode(this),"sliding")
             // e && e.preventDefault()

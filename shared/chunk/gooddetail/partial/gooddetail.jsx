@@ -11,6 +11,7 @@ import Slide from "../../../component/slider/slide.jsx";
 import PullHook from "../../../component/pullhook.jsx";
 import Alert from "../../../component/alert.jsx";
 import Header from "../../common/header.jsx";
+import Timer from "../../common/timer.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
 
@@ -40,8 +41,8 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
-        const {fetchCartCount,fetchIsCollected} = this.props;
-        const {selectedItem,attrs,code} = this.props.goodById.good
+        const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
+        const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             let selectedAttr = _.findWhere(attrs,{attrName:k})
             let selectedAttrValue = _.findWhere(selectedAttr.attrValues,{
@@ -52,6 +53,9 @@ class GoodDetail extends Component{
         fetchCartCount()
         fetchIsCollected({
             singleCode:code
+        })
+        fetchComments({
+            productCode,
         })
 
         dom.bindEvent(window,"scroll",(e)=>{
@@ -157,6 +161,17 @@ class GoodDetail extends Component{
             window.location.assign(`/confirmorder/${queryParam}`)
         }
     }
+    renderCountdown(){
+        const {good} = this.props.goodById;
+        if(good.flashbuy['active']){
+            return (
+                <span className="countdown">
+                <i className="iconfont icon-time"></i>距本期结束<em><Timer endTime={good.flashbuy['endTime']}/></em>
+                </span>
+            )
+        }
+        return null
+    }
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
@@ -199,12 +214,13 @@ class GoodDetail extends Component{
                  <div className="price clearfix">
                     <span className="nowPrice">&yen;{good.salePrice}</span>
                     <span className="oldPrice">市场价&yen;{good.originPrice}</span>
-                    <span className="countdown"><i className="iconfont icon-time"></i>距本期结束<em>04:34:10</em></span>
+                    {this.renderCountdown()}
                 </div>
                 <Promotions promotions={good.marketing}/>
-                 <a onClick={this.props.changeScene.bind(this,"comment")} 
+                 <a onClick={this.props.changeScene.bind(this,"comment",{productCode:good.productCode})} 
                  href="javascript:void(null)" className="goComment clearfix">
-                    <div className="left"><i className="iconfont icon-comment"></i>用户评论<em>(29)</em></div>
+                    <div className="left">
+                    <i className="iconfont icon-comment"></i>用户评论<em>({good.comments?good.comments.totalCount:0})</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
                 <Origin good={good}/>

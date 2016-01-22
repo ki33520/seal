@@ -82,10 +82,10 @@ class UpdatePassword extends Component{
         if(nextProps.passwordByForm.passwordChanging === false &&
            this.props.passwordByForm.passwordChanging === true){
             if(nextProps.passwordByForm.passwordChanged === true){
-                dispatch(alert("保存成功!",2000));
+                dispatch(alert(nextProps.passwordByForm.msg,2000));
                 setTimeout(()=>window.history.back(),2500);
             }else{
-                dispatch(alert(nextProps.passwordByForm.errMsg,2000));
+                dispatch(alert(nextProps.passwordByForm.msg,2000));
             }
         }
     }

@@ -7,7 +7,9 @@ import {
     REQUEST_GOOD,RESPONSE_GOOD,
     START_ADD_CART,FINISH_ADD_CART,
     START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED,
-    REQUEST_COMMENTS,RESPONSE_COMMENTS
+    REQUEST_COMMENTS,RESPONSE_COMMENTS,
+    REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
+    REQUEST_FLASHBUY,RESPONSE_FLASHBUY
 } from "./constant.es6";
 
 export function selectAttr(attr,attrValue){
@@ -172,7 +174,7 @@ function responseComments(param,res){
 export function fetchComments(param){
     return (dispatch)=>{
         dispatch(requestComments(param))
-        return apiRequest("/goodcomments",param).then((res)=>{
+        return apiRequest("/goodcomment",param).then((res)=>{
             dispatch(responseComments(param,res))
         })
     }
