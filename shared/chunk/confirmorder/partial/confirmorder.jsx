@@ -90,37 +90,36 @@ class ConfirmOrder extends Component{
         })
     }
     componentDidUpdate(prevProps,prevState){
-        const {dispatch,orderSubmited,paygatewayFetched,fetchPayGateway} = this.props;
+        const {dispatch,paygatewayFetched,fetchPayGateway} = this.props;
         if(prevProps.orderSubmiting === true && 
             this.props.orderSubmiting === false){
-            if(orderSubmited === true){
-                if(paygatewayFetched){
-                    setTimeout(()=>{
-                        // console.log('submitOrder')
-                        ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
-                    },1000)
-                }else{
-                    const {orderNo,totalFee,checkedReceiver,promoList} = this.props.order
-                    let productList = []
-                    promoList.forEach((promo)=>{
-                        promo.goods.forEach((good)=>{
-                            productList.push({
-                                goodsName:good.title,
-                                goodsColorAndSize:good.attrs
-                            })
+            if(this.props.orderSubmited === true){
+                const {orderNo,totalFee,checkedReceiver,promoList} = this.props.order
+                let productList = []
+                promoList.forEach((promo)=>{
+                    promo.goods.forEach((good)=>{
+                        productList.push({
+                            goodsName:good.title,
+                            goodsColorAndSize:good.attrs
                         })
                     })
-                    let message = {
-                        orderNo:orderNo,
-                        totalFee:totalFee,
-                        address:checkedReceiver.provinceName+checkedReceiver.cityName+checkedReceiver.districtName+checkedReceiver.address,
-                        userName:checkedReceiver.consignee,
-                        mobile:checkedReceiver.mobileNumber,
-                        productList:productList
-                    }
-                    fetchPayGateway(base64Encode(urlParam(message)))
+                })
+                let message = {
+                    orderNo:orderNo,
+                    totalFee:totalFee,
+                    address:checkedReceiver.provinceName+checkedReceiver.cityName+checkedReceiver.districtName+checkedReceiver.address,
+                    userName:checkedReceiver.consignee,
+                    mobile:checkedReceiver.mobileNumber,
+                    productList:JSON.stringify(productList)
                 }
+                fetchPayGateway(base64Encode(urlParam(message)))
             }
+        }
+        if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
+            setTimeout(()=>{
+                console.log('submitOrder')
+                ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
+            },1000)
         }
     }
     render(){

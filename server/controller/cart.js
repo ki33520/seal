@@ -18,10 +18,11 @@ function formatCarts(originalCarts) {
             promoTotal:originalCart.promoFee,
             total:originalCart.totalFee,
             qtys:originalCart.qtys,
+            tax:(originalCart.tariffFee * originalCart.totalFee),
+            dutyFree:originalCart.dutyFree,
+            buyLimit:originalCart.buyLimit,
             checked:true,
-            itemIds:[],
-            buyeds:[],
-            list:[]
+            group:[]
         };
 
         _.each(originalCart.cartMKTList, function(promoList, j){
@@ -49,11 +50,9 @@ function formatCarts(originalCarts) {
                 }
 
                 group.list.push(goods);
-                cart.itemIds.push(product.singleCode);
-                cart.buyeds.push(product.qty);
             });
 
-            cart.list.push(group);
+            cart.group.push(group);
         });
 
         carts.push(cart);
@@ -90,7 +89,7 @@ var cart = function(req, res, next) {
                 });
             }
         }else{
-            next(new Error(ret.msg));
+            next(new Error(resp.message));
         }
     })
 }
@@ -114,7 +113,7 @@ var updateCart = function(req, res, next) {
         } else {
             res.json({
                 isUpdated: false,
-                errMsg: resp.msg
+                errMsg: resp.message
             })
         }
     });
@@ -136,7 +135,7 @@ var deleteCart = function(req, res, next) {
         } else {
             res.json({
                 isDeleted: false,
-                errMsg: resp.msg
+                errMsg: resp.message
             })
         }
     }, function() {
@@ -157,13 +156,9 @@ var calculatePrice = function(req, res, next) {
         if(resp.returnCode === 0){
             res.json({
                 isFetched: true,
-                cart:formatCarts(resp.object)
+                carts:formatCarts(resp.object)
             })
         }
-    }, function() {
-        res.json({
-            apiResponded: false
-        })
     })
 }
 
