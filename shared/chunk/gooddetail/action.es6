@@ -37,6 +37,7 @@ export function fetchCartCount(){
     return (dispatch)=>{
         dispatch(requestCartCount())
         return apiRequest("/cartcount").then((res)=>{
+            console.log('res',res)
             dispatch(responseCartCount(res))
         })
     }
@@ -92,7 +93,7 @@ export function addCart(param){
             if(res.cartAdded){
                 dispatch(alert("添加购物车成功!",3000))
             }else{
-                dispatch(alert("添加购物车失败!",3000))
+                dispatch(alert(res.errMsg,3000))
             }
             dispatch(finishAddCart(param,res));
         })

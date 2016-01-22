@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
-import {urlParam,base64Encode} from "../../../lib/util.es6";
+import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import PullHook from "../../../component/pullhook.jsx";
@@ -154,7 +154,7 @@ class GoodDetail extends Component{
             return;
         }else if(selectedItem !== null && buyed > 0){
             let singleCode = selectedItem.code
-            let queryParam = base64Encode(urlParam({
+            let queryParam = base64EncodeForURL(urlParam({
                 itemIds:singleCode,
                 buyeds:buyed
             }))
