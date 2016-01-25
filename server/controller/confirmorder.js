@@ -149,7 +149,7 @@ var submitOrder = function(req, res, next) {
 
 var payGateway = function(req, res, next) {
     var message = util.decodeURLParam(req.params["param"])
-    console.log('message',message)
+    // console.log('message',message)
     var user = req.session.user;
     var orderStatusURL = util.getAPIURL("orderStatus", {
         orderNo: message.orderNo

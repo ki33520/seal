@@ -73,7 +73,7 @@ var util = {
         return md5(paramList)
     },
     decodeURLParam(param){
-        param = sharedUtil.base64Decode(param)
+        param = sharedUtil.base64DecodeForURL(param)
         var _param = {}
         _.each(param.split("&"),function(v){
             v = v.split("=")

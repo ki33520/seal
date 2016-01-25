@@ -10,9 +10,9 @@ function formatOrder(object) {
    return object.map((child,i)=>{
         var itemList = child.itemList.map((v,k)=>{
             return {
+                id: v.id,
                 discount: v.discount,
                 hasComment: v.hasComment,
-                id: v.id,
                 logisticsFee: v.logisticsFee,
                 orderId: v.orderId,
                 originPrice: v.originPrice,
@@ -31,6 +31,8 @@ function formatOrder(object) {
                 skuCode: v.skuCode,
                 tariffFee: v.tariffFee,
                 qty: v.qty,
+                abroadFee: v.abroadFee,
+                couponFee: v.couponFee,
                 updatedAt: v.updatedAt
             }
         });

@@ -35,6 +35,7 @@ router.get("/togglecollected", require("./controller/gooddetail").toggleCollecte
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
 router.get("/search", require("./controller/goodlist"));
 router.get("/goodcomment", require("./controller/gooddetail").goodComments);
+router.get("/cartcount", require("./controller/gooddetail").cartCount);
 
 router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
@@ -44,8 +45,6 @@ router.get("/cart",mainController.requireAuthorize,require("./controller/cart").
 router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
 router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
 router.post("/calculatePrice",require("./controller/cart").calculatePrice);
-
-router.get("/goodcommentshow/:id",require("./controller/goodcomment").showComment);
 
 router.get("/paygateway/:param",mainController.requireAuthorize,require("./controller/confirmorder").payGateway);
 router.get("/confirmorder/:param",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
