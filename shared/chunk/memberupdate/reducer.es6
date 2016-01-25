@@ -6,12 +6,6 @@ import {CHANGE_FIELD,START_CHANGE_BASIC,FINISH_CHANGE_BASIC,START_CHANGE_PASSWOR
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
-function detailByUser(state={},action){
-    switch(action.type){
-        default:
-            return state;
-    }
-}
 
 function basicByForm(state={},action){
     switch(action.type){
@@ -102,21 +96,7 @@ function membercardByForm(state={},action){
     }
 }
 
-function memberInfo(state={},action){
-    switch(action.type){
-        case CHANGE_FIELD:
-            const {name,value} = action;
-            return Object.assign({},state,{
-                [name]:value
-            });
-        default:
-            return state;
-    }
-}
-
 const rootReducer = combineReducers({
-    detailByUser,
-    memberInfo,
     basicByForm,
     passwordByForm,
     membercardByForm
