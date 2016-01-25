@@ -9,7 +9,6 @@ import {urlParam,base64Encode} from "../../../lib/util.es6";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import PullHook from "../../../component/pullhook.jsx";
-import Alert from "../../../component/alert.jsx";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
