@@ -56,7 +56,7 @@ var goodDetail = function(req, res, next) {
                 initialState: initialState
             })
         } else {
-            next(new Error(message))
+            next(new Error(ret["goodById"].message))
         }
     }).error(function(){
         next(new Error('api request failed'))
