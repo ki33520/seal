@@ -130,7 +130,7 @@ class OrderDetail extends Component{
         switch(orderStatus){
             case "STATUS_NOT_PAY":
                 let {cashierParam} = this.props.order;
-                cashierParam = cashierParam || {}
+                cashierParam = cashierParam || {};
                 return (
                     <div className="confirmBtns">
                         <a href="javascript:void(null);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>

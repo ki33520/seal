@@ -74,6 +74,7 @@ var showComment = function(req, res, next) {
     bluebird.props({
         showComment: util.fetchAPI("memberCommentByUser", {
             memberId: user.memberId,
+            isView: 1,
             pageNo: pageIndex,
             pageSize: pageSize
         },false)

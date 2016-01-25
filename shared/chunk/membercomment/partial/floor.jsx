@@ -10,11 +10,11 @@ class Floor extends Component{
             const key = "comment-" + i;
             const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:MM:SS");
             var stars = [],
-                imagesList = child.imageUrlList,
+                imagesList = child.imagesUrl ? child.imagesUrl.split(",") : [],
                 picList = [];
             if(imagesList){
                 picList = imagesList.map((v,k)=>{
-                    return <li key={i}><img src={imagesList[i]} /></li>;
+                    return <li key={i}><img src={imagesList[k]} /></li>;
                 });
             };
             const listclass = classNames({
