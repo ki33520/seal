@@ -23,11 +23,12 @@ function configureStore(initialState){
 
 class CartApp extends Component{
     render(){
-        const {carts} = this.props.initialState;
+        const {carts,authorize} = this.props.initialState;
         const initialState = {
             cartByUser:{
                 isFetching:false,
-                carts
+                carts,
+                authorize
             }
         };
         var store = configureStore(initialState);

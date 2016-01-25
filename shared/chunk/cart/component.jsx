@@ -10,6 +10,7 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import Checkbox from "../../component/form/checkbox.jsx";
 import Dialog from "../../component/dialog.jsx";
 import {urlParam,base64Encode} from "../../lib/util.es6";
+import localCart from "./localcart.jsx";
 
 class Cart extends Component {
     constructor(props){
@@ -17,6 +18,17 @@ class Cart extends Component {
         this.state = {
             dialogActive:false,
             dialogOnConfirm:null
+        }
+    }
+
+    componentDidMount(){
+        const {authorize} = this.props.cartByUser;
+        let cache = localCart.format();
+        if(authorize===false){
+            this.props.fetchLocalCart({
+                singleCodes:cache.ids,
+                qtys:cache.nums
+            });
         }
     }
     checkout(cart){
@@ -41,9 +53,18 @@ class Cart extends Component {
 
         window.location.assign(`/confirmorder/${queryParam}`);
     }
-
     handleChangeBuyed(goods,cartIndex,number) {
+        const {carts,authorize} = this.props.cartByUser;
         if(goods.buyLimit<number){
+            return false;
+        }
+        if(authorize===false){
+            localCart.updateCart(goods.id,number);
+            let cache = localCart.format();
+            this.props.fetchLocalCart({
+                singleCodes:cache.ids,
+                qtys:cache.nums
+            });
             return false;
         }
         if(goods.checked===false){
@@ -54,7 +75,6 @@ class Cart extends Component {
             });
             return false;
         }
-        const {carts} = this.props.cartByUser;
         let ids = [];
         let qtys = [];
         carts[cartIndex].group.forEach((group)=>{
@@ -72,7 +92,6 @@ class Cart extends Component {
             qtys:qtys.join(',')
         });
     }
-
     toggleAllChecked(cartIndex,checked){
         const {carts} = this.props.cartByUser;
         let ids = [];
@@ -91,7 +110,6 @@ class Cart extends Component {
             checked
         });
     }
-
     toggleItemChecked(id,cartIndex,checked){
         const {carts} = this.props.cartByUser;
         let ids = [];
@@ -120,21 +138,30 @@ class Cart extends Component {
             dialogActive:!this.state.dialogActive
         })
     }
-    handleDeleteCart(cartId,cartIndex){
-        const {deleteCart} = this.props;
+    handleDeleteCart(goods,cartIndex){
+        const {deleteCart,cartByUser} = this.props;
+        const {authorize} = cartByUser;
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
-                this.toggleDialog()
-                deleteCart({cartId,cartIndex});
+                this.toggleDialog();
+                if(authorize===false){
+                    localCart.deleteGoods(goods.id);
+                    let cache = localCart.format();
+                    this.props.fetchLocalCart({
+                        singleCodes:cache.ids,
+                        qtys:cache.nums
+                    });
+                }else{
+                    deleteCart({cartId:goods.cartId,cartIndex});
+                }
             }
         });
     }
- 
     renderGoods(goods,i,j,k) {
         return(
             <div className="group" key={"g-"+i+j+k}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId,i)}></a>
+                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i)}></a>
                 <div className="J_moveRight">
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
@@ -161,7 +188,6 @@ class Cart extends Component {
             </div>
         );
     }
-
     renderGroup(group,i,j){
         let goodsList = [];
         let manjian = classNames("manjian",{
@@ -169,7 +195,7 @@ class Cart extends Component {
         });
         group.list.map((goods,k)=>{
             goodsList.push(this.renderGoods(goods,i,j,k))
-        })
+        });
 
         return(
             <div className="J_item" key={"gp-" + i+j}>
@@ -178,7 +204,6 @@ class Cart extends Component {
             </div>
         );
     }
-
     renderInfo(total,tax, limitTax,limitMoney){
         let notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
         let warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
@@ -201,7 +226,6 @@ class Cart extends Component {
             </div>
         )
     }
-
     renderCart(cart,i){
         let groupList = [];
         cart.group.forEach((group,j)=>{
@@ -247,10 +271,10 @@ class Cart extends Component {
             </div>
         )
     }
-
     renderCarts(){
         const {carts} = this.props.cartByUser;
-        if(carts.length){
+  
+        if(carts && carts.length){
             let cartList = [];
             carts.forEach((cart,i)=>{
                 cartList.push(this.renderCart(cart,i));
@@ -270,7 +294,6 @@ class Cart extends Component {
             )
         }
     }
-
     render() {
         return (
             <div>
