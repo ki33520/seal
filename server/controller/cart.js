@@ -158,6 +158,11 @@ var calculatePrice = function(req, res, next) {
                 isFetched: true,
                 carts:formatCarts(resp.object)
             })
+        }else{
+            res.json({
+                isFetched: false,
+                errMsg: resp.message
+            })
         }
     })
 }

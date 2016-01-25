@@ -20,11 +20,14 @@ class Cart extends Component {
         }
     }
     checkout(cart){
+        if(!cart.checked){
+            return false;
+        }
         let ids = [];
         let qtys = [];
         cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
-                if(item.qty>0){
+                if(item.checked){
                     ids.push(item.id);
                     qtys.push(item.qty); 
                 }
@@ -34,9 +37,9 @@ class Cart extends Component {
         let queryParam = base64Encode(urlParam({
             itemIds:ids.join(","),
             buyeds:qtys.join(",")
-        }));
+        })); 
 
-        window.location.assign(`/confirmorder/${queryParam}`)
+        window.location.assign(`/confirmorder/${queryParam}`);
     }
 
     handleChangeBuyed(goods,cartIndex,number) {
