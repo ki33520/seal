@@ -40,7 +40,8 @@ class UpdateBasic extends Component{
     handleChangeBasic(e){
         e && e.preventDefault();
         const {dispatch,basicByForm} = this.props;
-        const {nickName,gender,birthday} = basicByForm;
+        let {nickName,gender,birthday} = basicByForm;
+        gender = gender === "-1" ? null : gender;
         dispatch(changeBasic("/updatebasic",{
             nickName,gender,birthday
         }));
