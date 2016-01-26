@@ -91,20 +91,35 @@ var util = {
         })
         return cartCount
     },
-    saveLocalCart(carts,singleCode,buyed,replace){
-        buyed = parseInt(buyed,10)
+    isLocalCartLimitExceed(carts,cart,replace){
+        let buyed = parseInt(cart.buyed,10)
         carts = carts || [];
-        if(_.some(carts,{singleCode:singleCode})){
-            carts = _.map(carts,function(cart){
-                if(cart.singleCode === singleCode){
-                    cart.buyed = replace?buyed:(cart.buyed + buyed)
+        let isExceed = false
+        if(_.some(carts,{singleCode:cart.singleCode})){
+            _.each(carts,function(v){
+                if(v.singleCode === cart.singleCode){
+                    buyed = replace?buyed:(v.buyed + buyed)
+                    isExceed = buyed > v.buyLimit
                 }
-                return cart
+            })
+        }
+        return isExceed
+    },
+    saveLocalCart(carts,cart,replace){
+        let buyed = parseInt(cart.buyed,10)
+        carts = carts || [];
+        if(_.some(carts,{singleCode:cart.singleCode})){
+            carts = _.map(carts,function(v){
+                if(v.singleCode === cart.singleCode){
+                    v.buyed = replace?buyed:(v.buyed + buyed)
+                }
+                return v
             })
         }else{
             carts.push({
-                singleCode:singleCode,
-                buyed:buyed
+                singleCode:cart.singleCode,
+                buyed:buyed,
+                buyLimit:cart.buyLimit
             })
         }
         return carts

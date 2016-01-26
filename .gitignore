@@ -11,3 +11,4 @@ client/page/*.html
 # /client/**/*.jsx
 /client/**/__coverage__/
 # /server/**/__tests__/
+/server/data/

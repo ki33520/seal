@@ -16,14 +16,21 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(methodOverride());
 
+// var NedbStore = require("nedb-session-store")(session);
+
 app.use(session({
     name: "seal.sid",
     secret: "seal20151111",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     cookie: {
-        // maxAge: 3600000 * 12 //12 hour
-    }
+        path:"/",
+        httpOnly:true,
+        maxAge: 365 * 24 * 60 * 60 * 1000 //1 year
+    },
+    // store:new NedbStore({
+    //     filename:__dirname + "/data/session.db"
+    // })
 }))
 
 app.engine('html', cons.swig);

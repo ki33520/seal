@@ -122,7 +122,8 @@ class GoodDetail extends Component{
             this.togglePopup("addToCart")
             addCart({
                 buyed:buyed,
-                itemId:selectedItem.code
+                buylimit:good.buyLimit,
+                singlecode:selectedItem.code
             });
         }
     }

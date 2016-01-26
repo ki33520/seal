@@ -16,14 +16,10 @@ import Alert from "../../../component/alert.jsx";
 
 class ConfirmOrder extends Component{
     renderReceiver(receiver){
-        if(receiver === null){
+        if(receiver){
             return (
-                <div className="order-time noReceive">
-                    <span>
-                        <i className="iconfont icon-plus"></i>
-                        请添加您的收货地址
-                    </span>
-                </div>
+                <div className="order-time noReceive" onClick={this.props.changeScene.bind(this,"receiver")}
+                ><div><i className="iconfont icon-plus"></i>请添加您的收货地址</div></div>
             )
         }
         return (

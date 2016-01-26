@@ -9,7 +9,7 @@ var config = require("../lib/config");
 
 var goodDetail = function(req, res, next) {
     var singleCode = req.params.id;
-    console.log('sessionId',req.sessionID)
+    // req.session["localcart"] = undefined
     bluebird.props({
         "goodById": util.fetchAPI("goodById", {
             code: singleCode,
@@ -168,8 +168,9 @@ var fetchGood = function(req, res, next) {
 }
 
 var addCart = function(req, res, next) {
-    var singleCode = req.query.itemId;
+    var singleCode = req.query.singlecode;
     var buyed = req.query.buyed;
+    var buyLimit = req.query.buylimit;
     var user = req.session.user;
     if (user) {
         util.fetchAPI("updateCart", {
@@ -192,11 +193,27 @@ var addCart = function(req, res, next) {
             }
         })
     } else {
-        var localcart = util.saveLocalCart(req.session["localcart"],singleCode,buyed,false)
-        req.session["localcart"] = localcart
-        res.json({
-            cartAdded: true,
-        })
+        var isExceed = util.isLocalCartLimitExceed(req.session["localcart"],{
+            singleCode:singleCode,
+            buyed:buyed,
+            buyLimit:buyLimit
+        },false)
+        if(isExceed){
+            res.json({
+                cartAdded:false,
+                errMsg:"商品超过限购数量!"
+            })
+        }else{
+            var localcart = util.saveLocalCart(req.session["localcart"],{
+                singleCode:singleCode,
+                buyed:buyed,
+                buyLimit:buyLimit
+            },false)
+            req.session["localcart"] = localcart
+            res.json({
+                cartAdded: true,
+            })
+        }
     }
 }
 
