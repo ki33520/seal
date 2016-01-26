@@ -2,31 +2,26 @@
 import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
-import {createStore} from "redux";
-import createStoreWithMiddleware from "../../lib/redux-helper.es6";
+import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
 import CommentList from "./component.jsx";
+import * as actions from "./action.es6";
 
-function selector(state){
-    const {allComment,showComment,isFetching,isFetched} = state.commentByUser;
-    return {
-        allComment,
-        showComment,
-        isFetched,
-        isFetching
-    };
-}
-
-let CommentListConnected = connect(selector)(CommentList);
+let ReceiverConnected = connect((state)=>{
+    return state;
+})(wrapComponentWithActions(CommentList,actions));
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
+    if (module.hot) {
+        module.hot.accept('./reducer.es6', () => {
+            const nextRootReducer = require('./reducer.es6');
+            store.replaceReducer(nextRootReducer);
+        });
+    }
     return store
 }
 
 class CommentApp extends Component{
-    constructor(props){
-        super(props);
-    }
     render(){
         const {allComment,showComment,isFetched} = this.props.initialState;
         const initialState = {
@@ -40,7 +35,7 @@ class CommentApp extends Component{
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-            <CommentListConnected />
+            <ReceiverConnected />
             </Provider>
         )
     }
