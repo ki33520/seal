@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(methodOverride());
 
-var NedbStore = require("nedb-session-store")(session);
+// var NedbStore = require("nedb-session-store")(session);
 
 app.use(session({
     name: "seal.sid",
@@ -28,9 +28,9 @@ app.use(session({
         httpOnly:true,
         maxAge: 365 * 24 * 60 * 60 * 1000 //1 year
     },
-    store:new NedbStore({
-        filename:__dirname + "/data/session.db"
-    })
+    // store:new NedbStore({
+    //     filename:__dirname + "/data/session.db"
+    // })
 }))
 
 app.engine('html', cons.swig);
