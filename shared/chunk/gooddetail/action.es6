@@ -1,5 +1,5 @@
 'use strict';
-import {apiRequest} from "../../lib/util.es6";
+import {apiRequest,saveLocalCart,getLocalCartCount} from "../../lib/util.es6";
 import {
     SELECT_ATTR,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
@@ -37,7 +37,9 @@ export function fetchCartCount(){
     return (dispatch)=>{
         dispatch(requestCartCount())
         return apiRequest("/cartcount").then((res)=>{
-            console.log('res',res)
+            if(res.logined === false){
+                res.result = getLocalCartCount()
+            }
             dispatch(responseCartCount(res))
         })
     }
@@ -90,10 +92,15 @@ export function addCart(param){
     return (dispatch)=>{
         dispatch(startAddCart(param));
         apiRequest("/addcart",param).then((res)=>{
-            if(res.cartAdded){
-                dispatch(alert("添加购物车成功!",3000))
+            if(res.logined === false){
+                saveLocalCart(param.itemId,param.buyed,false)
+                res.cartAdded = true;
             }else{
-                dispatch(alert(res.errMsg,3000))
+                if(res.cartAdded){
+                    dispatch(alert("添加购物车成功!",3000))
+                }else{
+                    dispatch(alert(res.errMsg,3000))
+                }
             }
             dispatch(finishAddCart(param,res));
         })

@@ -83,6 +83,45 @@ var util = {
         })
         return _param
     },
+    getLocalCartCount(carts){
+        carts = carts || [];
+        var cartCount = 0;
+        _.each(carts,function(cart){
+            cartCount += cart.buyed
+        })
+        return cartCount
+    },
+    saveLocalCart(carts,singleCode,buyed,replace){
+        buyed = parseInt(buyed,10)
+        carts = carts || [];
+        if(_.some(carts,{singleCode:singleCode})){
+            carts = _.map(carts,function(cart){
+                if(cart.singleCode === singleCode){
+                    cart.buyed = replace?buyed:(cart.buyed + buyed)
+                }
+                return cart
+            })
+        }else{
+            carts.push({
+                singleCode:singleCode,
+                buyed:buyed
+            })
+        }
+        return carts
+    },
+    syncLocalCart(memberId,carts){
+        carts = carts || []
+        var singleCodes = [],buyeds = [];
+        _.each(carts,function(cart){
+            singleCodes.push(cart.singleCode)
+            buyeds.push(cart.buyed)
+        })
+        return this.fetchAPI("batchUpdateCart",{
+            memberId:memberId,
+            singleCodes:singleCodes.join(","),
+            qtys:buyeds.join(",")
+        })
+    },
     writePage(url,html){
         var pageName = md5(url);
         var pagePath = path.resolve("client/page/"+pageName+".html")

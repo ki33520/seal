@@ -89,7 +89,7 @@ class Floor extends Component{
     }
     renderSlider(){
         let {slides} = this.props.channel.floors;
-        if(slides){
+        if(slides && slides.length > 0){
             slides = slides.map((slide,i)=>{
                 return (
                     <Slide key={i}>

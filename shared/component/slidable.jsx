@@ -177,15 +177,21 @@ class Slidable extends Component{
         if(this.props.onlyInside && !inTouchableRegion){
             return;
         }
-        if((Date.now() - this.startTouchTime) < 100){
-            return;
+        let moveY = Math.abs(clientY - this.startTouchY);
+        let moveX = Math.abs(clientX - this.startTouchX);
+        if(axis === "x" && moveX < 30){
+            return
+        }else if(axis === "y" && moveY < 10){
+            return
         }
-        let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
+        let touchAngle = Math.atan2(moveY,moveX) * 180 / Math.PI
+        let moveDirection = touchAngle < 45 ?"x":"y"
+        // let moveDirection =  moveY > moveX ?"y":"x"
         if(this.moveDirection && this.moveDirection !== moveDirection){
             return
         }
         this.moveDirection = moveDirection
-        // console.log('moveDirection',this.moveDirection)
+        // console.log('moveDirection',this.moveDirection,touchAngle)
         if(this.moveDirection === axis){
             dom.addClass(ReactDOM.findDOMNode(this),"sliding")
             // e && e.preventDefault()
@@ -213,10 +219,10 @@ class Slidable extends Component{
                 transitionTouch()
                 this.touchMoving = false
                 clearTimeout(this.timeout)
-            },200)
+            },30)
             // _.throttle(transitionTouch,60)
         }
-        e && e.preventDefault()
+        // e && e.preventDefault()
     }
     checkEdge(onEdge = ()=>{}){
         const {axis} = this.props;
