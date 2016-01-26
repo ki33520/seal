@@ -63,23 +63,19 @@ function formatCarts(originalCarts) {
  
 var cart = function(req, res, next) {
     var user = req.session.user;
-    util.fetchAPI("cartByUser",{
-        memberId:user.memberId
-    }).then(function(resp){
-
-        if(resp.returnCode === 0){
-            var carts = formatCarts(resp.object);
-            if (req.xhr === true) {
-                res.json({
+    var markup,initialState;
+    if(user){
+        util.fetchAPI("cartByUser",{
+            memberId:user.memberId
+        }).then(function(resp){
+            if(resp.returnCode === 0){
+                var carts = formatCarts(resp.object);
+                initialState = {
                     carts:carts,
-                    isFetched:true
-                });
-            }else{
-                var initialState = {
-                    carts:carts
+                    authorize:true
                 };
 
-                var markup = util.getMarkupByComponent(CartApp({
+                markup = util.getMarkupByComponent(CartApp({
                     initialState: initialState
                 }));
 
@@ -87,11 +83,24 @@ var cart = function(req, res, next) {
                     markup:markup,
                     initialState:initialState
                 });
+            }else{
+                next(new Error(resp.message));
             }
-        }else{
-            next(new Error(resp.message));
-        }
-    })
+        })
+    }else{
+        initialState = {
+            carts:[],
+            authorize:false
+        };
+        markup = util.getMarkupByComponent(CartApp({
+            initialState: initialState
+        }));
+
+        res.render('cart', {
+            markup:markup,
+            initialState:initialState
+        });
+    }
 }
 
 var updateCart = function(req, res, next) {
@@ -127,7 +136,6 @@ var deleteCart = function(req, res, next) {
         memberId: user.memberId,
         cartId: cartId
     }).then(function(resp) {
-        console.log(resp)
         if(resp.returnCode === 0){
             res.json({
                 isDeleted: true
@@ -167,10 +175,33 @@ var calculatePrice = function(req, res, next) {
     })
 }
 
+var getCart = function(req, res, next) {
+    var user = req.session.user;
+    util.fetchAPI("cartByUser",{
+        memberId:user.memberId
+    }).then(function(resp){
+
+        if(resp.returnCode === 0){
+            var carts = formatCarts(resp.object);
+            res.json({
+                carts:carts,
+                isFetched:true
+            });
+            
+        }else{
+            res.json({
+                carts:[],
+                isFetched:false
+            })
+        }
+    })
+}
+
 
 module.exports = {
     cart: cart,
     updateCart: updateCart,
     calculatePrice:calculatePrice,
-    deleteCart:deleteCart
+    deleteCart:deleteCart,
+    getCart:getCart
 };

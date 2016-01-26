@@ -7,7 +7,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
-    CHANGE_CART_NUM
+    CHANGE_CART_NUM,FINISH_LOCAL_CART
 } from "./constant.es6";
 
 function cartByUser(state={},action){
@@ -95,6 +95,11 @@ function cartByUser(state={},action){
             });
             return Object.assign({},state,{
                 carts
+            })
+        case FINISH_LOCAL_CART:
+        console.log(action.res.carts)
+            return Object.assign({},state,{
+                carts:action.res.carts
             })
         default:
             return state;

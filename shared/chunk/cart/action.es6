@@ -5,7 +5,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
-    CHANGE_CART_NUM
+    CHANGE_CART_NUM,FINISH_LOCAL_CART
 } from "./constant.es6";
 
 
@@ -16,7 +16,7 @@ function startUpdateCart(){
 }
  
 function finishUpdateCart(dispatch,param){
-    apiRequest('/calculatePrice',param,{method:"POST"}).then((res)=>{
+    apiRequest('/calculateprice',param,{method:"POST"}).then((res)=>{
         dispatch({
             type:FINISH_UPDATE_CART,
             param,
@@ -62,7 +62,7 @@ function startDeleteCart(){
 }
 
 function finishDeleteCart(dispatch,param){
-    apiRequest('/cart').then((res)=>{
+    apiRequest('/getcart',param,{method:"POST"}).then((res)=>{
         dispatch({
             type:FINISH_DELETE_CART,
             param,
@@ -71,10 +71,17 @@ function finishDeleteCart(dispatch,param){
     });
 }
 
+function finishFetchLocalCart(res){
+    return {
+        type : FINISH_LOCAL_CART,
+        res
+    }
+}
+
 export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
-        apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
+        apiRequest('/updatecart',param,{method:"POST"}).then((res)=>{
             finishUpdateCart(dispatch,param,res);
         })
     }
@@ -83,7 +90,7 @@ export function updateCart(param){
 export function deleteCart(param){
     return (dispatch)=>{
         dispatch(startDeleteCart());
-        apiRequest('/deleteCart',param,{method:"POST"}).then((res)=>{
+        apiRequest('/deletecart',param,{method:"POST"}).then((res)=>{
             if(res.isDeleted){
                 finishDeleteCart(dispatch,param);
             }
@@ -94,7 +101,7 @@ export function deleteCart(param){
 export function toggleCartItem(param){
     return (dispatch)=>{
         dispatch(toggleChecked(param));
-        apiRequest('/calculatePrice',param,{method:"POST"}).then((res)=>{
+        apiRequest('/calculateprice',param,{method:"POST"}).then((res)=>{
             finishChecked(dispatch,param,res);
         })
     }
@@ -103,7 +110,7 @@ export function toggleCartItem(param){
 export function toggleCartAll(param){
     return (dispatch)=>{
         dispatch(toggleCheckedAll(param));
-        apiRequest('/calculatePrice',param,{method:"POST"}).then((res)=>{
+        apiRequest('/calculateprice',param,{method:"POST"}).then((res)=>{
             finishCheckedAll(dispatch,param,res);
         })
     }
@@ -113,5 +120,19 @@ export function updateCartNumber(param){
     return {
         type:CHANGE_CART_NUM,
         param
+    }
+}
+
+export function fetchLocalCart(param){
+    return (dispatch)=>{
+        if(param.qtys === null){
+            dispatch(finishFetchLocalCart({
+                carts:[]
+            }));
+        }else{
+            apiRequest('/calculateprice',param,{method:"POST"}).then((res)=>{
+                dispatch(finishFetchLocalCart(res));
+            });
+        }
     }
 }

@@ -53,10 +53,9 @@ export function ordersByParam(state={},action){
                 paygatewayFetched:false
             })
         case RESPONSE_PAYGATEWAY:
-            let cashierParam = action.res.isFetched?action.res.result:{}
-            var order = {...state.order,cashierParam}
+            let cashierParam = action.res.isFetched?action.res.result:{};
             return Object.assign({},state,{
-                order,
+                cashierParam,
                 paygatewayFetching:false,
                 paygatewayFetched:action.res.isFetched
             })

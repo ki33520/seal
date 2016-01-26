@@ -2,7 +2,7 @@
 
 import React,{Component} from "react";
 
-class Node extends Component{
+class Floor extends Component{
     render(){
         const {list} = this.props;
         return (
@@ -33,4 +33,4 @@ class Node extends Component{
     }
 }
 
-export default Node;
+export default Floor;

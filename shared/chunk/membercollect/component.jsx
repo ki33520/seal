@@ -10,15 +10,11 @@ import Header from "../common/header.jsx";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
 
-import Node from "./partial/node.jsx";
+import Floor from "./partial/floor.jsx";
 import fetchCollect from "./action.es6";
 import {alert} from "../common/action.es6";
 
 class MembercollectList extends Component{
-    constructor(props){
-        super(props);
-        const {collect,isFetching,isFetched} = props;
-    }
     componentDidMount(){
         dom.registerPullDownEvent(()=>{
             this.beginRefresh();
@@ -26,7 +22,7 @@ class MembercollectList extends Component{
     }
     beginRefresh(){
         const {dispatch} = this.props;
-        const {collect,isFetching} = this.props;
+        const {collect,isFetching} = this.props.memberCollectByUser;
         var pageCount = collect.pageCount;
         var pageIndex = collect.pageIndex;
         var nextPage = pageIndex + 1;
@@ -42,13 +38,13 @@ class MembercollectList extends Component{
         }))
     }
     render(){
-        const {collect,isFetching} = this.props;
+        const {collect,isFetching} = this.props.memberCollectByUser;
         return (
             <div className="collect-content">
                 <Header>
                     <span className="title">我的收藏</span>
                 </Header>
-                <Node {...collect} />
+                <Floor {...collect} {...this.props} />
                 <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                 <GoTop relative={true}/>
             </div>
