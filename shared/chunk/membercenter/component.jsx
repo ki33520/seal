@@ -76,57 +76,34 @@ class MemberCenter extends Component{
     }
     renderOrderBanner(){
         const {isLogined,countOrder} = this.props.memberCenterByUser;
-        if(isLogined === false){
-            return (
-                <div className="userGoods">
-                    <a className="userGoods_1">
-                        <em></em>
-                        <span>待付款</span>
-                    </a>
-                    <a className="userGoods_2">
-                        <em></em>
-                        <span>待发货</span>
-                    </a>
-                    <a className="userGoods_3">
-                        <em></em>
-                        <span>待收货</span>
-                    </a>
-                    <a className="userGoods_4">
-                        <em></em>
-                        <span>待评价</span>
-                    </a>
-                </div>
-            )
-        }else{
-            const paymentNum = countOrder.paymentNum > 0 ? <i>{countOrder.paymentNum}</i> : null;
-            const sendNum = countOrder.sendNum > 0 ? <i>{countOrder.sendNum}</i> : null;
-            const signNum = countOrder.signNum > 0 ? <i>{countOrder.signNum}</i> : null;
-            const commentNum = countOrder.commentNum > 0 ? <i>{countOrder.commentNum}</i> : null;
-            return (
-                <div className="userGoods">
-                    <a href="/orderlist" className="userGoods_1">
-                        <em></em>
-                        <span>待付款</span>
-                        {paymentNum}
-                    </a>
-                    <a href="/orderlist" className="userGoods_2">
-                        <em></em>
-                        <span>待发货</span>
-                        {sendNum}
-                    </a>
-                    <a href="/orderlist" className="userGoods_3">
-                        <em></em>
-                        <span>待收货</span>
-                        {signNum}
-                    </a>
-                    <a href="/orderlist" className="userGoods_4">
-                        <em></em>
-                        <span>待评价</span>
-                        {commentNum}
-                    </a>
-                </div>
-            )
-        }
+        const paymentNum = countOrder && countOrder.paymentNum > 0 ? <i>{countOrder.paymentNum}</i> : null;
+        const sendNum = countOrder && countOrder.sendNum > 0 ? <i>{countOrder.sendNum}</i> : null;
+        const signNum = countOrder && countOrder.signNum > 0 ? <i>{countOrder.signNum}</i> : null;
+        const commentNum = countOrder && countOrder.commentNum > 0 ? <i>{countOrder.commentNum}</i> : null;
+        return (
+            <div className="userGoods">
+                <a href="/orderlist" className="userGoods_1">
+                    <em></em>
+                    <span>待付款</span>
+                    {paymentNum}
+                </a>
+                <a href="/orderlist" className="userGoods_2">
+                    <em></em>
+                    <span>待发货</span>
+                    {sendNum}
+                </a>
+                <a href="/orderlist" className="userGoods_3">
+                    <em></em>
+                    <span>待收货</span>
+                    {signNum}
+                </a>
+                <a href="/orderlist" className="userGoods_4">
+                    <em></em>
+                    <span>待评价</span>
+                    {commentNum}
+                </a>
+            </div>
+        )
         
     }
     renderPopQr(){
