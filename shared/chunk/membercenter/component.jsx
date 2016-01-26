@@ -33,8 +33,8 @@ class MemberCenter extends Component{
         })
     }
     renderBanner(){
-        const {isLogined,member} = this.props;
-        const {loginUrl,registerUrl} = this.props.api;
+        const {isLogined,member,api} = this.props.memberCenterByUser;
+        const {loginUrl,registerUrl} = api;
         if(isLogined === false){
             return (
                 <div className="userBtns">
@@ -55,8 +55,8 @@ class MemberCenter extends Component{
         }
     }
     renderLogout(){
-        const {isLogined} = this.props;
-        const {logoutUrl} = this.props.api;
+        const {isLogined,api} = this.props.memberCenterByUser;
+        const {logoutUrl} = api;
         if(isLogined === false){
             return null;
         }else{
@@ -75,7 +75,7 @@ class MemberCenter extends Component{
         
     }
     renderOrderBanner(){
-        const {isLogined,countOrder} = this.props;
+        const {isLogined,countOrder} = this.props.memberCenterByUser;
         if(isLogined === false){
             return (
                 <div className="userGoods">
@@ -130,7 +130,7 @@ class MemberCenter extends Component{
         
     }
     renderPopQr(){
-        const {member, isLogined} = this.props;
+        const {member, isLogined} = this.props.memberCenterByUser;
         const classes = classNames({
             "pop-qr":true,
             "active":this.state.popupActive
@@ -150,7 +150,7 @@ class MemberCenter extends Component{
         
     }
     render(){
-        const {isFetched, member, isLogined, api,countOrder} = this.props;
+        const {isFetched, member, isLogined, api,countOrder} = this.props.memberCenterByUser;
         return (
             <div className="user">
                 <header>
