@@ -21,7 +21,8 @@ class CommentList extends Component{
         }
     }
     beginRefresh(interval,flag){
-        const {allComment,showComment,isFetching,dispatch} =  this.props;
+        const {dispatch} = this.props;
+        const {allComment,showComment,isFetching} =  this.props.commentByUser;
         var comments = allComment,
             fetchLink = "/membercenter/comment",
             pageCount = 1,
@@ -51,7 +52,7 @@ class CommentList extends Component{
         this.beginRefresh(0,flag);
     }
     render(){
-        var {allComment,showComment,isFetching} = this.props;
+        var {allComment,showComment,isFetching} = this.props.commentByUser;
         return (
             <div className="comment-content">
                 <div className="comment-header">
