@@ -38,23 +38,6 @@ export function urlParam(param){
     return paramStr.join("&");
 }
 
-export function getSignatureByParam(param){
-        var keys = _.keys(param);
-        var sortedKeys = _.sortBy(keys,function(key){ 
-            return key
-        })
-        var paramList = [];
-        _.each(sortedKeys,function(key){
-            if(param[key] !== ""){
-                paramList.push(key + "=" + param[key])
-            }
-        })
-        paramList.push("appKey=" + "0236fe7659864b1b881cb6e94709de3f")
-         // console.log("paramList",paramList)
-        paramList = paramList.join("&")
-        return md5(paramList)
-}
-
 export function registerPullDownEvent(callback) {
     this.bindEvent(window,'scroll',()=>{
         var scrollTop = this.scrollTop();

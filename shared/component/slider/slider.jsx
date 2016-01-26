@@ -418,7 +418,7 @@ class Slider extends Component{
             active:isActive,
             prev:isPrevActive,
             next:isNextActive,
-            key:child.key?child.key:index,
+            identify:child.key?child.key:index,
             style:this.state.slideStyle,
             animateOut:isPrevActive,
             animateIn:isActive && this.state.prevActiveIndex !== null,
