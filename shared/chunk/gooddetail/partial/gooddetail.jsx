@@ -71,17 +71,16 @@ class GoodDetail extends Component{
             }
         })
     }
-    componentWillReceiveProps(nextProps){
-        const nextSelectedItem = nextProps.goodById.good.selectedItem
+    componentDidUpdate(prevProps){
         const {selectedItem} = this.props.goodById.good
-        if(nextSelectedItem !== null){
-            if(selectedItem !== null &&
-                selectedItem.code === nextSelectedItem.code){
-                return
-            }
-            this.props.fetchGood({
-                id:nextSelectedItem.code
-            })
+        const prevSelectedItem = prevProps.goodById.good.selectedItem
+        if(selectedItem === null){
+            return
+        }
+        if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
+                this.props.fetchGood({
+                    id:selectedItem.code
+                })
         }
     }
     handleAttrChange(selectedAttr,selectedAttrValue,e){

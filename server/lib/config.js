@@ -10,7 +10,10 @@ api = _.extend(api,require("./api/cart.json"));
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
     "oathServer": "https://ssl.e9448.com",
-    "imgServer":"http://imgtest.tepin.com/"
+    "imgServer":"http://imgtest.tepin.com/",
+    "cacheServer":{
+        "hosts":["192.168.0.161:11211"]
+    }
 };
 var runtime = process.env["NODE_ENV"];
 // runtime = "test"
@@ -28,11 +31,11 @@ if(runtime === "test"){
     config.appId = "hwg";
 }
 config.loginUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap&responseType=code";
 config.logoutUrl = config.oathServer +
-    "/score/member/v1/logout?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap";
+    "/score/member/v1/logout?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap";
 config.registerUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code&startPage=register";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap&responseType=code&startPage=register";
 config.cardUrl = config.oathServer +
     "/score/member/v1/cardInfo?"
 

@@ -10,7 +10,6 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import Checkbox from "../../component/form/checkbox.jsx";
 import Dialog from "../../component/dialog.jsx";
 import {urlParam,base64Encode} from "../../lib/util.es6";
-import localCart from "./localcart.jsx";
 
 class Cart extends Component {
     constructor(props){

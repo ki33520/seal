@@ -12,11 +12,16 @@ var router = require("./router.js");
 app.use('/client', express.static('client'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended:true
+    extended: true
 }));
 app.use(methodOverride());
 
-// var NedbStore = require("nedb-session-store")(session);
+// var RedisStore = require('connect-redis')(session)
+var MemcachedStore = require("connect-memcached")(session)
+var cacheServer = require("./lib/config").cacheServer
+var store = new MemcachedStore({
+    hosts: cacheServer.hosts
+})
 
 app.use(session({
     name: "seal.sid",
@@ -24,13 +29,16 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        path:"/",
-        httpOnly:true,
-        maxAge: 365 * 24 * 60 * 60 * 1000 //1 year
+        path: "/",
+        httpOnly: true,
+        maxAge: 1 * 24 * 60 * 60 * 1000 //1 month
     },
-    // store:new NedbStore({
-    //     filename:__dirname + "/data/session.db"
+    // store: new RedisStore({
+    //     host:"192.168.0.162",
+    //     port:"6379",
+    //     prefix:"seal"
     // })
+    store: store
 }))
 
 app.engine('html', cons.swig);

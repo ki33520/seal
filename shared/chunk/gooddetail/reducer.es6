@@ -29,7 +29,7 @@ function goodById(state={},action){
             })
         case RESPONSE_GOOD:
             good = Object.assign({},good,
-                _.omit(action.res.result,"slides"))
+                _.omit(action.res.result,["slides","attrs","selectedItem","stock"]))
             return Object.assign({},state,{
                 isFetching:false,
                 isFetched:action.res.isFetched,
@@ -119,6 +119,8 @@ function selectAttr(good,selectedAttr,selectedAttrValue){
         selectedItem = matchedItems[0];
     }
     good.selectedItem = selectedItem
+    // console.log('selectedItem',selectedItem)
+    // good.stock = selectedItem && selectedItem.stock
     return good
     function getMatchedItems(attrs){
         const selectedAttrs = _.filter(attrs,(attr)=>{

@@ -143,7 +143,7 @@ function goodFilter(good) {
     return _good
 }
 
-var fetchGood = function(req, res, next) {
+var goodById = function(req, res, next) {
     var id = req.params.id;
     util.fetchAPI("goodById", {
         code: id,
@@ -366,6 +366,6 @@ module.exports = {
     toggleCollected: toggleCollected,
     isCollected: isCollected,
     cartCount: cartCount,
-    fetchGood: fetchGood,
+    goodById: goodById,
     goodComments: goodComments
 };

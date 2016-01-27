@@ -66,7 +66,7 @@ export {alert} from "../common/action.es6";
 export function fetchGood(param){
     return (dispatch)=>{
         dispatch(requestGood(param));
-        return apiRequest("/fetchgood/"+param.id,{}).then((res)=>{
+        return apiRequest("/goodbyid/"+param.id,{}).then((res)=>{
             dispatch(responseGood(param,res));
         });
     }

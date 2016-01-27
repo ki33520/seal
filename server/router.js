@@ -29,7 +29,7 @@ router.get("/allbrands", require("./controller/polymer").allBrands);
 router.get("/allorigins", require("./controller/polymer").allOrigins);
 
 router.get("/gooddetail/:id", require("./controller/gooddetail").goodDetail);
-router.get("/fetchgood/:id", require("./controller/gooddetail").fetchGood);
+router.get("/goodbyid/:id", require("./controller/gooddetail").goodById);
 router.get("/addcart", require("./controller/gooddetail").addCart);
 router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
