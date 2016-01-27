@@ -45,14 +45,14 @@ class Cart extends Component {
     }
     handleChangeBuyed(goods,cartIndex,buyed) {
         const {carts,isUpdating} = this.props.cartByUser;
-  
-        if(isUpdating || goods.buyLimit<buyed){
+        if(isUpdating){
             return false;
         }
         if(goods.checked===false){
             this.props.testBuyed({
                 id:goods.id,
                 qty:buyed,
+                buyLimit:goods.buyLimit,
                 cartIndex
             });
             return false;
@@ -61,8 +61,10 @@ class Cart extends Component {
         let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                singleCodes.push(item.id);
-                buyeds.push(goods.id==item.id?buyed:item.qty);
+                if(item.checked){
+                    singleCodes.push(item.id);
+                    buyeds.push(goods.id==item.id?buyed:item.qty);
+                }
             });
         });
         this.props.updateCart({
