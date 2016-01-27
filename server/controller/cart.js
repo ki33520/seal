@@ -63,16 +63,15 @@ function formatCarts(originalCarts) {
  
 var cart = function(req, res, next) {
     var user = req.session.user;
-    var markup,initialState;
+    var markup,initialState,carts;
     if(user){
         util.fetchAPI("cartByUser",{
             memberId:user.memberId
         }).then(function(resp){
             if(resp.returnCode === 0){
-                var carts = formatCarts(resp.object);
+                carts = formatCarts(resp.object);
                 initialState = {
-                    carts:carts,
-                    authorize:true
+                    carts:carts
                 };
 
                 markup = util.getMarkupByComponent(CartApp({
@@ -88,83 +87,138 @@ var cart = function(req, res, next) {
             }
         })
     }else{
-        initialState = {
-            carts:[],
-            authorize:false
-        };
-        markup = util.getMarkupByComponent(CartApp({
-            initialState: initialState
-        }));
-
-        res.render('cart', {
-            markup:markup,
-            initialState:initialState
+        var localcart = req.session["localcart"]||[];
+        var singleCodes = [];
+        var buyeds = [];
+        _.each(localcart,function(item){
+            singleCodes.push(item.singleCode);
+            buyeds.push(item.buyed);
         });
+        if(singleCodes.length>0 && buyeds.length>0){
+            util.fetchAPI('cartByAnonymous', {
+                singleCodes:singleCodes.join(','),
+                qtys:buyeds.join(',')
+            }).then(function(resp) {
+                if(resp.returnCode === 0){
+                    carts=formatCarts(resp.object);
+                    initialState = {
+                        carts:carts
+                    };
+                    markup = util.getMarkupByComponent(CartApp({
+                        initialState: initialState
+                    }));
+                    res.render('cart', {
+                        markup:markup,
+                        initialState:initialState
+                    });
+                }else{
+                    next(new Error(resp.message));
+                }
+            })
+        }else{
+            initialState = {
+                carts:[]
+            };
+            markup = util.getMarkupByComponent(CartApp({
+                initialState: initialState
+            }));
+            res.render('cart', {
+                markup:markup,
+                initialState:initialState
+            });
+        }
     }
 }
 
 var updateCart = function(req, res, next) {
     var user = req.session.user;
     var singleCode = req.body.singleCode;
-    var qty = req.body.qty;
-    var figureUpFlag = req.body.figureUpFlag;
-
-    util.fetchAPI('updateCart', {
-        memberId: user.memberId,
-        singleCode:singleCode,
-        qty: qty,
-        figureUpFlag: figureUpFlag
-    }).then(function(resp) {
-        if (resp.returnCode === 0) {
-            res.json({
-                isUpdated: true
-            })
-        } else {
-            res.json({
-                isUpdated: false,
-                errMsg: resp.message
-            })
-        }
-    });
-}
-
-var deleteCart = function(req, res, next) {
-    var cartId = req.body.cartId;
-    var user = req.session.user;
-
-    util.fetchAPI('deleteCart', {
-        memberId: user.memberId,
-        cartId: cartId
-    }).then(function(resp) {
-        if(resp.returnCode === 0){
-            res.json({
-                isDeleted: true
-            })
-        } else {
-            res.json({
-                isDeleted: false,
-                errMsg: resp.message
-            })
-        }
-    }, function() {
-        res.json({
-            apiResponded: false
-        })
-    })
-}
- 
-var calculatePrice = function(req, res, next) {
+    var buyed = req.body.qty;
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
 
-    util.fetchAPI('calculatePrice', {
-        singleCodes,
-        qtys
+    if(user){
+        var memberId = user.memberId;
+        util.fetchAPI('updateCart', {
+            memberId: memberId,
+            singleCode:singleCode,
+            qty: buyed,
+            figureUpFlag: false
+        }).then(function(resp) {
+            if (resp.returnCode === 0) {
+                res.json({
+                    isUpdated:true
+                })
+            } else {
+                res.json({
+                    isUpdated: false,
+                    errMsg: resp.message
+                })
+            }
+        });
+    }else{
+        var carts = req.session["localcart"];
+        var _carts = util.saveLocalCart(carts,singleCode,buyed,true);
+        res.json({
+            isUpdated:true
+        })
+    }
+
+}
+
+var deleteCart = function(req, res, next) {
+    var user = req.session.user;
+    if(user){
+        var cartId = req.body.cartId;
+        var memberId = user.memberId;
+        util.fetchAPI('deleteCart', {
+            memberId: memberId,
+            cartId: cartId
+        }).then(function(resp) {
+            if(resp.returnCode === 0){
+                res.json({
+                    isDeleted: true
+                })
+            } else {
+                res.json({
+                    isDeleted: false,
+                    errMsg: resp.message
+                })
+            }
+        }, function() {
+            res.json({
+                apiResponded: false
+            })
+        })
+    }else{
+        var localcart = req.session["localcart"]||[];
+        var singleCode = req.body.singleCode;
+        var isDeleted = false;
+        _.each(localcart,function(item,i){
+            if(item.singleCode===singleCode){
+                localcart.splice(i,1);
+                isDeleted = true;
+            }
+        });
+
+        res.json({
+            isDeleted: isDeleted
+        })
+        
+    }
+}
+
+var fetchCart = function(req,res,next){
+    var singleCodes = req.body.singleCodes;
+    var qtys = req.body.qtys;
+    util.fetchAPI('cartByAnonymous', {
+        singleCodes:singleCodes,
+        qtys:qtys
     }).then(function(resp) {
         if(resp.returnCode === 0){
             res.json({
                 isFetched: true,
-                carts:formatCarts(resp.object)
+                cart:formatCarts(resp.object)[0]
             })
         }else{
             res.json({
@@ -175,33 +229,9 @@ var calculatePrice = function(req, res, next) {
     })
 }
 
-var getCart = function(req, res, next) {
-    var user = req.session.user;
-    util.fetchAPI("cartByUser",{
-        memberId:user.memberId
-    }).then(function(resp){
-
-        if(resp.returnCode === 0){
-            var carts = formatCarts(resp.object);
-            res.json({
-                carts:carts,
-                isFetched:true
-            });
-            
-        }else{
-            res.json({
-                carts:[],
-                isFetched:false
-            })
-        }
-    })
-}
-
-
 module.exports = {
     cart: cart,
     updateCart: updateCart,
-    calculatePrice:calculatePrice,
     deleteCart:deleteCart,
-    getCart:getCart
+    fetchCart:fetchCart
 };
