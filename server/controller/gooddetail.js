@@ -14,7 +14,7 @@ var goodDetail = function(req, res, next) {
         "goodById": util.fetchAPI("goodById", {
             code: singleCode,
             channel: "Mobile"
-        }),
+        },true),
         "flashbuyByGood": util.fetchAPI("flashbuyByGood", {
             singleCode: singleCode,
             channel: "Mobile"
@@ -143,12 +143,12 @@ function goodFilter(good) {
     return _good
 }
 
-var fetchGood = function(req, res, next) {
+var goodById = function(req, res, next) {
     var id = req.params.id;
     util.fetchAPI("goodById", {
         code: id,
         channel: "Mobile"
-    }).then(function(ret) {
+    },true).then(function(ret) {
         if (ret.returnCode === 0) {
             var good = goodFilter(ret.object);
             var slides = good.imageUrl;
@@ -366,6 +366,6 @@ module.exports = {
     toggleCollected: toggleCollected,
     isCollected: isCollected,
     cartCount: cartCount,
-    fetchGood: fetchGood,
+    goodById: goodById,
     goodComments: goodComments
 };
