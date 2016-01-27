@@ -10,7 +10,7 @@ var memberCenter = function(req, res, next) {
     var loginUrl = res.locals.loginUrl;
     var registerUrl = res.locals.registerUrl;
     var logoutUrl = res.locals.logoutUrl;
-
+    // req.session.user = undefined
     var authorized = req.session.user !== undefined;
 
     if (authorized === true) {

@@ -71,6 +71,9 @@ function formatCoupons(coupons) {
 var confirmOrder = function(req, res, next) {
     var param = util.decodeURLParam(req.params["param"])
     var user = req.session.user;
+    // user = {
+    //     memberId:"fc6804de52348ebe015239be28d00052"
+    // }
     util.fetchAPI("confirmOrder", {
         memberId: user.memberId,
         singleCodes: param.itemIds,

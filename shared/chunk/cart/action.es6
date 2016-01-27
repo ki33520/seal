@@ -5,7 +5,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
-    CHANGE_CART_NUM
+    CHANGE_CART_BUYED
 } from "./constant.es6";
 
 
@@ -15,14 +15,12 @@ function startUpdateCart(){
     }
 }
  
-function finishUpdateCart(dispatch,param){
-    apiRequest('/calculatePrice',param,{method:"POST"}).then((res)=>{
-        dispatch({
-            type:FINISH_UPDATE_CART,
-            param,
-            res
-        });
-    });
+function finishUpdateCart(param,res){
+    return {
+        type:FINISH_UPDATE_CART,
+        param,
+        res
+    }
 }
 
 function toggleChecked(param){
@@ -32,12 +30,12 @@ function toggleChecked(param){
     }
 }
 
-function finishChecked(dispatch,param,res){
-    dispatch({
+function finishChecked(param,res){
+    return{
         type:FINISH_TOGGLE_ITEM,
         param,
         res
-    });
+    };
 }
 
 function toggleCheckedAll(param){
@@ -47,45 +45,56 @@ function toggleCheckedAll(param){
     }
 }
 
-function finishCheckedAll(dispatch,param,res){
-    dispatch({
+function finishCheckedAll(param,res){
+    return {
         type:FINISH_TOGGLE_ALL,
         param,
         res
-    });
+    };
 }
 
-function startDeleteCart(){
+function startDeleteCart(param){
     return {
-        type:START_DELETE_CART
+        type:START_DELETE_CART,
+        param
     }
 }
 
-function finishDeleteCart(dispatch,param){
-    apiRequest('/cart').then((res)=>{
-        dispatch({
-            type:FINISH_DELETE_CART,
-            param,
-            res
-        });
-    });
+function finishDeleteCart(param,res){
+    return {
+        type:FINISH_DELETE_CART,
+        param,
+        res
+    }
 }
 
 export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
-        apiRequest('/updateCart',param,{method:"POST"}).then((res)=>{
-            finishUpdateCart(dispatch,param,res);
+        apiRequest('/updatecart',param,{method:"POST"}).then((res)=>{
+            if(res.isUpdated){
+                apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                    resp.isUpdated = true;
+                    dispatch(finishUpdateCart(param,resp));
+                });
+            }else{
+                dispatch(finishUpdateCart(param,res));
+            }
         })
     }
 }
 
 export function deleteCart(param){
     return (dispatch)=>{
-        dispatch(startDeleteCart());
-        apiRequest('/deleteCart',param,{method:"POST"}).then((res)=>{
+        dispatch(startDeleteCart(param));
+        apiRequest('/deletecart',param,{method:"POST"}).then((res)=>{
             if(res.isDeleted){
-                finishDeleteCart(dispatch,param);
+                apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                    resp.isDeleted = true;
+                    dispatch(finishDeleteCart(param,resp));
+                });
+            }else{
+                dispatch(finishDeleteCart(param,res));
             }
         })
     }
@@ -94,8 +103,8 @@ export function deleteCart(param){
 export function toggleCartItem(param){
     return (dispatch)=>{
         dispatch(toggleChecked(param));
-        apiRequest('/calculatePrice',param,{method:"POST"}).then((res)=>{
-            finishChecked(dispatch,param,res);
+        apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
+            dispatch(finishChecked(param,res));
         })
     }
 }
@@ -103,15 +112,15 @@ export function toggleCartItem(param){
 export function toggleCartAll(param){
     return (dispatch)=>{
         dispatch(toggleCheckedAll(param));
-        apiRequest('/calculatePrice',param,{method:"POST"}).then((res)=>{
-            finishCheckedAll(dispatch,param,res);
+        apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
+            dispatch(finishCheckedAll(param,res));
         })
     }
 }
 
-export function updateCartNumber(param){
+export function testBuyed(param){
     return {
-        type:CHANGE_CART_NUM,
+        type:CHANGE_CART_BUYED,
         param
     }
 }

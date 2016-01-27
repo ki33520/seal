@@ -1,11 +1,13 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
-import {fetchDeliveryOrder} from "../action.es6";
+import {fetchDeliveryOrder,fetchPayGateway} from "../action.es6";
+import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 
 const orderStatusObj = {
     "STATUS_NOT_PAY":"待付款",
@@ -57,8 +59,35 @@ class Floor extends Component{
             index: i
         }));
     }
-    handlePayGateway(){
-
+    handlePayGateway(child,e){
+        e && e.preventDefault();
+        const {dispatch} = this.props;
+        const {orderNo,paymentFee,checkedReceiver,itemList} = child;
+        let productList = []
+        itemList.forEach((item)=>{
+            productList.push({
+                goodsName: item.singleTitle,
+                goodsColorAndSize: item.singleProps
+            });
+        })
+        let message = {
+            orderNo:orderNo,
+            totalFee:paymentFee,
+            address:"北京市辖区东城区平安大道1号",
+            userName:"王朗",
+            mobile:"13112341234",
+            productList:JSON.stringify(productList)
+        }
+        // dispatch(
+        //     fetchPayGateway(base64EncodeForURL(urlParam(message)))
+        // )
+    }
+    componentDidUpdate(prevProps,prevState){
+        if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
+            setTimeout(()=>{
+                ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
+            },1000)
+        }
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
@@ -70,11 +99,11 @@ class Floor extends Component{
         })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
-                let {cashierParam} = this.props.orderItem;
+                let {cashierParam} = this.props;
                 cashierParam = cashierParam || {}
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">去支付</a>
+                        <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this,child)} className="pop_c">去支付</a>
                         <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
                             <input type="hidden" name="appId" value={cashierParam.appId} />
                             <input type="hidden" name="channel" value={cashierParam.channel} />
@@ -181,8 +210,19 @@ class Floor extends Component{
     }
     render(){
         const {orderItem} = this.props;
+        let {cashierParam} = this.props;
+        cashierParam = cashierParam || {}
         return (
             <div className="order-content">
+                <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                    <input type="hidden" name="appId" value={cashierParam.appId} />
+                    <input type="hidden" name="channel" value={cashierParam.channel} />
+                    <input type="hidden" name="openId" value={cashierParam.openId} />
+                    <input type="hidden" name="terminalType" value={cashierParam.terminalType} />
+                    <input type="hidden" name="message" value={cashierParam.message} />
+                    <input type="hidden" name="t" value={cashierParam.t} />
+                    <input type="hidden" name="h" value={cashierParam.h} />
+                </form>
                 {orderItem && orderItem.list && this.renderNode(orderItem.list)}
             </div>
         )

@@ -33,8 +33,8 @@ class MemberCenter extends Component{
         })
     }
     renderBanner(){
-        const {isLogined,member} = this.props;
-        const {loginUrl,registerUrl} = this.props.api;
+        const {isLogined,member,api} = this.props.memberCenterByUser;
+        const {loginUrl,registerUrl} = api;
         if(isLogined === false){
             return (
                 <div className="userBtns">
@@ -55,8 +55,8 @@ class MemberCenter extends Component{
         }
     }
     renderLogout(){
-        const {isLogined} = this.props;
-        const {logoutUrl} = this.props.api;
+        const {isLogined,api} = this.props.memberCenterByUser;
+        const {logoutUrl} = api;
         if(isLogined === false){
             return null;
         }else{
@@ -75,62 +75,39 @@ class MemberCenter extends Component{
         
     }
     renderOrderBanner(){
-        const {isLogined,countOrder} = this.props;
-        if(isLogined === false){
-            return (
-                <div className="userGoods">
-                    <a className="userGoods_1">
-                        <em></em>
-                        <span>待付款</span>
-                    </a>
-                    <a className="userGoods_2">
-                        <em></em>
-                        <span>待发货</span>
-                    </a>
-                    <a className="userGoods_3">
-                        <em></em>
-                        <span>待收货</span>
-                    </a>
-                    <a className="userGoods_4">
-                        <em></em>
-                        <span>待评价</span>
-                    </a>
-                </div>
-            )
-        }else{
-            const paymentNum = countOrder.paymentNum > 0 ? <i>{countOrder.paymentNum}</i> : null;
-            const sendNum = countOrder.sendNum > 0 ? <i>{countOrder.sendNum}</i> : null;
-            const signNum = countOrder.signNum > 0 ? <i>{countOrder.signNum}</i> : null;
-            const commentNum = countOrder.commentNum > 0 ? <i>{countOrder.commentNum}</i> : null;
-            return (
-                <div className="userGoods">
-                    <a href="/orderlist" className="userGoods_1">
-                        <em></em>
-                        <span>待付款</span>
-                        {paymentNum}
-                    </a>
-                    <a href="/orderlist" className="userGoods_2">
-                        <em></em>
-                        <span>待发货</span>
-                        {sendNum}
-                    </a>
-                    <a href="/orderlist" className="userGoods_3">
-                        <em></em>
-                        <span>待收货</span>
-                        {signNum}
-                    </a>
-                    <a href="/orderlist" className="userGoods_4">
-                        <em></em>
-                        <span>待评价</span>
-                        {commentNum}
-                    </a>
-                </div>
-            )
-        }
+        const {isLogined,countOrder} = this.props.memberCenterByUser;
+        const paymentNum = countOrder && countOrder.paymentNum > 0 ? <i>{countOrder.paymentNum}</i> : null;
+        const sendNum = countOrder && countOrder.sendNum > 0 ? <i>{countOrder.sendNum}</i> : null;
+        const signNum = countOrder && countOrder.signNum > 0 ? <i>{countOrder.signNum}</i> : null;
+        const commentNum = countOrder && countOrder.commentNum > 0 ? <i>{countOrder.commentNum}</i> : null;
+        return (
+            <div className="userGoods">
+                <a href="/orderlist" className="userGoods_1">
+                    <em></em>
+                    <span>待付款</span>
+                    {paymentNum}
+                </a>
+                <a href="/orderlist" className="userGoods_2">
+                    <em></em>
+                    <span>待发货</span>
+                    {sendNum}
+                </a>
+                <a href="/orderlist" className="userGoods_3">
+                    <em></em>
+                    <span>待收货</span>
+                    {signNum}
+                </a>
+                <a href="/orderlist" className="userGoods_4">
+                    <em></em>
+                    <span>待评价</span>
+                    {commentNum}
+                </a>
+            </div>
+        )
         
     }
     renderPopQr(){
-        const {member, isLogined} = this.props;
+        const {member, isLogined} = this.props.memberCenterByUser;
         const classes = classNames({
             "pop-qr":true,
             "active":this.state.popupActive
@@ -150,7 +127,7 @@ class MemberCenter extends Component{
         
     }
     render(){
-        const {isFetched, member, isLogined, api,countOrder} = this.props;
+        const {isFetched, member, isLogined, api,countOrder} = this.props.memberCenterByUser;
         return (
             <div className="user">
                 <header>

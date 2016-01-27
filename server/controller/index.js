@@ -85,8 +85,10 @@ function getJumpUrl(activity) {
             jumpUrl = activity.activityUrl
             break;
         case "3":
-            var singleCode = activity.activityProductList[0]["singleCode"]
-            jumpUrl = "/gooddetail/" + singleCode
+            if(activity.activityProductList){
+                var singleCode = activity.activityProductList[0]["singleCode"]
+                jumpUrl = "/gooddetail/" + singleCode
+            }
             break;
         default:
             jumpUrl = "/activity/" + activity.id;

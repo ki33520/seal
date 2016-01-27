@@ -83,6 +83,60 @@ var util = {
         })
         return _param
     },
+    getLocalCartCount(carts){
+        carts = carts || [];
+        var cartCount = 0;
+        _.each(carts,function(cart){
+            cartCount += cart.buyed
+        })
+        return cartCount
+    },
+    isLocalCartLimitExceed(carts,cart,replace){
+        let buyed = parseInt(cart.buyed,10)
+        carts = carts || [];
+        let isExceed = false
+        if(_.some(carts,{singleCode:cart.singleCode})){
+            _.each(carts,function(v){
+                if(v.singleCode === cart.singleCode){
+                    buyed = replace?buyed:(v.buyed + buyed)
+                    isExceed = buyed > v.buyLimit
+                }
+            })
+        }
+        return isExceed
+    },
+    saveLocalCart(carts,cart,replace){
+        let buyed = parseInt(cart.buyed,10)
+        carts = carts || [];
+        if(_.some(carts,{singleCode:cart.singleCode})){
+            carts = _.map(carts,function(v){
+                if(v.singleCode === cart.singleCode){
+                    v.buyed = replace?buyed:(v.buyed + buyed)
+                }
+                return v
+            })
+        }else{
+            carts.push({
+                singleCode:cart.singleCode,
+                buyed:buyed,
+                buyLimit:cart.buyLimit
+            })
+        }
+        return carts
+    },
+    syncLocalCart(memberId,carts){
+        carts = carts || []
+        var singleCodes = [],buyeds = [];
+        _.each(carts,function(cart){
+            singleCodes.push(cart.singleCode)
+            buyeds.push(cart.buyed)
+        })
+        return this.fetchAPI("batchUpdateCart",{
+            memberId:memberId,
+            singleCodes:singleCodes.join(","),
+            qtys:buyeds.join(",")
+        })
+    },
     writePage(url,html){
         var pageName = md5(url);
         var pagePath = path.resolve("client/page/"+pageName+".html")

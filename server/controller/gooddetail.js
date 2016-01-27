@@ -9,6 +9,7 @@ var config = require("../lib/config");
 
 var goodDetail = function(req, res, next) {
     var singleCode = req.params.id;
+    // req.session["localcart"] = undefined
     bluebird.props({
         "goodById": util.fetchAPI("goodById", {
             code: singleCode,
@@ -56,7 +57,7 @@ var goodDetail = function(req, res, next) {
                 initialState: initialState
             })
         } else {
-            next(new Error(message))
+            next(new Error(ret["goodById"].message))
         }
     }).error(function(){
         next(new Error('api request failed'))
@@ -142,7 +143,7 @@ function goodFilter(good) {
     return _good
 }
 
-var fetchGood = function(req, res, next) {
+var goodById = function(req, res, next) {
     var id = req.params.id;
     util.fetchAPI("goodById", {
         code: id,
@@ -167,13 +168,14 @@ var fetchGood = function(req, res, next) {
 }
 
 var addCart = function(req, res, next) {
-    var itemId = req.query.itemId;
+    var singleCode = req.query.singlecode;
     var buyed = req.query.buyed;
+    var buyLimit = req.query.buylimit;
     var user = req.session.user;
     if (user) {
         util.fetchAPI("updateCart", {
             memberId: user.memberId,
-            singleCode: itemId,
+            singleCode: singleCode,
             qty: buyed,
             figureUpFlag: true,
             channel: "Mobile"
@@ -191,10 +193,27 @@ var addCart = function(req, res, next) {
             }
         })
     } else {
-        res.json({
-            cartAdded: false,
-            errMsg: "请先登录"
-        })
+        var isExceed = util.isLocalCartLimitExceed(req.session["localcart"],{
+            singleCode:singleCode,
+            buyed:buyed,
+            buyLimit:buyLimit
+        },false)
+        if(isExceed){
+            res.json({
+                cartAdded:false,
+                errMsg:"商品超过限购数量!"
+            })
+        }else{
+            var localcart = util.saveLocalCart(req.session["localcart"],{
+                singleCode:singleCode,
+                buyed:buyed,
+                buyLimit:buyLimit
+            },false)
+            req.session["localcart"] = localcart
+            res.json({
+                cartAdded: true,
+            })
+        }
     }
 }
 
@@ -219,7 +238,7 @@ var cartCount = function(req, res, next) {
     } else {
         res.json({
             isFetched: true,
-            result: null
+            result: util.getLocalCartCount(req.session["localcart"])
         })
     }
 }
@@ -347,6 +366,6 @@ module.exports = {
     toggleCollected: toggleCollected,
     isCollected: isCollected,
     cartCount: cartCount,
-    fetchGood: fetchGood,
+    goodById: goodById,
     goodComments: goodComments
 };

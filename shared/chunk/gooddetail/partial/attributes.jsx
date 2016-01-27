@@ -12,6 +12,7 @@ class Attributes extends Component{
                 return null;
             }
             var attrValues = [];
+            // console.log('attrValues',attr.attrValues)
             attr.attrValues.map((attrValue,j)=>{
                 const active = attr.selectedValue !== null && attr.selectedValue.value === attrValue.value;
                 const classes = classNames({

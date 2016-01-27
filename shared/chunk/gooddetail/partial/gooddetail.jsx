@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
-import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
+import {urlParam,base64Encode} from "../../../lib/util.es6";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import PullHook from "../../../component/pullhook.jsx";
@@ -71,17 +71,16 @@ class GoodDetail extends Component{
             }
         })
     }
-    componentWillReceiveProps(nextProps){
-        const nextSelectedItem = nextProps.goodById.good.selectedItem
+    componentDidUpdate(prevProps){
         const {selectedItem} = this.props.goodById.good
-        if(nextSelectedItem !== null){
-            if(selectedItem !== null &&
-                selectedItem.code === nextSelectedItem.code){
-                return
-            }
-            this.props.fetchGood({
-                id:nextSelectedItem.code
-            })
+        const prevSelectedItem = prevProps.goodById.good.selectedItem
+        if(selectedItem === null){
+            return
+        }
+        if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
+                this.props.fetchGood({
+                    id:selectedItem.code
+                })
         }
     }
     handleAttrChange(selectedAttr,selectedAttrValue,e){
@@ -122,7 +121,8 @@ class GoodDetail extends Component{
             this.togglePopup("addToCart")
             addCart({
                 buyed:buyed,
-                itemId:selectedItem.code
+                buylimit:good.buyLimit,
+                singlecode:selectedItem.code
             });
         }
     }
@@ -154,7 +154,7 @@ class GoodDetail extends Component{
             return;
         }else if(selectedItem !== null && buyed > 0){
             let singleCode = selectedItem.code
-            let queryParam = base64EncodeForURL(urlParam({
+            let queryParam = base64Encode(urlParam({
                 itemIds:singleCode,
                 buyeds:buyed
             }))

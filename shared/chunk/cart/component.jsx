@@ -20,122 +20,155 @@ class Cart extends Component {
         }
     }
     checkout(cart){
-        let ids = [];
-        let qtys = [];
+        if(!cart.checked){
+            return false;
+        }
+        let itemIds = [];
+        let buyeds = [];
         cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
-                if(item.qty>0){
-                    ids.push(item.id);
-                    qtys.push(item.qty); 
+                if(item.checked){
+                    itemIds.push(item.id);
+                    buyeds.push(item.qty); 
                 }
             })
         });
+        if(itemIds.length&&buyeds.length){
+            let queryParam = base64Encode(urlParam({
+                itemIds:itemIds.join(","),
+                buyeds:buyeds.join(",")
+            })); 
 
-        let queryParam = base64Encode(urlParam({
-            itemIds:ids.join(","),
-            buyeds:qtys.join(",")
-        }));
-
-        window.location.assign(`/confirmorder/${queryParam}`)
+            window.location.assign(`/confirmorder/${queryParam}`);
+        }
     }
-
-    handleChangeBuyed(goods,cartIndex,number) {
-        if(goods.buyLimit<number){
+    handleChangeBuyed(goods,cartIndex,buyed) {
+        const {carts,isUpdating} = this.props.cartByUser;
+        if(isUpdating){
             return false;
         }
         if(goods.checked===false){
-            this.props.updateCartNumber({
+            this.props.testBuyed({
                 id:goods.id,
-                qty:number,
+                qty:buyed,
+                buyLimit:goods.buyLimit,
                 cartIndex
             });
             return false;
         }
-        const {carts} = this.props.cartByUser;
-        let ids = [];
-        let qtys = [];
+        let singleCodes = [];
+        let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                ids.push(item.id);
-                qtys.push(goods.id==item.id?number:item.qty);
-            })
+                if(item.checked){
+                    singleCodes.push(item.id);
+                    buyeds.push(goods.id==item.id?buyed:item.qty);
+                }
+            });
         });
         this.props.updateCart({
             singleCode:goods.id,
-            qty:number,
-            figureUpFlag:false,
+            qty:buyed,
             cartIndex,
-            singleCodes:ids.join(','),
-            qtys:qtys.join(',')
+            singleCodes:singleCodes.join(','),
+            qtys:buyeds.join(',')
         });
     }
-
     toggleAllChecked(cartIndex,checked){
-        const {carts} = this.props.cartByUser;
-        let ids = [];
-        let qtys = [];
+        const {carts,isAllToggling} = this.props.cartByUser;
+        if(isAllToggling) return false;
+        let singleCodes = [];
+        let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                ids.push(item.id);
-                qtys.push(checked?item.qty:0);
-            })
+                if(checked){
+                    singleCodes.push(item.id);
+                    buyeds.push(item.qty);   
+                }
+            });
         });
 
         this.props.toggleCartAll({
-            singleCodes:ids.join(','),
-            qtys:qtys.join(','),
+            singleCodes:singleCodes.join(','),
+            qtys:buyeds.join(','),
             cartIndex,
             checked
         });
     }
-
-    toggleItemChecked(id,cartIndex,checked){
-        const {carts} = this.props.cartByUser;
-        let ids = [];
-        let qtys = [];
+    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
+        const {carts,isToggleing} = this.props.cartByUser;
+        if(isToggleing) {
+            return false;
+        }
+        let singleCodes = [];
+        let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                ids.push(item.id);
-                if(id===item.id){
-                    qtys.push(checked?item.qty:0);
-                }else{
-                    qtys.push(item.checked?item.qty:0); 
+                if(item.checked && item.id !== goods.id){
+                    singleCodes.push(item.id);
+                    buyeds.push(item.qty);
                 }
-            })
+            });
         });
-        
+        if(checked){
+            singleCodes.push(goods.id);
+            buyeds.push(goods.qty);
+        }
         this.props.toggleCartItem({
-            singleCodes:ids.join(','),
-            qtys:qtys.join(','),
+            singleCodes:singleCodes.join(','),
+            qtys:buyeds.join(','),
             cartIndex,
-            id,
+            groupIndex,
+            goodsIndex,
+            id:goods.id,
             checked
         });
     }
     toggleDialog(){
         this.setState({
             dialogActive:!this.state.dialogActive
-        })
+        });
     }
-    handleDeleteCart(cartId,cartIndex){
-        const {deleteCart} = this.props;
+    handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
+        const {deleteCart,cartByUser} = this.props;
+        const cart = cartByUser.carts[cartIndex];
+        if(goods.checked === false){
+            return false;
+        }
+        let singleCodes = [];
+        let buyeds = [];
+        cart.group.forEach((group)=>{
+            group.list.forEach((item)=>{
+                if(item.id !== goods.id && item.checked){
+                    singleCodes.push(item.id);
+                    buyeds.push(item.qty);
+                }
+            })
+        });
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
-                this.toggleDialog()
-                deleteCart({cartId,cartIndex});
+                this.toggleDialog();
+                deleteCart({
+                    cartId:goods.cartId,
+                    singleCodes:singleCodes.join(','),
+                    qtys:buyeds.join(','),
+                    singleCode:goods.id,
+                    cartIndex,
+                    groupIndex,
+                    goodsIndex
+                });
             }
         });
     }
- 
     renderGoods(goods,i,j,k) {
         return(
             <div className="group" key={"g-"+i+j+k}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods.cartId,i)}></a>
+                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></a>
                 <div className="J_moveRight">
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
-                    onChange={this.toggleItemChecked.bind(this,goods.id,i)} />
+                    onChange={this.toggleItemChecked.bind(this,goods,i,j,k)} />
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href={"/gooddetail/"+goods.id}>
@@ -158,7 +191,6 @@ class Cart extends Component {
             </div>
         );
     }
-
     renderGroup(group,i,j){
         let goodsList = [];
         let manjian = classNames("manjian",{
@@ -166,7 +198,7 @@ class Cart extends Component {
         });
         group.list.map((goods,k)=>{
             goodsList.push(this.renderGoods(goods,i,j,k))
-        })
+        });
 
         return(
             <div className="J_item" key={"gp-" + i+j}>
@@ -175,7 +207,6 @@ class Cart extends Component {
             </div>
         );
     }
-
     renderInfo(total,tax, limitTax,limitMoney){
         let notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
         let warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
@@ -198,7 +229,6 @@ class Cart extends Component {
             </div>
         )
     }
-
     renderCart(cart,i){
         let groupList = [];
         cart.group.forEach((group,j)=>{
@@ -244,10 +274,10 @@ class Cart extends Component {
             </div>
         )
     }
-
     renderCarts(){
         const {carts} = this.props.cartByUser;
-        if(carts.length){
+  
+        if(carts && carts.length){
             let cartList = [];
             carts.forEach((cart,i)=>{
                 cartList.push(this.renderCart(cart,i));
@@ -267,7 +297,6 @@ class Cart extends Component {
             )
         }
     }
-
     render() {
         return (
             <div>

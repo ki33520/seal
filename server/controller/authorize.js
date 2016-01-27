@@ -15,15 +15,32 @@ var loginGateway = function(req, res, next) {
                 location.replace("/membercenter");
             } else {
                 returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
-                var user = _.pick(resp.object,[
-                    "nickName","userName","mobileNumber","openId","lastLoginTime","wxOpenId"
+                var user = _.pick(resp.object, [
+                    "nickName", "userName", "mobileNumber", "openId", "lastLoginTime", "wxOpenId"
                 ])
                 user.memberId = resp.object.id
                 req.session.user = user;
-                if(config.runtime === "develop"){
+                // console.log('user',req.session["user"])
+                if (config.runtime === "develop") {
                     // returnUrl = returnUrl.replace(":3000",":5000")
                 }
-                res.redirect(returnUrl);
+                if(req.session["localcart"] && req.session["localcart"].length > 0){
+                    util.syncLocalCart(user.memberId, req.session["localcart"]).then(function(ret) {
+                        if (ret.returnCode === 0) {
+                            req.session["localcart"] = []
+                            console.log('syncLocalCart success')
+                            res.redirect(returnUrl);
+                        } else {
+                            console.log('syncLocalCart fail')
+                            res.redirect(returnUrl);
+                        }
+                    }, function() {
+                        console.log('syncLocalCart fail')
+                        res.redirect(returnUrl);
+                    })
+                }else{
+                    res.redirect(returnUrl);
+                }
             }
         } else {
             return next(new Error(resp.message));

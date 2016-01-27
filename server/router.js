@@ -29,7 +29,7 @@ router.get("/allbrands", require("./controller/polymer").allBrands);
 router.get("/allorigins", require("./controller/polymer").allOrigins);
 
 router.get("/gooddetail/:id", require("./controller/gooddetail").goodDetail);
-router.get("/fetchgood/:id", require("./controller/gooddetail").fetchGood);
+router.get("/goodbyid/:id", require("./controller/gooddetail").goodById);
 router.get("/addcart", require("./controller/gooddetail").addCart);
 router.get("/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get("/iscollected", require("./controller/gooddetail").isCollected);
@@ -41,10 +41,10 @@ router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
 router.post("/trendyActivity",require("./controller/trendy").activity);
 
-router.get("/cart",mainController.requireAuthorize,require("./controller/cart").cart);
-router.post("/updateCart", mainController.requireAuthorize,require("./controller/cart").updateCart);
-router.post("/deleteCart", mainController.requireAuthorize,require("./controller/cart").deleteCart);
-router.post("/calculatePrice",require("./controller/cart").calculatePrice);
+router.get("/cart",require("./controller/cart").cart);
+router.post("/updatecart",require("./controller/cart").updateCart);
+router.post("/deletecart",require("./controller/cart").deleteCart);
+router.post("/fetchcart",require("./controller/cart").fetchCart);
 
 router.get("/paygateway/:param",mainController.requireAuthorize,require("./controller/confirmorder").payGateway);
 router.get("/confirmorder/:param",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);

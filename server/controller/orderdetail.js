@@ -62,20 +62,29 @@ function formatComment(object) {
     var itemList = object.itemList.map((v,k)=>{
         return {
             id: v.id,
-            orderId: v.orderId,
-            hasComment: v.hasComment,
-            singleTitle: v.singleTitle,
-            singleCode: v.singleCode,
-            salesPrice: v.salesPrice,
-            originPrice: v.originPrice,
             discount: v.discount,
+            hasComment: v.hasComment,
+            logisticsFee: v.logisticsFee,
+            orderId: v.orderId,
+            originPrice: v.originPrice,
+            originalCost: v.originalCost,
+            payableFee: v.payableFee,
+            paymentFee: v.paymentFee,
+            productCode: v.productCode,
+            promoFee: v.promoFee,
+            returnCount: v.returnCount,
+            salesPrice: v.salesPrice,
+            salesTotalFee: v.salesTotalFee,
+            singleCode: v.singleCode,
+            singleImageUrl: config.imgServer+v.singleImageUrl,
+            singleProps: v.singleProps,
+            singleTitle: v.singleTitle,
+            skuCode: v.skuCode,
+            tariffFee: v.tariffFee,
             qty: v.qty,
             abroadFee: v.abroadFee,
-            tariffFee: v.tariffFee,
-            salesTotalFee: v.salesTotalFee,
-            payableFee: v.payableFee,
             couponFee: v.couponFee,
-            singleImageUrl: config.imgServer+v.singleImageUrl
+            updatedAt: v.updatedAt
         }
     });
     var receiverObject = {

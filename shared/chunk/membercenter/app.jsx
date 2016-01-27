@@ -2,21 +2,22 @@
 import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
-import {createStore} from "redux";
-import createStoreWithMiddleware from "../../lib/redux-helper.es6";
+import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
 import MemberCenter from "./component.jsx";
+import * as actions from "./action.es6";
 
-function selector(state){
-    const {member,countOrder,api,isLogined,isFetched,isFetching} = state.memberCenterByUser;
-    return {
-        member,countOrder,api,isLogined,isFetched,isFetching
-    };
-}
-
-let MemberCenterConnected = connect(selector)(MemberCenter);
+let ReceiverConnected = connect((state)=>{
+    return state;
+})(wrapComponentWithActions(MemberCenter,actions));
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
+    if (module.hot) {
+        module.hot.accept('./reducer.es6', () => {
+            const nextRootReducer = require('./reducer.es6');
+            store.replaceReducer(nextRootReducer);
+        });
+    }
     return store
 }
 
@@ -37,7 +38,7 @@ class MembercenterApp extends Component{
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-            <MemberCenterConnected />
+            <ReceiverConnected />
             </Provider>
         )
     }
