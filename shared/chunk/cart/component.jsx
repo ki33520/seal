@@ -34,17 +34,19 @@ class Cart extends Component {
                 }
             })
         });
+        if(itemIds.length&&buyeds.length){
+            let queryParam = base64Encode(urlParam({
+                itemIds:itemIds.join(","),
+                buyeds:buyeds.join(",")
+            })); 
 
-        let queryParam = base64Encode(urlParam({
-            itemIds:itemIds.join(","),
-            buyeds:buyeds.join(",")
-        })); 
-
-        window.location.assign(`/confirmorder/${queryParam}`);
+            window.location.assign(`/confirmorder/${queryParam}`);
+        }
     }
     handleChangeBuyed(goods,cartIndex,buyed) {
-        const {carts} = this.props.cartByUser;
-        if(goods.buyLimit<buyed){
+        const {carts,isUpdating} = this.props.cartByUser;
+  
+        if(isUpdating || goods.buyLimit<buyed){
             return false;
         }
         if(goods.checked===false){
@@ -61,7 +63,7 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 singleCodes.push(item.id);
                 buyeds.push(goods.id==item.id?buyed:item.qty);
-            })
+            });
         });
         this.props.updateCart({
             singleCode:goods.id,
@@ -72,7 +74,8 @@ class Cart extends Component {
         });
     }
     toggleAllChecked(cartIndex,checked){
-        const {carts} = this.props.cartByUser;
+        const {carts,isAllToggling} = this.props.cartByUser;
+        if(isAllToggling) return false;
         let singleCodes = [];
         let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
@@ -81,7 +84,7 @@ class Cart extends Component {
                     singleCodes.push(item.id);
                     buyeds.push(item.qty);   
                 }
-            })
+            });
         });
 
         this.props.toggleCartAll({
@@ -92,7 +95,10 @@ class Cart extends Component {
         });
     }
     toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
-        const {carts} = this.props.cartByUser;
+        const {carts,isToggleing} = this.props.cartByUser;
+        if(isToggleing) {
+            return false;
+        }
         let singleCodes = [];
         let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
@@ -101,14 +107,12 @@ class Cart extends Component {
                     singleCodes.push(item.id);
                     buyeds.push(item.qty);
                 }
-            })
+            });
         });
-        
         if(checked){
             singleCodes.push(goods.id);
             buyeds.push(goods.qty);
         }
-
         this.props.toggleCartItem({
             singleCodes:singleCodes.join(','),
             qtys:buyeds.join(','),
@@ -122,14 +126,17 @@ class Cart extends Component {
     toggleDialog(){
         this.setState({
             dialogActive:!this.state.dialogActive
-        })
+        });
     }
-    handleDeleteCart(goods,cartIndex){
+    handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
         const {deleteCart,cartByUser} = this.props;
-        const {carts} = cartByUser;
+        const cart = cartByUser.carts[cartIndex];
+        if(goods.checked === false){
+            return false;
+        }
         let singleCodes = [];
         let buyeds = [];
-        carts[cartIndex].group.forEach((group)=>{
+        cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
                 if(item.id !== goods.id && item.checked){
                     singleCodes.push(item.id);
@@ -145,7 +152,10 @@ class Cart extends Component {
                     cartId:goods.cartId,
                     singleCodes:singleCodes.join(','),
                     qtys:buyeds.join(','),
-                    cartIndex
+                    singleCode:goods.id,
+                    cartIndex,
+                    groupIndex,
+                    goodsIndex
                 });
             }
         });
@@ -153,7 +163,7 @@ class Cart extends Component {
     renderGoods(goods,i,j,k) {
         return(
             <div className="group" key={"g-"+i+j+k}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i)}></a>
+                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></a>
                 <div className="J_moveRight">
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"

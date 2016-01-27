@@ -5,7 +5,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
-    CHANGE_CART_NUM
+    CHANGE_CART_BUYED
 } from "./constant.es6";
 
 
@@ -74,6 +74,7 @@ export function updateCart(param){
         apiRequest('/updatecart',param,{method:"POST"}).then((res)=>{
             if(res.isUpdated){
                 apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                    resp.isUpdated = true;
                     dispatch(finishUpdateCart(param,resp));
                 });
             }else{
@@ -89,6 +90,7 @@ export function deleteCart(param){
         apiRequest('/deletecart',param,{method:"POST"}).then((res)=>{
             if(res.isDeleted){
                 apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                    resp.isDeleted = true;
                     dispatch(finishDeleteCart(param,resp));
                 });
             }else{
@@ -118,7 +120,7 @@ export function toggleCartAll(param){
 
 export function testBuyed(param){
     return {
-        type:CHANGE_CART_NUM,
+        type:CHANGE_CART_BUYED,
         param
     }
 }

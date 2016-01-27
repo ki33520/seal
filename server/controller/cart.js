@@ -200,7 +200,6 @@ var deleteCart = function(req, res, next) {
                 isDeleted = true;
             }
         });
-
         res.json({
             isDeleted: isDeleted
         })
