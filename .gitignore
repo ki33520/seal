@@ -10,4 +10,5 @@ client/page/*.html
 # /client/**/stylesheet/
 # /client/**/*.jsx
 /client/**/__coverage__/
+/server/data/
 # /server/**/__tests__/
