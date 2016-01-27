@@ -38,7 +38,7 @@ app.use(session({
     //     port:"6379",
     //     prefix:"seal"
     // })
-    store: store
+    // store: store
 }))
 
 app.engine('html', cons.swig);
