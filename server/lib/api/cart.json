@@ -23,7 +23,7 @@
             "production": "http://product.tepin.hk"
         }
     },
-    "calculatePrice":{
+    "cartByAnonymous":{
         "uri": "/cart/v1/findCartsNotLogin",
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",

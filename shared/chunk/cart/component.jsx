@@ -20,152 +20,154 @@ class Cart extends Component {
             dialogOnConfirm:null
         }
     }
-
-    componentDidMount(){
-        const {authorize} = this.props.cartByUser;
-        let cache = localCart.format();
-        if(authorize===false){
-            this.props.fetchLocalCart({
-                singleCodes:cache.ids,
-                qtys:cache.nums
-            });
-        }
-    }
     checkout(cart){
         if(!cart.checked){
             return false;
         }
-        let ids = [];
-        let qtys = [];
+        let itemIds = [];
+        let buyeds = [];
         cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
                 if(item.checked){
-                    ids.push(item.id);
-                    qtys.push(item.qty); 
+                    itemIds.push(item.id);
+                    buyeds.push(item.qty); 
                 }
             })
         });
+        if(itemIds.length&&buyeds.length){
+            let queryParam = base64Encode(urlParam({
+                itemIds:itemIds.join(","),
+                buyeds:buyeds.join(",")
+            })); 
 
-        let queryParam = base64Encode(urlParam({
-            itemIds:ids.join(","),
-            buyeds:qtys.join(",")
-        })); 
-
-        window.location.assign(`/confirmorder/${queryParam}`);
-    }
-    handleChangeBuyed(goods,cartIndex,number) {
-        const {carts,authorize} = this.props.cartByUser;
-        if(goods.buyLimit<number){
-            return false;
+            window.location.assign(`/confirmorder/${queryParam}`);
         }
-        if(authorize===false){
-            localCart.updateCart(goods.id,number);
-            let cache = localCart.format();
-            this.props.fetchLocalCart({
-                singleCodes:cache.ids,
-                qtys:cache.nums
-            });
+    }
+    handleChangeBuyed(goods,cartIndex,buyed) {
+        const {carts,isUpdating} = this.props.cartByUser;
+  
+        if(isUpdating || goods.buyLimit<buyed){
             return false;
         }
         if(goods.checked===false){
-            this.props.updateCartNumber({
+            this.props.testBuyed({
                 id:goods.id,
-                qty:number,
+                qty:buyed,
                 cartIndex
             });
             return false;
         }
-        let ids = [];
-        let qtys = [];
+        let singleCodes = [];
+        let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                ids.push(item.id);
-                qtys.push(goods.id==item.id?number:item.qty);
-            })
+                singleCodes.push(item.id);
+                buyeds.push(goods.id==item.id?buyed:item.qty);
+            });
         });
         this.props.updateCart({
             singleCode:goods.id,
-            qty:number,
-            figureUpFlag:false,
+            qty:buyed,
             cartIndex,
-            singleCodes:ids.join(','),
-            qtys:qtys.join(',')
+            singleCodes:singleCodes.join(','),
+            qtys:buyeds.join(',')
         });
     }
     toggleAllChecked(cartIndex,checked){
-        const {carts} = this.props.cartByUser;
-        let ids = [];
-        let qtys = [];
+        const {carts,isAllToggling} = this.props.cartByUser;
+        if(isAllToggling) return false;
+        let singleCodes = [];
+        let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                ids.push(item.id);
-                qtys.push(checked?item.qty:0);
-            })
+                if(checked){
+                    singleCodes.push(item.id);
+                    buyeds.push(item.qty);   
+                }
+            });
         });
 
         this.props.toggleCartAll({
-            singleCodes:ids.join(','),
-            qtys:qtys.join(','),
+            singleCodes:singleCodes.join(','),
+            qtys:buyeds.join(','),
             cartIndex,
             checked
         });
     }
-    toggleItemChecked(id,cartIndex,checked){
-        const {carts} = this.props.cartByUser;
-        let ids = [];
-        let qtys = [];
+    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
+        const {carts,isToggleing} = this.props.cartByUser;
+        if(isToggleing) {
+            return false;
+        }
+        let singleCodes = [];
+        let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                ids.push(item.id);
-                if(id===item.id){
-                    qtys.push(checked?item.qty:0);
-                }else{
-                    qtys.push(item.checked?item.qty:0); 
+                if(item.checked && item.id !== goods.id){
+                    singleCodes.push(item.id);
+                    buyeds.push(item.qty);
                 }
-            })
+            });
         });
-        
+        if(checked){
+            singleCodes.push(goods.id);
+            buyeds.push(goods.qty);
+        }
         this.props.toggleCartItem({
-            singleCodes:ids.join(','),
-            qtys:qtys.join(','),
+            singleCodes:singleCodes.join(','),
+            qtys:buyeds.join(','),
             cartIndex,
-            id,
+            groupIndex,
+            goodsIndex,
+            id:goods.id,
             checked
         });
     }
     toggleDialog(){
         this.setState({
             dialogActive:!this.state.dialogActive
-        })
+        });
     }
-    handleDeleteCart(goods,cartIndex){
+    handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
         const {deleteCart,cartByUser} = this.props;
-        const {authorize} = cartByUser;
+        const cart = cartByUser.carts[cartIndex];
+        if(goods.checked === false){
+            return false;
+        }
+        let singleCodes = [];
+        let buyeds = [];
+        cart.group.forEach((group)=>{
+            group.list.forEach((item)=>{
+                if(item.id !== goods.id && item.checked){
+                    singleCodes.push(item.id);
+                    buyeds.push(item.qty);
+                }
+            })
+        });
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
                 this.toggleDialog();
-                if(authorize===false){
-                    localCart.deleteGoods(goods.id);
-                    let cache = localCart.format();
-                    this.props.fetchLocalCart({
-                        singleCodes:cache.ids,
-                        qtys:cache.nums
-                    });
-                }else{
-                    deleteCart({cartId:goods.cartId,cartIndex});
-                }
+                deleteCart({
+                    cartId:goods.cartId,
+                    singleCodes:singleCodes.join(','),
+                    qtys:buyeds.join(','),
+                    singleCode:goods.id,
+                    cartIndex,
+                    groupIndex,
+                    goodsIndex
+                });
             }
         });
     }
     renderGoods(goods,i,j,k) {
         return(
             <div className="group" key={"g-"+i+j+k}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i)}></a>
+                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></a>
                 <div className="J_moveRight">
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
-                    onChange={this.toggleItemChecked.bind(this,goods.id,i)} />
+                    onChange={this.toggleItemChecked.bind(this,goods,i,j,k)} />
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href={"/gooddetail/"+goods.id}>
