@@ -136,7 +136,7 @@ var updateCart = function(req, res, next) {
     var buyed = req.body.qty;
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
-
+    var buyLimit = req.body.buyLimit;
     if(user){
         var memberId = user.memberId;
         util.fetchAPI('updateCart', {
@@ -158,7 +158,12 @@ var updateCart = function(req, res, next) {
         });
     }else{
         var carts = req.session["localcart"];
-        var _carts = util.saveLocalCart(carts,singleCode,buyed,true);
+        var _carts = util.saveLocalCart(carts,{
+            singleCode,
+            buyed,
+            buyLimit
+        },true);
+        console.log(_carts)
         res.json({
             isUpdated:true
         })
@@ -200,7 +205,6 @@ var deleteCart = function(req, res, next) {
                 isDeleted = true;
             }
         });
-
         res.json({
             isDeleted: isDeleted
         })
