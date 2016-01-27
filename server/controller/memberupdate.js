@@ -73,7 +73,6 @@ var updatePassword = function(req, res, next) {
             rpassword: repeatPassword
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true,
