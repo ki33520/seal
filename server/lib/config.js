@@ -16,7 +16,7 @@ var config = {
     }
 };
 var runtime = process.env["NODE_ENV"];
-runtime = "test"
+// runtime = "test"
 config["runtime"] = runtime;
 if (runtime === "develop") {
     config.apiServer = "http://wsns.tepin.youayun.cn";
@@ -31,11 +31,11 @@ if(runtime === "test"){
     config.appId = "hwg";
 }
 config.loginUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap&responseType=code";
 config.logoutUrl = config.oathServer +
-    "/score/member/v1/logout?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap";
+    "/score/member/v1/logout?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap";
 config.registerUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId=haiwaigou&channel=wap&responseType=code&startPage=register";
+    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap&responseType=code&startPage=register";
 config.cardUrl = config.oathServer +
     "/score/member/v1/cardInfo?"
 
