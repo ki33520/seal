@@ -41,10 +41,6 @@ app.use(session({
     store: store
 }))
 
-app.on("err",function(err){
-    console.log('err',err)
-})
-
 app.engine('html', cons.swig);
 app.set('view engine', 'html');
 app.set("views", __dirname + '/../view');
