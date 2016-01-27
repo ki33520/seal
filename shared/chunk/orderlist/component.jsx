@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 import GoTop from "../../component/gotop.jsx";
@@ -52,6 +53,9 @@ class OrderList extends Component{
             pageIndex:nextPage
         }));
     }
+    componentDidMount(){
+        ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[this.state.displayFlag].click();
+    }
     toggleFlag(flag,e){
         e && e.preventDefault();
         const {orders} = this.props;
@@ -64,7 +68,7 @@ class OrderList extends Component{
     }
     render(){
         var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam} = this.props;
-        cashierParam = cashierParam || {}
+        cashierParam = cashierParam || {};
         return (
             <div className="order-list-content">
                 <Header>我的订单</Header>
@@ -77,7 +81,7 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
+                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
                         <Floor systemTime={systemTime} orderIndex={0} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
