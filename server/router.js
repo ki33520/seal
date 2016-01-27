@@ -42,10 +42,9 @@ router.get("/trendy", require("./controller/trendy").trendy);
 router.post("/trendyActivity",require("./controller/trendy").activity);
 
 router.get("/cart",require("./controller/cart").cart);
-router.post("/updatecart",mainController.requireAuthorize,require("./controller/cart").updateCart);
-router.post("/deletecart",mainController.requireAuthorize,require("./controller/cart").deleteCart);
-router.post("/calculateprice",require("./controller/cart").calculatePrice);
-router.post("/getcart", mainController.requireAuthorize,require("./controller/cart").getCart);
+router.post("/updatecart",require("./controller/cart").updateCart);
+router.post("/deletecart",require("./controller/cart").deleteCart);
+router.post("/fetchcart",require("./controller/cart").fetchCart);
 
 router.get("/paygateway/:param",mainController.requireAuthorize,require("./controller/confirmorder").payGateway);
 router.get("/confirmorder/:param",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
