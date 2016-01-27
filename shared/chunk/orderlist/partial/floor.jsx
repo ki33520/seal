@@ -99,20 +99,9 @@ class Floor extends Component{
         })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
-                let {cashierParam} = this.props;
-                cashierParam = cashierParam || {}
                 return (
                     <div className="order-buttons">
                         <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this,child)} className="pop_c">去支付</a>
-                        <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
-                            <input type="hidden" name="appId" value={cashierParam.appId} />
-                            <input type="hidden" name="channel" value={cashierParam.channel} />
-                            <input type="hidden" name="openId" value={cashierParam.openId} />
-                            <input type="hidden" name="terminalType" value={cashierParam.terminalType} />
-                            <input type="hidden" name="message" value={cashierParam.message} />
-                            <input type="hidden" name="t" value={cashierParam.t} />
-                            <input type="hidden" name="h" value={cashierParam.h} />
-                        </form>
                     </div>
                 )
             case "STATUS_CONFIRMED":
@@ -187,42 +176,60 @@ class Floor extends Component{
         }
     }
     renderNode(list){
-        return list.map((child,i)=>{
-            const {createdAt,id,orderReceiveId,orderId,itemList,salesTotalFee,orderStatus,timeoutTime} = child;
-            var crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
-            return (
-                <div className="order-box" key={i}>
-                    <div className="order-up">
-                        <span>{crtTime}</span>
-                        <div className="right">
-                            {this.renderOutTime(child)}
-                            <em>{orderStatusObj[orderStatus]}</em>
+        if(list>0){
+            return list.map((child,i)=>{
+                const {createdAt,id,orderReceiveId,orderId,itemList,salesTotalFee,orderStatus,timeoutTime} = child;
+                var crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
+                return (
+                    <div className="order-box" key={i}>
+                        <div className="order-up">
+                            <span>{crtTime}</span>
+                            <div className="right">
+                                {this.renderOutTime(child)}
+                                <em>{orderStatusObj[orderStatus]}</em>
+                            </div>
+                        </div>
+                        <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
+                        <div className="order-down">
+                            <span>合计：<em>&yen;{salesTotalFee}</em></span>
+                            {this.renderButtons(child,i)}
                         </div>
                     </div>
-                    <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
-                    <div className="order-down">
-                        <span>合计：<em>&yen;{salesTotalFee}</em></span>
-                        {this.renderButtons(child,i)}
-                    </div>
-                </div>
-            )
-        });
+                )
+            });
+        }
+        const {orderIndex} = this.props;
+        var context = "";
+        switch(orderIndex){
+            case 0:
+                context = "您目前还没有可查询的订单哟~";
+                break;
+            case 1:
+                context = "您目前还没有待付款的订单哟~";
+                break;
+            case 2:
+                context = "您目前还没有待发货的订单哟~";
+                break;
+            case 3:
+                context = "您目前还没有待收货的订单哟~";
+                break;
+            case 4:
+                context = "您目前还没有待评价的订单哟~";
+                break;
+            default:
+                context = "您目前还没有可查询的订单哟";
+        }
+        return (
+            <div className="empty-result">
+                <h3>{context}</h3>
+            </div>
+        )
     }
     render(){
-        const {orderItem} = this.props;
-        let {cashierParam} = this.props;
-        cashierParam = cashierParam || {}
+        const {orders,orderIndex} = this.props;
+        const orderItem = orders[orderIndex];
         return (
-            <div className="order-content">
-                <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
-                    <input type="hidden" name="appId" value={cashierParam.appId} />
-                    <input type="hidden" name="channel" value={cashierParam.channel} />
-                    <input type="hidden" name="openId" value={cashierParam.openId} />
-                    <input type="hidden" name="terminalType" value={cashierParam.terminalType} />
-                    <input type="hidden" name="message" value={cashierParam.message} />
-                    <input type="hidden" name="t" value={cashierParam.t} />
-                    <input type="hidden" name="h" value={cashierParam.h} />
-                </form>
+            <div className={`order-content order-content-${orderIndex}`}>
                 {orderItem && orderItem.list && this.renderNode(orderItem.list)}
             </div>
         )

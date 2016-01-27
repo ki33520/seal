@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 import GoTop from "../../component/gotop.jsx";
@@ -52,6 +53,9 @@ class OrderList extends Component{
             pageIndex:nextPage
         }));
     }
+    componentDidMount(){
+        ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[this.state.displayFlag].click();
+    }
     toggleFlag(flag,e){
         e && e.preventDefault();
         const {orders} = this.props;
@@ -63,33 +67,43 @@ class OrderList extends Component{
         }
     }
     render(){
-        var {orders,isFetching,systemTime,alertActive,alertContent} = this.props;
+        var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam} = this.props;
+        cashierParam = cashierParam || {};
         return (
             <div className="order-list-content">
                 <Header>我的订单</Header>
-                <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
+                <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                    <input type="hidden" name="appId" value={cashierParam.appId} />
+                    <input type="hidden" name="channel" value={cashierParam.channel} />
+                    <input type="hidden" name="openId" value={cashierParam.openId} />
+                    <input type="hidden" name="terminalType" value={cashierParam.terminalType} />
+                    <input type="hidden" name="message" value={cashierParam.message} />
+                    <input type="hidden" name="t" value={cashierParam.t} />
+                    <input type="hidden" name="h" value={cashierParam.h} />
+                </form>
+                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[0]} {...this.props} ref="floor"/>
+                        <Floor systemTime={systemTime} orderIndex={0} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[1]} {...this.props} ref="floor"/>
+                        <Floor systemTime={systemTime} orderIndex={1} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[2]} {...this.props} ref="floor"/>
+                        <Floor systemTime={systemTime} orderIndex={2} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[3]} {...this.props} ref="floor"/>
+                        <Floor systemTime={systemTime} orderIndex={3} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderItem={orders[4]} {...this.props} ref="floor"/>
+                        <Floor systemTime={systemTime} orderIndex={4} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
