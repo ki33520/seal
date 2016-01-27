@@ -14,7 +14,7 @@ var goodDetail = function(req, res, next) {
         "goodById": util.fetchAPI("goodById", {
             code: singleCode,
             channel: "Mobile"
-        },true),
+        }),
         "flashbuyByGood": util.fetchAPI("flashbuyByGood", {
             singleCode: singleCode,
             channel: "Mobile"
@@ -148,7 +148,7 @@ var goodById = function(req, res, next) {
     util.fetchAPI("goodById", {
         code: id,
         channel: "Mobile"
-    },true).then(function(ret) {
+    }).then(function(ret) {
         if (ret.returnCode === 0) {
             var good = goodFilter(ret.object);
             var slides = good.imageUrl;

@@ -10,10 +10,13 @@ api = _.extend(api,require("./api/cart.json"));
 var config = {
     "apiServer": "http://spi.tepin.com/mserver",
     "oathServer": "https://ssl.e9448.com",
-    "imgServer":"http://imgtest.tepin.com/"
+    "imgServer":"http://imgtest.tepin.com/",
+    "cacheServer":{
+        "hosts":["192.168.0.161:11211"]
+    }
 };
 var runtime = process.env["NODE_ENV"];
-// runtime = "test"
+runtime = "test"
 config["runtime"] = runtime;
 if (runtime === "develop") {
     config.apiServer = "http://wsns.tepin.youayun.cn";

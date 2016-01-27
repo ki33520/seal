@@ -28,6 +28,7 @@
     "babel-runtime": "^6.0.14",
     "body-parser": "^1.13.2",
     "classnames": "^2.2.0",
+    "connect-memcached": "^0.1.0",
     "consolidate": "^0.13.1",
     "express": "^4.13.1",
     "express-session": "^1.12.1",

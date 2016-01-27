@@ -74,7 +74,6 @@ class GoodDetail extends Component{
     componentDidUpdate(prevProps){
         const {selectedItem} = this.props.goodById.good
         const prevSelectedItem = prevProps.goodById.good.selectedItem
-        console.log('selectedItem',selectedItem)
         if(selectedItem === null){
             return
         }
