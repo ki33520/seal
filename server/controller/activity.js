@@ -6,6 +6,15 @@ var util = require("../lib/util.js");
 var ActivityApp = util.getSharedComponent("activity");
 var config = require("../lib/config.js");
 
+function getSalesPrice(goods){
+    if(goods.wapPrice > 0){
+        return goods.wapPrice;
+    }else if(goods.mobilePrice > 0){
+        return goods.mobilePrice;
+    }else{
+        return goods.salesPrice;
+    }
+}
 function filterResult(result){
     let list = [];
     if(result && result.length>0){
@@ -13,14 +22,14 @@ function filterResult(result){
             list.push({
                 id:item.singleCode,
                 title:item.title,
-                salesPrice:item.salesPrice,
+                salesPrice:getSalesPrice(item),
                 originPrice:item.originPrice,
                 imageUrl:config.imgServer + item.imageUrl,
                 sourceName:item.sourceName,
                 sourceImageUrl:config.imgServer + item.sourceImageUrl,
-                wapPrice:item.wapPrice,
-                phonePrice:item.phonePrice,
-                localStock:item.localStock
+                isSaleOut:item.localStock > 0 ? false : true,
+                isFlashPrice:item.wapPrice > 0 ? true : false,
+                isMobilePrice:item.mobilePrice>0? true:false
             })
         })
     }

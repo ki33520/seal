@@ -359,6 +359,14 @@
             "production": "http://sns.e9448.com"
         }
     },
+    "memberCardQRCode": {
+        "uri": "/sns/sso/v1/memberCardQRCode",
+        "baseURL": {
+            "develop": "http://sns.e9448.com",
+            "test": "http://sns.e9448.com",
+            "production": "http://sns.e9448.com"
+        }
+    },
     "specialActivity": {
         "uri": "/content/v1/templetedetail/list",
         "baseURL": {

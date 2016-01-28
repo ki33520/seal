@@ -23,6 +23,9 @@ class Cart extends Component {
         if(!cart.checked){
             return false;
         }
+        if(cart.total > cart.buyLimit){
+            return false
+        }
         let itemIds = [];
         let buyeds = [];
         cart.group.forEach((group)=>{
@@ -231,11 +234,15 @@ class Cart extends Component {
     }
     renderCart(cart,i){
         let groupList = [];
+        let allowBuy = cart.checked ? true : false;
+        if(cart.total > cart.buyLimit){
+            allowBuy = false
+        }
         cart.group.forEach((group,j)=>{
             groupList.push(this.renderGroup(group,i,j));
         });
         let button = classNames("btn_buy",{
-            "unable_buy":!cart.checked
+            "unable_buy":allowBuy===false
         });
         let promo = classNames("depot_bot",{
             hide:!cart.promoType
