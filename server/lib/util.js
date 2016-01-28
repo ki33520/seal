@@ -137,8 +137,7 @@ var util = {
             qtys:buyeds.join(",")
         })
     },
-    writePage(url,html){
-        var pageName = md5(url);
+    writePage(pageName,html){
         var pagePath = path.resolve("client/page/"+pageName+".html")
         try{
             fs.statSync(path.resolve("client/page"))
@@ -148,8 +147,7 @@ var util = {
         // console.log('writePage',fs.mkdirSync(path.resolve("client/page")))
         fs.writeFileSync(pagePath,html)
     },
-    readPage(url){
-        var pageName = md5(url);
+    readPage(pageName){
         var pagePath = path.resolve("client/page/"+pageName+".html")
         var stat;
         try{

@@ -4,6 +4,7 @@ var ErrorContent = util.getSharedComponent("common", "error.jsx");
 var config = require("../lib/config");
 var fs = require("fs");
 var path = require("path");
+var md5 = require('md5');
 
 var authorizeLocals = function(req, res, next) {
     var loginRedirectUrl = util.getAuthGatewayUrl(req, "/logingateway", true);
@@ -27,7 +28,7 @@ var requireAuthorize = function(req, res, next) {
 
 var staticize = function(req,res,next){
     // var pageName =
-    var pageContent = util.readPage(req.originalUrl)
+    var pageContent = util.readPage(md5(req.originalUrl))
         // console.log('pageContent',pageContent)
     if(pageContent){
         res.send(pageContent)

@@ -2,11 +2,36 @@
 import {apiRequest} from "../../lib/util.es6";
 import {
     REQUEST_CATEGORYBRANDS,RESPONSE_CATEGORYBRANDS,
+    REQUEST_CATEGORYACTIVITY,RESPONSE_CATEGORYACTIVITY,
     REQUEST_ALLBRANDS,RESPONSE_ALLBRANDS,
     REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS,
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
 } from "./constants.es6";
+
+function responseCategoryActivity(param,res){
+    return {
+        type:RESPONSE_CATEGORYACTIVITY,
+        param:param,
+        res:res
+    }
+}
+
+function requestCategoryActivity(param) {
+    return {
+        type:REQUEST_CATEGORYACTIVITY,
+        param:param
+    }
+}
+
+export function fetchCategoryActivity(param){
+    return (dispath)=>{
+        dispath(requestCategoryActivity(param));
+        return apiRequest("/categoryactivity",param).then((res)=>{
+            dispath(responseCategoryActivity(param,res))
+        })
+    }
+}
 
 function responseCategoryBrands(param,res){
     return {

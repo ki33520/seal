@@ -7,6 +7,13 @@ class Category extends Component{
     constructor(props){
         super(props);
     }
+    handleSelect(i){
+        const {categories} = this.props
+        const category = categories[i]
+        this.props.fetchCategoryActivity({
+            code:category.code
+        })
+    }
     renderCategory(category){
         let children = category.children.map((child,i)=>{
             return (
@@ -37,7 +44,7 @@ class Category extends Component{
         })
         return (
             <div className="category-list">
-                <SlideTabs axis="y" contentSlidable={false}>
+                <SlideTabs axis="y" contentSlidable={false} onSelect={this.handleSelect.bind(this)}>
                 {tabs}
                 </SlideTabs>
             </div>
