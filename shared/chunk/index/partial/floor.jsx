@@ -140,7 +140,7 @@ class Floor extends Component{
         return null
     }
     renderFlashBuy(){
-        let {flashbuys} = this.props.channel.floors;
+        let {flashbuys,flashbuyId} = this.props.channel.floors;
         if(flashbuys){
             flashbuys = flashbuys.map((good,i)=>{
                 return (
@@ -161,7 +161,7 @@ class Floor extends Component{
                 <div className="flashBuy">
                     <div className="title">
                         <span><i></i>闪购精选</span>
-                        <a href={"/flashbuy/"+this.props.channel.id}>更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
+                        <a href={"/flashbuy/"+flashbuyId}>更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
                     </div>
                     {flashbuys}
                 </div>
