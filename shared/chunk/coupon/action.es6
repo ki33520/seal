@@ -1,8 +1,6 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
-
-export const START_FETCH_COUPON = "START_FETCH_COUPON";
-export const FINISH_FETCH_COUPON = "FINISH_FETCH_COUPON";
+import {START_FETCH_COUPON,FINISH_FETCH_COUPON} from "./constant.es6";
 
 function requestCoupon(param){
     return {
@@ -14,7 +12,7 @@ function requestCoupon(param){
 function receiveCoupon(param,res){
 	return {
         type:FINISH_FETCH_COUPON,
-        pagination:res.pagination,
+        res:res.pagination,
         param,
     }
 }

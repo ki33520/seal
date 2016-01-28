@@ -6,7 +6,7 @@ import moment from "moment";
 
 class Floor extends Component{
     renderNode(list){
-        if(list>0){
+        if(list.length>0){
             return (
                 <ul className="comment-list">
                     {
@@ -65,16 +65,23 @@ class Floor extends Component{
                 </ul>
             )
         }
+        const {floorIndex} = this.props;
+        var context = (function(){
+            switch(floorIndex){
+                case 1:
+                    return "您目前还没有任何晒单哟~";
+                default:
+                    return "您目前还没有任何评论哟~";
+            }
+        })();
         return (
-            <div className="empty-result">
-                <h3>您目前没有任何收藏哦</h3>
-                <a className="btn-link" href="/">随便逛逛</a>
+            <div className={"empty-result empty-result-"+floorIndex}>
+                <h3>{context}</h3>
             </div>
         )
     }
     render(){
         const {comments} = this.props;
-        console.log(this.props)
         return (
             <div>
             {

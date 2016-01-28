@@ -1,7 +1,7 @@
 'use strict';
-
 import {combineReducers} from "redux";
-import {START_FETCH_COUPON,FINISH_FETCH_COUPON} from "./action.es6"; 
+import {START_FETCH_COUPON,FINISH_FETCH_COUPON} from "./constant.es6";
+
 function couponByUser(state={},action){
 
     switch(action.type){
@@ -12,8 +12,8 @@ function couponByUser(state={},action){
             });
     	case FINISH_FETCH_COUPON:
             const type = action.param.type;
-            const res = action.pagination[type];
-            let {pagination} = state;
+            const res = action.res[type];
+            let pagination = {...state.pagination};
             let coupons = _.union(pagination[type].coupons,res.coupons);
             pagination[type].pageIndex = res.pageIndex;
             pagination[type].totalPage = res.totalPage;

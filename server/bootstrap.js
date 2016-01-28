@@ -31,7 +31,7 @@ app.use(session({
     cookie: {
         path: "/",
         httpOnly: true,
-        maxAge: 1 * 24 * 60 * 60 * 1000 //1 month
+        maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
     },
     // store: new RedisStore({
     //     host:"192.168.0.162",

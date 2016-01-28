@@ -3,10 +3,9 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
 import Header from "../common/header.jsx";
-import {fetchCoupons} from "./action.es6"; 
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Refresher from "../../component/refresher.jsx";
-import GoTop from "../../component/gotop.jsx";
+import Loading from "../common/loading.jsx";
 
 class Coupon extends React.Component{
     constructor(props){
@@ -16,7 +15,7 @@ class Coupon extends React.Component{
         }
     }
     handleClick(index){
-        const {pagination,couponType,dispatch} = this.props;
+        const {pagination,couponType,dispatch} = this.props.couponByUser;
         const type = couponType[index];
         const {coupons,pageIndex,totalPage} = pagination[type];
        
@@ -31,15 +30,14 @@ class Coupon extends React.Component{
         this.fetchCouponsByParam(type,pageIndex);
     }
     fetchCouponsByParam(couponType,nextPage){
-        const {dispatch} = this.props;
-        dispatch(fetchCoupons({
+        this.props.fetchCoupons({
             type:couponType,
             pageIndex:nextPage
-        }));
+        });
     }
 
     beginRefresh(){
-        const {pagination,couponType,isFetching} = this.props;
+        const {pagination,couponType,isFetching} = this.props.couponByUser;
         const index = this.state.activeIndex;
         const type = couponType[index];
         const totalPage = pagination[type].totalPage;
@@ -92,8 +90,7 @@ class Coupon extends React.Component{
     }
 
     render(){
-        const {pagination,isFetching} = this.props;
-        
+        const {pagination,isFetching} = this.props.couponByUser;
         return (
             <div>
                 <Header>
@@ -111,7 +108,7 @@ class Coupon extends React.Component{
                     </SlideTabsItem>
                 </SlideTabs>
                 <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
-                <GoTop />
+                <Loading active={isFetching}/>
             </div>
         )
     }
