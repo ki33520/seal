@@ -176,7 +176,7 @@ class Floor extends Component{
         }
     }
     renderNode(list){
-        if(list>0){
+        if(list.length>0){
             return list.map((child,i)=>{
                 const {createdAt,id,orderReceiveId,orderId,itemList,salesTotalFee,orderStatus,timeoutTime} = child;
                 var crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
@@ -199,26 +199,20 @@ class Floor extends Component{
             });
         }
         const {orderIndex} = this.props;
-        var context = "";
-        switch(orderIndex){
-            case 0:
-                context = "您目前还没有可查询的订单哟~";
-                break;
-            case 1:
-                context = "您目前还没有待付款的订单哟~";
-                break;
-            case 2:
-                context = "您目前还没有待发货的订单哟~";
-                break;
-            case 3:
-                context = "您目前还没有待收货的订单哟~";
-                break;
-            case 4:
-                context = "您目前还没有待评价的订单哟~";
-                break;
-            default:
-                context = "您目前还没有可查询的订单哟";
-        }
+        var context = (function(){
+            switch(orderIndex){
+                case 1:
+                    return "您目前还没有待付款的订单哟~";
+                case 2:
+                    return "您目前还没有待发货的订单哟~";
+                case 3:
+                    return "您目前还没有待收货的订单哟~";
+                case 4:
+                    return "您目前还没有待评价的订单哟~";
+                default:
+                    return "您目前还没有可查询的订单哟~";
+            }
+        })();
         return (
             <div className="empty-result">
                 <h3>{context}</h3>
