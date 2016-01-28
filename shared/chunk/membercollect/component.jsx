@@ -11,7 +11,6 @@ import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
 
 import Floor from "./partial/floor.jsx";
-import fetchCollect from "./action.es6";
 import {alert} from "../common/action.es6";
 
 class MembercollectList extends Component{
@@ -21,7 +20,7 @@ class MembercollectList extends Component{
         }.bind(this));
     }
     beginRefresh(){
-        const {dispatch} = this.props;
+        const {dispatch,fetchCollect} = this.props;
         const {collect,isFetching} = this.props.memberCollectByUser;
         var pageCount = collect.pageCount;
         var pageIndex = collect.pageIndex;
@@ -33,19 +32,38 @@ class MembercollectList extends Component{
         if(isFetching === true){
             return false;
         }
-        dispatch(fetchCollect(window.location.href,{
+        fetchCollect("/membercenter/collect",{
             pageIndex:nextPage
-        }))
+        })
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.memberCollectByUser.isToggling === false &&
+           this.props.memberCollectByUser.isToggling === true){
+            if(nextProps.memberCollectByUser.isToggled === true){
+                this.beginRefresh();
+            }
+        }
+    }
+    handleDelete(child,e){
+        e && e.preventDefault();
+        e && e.preventDefault();
+        const {toggleCollected} = this.props;
+        toggleCollected({
+            productCode:child.productCode,
+            singleCode:child.singleCode,
+            status: false
+        });
     }
     render(){
-        const {collect,isFetching} = this.props.memberCollectByUser;
+        const {collect,isFetching,alertActive,alertContent} = this.props.memberCollectByUser;
         return (
             <div className="collect-content">
                 <Header>
                     <span className="title">我的收藏</span>
                 </Header>
-                <Floor {...collect} {...this.props} />
+                <Floor handleDelete={this.handleDelete.bind(this)} {...collect} {...this.props} />
                 <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                <Alert active={alertActive}>{alertContent}</Alert>
                 <GoTop relative={true}/>
             </div>
         );
