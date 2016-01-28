@@ -3,6 +3,7 @@
 var _ = require("lodash");
 var util = require("../lib/util");
 var bluebird = require("bluebird");
+var md5 = require("md5");
 var Polymer = util.getSharedComponent("polymer");
 var config = require("../lib/config");
 
@@ -22,7 +23,7 @@ var polymer = function(req, res, next) {
                 markup: markup,
                 initialState: initialState
             },function(err,html){
-                util.writePage(req.originalUrl,html)
+                util.writePage(md5(req.originalUrl),html)
                 res.send(html)
             });
         }else{
@@ -36,6 +37,7 @@ function categoryFilter(categories){
     _.each(categories,function(category){
         var _category = {
             name:category.name,
+            code:"111",
             imageUrl:config.imgServer + category.imageUrl,
             children:[]
         }
@@ -51,6 +53,31 @@ function categoryFilter(categories){
     return _categories;
 }
 
+var categoryActivity = function(req,res,next){
+    var code = req.query.code
+    util.fetchAPI("categoryActivity",{
+        categorysCode:code
+    }).then(function(ret){
+        if(ret.returnCode === 0){
+            var categoryactivity = ret.object
+            res.json({
+                result:categoryactivity,
+                isFetched:true
+            })
+        }else{
+            res.json({
+                isFetched:false,
+                errMsg:ret.message
+            })
+        }
+    },function(){
+        res.json({
+            isFetched:false,
+            errMsg:"api request failed"
+        })
+    })
+}
+
 var categoryBrands = function(req,res,next){
     util.fetchAPI("categoryBrands",{}).then(function(ret){
         if(ret.returnCode === 0){
@@ -60,9 +87,14 @@ var categoryBrands = function(req,res,next){
         }else{
             res.json({
                 categoryBrandsFetched:false,
-                errMsg:ret.msg
+                errMsg:ret.message
             })
         }
+    },function(){
+        res.json({
+            categoryBrandsFetched:false,
+            errMsg:"api request failed"
+        })
     })
 }
 
@@ -158,6 +190,7 @@ function allOriginsFilter(allorigins){
 
 module.exports = {
     polymer:polymer,
+    categoryActivity:categoryActivity,
     categoryBrands:categoryBrands,
     allBrands:allBrands,
     allOrigins:allOrigins

@@ -24,7 +24,7 @@ class Index extends Component{
         })
     }
     render(){
-        const {channels} = this.props.index;
+        const {channels,activeIndex} = this.props.index;
         const classes = classNames({
             "index-content":true
         })
@@ -41,7 +41,7 @@ class Index extends Component{
         return (
             <div className={classes}>
             <Header {...this.props}/>
-            <SlideTabs axis="x" onSelect={this.handleSelect.bind(this)}>
+            <SlideTabs axis="x" activeIndex={activeIndex} onSelect={this.handleSelect.bind(this)}>
             {tabs}
             </SlideTabs>
             <Footer activeIndex="0"/>

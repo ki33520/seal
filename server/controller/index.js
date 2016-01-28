@@ -3,6 +3,7 @@ var util = require("../lib/util");
 var Index = util.getSharedComponent("index");
 var config = require("../lib/config");
 var _ = require("lodash");
+var md5 = require("md5");
 
 var index = function(req, res, next) {
     util.fetchAPI("indexChannels", {
@@ -45,7 +46,7 @@ var index = function(req, res, next) {
                         markup: markup,
                         initialState: initialState
                     }, function(err, html) {
-                        util.writePage(req.originalUrl, html)
+                        util.writePage(md5(req.originalUrl), html)
                         res.send(html)
                     });
                 } else {
@@ -290,6 +291,7 @@ function activityGoodFilter(goods) {
 
 module.exports = {
     index: index,
+    floorFilter:floorFilter,
     channel: channel,
     searchHotWords: searchHotWords,
     searchAssociate: searchAssociate,

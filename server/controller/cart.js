@@ -158,12 +158,11 @@ var updateCart = function(req, res, next) {
         });
     }else{
         var carts = req.session["localcart"];
-        var _carts = util.saveLocalCart(carts,{
+        util.saveLocalCart(carts,{
             singleCode,
             buyed,
             buyLimit
         },true);
-        console.log(_carts)
         res.json({
             isUpdated:true
         })
