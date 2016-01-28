@@ -5,22 +5,33 @@ var util = require("../lib/util.js");
 var config = require("../lib/config.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 var DEFT = require("../../shared/chunk/goodlist/constant.es6");
- 
+
+function getSalesPrice(goods){
+    if(goods.flashPrice > 0){
+        return goods.flashPrice;
+    }else if(goods.mobilePrice > 0){
+        return goods.mobilePrice;
+    }else{
+        return goods.salesPrice;
+    }
+}
+
 function filterGoodsList(result){
     var list = [];
  
     result && result.map((v)=>{
         list.push({
-            smallImageUrl:config.imgServer + v.imageUrlWap,
-            salesPrice:v.salesPrice,
+            id:v.singleCode,
+            smallImageUrl:config.imgServer + v.picUrl,
+            salesPrice:getSalesPrice(v),
             originPrice:v.originPrice,
             discounts:v.discounts,
-            stock:v.stock,
-            id:v.singleCode,
             materTitle:v.materTitle,
-            productArea:v.productArea,
-            flag:config.imgServer +v.flag,
-            activityType:v.activityType
+            areaName:v.areaName,
+            areaLogo:config.imgServer +v.areaLogo,
+            isSaleOut:v.localStock > 0 ? false : true,
+            isFlashPrice:v.flashPrice>0?true:false,
+            isMobilePrice:v.mobilePrice>0 ?true:false
         })
     });
     
@@ -127,19 +138,7 @@ var search = function(req, res, next) {
                 })
             }
         } else {
-            var ErrorContent = util.getSharedComponent("common","error.jsx");
-            var initialState = {
-                code: "500",
-                msg: resp.goods.message
-            };
-            var markup = util.getMarkupByComponent(ErrorContent({
-                initialState: initialState
-            }));
-
-            res.render('error', {
-                markup: markup,
-                initialState: initialState
-            });
+            next(new Error(resp.message));
         }
     },function(){
         next(new Error("api request failed"))

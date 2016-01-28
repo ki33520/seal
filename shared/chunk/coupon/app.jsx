@@ -4,29 +4,28 @@ import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
-import createStoreWithMiddleware from "../../lib/redux-helper.es6";
+import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
 import Coupon from "./component.jsx";
+import * as actions from "./action.es6";
 
-function selector(state){
-    const {pagination,couponType,isFetching} = state.couponByUser
-    return {
-        pagination,
-        couponType,
-        isFetching
-    };
-}
-
-let CouponConnected = connect(selector)(Coupon);
+let CouponConnected = connect((state)=>{
+    return state;
+})(wrapComponentWithActions(Coupon,actions));
 
 function configureStore(initialState){
-    return createStoreWithMiddleware(rootReducer, initialState)
+    const store = createStoreWithMiddleware(rootReducer, initialState)
+    if (module.hot) {
+        module.hot.accept('./reducer.es6', () => {
+            const nextRootReducer = require('./reducer.es6');
+            store.replaceReducer(nextRootReducer);
+        });
+    }
+    return store
 }
-
+ 
 class CouponApp extends Component{
     render(){
-         
         const {pagination,couponType,isFetching} = this.props.initialState;
-
         const initialState = {
             couponByUser:{
                 pagination,

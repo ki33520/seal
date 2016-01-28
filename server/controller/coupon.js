@@ -1,37 +1,29 @@
 'use strict';
-
 var moment = require("moment");
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
  
-
-function couponByUser(param) {
-    return util.fetchAPI("couponByUser", param);
-}
-
 function formatCoupons(originalCoupons) {
-    
-    let coupons = [];
-
+    var coupons = [];
     originalCoupons.map((v,k)=>{
-        let code = v.employCode;
+        var code = v.employCode;
         if (code && code.length) {
             if(code.indexOf('haiwaigou')!== -1){
-                let validityDate = moment(new Date(v.validityDate)).format('YYYY.MM.DD');
-                let issueDate = moment(new Date(v.issueDate)).format('YYYY.MM.DD');
-                 
+                var validityDate = moment(new Date(v.validityDate)).format('YYYY.MM.DD');
+                var issueDate = moment(new Date(v.issueDate)).format('YYYY.MM.DD');
+                var ruleObject = v.ruleObject || {};
                 coupons.push({
                     expiryDate:issueDate+' - '+validityDate,
                     couponNo:v.couponNo,
                     money:v.money,
-                    couponName:v.ruleObject.couponName,
-                    songAccount:v.ruleObject.songAccount,
+                    couponName:ruleObject.couponName,
+                    songAccount:ruleObject.songAccount,
                     useRules:v.useRules,
                     couponDesc:v.couponDesc,
                     shortName:v.shortName,
-                    description:v.ruleObject.description
+                    description:ruleObject.description
                 });
             }
         }
@@ -44,27 +36,27 @@ function formatCoupons(originalCoupons) {
 //3已失效(包括已使用和已过期)
 //是否联盟 0：非联盟,1：联盟 
 var coupon = function(req, res, next) {
-    let user = req.session.user;
-    let pageSize = 10;
-    let pageIndex = req.body.pageIndex || 1;
-    let type = req.body.type||'youa';
-    let options = {
+    var user = req.session.user;
+    var pageSize = 10;
+    var pageIndex = req.body.pageIndex || 1;
+    var type = req.body.type||'youa';
+    var options = {
         youa:{status:0,isMerchants:0},
         legue:{status:1,isMerchants:1},
         invalid:{status:3}
     };
-    let param = _.merge(options[type],{
-        memberId:'fc6804de51c482730151e8ec0a080023',
+    var param = _.merge(options[type],{
+        memberId:user.memberId,
         pageSize:pageSize,
         pageIndex:pageIndex
     });
  
     bluebird.props({
-        coupons: couponByUser(param)
+        coupons: util.fetchAPI("couponByUser", param)
     }).then(function(resp) {
         //console.log(resp.coupons.object.result)
         if(resp.coupons.returnCode===0){
-            let pagination = {
+            var pagination = {
                 youa:{
                     coupons:[],
                     pageIndex,
@@ -82,7 +74,7 @@ var coupon = function(req, res, next) {
                 }
             };
 
-            let obj = resp.coupons.object;
+            var obj = resp.coupons.object;
 
             if (obj && obj.result) {
                 pagination[type] = {
@@ -92,7 +84,7 @@ var coupon = function(req, res, next) {
                 }
             }
 
-            let initialState = {
+            var initialState = {
                 pagination: pagination,
                 couponType:['youa','legue','invalid'],
                 isFetching: false
@@ -101,7 +93,7 @@ var coupon = function(req, res, next) {
             if (req.xhr === true) {
                 res.json(initialState);
             }else{
-                let markup = util.getMarkupByComponent(CouponApp({
+                var markup = util.getMarkupByComponent(CouponApp({
                     initialState: initialState
                 }));
 
@@ -110,8 +102,9 @@ var coupon = function(req, res, next) {
                     initialState: initialState
                 })
             }
-        }   
-        
+        }else{
+            next(new Error(resp.message));
+        }
     });
 
 }

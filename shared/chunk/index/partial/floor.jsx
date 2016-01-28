@@ -71,7 +71,7 @@ class Floor extends Component{
     renderNewRecommend(){
         let {newRecommend} = this.props.channel.floors;
         if(newRecommend && newRecommend.goods){
-            return newRecommend.goods.map((good,i)=>{
+            let goods = newRecommend.goods.map((good,i)=>{
                 return (
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                         <img src={good.imageUrl} />
@@ -84,6 +84,14 @@ class Floor extends Component{
                     </a>
                 )   
             })
+            return (
+                <div className="activityGeneral">
+                    <div className="title">
+                        <span><i></i>新品推荐</span>
+                    </div>
+                    {goods}
+                </div>
+            )
         }
         return null
     }
@@ -139,7 +147,7 @@ class Floor extends Component{
                 <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                     <img src={good.imageUrl}/>
                     <div className="right">
-                        <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10分</i><i>46秒</i></em></p>
+                        <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10</i>分<i>46</i>秒</em></p>
                         <div className="flashDot"></div>
                         <span className="name">{good.title}</span>
                         <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
@@ -259,12 +267,7 @@ class Floor extends Component{
                 {this.renderFlashBuy()}
                 <div className="activity_3">{this.renderActivityThree()}</div>
                 {this.renderSingleRecommend()}
-                <div className="activityGeneral">
-                    <div className="title">
-                        <span><i></i>新品推荐</span>
-                    </div>
-                    {this.renderNewRecommend()}
-                </div>
+                {this.renderNewRecommend()}
                 <Loading active={channelFetching}/>
             </div>
         )
