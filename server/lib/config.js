@@ -12,7 +12,7 @@ var config = {
     "oathServer": "https://ssl.e9448.com",
     "imgServer":"http://imgtest.tepin.com/",
     "cacheServer":{
-        "hosts":["192.168.0.161:11211"]
+        "hosts":["192.168.0.162:11211"]
     }
 };
 var runtime = process.env["NODE_ENV"];
