@@ -34,7 +34,7 @@ class Polymer extends Component{
                 <div className="polymer-list">
                     <SlideTabs navbarSlidable={false} onSelect={this.handleSelect.bind(this)}>
                         <SlideTabsItem navigator={()=><i>类别</i>}>
-                            <Category {...this.props.allCategory}/>
+                            <Category {...this.props.allCategory} {...this.props}/>
                         </SlideTabsItem>
                         <SlideTabsItem navigator={()=><i>品牌</i>}>
                             <Brand {...this.props}/>

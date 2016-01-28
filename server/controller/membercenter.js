@@ -21,10 +21,11 @@ var memberCenter = function(req, res, next) {
             },false),
             memberCountOrder: util.fetchAPI("memberCountOrder", {
                 memberId: user.memberId
-            },false),
+            },false)
         }).then(function(ret) {
             if (ret.memberMemberInfo.returnCode === 0 && ret.memberCountOrder.returnCode === 0) {
                 var member = ret.memberMemberInfo.object;
+                member.cardImgUrl = util.getAPI("memberCardQRCode", { openId: user.openId})
                 var countOrder = ret.memberCountOrder.object;
                 var initialState = {
                     isFetched: true,

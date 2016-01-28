@@ -55,6 +55,14 @@
             "production": "http://product.tepin.hk"
         }
     },
+    "categoryActivity": {
+        "uri": "/content/v1/activitycategory/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
     "goodById": {
         "uri": "/single/v1/detail",
         "baseURL": {
@@ -345,6 +353,14 @@
     },
     "timestamp": {
         "uri": "/sns/system/v1/timestamp",
+        "baseURL": {
+            "develop": "http://sns.e9448.com",
+            "test": "http://sns.e9448.com",
+            "production": "http://sns.e9448.com"
+        }
+    },
+    "memberCardQRCode": {
+        "uri": "/sns/sso/v1/memberCardQRCode",
         "baseURL": {
             "develop": "http://sns.e9448.com",
             "test": "http://sns.e9448.com",

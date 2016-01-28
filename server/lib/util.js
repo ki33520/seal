@@ -53,6 +53,17 @@ var util = {
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
     },
+    getAPI(apiName,param){
+        param = _.extend(param,{
+            appId:config.appId,
+            channel:"Mobile",
+            terminalType:"H5",
+            t:moment().format("X")
+        })
+        var signature = this.getSignatureByParam(param,config.appKey);
+        param = _.extend(param,{h:signature})
+        return config.api[apiName].url +"?"+sharedUtil.urlParam(param)
+    },
     getAPIURL(apiName,param){
         return config.api[apiName].url +"?"+sharedUtil.urlParam(param)
     },
@@ -137,8 +148,7 @@ var util = {
             qtys:buyeds.join(",")
         })
     },
-    writePage(url,html){
-        var pageName = md5(url);
+    writePage(pageName,html){
         var pagePath = path.resolve("client/page/"+pageName+".html")
         try{
             fs.statSync(path.resolve("client/page"))
@@ -148,8 +158,7 @@ var util = {
         // console.log('writePage',fs.mkdirSync(path.resolve("client/page")))
         fs.writeFileSync(pagePath,html)
     },
-    readPage(url){
-        var pageName = md5(url);
+    readPage(pageName){
         var pagePath = path.resolve("client/page/"+pageName+".html")
         var stat;
         try{

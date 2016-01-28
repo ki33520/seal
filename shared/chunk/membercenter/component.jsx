@@ -82,22 +82,22 @@ class MemberCenter extends Component{
         const commentNum = countOrder && countOrder.commentNum > 0 ? <i>{countOrder.commentNum}</i> : null;
         return (
             <div className="userGoods">
-                <a href="/orderlist" className="userGoods_1">
+                <a href="/orderlist/1" className="userGoods_1">
                     <em></em>
                     <span>待付款</span>
                     {paymentNum}
                 </a>
-                <a href="/orderlist" className="userGoods_2">
+                <a href="/orderlist/2" className="userGoods_2">
                     <em></em>
                     <span>待发货</span>
                     {sendNum}
                 </a>
-                <a href="/orderlist" className="userGoods_3">
+                <a href="/orderlist/3" className="userGoods_3">
                     <em></em>
                     <span>待收货</span>
                     {signNum}
                 </a>
-                <a href="/orderlist" className="userGoods_4">
+                <a href="/orderlist/4" className="userGoods_4">
                     <em></em>
                     <span>待评价</span>
                     {commentNum}
@@ -119,7 +119,7 @@ class MemberCenter extends Component{
                 <div className={classes}>
                     <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>
                     <div className="top">扫码分享</div>
-                    <div className="center"><img src={member.cardUrl} /></div>
+                    <div className="center"><img src={member.cardImgUrl} /></div>
                     <div className="bottom">邀请小伙伴扫一扫分享给TA</div>
                 </div>
             )

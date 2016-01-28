@@ -4,34 +4,31 @@ import classNames from "classnames";
 
 class GoodItem extends Component{
     render(){
-        const {id,title,salesPrice,originPrice,imageUrl,
-            sourceName,sourceImageUrl,wapPrice,phonePrice,
-            localStock} = this.props.goods;
-    
-    	const statusClass = classNames({
-            "sale-out":localStock<1
+        const {goods} = this.props;
+    	const saleOutIcon = classNames({
+            "sale-out":goods.isSaleOut
         });
-    	const activityClass=classNames({
-    		"flash-sale":wapPrice>0,
-    		"phone-price":!wapPrice && phonePrice>0
+    	const activityIcon=classNames({
+    		"flash-price":goods.isFlashPrice,
+    		"mobile-price":!goods.isFlashPrice && goods.isMobilePrice
     	});
         return (
-            	<div className="clearfix">
-            <a href={"/gooddetail/"+id} >
-                	<div className={statusClass}></div>
-                	<div className={activityClass}></div>
-                    <img src={imageUrl} alt="" />
-                    <div className="country">
-                    	<i><img src={sourceImageUrl} alt="" /></i>
-                    	{sourceName}
-                    </div>
-                    <p>{title}</p>
-                    <div>
-                        <span className="now-price">&yen;{salesPrice}</span>
-                        <span className="old-price">&yen;{originPrice}</span>
-                    </div>
-	        </a>
-                </div>
+            <div className="clearfix">
+                <a href={"/gooddetail/"+goods.id} >
+                    	<div className={saleOutIcon}></div>
+                    	<div className={activityIcon}></div>
+                        <img src={goods.imageUrl} alt="" />
+                        <div className="country">
+                        	<i><img src={goods.sourceImageUrl} alt="" /></i>
+                        	{goods.sourceName}
+                        </div>
+                        <p>{goods.title}</p>
+                        <div>
+                            <span className="now-price">&yen;{goods.salesPrice}</span>
+                            <span className="old-price">&yen;{goods.originPrice}</span>
+                        </div>
+    	        </a>
+            </div>
         )
     }
 }

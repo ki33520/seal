@@ -2,6 +2,7 @@
 import {combineReducers} from "redux";
 import {
     REQUEST_CATEGORYBRANDS,RESPONSE_CATEGORYBRANDS,
+    REQUEST_CATEGORYACTIVITY,RESPONSE_CATEGORYACTIVITY,
     REQUEST_ALLBRANDS,RESPONSE_ALLBRANDS,
     REQUEST_ALLORIGINS,RESPONSE_ALLORIGINS,
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
@@ -11,6 +12,21 @@ import {CHANGE_FIELD} from "../common/constant.es6";
 
 function allCategory(state={},action){
     switch(action.type){
+        case REQUEST_CATEGORYACTIVITY:
+            return Object.assign({},state,{
+                categoryActivityFetched:false,
+                categoryActivityFetching:true
+            })
+        case RESPONSE_CATEGORYACTIVITY:
+            let categoryactivity = null
+            if(action.res.isFetched){
+                categoryactivity = action.res.result
+            }
+            return Object.assign({},state,{
+                categoryactivity,
+                categoryActivityFetching:false,
+                categoryActivityFetched:action.res.isFetched,
+            })
         default:
             return state;
     }
