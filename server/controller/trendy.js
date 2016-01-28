@@ -7,20 +7,30 @@ var Trendy = util.getSharedComponent("trendy");
 var config = require("../lib/config.js");
 var pageSize = 10;
 
+function getSalesPrice(goods){
+    if(goods.wapPrice > 0){
+        return goods.wapPrice;
+    }else if(goods.mobilePrice > 0){
+        return goods.mobilePrice;
+    }else{
+        return goods.salesPrice;
+    }
+}
 function filterItem(originalData){
     var list = [];
     if(originalData && originalData.length > 0){
         _.each(originalData,function(v,i){
             list.push({
-                singleCode:v.singleCode,
+                id:v.singleCode,
                 title:v.title,
                 imageUrl:config.imgServer + v.imageUrl,
-                salePrice:v.salesPrice,
+                salesPrice:getSalesPrice(v),
                 originPrice:v.originPrice,
-                stock:v.localStock<1,
-                country:v.sourceName,
-                flag:config.imgServer + v.sourceImageUrl,
-                isQuick:v.wapPrice>0
+                sourceName:v.sourceName,
+                sourceImageUrl:config.imgServer + v.sourceImageUrl,
+                isSaleOut:v.localStock>0?false:true,
+                isMobilePrice:v.mobilePrice>0?true:false,
+                isFlashPrice:v.wapPrice>0?true:false
             })
         })
     }
