@@ -34,7 +34,6 @@ var collectlist = function(req, res, next) {
             pageSize: pageSize
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.memberCollectByUser.returnCode === 0) {
             var collect = {},
                 object = ret.memberCollectByUser.object;
@@ -61,7 +60,7 @@ var collectlist = function(req, res, next) {
             }
             
         }else{
-            next(new Error(ret.memberCollectByUser.msg));
+            next(new Error(ret.memberCollectByUser.message));
         }
     });
     
