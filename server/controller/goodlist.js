@@ -29,7 +29,7 @@ function filterGoodsList(result){
             materTitle:v.materTitle,
             areaName:v.areaName,
             areaLogo:config.imgServer +v.areaLogo,
-            isSaleout:v.localStock > 0 ? false : true,
+            isSaleOut:v.localStock > 0 ? false : true,
             isFlashPrice:v.flashPrice>0?true:false,
             isMobilePrice:v.mobilePrice>0 ?true:false
         })

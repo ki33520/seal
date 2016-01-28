@@ -1,18 +1,18 @@
 'use strict';
 import React,{Component} from "react";
-import classNames from "classnames";
 
 class GoodItem extends Component{
     renderIcon(goods){
-        if(goods.isFlashPrice){
-            return <div className="flash-price"></div>
-        }else if(goods.isMobilePrice){
-            return <div className="mobile-price"></div>
-        }else if(goods.isSaleout){
-            return <div className="sale-out"></div>
-        }else{
-            return null;
+        var icons = [];
+        if(goods.isSaleOut){
+            icons.push(<div className="sale-out" key="out"></div>);
         }
+        if(goods.isFlashPrice){
+            icons.push(<div className="flash-price" key="flash"></div>);
+        }else if(goods.isMobilePrice){
+            icons.push(<div className="mobile-price" key="mobile"></div>);
+        }
+        return icons;
     }
     render(){
     	let {goods} = this.props;
