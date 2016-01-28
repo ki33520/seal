@@ -7,22 +7,22 @@ class GoodItem extends Component{
     	 
     	let {goods} = this.props;
     	 
-    	const statusClass = classNames({
-            "sale-out":goods.stock<1
+    	const saleOutIcon = classNames({
+            "sale-out":goods.isSaleout
         });
-    	const activityClass=classNames({
-    		"flash-sale":goods.activityType==1,
-    		"phone-price":goods.activityType==2
+    	const activityIcon=classNames({
+    		"flash-price":goods.isFlashPrice,
+    		"mobile-price":!goods.isFlashPrice && goods.mobilePrice
     	});
         return (
             <a href={"/gooddetail/"+goods.id}>
             	<div className="clearfix">
-                	<div className={statusClass}></div>
-                	<div className={activityClass}></div>
+                	<div className={saleOutIcon}></div>
+                	<div className={activityIcon}></div>
                     <img src={goods.smallImageUrl} alt="" />
                     <div className="country">
-                    	<i><img src={goods.flag} alt="" /></i>
-                    	{goods.productArea}
+                    	<i><img src={goods.areaLogo} alt="" /></i>
+                    	{goods.areaName}
                     </div>
                     <p>{goods.materTitle}</p>
                     <div>
