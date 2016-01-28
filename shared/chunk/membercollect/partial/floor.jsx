@@ -5,7 +5,7 @@ import React,{Component} from "react";
 class Floor extends Component{
     render(){
         const {list} = this.props;
-        if(list>0){
+        if(list.length>0){
             return (
                 <ul className="collect-list">
                     {
@@ -34,7 +34,7 @@ class Floor extends Component{
         }else{
             return (
                 <div className="empty-result">
-                    <h3>您目前没有任何收藏哦</h3>
+                    <h3>您目前没有任何收藏哟~</h3>
                     <a className="btn-link" href="/">随便逛逛</a>
                 </div>
             )
