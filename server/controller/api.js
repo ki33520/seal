@@ -9,7 +9,7 @@ var Index = util.getSharedComponent("index");
 var floorFilter = require("./index").floorFilter;
 
 var buildIndexPage = function(req, res, next) {
-    var channelId = req.query.manageId
+    var channelId = req.body.manageId
     util.fetchAPI("indexChannels", {
         channel: "Mobile"
     }).then(function(ret) {
@@ -79,7 +79,7 @@ var buildIndexPage = function(req, res, next) {
 };
 
 var publishIndexPage = function(req, res, next) {
-    var channelId = req.query.manageId
+    var channelId = req.body.manageId
     var pageName = "index-"+md5(channelId)
     fse.copy(path.resolve("client/page/"+pageName+".html"),
         path.resolve("client/page/index.html"),function(err){

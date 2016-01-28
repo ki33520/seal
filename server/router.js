@@ -88,8 +88,8 @@ router.get("/coupon",mainController.requireAuthorize, require("./controller/coup
 router.post("/coupon", mainController.requireAuthorize, require("./controller/coupon"));
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
 
-router.all("/api/v1/build/index",require("./controller/api").buildIndexPage);
-router.all("/api/v1/publish/index",require("./controller/api").publishIndexPage);
+router.post("/api/v1/build/index",require("./controller/api").buildIndexPage);
+router.post("/api/v1/publish/index",require("./controller/api").publishIndexPage);
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);
 
