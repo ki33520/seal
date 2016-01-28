@@ -4,7 +4,7 @@ import React,{Component} from "react";
 
 class Floor extends Component{
     render(){
-        const {list} = this.props;
+        const {list,handleDelete} = this.props;
         if(list.length>0){
             return (
                 <ul className="collect-list">
@@ -12,19 +12,22 @@ class Floor extends Component{
                         list.map((child,key) => {
                             return (
                                 <li id={child.goodId} key={key}>
-                                    <a href={"/gooddetail/"+child.singleCode}>
-                                        <div className="col col-left">
-                                            <img src={child.imageUrl} />
+                                    <div className="col">
+                                        <div className="col-left">
+                                            <a href={"/gooddetail/"+child.singleCode}>
+                                                <img src={child.imageUrl} />
+                                            </a>
                                         </div>
-                                        <div className="col col-right">
+                                        <div className="col-right">
                                             <div className="title">{child.title}</div>
                                             <div className="origin"><img src={child.sourceImage} />{child.sourceName}</div>
                                             <div className="price">
-                                                <span><i>￥</i>{child.salesPrice}</span>
-                                                <span><i>￥</i>{child.originPrice}</span>
+                                                <span className="price-sales"><i>￥</i>{child.salesPrice}</span>
+                                                <span className="price-origin"><i>￥</i>{child.originPrice}</span>
+                                                <span className="delete"><a onClick={handleDelete.bind(this,child)} className="iconfont icon-trash"></a></span>
                                             </div>
                                         </div>
-                                    </a>
+                                    </div>
                                 </li>
                             )
                         })
