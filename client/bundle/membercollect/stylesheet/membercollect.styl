@@ -1,10 +1,11 @@
-@import "../../common/common.styl";
-@import "../../common/iconfont.styl";
-@import "../../common/header.styl";
-@import "../../common/member.styl";
-@import "../../component/refresher.styl";
-@import "../../component/masklayer.styl";
-@import "../../component/gotop.styl";
+@import "../../common/common";
+@import "../../common/iconfont";
+@import "../../common/header";
+@import "../../common/member";
+@import "../../component/refresher";
+@import "../../component/masklayer";
+@import "../../component/alert";
+@import "../../component/gotop";
 
 .collect-content{
 	color: $gray-color;
@@ -42,10 +43,8 @@
 			&:last-child{
 				border-bottom: none;
 			}
-			>a{
-				display: flex;
-			}
 			.col{
+				display: flex;
 			}
 			.col-left{
 				margin-top: .05rem;
@@ -88,21 +87,33 @@
 					>span{
 						flex: 1;
 						display: block;
-						color: #ed1844;
-						font-size: .5rem;
 						font-weight: normal;
 						i{
-							font-style: none;
+							fonte: none;
 							font-size: .4rem;
 							font-weight: normal;
 						}
-						&:last-child{
+						&.price-sales{
+							color: #ed1844;
+							font-size: .5rem;
+							text-align: left;
+						}
+						&.price-origin{
 							color: #aaa;
 							font-size: .3rem;
-							text-align: right;
+							text-align: left;
 							text-decoration: line-through;
 							i{
 								font-size: .3rem;
+							}
+						}
+						&.delete{
+							text-align: right;
+							font-size: .5rem;
+							color: #999;
+							a{
+								color: #999;
+								font-size: .5rem;
 							}
 						}
 					}

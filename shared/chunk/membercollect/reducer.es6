@@ -1,9 +1,9 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {RECEIVE_COLLECT,REQUEST_COLLECT} from "./action.es6";
+import {RECEIVE_COLLECT,REQUEST_COLLECT,START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./action.es6";
 
-import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
 function memberCollectByUser(state={},action){
@@ -21,6 +21,21 @@ function memberCollectByUser(state={},action){
                 isFetching:false,
                 collect:action.res
             })
+        case START_TOGGLE_COLLECTED:
+            return Object.assign({},state,{
+                isToggling:true,
+                isToggled:false
+            });
+        case FINISH_TOGGLE_COLLECTED:
+            var collect = {...state.collect};
+            _.remove(collect.list, function(n) {
+                return n.singleCode === action.param.singleCode;
+            });
+            return Object.assign({},state,{
+                isToggling:false,
+                isToggled:true,
+                collect: collect
+            })
         case SHOW_ALERT:
         case HIDE_ALERT:
             return alertReducer(state,action)
@@ -28,7 +43,6 @@ function memberCollectByUser(state={},action){
             return state;
     }
 }
-
 const rootReducer = combineReducers({
     memberCollectByUser
 });

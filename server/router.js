@@ -82,13 +82,14 @@ router.get("/cascadearea",mainController.requireAuthorize,require("./controller/
 router.post("/savereceiver",mainController.requireAuthorize,require("./controller/receiver").saveReceiver);
 router.post("/createreceiver",mainController.requireAuthorize,require("./controller/receiver").createReceiver);
 router.post("/deletereceiver",mainController.requireAuthorize,require("./controller/receiver").deleteReceiver);
+router.post("/setdefaultreceiver",mainController.requireAuthorize,require("./controller/receiver").setDefaultReceiver);
 
 router.get("/coupon",mainController.requireAuthorize, require("./controller/coupon"));
 router.post("/coupon", mainController.requireAuthorize, require("./controller/coupon"));
 router.get("/coupondetail/:id", require("./controller/coupondetail"));
 
-router.get("/api/v1/build/index",require("./controller/api").buildIndexPage);
-router.get("/api/v1/publish/index",require("./controller/api").publishIndexPage);
+router.all("/api/v1/build/index",require("./controller/api").buildIndexPage);
+router.all("/api/v1/publish/index",require("./controller/api").publishIndexPage);
 router.all("/mock/api/:api",require("./mock/api").all);
 router.all("*", mainController.notFoundHandler);
 

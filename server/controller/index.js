@@ -167,6 +167,9 @@ function floorFilter(floors) {
     _floors["flashbuys"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_SG"
     }), "activityList")
+    _floors["flashbuyId"] = _.result(_.findWhere(floors, {
+        manageCode: "ACTIVITY_SG"
+    }), "id")
     if (_floors["flashbuys"]) {
         _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList, function(good) {
             return {

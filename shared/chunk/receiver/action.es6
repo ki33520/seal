@@ -10,7 +10,8 @@ import {
     REQUEST_RECEIVERS,RESPONSE_RECEIVERS,
     START_SAVERECEIVER,FINISH_SAVERECEIVER,
     START_CREATERECEIVER,FINISH_CREATERECEIVER,
-    START_DELETERECEIVER,FINISH_DELETERECEIVER
+    START_DELETERECEIVER,FINISH_DELETERECEIVER,
+    START_SETDEFAULT,FINISH_SETDEFAULT
 } from "./constant.es6";
 
 export {alert} from "../common/action.es6";
@@ -231,6 +232,33 @@ export function deleteReceiver(param){
             method:"POST"
         }).then((res)=>{
             dispatch(finishDeleteReceiver(param,res))
+        })
+    }
+}
+
+function startSetDefault(param){
+    return {
+        type:START_SETDEFAULT,
+        param
+    }
+}
+
+function finishSetDefault(param,res){
+    return {
+        type:FINISH_SETDEFAULT,
+        param,
+        res,
+        finishAt:Date.now()
+    }
+}
+
+export function setDefault(param){
+    return (dispatch)=>{
+        dispatch(startSetDefault(param))
+        apiRequest("/setdefaultreceiver",param,{
+            method:"POST"
+        }).then((res)=>{
+            dispatch(finishSetDefault(param,res))
         })
     }
 }
