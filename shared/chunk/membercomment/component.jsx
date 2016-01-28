@@ -63,12 +63,12 @@ class CommentList extends Component{
                 <div className="tab-content">
                     <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)} >
                         <SlideTabsItem navigator={()=><span><b>全部评论</b></span>}>
-                            <Floor comments={allComment} ref="floor"/>
+                            <Floor comments={allComment} floorIndex={0} ref="floor"/>
                             <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                             <GoTop relative={true}/>
                         </SlideTabsItem>
                         <SlideTabsItem navigator={()=><span><b>晒单</b></span>}>
-                            <Floor comments={showComment} ref="floor"/>
+                            <Floor comments={showComment} floorIndex={1} ref="floor"/>
                             <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                             <GoTop relative={true}/>
                         </SlideTabsItem>
