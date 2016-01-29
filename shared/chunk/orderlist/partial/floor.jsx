@@ -62,32 +62,13 @@ class Floor extends Component{
     handlePayGateway(child,e){
         e && e.preventDefault();
         const {dispatch} = this.props;
-        const {orderNo,paymentFee,checkedReceiver,itemList} = child;
-        let productList = []
-        itemList.forEach((item)=>{
-            productList.push({
-                goodsName: item.singleTitle,
-                goodsColorAndSize: item.singleProps
-            });
-        })
+        const {orderNo} = child;
         let message = {
-            orderNo:orderNo,
-            totalFee:paymentFee,
-            address:"北京市辖区东城区平安大道1号",
-            userName:"王朗",
-            mobile:"13112341234",
-            productList:JSON.stringify(productList)
+            orderNo:orderNo
         }
-        // dispatch(
-        //     fetchPayGateway(base64EncodeForURL(urlParam(message)))
-        // )
-    }
-    componentDidUpdate(prevProps,prevState){
-        if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
-            setTimeout(()=>{
-                ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
-            },1000)
-        }
+        dispatch(
+            fetchPayGateway(base64EncodeForURL(urlParam(message)))
+        )
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
@@ -178,7 +159,8 @@ class Floor extends Component{
     renderNode(list){
         if(list.length>0){
             return list.map((child,i)=>{
-                const {createdAt,id,orderReceiveId,orderId,itemList,salesTotalFee,orderStatus,timeoutTime} = child;
+                const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
+                console.log(child)
                 var crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
                 return (
                     <div className="order-box" key={i}>
@@ -191,7 +173,7 @@ class Floor extends Component{
                         </div>
                         <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
-                            <span>合计：<em>&yen;{salesTotalFee}</em></span>
+                            <span>合计：<em>&yen;{paymentFee}</em></span>
                             {this.renderButtons(child,i)}
                         </div>
                     </div>
