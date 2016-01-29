@@ -27,8 +27,8 @@ function filterGoodsList(result){
             originPrice:v.originPrice,
             discounts:v.discounts,
             materTitle:v.materTitle,
-            areaName:v.areaName,
-            areaLogo:config.imgServer +v.areaLogo,
+            sourceName:v.areaName,
+            sourceImageUrl:config.imgServer +v.areaLogo,
             isSaleOut:v.localStock > 0 ? false : true,
             isFlashPrice:v.flashPrice>0?true:false,
             isMobilePrice:v.mobilePrice>0 ?true:false

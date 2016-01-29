@@ -22,8 +22,8 @@ class GoodItem extends Component{
                 	{this.renderIcon(goods)}
                     <img src={goods.smallImageUrl} alt="" />
                     <div className="country">
-                    	<i><img src={goods.areaLogo} alt="" /></i>
-                    	{goods.areaName}
+                    	<i><img src={goods.sourceImageUrl} alt="" /></i>
+                    	{goods.sourceName}
                     </div>
                     <p>{goods.materTitle}</p>
                     <div>

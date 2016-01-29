@@ -9,21 +9,26 @@ import {
 import {CHANGE_FIELD} from "../common/constant.es6";
 
 function trendy(state={},action){
-    let categories = state.categories
+    let categories = state.categories;
     switch(action.type){
         case REQUEST_GOODS:
-            categories[action.param.index]["isFetching"] = true
+            var category = {...categories[action.param.index]};
+            category.isFetching = true;
+            categories[action.param.index] = category;
             return Object.assign({},state,{
                 categories
             });
         case RECEIVE_GOODS:
-            categories[action.param.index]["isFetching"] = false
-            categories[action.param.index]["isFetched"] = action.res.isFetched
+            var i = action.param.index;
+            var pagination = action.res.pagination;
+            var category = {...categories[i]};
+            category.isFetching = false;
+            category.isFetched = action.res.isFetched;
             if(action.res.isFetched){
-                categories[action.param.index]["list"] = _.union(categories[action.param.index]["list"],
-                    action.res.pagination.goodList)
-                categories[action.param.index]["totalPage"] = action.res.pagination.totalPage
-                categories[action.param.index]["pageIndex"] = action.res.pagination.pageIndex
+                category.list = _.union(categories[i].list,pagination.goodList);
+                category.totalPage = pagination.totalPage;
+                category.pageIndex = pagination.pageIndex;
+                categories[i]=category;
             }
             return Object.assign({},state,{
                 categories
