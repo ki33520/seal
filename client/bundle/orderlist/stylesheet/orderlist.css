@@ -69,7 +69,7 @@ body{
     display:inline-block;
     line-height:.48rem;
 }
-.order-up i span{
+.order-up>i span{
     color: #7f1e9f;
 }
 .order-up .right{
@@ -77,11 +77,17 @@ body{
     line-height:.56rem;
     text-align:right;
 }
-.order-up .right i{
+.order-up .right>i{
     color:#801da1;
     margin-right:.24rem;
     display:inline-block;
-    /*float:right;*/
+}
+.order-up .right>i span{
+    color: #801da1;
+    margin-right: .15rem;
+}
+.order-up .right>i span i{
+    margin-left: .12rem;
 }
 .order-up .right em {
     color: #ed1946;

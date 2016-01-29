@@ -194,31 +194,31 @@ class OrderDetail extends Component{
                 <div className="title">
                     <div className="fl title-txt">结算</div>
                 </div>
-                <div className="bottom-line">
+                <div className="bottom-line clearfix">
                     <div className="label">商品总价：</div>
                     <div className="data"><i>&yen;</i><span>{order.salesTotalFee}</span></div>
                 </div>
-                <div className="bottom-line">
+                <div className="bottom-line clearfix">
                     <div className="label">国内运费：</div>
                     <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{order.logisticsFee}</span></div>
                 </div>
-                <div className="bottom-line">
+                <div className="bottom-line clearfix">
                     <div className="label">国际运费：</div>
                     <div className="data">{abroadFeeBox}<i>&yen;</i><span>{order.abroadFee}</span></div>
                 </div>
-                <div className="bottom-line">
+                <div className="bottom-line clearfix">
                     <div className="label">关税：</div>
                     <div className="data">{tariffFeeBox}<i>&yen;</i><span>{order.tariffFee}</span></div>
                 </div>
-                <div className="bottom-line intro">
+                <div className="bottom-line clearfix intro">
                     <div className="label">优惠活动：</div>
                     <div className="data">-<i>&yen;</i><span>{order.promoFee}</span></div>
                 </div>
-                <div className="bottom-line intro">
+                <div className="bottom-line clearfix intro">
                     <div className="label">优惠券：</div>
                     <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee}</span></div>
                 </div>
-                <div className=" bottom-line no-border">
+                <div className=" bottom-line clearfix no-border">
                     <div className="label">应付金额：</div>
                     <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee}</span></div>
                 </div>
