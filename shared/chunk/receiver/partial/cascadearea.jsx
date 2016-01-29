@@ -68,7 +68,7 @@ class CascadeArea extends Component{
     }
     render(){
         if(this.props.receiver === null){
-            return null
+            // return null
         }
         return (
             <div className="cascade-area">

@@ -12,7 +12,7 @@ var receiversFilter = require("./receiver").receiversFilter;
 
 function orderFilter(order) {
     var _order = _.pick(order, [
-        "qtys","promoName"
+        "qtys", "promoName"
     ]);
     _order["warehouse"] = order.warehouseName
     _order["totalFee"] = order.totalFee
@@ -151,11 +151,11 @@ var submitOrder = function(req, res, next) {
 }
 
 var payGateway = function(req, res, next) {
-    var message = util.decodeURLParam(req.params["param"])
-    // console.log('message',message)
+    var param = util.decodeURLParam(req.params["param"])
+        // console.log('param',param)
     var user = req.session.user;
     var orderStatusURL = util.getAPIURL("orderStatus", {
-        orderNo: message.orderNo
+        orderNo: param.orderNo
     })
     var urlObj = {
         protocol: req.protocol,
@@ -163,41 +163,90 @@ var payGateway = function(req, res, next) {
         pathname: "/"
     }
     var homeURL = url.format(urlObj)
-    urlObj["pathname"] = "/orderdetail/" + message.orderNo;
+    urlObj["pathname"] = "/orderdetail/" + param.orderNo;
     var orderDtailURL = url.format(urlObj)
-    _.extend(message, {
-        wxOpenId: user.wxOpenId,
-        subject: "haiwaigouH5",
-        createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
-        endTime: moment().add(2, "h").format("YYYY-MM-DD HH:mm:ss"),
-        appName: "haiwaigou",
-        homeURL: homeURL,
-        orderStatusURL: orderStatusURL,
-        orderDtailURL: orderDtailURL,
-        version: "NEW"
+
+    util.fetchAPI("orderByNo", {
+        orderNo: param.orderNo
+    }).then(function(ret) {
+        if (ret.returnCode === 0) {
+            var message = messageFilter(ret.object)
+            _.extend(message, {
+                wxOpenId: user.wxOpenId,
+                subject: "haiwaigouH5",
+                createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+                endTime: moment().add(2, "h").format("YYYY-MM-DD HH:mm:ss"),
+                appName: "haiwaigou",
+                homeURL: homeURL,
+                orderStatusURL: orderStatusURL,
+                orderDtailURL: orderDtailURL,
+                version: "NEW"
+            })
+            message = JSON.stringify({
+                "message": message
+            })
+            var t = moment().format("X")
+            var param = {
+                appId: config.appId,
+                channel: "Mobile",
+                openId: user.openId,
+                t: t,
+                terminalType: "H5",
+                message: message
+            }
+            var h = util.getSignatureByParam(param, config.appKey)
+            param["h"] = h
+            res.json({
+                isFetched: true,
+                result: param
+            })
+        } else {
+            res.json({
+                isFetched: false,
+                errMsg: ret.message
+            })
+        }
+    }, function() {
+        res.json({
+            isFetched: false,
+            errMsg: "api request failed"
+        })
     })
-    message = JSON.stringify({
-        "message": message
-    })
-    var t = moment().format("X")
-    var param = {
-        appId: config.appId,
-        channel: "Mobile",
-        openId: user.openId,
-        t:t,
-        terminalType: "H5",
-        message:message
+}
+
+function messageFilter(order) {
+    var productList = []
+    if (order["itemList"]) {
+        _.each(order["itemList"], function(good) {
+            productList.push({
+                goodsName: good.singleTitle,
+                goodsColorAndSize: good.singleProps
+            })
+        })
     }
-    var h = util.getSignatureByParam(param,config.appKey)
-    param["h"] = h
-    res.json({
-        isFetched:true,
-        result:param
-    })
+    var _order = _.pick(order, [
+        "totalFee", "orderNo"
+    ])
+    _order["productList"] = JSON.stringify(productList) 
+
+    var receiver = order.receiverObject
+    _order["address"] = receiver.completeAddress
+    _order["userName"] = receiver.receiverName
+    _order["mobile"] = receiver.receiverMobile
+    // _order["credentialsNo"] = receiver.receiverCertNo
+    // _order["realName"] = receiver.receiverName
+    // _order["credentialsType"] = "01"
+    // _order["goodsAmount"] = order.salesTotalFee
+    // _order["taxAmount"] = order.tariffFee
+    // _order["freight"] = order.abroadFee + order.logisticsFee
+    // _order["bizTypeCode"] = 1
+    // _order["paymentType"] = 0
+    // _order["customsCode"] = 0
+    return _order
 }
 
 module.exports = {
     confirmOrder: confirmOrder,
     submitOrder: submitOrder,
-    payGateway:payGateway
+    payGateway: payGateway
 };
