@@ -3,21 +3,36 @@
 import React,{Component} from "react";
 import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
-import classNames from "classnames";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
-var moment = require("moment");
+import Timer from "../common/timer.jsx";
 
 class FlashBuy extends Component{
+    renderIcon(goods){
+        var icons = [];
+        if(goods.isSaleOut){
+            icons.push(<div className="sale-out" key="out"></div>);
+        }
+        if(goods.isFlashPrice){
+            icons.push(<div className="flash-price" key="flash"></div>);
+        }else if(goods.isMobilePrice){
+            icons.push(<div className="mobile-price" key="mobile"></div>);
+        }
+        return icons;
+    }
     renderGoods(groupGoods){
         if(groupGoods.length > 0){
             return groupGoods.map((good,i)=>{
                 return (
-                    <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
+                    <a href={"/gooddetail/"+good.id} className="clearfix" key={i}>
+                        {this.renderIcon(good)}
                         <img src={good.imageUrl} />
                         <div className="right">
                             <span className="name">{good.title}</span>
-                            <span className="country"><i><img src={good.flag} alt="" /></i>{good.sourceName}</span>
-                            <span className="nowPrice">&yen;{good.salePrice}</span>
+                            <span className="country">
+                                <i><img src={good.sourceImageUrl} alt="" /></i>
+                                {good.sourceName}
+                            </span>
+                            <span className="nowPrice">&yen;{good.salesPrice}</span>
                             <span className="oldPrice">&yen;{good.originPrice}</span>
                         </div>
                     </a>
@@ -35,7 +50,7 @@ class FlashBuy extends Component{
                         <div className="flashList_title">
                             <span>距本期闪购结束</span>
                             <div className="titleBorder"></div>
-                            <p><em>14</em>时<em>14</em>分<em>14</em>秒</p>
+                            <p><Timer endTime={goods.endTime}/></p>
                         </div>
                         <div className="flashBuy">{this.renderGoods(goods.goodsList)}</div>
                     </div>
@@ -46,7 +61,6 @@ class FlashBuy extends Component{
     }
     renderPreFlash(){
         const {preFlashGoods} = this.props.flashBuy.groupGoods;
-        const beginTime = moment(preFlashGoods.startTime).format('HH:mm');
         if(preFlashGoods.length > 0){
             return preFlashGoods.map((goods,i)=>{
                 return(
@@ -55,7 +69,7 @@ class FlashBuy extends Component{
                             <img src="/client/asset/images/willFlash.png" />
                         </div>
                         <div className="willFlash_con">
-                            <div className="willFlash_time">开售时间<em>{beginTime}</em></div>
+                            <div className="willFlash_time">开售时间<em>{goods.preSaleTime}</em></div>
                             <div className="flashBuy">{this.renderGoods(goods.goodsList)}</div>
                             <div className="willFlash_line"></div>
                         </div>
