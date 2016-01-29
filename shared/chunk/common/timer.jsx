@@ -77,7 +77,7 @@ class Timer extends Component{
             day,hour,minute,second
         })
         return (
-            <span className="timer">{durationContent}</span>
+            <span className="timer" dangerouslySetInnerHTML={{__html:durationContent}}></span>
         )
     }
 }

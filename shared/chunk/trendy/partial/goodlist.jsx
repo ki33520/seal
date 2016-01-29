@@ -35,7 +35,7 @@ class GoodList extends Component{
                 )
             })
         }
-        return null
+        return '暂无商品';
     }
     render(){
         return (

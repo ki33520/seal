@@ -45,7 +45,7 @@ class Trendy extends React.Component{
                 <SlideTabsItem navigator={()=><i>{category.name}</i>} key={i}>
                     <div><GoodList category={category} />
                     <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={category.isFetching}/>
-                    <Loading active={category.list.length === 0}/>
+                    <Loading active={category.isFetching}/>
                     </div>
                 </SlideTabsItem>
             )

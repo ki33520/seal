@@ -22,5 +22,13 @@
             "test": "http://order.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
+    },
+    "orderByNo":{
+        "uri": "/order/v1/findOrderDetail",
+        "baseURL": {
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
     }
 }

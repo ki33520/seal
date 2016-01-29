@@ -7,6 +7,9 @@ class Category extends Component{
     constructor(props){
         super(props);
     }
+    componentDidMount(){
+        this.handleSelect(0)
+    }
     handleSelect(i){
         const {categories} = this.props
         const category = categories[i]

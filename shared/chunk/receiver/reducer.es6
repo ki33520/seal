@@ -12,7 +12,8 @@ import {
     REQUEST_RECEIVERS,RESPONSE_RECEIVERS,
     START_SAVERECEIVER,FINISH_SAVERECEIVER,
     START_CREATERECEIVER,FINISH_CREATERECEIVER,
-    START_DELETERECEIVER,FINISH_DELETERECEIVER
+    START_DELETERECEIVER,FINISH_DELETERECEIVER,
+    START_SETDEFAULT,FINISH_SETDEFAULT
 } from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -197,6 +198,27 @@ function receiverByUser(state={},action){
                 receiverDeleting:false,
                 receiverDeleted
             })
+        case START_SETDEFAULT:
+            return Object.assign({},state,{
+                receiverUpdating:true,
+                receiverUpdated:false
+            })
+        case FINISH_SETDEFAULT:
+            let receiverUpdated = action.res.receiverUpdated
+            if(receiverUpdated){
+                receivers = _.map(receivers,(receiver)=>{
+                    receiver.isDefault = false
+                    if(receiver.id === action.param.id){
+                        receiver.isDefault = true
+                    }
+                    return receiver
+                })
+                return Object.assign({},state,{
+                    receivers,
+                    receiverUpdated,
+                    receiverUpdating:false
+                })
+            }
         default:
             return state;
     }

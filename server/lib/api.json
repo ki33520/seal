@@ -327,6 +327,14 @@
             "production": "http://member.tepin.hk"
         }
     },
+    "setDefaultReceiver": {
+        "uri": "/address/v1/editDefault",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
     "findProvince": {
         "uri": "/sns/address/v1/findProvinceMap",
         "baseURL": {
