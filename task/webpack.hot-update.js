@@ -104,6 +104,11 @@ module.exports = {
         new webpack.optimize.OccurenceOrderPlugin(true),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin(),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false
+        //     }
+        // })
         // new ExtractTextPlugin("[name].css")
     ], commonChunks)
 }
