@@ -17,15 +17,28 @@
     background-color: #f5f5f5;
 }
 .update-content{
-    .userInfo{
-        padding: .3rem .5rem;
-        li{
-            line-height: .8rem;
-            >label{
-                margin-right: .2rem;
+    .user-info{
+        display: flex;
+        .user-headpic{
+            flex: 1;
+            padding: .3rem .5rem;
+            line-height: 0;
+            img{
+                width: 100%;
+                border-radius: 100%;
             }
-            >span{
-                color: $purple-color;
+        }
+        .user-info-list{
+            flex: 2;
+            padding: .4rem .5rem 0 0;
+            li{
+                line-height: .8rem;
+                >label{
+                    margin-right: .2rem;
+                }
+                >span{
+                    color: $purple-color;
+                }
             }
         }
     }

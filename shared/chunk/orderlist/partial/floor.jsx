@@ -160,7 +160,6 @@ class Floor extends Component{
         if(list.length>0){
             return list.map((child,i)=>{
                 const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
-                console.log(child)
                 var crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
                 return (
                     <div className="order-box" key={i}>
