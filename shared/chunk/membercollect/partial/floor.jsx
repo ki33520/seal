@@ -19,7 +19,7 @@ class Floor extends Component{
                                             </a>
                                         </div>
                                         <div className="col-right">
-                                            <div className="title">{child.title}</div>
+                                            <div className="title"><a href={"/gooddetail/"+child.singleCode}>{child.title}</a></div>
                                             <div className="origin"><img src={child.sourceImage} />{child.sourceName}</div>
                                             <div className="price">
                                                 <span className="price-sales"><i>￥</i>{child.salesPrice}</span>

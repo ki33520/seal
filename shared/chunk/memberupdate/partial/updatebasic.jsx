@@ -27,6 +27,54 @@ class UpdateBasic extends Component{
             max: max
         }
     }
+    formVerify(field,e){
+        e && e.preventDefault();
+        const {dispatch} = this.props;
+        const rules = {
+            nickName: {
+                reg: function(str){
+                    var len = 0;  
+                    for(var i=0; i<str.length; i++){
+                        if(str.charCodeAt(i)>127 || str.charCodeAt(i)==94){
+                           len += 2;
+                        }else{  
+                           len ++;
+                        }
+                    }
+                    if(len<4 || len>20){
+                        return false;
+                    }else{
+                        return true;
+                    }
+                },
+                msg: "请按正确格式填写昵称"
+            },
+            gender: {
+                reg: function(str){
+                    return /^[0-9]{1}$/.test(str);
+                },
+                msg: "请选择性别"
+            },
+            birthday:{
+                reg: function(str){
+                    return true;
+                }
+            }
+        };
+        if(typeof field === "object"){
+            for(let i in field){
+                let rule = rules[i];
+                if(rule){
+                    if(!rule.reg(field[i])){
+                        dispatch(alert(rule.msg,1000));
+                        return false;
+                    }
+                }else{
+                    field["callback"]();
+                }
+            }
+        }
+    }
     componentDidMount(){
         const {dispatch} = this.props;
         const birthday = this.state.year+"-"+this.state.month+'-'+this.state.day;
@@ -42,9 +90,15 @@ class UpdateBasic extends Component{
         const {dispatch,basicByForm} = this.props;
         let {nickName,gender,birthday} = basicByForm;
         gender = gender === "-1" ? null : gender;
-        dispatch(changeBasic("/updatebasic",{
-            nickName,gender,birthday
-        }));
+        this.formVerify({
+            nickName,gender,birthday,
+            callback: function(){
+                dispatch(changeBasic("/updatebasic",{
+                    nickName,gender,birthday
+                }));
+            }
+        });
+        
     }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props;
@@ -75,7 +129,6 @@ class UpdateBasic extends Component{
         }else{
             birthday = obj.year+"-"+obj.month+'-'+obj.day;
         }
-        
         dispatch(changeField(fieldName,birthday));
     }
     render(){
@@ -92,7 +145,7 @@ class UpdateBasic extends Component{
                         <label>昵称</label>
                         <input type="text" placeholder="请填写" name="nickName" value={nickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
                     </div>
-                    <div className="tips">4-20个字符，可全部有字母组成，或数字、字母、“_”、“-”任意两种以上组合</div>
+                    <div className="tips">4-20个字符，可全部由字母组成，或数字、字母、“_”、“-”任意两种以上组合</div>
                 </div>
                 <div className="form-item">
                     <div className="label-item">

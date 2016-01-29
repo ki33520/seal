@@ -46,7 +46,7 @@ class MemberCenter extends Component{
             return (
                 <div className="userInfo">
                     <div className="userInfo_con">
-                        <img src={member.imageUrl} />
+                        <img src={member.imageUrl || "/client/asset/images/headpic.png"} />
                         <a className="user-qr iconfont icon-erweima" href="javascript:void(0);" onClick={this.togglePopupActive.bind(this)}></a>
                     </div>
                     <span>{member.nickName}</span>
