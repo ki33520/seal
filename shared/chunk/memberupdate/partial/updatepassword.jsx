@@ -30,16 +30,16 @@ class UpdatePassword extends Component{
         const {dispatch,passwordByForm} = this.props;
         const rules = {
             oldPassword: {
-                reg: /^[A-Za-z0-9_]{6,18}$/,
-                msg: "旧密码"
+                reg: /^[A-Za-z0-9_]{1,}$/,
+                msg: "请输入旧密码"
             },
             password: {
                 reg: /^[a-z0-9_-]{6,18}$/,
-                msg: "新密码"
+                msg: "新密码长度需6-18个字符"
             },
             repeatPassword: {
                 reg: /^[a-z0-9_-]{6,18}$/,
-                msg: "重复新密码"
+                msg: "重复密码长度需6-18个字符"
             }
         };
         if(typeof field === 'object'){
@@ -47,7 +47,7 @@ class UpdatePassword extends Component{
                 let rule = rules[i];
                 if(rule){
                     if(!rule.reg.test(field[i]) || !field[i]){
-                        dispatch(alert("请正确填写"+rule.msg,1000));
+                        dispatch(alert(rule.msg,1000));
                         return false;
                     };
                 }else{
@@ -55,6 +55,7 @@ class UpdatePassword extends Component{
                         dispatch(alert("新密码与重复密码不同",1000));
                         return false;
                     }
+                    console.log(field[i])
                     field[i]();
                 }
             }
