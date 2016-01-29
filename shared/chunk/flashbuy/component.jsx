@@ -50,7 +50,10 @@ class FlashBuy extends Component{
                         <div className="flashList_title">
                             <span>距本期闪购结束</span>
                             <div className="titleBorder"></div>
-                            <p><Timer endTime={goods.endTime}/></p>
+                            <p>
+                                <Timer endTime={goods.endTime} dayEnable={true} 
+                                template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                            </p>
                         </div>
                         <div className="flashBuy">{this.renderGoods(goods.goodsList)}</div>
                     </div>
