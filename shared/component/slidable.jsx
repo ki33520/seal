@@ -164,7 +164,12 @@ class Slidable extends Component{
             // console.log('translateY',this.translateY)
             // this.transitionTouch(this.props.animateDuration)
             // if(this.touchDirection() === axis){
-            rAF(this.transitionTouch.bind(this,animateDuration))
+            let transitionTouch = this.transitionTouch.bind(this,animateDuration)
+            this.timeout = setTimeout(()=>{
+                transitionTouch()
+                clearTimeout(this.timeout)
+            },30)
+            // rAF(this.transitionTouch.bind(this,animateDuration))
             dom.removeClass(ReactDOM.findDOMNode(this),"sliding")
         }
     }
