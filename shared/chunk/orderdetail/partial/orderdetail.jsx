@@ -71,21 +71,9 @@ class OrderDetail extends Component{
     handlePayGateway(order,e){
         e && e.preventDefault();
         const {dispatch} = this.props;
-        const {orderNo,paymentFee,receiverObject,itemList} = order;
-        let productList = []
-        itemList.forEach((item)=>{
-            productList.push({
-                goodsName: item.singleTitle,
-                goodsColorAndSize: item.singleProps
-            });
-        })
+        const {orderNo} = order;
         let message = {
-            orderNo:orderNo,
-            totalFee:paymentFee,
-            address:receiverObject.completeAddress,
-            userName:receiverObject.receiverName,
-            mobile:receiverObject.receiverMobile,
-            productList:JSON.stringify(productList)
+            orderNo:orderNo
         }
         dispatch(
             fetchPayGateway(base64EncodeForURL(urlParam(message)))

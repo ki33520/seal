@@ -56,6 +56,13 @@ class OrderList extends Component{
     componentDidMount(){
         ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[this.state.displayFlag].click();
     }
+    componentDidUpdate(prevProps,prevState){
+        if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
+            setTimeout(()=>{
+                ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
+            },1000)
+        }
+    }
     toggleFlag(flag,e){
         e && e.preventDefault();
         const {orders} = this.props;

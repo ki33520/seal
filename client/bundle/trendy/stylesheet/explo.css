@@ -113,7 +113,7 @@ body{
 	height:100%;
 	display:block;
 }
-.activityGeneral .right .nowPrice{
+.activityGeneral .right .now-price{
 	float:left;
 	color:#ed1946;
 	font-size:.48rem;
@@ -121,7 +121,7 @@ body{
 	display:block;
 	font-weight:bold;
 }
-.activityGeneral .right .oldPrice{
+.activityGeneral .right .old-price{
 	text-decoration: line-through;
 	float:right;
 	color:#999;
@@ -129,7 +129,7 @@ body{
 	line-height:.6rem;
 	font-size:.32rem;
 }
-.activityGeneral .soldOut{
+.activityGeneral .sold-out{
 	width:1.813rem;
 	height:1.813rem;
 	background-image:url(/client/asset/images/ico_soldOut.png);
@@ -138,7 +138,7 @@ body{
 	left:1rem;
 	top:2rem;
 }
-.activityGeneral .right .nowPrice:first-letter{
+.activityGeneral .right .now-price:first-letter{
 	font-size:.32rem;
 	font-weight:normal;
 	padding-right:.06rem;

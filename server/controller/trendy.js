@@ -4,33 +4,23 @@ var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var Trendy = util.getSharedComponent("trendy");
-var config = require("../lib/config.js");
+var filter = require("../lib/filter.js");
 var pageSize = 10;
-
-function getSalesPrice(goods){
-    if(goods.wapPrice > 0){
-        return goods.wapPrice;
-    }else if(goods.mobilePrice > 0){
-        return goods.mobilePrice;
-    }else{
-        return goods.salesPrice;
-    }
-}
+ 
 function filterItem(originalData){
     var list = [];
     if(originalData && originalData.length > 0){
         _.each(originalData,function(v,i){
             list.push({
-                id:v.singleCode,
+                singleCode:v.singleCode,
                 title:v.title,
-                imageUrl:config.imgServer + v.imageUrl,
-                salesPrice:getSalesPrice(v),
+                imageUrl:filter.imageUrl(v.imageUrl),
+                salesPrice:filter.price(v),
                 originPrice:v.originPrice,
                 sourceName:v.sourceName,
-                sourceImageUrl:config.imgServer + v.sourceImageUrl,
-                isSaleOut:v.localStock>0?false:true,
-                isMobilePrice:v.mobilePrice>0?true:false,
-                isFlashPrice:v.wapPrice>0?true:false
+                sourceImageUrl:filter.imageUrl(v.sourceImageUrl),
+                isSoldOut:filter.isSoldOut(v.localStock),
+                saleType:filter.saleType(v)
             })
         })
     }
