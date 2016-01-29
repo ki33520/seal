@@ -5,9 +5,7 @@ var config = require("../lib/config");
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var sharedUtil = require("../../shared/lib/util.es6");
-var snsUrl = "http://sns.e9448.com/sns/system/v1/timestamp";
-
-
+var moment = require("moment");
 var flashBuy = function(req,res,next) {
     var id = req.params.id;
     bluebird.props({
@@ -16,13 +14,11 @@ var flashBuy = function(req,res,next) {
             start:0,
             limit:10
         }),
-        snsTime:sharedUtil.apiRequest(snsUrl)
-    }).then(function(ret){
-        var goods = ret.goods;
-        var snsTime = ret.snsTime;
-        if(goods.returnCode === 0 && snsTime.returnCode===0){
+        timestamp: util.fetchAPI("timestamp",{},false)
+    }).then(function(resp){
+        if(resp.goods.returnCode === 0 && resp.timestamp.returnCode===0){
             var initialState = {
-                groupGoods:flashBuyFilter(goods.object,snsTime.systemTime)
+                groupGoods:flashBuyFilter(resp.goods.object,resp.timestamp.systemTime)
             };
             var markup = util.getMarkupByComponent(FlashBuy({
                 initialState:initialState
@@ -31,9 +27,13 @@ var flashBuy = function(req,res,next) {
                 markup: markup,
                 initialState:initialState
             });
-
         }else{
-            next(new Error(ret.msg))
+            if(resp.goods.returnCode !== 0){
+                next(new Error(resp.goods.message));
+            }
+            if(resp.timestamp.returnCode !== 0){
+                next(new Error(resp.timestamp.message));
+            }
         }
     });
      
@@ -43,16 +43,17 @@ function flashBuyFilter(flashbuys,systemTime){
     var flashGoods = [];
     var preFlashGoods =  [];
     _.map(flashbuys,function(flashbuy){
-        var beginTime = new Date(flashbuy.startTime).getTime();
-        var overTime = new Date(flashbuy.endTime).getTime();
+        var startTime = new Date(flashbuy.startTime);
+        var endTime = new Date(flashbuy.endTime);
 
-        if(overTime > systemTime) {
+        if(endTime > systemTime) {
             var list = {
-                startTime:beginTime,
-                endTime:overTime,
+                startTime:moment(startTime).format("YYYY-MM-DD HH:mm:ss"),
+                endTime:moment(endTime).format("YYYY-MM-DD HH:mm:ss"),
+                preSaleTime:moment(startTime).format('HH:mm'),
                 goodsList:goodsFilter(flashbuy.activityProductList)
             }
-            if(beginTime < systemTime){
+            if(startTime < systemTime){
                 flashGoods.push(list)
             }else{
                 preFlashGoods.push(list)
@@ -62,14 +63,24 @@ function flashBuyFilter(flashbuys,systemTime){
     });
 
     flashGoods = flashGoods.sort(function(a,b){
-        return a.startTime - b.startTime
+        return moment(a.startTime).isBefore(b.startTime)
     });
 
     preFlashGoods = preFlashGoods.sort(function(a,b){
-        return a.startTime - b.startTime
+        return moment(a.startTime).isBefore(b.startTime)
     });
 
     return {flashGoods,preFlashGoods}
+}
+
+function getSalesPrice(goods){
+    if(goods.wapPrice > 0){
+        return goods.wapPrice;
+    }else if(goods.mobilePrice > 0){
+        return goods.mobilePrice;
+    }else{
+        return goods.salesPrice;
+    }
 }
 
 function goodsFilter(goodsList){
@@ -78,10 +89,13 @@ function goodsFilter(goodsList){
             id:goods.singleCode,
             imageUrl:config.imgServer + goods.imageUrl,
             originPrice:goods.originPrice,
-            salePrice:goods.salesPrice,
+            salesPrice:getSalesPrice(goods),
             title:goods.title,
             sourceName:goods.sourceName,
-            flag:config.imgServer + goods.sourceImageUrl
+            sourceImageUrl:config.imgServer + goods.sourceImageUrl,
+            isSaleOut:goods.localStock > 0 ? false : true,
+            isFlashPrice:goods.wapPrice > 0 ? true : false,
+            isMobilePrice:goods.mobilePrice>0? true:false
         }
     });
 }

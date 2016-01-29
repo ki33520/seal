@@ -32,7 +32,6 @@ class AddReceiver extends Component{
             code:city
         },"addReceiver")
     }
-
     componentDidUpdate(prevProps,prevState){
         if(this.props.active === true && prevProps.active === false &&
             this.props.provinces.length === 1){

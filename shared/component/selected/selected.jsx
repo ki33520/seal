@@ -13,6 +13,13 @@ class Selected extends Component{
             filterText:null
         }
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.value !== this.props.value){
+            this.setState({
+                value:nextProps.value
+            })
+        }
+    }
     getValueArray(){
         return this.state.value ? this.state.value.split(this.props.delimiter):[];
     }
@@ -33,14 +40,6 @@ class Selected extends Component{
         },()=>{
             this.props.onChange(value);
         })
-    }
-    isMounted(component){
-        try{
-            React.findDOMNode(component);
-            return true
-        }catch(e){
-            return false
-        }
     }
     handleCheck(option,e){
         e && e.preventDefault();
@@ -88,7 +87,6 @@ class Selected extends Component{
             if(filterText && this.props.optionFilter(filterText,option) === false){
                 return;
             }
-
             if(option.group && option.group !== groupHeader){
                 groupHeader = option.group;
                 const groupHeaderClasses = classNames({
@@ -124,7 +122,6 @@ class Selected extends Component{
         });
         
         const {items,selectedLabels} = this.renderItem();
-
         const status = (
             <span className="status">{selectedLabels.length > 0?
             (selectedLabels.length > 1?this.renderStatus(selectedLabels):

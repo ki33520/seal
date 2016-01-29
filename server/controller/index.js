@@ -4,6 +4,7 @@ var Index = util.getSharedComponent("index");
 var config = require("../lib/config");
 var _ = require("lodash");
 var md5 = require("md5");
+var moment = require("moment");
 
 var index = function(req, res, next) {
     util.fetchAPI("indexChannels", {
@@ -127,6 +128,8 @@ function floorFilter(floors) {
             id: rushbuy.id,
             jumpUrl: getJumpUrl(rushbuy),
             imageUrl: config.imgServer + rushbuy.imageUrl,
+            startTime:moment(new Date(rushbuy.startTime)).format("YYYY-MM-DD HH:mm:ss"),
+            endTime:moment(new Date(rushbuy.endTime)).format("YYYY-MM-DD HH:mm:ss")
         }
     })
     _floors["activityOne"] = _.result(_.findWhere(floors, {
@@ -171,14 +174,23 @@ function floorFilter(floors) {
         manageCode: "ACTIVITY_SG"
     }), "id")
     if (_floors["flashbuys"]) {
-        _floors["flashbuys"] = _.map(_floors["flashbuys"][0].activityProductList, function(good) {
-            return {
-                singleCode: good.singleCode,
-                imageUrl: config.imgServer + good.imageUrl,
-                salePrice: good.salesPrice,
-                originPrice: good.originPrice,
-                title: good.title
+        _floors["flashbuys"] = _.map(_floors["flashbuys"],function(flashbuy){
+            flashbuy["id"] = 
+            flashbuy["goods"] = [];
+            flashbuy["startTime"] = moment(new Date(flashbuy.startTime)).format("YYYY-MM-DD HH:mm:ss")
+            flashbuy["endTime"] = moment(new Date(flashbuy.endTime)).format("YYYY-MM-DD HH:mm:ss")
+            if(flashbuy["activityProductList"]){
+                _.each(flashbuy["activityProductList"],function(good){
+                    flashbuy["goods"].push({
+                        singleCode: good.singleCode,
+                        imageUrl: config.imgServer + good.imageUrl,
+                        salePrice: good.salesPrice,
+                        originPrice: good.originPrice,
+                        title: good.title
+                    })
+                })
             }
+            return flashbuy
         })
     }
     _floors["singleRecommend"] = _.result(_.findWhere(floors, {

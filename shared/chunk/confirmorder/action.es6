@@ -145,6 +145,9 @@ export function fetchPayGateway(param){
     return (dispatch)=>{
         dispatch(requestPayGateway(param))
         apiRequest("/paygateway/"+ param,{}).then((res)=>{
+            if(!res.isFetched){
+                dispatch(alert("获取订单信息失败!",3000))
+            }
             dispatch(responsePayGateway(param,res))
         })
     }

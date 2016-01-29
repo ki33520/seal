@@ -9,6 +9,7 @@ import Image from "../../../component/image.jsx";
 import ScrollSpy from "../../../component/scrollspy.jsx";
 import Loading from "../../common/loading.jsx";
 import Timer from "../../common/timer.jsx";
+import {validTimeRegion} from "../../../lib/util.es6";
 
 class Floor extends Component{
     constructor(props){
@@ -129,11 +130,28 @@ class Floor extends Component{
         let {rushbuys} = this.props.channel.floors;
         if(rushbuys){
             return rushbuys.map((rushbuy,i)=>{
-                return <a href={rushbuy.jumpUrl} key={i}>
-                    <image src={rushbuy.imageUrl} />
+                let timer = (
                     <span><i><img src="/client/asset/images/flashClock.png" />
-                    </i>距本期活动结束：<Timer endTime="2016-01-25 20:00:00" dayEnable={true} 
-                    template="<%= day %>天<%= hour %>时<%= minute %>分<%= second %>秒"/></span>
+                    </i>距本期活动结束：<Timer endTime={rushbuy.endTime} dayEnable={true} 
+                        template="<%= day %>天<%= hour %>时<%= minute %>分<%= second %>秒"/>
+                    </span>
+                )
+                let validTime = validTimeRegion(rushbuy.startTime,rushbuy.endTime)
+                if(validTime === -1){
+                    timer = (
+                    <span><i><img src="/client/asset/images/flashClock.png" />
+                    </i>距本期活动开始：<Timer endTime={rushbuy.startTime} dayEnable={true} 
+                        template="<%= day %>天<%= hour %>时<%= minute %>分<%= second %>秒"/>
+                    </span>
+                    )
+                }else if(validTime === 1){
+                    timer = (
+                    <span><i><img src="/client/asset/images/flashClock.png" />
+                    </i>活动已结束</span>
+                    )
+                }
+                return <a href={rushbuy.jumpUrl} key={i}>
+                    <image src={rushbuy.imageUrl} />{timer}
                 </a>
             })
         }
@@ -142,20 +160,30 @@ class Floor extends Component{
     renderFlashBuy(){
         let {flashbuys,flashbuyId} = this.props.channel.floors;
         if(flashbuys){
-            flashbuys = flashbuys.map((good,i)=>{
-                return (
-                <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
-                    <img src={good.imageUrl}/>
-                    <div className="right">
-                        <p>距本期闪购结束<em><i>01</i>天<i>34</i>时<i>10</i>分<i>46</i>秒</em></p>
-                        <div className="flashDot"></div>
-                        <span className="name">{good.title}</span>
-                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                        <span className="nowPrice">&yen;{good.salePrice}</span>
-                        <span className="oldPrice">&yen;{good.originPrice}</span>
-                    </div>
-                </a>
-                )
+            let goods = null;
+            flashbuys = flashbuys.forEach((flashbuy,i)=>{
+                let validTime = validTimeRegion(flashbuy.startTime,flashbuy.endTime)
+                if(validTime === 0){
+                    goods = flashbuy.goods.map((good,i)=>{
+                        let timer = (
+                            <Timer endTime={flashbuy.endTime} dayEnable={true} 
+                            template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                        )
+                        return (
+                        <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
+                            <img src={good.imageUrl}/>
+                            <div className="right">
+                                <p>距本期闪购结束<em>{timer}</em></p>
+                                <div className="flashDot"></div>
+                                <span className="name">{good.title}</span>
+                                <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
+                                <span className="nowPrice">&yen;{good.salePrice}</span>
+                                <span className="oldPrice">&yen;{good.originPrice}</span>
+                            </div>
+                        </a>
+                        )
+                    })
+                }
             })
             return (
                 <div className="flashBuy">
@@ -163,7 +191,7 @@ class Floor extends Component{
                         <span><i></i>闪购精选</span>
                         <a href={"/flashbuy/"+flashbuyId}>更多<i><img src="/client/asset/images/ico_more.png" /></i></a>
                     </div>
-                    {flashbuys}
+                    {goods}
                 </div>
             )
         }

@@ -90,30 +90,16 @@ class ConfirmOrder extends Component{
         if(prevProps.orderSubmiting === true && 
             this.props.orderSubmiting === false){
             if(this.props.orderSubmited === true){
-                const {orderNo,totalFee,checkedReceiver,promoList} = this.props.order
-                let productList = []
-                promoList.forEach((promo)=>{
-                    promo.goods.forEach((good)=>{
-                        productList.push({
-                            goodsName:good.title,
-                            goodsColorAndSize:good.attrs
-                        })
-                    })
-                })
+                const {orderNo} = this.props.order
                 let message = {
                     orderNo:orderNo,
-                    totalFee:totalFee,
-                    address:checkedReceiver.provinceName+checkedReceiver.cityName+checkedReceiver.districtName+checkedReceiver.address,
-                    userName:checkedReceiver.consignee,
-                    mobile:checkedReceiver.mobileNumber,
-                    productList:JSON.stringify(productList)
                 }
                 fetchPayGateway(base64EncodeForURL(urlParam(message)))
             }
         }
         if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
             setTimeout(()=>{
-                console.log('submitOrder')
+                // console.log('submitOrder')
                 ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
             },1000)
         }
