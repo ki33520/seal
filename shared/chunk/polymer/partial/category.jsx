@@ -28,9 +28,11 @@ class Category extends Component{
         })
         return (
             <div className="rightCon">
-                <a href="#" className="ad">
-                    <img src={category.imageUrl}/>
+                {category.activity?(
+                <a href={category.activity.jumpUrl} className="ad">
+                    <img src={category.activity.imageUrl}/>
                 </a>
+                ):null}
                 <div className="content">
                     <div className="title">热门分类</div>
                     {children}

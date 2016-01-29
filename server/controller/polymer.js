@@ -37,8 +37,7 @@ function categoryFilter(categories){
     _.each(categories,function(category){
         var _category = {
             name:category.name,
-            code:"111",
-            imageUrl:config.imgServer + category.imageUrl,
+            code:category.id,
             children:[]
         }
         _.each(category.children,function(child){
@@ -59,7 +58,7 @@ var categoryActivity = function(req,res,next){
         categorysCode:code
     }).then(function(ret){
         if(ret.returnCode === 0){
-            var categoryactivity = ret.object
+            var categoryactivity = categoryActivityFilter(ret.object?ret.object[0]:{})
             res.json({
                 result:categoryactivity,
                 isFetched:true
@@ -76,6 +75,31 @@ var categoryActivity = function(req,res,next){
             errMsg:"api request failed"
         })
     })
+}
+
+function categoryActivityFilter(activity){
+    var _activity = {}
+    _activity["imageUrl"] = config.imgServer + activity.imageUrl
+    _activity["jumpUrl"] = getJumpUrl(activity)
+    return _activity
+}
+
+function getJumpUrl(activity) {
+    var jumpUrl = null;
+    switch (activity.hasTemplate) {
+        case "2":
+            jumpUrl = activity.activityUrl
+            break;
+        case "3":
+            if(activity.activityProductList){
+                var singleCode = activity.activityProductList[0]["singleCode"]
+                jumpUrl = "/gooddetail/" + singleCode
+            }
+            break;
+        default:
+            jumpUrl = "/activity/" + activity.id;
+    }
+    return jumpUrl
 }
 
 var categoryBrands = function(req,res,next){

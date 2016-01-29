@@ -2,12 +2,9 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
-
 import Refresher from "../../component/refresher.jsx";
-import Icon from "../../component/icon.jsx";
 import Header from "../common/header.jsx";
 import GoodItem from "./partial/goodItem.jsx";
-import ShareBox from "./partial/shareBox.jsx";
 import fetchGoods from "./action.es6"; 
 
 class Activity extends React.Component{
@@ -36,22 +33,18 @@ class Activity extends React.Component{
             pageIndex:nextPage
         }));
     }
-
     handleShare(){
         this.setState({
             shareActive:true,
             maskActive:true
         })
     }
-
     cancelShare(){
         this.setState({
             shareActive:false,
             maskActive:false
         })
     }
-  
-
     render(){
         const {isFetching,list,imageUrl,title} = this.props;
         let goods = [];
@@ -64,9 +57,6 @@ class Activity extends React.Component{
             <div>
                 <Header>
                     <span className="title">{title}</span>
-                    <div className="btn-right" onClick={this.handleShare.bind(this)}>
-                        <Icon icon="share"/>
-                    </div>
                 </Header>
                  
                 <div className="specialActivity">
@@ -77,7 +67,6 @@ class Activity extends React.Component{
                         {goods}
                     </div>
                 </div>
-                <ShareBox visible={this.state.shareActive} cancelShare={this.cancelShare.bind(this)} />
                 <Refresher active={isFetching}/>
             </div>
         )

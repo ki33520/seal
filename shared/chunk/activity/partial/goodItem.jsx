@@ -1,25 +1,24 @@
 'use strict';
 import React,{Component} from "react";
+import classNames from "classnames";
 
 class GoodItem extends Component{
-    renderIcon(goods){
-        var icons = [];
-        if(goods.isSaleOut){
-            icons.push(<div className="sale-out" key="out"></div>);
-        }
-        if(goods.isFlashPrice){
-            icons.push(<div className="flash-price" key="flash"></div>);
-        }else if(goods.isMobilePrice){
-            icons.push(<div className="mobile-price" key="mobile"></div>);
-        }
-        return icons;
-    }
     render(){
         const {goods} = this.props;
+        const soldOut = classNames({
+            "sale-out":goods.isSoldOut,
+            "hide": goods.isSoldOut?false:true
+        });
+        const saleIcon = classNames({
+            "flash-price":goods.saleType==='flash',
+            "mobile-price":goods.saleType ==='mobile',
+            "hide":goods.saleType===undefined
+        });
         return (
             <div className="clearfix">
-                <a href={"/gooddetail/"+goods.id} >
-                    	{this.renderIcon(goods)}
+                <a href={"/gooddetail/"+goods.singleCode} >
+                    	<div className={soldOut}></div>
+                        <div className={saleIcon}></div>
                         <img src={goods.imageUrl} alt="" />
                         <div className="country">
                         	<i><img src={goods.sourceImageUrl} alt="" /></i>
