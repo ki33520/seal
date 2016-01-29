@@ -182,7 +182,7 @@
     line-height:.6rem;
     font-size:.32rem;
 }
-.flashBuy .soldOut{
+.flashBuy .sale-out{
     width:1.813rem;
     height:1.813rem;
     background-image:url(/client/asset/images/ico_soldOut.png);
