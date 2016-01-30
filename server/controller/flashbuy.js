@@ -80,7 +80,13 @@ function goodsFilter(goodsList){
             title:goods.title,
             imageUrl:filter.imageUrl(goods.imageUrl),
             originPrice:goods.originPrice,
-            salesPrice:filter.price(goods),
+            salesPrice:filter.price({
+                flashPrice:goods.wapPrice,
+                mobilePrice:goods.mobilePrice,
+                salesPrice:goods.salesPrice,
+                startTime:goods.beginDateStr,
+                endTime:goods.endDateStr
+            }),
             sourceName:goods.sourceName,
             sourceImageUrl:filter.imageUrl(goods.sourceImageUrl),
             isSaleOut:filter.isSoldOut(goods.localStock),

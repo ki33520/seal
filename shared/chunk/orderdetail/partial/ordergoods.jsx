@@ -16,8 +16,12 @@ class OrderGoods extends Component{
                             <img src={good.singleImageUrl}/>
                         </a>
                         <div className="gd_info">
-                            <p className="name"><span>{good.singleTitle}</span></p>
-                            <p className="value"><i>&yen;</i><span>{good.salesPrice}</span><i>X</i><b>{good.qty}</b></p>
+                            <p className="name">
+                                <a href={"/gooddetail/"+good.singleCode}>
+                                    <span>{good.singleTitle}</span>
+                                </a>
+                            </p>
+                            <p className="value"><i>&yen;</i><span>{good.salesPrice.toFixed(2)}</span><i>X</i><b>{good.qty}</b></p>
                         </div>
                     </div>
                 )

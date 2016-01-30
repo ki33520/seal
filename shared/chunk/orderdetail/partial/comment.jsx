@@ -78,7 +78,7 @@ class Comment extends Component{
                             </a>
                             <div className="gd_info">
                                 <p className="name">{v.singleTitle}</p>
-                                <p className="value"><i>&yen;</i><span>{v.salesPrice}</span></p>
+                                <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span></p>
                             </div>
                         </div>
                     </div>

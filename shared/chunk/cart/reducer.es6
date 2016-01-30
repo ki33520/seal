@@ -37,7 +37,7 @@ function cartByUser(state={},action){
                 isToggled:false
             });
         case FINISH_TOGGLE_ITEM:
-            var {cartIndex,groupIndex,goodsIndex,id,checked} = action.param;
+            var {cartIndex,groupIndex,goodsIndex,singleCode,checked} = action.param;
             var carts = state.carts.slice();
             var cart = {...carts[cartIndex]};
             var _cart = action.res.cart;
@@ -120,17 +120,13 @@ function cartByUser(state={},action){
                 carts
             });
         case CHANGE_CART_BUYED:
-            var {cartIndex,id,qty} = action.param;
+            var {cartIndex,groupIndex,goodsIndex,buyLimit,qty} = action.param;
             var carts = state.carts.slice();
-            var cart = {...carts[cartIndex]};
-            cart.group.forEach((group)=>{
-                group.list.forEach((item)=>{
-                    if(item.id===id){
-                        item.qty = qty;
-                    }
-                });
-            });
-            carts[cartIndex] = cart;
+            if(qty<=buyLimit){
+                var cart = {...carts[cartIndex]};
+                cart.group[groupIndex].list[goodsIndex].qty=qty;
+                carts[cartIndex] = cart;
+            }
             return Object.assign({},state,{
                 carts
             })
