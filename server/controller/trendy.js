@@ -15,7 +15,13 @@ function filterItem(originalData){
                 singleCode:v.singleCode,
                 title:v.title,
                 imageUrl:filter.imageUrl(v.imageUrl),
-                salesPrice:filter.price(v),
+                salesPrice:filter.price({
+                    flashPrice:v.wapPrice,
+                    mobilePrice:v.mobilePrice,
+                    salesPrice:v.salesPrice,
+                    startTime:v.beginDateStr,
+                    endTime:v.endDateStr
+                }),
                 originPrice:v.originPrice,
                 sourceName:v.sourceName,
                 sourceImageUrl:filter.imageUrl(v.sourceImageUrl),

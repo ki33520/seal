@@ -13,7 +13,13 @@ function filterGoodsList(result){
         list.push({
             singleCode:v.singleCode,
             smallImageUrl:filter.imageUrl(v.picUrl),
-            salesPrice:filter.price(v),
+            salesPrice:filter.price({
+                flashPrice:v.flashPrice,
+                mobilePrice:v.mobilePrice,
+                salesPrice:v.salesPrice,
+                startTime:v.beginDateStr,
+                endTime:v.endDateStr
+            }),
             originPrice:v.originPrice,
             discounts:v.discounts,
             materTitle:v.materTitle,

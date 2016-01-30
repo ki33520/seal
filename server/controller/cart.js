@@ -137,8 +137,8 @@ var updateCart = function(req, res, next) {
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
     var buyLimit = req.body.buyLimit;
-
-    if(buyed>buyLimit){
+ 
+    if(buyed-buyLimit>0){
         res.json({
             isUpdated:false
         });
