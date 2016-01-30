@@ -83,15 +83,6 @@ class GoodDetail extends Component{
                 })
         }
     }
-    handleAttrChange(selectedAttr,selectedAttrValue,e){
-        e && e.preventDefault();
-        const {fetchGood,selectAttr} = this.props;
-        if(selectedAttrValue.disabled){
-            return;
-        }
-        // console.log('selectAttr',selectAttr)
-        selectAttr(selectedAttr,selectedAttrValue)
-    }
     handleAttrToggle(selectedAttrName,selectedAttrValue,e){
         e && e.preventDefault()
         if(selectedAttrValue.disabled){

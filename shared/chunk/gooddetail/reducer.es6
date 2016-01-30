@@ -1,7 +1,7 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,TOGGLE_ATTR,
+import {RESPONSE_GOOD,REQUEST_GOOD,TOGGLE_ATTR,
     START_ADD_CART,FINISH_ADD_CART,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
@@ -17,11 +17,6 @@ import _ from "lodash";
 function goodById(state={},action){
     let good = {...state.good};
     switch(action.type){
-        case SELECT_ATTR:
-            good = selectAttr(good,action.attr,action.attrValue)
-            return Object.assign({},state,{
-                good:good
-            })
         case TOGGLE_ATTR:
             good = toggleAttr(good,action.attrName,action.attrValue)
             return Object.assign({},state,{
@@ -144,63 +139,6 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
     return _good
     // let attrs = 
 }
-
-function selectAttr(good,selectedAttr,selectedAttrValue){
-    let attrs = good.attrs.map((v,k)=>{
-        if(v.attrName === selectedAttr.attrName){
-            v.selectedValue = selectedAttrValue;
-        }else if(k !== 0){
-           v.selectedValue = null
-        }
-        return v;
-    })
-    let matchedItems = getMatchedItems(attrs)
-    _.each(attrs,(attr,i)=>{
-        const attrName = attr.attrName
-        if(attr.selectedValue !== null){
-            return
-        }
-        attrs[i].attrValues = attr.attrValues.map((attrValue)=>{
-            const value = attrValue.value
-            const itemFoundPredicate = {
-                attrs:{
-                    [attrName]:value
-                }
-            };
-            const itemFound = _.findWhere(matchedItems,itemFoundPredicate);
-            attrValue.disabled = false;
-            if(itemFound === undefined){
-                // console.log("%s:%s stock not found",attrName,value)
-                attrValue.disabled = true;
-            }else if(itemFound.stock === 0){
-                attrValue.disabled = true;
-                // console.log("%s:%s stock is 0",attrName,value)
-            }
-            return attrValue;
-        })
-    })
-    const notFullFilled = _.some(attrs,{selectedValue:null});
-    let selectedItem = null
-    if(matchedItems.length === 1 && notFullFilled === false){
-        selectedItem = matchedItems[0];
-    }
-    good.selectedItem = selectedItem
-    // console.log('selectedItem',selectedItem)
-    // good.stock = selectedItem && selectedItem.stock
-    return good
-    function getMatchedItems(attrs){
-        const selectedAttrs = _.filter(attrs,(attr)=>{
-            return attr.selectedValue !== null;
-        })
-        var itemPredicate = {attrs:{}};
-        _.each(selectedAttrs,(attr)=>{
-            itemPredicate.attrs[attr.attrName] = attr.selectedValue.value;
-        })
-        matchedItems = _.where(good.items,itemPredicate);
-        return matchedItems;
-    }
-}
-
 
 function cartByUser(state={},action){
     switch(action.type){
