@@ -22,8 +22,8 @@ class Floor extends Component{
                                             <div className="title"><a href={"/gooddetail/"+child.singleCode}>{child.title}</a></div>
                                             <div className="origin"><img src={child.sourceImage} />{child.sourceName}</div>
                                             <div className="price">
-                                                <span className="price-sales"><i>￥</i>{child.salesPrice}</span>
-                                                <span className="price-origin"><i>￥</i>{child.originPrice}</span>
+                                                <span className="price-sales"><i>￥</i>{child.salesPrice.toFixed(2)}</span>
+                                                <span className="price-origin"><i>￥</i>{child.originPrice.toFixed(2)}</span>
                                                 <span className="delete"><a onClick={handleDelete.bind(this,child)} className="iconfont icon-trash"></a></span>
                                             </div>
                                         </div>
