@@ -1,7 +1,7 @@
 'use strict';
 import {apiRequest,saveLocalCart,getLocalCartCount} from "../../lib/util.es6";
 import {
-    SELECT_ATTR,
+    SELECT_ATTR,TOGGLE_ATTR
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_GOOD,RESPONSE_GOOD,
@@ -16,6 +16,14 @@ export function selectAttr(attr,attrValue){
     return {
         type:SELECT_ATTR,
         attr,
+        attrValue
+    }
+}
+
+export function toggleAttr(attrName,attrValue){
+    return {
+        type:TOGGLE_ATTR,
+        attrName,
         attrValue
     }
 }
@@ -66,7 +74,7 @@ export {alert} from "../common/action.es6";
 export function fetchGood(param){
     return (dispatch)=>{
         dispatch(requestGood(param));
-        return apiRequest("/goodbyid/"+param.id,{}).then((res)=>{
+        return apiRequest("/gooddetail/"+param.id,{}).then((res)=>{
             dispatch(responseGood(param,res));
         });
     }

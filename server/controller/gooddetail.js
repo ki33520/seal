@@ -46,20 +46,36 @@ var goodDetail = function(req, res, next) {
             }
             good.promotions = promotions
 
-            var initialState = {
-                good
+            if(req.xhr){
+                res.json({
+                    isFetched:true,
+                    result:good
+                })
             }
+            var initialState = {good:good}
             var markup = util.getMarkupByComponent(GoodDetailApp({
-                initialState: initialState
+                initialState:initialState
             }));
             res.render('gooddetail', {
                 markup: markup,
                 initialState: initialState
             })
         } else {
+            if(req.xhr){
+                res.json({
+                    isFetched:false,
+                    errMsg:ret["goodById"].message
+                })
+            }
             next(new Error(ret["goodById"].message))
         }
     }).error(function(){
+        if(req.xhr){
+            res.json({
+                isFetched:false,
+                errMsg:"api request failed"
+            })
+        }
         next(new Error('api request failed'))
     })
 }
@@ -82,7 +98,7 @@ function promotionsFilter(promotions){
 function goodFilter(good) {
     var _good = _.pick(good, [
         "code", "discount", "isMain", "title", "subTitle", "detail",
-        "buyLimit", "sourceAreaId",
+        "buyLimit", "sourceAreaId","useMobilePrice","mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
         "description", "showTaxRate", "addCount"
     ]);
@@ -141,30 +157,6 @@ function goodFilter(good) {
     _good["selectedItem"] = selectedItem
     _good["attrs"] = attrs;
     return _good
-}
-
-var goodById = function(req, res, next) {
-    var id = req.params.id;
-    util.fetchAPI("goodById", {
-        code: id,
-        channel: "Mobile"
-    }).then(function(ret) {
-        if (ret.returnCode === 0) {
-            var good = goodFilter(ret.object);
-            var slides = good.imageUrl;
-            good.slides = slides;
-            res.json({
-                result: good,
-                isFetched: true
-            })
-        } else {
-            res.json({
-                isFetched: false,
-                errMsg: ret.message
-            })
-        }
-    })
-
 }
 
 var addCart = function(req, res, next) {
@@ -366,6 +358,5 @@ module.exports = {
     toggleCollected: toggleCollected,
     isCollected: isCollected,
     cartCount: cartCount,
-    goodById: goodById,
     goodComments: goodComments
 };

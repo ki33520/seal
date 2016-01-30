@@ -92,6 +92,9 @@ class GoodDetail extends Component{
         // console.log('selectAttr',selectAttr)
         selectAttr(selectedAttr,selectedAttrValue)
     }
+    toggleAttr(selectedAttr,e){
+        e && e.preventDefault()
+    }
     handleBuyedChanged(buyed){
         const {good} = this.props.goodById
         if(good.stock === null){
@@ -172,6 +175,23 @@ class GoodDetail extends Component{
         }
         return null
     }
+    renderPrice(){
+        const {good} = this.props.goodById;
+        let salePrice = good.salePrice
+        if(good.flashbuy["active"]){
+            salePrice = good.flashbuy["price"]
+        }
+        if(good["useMobilePrice"] && !good.flashbuy["active"]){
+            salePrice = good["mobilePrice"]
+            return (
+                <span>
+                <span className="nowPrice">&yen;{salePrice}</span>
+                <span className="exclusive">手机专享价</span>
+                </span>
+            )
+        }
+        return <span className="nowPrice">&yen;{salePrice}</span>
+    }
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
@@ -212,7 +232,7 @@ class GoodDetail extends Component{
                     <i className={isCollectedClasses}></i>收藏</a>
                 </div>
                  <div className="price clearfix">
-                    <span className="nowPrice">&yen;{good.salePrice}</span>
+                    {this.renderPrice()}
                     <span className="oldPrice">市场价&yen;{good.originPrice}</span>
                     {this.renderCountdown()}
                 </div>
