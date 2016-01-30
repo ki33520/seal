@@ -101,35 +101,35 @@ class Floor extends Component{
         }
     }
     renderGoods(itemList){
-            return (
-                <div className="J_moveRight">
-                    {
-                        itemList.map((good,i)=>{
-                            return (
-                                <div className="clearfix" key={i}>
-                                    <span className="img_wrap J_ytag cartlist">
-                                    <Image placeholder={good.singleImageUrl} />
-                                    </span>
-                                    <div className="gd_info">
-                                        <p className="name">{good.singleTitle}</p>
-                                        <p className="value">&yen;{good.salesPrice}</p>
-                                    </div>
+        return (
+            <div className="J_moveRight">
+                {
+                    itemList.map((good,i)=>{
+                        return (
+                            <div className="clearfix" key={i}>
+                                <span className="img_wrap J_ytag cartlist">
+                                <Image placeholder={good.singleImageUrl} />
+                                </span>
+                                <div className="gd_info">
+                                    <p className="name">{good.singleTitle}</p>
+                                    <p className="value">&yen;{good.salesPrice}</p>
                                 </div>
-                            )
-                        })
-                    }
-                </div>
-            );
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        );
     }
     renderOutTime(child){
         const {systemTime} = this.props;
         const {createdAt,timeoutTime,orderStatus} = child;
-        const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:MM:SS");
-        const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:MM:SS");
+        const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
+        const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
         if(orderStatus === "STATUS_NOT_PAY" && outTime){
             return (
                 <i>
-                    <Timer endTime={outTime} dayEnable={true} template="<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
                     <span>后自动取消</span>
                 </i>
             )
