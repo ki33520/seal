@@ -2,20 +2,33 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import moment from "moment";
 import Header from "../../common/header.jsx";
+import Timer from "../../common/timer.jsx";
 
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
-
 import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
+
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
+import Dialog from "../../../component/dialog.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
-import moment from "moment";
-import Timer from "../../common/timer.jsx";
 
 
 class OrderDetail extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            dialogActive:false,
+            dialogOnConfirm:null
+        }
+    }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        });
+    }
     renderAddress(order){
         const {receiverName,receiverMobile,
             receiverProvince,receiverCity,receiverDistrict,receiverAddress} = order.receiverObject;
@@ -39,9 +52,16 @@ class OrderDetail extends Component{
         e && e.preventDefault();
         const {dispatch,order} = this.props;
         const {orderNo} = order;
-        dispatch(fetchCloseOrder("/closedorder",{
-            orderNo
-        }));
+
+        this.setState({
+            dialogActive:true,
+            dialogOnConfirm:()=>{
+                this.toggleDialog();
+                dispatch(fetchCloseOrder("/closedorder",{
+                    orderNo
+                }));
+            }
+        });
     }
     handlePayGateway(order,e){
         e && e.preventDefault();
@@ -109,12 +129,6 @@ class OrderDetail extends Component{
                         </form>
                     </div>
                 )
-                return (
-                    <div className="confirmBtns">
-                        <a href="javascript:void(null);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
-                        <a href="javascript:void(null);" className="confirm_btn">立即支付</a>
-                    </div>
-                )
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="confirmBtns">
@@ -139,7 +153,6 @@ class OrderDetail extends Component{
     renderOutTime(){
         const {order,systemTime} = this.props;
         const {orderCrtTime,timeoutTime,orderStatus} = order;
-        console.log(new Date(timeoutTime).getTime()-systemTime)
         const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
         const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
 
@@ -206,6 +219,9 @@ class OrderDetail extends Component{
                 </div>
             </div>
             {this.renderFooter()}
+            <Dialog active={this.state.dialogActive} 
+                onCancel={this.toggleDialog.bind(this)}
+                onConfrim={this.state.dialogOnConfirm}>确定要取消订单吗?</Dialog>
             <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
