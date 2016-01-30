@@ -112,7 +112,7 @@ class Floor extends Component{
                                 </span>
                                 <div className="gd_info">
                                     <p className="name">{good.singleTitle}</p>
-                                    <p className="value">&yen;{good.salesPrice}</p>
+                                    <p className="value">&yen;{good.salesPrice.toFixed(2)}</p>
                                 </div>
                             </div>
                         )
@@ -151,7 +151,7 @@ class Floor extends Component{
                         </div>
                         <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
-                            <span>合计：<em>&yen;{paymentFee}</em></span>
+                            <span>合计：<em>&yen;{paymentFee.toFixed(2)}</em></span>
                             {this.renderButtons(child,i)}
                         </div>
                     </div>

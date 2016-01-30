@@ -538,17 +538,6 @@
     margin-left:.24rem;
     font-size:.32rem;
 }
-.confirmBtns a.confirm_btn {
-    display: inline-block;
-    background-color: #dd1847;
-    color: #fff;
-    border-radius: 20px;
-    line-height: .94rem;
-    border: 1px solid #dd1847;
-    width: 40%;
-    text-align: center;
-    margin: 0 2%;
-}
 .confirmBtns .checkboxRed {
     width:.43rem;
     height: .43rem;

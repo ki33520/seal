@@ -12,7 +12,13 @@ function filterResult(result){
             list.push({
                 singleCode:item.singleCode,
                 title:item.title,
-                salesPrice:filter.price(item),
+                salesPrice:filter.price({
+                    flashPrice:item.wapPrice,
+                    mobilePrice:item.mobilePrice,
+                    salesPrice:item.salesPrice,
+                    startTime:item.beginDateStr,
+                    endTime:item.endDateStr
+                }),
                 originPrice:item.originPrice,
                 imageUrl:filter.imageUrl(item.imageUrl),
                 sourceName:item.sourceName,
