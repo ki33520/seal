@@ -17,7 +17,7 @@ class OrderGoods extends Component{
                         </a>
                         <div className="gd_info">
                             <p className="name"><span>{good.singleTitle}</span></p>
-                            <p className="value"><i>&yen;</i><span>{good.salesPrice}</span><i>X</i><b>{good.qty}</b></p>
+                            <p className="value"><i>&yen;</i><span>{good.salesPrice.toFixed(2)}</span><i>X</i><b>{good.qty}</b></p>
                         </div>
                     </div>
                 )
