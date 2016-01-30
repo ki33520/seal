@@ -88,7 +88,7 @@ var search = function(req, res, next) {
         options.sourceAreas = query.areaNames;
     }
 
-    var params = Object.assign({},options);
+    var params = _.assign({},options);
 
     if(params.searchKey){
         params.searchKey=null;

@@ -4,7 +4,6 @@ import React,{Component} from "react";
 import Index from "./partial/index.jsx";
 import SearchBox from "./partial/search.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
-import {fetchHotWord} from "./action.es6";
 
 class TrendyRouter extends Component{
     handleSceneChange(currentScene,prevScene){

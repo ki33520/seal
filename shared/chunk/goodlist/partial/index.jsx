@@ -2,7 +2,6 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../../lib/util.es6";
-import {fetchGoods,changeParam,changeClassItem,resetAll} from "../action.es6";
 import MaskLayer from "../../../component/masklayer.jsx";
 import Header from "../../common/header.jsx";
 import Sidebar from "./sidebar.jsx";
@@ -24,7 +23,7 @@ class GoodListApp extends React.Component{
     }
 
     handleReset(){
-        const {dispatch,searchParams,filters} = this.props;
+        const {searchParams,filters} = this.props.goodsByParam;
         const {categoryNames,brandNames,areaNames} = filters;
 
         let categories = [];
@@ -50,20 +49,20 @@ class GoodListApp extends React.Component{
             areas.push(item);
         })
 
-        dispatch(resetAll({
+        this.props.resetAll({
             searchParams:params,
             filters:{
                 categoryNames:categories,
                 brandNames:brands,
                 areaNames:areas
             }
-        }));
+        });
     }
 
     toggleCanBuy(isHaveGoods){
-        const {dispatch,searchParams} = this.props;
+        const {searchParams} = this.props.goodsByParam;
         const param = Object.assign({},searchParams,{isHaveGoods});
-        dispatch(changeParam(param));
+        this.props.changeParam(param);
     }
 
     togglePopupActive(){
@@ -93,31 +92,31 @@ class GoodListApp extends React.Component{
     }
  
     toggleCheckedClass(values){
-        const {dispatch,filters} = this.props;
+        const {filters} = this.props.goodsByParam;
         let newFilters = Object.assign({},filters,{
             categoryNames:values
         });
-        dispatch(changeClassItem(newFilters))
+        this.props.changeClassItem(newFilters);
     }
 
     toggleCheckedBrand(values){
-        const {dispatch,filters} = this.props;
+        const {filters} = this.props.goodsByParam;
         let newFilters = Object.assign({},filters,{
             brandNames:values
         });
-        dispatch(changeClassItem(newFilters))
+        this.props.changeClassItem(newFilters);
     }
 
     toggleCheckedArea(values){
-        const {dispatch,filters} = this.props;
+        const {filters} = this.props.goodsByParam;
         let newFilters = Object.assign({},filters,{
             areaNames:values
         });
-        dispatch(changeClassItem(newFilters))
+        this.props.changeClassItem(newFilters);
     }
 
     handlerSave(){
-        const {dispatch,filters,searchParams} = this.props;
+        const {filters,searchParams} = this.props.goodsByParam;
         const {categoryNames,brandNames,areaNames} = filters;
 
         let categories = [];
@@ -154,19 +153,19 @@ class GoodListApp extends React.Component{
             searchParams.brandNames=null;
         }
  
-        dispatch(fetchGoods(searchParams));
+        this.props.fetchGoods(searchParams);
 
         this.togglePopupActive();
     }
 
     toggleSortByParam(sortParam){
-        const {dispatch,searchParams} = this.props;
+        const {searchParams} = this.props.goodsByParam;
         let newParams = Object.assign({},searchParams,sortParam);
-        dispatch(fetchGoods(newParams))
+        this.props.fetchGoods(newParams);
     }
 
     render(){
-        const {searchParams,filters,goods,isFetching} = this.props;
+        const {searchParams,filters,goods,isFetching} = this.props.goodsByParam;
         const searchKey = searchParams.k;
         const {categoryNames,brandNames,areaNames} = filters;
         const goodList = [];
