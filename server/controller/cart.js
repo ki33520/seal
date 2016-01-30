@@ -36,8 +36,8 @@ function formatCarts(originalCarts) {
             _.each(promoList.cartProductList,function(product,k){
                 var goods = {
                     cartId:product.cartId,
+                    singleCode:product.singleCode,
                     imageUrl:config.imgServer + product.imageUrl,
-                    id:product.singleCode,
                     title:product.title,
                     props:product.props,
                     originPrice:product.originPrice,
@@ -137,6 +137,14 @@ var updateCart = function(req, res, next) {
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
     var buyLimit = req.body.buyLimit;
+
+    if(buyed>buyLimit){
+        res.json({
+            isUpdated:false
+        });
+        return false;
+    }
+
     if(user){
         var memberId = user.memberId;
         util.fetchAPI('updateCart', {
@@ -165,7 +173,7 @@ var updateCart = function(req, res, next) {
         },true);
         res.json({
             isUpdated:true
-        })
+        });
     }
 
 }
@@ -195,15 +203,21 @@ var deleteCart = function(req, res, next) {
             })
         })
     }else{
-        var localcart = req.session["localcart"]||[];
+        var localcart = req.session["localcart"];
         var singleCode = req.body.singleCode;
         var isDeleted = false;
-        _.each(localcart,function(item,i){
-            if(item.singleCode===singleCode){
-                localcart.splice(i,1);
-                isDeleted = true;
-            }
-        });
+
+        if(localcart && localcart.length>0){
+            localcart.forEach(function(item,i){
+                if(item.singleCode===singleCode){
+                    localcart.splice(i,1);
+                    isDeleted = true;
+                }
+            });
+        }else{
+            isDeleted = true;
+        }
+
         res.json({
             isDeleted: isDeleted
         })
@@ -214,22 +228,28 @@ var deleteCart = function(req, res, next) {
 var fetchCart = function(req,res,next){
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
-    util.fetchAPI('cartByAnonymous', {
-        singleCodes:singleCodes,
-        qtys:qtys
-    }).then(function(resp) {
-        if(resp.returnCode === 0){
-            res.json({
-                isFetched: true,
-                cart:formatCarts(resp.object)[0]
-            })
-        }else{
-            res.json({
-                isFetched: false,
-                errMsg: resp.message
-            })
-        }
-    })
+    if(singleCodes!==''||qtys!==''){
+        util.fetchAPI('cartByAnonymous', {
+            singleCodes:singleCodes,
+            qtys:qtys
+        }).then(function(resp) {
+            if(resp.returnCode === 0){
+                res.json({
+                    isFetched: true,
+                    cart:formatCarts(resp.object)[0]
+                })
+            }else{
+                res.json({
+                    isFetched: false,
+                    errMsg: resp.message
+                })
+            }
+        })
+    }else{
+        res.json({
+            isFetched: false
+        })
+    }
 }
 
 module.exports = {
