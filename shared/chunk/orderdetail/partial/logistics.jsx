@@ -17,10 +17,11 @@ class Logistics extends Component{
         }
     }
     componentDidMount(){
-        const {dispatch,order} = this.props;
-        dispatch(fetchLogistics("/logistics",{
+        const {fetchLogistics} = this.props;
+        const {order} = this.props.orderByParam;
+        fetchLogistics("/logistics",{
             orderNo:order.orderNo
-        }))
+        });
     }
     renderTrace(routes){
         if(routes.length>0){
@@ -86,7 +87,7 @@ class Logistics extends Component{
         )
     }
     render(){
-        const {logistics,order} = this.props;
+        const {logistics,order} = this.props.orderByParam;
         var parcel = [];
         for(var i in logistics){
             if(i === "dispatchs"){

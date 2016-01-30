@@ -10,10 +10,9 @@ import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
 import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
 
-import {alert} from "../../common/action.es6";
-import Alert from "../../../component/alert.jsx";
 import Dialog from "../../../component/dialog.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
+import Alert from "../../../component/alert.jsx";
 
 
 class OrderDetail extends Component{
@@ -42,67 +41,68 @@ class OrderDetail extends Component{
     }
     handleDeliveryOrder(e){
         e && e.preventDefault();
-        const {dispatch,order} = this.props;
+        const {fetchDeliveryOrder} = this.props;
+        const {order} = this.props.orderByParam;
         const {orderNo} = order;
-        dispatch(fetchDeliveryOrder("/deliveryorder",{
+        fetchDeliveryOrder("/deliveryorder",{
             orderNo
-        }));
+        });
     }
     handleCloseOrder(e){
         e && e.preventDefault();
-        const {dispatch,order} = this.props;
+        const {fetchCloseOrder} = this.props;
+        const {order} = this.props.orderByParam;
         const {orderNo} = order;
-
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
                 this.toggleDialog();
-                dispatch(fetchCloseOrder("/closedorder",{
+                fetchCloseOrder("/closedorder",{
                     orderNo
-                }));
+                });
             }
         });
     }
-    handlePayGateway(order,e){
+    handlePayGateway(e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
+        const {fetchPayGateway} = this.props;
+        const {order} = this.props.orderByParam;
         const {orderNo} = order;
         let message = {
             orderNo:orderNo
         }
-        dispatch(
-            fetchPayGateway(base64EncodeForURL(urlParam(message)))
-        )
+        fetchPayGateway(base64EncodeForURL(urlParam(message)));
+        
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
-        if(nextProps.closeOrderChanging === false &&
-           this.props.closeOrderChanging === true){
-            if(nextProps.closeOrderChanged === true){
-                dispatch(alert(nextProps.msg,2000));
+        const {alert} = this.props;
+        if(nextProps.orderByParam.closeOrderChanging === false &&
+           this.props.orderByParam.closeOrderChanging === true){
+            if(nextProps.orderByParam.closeOrderChanged === true){
+                alert(nextProps.orderByParam.msg,2000);
             }else{
-                dispatch(alert(nextProps.msg,2000));
+                alert(nextProps.orderByParam.msg,2000);
             }
         }
         
-        if(nextProps.deliveryOrderChanging === false &&
-           this.props.deliveryOrderChanging === true){
-            if(nextProps.deliveryOrderChanged === true){
-                dispatch(alert(nextProps.msg,2000));
+        if(nextProps.orderByParam.deliveryOrderChanging === false &&
+           this.props.orderByParam.deliveryOrderChanging === true){
+            if(nextProps.orderByParam.deliveryOrderChanged === true){
+                alert(nextProps.orderByParam.msg,2000);
             }else{
-                dispatch(alert(nextProps.msg,2000));
+                alert(nextProps.orderByParam.msg,2000);
             }
         }
     }
     componentDidUpdate(prevProps,prevState){
-        if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
+        if(prevProps.orderByParam.paygatewayFetched === false && this.props.orderByParam.paygatewayFetched === true){
             setTimeout(()=>{
                 ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
             },1000)
         }
     }
     renderFooter(){
-        const {order} = this.props;
+        const {order} = this.props.orderByParam;
         const {orderStatus,orderId,itemList} = order;
         var hasComment = false;
         itemList.map((v,k)=>{
@@ -112,12 +112,12 @@ class OrderDetail extends Component{
         })
         switch(orderStatus){
             case "STATUS_NOT_PAY":
-                let {cashierParam} = this.props.order;
+                let {cashierParam} = order;
                 cashierParam = cashierParam || {};
                 return (
                     <div className="confirmBtns">
                         <a href="javascript:void(null);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
-                        <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this,order)} className="confirm_btn">立即支付</a>
+                        <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this)} className="confirm_btn">立即支付</a>
                         <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
                             <input type="hidden" name="appId" value={cashierParam.appId} />
                             <input type="hidden" name="channel" value={cashierParam.channel} />
@@ -151,7 +151,7 @@ class OrderDetail extends Component{
         }
     }
     renderOutTime(){
-        const {order,systemTime} = this.props;
+        const {order,systemTime} = this.props.orderByParam;
         const {orderCrtTime,timeoutTime,orderStatus} = order;
         const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
         const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
@@ -169,7 +169,7 @@ class OrderDetail extends Component{
         }
     }
     render(){
-        const {order,alertActive,alertContent} = this.props;
+        const {order,alertActive,alertContent} = this.props.orderByParam;
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
@@ -183,7 +183,7 @@ class OrderDetail extends Component{
             </div>
             {this.renderAddress(order)}
             <div className="order-list">
-                <OrderGoods {...this.props.order}/>
+                <OrderGoods {...order}/>
             </div>
             <div className="count-box">
                 <div className="title">
