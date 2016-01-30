@@ -13,6 +13,9 @@ export const RESPONSE_DELIVERYORDER= "RESPONSE_DELIVERYORDER";
 export const REQUEST_PAYGATEWAY = "REQUEST_PAYGATEWAY";
 export const RESPONSE_PAYGATEWAY = "RESPONSE_PAYGATEWAY";
 
+import {alert} from "../common/action.es6";
+export {alert} from "../common/action.es6";
+
 export function changeField(name,value,key){
     return {
         type:CHANGE_FIELD,
