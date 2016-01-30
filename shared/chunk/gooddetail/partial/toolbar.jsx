@@ -16,7 +16,7 @@ class Toolbar extends Component{
         };
     }
     render(){
-        const {addToCart,directBuy,handleBuyedChanged,handleAttrChange,
+        const {addToCart,directBuy,handleBuyedChanged,handleAttrToggle,
             popupActive,trigger,togglePopup,
             cartCount,selectedAttr,buyed,good} = this.props
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
@@ -42,7 +42,7 @@ class Toolbar extends Component{
                     <Attributes attrs={good.attrs}
                     stock={good.stock}
                     selectedAttr={selectedAttr}
-                    onAttrChange={handleAttrChange} />
+                    onAttrChange={handleAttrToggle} />
                     <div className="pro clearfix">
                         <div className="pro-name">
                             <span>购买数量</span>

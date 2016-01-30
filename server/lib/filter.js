@@ -1,18 +1,20 @@
 'use strict';
 var config = require("./config.js");
+var moment = require("moment");
 
 var filter = {
-	price : function(goods){
-		if(goods.flashPrice > 0){
-			return goods.flashPrice;
-		}
-		if(goods.wapPrice > 0){
-			return goods.wapPrice;
-		}
-		if(goods.mobilePrice){
-			return goods.mobilePrice;
-		}
-		return goods.salesPrice;
+	price : function(item){
+		if(item.startTime && item.endTime){
+			var startDate = moment(new Date(item.startTime)).format("YYYY-MM-DD HH:mm:ss");
+			var endDate = moment(new Date(item.endTime)).format("YYYY-MM-DD HH:mm:ss");
+			if(moment().isBetween(startDate,endDate)){
+            	return item.flashPrice;
+			}
+		}  
+        if(item.mobilePrice > 0){
+        	return item.mobilePrice;
+        }
+        return item.salesPrice;
 	},
 	imageUrl:function(path){
 		return config.imgServer + path;
