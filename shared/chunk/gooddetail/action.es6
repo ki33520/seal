@@ -1,7 +1,7 @@
 'use strict';
 import {apiRequest,saveLocalCart,getLocalCartCount} from "../../lib/util.es6";
 import {
-    SELECT_ATTR,TOGGLE_ATTR
+    TOGGLE_ATTR,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_GOOD,RESPONSE_GOOD,
@@ -11,14 +11,6 @@ import {
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
     REQUEST_FLASHBUY,RESPONSE_FLASHBUY
 } from "./constant.es6";
-
-export function selectAttr(attr,attrValue){
-    return {
-        type:SELECT_ATTR,
-        attr,
-        attrValue
-    }
-}
 
 export function toggleAttr(attrName,attrValue){
     return {

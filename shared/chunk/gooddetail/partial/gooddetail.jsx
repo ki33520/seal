@@ -44,11 +44,11 @@ class GoodDetail extends Component{
         const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
-            let selectedAttr = _.findWhere(attrs,{attrName:k})
-            let selectedAttrValue = _.findWhere(selectedAttr.attrValues,{
-                value:v
-            })
-            this.handleAttrChange(selectedAttr,selectedAttrValue)
+            // let selectedAttr = _.findWhere(attrs,{attrName:k})
+            // let selectedAttrValue = _.findWhere(selectedAttr.attrValues,{
+            //     value:v
+            // })
+            // this.handleAttrChange(selectedAttr,selectedAttrValue)
         }) 
         fetchCartCount()
         fetchIsCollected({
@@ -83,17 +83,12 @@ class GoodDetail extends Component{
                 })
         }
     }
-    handleAttrChange(selectedAttr,selectedAttrValue,e){
-        e && e.preventDefault();
-        const {fetchGood,selectAttr} = this.props;
+    handleAttrToggle(selectedAttrName,selectedAttrValue,e){
+        e && e.preventDefault()
         if(selectedAttrValue.disabled){
             return;
         }
-        // console.log('selectAttr',selectAttr)
-        selectAttr(selectedAttr,selectedAttrValue)
-    }
-    toggleAttr(selectedAttr,e){
-        e && e.preventDefault()
+        this.props.toggleAttr(selectedAttrName,selectedAttrValue)
     }
     handleBuyedChanged(buyed){
         const {good} = this.props.goodById
@@ -252,7 +247,7 @@ class GoodDetail extends Component{
             <Toolbar cartCount={cartCount} good={good} 
             popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
             selectedAttr={selectedAttr} buyed={buyed}
-            handleAttrChange={this.handleAttrChange.bind(this)}
+            handleAttrToggle={this.handleAttrToggle.bind(this)}
             handleBuyedChanged={this.handleBuyedChanged.bind(this)}
             directBuy={this.directBuy.bind(this)} 
             addToCart={this.addToCart.bind(this)}>
