@@ -30,10 +30,12 @@ var goodDetail = function(req, res, next) {
             good.slides = slides;
             good.mainImageUrl = good.imageUrl[0]
 
-            var flashbuy = {active:false}
+            var flashbuy = {
+                active: false
+            }
             if (ret["flashbuyByGood"].returnCode === 0) {
                 flashbuy = flashbuyFilter(ret["flashbuyByGood"].object)
-                if(moment().isBetween(moment(flashbuy["startTime"]),moment(flashbuy["endTime"]))){
+                if (moment().isBetween(moment(flashbuy["startTime"]), moment(flashbuy["endTime"]))) {
                     // console.log('start')
                     flashbuy["active"] = true
                 }
@@ -41,39 +43,41 @@ var goodDetail = function(req, res, next) {
             good.flashbuy = flashbuy;
 
             var promotions = {}
-            if(ret["promotionsByGood"].returnCode === 0){
+            if (ret["promotionsByGood"].returnCode === 0) {
                 promotions = promotionsFilter(ret["promotionsByGood"].object)
             }
             good.promotions = promotions
 
-            if(req.xhr){
+            if (req.xhr) {
                 res.json({
-                    isFetched:true,
-                    result:good
+                    isFetched: true,
+                    result: good
                 })
             }
-            var initialState = {good:good}
+            var initialState = {
+                good: good
+            }
             var markup = util.getMarkupByComponent(GoodDetailApp({
-                initialState:initialState
+                initialState: initialState
             }));
             res.render('gooddetail', {
                 markup: markup,
                 initialState: initialState
             })
         } else {
-            if(req.xhr){
+            if (req.xhr) {
                 res.json({
-                    isFetched:false,
-                    errMsg:ret["goodById"].message
+                    isFetched: false,
+                    errMsg: ret["goodById"].message
                 })
             }
             next(new Error(ret["goodById"].message))
         }
-    }).error(function(){
-        if(req.xhr){
+    }).error(function() {
+        if (req.xhr) {
             res.json({
-                isFetched:false,
-                errMsg:"api request failed"
+                isFetched: false,
+                errMsg: "api request failed"
             })
         }
         next(new Error('api request failed'))
@@ -82,7 +86,7 @@ var goodDetail = function(req, res, next) {
 
 function flashbuyFilter(flashbuy) {
     var _flashbuy = {};
-    if(flashbuy){
+    if (flashbuy) {
         _flashbuy["price"] = flashbuy.wapPrice
         _flashbuy["startTime"] = moment(new Date(flashbuy.beginDate)).format("YYYY-MM-DD HH:mm:ss")
         _flashbuy["endTime"] = moment(new Date(flashbuy.endDate)).format("YYYY-MM-DD HH:mm:ss")
@@ -90,7 +94,7 @@ function flashbuyFilter(flashbuy) {
     return _flashbuy
 }
 
-function promotionsFilter(promotions){
+function promotionsFilter(promotions) {
     var _promotions = {};
     return promotions
 }
@@ -98,7 +102,7 @@ function promotionsFilter(promotions){
 function goodFilter(good) {
     var _good = _.pick(good, [
         "code", "discount", "isMain", "title", "subTitle", "detail",
-        "buyLimit", "sourceAreaId","useMobilePrice","mobilePrice",
+        "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
         "description", "showTaxRate", "addCount"
     ]);
@@ -123,10 +127,7 @@ function goodFilter(good) {
     var attrs = {}
     var keys = _.keys(_good["items"][0].attrs)
     _.each(keys, function(key) {
-        attrs[key] = {
-            selectedValue: null,
-            attrValues: []
-        }
+        attrs[key] = []
     })
     var selectedItem = null
     _.each(_good["items"], function(item) {
@@ -134,24 +135,25 @@ function goodFilter(good) {
             selectedItem = item
         }
         _.each(attrs, function(v, k) {
-            v["attrValues"].push(item.attrs[k])
-            attrs[k]["attrValues"] = _.uniq(v["attrValues"])
+            v.push(item.attrs[k])
+            attrs[k] = _.uniq(v)
         })
     })
-    attrs = _.map(attrs, function(attr, k) {
-            attr.attrName = k
-            attr.attrValues = _.map(attr.attrValues, function(value) {
-                return {
+    attrs = _.mapValues(attrs, function(attrValues, attrName) {
+            attrValues = _.map(attrValues, function(value) {
+                let _value = {
                     value: value,
+                    selected: false,
                     disabled: false
                 }
-            });
-            if (selectedItem !== null) {
-                attr.selectedValue = _.findWhere(attr.attrValues, {
-                    value: selectedItem.attrs[k]
-                })
-            }
-            return attr
+                if (selectedItem !== null) {
+                    if (selectedItem.attrs[attrName] === value) {
+                        // _value["selected"] = true
+                    }
+                }
+                return _value
+            })
+            return attrValues
         })
         // _good["isCollected"] = false
     _good["selectedItem"] = selectedItem
@@ -185,22 +187,22 @@ var addCart = function(req, res, next) {
             }
         })
     } else {
-        var isExceed = util.isLocalCartLimitExceed(req.session["localcart"],{
-            singleCode:singleCode,
-            buyed:buyed,
-            buyLimit:buyLimit
-        },false)
-        if(isExceed){
+        var isExceed = util.isLocalCartLimitExceed(req.session["localcart"], {
+            singleCode: singleCode,
+            buyed: buyed,
+            buyLimit: buyLimit
+        }, false)
+        if (isExceed) {
             res.json({
-                cartAdded:false,
-                errMsg:"商品超过限购数量!"
+                cartAdded: false,
+                errMsg: "商品超过限购数量!"
             })
-        }else{
-            var localcart = util.saveLocalCart(req.session["localcart"],{
-                singleCode:singleCode,
-                buyed:buyed,
-                buyLimit:buyLimit
-            },false)
+        } else {
+            var localcart = util.saveLocalCart(req.session["localcart"], {
+                singleCode: singleCode,
+                buyed: buyed,
+                buyLimit: buyLimit
+            }, false)
             req.session["localcart"] = localcart
             res.json({
                 cartAdded: true,

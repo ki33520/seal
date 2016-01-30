@@ -1,7 +1,7 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,
+import {RESPONSE_GOOD,REQUEST_GOOD,SELECT_ATTR,TOGGLE_ATTR,
     START_ADD_CART,FINISH_ADD_CART,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
@@ -23,7 +23,7 @@ function goodById(state={},action){
                 good:good
             })
         case TOGGLE_ATTR:
-            good = toggleAttr(good,action.attr,action.attrValue)
+            good = toggleAttr(good,action.attrName,action.attrValue)
             return Object.assign({},state,{
                 good
             })
@@ -82,6 +82,67 @@ function goodById(state={},action){
         default:
             return state;
     }
+}
+
+function toggleAttr(good,selectedAttrName,selectedAttrValue){
+    let _good = Object.assign({},good)
+    let isAttrSelected = false
+    _good.attrs[selectedAttrName].map((v)=>{
+        if(v.value === selectedAttrValue.value){
+            v.selected = !v.selected
+            isAttrSelected = v.selected
+        }else{
+            v.selected = false
+        }
+        return v
+    })
+
+    let selectedAttrs = {}
+    for(let attrName in _good.attrs){
+        let attrValues = _good.attrs[attrName]
+        if(_.some(attrValues,{selected:true,disabled:false})){
+            selectedAttrs[attrName] = _.findWhere(attrValues,{selected:true}).value
+        }
+    }
+
+    let isNeedValidateStock = false
+    for(let attrName in _good.attrs){
+        let attrValues = _good.attrs[attrName]
+        if(attrName === selectedAttrName){
+            continue;
+        }
+        // console.log('selectedAttrs',selectedAttrs)
+        _good.attrs[attrName] = attrValues.map((attrValue)=>{
+            let _selectedAttrs = Object.assign({},selectedAttrs,{
+                [attrName]:attrValue.value
+            })
+            let isAttrPairExist = _.some(_good.items,(item)=>{
+                return _.isEqual(_.pick(item.attrs,_.keys(_selectedAttrs)),_selectedAttrs)
+            })
+            attrValue.disabled = !isAttrPairExist
+            if(isNeedValidateStock){
+                let validItem = _.findWhere(_good.items,_selectedAttrs)
+                if(validItem === 0){
+                    attrValue.disabled = true
+                }
+            }
+            if(attrValue.disabled && attrValue.selected){
+                attrValue.selected = false
+            }
+            return attrValue
+        })
+        if(_.keys(selectedAttrs).length === (_.keys(_good.attrs).length - 1)){
+            isNeedValidateStock = true
+        }
+    }
+
+    if(_.keys(selectedAttrs).length === _.keys(_good.attrs).length){
+        let selectedItem = _.findWhere(_good.items,selectedAttrs)
+        selectedItem = selectedItem || null
+        good["selectedItem"] = selectedItem
+    }
+    return _good
+    // let attrs = 
 }
 
 function selectAttr(good,selectedAttr,selectedAttrValue){

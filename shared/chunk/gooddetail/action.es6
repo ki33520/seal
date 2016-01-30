@@ -1,7 +1,7 @@
 'use strict';
 import {apiRequest,saveLocalCart,getLocalCartCount} from "../../lib/util.es6";
 import {
-    SELECT_ATTR,TOGGLE_ATTR
+    SELECT_ATTR,TOGGLE_ATTR,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_GOOD,RESPONSE_GOOD,
