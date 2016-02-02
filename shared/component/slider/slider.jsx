@@ -116,7 +116,8 @@ class Slider extends Component{
         }
     }
     handleTouchStart(e){
-        e && e.preventDefault();
+        // e && e.preventDefault();
+        e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
         }
@@ -126,10 +127,12 @@ class Slider extends Component{
         const {clientY,clientX} = e.changedTouches[0];
         this.startTouchX = clientX;
         this.startTouchY = clientY;
+        this.moveDirection = null;
         // console.log('touch start',e.changedTouches,e.targetTouches,e.touches)
     }
     handleTouchEnd(e){
-        e && e.preventDefault();
+        // e && e.preventDefault();
+        e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
         }
@@ -181,7 +184,8 @@ class Slider extends Component{
         }
     }
     handleTouchMove(e){
-        e && e.preventDefault();
+        // e && e.preventDefault();
+        e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
         }
@@ -195,6 +199,21 @@ class Slider extends Component{
             e.preventDefault();
             return;
         }
+        const {oriention} = this.props;
+        let moveY = Math.abs(clientY - this.startTouchY);
+        let moveX = Math.abs(clientX - this.startTouchX);
+        if(oriention === "horizontal" && moveX < 30){
+            return
+        }else if(oriention === "vertical" && moveY < 10){
+            return
+        }
+        let touchAngle = Math.atan2(moveY,moveX) * 180 / Math.PI
+        let moveDirection = touchAngle < 45 ?"horizontal":"vertical"
+        // let moveDirection =  moveY > moveX ?"y":"x"
+        if(this.moveDirection && this.moveDirection !== moveDirection){
+            return
+        }
+        this.moveDirection = moveDirection
 
         const offsetX = Math.abs(this.startTouchX) - Math.abs(clientX);
         const offsetY = Math.abs(this.startTouchY) - Math.abs(clientY);

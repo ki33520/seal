@@ -27,7 +27,7 @@ class Coupon extends Component{
                             <div className="date">{coupon.startTime}-{coupon.endTime}</div>
                             <div className="explain">{coupon.couponDesc}</div>
                         </div>
-                        {checkedCoupon.couponNo === coupon.couponNo?(
+                        {checkedCoupon && checkedCoupon.couponNo === coupon.couponNo?(
                             <div className="selected"></div>
                         ):null}
                     </div>

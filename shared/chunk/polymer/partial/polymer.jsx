@@ -39,7 +39,7 @@ class Polymer extends Component{
                         <SlideTabsItem navigator={()=><i>品牌</i>}>
                             <Brand {...this.props}/>
                         </SlideTabsItem>
-                        <SlideTabsItem navigator={()=><i>产地</i>}>
+                        <SlideTabsItem navigator={()=><i>国家</i>}>
                             <Origin {...this.props}/>
                         </SlideTabsItem>
                     </SlideTabs>

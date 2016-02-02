@@ -10,6 +10,13 @@ class NumberPicker extends Component{
             value:this.props.value
         }
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.value !== this.props.value){
+            this.setState({
+                value:nextProps.value
+            })
+        }
+    }
     handleIncrease(e){
         e && e.preventDefault();
         var value = this.state.value;

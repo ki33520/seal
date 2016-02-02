@@ -109,7 +109,7 @@ var receiverById = function(req, res, next) {
 
 function receiverFilter(receiver) {
     var _receiver = _.pick(receiver, [
-        "cityCode", "cityName",
+        "cityCode", "cityName","isDefault",
         "provinceCode", "provinceName", "isDefault", "idCard", "address", "zipcode"
     ]);
     _receiver["districtCode"] = receiver["countyCode"]
@@ -117,7 +117,6 @@ function receiverFilter(receiver) {
     _receiver["id"] = receiver["recvAddressId"]
     _receiver["consignee"] = receiver["recvLinkman"]
     _receiver["mobileNumber"] = receiver["recvMobile"]
-    _receiver["isDefault"] = (receiver["isDefault"] === 1)
     return _receiver
 }
 
