@@ -103,6 +103,34 @@ var confirmOrder = function(req, res, next) {
     })
 }
 
+var shipFee = function(req,res,next){
+    var provinceCode = req.query.provinceCode
+    var cityCode = req.query.cityCode
+    var districtCode = req.query.districtCode
+    util.fetchAPI("shipFeeByReceiver",{
+        provinceCode:provinceCode,
+        cityCode:cityCode,
+        countyCode:districtCode
+    }).then(function(ret){
+        if(ret.returnCode === 0){
+            res.json({
+                isFetched:true,
+                result:ret.object
+            })
+        }else{
+            res.json({
+                isFetched:false,
+                errMsg:ret.message
+            })
+        }
+    },function(){
+        res.json({
+            isFetched:false,
+            errMsg:"api request failed"
+        })
+    })
+}
+
 var submitOrder = function(req, res, next) {
     var user = req.session.user;
     var itemIds = req.body.itemIds;
@@ -247,6 +275,7 @@ function messageFilter(order) {
 
 module.exports = {
     confirmOrder: confirmOrder,
+    shipFee:shipFee,
     submitOrder: submitOrder,
     payGateway: payGateway
 };

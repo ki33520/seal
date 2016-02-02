@@ -46,6 +46,7 @@ router.post("/updatecart",require("./controller/cart").updateCart);
 router.post("/deletecart",require("./controller/cart").deleteCart);
 router.post("/fetchcart",require("./controller/cart").fetchCart);
 
+router.get("/shipfee",mainController.requireAuthorize,require("./controller/confirmorder").shipFee);
 router.get("/paygateway/:param",mainController.requireAuthorize,require("./controller/confirmorder").payGateway);
 router.get("/confirmorder/:param",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
 router.post("/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);

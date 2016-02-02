@@ -6,12 +6,17 @@ import Receiver from "../receiver/app.jsx";
 import Coupon from "./partial/coupon.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
-import {changeReceiver,changeCoupon} from "./action.es6";
+import {changeReceiver,changeCoupon,fetchShipFee} from "./action.es6";
 
 class ConfirmOrderRouter extends Component{
     handleChangeReceiver(receiver){
         const {dispatch} = this.props;
         dispatch(changeReceiver(receiver));
+        dispatch(fetchShipFee({
+            provinceCode:receiver.provinceCode,
+            cityCode:receiver.cityCode,
+            districtCode:receiver.districtCode
+        }))
     }
     handleChangeCoupon(coupon){
         const {dispatch} = this.props;

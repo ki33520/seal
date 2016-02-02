@@ -45,10 +45,10 @@ class GoodDetail extends Component{
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             // let selectedAttr = _.findWhere(attrs,{attrName:k})
-            // let selectedAttrValue = _.findWhere(selectedAttr.attrValues,{
-            //     value:v
-            // })
-            // this.handleAttrChange(selectedAttr,selectedAttrValue)
+            let selectedAttrValue = _.findWhere(attrs[k],{
+                value:v
+            })
+            this.handleAttrToggle(k,selectedAttrValue)
         }) 
         fetchCartCount()
         fetchIsCollected({
