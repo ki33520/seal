@@ -135,9 +135,7 @@ function floorFilter(floors) {
     _floors["activityOne"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_THREE"
     }), "activityList")
-    _floors["activityOne"] = _.groupBy(_floors["activityOne"], "activityName");
-    _floors["activityOne"] = _.mapValues(_floors["activityOne"], function(v) {
-        v = v[0]
+    _floors["activityOne"] = _.map(_floors["activityOne"], function(v) {
         return {
             id: v.id,
             name: v.activityName,
