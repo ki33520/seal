@@ -24,7 +24,7 @@ function basicByForm(state={},action){
                 basicChanging:false,
                 basicChanged:action.res.isChanged,
                 msg:action.res.msg
-            },action.res.result);
+            },action.param);
         case SHOW_ALERT:
         case HIDE_ALERT:
             return alertReducer(state,action)

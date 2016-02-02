@@ -101,24 +101,40 @@ class Floor extends Component{
         }
     }
     renderGoods(itemList){
+        var content;
+        if(itemList.length>1){
+            content = (
+                <div className="clearfix">
+                    <div className="slide-img-wrap">
+                        {
+                            itemList.map((good,i)=>{
+                                return (
+                                    <span key={i} className="img_wrap J_ytag cartlist">
+                                    <Image placeholder={good.singleImageUrl} />
+                                    </span>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+            )
+        }else{
+            content = itemList.map((good,i)=>{
+                return (
+                    <div className="clearfix" key={i}>
+                        <span className="img_wrap J_ytag cartlist">
+                        <Image placeholder={good.singleImageUrl} />
+                        </span>
+                        <div className="gd_info">
+                            <p className="name">{good.singleTitle}</p>
+                            <p className="value">&yen;{good.salesPrice.toFixed(2)}</p>
+                        </div>
+                    </div>
+                )
+            })
+        }
         return (
-            <div className="J_moveRight">
-                {
-                    itemList.map((good,i)=>{
-                        return (
-                            <div className="clearfix" key={i}>
-                                <span className="img_wrap J_ytag cartlist">
-                                <Image placeholder={good.singleImageUrl} />
-                                </span>
-                                <div className="gd_info">
-                                    <p className="name">{good.singleTitle}</p>
-                                    <p className="value">&yen;{good.salesPrice.toFixed(2)}</p>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-            </div>
+            <div className="J_moveRight">{content}</div>
         );
     }
     renderOutTime(child){

@@ -25,6 +25,8 @@ function configureStore(initialState){
 class MemberupdateApp extends Component{
     render(){
         const {memberInfo} = this.props.initialState;
+        memberInfo.fieldnickName = memberInfo.nickName;
+        memberInfo.fieldgender = memberInfo.gender;
         const initialState = {
             basicByForm: memberInfo
         };
