@@ -56,7 +56,7 @@ class UpdateReceiver extends Component{
         } = receiver;
         saveReceiver({
             id,consignee,mobileNumber,idCard,address,
-            isdefault:isDefault,
+            isDefault:isDefault,
             provinceCode,
             cityCode,
             districtCode

@@ -134,6 +134,7 @@ var saveReceiver = function(req, res, next) {
         recvMobile: req.body.mobileNumber,
         areaCode: req.body.districtCode,
         address: req.body.address,
+        isDefault:req.body.isDefault
     }
     util.fetchAPI("updateReceiver", receiver).then(function(resp) {
         if (resp.returnCode === 0) {
@@ -158,6 +159,7 @@ var createReceiver = function(req, res, next) {
         recvMobile: req.body.mobileNumber,
         areaCode: req.body.districtCode,
         address: req.body.address,
+        isDefault:req.body.isDefault
     }
     util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
         if (resp.returnCode === 0) {

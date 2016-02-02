@@ -7,6 +7,8 @@ import Dialog from "../../../component/dialog.jsx";
 import Radio from "../../../component/form/radio.jsx";
 import _ from "lodash";
 
+import Alert from "../../../component/alert.jsx";
+
 class Receiver extends Component{
     constructor(props){
         super(props);
@@ -84,6 +86,14 @@ class Receiver extends Component{
         );
     }
     render(){
+        const handleAddReceiver = ()=>{
+            console.log('receivers',this.props.receivers.length)
+            if(this.props.receivers.length >= 6){
+                this.props.alert("收货地址不能超过6个!",2000)
+            }else{
+                this.props.changeScene("addreceiver")
+            }
+        }
         return (
             <div className="receiver-content">
             {this.props.checkable?(<Header onGoBack={this.handleCheckableGoBack.bind(this)}>选择收货地址</Header>):(
@@ -98,9 +108,10 @@ class Receiver extends Component{
             {this.props.receivers.length > 0?(
             <div className="addBtns">
                 <a href="javascript:void(null)" 
-                onClick={this.props.changeScene.bind(this,"addreceiver")} className="addBtn">添加新地址</a>
+                onClick={handleAddReceiver} className="addBtn">添加新地址</a>
             </div>
             ):null}
+            <Alert active={this.props.alertActive}>{this.props.alertContent}</Alert>
             </div>
         )
     }

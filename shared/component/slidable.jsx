@@ -67,7 +67,7 @@ class Slidable extends Component{
                 }
             }
         }
-        this.checkEdge()
+        this.checkBound()
         if(this.props.simulateTranslate === true){
             // console.log('simulateTranslate')
             if(axis === "x"){
@@ -159,7 +159,7 @@ class Slidable extends Component{
                 this.translateX = (nextIndex * itemNode.offsetWidth) > 0 ?
                 - (nextIndex * itemNode.offsetWidth) :0;
             }
-            this.checkEdge()
+            this.checkBound()
             // console.log('this.translateX',Math.abs(this.endTouchX - this.startTouchX),Math.abs(this.endTouchY - this.startTouchY))
             // console.log('translateY',this.translateY)
             // this.transitionTouch(this.props.animateDuration)
@@ -196,7 +196,6 @@ class Slidable extends Component{
             return
         }
         this.moveDirection = moveDirection
-        // console.log('moveDirection',this.moveDirection,touchAngle)
         if(this.moveDirection === axis){
             dom.addClass(ReactDOM.findDOMNode(this),"sliding")
             // e && e.preventDefault()
@@ -209,7 +208,7 @@ class Slidable extends Component{
 
         this.translateY = this.translateY >= 0 ? 0 : this.translateY;
         this.translateX = this.translateX >= 0 ? 0 : this.translateX;
-        this.checkEdge(()=>{
+        this.checkBound(()=>{
             this.lastY = clientY;
             this.lastX = clientX;
         })
@@ -227,14 +226,11 @@ class Slidable extends Component{
             },30)
             // _.throttle(transitionTouch,60)
         }
-        // e && e.preventDefault()
     }
-    checkEdge(onEdge = ()=>{}){
+    checkBound(callback = ()=>{}){
         const {axis} = this.props;
         let {translateY,translateX} = this
         let translateNode = ReactDOM.findDOMNode(this);
-        // let beyondY = dom.offset(translateNode.parentNode).top - dom.offset(translateNode).top; 
-        // let beyondX = dom.offset(translateNode.parentNode).left - dom.offset(translateNode).left; 
         let maxBeyondY = translateNode.offsetHeight - translateNode.parentNode.offsetHeight;
         let maxBeyondX = translateNode.offsetWidth - translateNode.parentNode.offsetWidth;
         if(maxBeyondY <= (- this.translateY) && maxBeyondY > 0 && axis === "y"){
@@ -242,7 +238,7 @@ class Slidable extends Component{
         }else if(maxBeyondX <= (- this.translateX) && maxBeyondX > 0 && axis === "x"){
             this.translateX = - maxBeyondX
         }else{
-            onEdge()
+            callback()
         }
     }
     transitionTouch(duration){
@@ -258,11 +254,8 @@ class Slidable extends Component{
         }
         if(transform !==null){
             let translateNode = ReactDOM.findDOMNode(this);
-            // _.delay(()=>{
-            // let duration = duration || 0.3
             translateNode.style.transitionDuration = `${duration}s`;
             translateNode.style.WebkitTransform = transform;
-            // },60)
         }
     }
     render(){
