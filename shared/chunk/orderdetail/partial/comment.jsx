@@ -13,21 +13,22 @@ import Alert from "../../../component/alert.jsx";
 
 class Comment extends Component{
     handleStar(name,arrKey,val,e){
-        const {dispatch} = this.props;
-        dispatch(changeField(name,val,arrKey));
+        const {changeField} = this.props;
+        changeField(name,val,arrKey);
     }
     handleContent(name,arrKey,e){
-        const {dispatch} = this.props;
-        dispatch(changeField(name,e.target.value,arrKey));
+        const {changeField} = this.props;
+        changeField(name,e.target.value,arrKey);
     }
     handleIsOpen(name,e){
-        const {dispatch} = this.props;
+        const {changeField} = this.props;
         var checked = e.target.checked ? 0 : 1;
-        dispatch(changeField(name,checked));
+        changeField(name,checked);
     }
     handleSave(e){
         e && e.preventDefault();
-        var {dispatch,order,isOpen} = this.props;
+        const {saveComment} = this.props;
+        var {order,isOpen} = this.props.orderByParam;
         var obj = order.itemList.map((v,k)=>{
             v.isOpen = isOpen === undefined ? 1 : isOpen;
             const {rate,id,content,isOpen} = v;
@@ -38,19 +39,19 @@ class Comment extends Component{
                 itemId: id,
             }
         })
-        dispatch(saveComment("/savecomment",{
+        saveComment("/savecomment",{
             commentsJson: JSON.stringify(obj)
-        }));
+        });
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
-        if(nextProps.saveCommentChanging === false &&
-           this.props.saveCommentChanging === true){
-            if(nextProps.saveCommentChanged === true){
-                dispatch(alert(nextProps.msg,2000));
+        const {alert} = this.props;
+        if(nextProps.orderByParam.saveCommentChanging === false &&
+           this.props.orderByParam.saveCommentChanging === true){
+            if(nextProps.orderByParam.saveCommentChanged === true){
+                alert(nextProps.orderByParam.msg,2000);
                 setTimeout(()=>window.history.back(),2500);
             }else{
-                dispatch(alert(nextProps.msg,2000));
+                alert(nextProps.orderByParam.msg,2000);
             }
         }
     }
@@ -78,7 +79,7 @@ class Comment extends Component{
                             </a>
                             <div className="gd_info">
                                 <p className="name">{v.singleTitle}</p>
-                                <p className="value"><i>&yen;</i><span>{v.salesPrice}</span></p>
+                                <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span></p>
                             </div>
                         </div>
                     </div>
@@ -100,7 +101,7 @@ class Comment extends Component{
         });
     }
     render(){
-        const {logistics,order,alertActive,alertContent} = this.props;
+        const {logistics,order,alertActive,alertContent} = this.props.orderByParam;
         const {itemList} = order;
         return (
             <div className="order-detail-content comment-content">

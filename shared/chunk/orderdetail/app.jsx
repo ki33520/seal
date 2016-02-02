@@ -1,23 +1,27 @@
 'use strict'
-import React from "react";
+import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
-import createStoreWithMiddleware from "../../lib/redux-helper.es6";
+import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
 import OrderDetail from "./component.jsx";
+import * as actions from "./action.es6";
 
-function selector(state){
-    //const {isFetching,isFetched,logistics,order,systemTime,msg,closeOrderChanged,closeOrderChanging,alertActive,alertContent} = state.orderByParam;
-    return state.orderByParam;
-}
-
-let OrderDetailConnected = connect(selector)(OrderDetail);
+let ReceiverConnected = connect((state)=>{
+    return state;
+})(wrapComponentWithActions(OrderDetail,actions));
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
+    if (module.hot) {
+        module.hot.accept('./reducer.es6', () => {
+            const nextRootReducer = require('./reducer.es6');
+            store.replaceReducer(nextRootReducer);
+        });
+    }
     return store
 }
 
-class OrderDetailApp extends React.Component{
+class OrderDetailApp extends Component{
     render(){
         const {isFetched,order,systemTime} = this.props.initialState;
         const initialState = {
@@ -27,12 +31,11 @@ class OrderDetailApp extends React.Component{
                 order,
                 systemTime
             }
-        }
+        };
         var store = configureStore(initialState);
-
         return (
             <Provider store={store}>
-            <OrderDetailConnected />
+            <ReceiverConnected />
             </Provider>
         )
     }

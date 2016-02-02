@@ -34,6 +34,10 @@ class ConfirmOrder extends Component{
         )
     }
     renderTotal(order){
+        let couponFee = order.checkedCoupon ? order.checkedCoupon.couponFee : order.couponFee
+        let totalFee = parseFloat(order.productFee) + parseFloat(order.shipFee) + parseFloat(order.abroadFee)
+            + parseFloat(order.tariffFee) - parseFloat(order.promoFee) - parseFloat(couponFee)
+        totalFee = totalFee < 0.3 ? 0.3:totalFee
         return (
             <div className="count-box">
                 <div className="title">
@@ -41,21 +45,21 @@ class ConfirmOrder extends Component{
                 </div>
                 <div className="count-box-line">
                     <div className="label">商品总价：</div>
-                    <div className="data"> - &yen;<span>{order.productFee}</span></div>
+                    <div className="data">&yen;<span>{order.productFee}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">国内运费：</div>
-                    <div className="red-box"> 包邮 </div>
-                    <div className="data"> - &yen;<span>{order.shipFee}</span></div>
+                    {order.shipFee>0?null:<div className="red-box">包邮</div>}
+                    <div className="data">&yen;<span>{order.shipFee}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">国际运费：</div>
-                    <div className="data"> - &yen;<span>{order.abroadFee}</span></div>
+                    <div className="data">&yen;<span>{order.abroadFee}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">关税：</div>
-                    <div className="red-box">免税</div>
-                    <div className="data"> - &yen;<span>{order.tariffFee}</span></div>
+                    {order.tariffFee>0?null:<div className="red-box">免税</div>}
+                    <div className="data">&yen;<span>{order.tariffFee}</span></div>
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠活动：</div>
@@ -63,11 +67,11 @@ class ConfirmOrder extends Component{
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠券：</div>
-                    <div className="data"> - &yen; <span id="coupon_money">{order.couponFee}</span></div>
+                    <div className="data"> - &yen; <span id="coupon_money">{couponFee}</span></div>
                 </div>
                 <div className=" count-box-line no-border">
                     <div className="label">应付金额：</div>
-                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalFee}</span></div>
+                    <div className="data red-w">&yen;<span id="total_amount_money">{totalFee}</span></div>
                 </div>
             </div>
         )
@@ -111,13 +115,11 @@ class ConfirmOrder extends Component{
             <Header>确认订单</Header>
             {this.renderReceiver(order.checkedReceiver)}
             <OrderGoods {...this.props.order}/>
-            <div className="ckTo-box clearfix">
-                <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"coupon")}>
-                <div className="intro">
+            <div className="ckTo-box">
+                <div className="intro clearfix" onClick={this.props.changeScene.bind(this,"coupon")}>
                 <span>优惠券</span>
-                <span>{order.checkedCoupon?<em><i>券</i>{order.checkedCoupon["couponName"]}</em>:null}<i className="iconfont icon-right"></i></span>
+                <span>{order.checkedCoupon?(<em>{order.checkedCoupon["couponName"]}</em>):null}<i className="iconfont icon-right"></i></span>
                 </div>
-                </a>
             </div>
             {this.renderTotal(order)}
             <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}

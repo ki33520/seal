@@ -1,31 +1,18 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 
-export const VERIFY_PAYPASSWORD_REQUEST = "VERIFY_PAYPASSWORD";
-export const VERIFY_PAYPASSWORD_RESPONSE = "VERIFY_PAYPASSWORD";
-export const START_SUBMITORDER = "START_SUBMITORDER";
-export const FINISH_SUBMITORDER = "FINISH_SUBMITORDER";
-export const CHANGE_RECEIVER = "CHANGE_RECEIVER";
-export const CHANGE_DELIVERYTIME = "CHANGE_DELIVERYTIME"
-export const CHANGE_COUPON = "CHANGE_COUPON";
-export const CHANGE_INVOICE = "CHANGE_INVOICE";
-export const TOGGLE_BALANCE = "TOGGLE_BALANCE";
-export const TOGGLE_TICKET = "TOGGLE_TICKET";
-export const CHANGE_PAYPASSWORD = "CHANGE_PAYPASSWORD";
-export const REQUEST_PAYGATEWAY = "REQUEST_PAYGATEWAY";
-export const RESPONSE_PAYGATEWAY = "RESPONSE_PAYGATEWAY";
+import {
+    CHANGE_RECEIVER,CHANGE_COUPON,
+    START_SUBMITORDER,FINISH_SUBMITORDER,
+    REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY,
+    REQUEST_SHIPFEE,RESPONSE_SHIPFEE,
+    CALCULATE_TOTALFEE
+} from "./constant.es6";
 
 export function changeReceiver(checkedReceiver){
     return {
         type:CHANGE_RECEIVER,
         checkedReceiver
-    }
-}
-
-export function changeDeliveryTime(checkedDeliveryTime){
-    return {
-        type:CHANGE_DELIVERYTIME,
-        checkedDeliveryTime
     }
 }
 
@@ -35,59 +22,10 @@ export function changeCoupon(checkedCoupon){
         checkedCoupon
     }
 }
-export function changeInvoice(checkedInvoice){
-    return {
-        type:CHANGE_INVOICE,
-        checkedInvoice
-    }
-}
 
-export function toggleBalance(useBalance){
+export function calculateTotalFee(){
     return {
-        type:TOGGLE_BALANCE,
-        useBalance
-    }
-}
-
-export function toggleTicket(useTicket){
-    return {
-        type:TOGGLE_TICKET,
-        useTicket
-    }
-}
-
-export function changePaypassword(payPassword){
-    return {
-        type:CHANGE_PAYPASSWORD,
-        payPassword
-    }
-}
-
-function verifyPasswordRequest(param){
-    return {
-        type:VERIFY_PAYPASSWORD_REQUEST,
-        param
-    }
-}
-
-function verifyPasswordResponse(param,res){
-    return {
-        type:VERIFY_PAYPASSWORD_RESPONSE,
-        param,
-        res,
-        responseAt:Date.now()
-    }
-}
-
-export function verifyPassword(url,param){
-    return (dispatch)=>{
-        dispatch(verifyPasswordRequest(param));
-        apiRequest(url,param,{
-            type:"jsonp",
-            jsonpCallback:"jsoncallback"
-        }).then((res)=>{
-            dispatch(verifyPasswordResponse(param,res));
-        })
+        type:CALCULATE_TOTALFEE
     }
 }
 
@@ -121,6 +59,31 @@ export function submitOrder(url,param){
                 dispatch(alert(res.errMsg,3000))
             }
             dispatch(finishSubmitOrder(param,res));
+        })
+    }
+}
+
+function requestShipFee(param){
+    return {
+        type:REQUEST_SHIPFEE,
+        param
+    }
+}
+
+function responseShipFee(param,res){
+    return {
+        type:RESPONSE_SHIPFEE,
+        param,
+        res,
+        responseAt:Date.now()
+    }
+}
+
+export function fetchShipFee(param){
+    return (dispatch)=>{
+        dispatch(requestShipFee(param));
+        apiRequest("/shipfee",param).then((res)=>{
+            dispatch(responseShipFee(param,res))
         })
     }
 }

@@ -27,7 +27,7 @@ class CascadeArea extends Component{
                 <i>*</i>
                 <div className="receiver-form-label">省份</div>
                 <div className="receiver-form-field">
-                <Selected options={provinces} closeOnSelect={false} 
+                <Selected options={provinces} closeOnSelect={true} 
                     maxHeight="5rem" 
                     value={province} onChange={this.handleProvinceChange.bind(this)}/>
                 </div>
@@ -44,7 +44,7 @@ class CascadeArea extends Component{
             <i>*</i>
             <div className="receiver-form-label">城市</div>
             <div className="receiver-form-field">
-            <Selected options={cities} closeOnSelect={false} 
+            <Selected options={cities} closeOnSelect={true} 
                 maxHeight="5rem" 
                 value={city} onChange={this.handleCityChange.bind(this)}/>
             </div>
@@ -59,7 +59,7 @@ class CascadeArea extends Component{
             <i>*</i>
             <div className="receiver-form-label">区县</div>
             <div className="receiver-form-field">
-            <Selected options={districts} closeOnSelect={false} 
+            <Selected options={districts} closeOnSelect={true} 
                 maxHeight="5rem" 
                 value={district} onChange={this.handleDistrictChange.bind(this)}/>
             </div>

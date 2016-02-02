@@ -1,37 +1,32 @@
 'use strict';
-
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var ActivityApp = util.getSharedComponent("activity");
-var config = require("../lib/config.js");
-
-function getSalesPrice(goods){
-    if(goods.wapPrice > 0){
-        return goods.wapPrice;
-    }else if(goods.mobilePrice > 0){
-        return goods.mobilePrice;
-    }else{
-        return goods.salesPrice;
-    }
-}
+var filter = require("../lib/filter.js");
+ 
 function filterResult(result){
     var list = [];
     if(result && result.length>0){
         result.map((item,i)=>{
             list.push({
-                id:item.singleCode,
+                singleCode:item.singleCode,
                 title:item.title,
-                salesPrice:getSalesPrice(item),
+                salesPrice:filter.price({
+                    flashPrice:item.wapPrice,
+                    mobilePrice:item.mobilePrice,
+                    salesPrice:item.salesPrice,
+                    startTime:item.beginDateStr,
+                    endTime:item.endDateStr
+                }),
                 originPrice:item.originPrice,
-                imageUrl:config.imgServer + item.imageUrl,
+                imageUrl:filter.imageUrl(item.imageUrl),
                 sourceName:item.sourceName,
-                sourceImageUrl:config.imgServer + item.sourceImageUrl,
-                isSaleOut:item.localStock > 0 ? false : true,
-                isFlashPrice:item.wapPrice > 0 ? true : false,
-                isMobilePrice:item.mobilePrice>0? true:false
-            })
-        })
+                sourceImageUrl:filter.imageUrl(item.sourceImageUrl),
+                isSoldOut:filter.isSoldOut(item.localStock),
+                saleType:filter.saleType(item)
+            });
+        });
     }
     return list;
 }
@@ -61,7 +56,7 @@ var activity = function(req, res, next) {
                 var initialState = {
                     list,
                     totalPage,
-                    imageUrl:config.imgServer + obj.imageUrl,
+                    imageUrl:filter.imageUrl(obj.imageUrl),
                     title:obj.activityName,
                     isFetching:false
                 };

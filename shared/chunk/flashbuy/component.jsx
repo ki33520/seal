@@ -5,26 +5,25 @@ import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
 import Timer from "../common/timer.jsx";
+import classNames from "classnames";
 
 class FlashBuy extends Component{
-    renderIcon(goods){
-        var icons = [];
-        if(goods.isSaleOut){
-            icons.push(<div className="sale-out" key="out"></div>);
-        }
-        if(goods.isFlashPrice){
-            icons.push(<div className="flash-price" key="flash"></div>);
-        }else if(goods.isMobilePrice){
-            icons.push(<div className="mobile-price" key="mobile"></div>);
-        }
-        return icons;
-    }
     renderGoods(groupGoods){
         if(groupGoods.length > 0){
             return groupGoods.map((good,i)=>{
+                const soldOut = classNames({
+                    "sale-out":good.isSoldOut,
+                    "hide": good.isSoldOut?false:true
+                });
+                const saleIcon = classNames({
+                    "flash-price":good.saleType==='flash',
+                    "mobile-price":good.saleType ==='mobile',
+                    "hide":good.saleType===undefined
+                });
                 return (
-                    <a href={"/gooddetail/"+good.id} className="clearfix" key={i}>
-                        {this.renderIcon(good)}
+                    <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
+                        <div className={soldOut}></div>
+                        <div className={saleIcon}></div>
                         <img src={good.imageUrl} />
                         <div className="right">
                             <span className="name">{good.title}</span>
@@ -50,7 +49,10 @@ class FlashBuy extends Component{
                         <div className="flashList_title">
                             <span>距本期闪购结束</span>
                             <div className="titleBorder"></div>
-                            <p><Timer endTime={goods.endTime}/></p>
+                            <p>
+                                <Timer endTime={goods.endTime} dayEnable={true} 
+                                template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                            </p>
                         </div>
                         <div className="flashBuy">{this.renderGoods(goods.goodsList)}</div>
                     </div>

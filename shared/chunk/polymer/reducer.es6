@@ -18,12 +18,17 @@ function allCategory(state={},action){
                 categoryActivityFetching:true
             })
         case RESPONSE_CATEGORYACTIVITY:
-            let categoryactivity = null
+            let categories = state.categories;
             if(action.res.isFetched){
-                categoryactivity = action.res.result
+                categories = categories.map((category)=>{
+                    if(category.code === action.param.code){
+                        category.activity = action.res.result
+                    }
+                    return category
+                })
             }
             return Object.assign({},state,{
-                categoryactivity,
+                categories,
                 categoryActivityFetching:false,
                 categoryActivityFetched:action.res.isFetched,
             })

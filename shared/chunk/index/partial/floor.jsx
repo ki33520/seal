@@ -199,35 +199,29 @@ class Floor extends Component{
     }
     renderActivityOne(){
         let {activityOne} = this.props.channel.floors;
-        if(activityOne){
-            let mobileonly = activityOne["手机专享"];
-            let finest = activityOne["海外精选"];
-            let stockup = activityOne["今日海囤"];
-            if(mobileonly && finest && stockup){
-                return (
-                    <div className="activity">
-                    <ul className="clearfix">
-                        <li>
-                            <a href={mobileonly.jumpUrl}>
-                                <img src={mobileonly.imageUrl} alt="" />
-                                <span></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href={finest.jumpUrl}>
-                                <img src={finest.imageUrl} alt="" />
-                                <span></span>
-                            </a>
-                            <a href={stockup.jumpUrl}>
-                                <img src={stockup.imageUrl} alt="" />
-                                <span></span>
-                            </a>
-                        </li>
-                    </ul>
-                    </div>
-                )
-            }
-            return null
+        if(activityOne && activityOne.length > 0){
+            return (
+                <div className="activity">
+                <ul className="clearfix">
+                    <li>
+                        <a href={activityOne[0].jumpUrl}>
+                            <img src={activityOne[0].imageUrl} alt="" />
+                            <span></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href={activityOne[1].jumpUrl}>
+                            <img src={activityOne[1].imageUrl} alt="" />
+                            <span></span>
+                        </a>
+                        <a href={activityOne[2].jumpUrl}>
+                            <img src={activityOne[2].imageUrl} alt="" />
+                            <span></span>
+                        </a>
+                    </li>
+                </ul>
+                </div>
+            )
         }
         return null
     }

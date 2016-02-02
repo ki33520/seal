@@ -207,9 +207,9 @@ function receiverByUser(state={},action){
             let receiverUpdated = action.res.receiverUpdated
             if(receiverUpdated){
                 receivers = _.map(receivers,(receiver)=>{
-                    receiver.isDefault = false
+                    receiver.isDefault = 0
                     if(receiver.id === action.param.id){
-                        receiver.isDefault = true
+                        receiver.isDefault = 1
                     }
                     return receiver
                 })

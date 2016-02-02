@@ -44,11 +44,11 @@ class GoodDetail extends Component{
         const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
-            let selectedAttr = _.findWhere(attrs,{attrName:k})
-            let selectedAttrValue = _.findWhere(selectedAttr.attrValues,{
+            // let selectedAttr = _.findWhere(attrs,{attrName:k})
+            let selectedAttrValue = _.findWhere(attrs[k],{
                 value:v
             })
-            this.handleAttrChange(selectedAttr,selectedAttrValue)
+            this.handleAttrToggle(k,selectedAttrValue)
         }) 
         fetchCartCount()
         fetchIsCollected({
@@ -83,14 +83,12 @@ class GoodDetail extends Component{
                 })
         }
     }
-    handleAttrChange(selectedAttr,selectedAttrValue,e){
-        e && e.preventDefault();
-        const {fetchGood,selectAttr} = this.props;
+    handleAttrToggle(selectedAttrName,selectedAttrValue,e){
+        e && e.preventDefault()
         if(selectedAttrValue.disabled){
             return;
         }
-        // console.log('selectAttr',selectAttr)
-        selectAttr(selectedAttr,selectedAttrValue)
+        this.props.toggleAttr(selectedAttrName,selectedAttrValue)
     }
     handleBuyedChanged(buyed){
         const {good} = this.props.goodById
@@ -172,6 +170,23 @@ class GoodDetail extends Component{
         }
         return null
     }
+    renderPrice(){
+        const {good} = this.props.goodById;
+        let salePrice = good.salePrice
+        if(good.flashbuy["active"]){
+            salePrice = good.flashbuy["price"]
+        }
+        if(good["useMobilePrice"] && !good.flashbuy["active"]){
+            salePrice = good["mobilePrice"]
+            return (
+                <span>
+                <span className="nowPrice">&yen;{salePrice}</span>
+                <span className="exclusive">手机专享价</span>
+                </span>
+            )
+        }
+        return <span className="nowPrice">&yen;{salePrice}</span>
+    }
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
@@ -212,7 +227,7 @@ class GoodDetail extends Component{
                     <i className={isCollectedClasses}></i>收藏</a>
                 </div>
                  <div className="price clearfix">
-                    <span className="nowPrice">&yen;{good.salePrice}</span>
+                    {this.renderPrice()}
                     <span className="oldPrice">市场价&yen;{good.originPrice}</span>
                     {this.renderCountdown()}
                 </div>
@@ -232,7 +247,7 @@ class GoodDetail extends Component{
             <Toolbar cartCount={cartCount} good={good} 
             popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
             selectedAttr={selectedAttr} buyed={buyed}
-            handleAttrChange={this.handleAttrChange.bind(this)}
+            handleAttrToggle={this.handleAttrToggle.bind(this)}
             handleBuyedChanged={this.handleBuyedChanged.bind(this)}
             directBuy={this.directBuy.bind(this)} 
             addToCart={this.addToCart.bind(this)}>

@@ -31,7 +31,7 @@ class Cart extends Component {
         cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
                 if(item.checked){
-                    itemIds.push(item.id);
+                    itemIds.push(item.singleCode);
                     buyeds.push(item.qty); 
                 }
             })
@@ -45,17 +45,18 @@ class Cart extends Component {
             window.location.assign(`/confirmorder/${queryParam}`);
         }
     }
-    handleChangeBuyed(goods,cartIndex,buyed) {
+    handleChangeBuyed(goods,cartIndex,groupIndex,goodsIndex,buyed) {
         const {carts,isUpdating} = this.props.cartByUser;
         if(isUpdating){
             return false;
         }
         if(goods.checked===false){
             this.props.testBuyed({
-                id:goods.id,
                 qty:buyed,
                 buyLimit:goods.buyLimit,
-                cartIndex
+                cartIndex,
+                groupIndex,
+                goodsIndex
             });
             return false;
         }
@@ -64,17 +65,18 @@ class Cart extends Component {
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
                 if(item.checked){
-                    singleCodes.push(item.id);
-                    buyeds.push(goods.id==item.id?buyed:item.qty);
+                    singleCodes.push(item.singleCode);
+                    buyeds.push(goods.singleCode==item.singleCode?buyed:item.qty);
                 }
             });
         });
         this.props.updateCart({
-            singleCode:goods.id,
+            singleCode:goods.singleCode,
             qty:buyed,
-            cartIndex,
+            buyLimit:goods.buyLimit,
             singleCodes:singleCodes.join(','),
-            qtys:buyeds.join(',')
+            qtys:buyeds.join(','),
+            cartIndex
         });
     }
     toggleAllChecked(cartIndex,checked){
@@ -85,7 +87,7 @@ class Cart extends Component {
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
                 if(checked){
-                    singleCodes.push(item.id);
+                    singleCodes.push(item.singleCode);
                     buyeds.push(item.qty);   
                 }
             });
@@ -107,14 +109,14 @@ class Cart extends Component {
         let buyeds = [];
         carts[cartIndex].group.forEach((group)=>{
             group.list.forEach((item)=>{
-                if(item.checked && item.id !== goods.id){
-                    singleCodes.push(item.id);
+                if(item.checked && item.singleCode !== goods.singleCode){
+                    singleCodes.push(item.singleCode);
                     buyeds.push(item.qty);
                 }
             });
         });
         if(checked){
-            singleCodes.push(goods.id);
+            singleCodes.push(goods.singleCode);
             buyeds.push(goods.qty);
         }
         this.props.toggleCartItem({
@@ -123,7 +125,7 @@ class Cart extends Component {
             cartIndex,
             groupIndex,
             goodsIndex,
-            id:goods.id,
+            singleCode:goods.singleCode,
             checked
         });
     }
@@ -142,8 +144,8 @@ class Cart extends Component {
         let buyeds = [];
         cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
-                if(item.id !== goods.id && item.checked){
-                    singleCodes.push(item.id);
+                if(item.singleCode !== goods.singleCode && item.checked){
+                    singleCodes.push(item.singleCode);
                     buyeds.push(item.qty);
                 }
             })
@@ -156,7 +158,7 @@ class Cart extends Component {
                     cartId:goods.cartId,
                     singleCodes:singleCodes.join(','),
                     qtys:buyeds.join(','),
-                    singleCode:goods.id,
+                    singleCode:goods.singleCode,
                     cartIndex,
                     groupIndex,
                     goodsIndex
@@ -174,7 +176,7 @@ class Cart extends Component {
                     onChange={this.toggleItemChecked.bind(this,goods,i,j,k)} />
                     <div>
                         <div className="img_wrap">
-                            <a className="J_ytag cartlist" href={"/gooddetail/"+goods.id}>
+                            <a className="J_ytag cartlist" href={"/gooddetail/"+goods.singleCode}>
                             <img width="100%" src={goods.imageUrl} /></a>
                             <span className="limitBuy">限购{goods.buyLimit}件</span>
                         </div>
@@ -186,7 +188,7 @@ class Cart extends Component {
                             </p>
                             <div className="act_wrap"> 
                                 <NumberPicker value={goods.qty} minimum={1} maximum={goods.buyLimit} 
-                                onChange={this.handleChangeBuyed.bind(this,goods,i)} />
+                                onChange={this.handleChangeBuyed.bind(this,goods,i,j,k)} />
                             </div>
                         </div>
                     </div>

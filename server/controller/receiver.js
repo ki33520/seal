@@ -61,6 +61,14 @@ function receiversFilter(receivers) {
     _.each(receivers, function(receiver) {
         var _receiver = receiverFilter(receiver)
         _receiver["id"] = receiver.recvAddressId
+        var idCard = _.words(receiver["idCard"],/\d{1}/g)
+        idCard = _.map(idCard,function(v,i){
+            if(i > 5 && i < 14){
+                v = "*"
+            }
+            return v
+        })
+        _receiver["idCard"] = idCard.join("")
         _receivers.push(_receiver)
     })
     return _receivers
@@ -101,7 +109,7 @@ var receiverById = function(req, res, next) {
 
 function receiverFilter(receiver) {
     var _receiver = _.pick(receiver, [
-        "cityCode", "cityName",
+        "cityCode", "cityName","isDefault",
         "provinceCode", "provinceName", "isDefault", "idCard", "address", "zipcode"
     ]);
     _receiver["districtCode"] = receiver["countyCode"]
@@ -109,7 +117,6 @@ function receiverFilter(receiver) {
     _receiver["id"] = receiver["recvAddressId"]
     _receiver["consignee"] = receiver["recvLinkman"]
     _receiver["mobileNumber"] = receiver["recvMobile"]
-    _receiver["isDefault"] = (receiver["isDefault"] === 1)
     return _receiver
 }
 

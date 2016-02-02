@@ -2,36 +2,31 @@
 var _ = require("lodash");
 var bluebird = require("bluebird");
 var util = require("../lib/util.js");
-var config = require("../lib/config.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 var DEFT = require("../../shared/chunk/goodlist/constant.es6");
-
-function getSalesPrice(goods){
-    if(goods.flashPrice > 0){
-        return goods.flashPrice;
-    }else if(goods.mobilePrice > 0){
-        return goods.mobilePrice;
-    }else{
-        return goods.salesPrice;
-    }
-}
+var filter = require("../lib/filter.js");
 
 function filterGoodsList(result){
     var list = [];
  
     result && result.map((v)=>{
         list.push({
-            id:v.singleCode,
-            smallImageUrl:config.imgServer + v.picUrl,
-            salesPrice:getSalesPrice(v),
+            singleCode:v.singleCode,
+            smallImageUrl:filter.imageUrl(v.picUrl),
+            salesPrice:filter.price({
+                flashPrice:v.flashPrice,
+                mobilePrice:v.mobilePrice,
+                salesPrice:v.salesPrice,
+                startTime:v.beginDateStr,
+                endTime:v.endDateStr
+            }),
             originPrice:v.originPrice,
             discounts:v.discounts,
             materTitle:v.materTitle,
             sourceName:v.areaName,
-            sourceImageUrl:config.imgServer +v.areaLogo,
-            isSaleOut:v.localStock > 0 ? false : true,
-            isFlashPrice:v.flashPrice>0?true:false,
-            isMobilePrice:v.mobilePrice>0 ?true:false
+            sourceImageUrl:filter.imageUrl(v.areaLogo),
+            isSoldOut:filter.isSoldOut(v.localStock),
+            saleType:filter.saleType(v)
         })
     });
     
@@ -93,7 +88,7 @@ var search = function(req, res, next) {
         options.sourceAreas = query.areaNames;
     }
 
-    var params = Object.assign({},options);
+    var params = _.assign({},options);
 
     if(params.searchKey){
         params.searchKey=null;
