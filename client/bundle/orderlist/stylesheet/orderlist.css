@@ -109,6 +109,11 @@ body{
 .J_moveRight > div {
     padding:.32rem 0;
 }
+.J_moveRight .slide-img-wrap{
+    overflow-y: hidden;
+    overflow-x: auto;
+    height: 2.08rem;
+}
 .J_moveRight .img_wrap {
     width:2.08rem;
     height:2.08rem;
