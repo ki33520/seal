@@ -3,27 +3,23 @@
 import React,{Component} from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
-import createStoreWithMiddleware from "../../lib/redux-helper.es6";
+import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
 import GoodList from "./component.jsx";
+import * as actions from "./action.es6";
 
-function selector(state){
-    const {searchParams,totalPage,filters,goods,hotwords,associatewords,isFetching,hotwordFetched} = state.goodsByParam
-    return {
-        isFetching,
-        searchParams,
-        totalPage,
-        filters,
-        goods,
-        hotwordFetched,
-        associatewords,
-        hotwords
-    };
-}
+let GoodListConnected = connect((state)=>{
+    return state;
+})(wrapComponentWithActions(GoodList,actions));
 
-let GoodListConnected = connect(selector)(GoodList);
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
+    if (module.hot) {
+        module.hot.accept('./reducer.es6', () => {
+            const nextRootReducer = require('./reducer.es6');
+            store.replaceReducer(nextRootReducer);
+        });
+    }
     return store
 }
 

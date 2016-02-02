@@ -2,7 +2,6 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import {fetchHotWord} from "../action.es6"
 
 class SearchBox extends Component{
     constructor(props){
