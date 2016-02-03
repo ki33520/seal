@@ -167,7 +167,7 @@ class Floor extends Component{
                         </div>
                         <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
-                            <span>合计：<em>&yen;{paymentFee.toFixed(2)}</em></span>
+                            <span>合计：<em>&yen;{salesTotalFee.toFixed(2)}</em></span>
                             {this.renderButtons(child,i)}
                         </div>
                     </div>
