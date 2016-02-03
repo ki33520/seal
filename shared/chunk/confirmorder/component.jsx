@@ -12,11 +12,13 @@ class ConfirmOrderRouter extends Component{
     handleChangeReceiver(receiver){
         const {dispatch} = this.props;
         dispatch(changeReceiver(receiver));
-        dispatch(fetchShipFee({
-            provinceCode:receiver.provinceCode,
-            cityCode:receiver.cityCode,
-            districtCode:receiver.districtCode
-        }))
+        if(receiver){
+            dispatch(fetchShipFee({
+                provinceCode:receiver.provinceCode,
+                cityCode:receiver.cityCode,
+                districtCode:receiver.districtCode
+            }))
+        }
     }
     handleChangeCoupon(coupon){
         const {dispatch} = this.props;

@@ -119,15 +119,15 @@ header .indexSearch:before{
   background-size: 100%;
   margin-bottom:.373rem;
 }
-.m-entry span:nth-child(2):before {
+.m-entry a:nth-child(2) >span:before {
     background-position:0 -60px;
     background-size: 100%;
 }
-.m-entry span:nth-child(3):before {
+.m-entry a:nth-child(3) >span:before {
     background-position:0 -120px;
     background-size: 100%;
 }
-.m-entry span:nth-child(4):before {
+.m-entry a:nth-child(4) >span:before {
     background-position:0 -180px;
     background-size: 100%;
 }

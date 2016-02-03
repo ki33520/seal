@@ -9,54 +9,58 @@ import{
  
 
 class GoodSorter extends Component{
- 
-    sortDefault(){
-        const {toggleSort} = this.props;
-        
-        toggleSort({
-            sortType:SORT_NORMAL,
-            sortViewType:SORT_DESC
+    constructor(props){
+        super(props);
+        this.state = {
+            viewType:SORT_DESC,
+            sortType:SORT_NORMAL
+        }
+    }
+    sortBy(type){
+        const {toggleSort} = this.props
+        switch(type){
+            case SORT_NORMAL:
+                toggleSort({
+                    sortType:SORT_NORMAL,
+                    viewType:SORT_DESC
+                });
+                break;
+            case SORT_PRICE:
+                toggleSort({
+                    sortType:SORT_PRICE,
+                    viewType:this.state.viewType
+                });
+                break;
+            case SORT_SALES:
+                toggleSort({
+                    sortType:SORT_SALES,
+                    viewType:SORT_DESC
+                });
+                break;
+        }
+        this.setState({
+            viewType:!this.state.viewType,
+            sortType:type
         });
     }
-
-    sortPrice(){
-        let sortViewType =  this.props.params.sortViewType;
-        sortViewType = sortViewType === SORT_ASC ? SORT_DESC :SORT_ASC;
-        this.props.toggleSort({
-            sortType:SORT_PRICE,
-            sortViewType
-        });
-    }
-
-    sortSales(){
-        this.props.toggleSort({
-            sortType:SORT_SALES,
-            sortViewType:SORT_DESC
-        });
-    }
-
     render(){
-        const {sortType,sortViewType} = this.props.params;
- 
-        const normalClass=classNames('normal',{
+        const {sortType,viewType} = this.state;
+        const normal=classNames('normal',{
             "active":sortType===SORT_NORMAL
         });
-        
-        const priceClass=classNames("price",{
-            "active":sortType===SORT_PRICE && sortViewType===SORT_DESC,
-            "price-asc":sortType===SORT_PRICE && sortViewType===SORT_ASC
+        const price=classNames("price",{
+            "active":sortType===SORT_PRICE && viewType===SORT_DESC,
+            "price-asc":sortType===SORT_PRICE && viewType===SORT_ASC
         });
-
-        const salesClass=classNames('sales',{
+        const sales=classNames('sales',{
             "active":sortType===SORT_SALES
         });
-
         return (
             <div>
                 <div className="search-order">
-                    <a href="javascript:;" className={normalClass} onClick={this.sortDefault.bind(this)}><i></i>默认</a>
-                    <a href="javascript:;" className={priceClass}  onClick={this.sortPrice.bind(this)}><i></i>价格</a>
-                    <a href="javascript:;" className={salesClass}  onClick={this.sortSales.bind(this)}><i></i>销量</a>
+                    <a href="javascript:;" className={normal} onClick={this.sortBy.bind(this,SORT_NORMAL)}><i></i>默认</a>
+                    <a href="javascript:;" className={price}  onClick={this.sortBy.bind(this,SORT_PRICE)}><i></i>价格</a>
+                    <a href="javascript:;" className={sales}  onClick={this.sortBy.bind(this,SORT_SALES)}><i></i>销量</a>
                 </div>
             </div>
         )

@@ -7,6 +7,8 @@ import Dialog from "../../../component/dialog.jsx";
 import Radio from "../../../component/form/radio.jsx";
 import _ from "lodash";
 
+import Alert from "../../../component/alert.jsx";
+
 class Receiver extends Component{
     constructor(props){
         super(props);
@@ -17,6 +19,7 @@ class Receiver extends Component{
     }
     handleCheck(receiver){
         const {onCheck} = this.props
+        this.props.changeReceiver(receiver)
         onCheck(receiver)
         this.props.receiverByUser.changeScene("index")
     }
@@ -26,7 +29,7 @@ class Receiver extends Component{
         })
     }
     handleDelete(receiver){
-        const {deleteReceiver} = this.props;
+        const {deleteReceiver,checkedReceiver,receivers} = this.props;
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
@@ -35,11 +38,17 @@ class Receiver extends Component{
             }
         })
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.receiverDeleted === true && this.props.receiverDeleted === false){
+            const {checkedReceiver,checkable} = this.props;
+            const {receivers} = nextProps;
+            if(_.some(receivers,{id:checkedReceiver.id}) === false && checkable){
+                this.props.onCheck(receivers.length > 0 ?receivers[0]:null)
+                this.props.changeReceiver(receivers.length > 0 ?receivers[0]:null)
+            }
+        }
+    }
     handleCheckableGoBack(){
-        const {checkedReceiver,receivers,onCheck} = this.props
-        const receiver = _.findWhere(receivers,{id:checkedReceiver.id})
-        onCheck(receiver)
-        // console.log("checkedReceiver",receiver)
         this.props.receiverByUser.changeScene("index")
     }
     setReceiverDefault(receiver){
@@ -84,6 +93,13 @@ class Receiver extends Component{
         );
     }
     render(){
+        const handleAddReceiver = ()=>{
+            if(this.props.receivers.length >= 6){
+                this.props.alert("收货地址不能超过6个!",2000)
+            }else{
+                this.props.changeScene("addreceiver")
+            }
+        }
         return (
             <div className="receiver-content">
             {this.props.checkable?(<Header onGoBack={this.handleCheckableGoBack.bind(this)}>选择收货地址</Header>):(
@@ -98,9 +114,10 @@ class Receiver extends Component{
             {this.props.receivers.length > 0?(
             <div className="addBtns">
                 <a href="javascript:void(null)" 
-                onClick={this.props.changeScene.bind(this,"addreceiver")} className="addBtn">添加新地址</a>
+                onClick={handleAddReceiver} className="addBtn">添加新地址</a>
             </div>
             ):null}
+            <Alert active={this.props.alertActive}>{this.props.alertContent}</Alert>
             </div>
         )
     }

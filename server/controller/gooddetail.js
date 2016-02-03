@@ -104,11 +104,12 @@ function goodFilter(good) {
         "code", "discount", "isMain", "title", "subTitle", "detail",
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
-        "description", "showTaxRate", "addCount"
+        "description", "addCount"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl
     })
+    _good["showTaxRate"] = (good.showTaxRate * 100 + "%")
     _good["productCode"] = good.groupCode
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice

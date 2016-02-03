@@ -43,7 +43,7 @@ class Floor extends Component{
     }
     renderSingleRecommend(){
         let {singleRecommend} = this.props.channel.floors;
-        if(singleRecommend && singleRecommend.goods){
+        if(singleRecommend && singleRecommend.goods && singleRecommend.goods.length > 0){
             let goods = singleRecommend.goods.map((good,i)=>{
                 return (
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
@@ -71,7 +71,7 @@ class Floor extends Component{
     }
     renderNewRecommend(){
         let {newRecommend} = this.props.channel.floors;
-        if(newRecommend && newRecommend.goods){
+        if(newRecommend && newRecommend.goods && newRecommend.goods.length > 0){
             let goods = newRecommend.goods.map((good,i)=>{
                 return (
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
@@ -120,7 +120,7 @@ class Floor extends Component{
         let {badges} = this.props.channel.floors;
         if(badges && badges.length > 0){
             badges = badges.map((badge,i)=>{
-                return <span key={i}>{badge.title}</span>
+                return <a href={badge.jumpUrl} key={i}><span>{badge.title}</span></a>
             })
             return <div className="m-entry">{badges}</div>
         }
