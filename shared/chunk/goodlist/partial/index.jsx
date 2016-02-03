@@ -1,8 +1,8 @@
 'use strict'
 import React,{Component} from "react";
 import classNames from "classnames";
-import util from "../../../lib/util.es6";
 import MaskLayer from "../../../component/masklayer.jsx";
+import Refresher from "../../../component/refresher.jsx";
 import Header from "../../common/header.jsx";
 import Sidebar from "./sidebar.jsx";
 import GoodItem from "./goodItem.jsx";
@@ -71,6 +71,17 @@ class GoodListApp extends React.Component{
         let _params = Object.assign({},params,order);
         this.props.fetchGoods(_params);
     }
+    beginRefresh(){
+        const {params,totalPage,isFetching} = this.props.goodsByParam;
+        let curentPage = params.pageIndex;
+        if(isFetching || totalPage <= curentPage){
+            return false;
+        }
+        let _params = Object.assign({},params,{
+            pageIndex : curentPage + 1
+        });
+        this.props.fetchGoods(_params);
+    }
     render(){
         const {keyword,filters,list,isFetching} = this.props.goodsByParam;
         const goodList = [];
@@ -115,6 +126,7 @@ class GoodListApp extends React.Component{
                     <div className="special-activity-list clearfix">
                         {goodList}
                     </div>
+                    <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
                 </div>
                 <Sidebar
                     popupActive={this.state.popupActive}
