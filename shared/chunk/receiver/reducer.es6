@@ -219,6 +219,9 @@ function receiverByUser(state={},action){
                     receiverUpdating:false
                 })
             }
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
         default:
             return state;
     }

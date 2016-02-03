@@ -146,6 +146,7 @@ class Slider extends Component{
             // e.preventDefault();
             // return;
         }
+        const activeIndex = this.getActiveIndex()
         const offsetWidth = this.state.slideStyle.width; 
         const offsetHeight = this.state.slideStyle.height; 
         const {oriention} = this.props;
@@ -155,9 +156,15 @@ class Slider extends Component{
             const absOfOffsetY = Math.abs(offsetY);
             if(absOfOffsetY >= offsetHeight / 2){
                 if(offsetY < 0){
+                    if(activeIndex === this.props.children.length && this.needPseudoNode()){
+                        return
+                    }
                     // console.log('next Y')
                     setTimeout(this.next.bind(this),100);
                 }else if(offsetY > 0){
+                    if(activeIndex === 1 && this.needPseudoNode()){
+                        return
+                    }
                     // console.log('prev Y')
                     setTimeout(this.prev.bind(this),100);
                 }
@@ -167,15 +174,23 @@ class Slider extends Component{
             }
         }
         if(oriention === "horizontal"){
+
             offsetX = Math.abs(clientX) - Math.abs(this.startTouchX);
             const absOfOffsetX = Math.abs(offsetX);
             // console.log('distance',Math.abs(clientX),Math.abs(this.startTouchX))
             if(absOfOffsetX >= offsetWidth / 2){
                 if(offsetX < 0){
-                    // console.log('next X');
+                    if(activeIndex === this.props.children.length && this.needPseudoNode()){
+                        console.log('stop next')
+                        return
+                    }
                     setTimeout(this.next.bind(this),100);
+                    // console.log('next X');
                 }else if(offsetX > 0){
-                    // console.log('prev X');
+                    if(activeIndex === 1 && this.needPseudoNode()){
+                        console.log('stop prev')
+                        return
+                    }
                     setTimeout(this.prev.bind(this),100);
                 }
             }else{
@@ -185,7 +200,7 @@ class Slider extends Component{
     }
     handleTouchMove(e){
         // e && e.preventDefault();
-        e && e.stopPropagation();
+        // e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
         }
@@ -196,8 +211,8 @@ class Slider extends Component{
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = this.inTouchableRegion(clientX,clientY,e.currentTarget);
         if(!inTouchableRegion){
-            e.preventDefault();
-            return;
+            // e.preventDefault();
+            // return;
         }
         const {oriention} = this.props;
         let moveY = Math.abs(clientY - this.startTouchY);
@@ -214,13 +229,19 @@ class Slider extends Component{
             return
         }
         this.moveDirection = moveDirection
+        if(this.moveDirection === oriention){
+            e.preventDefault()
+        }
 
         const offsetX = Math.abs(this.startTouchX) - Math.abs(clientX);
         const offsetY = Math.abs(this.startTouchY) - Math.abs(clientY);
 
         // console.log('currentX',clientX,'currentY',clientY)
         // console.log('lastX',this.lastMoveX,'lastY',this.lastMoveY)
+        // this.timeout = setTimeout(()=>{
         this.transitionTouch(offsetX,offsetY)
+            // clearTimeout(this.timeout)
+        // },30)
         this.lastMoveY = clientY;
         this.lastMoveX = clientX;
     }
@@ -258,6 +279,13 @@ class Slider extends Component{
                 return;
             }
             scrollY += offsetY;
+            if(this.needPseudoNode()){
+                if(scrollY >= (this.state.slideStyle.height * this.props.children.length)){
+                    return
+                }else if(scrollY <= this.state.slideStyle.height){
+                    return
+                }
+            }
             transform = "translate3D(0,-"+scrollY+"px,0)";
         }else if(oriention === "horizontal" && offsetX !== 0){
             var scrollX = this.state.slideStyle.width * activeIndex;
@@ -266,6 +294,13 @@ class Slider extends Component{
                 return;
             }
             scrollX += offsetX;
+            if(this.needPseudoNode()){
+                if(scrollX >= (this.state.slideStyle.width * this.props.children.length)){
+                    return
+                }else if(scrollX <= this.state.slideStyle.width){
+                    return
+                }
+            }
             transform = "translate3D(-"+scrollX+"px,0,0)";
         }
         const slidesNode = ReactDOM.findDOMNode(this.refs.slides);
@@ -364,7 +399,7 @@ class Slider extends Component{
         const count = this.slides.length;
         const activeIndex = state.activeIndex;
         var slidesStyle = this.state.slidesStyle;
-        if(this.needPseudoNode() === true){
+        if(this.props.effect === "roll"){
             var transform;
             // if direction is next and should active is pseudo item then redirect to the first real item
             if(activeIndex === 1&& state.direction === "next"){
@@ -530,7 +565,7 @@ class Slider extends Component{
             sliderStyle = null;
             slidesStyle = null;
         }
-        // console.log('render slider',this.state)
+        // console.log('render slider',this.getActiveIndex())
         return (
             <div className={classes} 
             style={sliderStyle}

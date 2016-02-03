@@ -178,7 +178,7 @@
     "fetchGoodsList": {
         "uri": "/search/v1/findListByParamsWap",
         "baseURL": {
-            "develop": "http://solr.hwg.youayun.cn:7988",
+            "develop": "http://search.hwg.youayun.cn:7988",
             "test": "http://search.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }

@@ -46,7 +46,7 @@ class AddReceiver extends Component{
         } = (receiver === null?{}:receiver);
         createReceiver({
             consignee,idCard,mobileNumber,address,
-            isdefault:1,
+            isDefault:0,
             provinceCode,
             cityCode,
             districtCode,

@@ -116,6 +116,7 @@ function floorFilter(floors) {
     _floors["badges"] = _.map(_floors["badges"], function(badge) {
         return {
             id: badge.id,
+            jumpUrl: getJumpUrl(badge),
             imageUrl: config.imgServer + badge.imageUrl,
             title: badge.activityTitle
         }

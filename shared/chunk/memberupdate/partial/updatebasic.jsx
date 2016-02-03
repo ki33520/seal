@@ -31,7 +31,7 @@ class UpdateBasic extends Component{
         e && e.preventDefault();
         const {dispatch} = this.props;
         const rules = {
-            nickName: {
+            fieldnickName: {
                 reg: function(str){
                     var len = 0;  
                     for(var i=0; i<str.length; i++){
@@ -49,7 +49,7 @@ class UpdateBasic extends Component{
                 },
                 msg: "请按正确格式填写昵称"
             },
-            gender: {
+            fieldgender: {
                 reg: function(str){
                     return /^[0-9]{1}$/.test(str);
                 },
@@ -77,24 +77,30 @@ class UpdateBasic extends Component{
     }
     componentDidMount(){
         const {dispatch} = this.props;
-        const birthday = this.state.year+"-"+this.state.month+'-'+this.state.day;
-        dispatch(changeField('birthday',birthday));
+        const {birthday} = this.props.basicByForm;
+        if(birthday){
+            const fieldBirthday = this.state.year+"-"+this.state.month+'-'+this.state.day;
+            dispatch(changeField("birthday",fieldBirthday));
+        }
     }
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
         const {dispatch} = this.props;
-        dispatch(changeField(fieldName,e.target.value));
+        dispatch(changeField("field"+fieldName,e.target.value));
     }
     handleChangeBasic(e){
         e && e.preventDefault();
         const {dispatch,basicByForm} = this.props;
         let {nickName,gender,birthday} = basicByForm;
+        let {fieldnickName,fieldgender} = basicByForm;
         gender = gender === "-1" ? null : gender;
         this.formVerify({
-            nickName,gender,birthday,
+            fieldnickName,fieldgender,birthday,
             callback: function(){
                 dispatch(changeBasic("/updatebasic",{
-                    nickName,gender,birthday
+                    nickName: fieldnickName,
+                    gender: fieldgender,
+                    birthday: birthday
                 }));
             }
         });
@@ -133,7 +139,7 @@ class UpdateBasic extends Component{
     }
     render(){
         const {dispatch,basicByForm} = this.props;
-        const {nickName,gender,birthday,alertContent,alertActive} = basicByForm;
+        const {nickName,gender,birthday,fieldnickName,fieldgender,alertContent,alertActive} = basicByForm;
         return (
             <div className="basic-content">
                 <Header>
@@ -143,14 +149,14 @@ class UpdateBasic extends Component{
                 <div className="form-item">
                     <div className="label-item">
                         <label>昵称</label>
-                        <input type="text" placeholder="请填写" name="nickName" value={nickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
+                        <input type="text" placeholder="请填写" name="nickName" value={fieldnickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
                     </div>
                     <div className="tips">4-20个字符，可全部由字母组成，或数字、字母、“_”、“-”任意两种以上组合</div>
                 </div>
                 <div className="form-item">
                     <div className="label-item">
                         <label>性别</label>
-                        <select value={gender} defaultValue={gender} name="gender" onChange={this.handleFieldChange.bind(this,"gender")}>
+                        <select value={fieldgender} name="gender" onChange={this.handleFieldChange.bind(this,"gender")}>
                             <option value="-1">请选择</option>
                             {
                                 _.map(["保密","男","女"],function(a,b){
