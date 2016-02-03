@@ -25,14 +25,15 @@ function configureStore(initialState){
 
 class GoodListApp extends Component{
     render(){
-        const {searchParams,totalPage,filters,goods} = this.props.initialState;
+        const {totalPage,filters,params,list,keyword,isFetching} = this.props.initialState;
         const initialState = {
             goodsByParam:{
-                isFetching:false,
-                searchParams,
+                list,
                 totalPage,
                 filters,
-                goods
+                params,
+                keyword,
+                isFetching
             }
         };
         let store = configureStore(initialState);
