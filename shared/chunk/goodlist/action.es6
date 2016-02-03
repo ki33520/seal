@@ -1,103 +1,44 @@
 'use strict'
 import {apiRequest} from "../../lib/util.es6";
 import {
-    REQUEST_HOTWORD,RESPONSE_HOTWORD,
-    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     RECEIVE_GOODS,REQUEST_GOODS,
-    CHANGE_PARAM,CHANGE_ClASS_ITEM,CHANGE_BRAND_ITEM,CHANGE_AREA_ITEM,
-    RESET_ALL_ITEM
+    TOGGLE_CHECKED,RESET_FILTER
 } from "./constant.es6";
 
-function receiveGoods(param,res){
+function receiveGoods(params,res){
     return {
         type:RECEIVE_GOODS,
-        param:param,
-        res:res
+        params,
+        res
     }
 }
 
-function requestGoods (param) {
+function requestGoods (params) {
     return {
         type:REQUEST_GOODS,
-        param:param
+        params
     }
 }
 
-export function fetchGoods(param){
+export function fetchGoods(params){
     return (dispath)=>{
-        dispath(requestGoods(param));
-        return apiRequest('/search',param).then((res)=>{
-            dispath(receiveGoods(param,res))
+        dispath(requestGoods(params));
+        return apiRequest('/search',params).then((res)=>{
+            dispath(receiveGoods(params,res))
         })
     }
 }
 
-export function changeParam(param){
+export function toggleChecked(params){
     return {
-        type:CHANGE_PARAM,
-        param
+        type:TOGGLE_CHECKED,
+        params
     }
 }
 
-export function changeClassItem(param){
+export function resetFilter(params){
     return {
-        type:CHANGE_ClASS_ITEM,
-        param
+        type:RESET_FILTER,
+        params
     }
 }
-
-export function resetAll(param){
-    return {
-        type:RESET_ALL_ITEM,
-        param
-    }
-}
-
-function requestHotWord(param){
-    return {
-        type:REQUEST_HOTWORD,
-        param
-    }
-}
-
-function responseHotWord(param,res){
-    return {
-        type:RESPONSE_HOTWORD,
-        param,
-        res
-    }
-}
-
-export function fetchHotWord(param){
-    return (dispatch)=>{
-        dispatch(requestHotWord(param));
-        apiRequest("/searchhotwords",param).then((res)=>{
-            dispatch(responseHotWord(param,res));
-        })
-    }
-}
-
-function requestAssociateWord(param){
-    return {
-        type:REQUEST_ASSOICATEWORD,
-        param
-    }
-}
-
-function responseAssociateWord(param,res){
-    return {
-        type:RESPONSE_ASSOICATEWORD,
-        param,
-        res
-    }
-}
-
-export function fetchAssociateKeywords(param){
-    return (dispatch)=>{
-        dispatch(requestAssociateWord(param));
-        apiRequest("/searchassociate",param,{method:"POST"}).then((res)=>{
-            dispatch(responseAssociateWord(param,res));
-        })
-    }
-}
- 
