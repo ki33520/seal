@@ -4,7 +4,7 @@ import {combineReducers} from "redux";
 import _ from "lodash"
 
 import {
-    CHANGE_FIELD,
+    CHANGE_FIELD,CHANGE_RECEIVER,
     REQUEST_PROVINCES,RESPONSE_PROVINCES,
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
@@ -166,6 +166,10 @@ function cascadeArea(state,action){
 function receiverByUser(state={},action){
     let receivers = state.receivers
     switch(action.type){
+        case CHANGE_RECEIVER:
+            return Object.assign({},state,{
+                checkedReceiver:action.checkedReceiver
+            })
         case REQUEST_RECEIVERS:
             return Object.assign({},state,{
                 receiversFetching:true,
