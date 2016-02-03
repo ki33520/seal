@@ -126,7 +126,6 @@ class GoodListApp extends React.Component{
                     <div className="special-activity-list clearfix">
                         {goodList}
                     </div>
-                    <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
                 </div>
                 <Sidebar
                     popupActive={this.state.popupActive}
@@ -149,6 +148,7 @@ class GoodListApp extends React.Component{
                     toggleChecked={this.toggleChecked.bind(this,'areaNames')}
                     handleGoBack ={this.toggleFilterPopup.bind(this)} />
                 <MaskLayer visible={this.state.maskActive} />
+                <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
             </div>
         )
     }
