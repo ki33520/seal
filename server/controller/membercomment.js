@@ -13,6 +13,7 @@ function formatComment(object) {
             imageUrlList: child.imageUrlList,
             imagesUrl: child.imagesUrl,
             createdAt: child.createdAt,
+            updatedAt: child.updatedAt,
             id: child.id,
             orderItemId: child.orderItemId,
             orderTime: child.orderTime,
@@ -22,7 +23,8 @@ function formatComment(object) {
             singleCode: child.singleCode,
             singleImage: config.imgServer+child.singleImage,
             singleTitle: child.singleTitle,
-            rate: child.rate
+            rate: child.rate,
+            salesPrice: child.salesPrice
         };
     });
 }
@@ -38,12 +40,13 @@ var index = function(req, res, next) {
             pageSize: pageSize
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
                 object = ret.allComment.object;
+            console.log(object.totalCount)
             allComment.totalCount = object.totalCount;
-            allComment.list = object.result ? _.slice(formatComment(object.result),0,pageIndex*pageSize) : [];
+            allComment.pageCount = Math.ceil(allComment.totalCount/pageSize);
+            allComment.list = object.result ? formatComment(object.result) : [];
             allComment.pageIndex = pageIndex;
             allComment.pageSize = pageSize;
             if (req.xhr === true) {
@@ -80,12 +83,12 @@ var showComment = function(req, res, next) {
             pageSize: pageSize
         },false)
     }).then(function(ret) {
-        console.log(ret)
         if (ret.showComment.returnCode === 0) {
             var showComment = {},
                 object = ret.showComment.object;
             showComment.totalCount = object.totalCount;
-            showComment.list = object.result ? _.slice(formatComment(object.result),0,pageIndex*pageSize) : [];
+            showComment.pageCount = Math.ceil(showComment.totalCount/pageSize);
+            showComment.list = object.result ? formatComment(object.result) : [];
             showComment.pageIndex = pageIndex;
             showComment.pageSize = pageSize;
             res.json({
