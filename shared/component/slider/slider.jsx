@@ -181,12 +181,14 @@ class Slider extends Component{
             if(absOfOffsetX >= offsetWidth / 2){
                 if(offsetX < 0){
                     if(activeIndex === this.props.children.length && this.needPseudoNode()){
+                        console.log('stop next')
                         return
                     }
-                    // console.log('next X');
                     setTimeout(this.next.bind(this),100);
+                    // console.log('next X');
                 }else if(offsetX > 0){
                     if(activeIndex === 1 && this.needPseudoNode()){
+                        console.log('stop prev')
                         return
                     }
                     setTimeout(this.prev.bind(this),100);
@@ -227,13 +229,19 @@ class Slider extends Component{
             return
         }
         this.moveDirection = moveDirection
+        if(this.moveDirection === oriention){
+            e.preventDefault()
+        }
 
         const offsetX = Math.abs(this.startTouchX) - Math.abs(clientX);
         const offsetY = Math.abs(this.startTouchY) - Math.abs(clientY);
 
         // console.log('currentX',clientX,'currentY',clientY)
         // console.log('lastX',this.lastMoveX,'lastY',this.lastMoveY)
+        // this.timeout = setTimeout(()=>{
         this.transitionTouch(offsetX,offsetY)
+            // clearTimeout(this.timeout)
+        // },30)
         this.lastMoveY = clientY;
         this.lastMoveX = clientX;
     }
@@ -272,7 +280,7 @@ class Slider extends Component{
             }
             scrollY += offsetY;
             if(this.needPseudoNode()){
-                if(scrollY >= (this.state.slideStyle.height * count)){
+                if(scrollY >= (this.state.slideStyle.height * this.props.children.length)){
                     return
                 }else if(scrollY <= this.state.slideStyle.height){
                     return
@@ -391,7 +399,7 @@ class Slider extends Component{
         const count = this.slides.length;
         const activeIndex = state.activeIndex;
         var slidesStyle = this.state.slidesStyle;
-        if(this.needPseudoNode() === true){
+        if(this.props.effect === "roll"){
             var transform;
             // if direction is next and should active is pseudo item then redirect to the first real item
             if(activeIndex === 1&& state.direction === "next"){
@@ -557,7 +565,7 @@ class Slider extends Component{
             sliderStyle = null;
             slidesStyle = null;
         }
-        // console.log('render slider',this.state)
+        // console.log('render slider',this.getActiveIndex())
         return (
             <div className={classes} 
             style={sliderStyle}

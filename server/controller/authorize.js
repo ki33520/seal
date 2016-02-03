@@ -21,7 +21,7 @@ var loginGateway = function(req, res, next) {
                 user.memberId = resp.object.id
                 req.session.user = user;
                 // console.log('user',req.session["user"])
-                if (returnUrl.search(/:3000/g)) {
+                if (returnUrl.search(/:3000/g) && config.runtime === "develop") {
                     returnUrl = returnUrl.replace(":3000",":5000")
                 }
                 if(req.session["localcart"] && req.session["localcart"].length > 0){

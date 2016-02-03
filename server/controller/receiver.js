@@ -136,18 +136,68 @@ var saveReceiver = function(req, res, next) {
         address: req.body.address,
         isDefault:req.body.isDefault
     }
-    util.fetchAPI("updateReceiver", receiver).then(function(resp) {
-        if (resp.returnCode === 0) {
-            res.json({
-                receiverSaved: true
-            })
-        } else {
-            res.json({
-                receiverSaved: false,
-                errMsg: resp.message
-            })
+    var validResult = receiverValidator(_.extend(receiver,{
+        provinceCode:req.body.provinceCode,
+        cityCode:req.body.cityCode
+    }))
+    if(validResult.isValid === false){
+        res.json({
+            receiverSaved:false,
+            errMsg:validResult.errMsg
+        })
+    }else{
+        util.fetchAPI("updateReceiver", receiver).then(function(resp) {
+            if (resp.returnCode === 0) {
+                res.json({
+                    receiverSaved: true
+                })
+            } else {
+                res.json({
+                    receiverSaved: false,
+                    errMsg: resp.message
+                })
+            }
+        })
+    }
+}
+
+function receiverValidator(receiver){
+    let isValid = true
+    let errMsg = null
+    if(receiver.recvLinkman){
+        if(/\w{2,10}/g.test(receiver.recvLinkman) === false){
+            // return {isValid:false,errMsg:"姓名不合法"}
         }
-    })
+    }else{
+        return {isValid:false,errMsg:"姓名不能为空"}
+    }
+    if(receiver.idCard){
+        if(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/g.test(receiver.idCard) === false){
+            return {isValid:false,errMsg:"身份证不合法"}
+        }
+    }else{
+        return {isValid:false,errMsg:"身份证不能为空"}
+    }
+    if(receiver.recvMobile){
+        if(/^1[3|4|5|7|8]\d{9}$/g.test(receiver.recvMobile) === false){
+            return {isValid:false,errMsg:"手机号码不合法"}
+        }
+    }else{
+        return {isValid:false,errMsg:"手机号码不能为空"}
+    }
+    if(!receiver.provinceCode){
+        return {isValid:false,errMsg:"省份不能为空"}
+    }
+    if(!receiver.cityCode){
+        return {isValid:false,errMsg:"城市不能为空"}
+    }
+    if(!receiver.areaCode){
+        return {isValid:false,errMsg:"区县不能为空"}
+    }
+    if(!receiver.address){
+        return {isValid:false,errMsg:"详细地址不能为空"}
+    }
+    return {isValid,errMsg}
 }
 
 var createReceiver = function(req, res, next) {
@@ -161,18 +211,29 @@ var createReceiver = function(req, res, next) {
         address: req.body.address,
         isDefault:req.body.isDefault
     }
-    util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
-        if (resp.returnCode === 0) {
-            res.json({
-                receiverSaved: true
-            })
-        } else {
-            res.json({
-                receiverSaved: false,
-                errMsg: resp.message
-            })
-        }
-    })
+    var validResult = receiverValidator(_.extend(receiver,{
+        provinceCode:req.body.provinceCode,
+        cityCode:req.body.cityCode
+    }))
+    if(validResult.isValid === false){
+        res.json({
+            receiverSaved:false,
+            errMsg:validResult.errMsg
+        })
+    }else{
+        util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
+            if (resp.returnCode === 0) {
+                res.json({
+                    receiverSaved: true
+                })
+            } else {
+                res.json({
+                    receiverSaved: false,
+                    errMsg: resp.message
+                })
+            }
+        })
+    }
 }
 
 var deleteReceiver = function(req,res,next){

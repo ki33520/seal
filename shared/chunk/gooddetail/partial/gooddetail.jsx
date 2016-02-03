@@ -219,7 +219,7 @@ class GoodDetail extends Component{
             </Header>
             <div className={upperClasses}>
                 {good.slides.length > 0?(
-                <Slider effect="roll" autoPlay={false} speed={200}>{slides}</Slider>
+                <Slider effect="roll" autoPlay={false} loop={true} speed={200}>{slides}</Slider>
                 ):null}
                 <div className="title clearfix">
                     <span>{good.title}</span>

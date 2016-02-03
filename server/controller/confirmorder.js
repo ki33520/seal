@@ -182,9 +182,7 @@ var payGateway = function(req, res, next) {
     var param = util.decodeURLParam(req.params["param"])
         // console.log('param',param)
     var user = req.session.user;
-    var orderStatusURL = util.getAPIURL("orderStatus", {
-        orderNo: param.orderNo
-    })
+    var orderStatusURL = config.api["orderStatus"].url
     var urlObj = {
         protocol: req.protocol,
         host: req.headers.host,
