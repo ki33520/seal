@@ -15,27 +15,17 @@ class Coupon extends React.Component{
         }
     }
     handleClick(index){
-        const {pagination,couponType,dispatch} = this.props.couponByUser;
+        const {pagination,couponType} = this.props.couponByUser;
         const type = couponType[index];
         const {coupons,pageIndex,totalPage} = pagination[type];
-       
         this.setState({
             activeIndex:index
         });
-
-        if(coupons.length>0){
+        if(coupons){
             return false;
         }
-
         this.fetchCouponsByParam(type,pageIndex);
     }
-    fetchCouponsByParam(couponType,nextPage){
-        this.props.fetchCoupons({
-            type:couponType,
-            pageIndex:nextPage
-        });
-    }
-
     beginRefresh(){
         const {pagination,couponType,isFetching} = this.props.couponByUser;
         const index = this.state.activeIndex;
@@ -43,14 +33,17 @@ class Coupon extends React.Component{
         const totalPage = pagination[type].totalPage;
         const pageIndex = Number(pagination[type].pageIndex);
         const nextPage = pageIndex + 1;
-
         if(totalPage < pageIndex||isFetching === true){
             return false;
         }
-
         this.fetchCouponsByParam(type,nextPage);
     }
- 
+    fetchCouponsByParam(couponType,nextPage){
+        this.props.fetchCoupons({
+            type:couponType,
+            pageIndex:nextPage
+        });
+    }
     renderYouaCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
@@ -62,7 +55,6 @@ class Coupon extends React.Component{
             return (<NoCoupon message="您目前没有友阿优惠券哟！"/>);
         }
     }
-
     renderLegueCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
@@ -74,7 +66,6 @@ class Coupon extends React.Component{
             return (<NoCoupon message="您目前没有联盟优惠券哟！"/>);
         }
     }  
-
     renderInvalidCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
@@ -149,12 +140,10 @@ class YouaCoupon extends Component{
 class LegueCoupon extends Component{
     render(){
         const {coupon,invalid} = this.props;
-
         const classes = classNames("coupon",{
             "union-invalid":invalid,
             "union":!invalid
         });
-
         const expired = classNames({
             expired:invalid
         });
