@@ -3,7 +3,26 @@ var moment = require("moment");
 var _ = require("lodash");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
- 
+function filterCoupon(obj){
+    var coupon = {};
+    if(obj){
+        coupon = {
+            qrCode:null,//二维码
+            couponNo:obj.couponNo,//'优惠券号'
+            couponName:obj.couponName,//'优惠券名'
+            platform:obj.employCode,//'使用平台'
+            issueDate:obj.issueStartTime,//,'发券日期'
+            useDate:obj.issueDate,//'生效日期'
+            expDate:obj.validityDate,//'使用期限'
+            remark:obj.remark//'使用说明'
+        };
+        if(obj.employCode && obj.employCode !=='haiwaigou'){
+            //coupon.qrCode = 'xxx'
+        }
+    }
+    return coupon;
+}
+
 function formatCoupons(originalCoupons) {
     var coupons = [];
     _.each(originalCoupons,function(v){
@@ -37,8 +56,8 @@ function formatCoupons(originalCoupons) {
 var coupon = function(req, res, next) {
     var user = req.session.user;
     var pageSize = 10;
-    var pageIndex = req.body.pageIndex || 1;
-    var type = req.body.type||'youa';
+    var pageIndex = req.query.pageIndex || 1;
+    var type = req.query.type||'youa';
     var options = {
         youa:{status:0,isMerchants:0},
         legue:{status:0,isMerchants:1},
@@ -84,7 +103,25 @@ var coupon = function(req, res, next) {
             next(new Error(resp.message));
         }
     });
-
 }
 
-module.exports = coupon;
+var couponDetail = function(req, res, next) {
+    var user = req.session.user;
+    var couponNo = req.params.id;
+
+    util.fetchAPI("couponDetail", {
+        memberId:user.memberId,
+        couponNo: couponNo
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json(filterCoupon(resp.object));
+        }else{
+            next(new Error(resp.message));
+        }
+    })
+}
+
+module.exports = {
+    list:coupon,
+    detail:couponDetail
+};

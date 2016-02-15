@@ -84,9 +84,8 @@ router.post("/createreceiver",mainController.requireAuthorize,require("./control
 router.post("/deletereceiver",mainController.requireAuthorize,require("./controller/receiver").deleteReceiver);
 router.post("/setdefaultreceiver",mainController.requireAuthorize,require("./controller/receiver").setDefaultReceiver);
 
-router.get("/coupon",mainController.requireAuthorize, require("./controller/coupon"));
-router.post("/coupon", mainController.requireAuthorize, require("./controller/coupon"));
-router.get("/coupondetail/:id", require("./controller/coupondetail"));
+router.get("/coupon",mainController.requireAuthorize, require("./controller/coupon").list);
+router.get("/coupon/:id",mainController.requireAuthorize, require("./controller/coupon").detail);
 
 router.post("/api/v1/build/index",require("./controller/api").buildIndexPage);
 router.post("/api/v1/publish/index",require("./controller/api").publishIndexPage);
