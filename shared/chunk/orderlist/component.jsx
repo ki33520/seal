@@ -6,21 +6,44 @@ import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
-import fetchOrder from "./action.es6";
+import {fetchOrder,fetchDeliveryOrder} from "./action.es6";
 
 import Floor from "./partial/floor.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Header from "../common/header.jsx";
 import {alert} from "../common/action.es6";
 import Alert from "../../component/alert.jsx";
+import Dialog from "../../component/dialog.jsx";
 
 
 class OrderList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            displayFlag: props.flag
+            displayFlag: props.flag,
+            dialogActive:false,
+            dialogContent: "确定已收货吗?",
+            dialogOnConfirm:null
         }
+    }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        });
+    }
+    confirmDialog(orderNo,i){
+        const {dispatch} = this.props;
+        this.setState({
+            dialogActive:true,
+            dialogContent: "确定已收货吗?",
+            dialogOnConfirm:()=>{
+                this.toggleDialog();
+                dispatch(fetchDeliveryOrder("/deliveryorder",{
+                    orderNo,
+                    index: i
+                }));
+            }
+        });
     }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props;
@@ -105,7 +128,7 @@ class OrderList extends Component{
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=><a href="/orderlist/3">待收货</a>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={3} {...this.props} ref="floor"/>
+                        <Floor systemTime={systemTime} orderIndex={3} confirmDialog={this.confirmDialog.bind(this)} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
@@ -115,6 +138,9 @@ class OrderList extends Component{
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                 </SlideTabs>
+                <Dialog active={this.state.dialogActive} 
+                    onCancel={this.toggleDialog.bind(this)}
+                    onConfrim={this.state.dialogOnConfirm}>{this.state.dialogContent}</Dialog>
                 <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
