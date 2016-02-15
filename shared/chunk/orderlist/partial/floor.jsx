@@ -24,14 +24,16 @@ class Floor extends Component{
     constructor(props){
         super(props);
     }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        });
+    }
     handleDeliveryOrder(child,i,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
+        const {dispatch,confirmDialog} = this.props;
         const {orderNo} = child;
-        dispatch(fetchDeliveryOrder("/deliveryorder",{
-            orderNo,
-            index: i
-        }));
+        confirmDialog.call(this,orderNo,i);
     }
     handlePayGateway(child,e){
         e && e.preventDefault();

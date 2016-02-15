@@ -20,6 +20,7 @@ class OrderDetail extends Component{
         super(props);
         this.state = {
             dialogActive:false,
+            dialogContent: "确定要取消订单吗?",
             dialogOnConfirm:null
         }
     }
@@ -44,8 +45,15 @@ class OrderDetail extends Component{
         const {fetchDeliveryOrder} = this.props;
         const {order} = this.props.orderByParam;
         const {orderNo} = order;
-        fetchDeliveryOrder("/deliveryorder",{
-            orderNo
+        this.setState({
+            dialogActive:true,
+            dialogContent: "确定已收货吗?",
+            dialogOnConfirm:()=>{
+                this.toggleDialog();
+                fetchDeliveryOrder("/deliveryorder",{
+                    orderNo
+                });
+            }
         });
     }
     handleCloseOrder(e){
@@ -55,6 +63,7 @@ class OrderDetail extends Component{
         const {orderNo} = order;
         this.setState({
             dialogActive:true,
+            dialogContent: "确定要取消订单吗?",
             dialogOnConfirm:()=>{
                 this.toggleDialog();
                 fetchCloseOrder("/closedorder",{
@@ -221,7 +230,7 @@ class OrderDetail extends Component{
             {this.renderFooter()}
             <Dialog active={this.state.dialogActive} 
                 onCancel={this.toggleDialog.bind(this)}
-                onConfrim={this.state.dialogOnConfirm}>确定要取消订单吗?</Dialog>
+                onConfrim={this.state.dialogOnConfirm}>{this.state.dialogContent}</Dialog>
             <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
