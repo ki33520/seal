@@ -1,9 +1,12 @@
 'use strict';
 import {combineReducers} from "redux";
-import {START_FETCH_COUPON,FINISH_FETCH_COUPON} from "./constant.es6";
+import {
+    START_FETCH_COUPON,FINISH_FETCH_COUPON,
+    START_FETCH_DETAIL,FINISH_FETCH_DETAIL,
+    FETCH_COUPON_ID
+} from "./constant.es6";
 
-function couponByUser(state={},action){
-
+function index(state={},action){
     switch(action.type){
     	case START_FETCH_COUPON:
     		return Object.assign({},state,{
@@ -28,9 +31,37 @@ function couponByUser(state={},action){
     }
 }
 
+function detail(state={},action){
+    switch(action.type){
+        case START_FETCH_DETAIL:
+            return Object.assign({},state,{
+                isFetching:true,
+                isFetched:false
+            });
+        case FINISH_FETCH_DETAIL:
+            return Object.assign({},state,{
+                isFetching:false,
+                isFetched:true,
+                coupon:action.res
+            });
+        default:
+            return state;
+    }
+}
+
+function rule(state={},action){
+    switch(action.type){
+        case FETCH_COUPON_ID:
+            return Object.assign({},state,{
+                couponNo:action.param.id
+            });
+        default:
+            return state;
+    }
+}
 
 const rootReducer = combineReducers({
-    couponByUser
+    index,detail,rule
 });
 
 export default rootReducer;

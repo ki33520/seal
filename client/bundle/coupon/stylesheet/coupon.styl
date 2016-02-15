@@ -8,6 +8,7 @@
 @import "../../component/slidetabs.styl";
 @import "../../component/refresher.styl";
 @import "../../common/loading.styl";
+@import "../../common/scene.styl";
 .container {
 	height: 100%;
 	&>div{
@@ -15,7 +16,9 @@
 		overflow:hidden;
 	}
 }
-
+.scene-group>.scene {
+	background-color: #f3f3f3;
+}
 .slide-tabs {
 	background-color: #f3f3f3;
 	.slide-tabs-navbar {
@@ -229,3 +232,66 @@
 }
 
 
+.coupon-detail-content {
+    font-size: .4rem;
+	.link {
+        position: absolute;
+        font-size: .2rem;
+        right: .5rem;
+	}
+    .coupon-detail-body {
+        padding: 1.5rem 1.6rem 1rem 1.6rem;
+        height:100%;
+        box-sizing:border-box;
+
+        &>p{
+            line-height:1.2rem;
+            margin:.4rem 0;
+            &>label{
+                display:inline-block;
+                color:#999;
+            }
+            &>span{
+                display:inline-block;
+                padding-left:.5rem;
+            }
+        }
+
+        .coupon-detail-button{
+            display:flex;
+            padding:.4rem 0;
+            &>span{
+                flex:1;
+                text-align:center;
+                &>a{
+                    display:inline-block;
+                    padding:.15rem .25rem;
+                    border:.05rem solid $pink-color;
+                    color:$pink-color;
+                    border-radius:.15rem;
+
+                    &.disabled{
+                        border-color:#999;
+                        color:#999;
+                    }
+                }
+            }
+        }
+    }
+    .coupon-qrcode {
+        background: url(/client/asset/image/detail-arrow.png) no-repeat 0 100%;
+        background-size: 100%;
+        padding:0 0 1.5rem 0;
+        &>img {
+            width: 100%;
+        }
+    }
+}
+
+.rule {
+    padding:.5rem .6rem;
+    p {
+        margin: .25rem 0 .6rem 0;
+        font-size: .4rem;
+    }
+}
