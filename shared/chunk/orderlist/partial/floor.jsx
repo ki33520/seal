@@ -67,14 +67,14 @@ class Floor extends Component{
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child)} className="pop_c">确认收货</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
                         <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_SENDED":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">确认收货</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
                         <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )

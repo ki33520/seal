@@ -14,7 +14,8 @@ import Alert from "../../../component/alert.jsx";
 class Comment extends Component{
     handleStar(name,arrKey,val,e){
         const {changeField} = this.props;
-        changeField(name,val,arrKey);
+        var rate = val>3 ? val : 3;
+        changeField(name,rate,arrKey);
     }
     handleContent(name,arrKey,e){
         const {changeField} = this.props;
