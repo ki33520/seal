@@ -37,7 +37,7 @@ class GoodListApp extends React.Component{
         this.props.toggleChecked({name,values});
     }
     handlerSave(isHaveGoods){
-        const {params,filters} = this.props.goodsByParam;
+        const {params,filters} = this.props.index;
         const {categoryNames,brandNames,areaNames} = filters;
         let _params = Object.assign({},params,{
             isHaveGoods
@@ -67,12 +67,12 @@ class GoodListApp extends React.Component{
         this.togglePopupActive();
     }
     toggleSort(order){
-        const {params} = this.props.goodsByParam;
+        const {params} = this.props.index;
         let _params = Object.assign({},params,order);
         this.props.fetchGoods(_params);
     }
     beginRefresh(){
-        const {params,totalPage,isFetching} = this.props.goodsByParam;
+        const {params,totalPage,isFetching} = this.props.index;
         let curentPage = params.pageIndex;
         if(isFetching || totalPage <= curentPage){
             return false;
@@ -83,7 +83,7 @@ class GoodListApp extends React.Component{
         this.props.fetchGoods(_params);
     }
     render(){
-        const {keyword,filters,list,isFetching} = this.props.goodsByParam;
+        const {keyword,filters,list,isFetching} = this.props.index;
         const goodList = [];
         if(list.length===0){
             return (

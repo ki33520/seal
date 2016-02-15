@@ -12,7 +12,7 @@ function couponByUser(state={},action){
             });
     	case FINISH_FETCH_COUPON:
             const type = action.param.type;
-            const res = action.res[type];
+            const res = action.res;
             let pagination = {...state.pagination};
             let coupons = _.union(pagination[type].coupons,res.coupons);
             pagination[type].pageIndex = res.pageIndex;

@@ -12,7 +12,7 @@ class Floor extends Component{
                     {
                         list.map((child,i)=>{
                             const key = "comment-" + i;
-                            const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:MM:SS");
+                            const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:mm:ss");
                             var stars = [],
                                 imagesList = child.imagesUrl ? child.imagesUrl.split(",") : [],
                                 picList = [];

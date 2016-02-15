@@ -12,7 +12,7 @@ function requestCoupon(param){
 function receiveCoupon(param,res){
 	return {
         type:FINISH_FETCH_COUPON,
-        res:res.pagination,
+        res,
         param,
     }
 }

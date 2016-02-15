@@ -50,7 +50,7 @@ function flashBuyFilter(flashbuys,systemTime){
             var list = {
                 startTime:moment(startTime).format("YYYY-MM-DD HH:mm:ss"),
                 endTime:moment(endTime).format("YYYY-MM-DD HH:mm:ss"),
-                preSaleTime:moment(startTime).format('HH:mm'),
+                preSaleTime:moment(startTime).format('DD日HH时'),
                 goodsList:goodsFilter(flashbuy.activityProductList)
             }
             if(startTime < systemTime){

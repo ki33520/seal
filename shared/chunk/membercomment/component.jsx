@@ -23,18 +23,18 @@ class CommentList extends Component{
     beginRefresh(interval,flag){
         const {dispatch} = this.props;
         const {allComment,showComment,isFetching} =  this.props.commentByUser;
-        var comments = allComment,
+        var flag = flag !== undefined ? flag: this.state.displayFlag,
+            interval = interval !== undefined ? interval : 1,
+            comments = allComment,
             fetchLink = "/membercenter/comment",
             pageCount = 1,
             nextPage = 1;
-        var flag = flag !== undefined ? flag: this.state.displayFlag,
-            interval = interval !== undefined ? interval : 1;
         if(flag === 1){
             fetchLink = "/membercenter/showcomment";
             comments = showComment;
         }
         if(comments){
-            pageCount = Math.ceil(comments.totalCount/comments.pageSize);
+            pageCount = comments.pageCount;
             nextPage = comments.pageIndex + interval;
         };
         if(pageCount < nextPage || isFetching){

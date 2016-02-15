@@ -231,7 +231,7 @@ class MemberCenter extends Component{
                         <dl>
                             <dt>
                                 <img src="/client/asset/images/user_icon_8.png" />
-                                帮助反馈
+                                帮助与反馈
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>
