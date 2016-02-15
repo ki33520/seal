@@ -1,13 +1,12 @@
 'use strict';
 var moment = require("moment");
 var _ = require("lodash");
-var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
  
 function formatCoupons(originalCoupons) {
     var coupons = [];
-    originalCoupons.map((v,k)=>{
+    _.each(originalCoupons,function(v){
         var code = v.employCode;
         if (code && code.length) {
             if(code.indexOf('haiwaigou')!== -1){
@@ -34,7 +33,7 @@ function formatCoupons(originalCoupons) {
  
 //优惠券状态:0未使用(包含已生效、未生效)
 //3已失效(包括已使用和已过期)
-//是否联盟 0：非联盟,1：联盟 
+//是否联盟 0：非联盟,1：联盟 , 不填则表示全部
 var coupon = function(req, res, next) {
     var user = req.session.user;
     var pageSize = 10;
@@ -42,7 +41,7 @@ var coupon = function(req, res, next) {
     var type = req.body.type||'youa';
     var options = {
         youa:{status:0,isMerchants:0},
-        legue:{status:1,isMerchants:1},
+        legue:{status:0,isMerchants:1},
         invalid:{status:3}
     };
     var param = _.merge(options[type],{
@@ -51,48 +50,27 @@ var coupon = function(req, res, next) {
         pageIndex:pageIndex
     });
  
-    bluebird.props({
-        coupons: util.fetchAPI("couponByUser", param)
-    }).then(function(resp) {
-        //console.log(resp.coupons.object.result)
-        if(resp.coupons.returnCode===0){
+    util.fetchAPI("couponByUser", param).then(function(resp) {
+        //console.log(resp.object.result)
+        if(resp.returnCode===0){
             var pagination = {
-                youa:{
-                    coupons:[],
-                    pageIndex,
-                    totalPage:0
-                },
-                legue:{
-                    coupons:[],
-                    pageIndex,
-                    totalPage:0
-                },
-                invalid:{
-                    coupons:[],
-                    pageIndex,
-                    totalPage:0
-                }
+                youa:{},
+                legue:{},
+                invalid:{}
             };
-
-            var obj = resp.coupons.object;
-
-            if (obj && obj.result) {
-                pagination[type] = {
-                    coupons:formatCoupons(obj.result),
-                    pageIndex:pageIndex,
-                    totalPage:Math.ceil(obj.totalCount / pageSize)
-                }
-            }
-
-            var initialState = {
-                pagination: pagination,
-                couponType:['youa','legue','invalid'],
-                isFetching: false
+            var obj = resp.object;
+            pagination[type] = {
+                coupons:formatCoupons(obj.result),
+                pageIndex:pageIndex,
+                totalPage:Math.ceil(obj.totalCount / pageSize)
             };
-
             if (req.xhr === true) {
-                res.json(initialState);
+                res.json(pagination[type]);
             }else{
+                var initialState = {
+                    pagination: pagination,
+                    couponType:['youa','legue','invalid']
+                };
                 var markup = util.getMarkupByComponent(CouponApp({
                     initialState: initialState
                 }));

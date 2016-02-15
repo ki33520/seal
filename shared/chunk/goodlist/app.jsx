@@ -27,13 +27,16 @@ class GoodListApp extends Component{
     render(){
         const {totalPage,filters,params,list,keyword,isFetching} = this.props.initialState;
         const initialState = {
-            goodsByParam:{
+            index:{
                 list,
                 totalPage,
                 filters,
                 params,
                 keyword,
                 isFetching
+            },
+            search:{
+                keyword:keyword
             }
         };
         let store = configureStore(initialState);
