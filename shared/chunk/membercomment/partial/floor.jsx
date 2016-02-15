@@ -53,7 +53,7 @@ class Floor extends Component{
                                         </div>
                                         <div className="date">{crtTime}</div>
                                     </div>
-                                    <div className="content">{child.content}</div>
+                                    <div className="content">{child.content || "没有评论内容"}</div>
                                     <ul className={listclass}>
                                         {picList}
                                     </ul>
