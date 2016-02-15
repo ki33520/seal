@@ -214,7 +214,7 @@ class OrderDetail extends Component{
                     <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
                 </div>
                 <div className=" bottom-line clearfix no-border">
-                    <div className="label">应付金额：</div>
+                    <div className="label">实付金额：</div>
                     <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee.toFixed(2)}</span></div>
                 </div>
             </div>
