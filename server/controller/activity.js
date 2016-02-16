@@ -1,24 +1,24 @@
 'use strict';
 var _ = require("lodash");
-var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var ActivityApp = util.getSharedComponent("activity");
 var filter = require("../lib/filter.js");
  
-function filterResult(result){
+function filterResult(goods){
     var list = [];
-    if(result && result.length>0){
-        result.map((item,i)=>{
+    if(goods && goods.length>0){
+        _.each(goods,function(item,i){
+            var salesPrice = filter.price({
+                flashPrice:item.wapPrice,
+                mobilePrice:item.mobilePrice,
+                salesPrice:item.salesPrice,
+                startTime:item.beginDateStr,
+                endTime:item.endDateStr
+            });
             list.push({
                 singleCode:item.singleCode,
                 title:item.title,
-                salesPrice:filter.price({
-                    flashPrice:item.wapPrice,
-                    mobilePrice:item.mobilePrice,
-                    salesPrice:item.salesPrice,
-                    startTime:item.beginDateStr,
-                    endTime:item.endDateStr
-                }),
+                salesPrice:salesPrice,
                 originPrice:item.originPrice,
                 imageUrl:filter.imageUrl(item.imageUrl),
                 sourceName:item.sourceName,
@@ -33,32 +33,29 @@ function filterResult(result){
 
 var activity = function(req, res, next) {
 
-    var pageIndex = req.query.pageIndex || 1;
     var pageSize = 12;
+    var pageIndex = req.query.pageIndex || 1;
     var activityId = req.params.id;
  
-    bluebird.props({
-        goods: util.fetchAPI("specialActivity", {
-            activityId:activityId,
-            start: pageIndex,
-            limit: pageSize
-        })
+    util.fetchAPI("specialActivity", {
+        activityId:activityId,
+        start: pageIndex,
+        limit: pageSize
     }).then(function(resp) {
-        if (resp.goods.returnCode === 0) {
-            var obj = resp.goods.object;
+        if (resp.returnCode === 0) {
+            var obj = resp.object;
             var activityProductList = obj ? obj.activityProductList : [];
             var list = filterResult(activityProductList);
 
             if (req.xhr === true) {
-                res.json({list,isFetching:false});
+                res.json(list);
             }else{
                 var totalPage = Math.ceil(obj.totalCount / pageSize);
                 var initialState = {
                     list,
                     totalPage,
                     imageUrl:filter.imageUrl(obj.imageUrl),
-                    title:obj.activityName,
-                    isFetching:false
+                    title:obj.activityName
                 };
                 var markup = util.getMarkupByComponent(ActivityApp({
                     initialState: initialState
@@ -72,8 +69,6 @@ var activity = function(req, res, next) {
         } else {
             next(new Error(resp.message));
         }
-    },function(){
-       console.log('error')
     });
 
 }

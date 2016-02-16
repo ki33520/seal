@@ -21,13 +21,13 @@ class Activity extends React.Component{
         let {pageIndex} = this.state;
         let nextPage = pageIndex + 1;
 
-        if(isFetching || totalPage < pageIndex){
+        if(isFetching || totalPage <= pageIndex){
             return false;
         }
 
         this.setState({
             pageIndex:nextPage
-        })
+        });
 
         dispatch(fetchGoods(window.location.href,{
             pageIndex:nextPage
@@ -37,13 +37,13 @@ class Activity extends React.Component{
         this.setState({
             shareActive:true,
             maskActive:true
-        })
+        });
     }
     cancelShare(){
         this.setState({
             shareActive:false,
             maskActive:false
-        })
+        });
     }
     render(){
         const {isFetching,list,imageUrl,title} = this.props;
@@ -54,11 +54,10 @@ class Activity extends React.Component{
         });
 
         return (
-            <div>
+            <div className="inner-scroll">
                 <Header>
                     <span className="title">{title}</span>
                 </Header>
-                 
                 <div className="specialActivity">
                     <div className="banner">
                       <img src={imageUrl} alt="" />
@@ -67,7 +66,7 @@ class Activity extends React.Component{
                         {goods}
                     </div>
                 </div>
-                <Refresher active={isFetching}/>
+                <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
             </div>
         )
     }

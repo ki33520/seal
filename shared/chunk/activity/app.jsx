@@ -27,14 +27,14 @@ function configureStore(initialState){
 
 class ActivityApp extends Component{
     render(){
-        const {isFetching,list,imageUrl,title,totalPage} = this.props.initialState;
+        const {list,imageUrl,title,totalPage} = this.props.initialState;
         const initialState = {
             goodsByParam:{
-                isFetching,
                 list,
                 imageUrl,
                 title,
-                totalPage
+                totalPage,
+                isFetching:false
             }
         };
         var store = configureStore(initialState);
