@@ -1,13 +1,31 @@
 'use strict';
 var moment = require("moment");
 var _ = require("lodash");
-var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
- 
+function filterCoupon(obj){
+    var coupon = {};
+    if(obj){
+        coupon = {
+            qrCode:null,//二维码
+            couponNo:obj.couponNo,//'优惠券号'
+            couponName:obj.couponName,//'优惠券名'
+            platform:obj.employCode,//'使用平台'
+            issueDate:obj.issueStartTime,//,'发券日期'
+            useDate:obj.issueDate,//'生效日期'
+            expDate:obj.validityDate,//'使用期限'
+            remark:obj.remark//'使用说明'
+        };
+        if(obj.employCode && obj.employCode !=='haiwaigou'){
+            //coupon.qrCode = 'xxx'
+        }
+    }
+    return coupon;
+}
+
 function formatCoupons(originalCoupons) {
     var coupons = [];
-    originalCoupons.map((v,k)=>{
+    _.each(originalCoupons,function(v){
         var code = v.employCode;
         if (code && code.length) {
             if(code.indexOf('haiwaigou')!== -1){
@@ -34,15 +52,15 @@ function formatCoupons(originalCoupons) {
  
 //优惠券状态:0未使用(包含已生效、未生效)
 //3已失效(包括已使用和已过期)
-//是否联盟 0：非联盟,1：联盟 
+//是否联盟 0：非联盟,1：联盟 , 不填则表示全部
 var coupon = function(req, res, next) {
     var user = req.session.user;
     var pageSize = 10;
-    var pageIndex = req.body.pageIndex || 1;
-    var type = req.body.type||'youa';
+    var pageIndex = req.query.pageIndex || 1;
+    var type = req.query.type||'youa';
     var options = {
         youa:{status:0,isMerchants:0},
-        legue:{status:1,isMerchants:1},
+        legue:{status:0,isMerchants:1},
         invalid:{status:3}
     };
     var param = _.merge(options[type],{
@@ -51,48 +69,27 @@ var coupon = function(req, res, next) {
         pageIndex:pageIndex
     });
  
-    bluebird.props({
-        coupons: util.fetchAPI("couponByUser", param)
-    }).then(function(resp) {
-        //console.log(resp.coupons.object.result)
-        if(resp.coupons.returnCode===0){
+    util.fetchAPI("couponByUser", param).then(function(resp) {
+        //console.log(resp.object.result)
+        if(resp.returnCode===0){
             var pagination = {
-                youa:{
-                    coupons:[],
-                    pageIndex,
-                    totalPage:0
-                },
-                legue:{
-                    coupons:[],
-                    pageIndex,
-                    totalPage:0
-                },
-                invalid:{
-                    coupons:[],
-                    pageIndex,
-                    totalPage:0
-                }
+                youa:{},
+                legue:{},
+                invalid:{}
             };
-
-            var obj = resp.coupons.object;
-
-            if (obj && obj.result) {
-                pagination[type] = {
-                    coupons:formatCoupons(obj.result),
-                    pageIndex:pageIndex,
-                    totalPage:Math.ceil(obj.totalCount / pageSize)
-                }
-            }
-
-            var initialState = {
-                pagination: pagination,
-                couponType:['youa','legue','invalid'],
-                isFetching: false
+            var obj = resp.object;
+            pagination[type] = {
+                coupons:formatCoupons(obj.result),
+                pageIndex:pageIndex,
+                totalPage:Math.ceil(obj.totalCount / pageSize)
             };
-
             if (req.xhr === true) {
-                res.json(initialState);
+                res.json(pagination[type]);
             }else{
+                var initialState = {
+                    pagination: pagination,
+                    couponType:['youa','legue','invalid']
+                };
                 var markup = util.getMarkupByComponent(CouponApp({
                     initialState: initialState
                 }));
@@ -106,7 +103,25 @@ var coupon = function(req, res, next) {
             next(new Error(resp.message));
         }
     });
-
 }
 
-module.exports = coupon;
+var couponDetail = function(req, res, next) {
+    var user = req.session.user;
+    var couponNo = req.params.id;
+
+    util.fetchAPI("couponDetail", {
+        memberId:user.memberId,
+        couponNo: couponNo
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json(filterCoupon(resp.object));
+        }else{
+            next(new Error(resp.message));
+        }
+    })
+}
+
+module.exports = {
+    list:coupon,
+    detail:couponDetail
+};

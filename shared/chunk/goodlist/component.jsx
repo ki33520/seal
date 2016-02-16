@@ -2,7 +2,7 @@
 
 import React,{Component} from "react";
 import Index from "./partial/index.jsx";
-import SearchBox from "./partial/search.jsx";
+import SearchBox from "../index/partial/search.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
 class IndexRouter extends Component{

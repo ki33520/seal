@@ -2,15 +2,15 @@
 
 import React,{Component} from "react";
 import Index from "./partial/index.jsx";
-import SearchBox from "./partial/search.jsx";
+import SearchBox from "../index/partial/search.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
 class TrendyRouter extends Component{
     handleSceneChange(currentScene,prevScene){
-        const {fetchHotWord} = this.props
+        const {fetchHotWord,search} = this.props
         switch(currentScene){
             case "search":
-                fetchHotWord();
+                !search.hotwordFetched && fetchHotWord();
                 break;
         }
     }

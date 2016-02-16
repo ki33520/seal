@@ -94,9 +94,10 @@ class Logistics extends Component{
                 parcel = logistics[i];
             }
         }
+        const cnNumbers = ["一","二","三","四","五","六","七","八","九"]
         const tabs = parcel.map((item,i)=>{
             return (
-                <SlideTabsItem navigator={()=><i>{"包裹"+i}</i>} key={i}>
+                <SlideTabsItem navigator={()=><i>{"包裹"+cnNumbers[i]}</i>} key={i}>
                     {this.renderContent(item)}
                 </SlideTabsItem>
             )

@@ -12,7 +12,7 @@ class Floor extends Component{
                     {
                         list.map((child,i)=>{
                             const key = "comment-" + i;
-                            const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:MM:SS");
+                            const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:mm:ss");
                             var stars = [],
                                 imagesList = child.imagesUrl ? child.imagesUrl.split(",") : [],
                                 picList = [];
@@ -53,7 +53,7 @@ class Floor extends Component{
                                         </div>
                                         <div className="date">{crtTime}</div>
                                     </div>
-                                    <div className="content">{child.content}</div>
+                                    <div className="content">{child.content || "没有评论内容"}</div>
                                     <ul className={listclass}>
                                         {picList}
                                     </ul>

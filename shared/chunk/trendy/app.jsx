@@ -28,9 +28,12 @@ class TrendyApp extends Component{
         const initialState = {
             trendy:{
                 categories
+            },
+            search:{
+                keyword:''
             }
         };
-        var store = configureStore(initialState);
+        const store = configureStore(initialState);
         return (
             <Provider store={store}>
             <TrendyConnected />

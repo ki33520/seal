@@ -1,6 +1,6 @@
 'use strict'
 import {
-    createStore, applyMiddleware,bindActionCreators
+    createStore, applyMiddleware,bindActionCreators,compose
 }
 from "redux";
 import React,{Component} from "react";
@@ -9,10 +9,11 @@ import createLogger from "redux-logger";
 
 const logger = createLogger();
 
-const createStoreWithMiddleware = applyMiddleware(
-    thunkMiddleware,
-    logger
-)(createStore);
+const createStoreWithMiddleware = compose(
+    applyMiddleware(thunkMiddleware,logger),
+    typeof window === 'object' && 
+    typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
+)(createStore)
 
 export default createStoreWithMiddleware;
 

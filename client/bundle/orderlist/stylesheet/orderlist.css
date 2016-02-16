@@ -123,7 +123,7 @@ body{
     float: left;
     font-size: 0;
     overflow: hidden;
-    margin:0 .16rem;
+    margin:0 .32rem 0 .16rem;
 }
 .J_moveRight .img_wrap img{
     width:100%;
@@ -137,9 +137,9 @@ body{
 .J_moveRight .gd_info .name {
     width: 100%;
     line-height: .54rem;
-    height: 1.08rem;
+    min-height: 1.08rem;
     margin:0 0 .4rem;
-    font-size:.32rem;
+    font-size:.34rem;
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;

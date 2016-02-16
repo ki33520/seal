@@ -46,10 +46,11 @@ function orderFilter(order) {
     var checkedReceiver = _.findWhere(_order["receivers"], {
         isDefault: 1
     })
-    checkedReceiver = (_order["receivers"].length > 0 && checkedReceiver === undefined) && _order["receivers"][0]
+    if(_order["receivers"].length > 0 && checkedReceiver === undefined){
+        checkedReceiver = _order["receivers"][0]
+    }
     _order["checkedReceiver"] = checkedReceiver ? checkedReceiver : null
     _order["coupons"] = formatCoupons(order.couponList)
-        // console.log('order',_order)
         // order.coupons = formatCoupons(originResp.couponList)
     return _order;
 }

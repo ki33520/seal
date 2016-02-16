@@ -24,14 +24,16 @@ class Floor extends Component{
     constructor(props){
         super(props);
     }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        });
+    }
     handleDeliveryOrder(child,i,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
+        const {dispatch,confirmDialog} = this.props;
         const {orderNo} = child;
-        dispatch(fetchDeliveryOrder("/deliveryorder",{
-            orderNo,
-            index: i
-        }));
+        confirmDialog.call(this,orderNo,i);
     }
     handlePayGateway(child,e){
         e && e.preventDefault();
@@ -67,14 +69,14 @@ class Floor extends Component{
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child)} className="pop_c">确认收货</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
                         <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_SENDED":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" className="pop_c">确认收货</a>
+                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
                         <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
@@ -120,6 +122,7 @@ class Floor extends Component{
             )
         }else{
             content = itemList.map((good,i)=>{
+                const salesPrice = good.salesPrice !== undefined ? good.salesPrice : 0;
                 return (
                     <div className="clearfix" key={i}>
                         <span className="img_wrap J_ytag cartlist">
@@ -127,7 +130,7 @@ class Floor extends Component{
                         </span>
                         <div className="gd_info">
                             <p className="name">{good.singleTitle}</p>
-                            <p className="value">&yen;{good.salesPrice.toFixed(2)}</p>
+                            <p className="value">&yen;{salesPrice.toFixed(2)}</p>
                         </div>
                     </div>
                 )
@@ -155,6 +158,7 @@ class Floor extends Component{
         if(list.length>0){
             return list.map((child,i)=>{
                 const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
+                const salesTotal = salesTotalFee !== undefined ? salesTotalFee : 0;
                 const crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
                 return (
                     <div className="order-box" key={i}>
@@ -167,7 +171,7 @@ class Floor extends Component{
                         </div>
                         <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
-                            <span>合计：<em>&yen;{paymentFee.toFixed(2)}</em></span>
+                            <span>合计：<em>&yen;{salesTotal.toFixed(2)}</em></span>
                             {this.renderButtons(child,i)}
                         </div>
                     </div>

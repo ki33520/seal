@@ -175,6 +175,14 @@
             "production": "http://marketing.tepin.hk"
         }
     },
+    "couponDetail": {
+        "uri": "/coupon/v1/findCouponDetail",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://marketing.tepin.hk"
+        }
+    },
     "fetchGoodsList": {
         "uri": "/search/v1/findListByParamsWap",
         "baseURL": {

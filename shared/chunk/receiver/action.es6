@@ -2,7 +2,7 @@
 import {apiRequest} from "../../lib/util.es6";
 
 import {
-    CHANGE_FIELD,
+    CHANGE_FIELD,CHANGE_RECEIVER,
     REQUEST_PROVINCES,RESPONSE_PROVINCES,
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
@@ -15,6 +15,13 @@ import {
 } from "./constant.es6";
 
 export {alert} from "../common/action.es6";
+
+export function changeReceiver(checkedReceiver){
+    return {
+        type:CHANGE_RECEIVER,
+        checkedReceiver
+    }
+}
 
 function requestReceivers(){
     return {

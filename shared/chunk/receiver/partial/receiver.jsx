@@ -19,6 +19,7 @@ class Receiver extends Component{
     }
     handleCheck(receiver){
         const {onCheck} = this.props
+        this.props.changeReceiver(receiver)
         onCheck(receiver)
         this.props.receiverByUser.changeScene("index")
     }
@@ -28,7 +29,7 @@ class Receiver extends Component{
         })
     }
     handleDelete(receiver){
-        const {deleteReceiver} = this.props;
+        const {deleteReceiver,checkedReceiver,receivers} = this.props;
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
@@ -37,11 +38,17 @@ class Receiver extends Component{
             }
         })
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.receiverDeleted === true && this.props.receiverDeleted === false){
+            const {checkedReceiver,checkable} = this.props;
+            const {receivers} = nextProps;
+            if(_.some(receivers,{id:checkedReceiver.id}) === false && checkable){
+                this.props.onCheck(receivers.length > 0 ?receivers[0]:null)
+                this.props.changeReceiver(receivers.length > 0 ?receivers[0]:null)
+            }
+        }
+    }
     handleCheckableGoBack(){
-        const {checkedReceiver,receivers,onCheck} = this.props
-        const receiver = _.findWhere(receivers,{id:checkedReceiver.id})
-        onCheck(receiver)
-        // console.log("checkedReceiver",receiver)
         this.props.receiverByUser.changeScene("index")
     }
     setReceiverDefault(receiver){
@@ -87,7 +94,6 @@ class Receiver extends Component{
     }
     render(){
         const handleAddReceiver = ()=>{
-            console.log('receivers',this.props.receivers.length)
             if(this.props.receivers.length >= 6){
                 this.props.alert("收货地址不能超过6个!",2000)
             }else{

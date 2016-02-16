@@ -37,7 +37,7 @@ class GoodListApp extends React.Component{
         this.props.toggleChecked({name,values});
     }
     handlerSave(isHaveGoods){
-        const {params,filters} = this.props.goodsByParam;
+        const {params,filters} = this.props.index;
         const {categoryNames,brandNames,areaNames} = filters;
         let _params = Object.assign({},params,{
             isHaveGoods
@@ -67,12 +67,12 @@ class GoodListApp extends React.Component{
         this.togglePopupActive();
     }
     toggleSort(order){
-        const {params} = this.props.goodsByParam;
+        const {params} = this.props.index;
         let _params = Object.assign({},params,order);
         this.props.fetchGoods(_params);
     }
     beginRefresh(){
-        const {params,totalPage,isFetching} = this.props.goodsByParam;
+        const {params,totalPage,isFetching} = this.props.index;
         let curentPage = params.pageIndex;
         if(isFetching || totalPage <= curentPage){
             return false;
@@ -83,7 +83,7 @@ class GoodListApp extends React.Component{
         this.props.fetchGoods(_params);
     }
     render(){
-        const {keyword,filters,list,isFetching} = this.props.goodsByParam;
+        const {keyword,filters,list,isFetching} = this.props.index;
         const goodList = [];
         if(list.length===0){
             return (
@@ -126,7 +126,6 @@ class GoodListApp extends React.Component{
                     <div className="special-activity-list clearfix">
                         {goodList}
                     </div>
-                    <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
                 </div>
                 <Sidebar
                     popupActive={this.state.popupActive}
@@ -149,6 +148,7 @@ class GoodListApp extends React.Component{
                     toggleChecked={this.toggleChecked.bind(this,'areaNames')}
                     handleGoBack ={this.toggleFilterPopup.bind(this)} />
                 <MaskLayer visible={this.state.maskActive} />
+                <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
             </div>
         )
     }

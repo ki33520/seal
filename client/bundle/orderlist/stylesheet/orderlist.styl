@@ -6,6 +6,7 @@
 @import "../../component/masklayer";
 @import "../../component/gotop";
 @import "../../component/alert";
+@import "../../component/dialog";
 @import "./orderlist.css";
 $gray-color = #555
 body {
@@ -95,13 +96,19 @@ body {
             border-bottom:px2rem(1) solid #D7D7D7;
             line-height:px2rem(36);
             &.active{
-                color:#801da1;
-                border-color:#801da1;
+                border-bottom:px2rem(2) solid #801da1;
+            }
+            &>a{
+                display: block;
+                text-align: center;
+            }
+            &>span{
+                padding-bottom:px2rem(3);
             }
         }
     }
     .slide-tabs-content{
         overflow:hidden;
-        padding-bottom:px2rem(30);
+        padding-bottom:px2rem(45);
     }
 }

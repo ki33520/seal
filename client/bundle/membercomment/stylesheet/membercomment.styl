@@ -63,22 +63,22 @@ body{
 			background:#FFF;
 			width: 100%;
 			.slide-tabs-navbar-item{
-				line-height:px2rem(38);
+				background:#FFF;
 				border:0 none;
-				width:px2rem(72);
+				border-bottom:px2rem(1) solid #D7D7D7;
+				line-height:px2rem(36);
 				&.active{
+					color:#801da1;
+					border-color:#801da1;
 					border-bottom:px2rem(2) solid #801da1;
 				}
 				&>span{
 					padding-bottom:px2rem(3);
 				}
-				&.active>span{
-					color:#801da1;
-				}
 			}
 		}
 		.slide-tabs-content{
-			padding-bottom: 1.17rem;
+            padding-bottom:px2rem(38);
 		}
 		
 	}
@@ -89,8 +89,8 @@ body{
 			background-color: #fff;
 			.product{
 				display: flex;
-				padding: 0 .1rem .25rem .1rem;
-				margin-bottom: .25rem;
+				padding: 0 0 .25rem 0;
+				margin: 0 .1rem .25rem;
 				border-bottom: 1px solid #f1f1f1;
 				font-size: .35rem;
 				.col{
@@ -109,9 +109,17 @@ body{
 					flex: 1;
 					position: relative;
 					.title{
-						line-height: .55rem;
-						height: 1.1rem;
+						line-height: .5rem;
+						min-height: 1rem;
+						margin-bottom: .2rem;
 						color: #555;
+						font-size: .34rem;
+					}
+					.price{
+						font-size: .34rem;
+						i{
+							font-size: .28rem;
+						}
 					}
 					.origin{
 						display: flex;
@@ -129,8 +137,7 @@ body{
 			}
 			.stars-culm{
 				display: flex;
-				margin-bottom: .25rem;
-				padding: 0 .2rem;
+				margin: 0 .2rem .25rem;
 				line-height: .5rem;
 				.stars{
 					flex: 4;
@@ -150,7 +157,8 @@ body{
 				}
 			}
 			.content{
-				padding: 0 .2rem;
+				margin: 0 .2rem;
+				overflow: hidden;
 			}
 			.pic-list{
 				display: flex;
@@ -171,24 +179,4 @@ body{
 			}
 		}
 	}
-}
-
-.slide-tabs{
-    .slide-tabs-navbar{
-        height: 1.16rem;
-        border:0 none;
-        .slide-tabs-navbar-item{
-            background:#FFF;
-            border:0 none;
-            border-bottom:px2rem(1) solid #D7D7D7;
-            line-height:px2rem(36);
-            &.active{
-                color:#801da1;
-                border-color:#801da1;
-            }
-        }
-    }
-    .slide-tabs-content{
-        overflow:hidden;
-    }
 }
