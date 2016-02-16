@@ -15,8 +15,8 @@ function requestGoods (param) {
 function receiveGoods(param,res){
     return {
         type:RECEIVE_GOODS,
-        res,
-        param
+        param,
+        res
     }
 }
 

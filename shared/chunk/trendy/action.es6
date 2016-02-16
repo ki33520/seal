@@ -2,9 +2,9 @@
 import {apiRequest} from "../../lib/util.es6";
 
 import {
+    RECEIVE_GOODS,REQUEST_GOODS,
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
-    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
-    RECEIVE_GOODS,REQUEST_GOODS
+    REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
 } from "./constant.es6";
 
 function receiveGoods(param,res){

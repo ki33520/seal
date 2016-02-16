@@ -2,17 +2,14 @@
 
 var _ = require("lodash");
 var util = require("../lib/util");
-var bluebird = require("bluebird");
 var md5 = require("md5");
 var Polymer = util.getSharedComponent("polymer");
 var config = require("../lib/config");
 
 var polymer = function(req, res, next) {
-    bluebird.props({
-        category: util.fetchAPI("allCategory",{})
-    }).then(function(resp) {
-        if(resp.category.returnCode===0){
-            let categories = categoryFilter(resp.category.object)
+    util.fetchAPI("allCategory",{}).then(function(resp) {
+        if(resp.returnCode===0){
+            var categories = categoryFilter(resp.object)
             var initialState = {
                 categories: categories
             }; 
