@@ -16,9 +16,6 @@ function filterCoupon(obj){
             expDate:obj.validityDate,//'使用期限'
             remark:obj.remark//'使用说明'
         };
-        if(obj.employCode && obj.employCode !=='haiwaigou'){
-            //coupon.qrCode = 'xxx'
-        }
     }
     return coupon;
 }
@@ -26,27 +23,21 @@ function filterCoupon(obj){
 function formatCoupons(originalCoupons) {
     var coupons = [];
     _.each(originalCoupons,function(v){
-        var code = v.employCode;
-        if (code && code.length) {
-            if(code.indexOf('haiwaigou')!== -1){
-                var validityDate = moment(new Date(v.validityDate)).format('YYYY.MM.DD');
-                var issueDate = moment(new Date(v.issueDate)).format('YYYY.MM.DD');
-                var ruleObject = v.ruleObject || {};
-                coupons.push({
-                    expiryDate:issueDate+' - '+validityDate,
-                    couponNo:v.couponNo,
-                    money:v.money,
-                    couponName:ruleObject.couponName,
-                    songAccount:ruleObject.songAccount,
-                    useRules:v.useRules,
-                    couponDesc:v.couponDesc,
-                    shortName:v.shortName,
-                    description:ruleObject.description
-                });
-            }
-        }
-    })
-    
+        var validityDate = moment(new Date(v.validityDate)).format('YYYY.MM.DD');
+        var issueDate = moment(new Date(v.issueDate)).format('YYYY.MM.DD');
+        var ruleObject = v.ruleObject || {};
+        coupons.push({
+            expiryDate:issueDate+' - '+validityDate,
+            couponNo:v.couponNo,
+            money:v.money,
+            couponName:ruleObject.couponName,
+            songAccount:ruleObject.songAccount,
+            useRules:v.useRules,
+            couponDesc:v.couponDesc,
+            shortName:v.shortName,
+            description:ruleObject.description
+        });
+    });
     return coupons;
 }
  
@@ -70,7 +61,6 @@ var coupon = function(req, res, next) {
     });
  
     util.fetchAPI("couponByUser", param).then(function(resp) {
-        //console.log(resp.object.result)
         if(resp.returnCode===0){
             var pagination = {
                 youa:{},
@@ -93,7 +83,6 @@ var coupon = function(req, res, next) {
                 var markup = util.getMarkupByComponent(CouponApp({
                     initialState: initialState
                 }));
-
                 res.render('coupon', {
                     markup: markup,
                     initialState: initialState

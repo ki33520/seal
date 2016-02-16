@@ -34,8 +34,7 @@ class CouponApp extends Component{
             },
             detail:{
                 coupon:{}
-            },
-            rule:{}
+            }
         };
         let store = configureStore(initialState);
         return (

@@ -12,9 +12,6 @@ class IndexRouter extends Component{
             case "detail":
                 this.props.fetchCouponDetail(param);
                 break;
-            case "rule":
-                this.props.fetchCouponId(param);
-                break;
         }
     }
     render(){
@@ -22,7 +19,6 @@ class IndexRouter extends Component{
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
                 <Scene name="index"><Index {...this.props}/></Scene>
                 <Scene name="detail"><CouponDetail {...this.props}/></Scene>
-                <Scene name="rule"><CouponRules {...this.props}/></Scene>
             </SceneGroup>
         );
     }
