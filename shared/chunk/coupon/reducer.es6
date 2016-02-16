@@ -11,7 +11,8 @@ function index(state={},action){
     	case START_FETCH_COUPON:
     		return Object.assign({},state,{
                 isFetching:true,
-                isFetched:false
+                isFetched:false,
+                isLoading:action.param.isLoading
             });
     	case FINISH_FETCH_COUPON:
             const type = action.param.type;
@@ -24,6 +25,7 @@ function index(state={},action){
     		return Object.assign({},state,{
                 isFetching:false,
                 isFetched:true,
+                isLoading:false,
                 pagination:pagination
             });
         default:
@@ -36,7 +38,8 @@ function detail(state={},action){
         case START_FETCH_DETAIL:
             return Object.assign({},state,{
                 isFetching:true,
-                isFetched:false
+                isFetched:false,
+                coupon:null
             });
         case FINISH_FETCH_DETAIL:
             return Object.assign({},state,{
@@ -49,19 +52,8 @@ function detail(state={},action){
     }
 }
 
-function rule(state={},action){
-    switch(action.type){
-        case FETCH_COUPON_ID:
-            return Object.assign({},state,{
-                couponNo:action.param.id
-            });
-        default:
-            return state;
-    }
-}
-
 const rootReducer = combineReducers({
-    index,detail,rule
+    index,detail
 });
 
 export default rootReducer;
