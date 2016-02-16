@@ -33,7 +33,7 @@ class CouponApp extends Component{
                 isFetching:false
             },
             detail:{
-                coupon:{}
+                coupon:null
             }
         };
         let store = configureStore(initialState);

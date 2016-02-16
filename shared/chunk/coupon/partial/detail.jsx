@@ -2,29 +2,26 @@
 
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
-
+import Loading from "../../common/loading.jsx";
 class CouponDetail extends Component{
     handleBack(){
         this.props.changeScene("index");
     }
-    render(){
-        const {coupon} = this.props.detail;
-        var qrcode = null;
-        if(coupon.qrCode){
-            qrcode = (
+    renderQRcode(coupon){
+        if(coupon&&coupon.qrCode){
+            return (
                 <div className="qr">
                     <img src="/client/asset/images/qr.png"/>
                     <div className="arrow"></div>
                 </div>
-            );
+            )  
         }
-        return (
-            <div className="box">
-                <Header onGoBack={this.handleBack.bind(this)}>
-                    <span className="title">优惠券详情</span>
-                </Header>
-                <div className="coupon-detail">
-                    {qrcode}
+        return null;
+    }
+    renderDetail(coupon){
+        if(coupon){
+            return (
+                <div>
                     <dl>
                         <dt>优惠券号</dt>
                         <dd>{coupon.couponNo}</dd>
@@ -50,6 +47,22 @@ class CouponDetail extends Component{
                         <dd>{coupon.remark}</dd>
                     </dl>
                 </div>
+            )
+        }
+        return null;
+    }
+    render(){
+        const {coupon,isFetching} = this.props.detail;
+        return (
+            <div className="box">
+                <Header onGoBack={this.handleBack.bind(this)}>
+                    <span className="title">优惠券详情</span>
+                </Header>
+                <div className="coupon-detail">
+                    {this.renderQRcode(coupon)}
+                    {this.renderDetail(coupon)}
+                </div>
+                <Loading active={isFetching}/>
             </div>
         )
     }
