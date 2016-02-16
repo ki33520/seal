@@ -43,7 +43,6 @@ var index = function(req, res, next) {
         if (ret.allComment.returnCode === 0) {
             var allComment = {},
                 object = ret.allComment.object;
-            console.log(object.totalCount)
             allComment.totalCount = object.totalCount;
             allComment.pageCount = Math.ceil(allComment.totalCount/pageSize);
             allComment.list = object.result ? formatComment(object.result) : [];
