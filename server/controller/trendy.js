@@ -1,16 +1,14 @@
 'use strict';
 
 var _ = require("lodash");
-var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var Trendy = util.getSharedComponent("trendy");
 var filter = require("../lib/filter.js");
-var pageSize = 10;
  
 function filterItem(originalData){
     var list = [];
     if(originalData && originalData.length > 0){
-        _.each(originalData,function(v,i){
+        _.each(originalData,function(v){
             list.push({
                 singleCode:v.singleCode,
                 title:v.title,
@@ -35,7 +33,7 @@ function filterItem(originalData){
 
 function filterList(originalData,pageSize){
     var categories = [] 
-    _.each(originalData,function(item,i){
+    _.each(originalData,function(item){
         var category = {
             name:item.activityName,
             totalPage:Math.ceil(item.totalCount/pageSize)||0,
@@ -49,18 +47,17 @@ function filterList(originalData,pageSize){
 }
 
 var trendy = function(req, res, next) {
-    bluebird.props({
-        goods: util.fetchAPI("fetchTendyGoods", {
-            start: 1,
-            Limit: pageSize
-        })
+    var pageSize = 10;
+    util.fetchAPI("fetchTendyGoods", {
+        start: 1,
+        Limit: pageSize
     }).then(function(resp) {
-        if (resp.goods.returnCode === 0) {
-            let categories = filterList(resp.goods.object,pageSize);
-            let initialState = {
+        if (resp.returnCode === 0) {
+            var categories = filterList(resp.object,pageSize);
+            var initialState = {
                 categories
             };
-            let markup = util.getMarkupByComponent(Trendy({
+            var markup = util.getMarkupByComponent(Trendy({
                 initialState: initialState
             }));
             res.render('trendy', {
@@ -68,27 +65,24 @@ var trendy = function(req, res, next) {
                 initialState: initialState
             })
         } else {
-            next(new Error(resp.goods.message))
+            next(new Error(resp.message))
         }
     });
-
 }
 
 var activity = function(req, res, next) {
-    let pageIndex = Number(req.body.pageIndex) || 1;
-    let id = req.body.id;
-
-    bluebird.props({
-        goods: util.fetchAPI("fetchActivityTendyGoods", {
-            activityId:id,
-            activityType:'ACTIVITY_BK',
-            start: pageIndex,
-            Limit: pageSize
-        })
+    var pageIndex = Number(req.body.pageIndex) || 1;
+    var id = req.body.id;
+    var pageSize = 10;
+    util.fetchAPI("fetchActivityTendyGoods", {
+        activityId:id,
+        activityType:'ACTIVITY_BK',
+        start: pageIndex,
+        Limit: pageSize
     }).then(function(resp) {
-        if (resp.goods.returnCode === 0) {
-            let goodList = filterItem(resp.goods.object.result);
-            let totalPage = Math.ceil(resp.goods.object.totalCount / pageSize);
+        if (resp.returnCode === 0) {
+            var goodList = filterItem(resp.object.result);
+            var totalPage = Math.ceil(resp.object.totalCount / pageSize);
             res.json({
                 pagination:{
                     goodList:goodList,
@@ -100,8 +94,8 @@ var activity = function(req, res, next) {
         } else {
             res.json({
                 isFetched:false,
-                errMsg:resp.goods.message
-            })
+                errMsg:resp.message
+            });
         }
     });
 

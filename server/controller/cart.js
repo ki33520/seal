@@ -8,7 +8,7 @@ var config = require("../lib/config.js");
 function formatCarts(originalCarts) {
     var carts = [];
 
-     _.each(originalCarts, function(originalCart, i) {
+     _.each(originalCarts, function(originalCart) {
         var cart = {
             warehouseName: originalCart.warehouseName,
             warehouseId: originalCart.warehouseId,
@@ -25,7 +25,7 @@ function formatCarts(originalCarts) {
             group:[]
         };
 
-        _.each(originalCart.cartMKTList, function(promoList, j){
+        _.each(originalCart.cartMKTList, function(promoList){
             var group = {
                 promoType:promoList.promoType,
                 promoName:promoList.promoName,
@@ -33,7 +33,7 @@ function formatCarts(originalCarts) {
                 list:[]
             }
 
-            _.each(promoList.cartProductList,function(product,k){
+            _.each(promoList.cartProductList,function(product){
                 var goods = {
                     cartId:product.cartId,
                     singleCode:product.singleCode,

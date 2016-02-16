@@ -1,39 +1,38 @@
 'use strict';
 var _ = require("lodash");
-var bluebird = require("bluebird");
 var util = require("../lib/util.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 var filter = require("../lib/filter.js");
 
 function filterGoodsList(result){
     var list = [];
-    result && result.map((v)=>{
+    result && _.each(result,function(v){
+        var salesPrice = filter.price({
+            flashPrice:v.flashPrice,
+            mobilePrice:v.mobilePrice,
+            salesPrice:v.salesPrice,
+            startTime:v.beginDateStr,
+            endTime:v.endDateStr
+        });
         list.push({
             singleCode:v.singleCode,
-            smallImageUrl:filter.imageUrl(v.picUrl),
-            salesPrice:filter.price({
-                flashPrice:v.flashPrice,
-                mobilePrice:v.mobilePrice,
-                salesPrice:v.salesPrice,
-                startTime:v.beginDateStr,
-                endTime:v.endDateStr
-            }),
+            salesPrice:salesPrice,
             originPrice:v.originPrice,
             discounts:v.discounts,
             materTitle:v.materTitle,
             sourceName:v.areaName,
+            smallImageUrl:filter.imageUrl(v.picUrl),
             sourceImageUrl:filter.imageUrl(v.areaLogo),
             isSoldOut:filter.isSoldOut(v.localStock),
             saleType:filter.saleType(v)
         });
     });
-    
     return list;
 }
 
 function filterNames(result){
     var list = [];
-    result && result.map((item,i)=>{
+    result && _.each(result,function(item){
         list.push({
             id:item.id,
             name:item.name,
@@ -73,11 +72,9 @@ var search = function(req, res, next) {
     if(req.query.areaName){
         options.sourceAreas = req.query.areaName;
     }
-    bluebird.props({
-        goods: util.fetchAPI("fetchGoodsList", options)
-    }).then(function(resp) {
-        if (resp.goods.returnCode === 0) {
-            var goods = resp.goods.object;
+    util.fetchAPI("fetchGoodsList", options).then(function(resp) {
+        if (resp.returnCode === 0) {
+            var goods = resp.object;
             var list = filterGoodsList(goods.cbls);
             if(req.xhr===true){
                 res.json({
@@ -117,8 +114,6 @@ var search = function(req, res, next) {
         } else {
             next(new Error(resp.message));
         }
-    },function(){
-        next(new Error("api request failed"))
     });
 }
 

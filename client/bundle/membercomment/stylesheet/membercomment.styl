@@ -63,9 +63,13 @@ body{
 			background:#FFF;
 			width: 100%;
 			.slide-tabs-navbar-item{
+				background:#FFF;
+				border:0 none;
 				border-bottom:px2rem(1) solid #D7D7D7;
 				line-height:px2rem(36);
 				&.active{
+					color:#801da1;
+					border-color:#801da1;
 					border-bottom:px2rem(2) solid #801da1;
 				}
 				&>span{
@@ -74,7 +78,7 @@ body{
 			}
 		}
 		.slide-tabs-content{
-			padding-bottom: 1.17rem;
+            padding-bottom:px2rem(38);
 		}
 		
 	}
@@ -109,10 +113,10 @@ body{
 						min-height: 1rem;
 						margin-bottom: .2rem;
 						color: #555;
-						font-size: .32rem;
+						font-size: .34rem;
 					}
 					.price{
-						font-size: .32rem;
+						font-size: .34rem;
 						i{
 							font-size: .28rem;
 						}
@@ -174,25 +178,5 @@ body{
 				}
 			}
 		}
-	}
-}
-
-.slide-tabs{
-	.slide-tabs-navbar{
-		height: 1.16rem;
-		border:0 none;
-		.slide-tabs-navbar-item{
-			background:#FFF;
-			border:0 none;
-			border-bottom:px2rem(1) solid #D7D7D7;
-			line-height:px2rem(36);
-			&.active{
-				color:#801da1;
-				border-color:#801da1;
-			}
-		}
-	}
-	.slide-tabs-content{
-		overflow:hidden;
 	}
 }

@@ -6,21 +6,44 @@ import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
-import fetchOrder from "./action.es6";
+import {fetchOrder,fetchDeliveryOrder} from "./action.es6";
 
 import Floor from "./partial/floor.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Header from "../common/header.jsx";
 import {alert} from "../common/action.es6";
 import Alert from "../../component/alert.jsx";
+import Dialog from "../../component/dialog.jsx";
 
 
 class OrderList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            displayFlag: props.flag
+            displayFlag: props.flag,
+            dialogActive:false,
+            dialogContent: "确定已收货吗?",
+            dialogOnConfirm:null
         }
+    }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        });
+    }
+    confirmDialog(orderNo,i){
+        const {dispatch} = this.props;
+        this.setState({
+            dialogActive:true,
+            dialogContent: "确定已收货吗?",
+            dialogOnConfirm:()=>{
+                this.toggleDialog();
+                dispatch(fetchDeliveryOrder("/deliveryorder",{
+                    orderNo,
+                    index: i
+                }));
+            }
+        });
     }
     componentWillReceiveProps(nextProps){
         const {dispatch} = this.props;
@@ -78,7 +101,7 @@ class OrderList extends Component{
         cashierParam = cashierParam || {};
         return (
             <div className="order-list-content">
-                <Header>我的订单</Header>
+                <Header><span className="title">我的订单</span></Header>
                 <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
                     <input type="hidden" name="appId" value={cashierParam.appId} />
                     <input type="hidden" name="channel" value={cashierParam.channel} />
@@ -88,33 +111,36 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
-                    <SlideTabsItem navigator={()=><span>全部</span>} className="listMain">
+                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false}>
+                    <SlideTabsItem navigator={()=><a href="/orderlist/0">全部</a>} className="listMain">
                         <Floor systemTime={systemTime} orderIndex={0} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><span>待付款</span>} className="listMain">
+                    <SlideTabsItem navigator={()=><a href="/orderlist/1">待付款</a>} className="listMain">
                         <Floor systemTime={systemTime} orderIndex={1} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><span>待发货</span>} className="listMain">
+                    <SlideTabsItem navigator={()=><a href="/orderlist/2">待发货</a>} className="listMain">
                         <Floor systemTime={systemTime} orderIndex={2} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><span>待收货</span>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={3} {...this.props} ref="floor"/>
+                    <SlideTabsItem navigator={()=><a href="/orderlist/3">待收货</a>} className="listMain">
+                        <Floor systemTime={systemTime} orderIndex={3} confirmDialog={this.confirmDialog.bind(this)} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><span>待评价</span>} className="listMain">
+                    <SlideTabsItem navigator={()=><a href="/orderlist/4">待评价</a>} className="listMain">
                         <Floor systemTime={systemTime} orderIndex={4} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
                 </SlideTabs>
+                <Dialog active={this.state.dialogActive} 
+                    onCancel={this.toggleDialog.bind(this)}
+                    onConfrim={this.state.dialogOnConfirm}>{this.state.dialogContent}</Dialog>
                 <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
