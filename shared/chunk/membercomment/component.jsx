@@ -5,7 +5,7 @@ import classNames from "classnames";
 import util,{apiRequest} from "../../lib/util.es6";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
-import fetchComment from "./action.es6";
+import {fetchComment} from "./action.es6";
 
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Slider from "../../component/slider/slider.jsx";

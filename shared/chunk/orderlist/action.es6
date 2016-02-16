@@ -24,7 +24,7 @@ function receiveOrder(param,res){
     }
 }
 
-export default function fetchOrder(url,param){
+export function fetchOrder(url,param){
     return (dispatch)=>{
         dispatch(requestOrder(param));
         return apiRequest(url,param).then((res)=>{
