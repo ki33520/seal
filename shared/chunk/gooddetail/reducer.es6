@@ -132,9 +132,11 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
     }
 
     if(_.keys(selectedAttrs).length === _.keys(_good.attrs).length){
-        let selectedItem = _.findWhere(_good.items,selectedAttrs)
+        let selectedItem = _.findWhere(_good.items,{'attrs':selectedAttrs})
         selectedItem = selectedItem || null
-        good["selectedItem"] = selectedItem
+        _good["selectedItem"] = selectedItem
+    }else{
+        _good["selectedItem"] = null
     }
     return _good
     // let attrs = 

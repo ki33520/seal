@@ -85,7 +85,9 @@ var goodDetail = function(req, res, next) {
 }
 
 function flashbuyFilter(flashbuy) {
-    var _flashbuy = {};
+    var _flashbuy = {
+        active:false
+    };
     if (flashbuy) {
         _flashbuy["price"] = flashbuy.wapPrice
         _flashbuy["startTime"] = moment(new Date(flashbuy.beginDate)).format("YYYY-MM-DD HH:mm:ss")
