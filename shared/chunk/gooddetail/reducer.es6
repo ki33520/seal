@@ -20,6 +20,7 @@ function goodById(state={},action){
         case TOGGLE_ATTR:
             good = toggleAttr(good,action.attrName,action.attrValue)
             return Object.assign({},state,{
+                attrToggled:true,
                 good
             })
         case REQUEST_GOOD:

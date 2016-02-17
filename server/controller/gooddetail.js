@@ -40,7 +40,7 @@ var goodDetail = function(req, res, next) {
                     flashbuy["active"] = true
                 }
             }
-            good.flashbuy = flashbuy;
+            good.flashbuy = {active:false};
 
             var promotions = {}
             if (ret["promotionsByGood"].returnCode === 0) {
@@ -53,25 +53,27 @@ var goodDetail = function(req, res, next) {
                     isFetched: true,
                     result: good
                 })
+            }else{
+                var initialState = {
+                    good: good
+                }
+                var markup = util.getMarkupByComponent(GoodDetailApp({
+                    initialState: initialState
+                }));
+                res.render('gooddetail', {
+                    markup: markup,
+                    initialState: initialState
+                })
             }
-            var initialState = {
-                good: good
-            }
-            var markup = util.getMarkupByComponent(GoodDetailApp({
-                initialState: initialState
-            }));
-            res.render('gooddetail', {
-                markup: markup,
-                initialState: initialState
-            })
         } else {
             if (req.xhr) {
                 res.json({
                     isFetched: false,
                     errMsg: ret["goodById"].message
                 })
+            }else{
+                next(new Error(ret["goodById"].message))
             }
-            next(new Error(ret["goodById"].message))
         }
     }).error(function() {
         if (req.xhr) {
@@ -79,8 +81,9 @@ var goodDetail = function(req, res, next) {
                 isFetched: false,
                 errMsg: "api request failed"
             })
+        }else{
+            next(new Error('api request failed'))
         }
-        next(new Error('api request failed'))
     })
 }
 

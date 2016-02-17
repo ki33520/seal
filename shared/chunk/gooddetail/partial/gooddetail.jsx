@@ -72,13 +72,12 @@ class GoodDetail extends Component{
     componentDidUpdate(prevProps){
         const {selectedItem} = this.props.goodById.good
         const prevSelectedItem = prevProps.goodById.good.selectedItem
-        if(selectedItem === null){
-            return
-        }
-        if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
-                this.props.fetchGood({
-                    id:selectedItem.code
-                })
+        if(this.props.goodById.attrToggled){
+            if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
+                    this.props.fetchGood({
+                        id:selectedItem.code
+                    })
+            }
         }
     }
     handleAttrToggle(selectedAttrName,selectedAttrValue,e){
@@ -186,7 +185,7 @@ class GoodDetail extends Component{
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
-        const {selectedItem,buyed} = this.state;
+        const {buyed} = this.state;
 
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
