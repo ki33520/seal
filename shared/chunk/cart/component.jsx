@@ -307,6 +307,7 @@ class Cart extends Component {
         }
     }
     render() {
+        const {isUpdating} = this.props.cartByUser;
         return (
             <div>
                 <Header>
