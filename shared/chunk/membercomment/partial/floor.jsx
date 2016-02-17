@@ -14,7 +14,7 @@ class Floor extends Component{
                             const key = "comment-" + i;
                             const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:mm:ss");
                             var stars = [],
-                                imagesList = child.imagesUrl ? child.imagesUrl.split(",") : [],
+                                imagesList = child.imageUrlList ? child.imageUrlList : [],
                                 picList = [];
                             if(imagesList){
                                 picList = imagesList.map((v,k)=>{
