@@ -188,15 +188,6 @@
         },
         "vendor": "react"
     },
-    "coupondetail":{
-        "html": ["coupondetail.html"],
-        "path": "./client/bundle/coupondetail/",
-        "compiler": {
-            "js": "babel",
-            "css": "stylus"
-        },
-        "vendor": "react"
-    },
     "polymer":{
         "html": ["polymer.html"],
         "path": "./client/bundle/polymer/",

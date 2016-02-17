@@ -113,7 +113,7 @@ class OrderList extends Component{
                 </form>
                 <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false}>
                     <SlideTabsItem navigator={()=><a href="/orderlist/0">全部</a>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={0} {...this.props} ref="floor"/>
+                        <Floor systemTime={systemTime} orderIndex={0} confirmDialog={this.confirmDialog.bind(this)} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                         <GoTop relative={true}/>
                     </SlideTabsItem>
