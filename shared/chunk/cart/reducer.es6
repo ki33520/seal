@@ -34,7 +34,9 @@ function cartByUser(state={},action){
         case START_TOGGLE_ITEM:
             return Object.assign({},state,{
                 isToggleing:true,
-                isToggled:false
+                isToggled:false,
+                isUpdating:true,
+                isUpdated:false
             });
         case FINISH_TOGGLE_ITEM:
             var {cartIndex,groupIndex,goodsIndex,singleCode,checked} = action.param;
@@ -59,12 +61,16 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isToggleing:false,
                 isToggled:true,
+                isUpdating:false,
+                isUpdated:true,
                 carts:carts
             });
         case START_TOGGLE_ALL:
             return Object.assign({},state,{
                 isAllToggling:true,
-                isAllToggled:false
+                isAllToggled:false,
+                isUpdating:true,
+                isUpdated:false
             });
         case FINISH_TOGGLE_ALL:
             var {cartIndex,checked} = action.param;
@@ -89,12 +95,16 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isAllToggling:false,
                 isAllToggled:true,
+                isUpdating:false,
+                isUpdated:true,
                 carts:carts
             }); 
         case START_DELETE_CART:
             return Object.assign({},state,{
                 isDeleting:true,
-                isDeleted:false
+                isDeleted:false,
+                isUpdating:true,
+                isUpdated:false
             });
         case FINISH_DELETE_CART:
             var {cartIndex,groupIndex,goodsIndex} = action.param;
@@ -117,6 +127,8 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isDeleting:false,
                 isDeleted:true,
+                isUpdating:false,
+                isUpdated:true,
                 carts
             });
         case CHANGE_CART_BUYED:
