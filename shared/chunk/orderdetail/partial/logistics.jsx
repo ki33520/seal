@@ -88,26 +88,50 @@ class Logistics extends Component{
     }
     render(){
         const {logistics,order} = this.props.orderByParam;
-        var parcel = [];
+        var content,
+            parcel = [];
         for(var i in logistics){
             if(i === "dispatchs"){
                 parcel = logistics[i];
             }
         }
-        const cnNumbers = ["一","二","三","四","五","六","七","八","九"]
+        const cnNumbers = ["一","二","三","四","五","六","七","八","九"];
         const tabs = parcel.map((item,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{"包裹"+cnNumbers[i]}</i>} key={i}>
                     {this.renderContent(item)}
                 </SlideTabsItem>
             )
-        })
+        });
+        const slideTabs = (
+            <SlideTabs axis="x" onSelect={this.handleClick.bind(this)} navbarSlidable={false}>
+                {tabs}
+            </SlideTabs>
+        );
+        if(parcel.length>1){
+            content = slideTabs;
+        }else{
+            if(parcel.length>0){
+                content = (
+                    <div className="slide-tabs slide-tabs-fixed">
+                        <div className="slide-tabs-content fixed">
+                            <div className="slide-tabs-item">
+                                {this.renderContent(parcel[0])}
+                            </div>
+                        </div>
+                        <div className="slide-tabs-navbar">
+                            <div className="slide-tabs-navbar-item active">
+                                <i>{"包裹"+cnNumbers[0]}</i>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        };
         return (
             <div className="order-detail-content logistics-content">
                 <Header>物流信息</Header>
-                <SlideTabs axis="x" onSelect={this.handleClick.bind(this)}>
-                    {tabs}
-                </SlideTabs>
+                {content}
             </div>
         )
     }

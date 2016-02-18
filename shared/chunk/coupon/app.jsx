@@ -33,9 +33,8 @@ class CouponApp extends Component{
                 isFetching:false
             },
             detail:{
-                coupon:{}
-            },
-            rule:{}
+                coupon:null
+            }
         };
         let store = configureStore(initialState);
         return (

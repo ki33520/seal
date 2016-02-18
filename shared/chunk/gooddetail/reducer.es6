@@ -20,6 +20,7 @@ function goodById(state={},action){
         case TOGGLE_ATTR:
             good = toggleAttr(good,action.attrName,action.attrValue)
             return Object.assign({},state,{
+                attrToggled:true,
                 good
             })
         case REQUEST_GOOD:
@@ -132,9 +133,11 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
     }
 
     if(_.keys(selectedAttrs).length === _.keys(_good.attrs).length){
-        let selectedItem = _.findWhere(_good.items,selectedAttrs)
+        let selectedItem = _.findWhere(_good.items,{'attrs':selectedAttrs})
         selectedItem = selectedItem || null
-        good["selectedItem"] = selectedItem
+        _good["selectedItem"] = selectedItem
+    }else{
+        _good["selectedItem"] = null
     }
     return _good
     // let attrs = 

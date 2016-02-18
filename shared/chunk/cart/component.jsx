@@ -199,7 +199,7 @@ class Cart extends Component {
     renderGroup(group,i,j){
         let goodsList = [];
         let manjian = classNames("manjian",{
-            hide:!group.promoType
+            hide:!group.promoName
         });
         group.list.map((goods,k)=>{
             goodsList.push(this.renderGoods(goods,i,j,k))
@@ -247,7 +247,7 @@ class Cart extends Component {
             "unable_buy":allowBuy===false
         });
         let promo = classNames("depot_bot",{
-            hide:!cart.promoType
+            hide:!cart.promoName
         });
          
         return(
@@ -307,6 +307,7 @@ class Cart extends Component {
         }
     }
     render() {
+        const {isUpdating} = this.props.cartByUser;
         return (
             <div>
                 <Header>

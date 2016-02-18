@@ -24,9 +24,7 @@ class GoodDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedAttr:null,
             buyed:1,
-            selectedItem:props.goodById.good.selectedItem,
             popupActive:false,
             trigger:null,
             upperVisble:true,
@@ -74,13 +72,12 @@ class GoodDetail extends Component{
     componentDidUpdate(prevProps){
         const {selectedItem} = this.props.goodById.good
         const prevSelectedItem = prevProps.goodById.good.selectedItem
-        if(selectedItem === null){
-            return
-        }
-        if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
-                this.props.fetchGood({
-                    id:selectedItem.code
-                })
+        if(this.props.goodById.attrToggled){
+            if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
+                    this.props.fetchGood({
+                        id:selectedItem.code
+                    })
+            }
         }
     }
     handleAttrToggle(selectedAttrName,selectedAttrValue,e){
@@ -103,24 +100,23 @@ class GoodDetail extends Component{
         e && e.preventDefault();
         const {alert,addCart} = this.props;
         let {good} = this.props.goodById
-        const {selectedItem,buyed} = this.state;
-        if(selectedItem === null){
-            const unselectedProperties = _.filter(good.properties,(property)=>{
-                return property.selectedValue === null;
+        const {buyed} = this.state;
+        if(good.selectedItem === null){
+            const attrName = _.findKey(good.attrs,(attr)=>{
+                return _.some(attr,{selected:true}) === false
+                // return property.selectedValue === null;
             })
-            var propertyNames = _.pluck(unselectedProperties,"propertyName");
-            propertyNames = propertyNames.join(",");
-            alert(`请选择${propertyNames}`,3000);
+            alert(`请选择${attrName}`,3000);
             return;
         }else if(buyed === 0){
             alert('购买数量必须大于0',3000);
             return;
-        }else if(selectedItem !== null && buyed > 0){
+        }else if(good.selectedItem !== null && buyed > 0){
             this.togglePopup("addToCart")
             addCart({
                 buyed:buyed,
                 buylimit:good.buyLimit,
-                singlecode:selectedItem.code
+                singlecode:good.selectedItem.code
             });
         }
     }
@@ -138,20 +134,19 @@ class GoodDetail extends Component{
         e && e.preventDefault();
         const {alert} = this.props
         const {good} = this.props.goodById;
-        const {selectedItem,buyed} = this.state;
-        if(selectedItem === null){
-            const unselectedProperties = _.filter(good.properties,(property)=>{
-                return property.selectedValue === null;
+        const {buyed} = this.state;
+        if(good.selectedItem === null){
+            const attrName = _.findKey(good.attrs,(attr)=>{
+                return _.some(attr,{selected:true}) === false
+                // return property.selectedValue === null;
             })
-            var propertyNames = _.pluck(unselectedProperties,"propertyName");
-            propertyNames = propertyNames.join(",");
-            alert(`请选择${propertyNames}`,3000);
+            alert(`请选择${attrName}`,3000);
             return;
         }else if(buyed === 0){
             alert('购买数量必须大于0',3000);
             return;
-        }else if(selectedItem !== null && buyed > 0){
-            let singleCode = selectedItem.code
+        }else if(good.selectedItem !== null && buyed > 0){
+            let singleCode = good.selectedItem.code
             let queryParam = base64Encode(urlParam({
                 itemIds:singleCode,
                 buyeds:buyed
@@ -190,7 +185,7 @@ class GoodDetail extends Component{
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
-        const {selectedItem,buyed,selectedAttr} = this.state;
+        const {buyed} = this.state;
 
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
@@ -246,7 +241,7 @@ class GoodDetail extends Component{
             </div>
             <Toolbar cartCount={cartCount} good={good} 
             popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
-            selectedAttr={selectedAttr} buyed={buyed}
+            buyed={buyed}
             handleAttrToggle={this.handleAttrToggle.bind(this)}
             handleBuyedChanged={this.handleBuyedChanged.bind(this)}
             directBuy={this.directBuy.bind(this)} 

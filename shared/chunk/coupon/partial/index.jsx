@@ -18,13 +18,14 @@ class Coupon extends React.Component{
         const {pagination,couponType} = this.props.index;
         const type = couponType[index];
         const {coupons,pageIndex,totalPage} = pagination[type];
+        const _pageIndex = pageIndex || 1;
         this.setState({
             activeIndex:index
         });
         if(coupons){
             return false;
         }
-        this.fetchCouponsByParam(type,pageIndex);
+        this.fetchCouponsByParam(type,_pageIndex,true);
     }
     beginRefresh(){
         const {pagination,couponType,isFetching} = this.props.index;
@@ -33,15 +34,16 @@ class Coupon extends React.Component{
         const totalPage = pagination[type].totalPage;
         const pageIndex = Number(pagination[type].pageIndex);
         const nextPage = pageIndex + 1;
-        if(totalPage < pageIndex||isFetching === true){
+        if(totalPage <= pageIndex||isFetching === true){
             return false;
         }
-        this.fetchCouponsByParam(type,nextPage);
+        this.fetchCouponsByParam(type,nextPage,false);
     }
-    fetchCouponsByParam(couponType,nextPage){
+    fetchCouponsByParam(couponType,pageIndex,isLoading){
         this.props.fetchCoupons({
             type:couponType,
-            pageIndex:nextPage
+            pageIndex,
+            isLoading
         });
     }
     renderYouaCoupons(coupons){
@@ -142,9 +144,9 @@ class Coupon extends React.Component{
         );
     }
     render(){
-        const {pagination,isFetching} = this.props.index;
+        const {pagination,isFetching,isLoading} = this.props.index;
         return (
-            <div>
+            <div className="inner-scroll">
                 <Header>
                     <span className="title">优惠券</span>
                 </Header>
@@ -160,7 +162,7 @@ class Coupon extends React.Component{
                     </SlideTabsItem>
                 </SlideTabs>
                 <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
-                <Loading active={isFetching}/>
+                <Loading active={isLoading}/>
             </div>
         )
     }
