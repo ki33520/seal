@@ -208,7 +208,7 @@ class OrderDetail extends Component{
                 </div>
                 <div className="bottom-line clearfix">
                     <div className="label">国际运费：</div>
-                    <div className="data">{abroadFeeBox}<i>&yen;</i><span>{order.abroadFee.toFixed(2)}</span></div>
+                    <div className="data"><i>&yen;</i><span>{order.abroadFee.toFixed(2)}</span></div>
                 </div>
                 <div className="bottom-line clearfix">
                     <div className="label">关税：</div>
@@ -223,7 +223,7 @@ class OrderDetail extends Component{
                     <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
                 </div>
                 <div className=" bottom-line clearfix no-border">
-                    <div className="label">实付金额：</div>
+                    <div className="label">应付金额：</div>
                     <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee.toFixed(2)}</span></div>
                 </div>
             </div>

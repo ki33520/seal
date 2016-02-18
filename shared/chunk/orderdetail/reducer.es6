@@ -62,6 +62,7 @@ function orderByParam(state={},action){
             })
         case RESPONSE_DELIVERYORDER:
             state.order.orderStatus = action.res.orderStatus ? action.res.orderStatus : state.order.orderStatus;
+            state.order.orderStatusArr = action.res.orderStatusArr ? action.res.orderStatusArr : state.order.orderStatusArr;
             return Object.assign({},state,{
                 deliveryOrderChanging:false,
                 deliveryOrderChanged: action.res.isChanged,
