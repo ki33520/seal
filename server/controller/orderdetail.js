@@ -57,7 +57,24 @@ var payType = [{
     value: "10",
     text: "微信支付"
 }]
-
+function getStatus(str){
+    var statusArr = [];
+    orderStatus.map((v, k)=>{
+        statusArr[k] = {
+            value: v.value,
+            text: v.text,
+            active: v.active
+        };
+    });
+    statusArr.map((v, k)=>{
+        if (v.value === str) {
+            _.map(statusArr.slice(0, k+1), function(value) {
+                value.active = true
+            })
+        }
+    });
+    return statusArr;
+}
 function formatComment(object) {
     var itemList = object.itemList.map((v,k)=>{
         return {
@@ -122,22 +139,7 @@ function formatComment(object) {
     if (order.orderStatus == 'STATUS_NOT_PAY' || order.orderStatus == 'STATUS_CANCELED') {
         order.canFlow = false;
     }
-    var statusArr = [];
-    orderStatus.map((v, k)=>{
-        statusArr[k] = {
-            value: v.value,
-            text: v.text,
-            active: v.active
-        };
-    });
-    statusArr.map((v, k)=>{
-        if (v.value === order.orderStatus) {
-            _.map(statusArr.slice(0, k+1), function(value) {
-                value.active = true
-            })
-        }
-    });
-    order.orderStatusArr = statusArr;
+    order.orderStatusArr = getStatus(order.orderStatus);
     _.each(payType, function(v, k) {
         if (v.value === order.payType) {
             order.payType = v.text;
@@ -221,8 +223,9 @@ var orderDelivery = function(req, res, next) {
         if (resp.returnCode === 0) {
             res.json({
                 isChanged: true,
+                msg: resp.message,
                 orderStatus: "STATUS_FINISHED",
-                msg: resp.message
+                orderStatusArr: getStatus("STATUS_FINISHED")
             })
         }else{
             res.json({
@@ -238,7 +241,7 @@ var comments = function(req, res, next) {
         memberId: user.memberId,
         commentsJson: req.body.commentsJson
         //'[{rate:5,content:nice,isOpen:1,itemId:S732000000195}]'
-    }).then(function(resp) {
+    },false,{ method: 'POST'}).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({
                 isChanged: true,

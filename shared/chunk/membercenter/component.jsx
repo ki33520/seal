@@ -76,31 +76,35 @@ class MemberCenter extends Component{
     }
     renderOrderBanner(){
         const {isLogined,countOrder} = this.props.memberCenterByUser;
-        const paymentNum = countOrder && countOrder.paymentNum > 0 ? <i>{countOrder.paymentNum}</i> : null;
-        const sendNum = countOrder && countOrder.sendNum > 0 ? <i>{countOrder.sendNum}</i> : null;
-        const signNum = countOrder && countOrder.signNum > 0 ? <i>{countOrder.signNum}</i> : null;
-        const commentNum = countOrder && countOrder.commentNum > 0 ? <i>{countOrder.commentNum}</i> : null;
+        let count = {};
+        _.forIn(countOrder, function(value, key) {
+            if(value>0){
+                count[key] = value < 100 ? <i>{value}</i> : <i>99+</i>
+            }else{
+                count[key] = null;
+            }
+        });
         return (
             <div className="userGoods">
                 <a href="/orderlist/1" className="userGoods_1">
                     <em></em>
                     <span>待付款</span>
-                    {paymentNum}
+                    {count.paymentNum}
                 </a>
                 <a href="/orderlist/2" className="userGoods_2">
                     <em></em>
                     <span>待发货</span>
-                    {sendNum}
+                    {count.sendNum}
                 </a>
                 <a href="/orderlist/3" className="userGoods_3">
                     <em></em>
                     <span>待收货</span>
-                    {signNum}
+                    {count.signNum}
                 </a>
                 <a href="/orderlist/4" className="userGoods_4">
                     <em></em>
                     <span>待评价</span>
-                    {commentNum}
+                    {count.commentNum}
                 </a>
             </div>
         )
