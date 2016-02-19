@@ -3,14 +3,44 @@ var moment = require("moment");
 var _ = require("lodash");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
+function flagOfCoupon(coupon) {
+    var obj = {
+        hwg:{name:"海外购",value:"haitao",title:"海外购www.tepin.hk"},
+        tepin:{name:"特品汇",value:"tepin",title:"特品汇www.tepin.com"},
+        hnmall:{name:"农博汇",value:"hnmall",title:"农博汇www.hnmall.com"},
+        sap:{name:"全平台",value:"sap",title:""},
+        unknow:{}
+    }
+    if(coupon.employCode === null){
+        return obj.unknow;
+    }
+    if (coupon.employCode.length > 1) {
+        return obj.sap;
+    }
+    if (coupon.employCode.length === 1) {
+        switch (coupon.employCode[0]) {
+            case "sap":
+                return obj.sap;
+            case "tepin":
+                return obj.tepin;
+            case "hnmall":
+                return obj.hnmall;
+            case "hwg":
+                return obj.hwg;
+            default:
+                return obj.unknow;
+        }
+    }
+}
 function filterCoupon(obj){
     var coupon = {};
     if(obj){
+        var rule = obj.ruleObject || {};
         coupon = {
-            qrCode:null,//二维码
+            qrCode:null,//二维码obj.qrCode
             couponNo:obj.couponNo,//'优惠券号'
-            couponName:obj.couponName,//'优惠券名'
-            platform:obj.employCode,//'使用平台'
+            couponName:rule.couponName,//'优惠券名'
+            platform:flagOfCoupon(obj).name,//'使用平台'
             issueDate:obj.issueStartTime,//,'发券日期'
             useDate:obj.issueDate,//'生效日期'
             expDate:obj.validityDate,//'使用期限'
@@ -30,20 +60,22 @@ function formatCoupons(originalCoupons) {
             expiryDate:issueDate+' - '+validityDate,
             couponNo:v.couponNo,
             money:v.money,
+            used:v.status===1,
+            expiried:v.status===2,
             couponName:ruleObject.couponName,
             songAccount:ruleObject.songAccount,
             useRules:v.useRules,
             couponDesc:v.couponDesc,
             shortName:v.shortName,
+            flag:flagOfCoupon(v),
             description:ruleObject.description
         });
     });
     return coupons;
 }
  
-//优惠券状态:0未使用(包含已生效、未生效)
-//3已失效(包括已使用和已过期)
-//是否联盟 0：非联盟,1：联盟 , 不填则表示全部
+//优惠券状态:0未生效,1已使用,2已过期,3可使用.4已失效(已失效，包括已使用和已过期),5有效券(有效优惠券，包括可使用和未生效)
+//是否联盟 0：非联盟,1：联盟(如果查询全部传空) 
 var coupon = function(req, res, next) {
     var user = req.session.user;
     var pageSize = 10;

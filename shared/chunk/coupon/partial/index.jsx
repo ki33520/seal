@@ -67,7 +67,7 @@ class Coupon extends React.Component{
     renderInvalidCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
-                if(item.flag==='legue'){
+                if(item.flag.value==='legue'){
                     return this.renderLegueCoupon(item,true,'il-'+i);
                 }else{
                     return this.renderYouaCoupon(item,true,'iy-'+i);
@@ -86,16 +86,17 @@ class Coupon extends React.Component{
         )
     }
     renderYouaCoupon(coupon,invalid,i){
-        const beUsed = classNames({
-            beUsed:invalid
-        });
-
-        let flag = coupon.flag;
-        let classes = classNames("coupon",{
+        const classes = classNames("coupon",{
             "youa-invalid":invalid,
-            "haitao":!invalid
+            "haitao":!invalid && coupon.flag.value==='haitao',
+            "tepin":!invalid && coupon.flag.value==='tepin',
+            "hnmall":!invalid && coupon.flag.value==='hnmall',
+            "general":!invalid && coupon.flag.value===undefined,
         });
-
+        const status = classNames({
+            used:coupon.used,
+            expired:coupon.expired
+        });
         return (
             <div className={classes} key={i}>
                 <a href="javascript:;" onClick={this.props.changeScene.bind(this,"detail",{id:coupon.couponNo})}>
@@ -104,11 +105,11 @@ class Coupon extends React.Component{
                         <div className="term">{coupon.songAccount}</div>
                     </div>
                     <div className="right">
-                        <div className="kind">海外购www.tepin.hk</div>
+                        <div className="kind">{coupon.flag.title}</div>
                         <div className="date">{coupon.expiryDate}</div>
                         <div className="explain">{coupon.couponDesc}</div>
                     </div>
-                    <div className={beUsed}></div>
+                    <div className={status}></div>
                 </a>
             </div>
         );
@@ -118,8 +119,9 @@ class Coupon extends React.Component{
             "union-invalid":invalid,
             "union":!invalid
         });
-        const expired = classNames({
-            expired:invalid
+        const status = classNames({
+            used:coupon.used,
+            expired:coupon.expired
         });
 
         return (
@@ -138,7 +140,7 @@ class Coupon extends React.Component{
                         <div className="term">{coupon.useRules}</div>
                         <div className="date">{coupon.expiryDate}</div>
                     </div>
-                    <div className={expired}></div>
+                    <div className={status}></div>
                 </a>
             </div>
         );
@@ -152,16 +154,18 @@ class Coupon extends React.Component{
                 </Header>
                 <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
                     <SlideTabsItem navigator={()=>'友阿优惠券'}>
-                        <div>{this.renderYouaCoupons(pagination.youa.coupons)}</div>
+                        {this.renderYouaCoupons(pagination.youa.coupons)}
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'联盟优惠券'}>
-                        <div>{this.renderLegueCoupons(pagination.legue.coupons)}</div>
+                        {this.renderLegueCoupons(pagination.legue.coupons)}
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>
-                        <div>{this.renderInvalidCoupons(pagination.invalid.coupons)}</div>
+                        {this.renderInvalidCoupons(pagination.invalid.coupons)}
+                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
                     </SlideTabsItem>
                 </SlideTabs>
-                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
                 <Loading active={isLoading}/>
             </div>
         )
