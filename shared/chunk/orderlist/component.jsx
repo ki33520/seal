@@ -114,7 +114,7 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false}>
+                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}> 
                     <SlideTabsItem navigator={()=><a href="/orderlist/0">全部</a>} className="listMain">
                         <Floor systemTime={systemTime} orderIndex={0} confirmDialog={this.confirmDialog.bind(this)} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
