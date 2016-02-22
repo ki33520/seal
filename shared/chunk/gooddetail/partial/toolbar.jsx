@@ -20,6 +20,7 @@ class Toolbar extends Component{
             popupActive,trigger,togglePopup,
             cartCount,selectedAttr,buyed,good} = this.props
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
+        const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
         return (
             <div className="good-detail-toolbar">
             <div className="good-detail-btn">
@@ -42,7 +43,6 @@ class Toolbar extends Component{
                         <i className="iconfont icon-close-circled" onClick={togglePopup.bind(this,null)}></i>
                     </div>
                     <Attributes attrs={good.attrs}
-                    stock={good.stock}
                     onAttrChange={handleAttrToggle} />
                     <div className="pro clearfix">
                         <div className="pro-name">
@@ -50,7 +50,7 @@ class Toolbar extends Component{
                             <em>（限购{good.buyLimit}件）</em>
                         </div>
                         <div className="good-buyed">
-                        <NumberPicker value={buyed} onChange={handleBuyedChanged} maximum={good.buyLimit}/>
+                        <NumberPicker value={buyed} onChange={handleBuyedChanged} minimum={1} maximum={buylimit}/>
                         </div>
                     </div>
                     <a href="javascript:void(0);" onClick={handleConfirm} className="goodsSureBtn">确定</a>

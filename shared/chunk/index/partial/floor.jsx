@@ -120,7 +120,7 @@ class Floor extends Component{
         let {badges} = this.props.channel.floors;
         if(badges && badges.length > 0){
             badges = badges.map((badge,i)=>{
-                return <a href={badge.jumpUrl} key={i}><span>{badge.title}</span></a>
+                return <a href={badge.jumpUrl} key={i}><span><img src={badge.imageUrl}/><p>{badge.title}</p></span></a>
             })
             return <div className="m-entry">{badges}</div>
         }

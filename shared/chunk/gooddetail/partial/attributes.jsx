@@ -6,7 +6,7 @@ import Popover from "../../../component/popover.jsx";
 
 class Attributes extends Component{
     render(){
-        const {onAttrChange,stock,attrs} = this.props;
+        const {onAttrChange,attrs} = this.props;
         let attrContent = []
         for(let attrName in attrs){
             let attrValues = attrs[attrName]
