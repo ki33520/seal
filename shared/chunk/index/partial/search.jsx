@@ -30,6 +30,23 @@ class SearchBox extends Component{
         const {changeField} = this.props;
         changeField('keyword',null)
     }
+    renderHistory(){
+        if(this.props.search.history && this.props.search.history.length > 0){
+            const history = this.props.search.history.map((keyword,i)=>{
+                return <a href={"/search?k="+keyword} key={i}>{keyword}</a>
+            })
+            return (
+                <div className="searchList">
+                    <span className="clearfix">
+                        <em>历史搜索</em>
+                        <i>清空记录</i>
+                    </span>
+                    {history}
+                </div>
+            )
+        }
+        return null
+    }
     renderSearchList(){
         return (
             <div className="searchbox-list">
@@ -37,12 +54,7 @@ class SearchBox extends Component{
                     <span>热搜</span>
                     <div>{this.renderHotWord()}</div>
                 </div>
-                <div className="searchList">
-                    <span className="clearfix">
-                        <em>历史搜索</em>
-                        <i>清空记录</i>
-                    </span>
-                </div>
+                {this.renderHistory()}
             </div>
         )
     }

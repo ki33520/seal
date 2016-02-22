@@ -1,7 +1,7 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 import {
-    REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,REQUEST_SEARCHHISTORY,RESPONSE_SEARCHHISTORY,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
@@ -142,6 +142,30 @@ export function fetchHotWord(param){
         dispatch(requestHotWord(param));
         apiRequest("/searchhotwords",param).then((res)=>{
             dispatch(responseHotWord(param,res));
+        })
+    }
+}
+
+function requestSearchHistory(param){
+    return {
+        type:REQUEST_SEARCHHISTORY,
+        param
+    }
+}
+
+function responseSearchHistory(param,res){
+    return {
+        type:RESPONSE_SEARCHHISTORY,
+        param,
+        res
+    }
+}
+
+export function fetchSearchHistory(param){
+    return (dispatch)=>{
+        dispatch(requestSearchHistory(param));
+        apiRequest("/searchhistory",param).then((res)=>{
+            dispatch(responseSearchHistory(param,res));
         })
     }
 }
