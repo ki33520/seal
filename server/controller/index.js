@@ -240,10 +240,19 @@ var searchHotWords = function(req, res, next) {
 var searchHistory = function(req,res,next){
     if(req.xhr === true){
         var history = req.session["searchhistory"] || []
-        console.log('history',history)
+        // console.log('history',history)
         res.json({
             isFetched:true,
             result:history
+        })
+    }
+}
+
+var purgeSearchHistory = function(req,res,next){
+    if(req.xhr === true){
+        req.session["searchhistory"] = []
+        res.json({
+            isFinished:true
         })
     }
 }
@@ -323,6 +332,7 @@ module.exports = {
     floorFilter:floorFilter,
     channel: channel,
     searchHistory:searchHistory,
+    purgeSearchHistory:purgeSearchHistory,
     searchHotWords: searchHotWords,
     searchAssociate: searchAssociate,
     activityGood: activityGood

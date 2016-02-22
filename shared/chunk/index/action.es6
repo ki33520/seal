@@ -1,7 +1,9 @@
 'use strict';
 import {apiRequest} from "../../lib/util.es6";
 import {
-    REQUEST_HOTWORD,RESPONSE_HOTWORD,REQUEST_SEARCHHISTORY,RESPONSE_SEARCHHISTORY,
+    REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_SEARCHHISTORY,RESPONSE_SEARCHHISTORY,
+    START_PURGE_SEARCHHISTORY,FINISH_PURGE_SEARCHHISTORY,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
@@ -166,6 +168,30 @@ export function fetchSearchHistory(param){
         dispatch(requestSearchHistory(param));
         apiRequest("/searchhistory",param).then((res)=>{
             dispatch(responseSearchHistory(param,res));
+        })
+    }
+}
+
+function startPurgeSearchHistory(param){
+    return {
+        type:START_PURGE_SEARCHHISTORY,
+        param
+    }
+}
+
+function finishPurgeSearchHistory(param,res){
+    return {
+        type:FINISH_PURGE_SEARCHHISTORY,
+        param,
+        res
+    }
+}
+
+export function purgeSearchHistory(param){
+    return (dispatch)=>{
+        dispatch(startPurgeSearchHistory(param));
+        apiRequest("/purgesearchhistory",param).then((res)=>{
+            dispatch(finishPurgeSearchHistory(param,res));
         })
     }
 }
