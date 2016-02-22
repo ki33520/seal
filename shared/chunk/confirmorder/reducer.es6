@@ -31,6 +31,7 @@ function orderByParam(state={},action){
         case RESPONSE_SHIPFEE:
             order = {...state.order}
             if(action.res.isFetched){
+                order.totalFee += (action.res.result - order.shipFee)
                 order.shipFee = action.res.result
             }
             return Object.assign({},state,{

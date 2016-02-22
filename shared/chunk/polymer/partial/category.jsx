@@ -20,7 +20,7 @@ class Category extends Component{
     renderCategory(category){
         let children = category.children.map((child,i)=>{
             return (
-            <a href={"/search?categoryNames="+child.name} className="cg" key={i}>
+            <a href={"/search?categoryName="+child.name} className="cg" key={i}>
                 <img src={child.imageUrl}/>
                 <div>{child.name}</div>
             </a>

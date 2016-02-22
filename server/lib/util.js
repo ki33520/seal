@@ -135,6 +135,14 @@ var util = {
         }
         return carts
     },
+    saveSearchHistory(history,record){
+        history = history || [];
+        if(_.some(history,record) === false){
+            history.push(record)
+        }
+        // console.log('history',history)
+        return history
+    },
     syncLocalCart(memberId,carts){
         carts = carts || []
         var singleCodes = [],buyeds = [];

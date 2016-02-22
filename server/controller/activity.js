@@ -54,7 +54,7 @@ var activity = function(req, res, next) {
                 var initialState = {
                     list,
                     totalPage,
-                    imageUrl:filter.imageUrl(obj.imageUrl),
+                    imageUrl:filter.imageUrl(obj.bannerImageUrl),
                     title:obj.activityName
                 };
                 var markup = util.getMarkupByComponent(ActivityApp({

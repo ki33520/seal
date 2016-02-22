@@ -17,6 +17,8 @@ router.get("/logoutgateway",mainController.requireAuthorize,require("./controlle
 router.get("/",require("./controller/index.js").index);
 router.get("/channel", require("./controller/index.js").channel);
 router.get("/searchhotwords", require("./controller/index.js").searchHotWords);
+router.get("/searchhistory", require("./controller/index.js").searchHistory);
+router.get("/purgesearchhistory", require("./controller/index.js").purgeSearchHistory);
 router.post("/searchassociate", require("./controller/index.js").searchAssociate);
 router.get("/activitygood", require("./controller/index.js").activityGood);
 router.get("/mobileonly/:id", require("./controller/topic.js").mobileOnly);

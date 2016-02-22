@@ -49,7 +49,10 @@ var search = function(req, res, next) {
         pageSize:10
     };
     if(req.query.k){
-        options.searchKey=req.query.k;
+        var keyword = req.query.k;
+        var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword);
+        options.searchKey=keyword;
+        req.session["searchhistory"] = searchhistory;
     }
     if(Number(req.query.pageIndex)){
         options.currentPage = req.query.pageIndex;

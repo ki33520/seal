@@ -2,6 +2,8 @@
 
 import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_SEARCHHISTORY,RESPONSE_SEARCHHISTORY,
+    START_PURGE_SEARCHHISTORY,FINISH_PURGE_SEARCHHISTORY,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
@@ -11,6 +13,7 @@ import {CHANGE_FIELD} from "../common/constant.es6";
 import {combineReducers} from "redux";
 
 function search(state={},action){
+    let history = null;
     switch(action.type){
         case CHANGE_FIELD:
             const {name,value} = action;
@@ -29,6 +32,34 @@ function search(state={},action){
                 hotwords,
                 hotwordFetched,
                 hotwordFetching:false
+            })
+        case REQUEST_SEARCHHISTORY:
+            return Object.assign({},state,{
+                historyFetched:false,
+                historyFetching:true
+            });
+        case RESPONSE_SEARCHHISTORY:
+            history = action.res.result
+            const historyFetched = action.res.isFetched;
+            return Object.assign({},state,{
+                history,
+                historyFetched,
+                historyFetching:false
+            })
+        case START_PURGE_SEARCHHISTORY:
+            return Object.assign({},state,{
+                historyPurged:false,
+                historyPurging:true
+            })
+        case FINISH_PURGE_SEARCHHISTORY:
+            history = state.history
+            if(action.res.isFinished){
+                history = []
+            }
+            return Object.assign({},state,{
+                history,
+                historyPurged:action.res.isFinished,
+                historyPurging:false
             })
         case REQUEST_ASSOICATEWORD:
             return Object.assign({},state,{
