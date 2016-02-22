@@ -3,10 +3,12 @@
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
+import dom from "../../../lib/dom.es6";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
 import {fetchDeliveryOrder,fetchPayGateway} from "../action.es6";
+import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import Timer from "../../common/timer.jsx";
 
@@ -104,20 +106,21 @@ class Floor extends Component{
     }
     renderGoods(itemList){
         var content;
+
         if(itemList.length>1){
             content = (
-                <div className="clearfix">
-                    <div className="slide-img-wrap">
+                <div className="clearfix slide-img-block">
+                    <SlideTabs ref="imgslide" axis="x" activeIndex={0} navbarSlidable={true} >
                         {
                             itemList.map((good,i)=>{
                                 return (
-                                    <span key={i} className="img_wrap J_ytag cartlist">
-                                    <Image placeholder={good.singleImageUrl} />
-                                    </span>
+                                    <SlideTabsItem navigator={()=><span key={i} className="img_wrap J_ytag cartlist"><Image placeholder={good.singleImageUrl} /></span>} className="listMain">
+                                        <div>asdadsdas</div>
+                                    </SlideTabsItem>
                                 )
                             })
                         }
-                    </div>
+                    </SlideTabs>
                 </div>
             )
         }else{

@@ -113,12 +113,9 @@ body{
     padding:0 .16rem;
 }
 .J_moveRight > div {
-    padding:.32rem 0;
+    margin:.32rem 0;
 }
 .J_moveRight .slide-img-wrap{
-    overflow-y: hidden;
-    overflow-x: auto;
-    height: 2.08rem;
 }
 .J_moveRight .img_wrap {
     width:2.08rem;
@@ -129,7 +126,7 @@ body{
     float: left;
     font-size: 0;
     overflow: hidden;
-    margin:0 .32rem 0 .16rem;
+    margin: 0 .16rem;
 }
 .J_moveRight .img_wrap img{
     width:100%;
