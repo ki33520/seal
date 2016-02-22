@@ -152,11 +152,6 @@ function goodFilter(good) {
                     selected: false,
                     disabled: false
                 }
-                if (selectedItem !== null) {
-                    if (selectedItem.attrs[attrName] === value) {
-                        // _value["selected"] = true
-                    }
-                }
                 return _value
             })
             return attrValues

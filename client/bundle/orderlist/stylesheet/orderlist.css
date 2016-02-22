@@ -56,30 +56,31 @@ body{
 .listMain .order-box {
     border-top:.266667rem solid #f7f7f7;
     background-color:#fff;
+    color: #666;
 }
 .order-up, .order-down {
     padding:.24rem .32rem;
 }
 .order-up{
     border-bottom: 1px solid #d7d7d7;
+    line-height:.48rem;
 }
 .order-up span{
     color:#666;
     font-size:.27rem;
     display:inline-block;
-    line-height:.48rem;
 }
 .order-up>i span{
     color: #7f1e9f;
 }
 .order-up .right{
     font-size:.27rem;
-    line-height:.56rem;
+    line-height:.48rem;
     text-align:right;
 }
 .order-up .right>i{
     color:#801da1;
-    margin-right:.24rem;
+    margin-right:.15rem;
     display:inline-block;
 }
 .order-up .right>i span{
@@ -87,7 +88,7 @@ body{
     margin-right: .15rem;
 }
 .order-up .right>i span i{
-    margin-left: .12rem;
+    margin-left: 0;
 }
 .order-up .right em {
     color: #ed1946;
@@ -101,6 +102,11 @@ body{
 .order-list {
     border-bottom: 1px solid #d7d7d7;
     padding-bottom: 0;
+}
+.order-list>a,
+.order-list>a:hover,
+.order-list>a:visited{
+    color: #666;
 }
 .J_moveRight {
     position: relative;
@@ -157,7 +163,6 @@ body{
 }
 .J_moveRight .gd_info .value span {
     font-size: .38rem;
-    color: #333;
     z-index: 98;
 }
 .order-down>span{
@@ -170,7 +175,7 @@ body{
 }
 .order-down span em {
     color: #ed1946;
-    font-size: .5rem;
+    font-size: .45rem;
     font-weight:bold;
     line-height: .8rem;
     display:inline-block;

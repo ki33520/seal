@@ -2,6 +2,7 @@
 
 import {
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
+    REQUEST_SEARCHHISTORY,RESPONSE_SEARCHHISTORY,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
@@ -29,6 +30,19 @@ function search(state={},action){
                 hotwords,
                 hotwordFetched,
                 hotwordFetching:false
+            })
+        case REQUEST_SEARCHHISTORY:
+            return Object.assign({},state,{
+                historyFetched:false,
+                historyFetching:true
+            });
+        case RESPONSE_SEARCHHISTORY:
+            const history = action.res.result;
+            const historyFetched = action.res.isFetched;
+            return Object.assign({},state,{
+                history,
+                historyFetched,
+                historyFetching:false
             })
         case REQUEST_ASSOICATEWORD:
             return Object.assign({},state,{

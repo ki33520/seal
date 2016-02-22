@@ -8,10 +8,11 @@ import {SceneGroup,Scene} from "../common/scene.jsx"
 
 class IndexRouter extends Component{
     handleSceneChange(currentScene,prevScene){
-        const {fetchHotWord} = this.props
+        const {fetchHotWord,fetchSearchHistory} = this.props
         switch(currentScene){
             case "search":
                 !this.props.search.hotwordFetched && fetchHotWord()
+                !this.props.search.historyFetched && fetchSearchHistory()
         }
     }
     render(){

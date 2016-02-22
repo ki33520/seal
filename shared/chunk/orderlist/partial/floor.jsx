@@ -148,7 +148,7 @@ class Floor extends Component{
         if(orderStatus === "STATUS_NOT_PAY" && outTime){
             return (
                 <i>
-                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
                     <span>后自动取消</span>
                 </i>
             )
@@ -158,8 +158,8 @@ class Floor extends Component{
         if(list.length>0){
             return list.map((child,i)=>{
                 const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
-                const salesTotal = salesTotalFee !== undefined ? salesTotalFee : 0;
-                const crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD");
+                const paymentFeeTotal = paymentFee !== undefined ? paymentFee : 0;
+                const crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD HH:mm:ss");
                 return (
                     <div className="order-box" key={i}>
                         <div className="order-up">
@@ -171,7 +171,7 @@ class Floor extends Component{
                         </div>
                         <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
-                            <span>合计：<em>&yen;{salesTotal.toFixed(2)}</em></span>
+                            <span>合计：<em>&yen;{paymentFeeTotal.toFixed(2)}</em></span>
                             {this.renderButtons(child,i)}
                         </div>
                     </div>

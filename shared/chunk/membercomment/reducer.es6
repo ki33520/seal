@@ -10,10 +10,21 @@ function commentByUser(state={},action){
     switch(action.type){
         case REQUEST_COMMENT:
             return Object.assign({},state,{
+                isFetched:false,
                 isFetching:true
             })
         case RECEIVE_COMMENT:
+            var cState = {...state};
+            var {allComment,showComment} = action.res;
+            if(allComment){
+                allComment.list = _.union(cState.allComment.list,allComment.list);
+            }
+            if(showComment){
+                showComment.list = cState.showComment && cState.showComment.list ? _.union(cState.showComment.list,showComment.list) : showComment.list;
+            };
+            
             return Object.assign({},state,{
+                isFetched:true,
                 isFetching:false
             },action.res)
         case SHOW_ALERT:

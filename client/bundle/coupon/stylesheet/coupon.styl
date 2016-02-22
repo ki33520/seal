@@ -45,8 +45,7 @@
 
 .inner-scroll {
 	height: 100%;
-	overflow-y:auto;
-	overflow-x:hidden;
+	overflow: hidden;
 }
 .coupon {
     height: 120px;
@@ -175,7 +174,23 @@
 .union {
 	background-image: url(/client/asset/images/union_normal.png);
 }
-
+.used,.expired {
+	position:absolute;
+	right:20px;
+	bottom:20px;
+	width:50%;
+	height:100%;
+	width: 70px;
+	height: 70px;
+}
+.used{
+	background:url(/client/asset/images/beUsed.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+}
+.expired{
+	background:url(/client/asset/images/expired.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+}
 .union-invalid,.union {
 
 	.content {

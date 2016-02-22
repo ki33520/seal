@@ -183,7 +183,7 @@ function floorFilter(floors) {
                     flashbuy["goods"].push({
                         singleCode: good.singleCode,
                         imageUrl: config.imgServer + good.imageUrl,
-                        salePrice: good.salesPrice,
+                        salePrice: good.wapPrice,
                         originPrice: good.originPrice,
                         title: good.title
                     })
@@ -236,8 +236,23 @@ var searchHotWords = function(req, res, next) {
         }
     })
 }
+
+var searchHistory = function(req,res,next){
+    if(req.xhr === true){
+        var history = req.session["searchhistory"] || []
+        console.log('history',history)
+        res.json({
+            isFetched:true,
+            result:history
+        })
+    }
+}
+
 var searchAssociate = function(req, res, next) {
     var keyword = req.body.keyword
+
+    var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword)
+    req.session["searchhistory"] = searchhistory
     util.fetchAPI("fetchAssociateKeywords", {
         searchKey: keyword
     }).then(function(ret) {
@@ -307,6 +322,7 @@ module.exports = {
     index: index,
     floorFilter:floorFilter,
     channel: channel,
+    searchHistory:searchHistory,
     searchHotWords: searchHotWords,
     searchAssociate: searchAssociate,
     activityGood: activityGood

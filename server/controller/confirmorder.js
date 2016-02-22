@@ -190,14 +190,16 @@ var payGateway = function(req, res, next) {
         pathname: "/"
     }
     var homeURL = url.format(urlObj)
-    urlObj["pathname"] = "/orderdetail/" + param.orderNo;
-    var orderDtailURL = url.format(urlObj)
 
     util.fetchAPI("orderByNo", {
         orderNo: param.orderNo
     }).then(function(ret) {
         if (ret.returnCode === 0) {
             var message = messageFilter(ret.object)
+
+            urlObj["pathname"] = "/orderdetail/" + message.id;
+            var orderDetailURL = url.format(urlObj)
+
             _.extend(message, {
                 wxOpenId: user.wxOpenId,
                 subject: "haiwaigouH5",
@@ -206,7 +208,7 @@ var payGateway = function(req, res, next) {
                 appName: "haiwaigou",
                 homeURL: homeURL,
                 orderStatusURL: orderStatusURL,
-                orderDtailURL: orderDtailURL,
+                orderDetailURL: orderDetailURL,
                 version: "NEW"
             })
             message = JSON.stringify({
@@ -252,7 +254,7 @@ function messageFilter(order) {
         })
     }
     var _order = _.pick(order, [
-        "totalFee", "orderNo"
+        "totalFee", "orderNo","id"
     ])
     _order["productList"] = JSON.stringify(productList) 
 
