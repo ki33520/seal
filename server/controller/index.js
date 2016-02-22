@@ -251,8 +251,8 @@ var searchHistory = function(req,res,next){
 var searchAssociate = function(req, res, next) {
     var keyword = req.body.keyword
 
-    var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword)
-    req.session["searchhistory"] = searchhistory
+    // var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword)
+    // req.session["searchhistory"] = searchhistory
     util.fetchAPI("fetchAssociateKeywords", {
         searchKey: keyword
     }).then(function(ret) {
