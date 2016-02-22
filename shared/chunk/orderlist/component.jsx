@@ -101,7 +101,10 @@ class OrderList extends Component{
         cashierParam = cashierParam || {};
         return (
             <div className="order-list-content">
-                <Header><span className="title">我的订单</span></Header>
+                <header className="header">
+                    <a href="/membercenter" className="iconfont icon-back"></a>
+                    <span className="title">我的订单</span>
+                </header>
                 <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
                     <input type="hidden" name="appId" value={cashierParam.appId} />
                     <input type="hidden" name="channel" value={cashierParam.channel} />
@@ -111,7 +114,7 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false}>
+                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}> 
                     <SlideTabsItem navigator={()=><a href="/orderlist/0">全部</a>} className="listMain">
                         <Floor systemTime={systemTime} orderIndex={0} confirmDialog={this.confirmDialog.bind(this)} {...this.props} ref="floor"/>
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />

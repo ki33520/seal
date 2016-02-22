@@ -74,7 +74,7 @@ class Logistics extends Component{
                 <div className="info">
                     <h2>物流详情</h2>
                     <p><i>物流公司：</i>{item.expressName}</p>
-                    <p>物流编号：{item.mailNumber}</p>
+                    <p>物流单号：{item.mailNumber}</p>
                 </div>
                 
                 <div className="rate">
