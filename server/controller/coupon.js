@@ -3,30 +3,34 @@ var moment = require("moment");
 var _ = require("lodash");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
-function flagOfCoupon(coupon) {
+function flagOfCoupon(employCode) {
     var obj = {
-        hwg:{name:"海外购",value:"haitao",title:"海外购www.tepin.hk"},
+        haitao:{name:"海外购",value:"haitao",title:"海外购www.tepin.hk"},
         tepin:{name:"特品汇",value:"tepin",title:"特品汇www.tepin.com"},
         hnmall:{name:"农博汇",value:"hnmall",title:"农博汇www.hnmall.com"},
-        sap:{name:"全平台",value:"sap",title:""},
-        unknow:{}
+        general:{name:"全平台",value:"general",title:""},
+        unknow:{name:"",value:"general"}
     }
-    if(coupon.employCode === null){
+    if(employCode === null){
         return obj.unknow;
     }
-    if (coupon.employCode.length > 1) {
-        return obj.sap;
+    if (employCode.length > 1) {
+        if(employCode.indexOf("hwg")!==-1 || employCode.indexOf("haiwaigou")!==-1){
+            return obj.haitao;
+        }
+        return obj.general;
     }
-    if (coupon.employCode.length === 1) {
-        switch (coupon.employCode[0]) {
+    if (employCode.length === 1) {
+        switch (employCode[0]) {
             case "sap":
-                return obj.sap;
+                return obj.general;
             case "tepin":
                 return obj.tepin;
             case "hnmall":
                 return obj.hnmall;
             case "hwg":
-                return obj.hwg;
+            case "haiwaigou":
+                return obj.haitao;
             default:
                 return obj.unknow;
         }
@@ -40,7 +44,7 @@ function filterCoupon(obj){
             qrCode:null,//二维码obj.qrCode
             couponNo:obj.couponNo,//'优惠券号'
             couponName:rule.couponName,//'优惠券名'
-            platform:flagOfCoupon(obj).name,//'使用平台'
+            platform:flagOfCoupon(obj.employCode).name,//'使用平台'
             issueDate:obj.issueStartTime,//,'发券日期'
             useDate:obj.issueDate,//'生效日期'
             expDate:obj.validityDate,//'使用期限'
@@ -62,12 +66,13 @@ function formatCoupons(originalCoupons) {
             money:v.money,
             used:v.status===1,
             expiried:v.status===2,
+            isLegue:v.isMerchants===1,
             couponName:ruleObject.couponName,
             songAccount:ruleObject.songAccount,
             useRules:v.useRules,
             couponDesc:v.couponDesc,
             shortName:v.shortName,
-            flag:flagOfCoupon(v),
+            flag:flagOfCoupon(v.employCode).value,
             description:ruleObject.description
         });
     });

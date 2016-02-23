@@ -49,7 +49,7 @@ class Coupon extends React.Component{
     renderYouaCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
-                return this.renderYouaCoupon(item,false,'y-'+i);
+                return this.renderYouaCoupon(item,'y-'+i);
             });
         }else{
             return this.renderNoCoupon("您目前没有友阿优惠券哟！");
@@ -58,7 +58,7 @@ class Coupon extends React.Component{
     renderLegueCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
-                return this.renderLegueCoupon(item,false,'l-'+i);
+                return this.renderLegueCoupon(item,'l-'+i);
             });
         }else{
             return this.renderNoCoupon("您目前没有联盟优惠券哟！");
@@ -67,10 +67,10 @@ class Coupon extends React.Component{
     renderInvalidCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
-                if(item.flag.value==='legue'){
-                    return this.renderLegueCoupon(item,true,'il-'+i);
+                if(item.isLegue){
+                    return this.renderLegueCoupon(item,'il-'+i);
                 }else{
-                    return this.renderYouaCoupon(item,true,'iy-'+i);
+                    return this.renderYouaCoupon(item,'iy-'+i);
                 }
             });
         }else{
@@ -85,20 +85,21 @@ class Coupon extends React.Component{
             </div>
         )
     }
-    renderYouaCoupon(coupon,invalid,i){
-        const classes = classNames("coupon",{
-            "youa-invalid":invalid,
-            "haitao":!invalid && coupon.flag.value==='haitao',
-            "tepin":!invalid && coupon.flag.value==='tepin',
-            "hnmall":!invalid && coupon.flag.value==='hnmall',
-            "general":!invalid && coupon.flag.value===undefined,
+    renderYouaCoupon(coupon,i){
+        const canUse = !(coupon.used || coupon.expiried);
+        const row = classNames("coupon",{
+            "youa-invalid":!canUse,
+            "haitao":canUse && coupon.flag==='haitao',
+            "tepin":canUse && coupon.flag==='tepin',
+            "hnmall":canUse && coupon.flag==='hnmall',
+            "general":canUse && coupon.flag==="general",
         });
         const status = classNames({
             used:coupon.used,
-            expired:coupon.expired
+            expiried:coupon.expiried
         });
         return (
-            <div className={classes} key={i}>
+            <div className={row} key={i}>
                 <a href="javascript:;" onClick={this.props.changeScene.bind(this,"detail",{id:coupon.couponNo})}>
                     <div className="left">
                         <div className="price"><em>&yen;</em>{coupon.money}</div>
@@ -114,14 +115,15 @@ class Coupon extends React.Component{
             </div>
         );
     }
-    renderLegueCoupon(coupon,invalid,i){
+    renderLegueCoupon(coupon,i){
+        const invalid = coupon.used || coupon.expiried;
         const classes = classNames("coupon",{
             "union-invalid":invalid,
-            "union":!invalid
+            "union": true
         });
         const status = classNames({
             used:coupon.used,
-            expired:coupon.expired
+            expiried:coupon.expiried
         });
 
         return (
