@@ -240,7 +240,7 @@ var searchHotWords = function(req, res, next) {
 var searchHistory = function(req,res,next){
     if(req.xhr === true){
         var history = req.session["searchhistory"] || []
-        console.log('history',history)
+        // console.log('history',history)
         res.json({
             isFetched:true,
             result:history
@@ -248,11 +248,20 @@ var searchHistory = function(req,res,next){
     }
 }
 
+var purgeSearchHistory = function(req,res,next){
+    if(req.xhr === true){
+        req.session["searchhistory"] = []
+        res.json({
+            isFinished:true
+        })
+    }
+}
+
 var searchAssociate = function(req, res, next) {
     var keyword = req.body.keyword
 
-    // var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword)
-    // req.session["searchhistory"] = searchhistory
+    //var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword)
+    //req.session["searchhistory"] = searchhistory
     util.fetchAPI("fetchAssociateKeywords", {
         searchKey: keyword
     }).then(function(ret) {
@@ -323,6 +332,7 @@ module.exports = {
     floorFilter:floorFilter,
     channel: channel,
     searchHistory:searchHistory,
+    purgeSearchHistory:purgeSearchHistory,
     searchHotWords: searchHotWords,
     searchAssociate: searchAssociate,
     activityGood: activityGood

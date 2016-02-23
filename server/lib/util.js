@@ -140,7 +140,7 @@ var util = {
         if(_.some(history,record) === false){
             history.push(record)
         }
-        console.log('history',history)
+        // console.log('history',history)
         return history
     },
     syncLocalCart(memberId,carts){

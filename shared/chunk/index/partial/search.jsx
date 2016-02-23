@@ -39,13 +39,17 @@ class SearchBox extends Component{
                 <div className="searchList">
                     <span className="clearfix">
                         <em>历史搜索</em>
-                        <i>清空记录</i>
+                        <i onClick={this.handlePurgeHistory.bind(this)}>清空记录</i>
                     </span>
                     {history}
                 </div>
             )
         }
         return null
+    }
+    handlePurgeHistory(e){
+        e && e.preventDefault()
+        this.props.purgeSearchHistory()
     }
     renderSearchList(){
         return (

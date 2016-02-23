@@ -35,9 +35,6 @@ class ConfirmOrder extends Component{
     }
     renderTotal(order){
         let couponFee = order.checkedCoupon ? order.checkedCoupon.couponFee : order.couponFee
-        let totalFee = parseFloat(order.productFee) + parseFloat(order.shipFee) + parseFloat(order.abroadFee)
-            + parseFloat(order.tariffFee) - parseFloat(order.promoFee) - parseFloat(couponFee)
-        totalFee = totalFee < 0.3 ? 0.3:totalFee
         return (
             <div className="count-box">
                 <div className="title">
@@ -71,7 +68,7 @@ class ConfirmOrder extends Component{
                 </div>
                 <div className=" count-box-line no-border">
                     <div className="label">应付金额：</div>
-                    <div className="data red-w">&yen;<span id="total_amount_money">{totalFee}</span></div>
+                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalFee}</span></div>
                 </div>
             </div>
         )
