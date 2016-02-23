@@ -106,20 +106,17 @@ class Floor extends Component{
     }
     renderGoods(itemList){
         var content;
-
+        var tabItems = itemList.map((good,i)=>{
+            return (
+                <SlideTabsItem key={i} navigator={()=><span className="img_wrap J_ytag cartlist"><Image placeholder={good.singleImageUrl} /></span>} className="listMain">
+                </SlideTabsItem>
+            )
+        });
         if(itemList.length>1){
             content = (
                 <div className="clearfix slide-img-block">
-                    <SlideTabs ref="imgslide" axis="x" activeIndex={0} navbarSlidable={true} >
-                        {
-                            itemList.map((good,i)=>{
-                                return (
-                                    <SlideTabsItem navigator={()=><span key={i} className="img_wrap J_ytag cartlist"><Image placeholder={good.singleImageUrl} /></span>} className="listMain">
-                                        <div>asdadsdas</div>
-                                    </SlideTabsItem>
-                                )
-                            })
-                        }
+                    <SlideTabs ref="imgslide" axis="x" activeIndex={0} navbarSlidable={itemList.length>4} >
+                        {tabItems}
                     </SlideTabs>
                 </div>
             )

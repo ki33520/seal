@@ -20,6 +20,12 @@ function orderByParam(state={},action){
             })
         case CHANGE_COUPON:
             var order = {...state.order,checkedCoupon:action.checkedCoupon}
+            if(action.checkedCoupon){
+                order.couponFee = order.checkedCoupon.couponFee
+            }else{
+                order.couponFee = 0
+            }
+            order.totalFee = calculateTotalFee(order)
             return Object.assign({},state,{
                 order
             })
@@ -31,8 +37,9 @@ function orderByParam(state={},action){
         case RESPONSE_SHIPFEE:
             order = {...state.order}
             if(action.res.isFetched){
-                order.totalFee += (action.res.result - order.shipFee)
+                // order.totalFee += (action.res.result - order.shipFee)
                 order.shipFee = action.res.result
+                order.totalFee = calculateTotalFee(order)
             }
             return Object.assign({},state,{
                 order
@@ -77,6 +84,18 @@ function orderByParam(state={},action){
     }
 }
 
+function calculateTotalFee(order){
+    let totalFee = order.productFee + order.shipFee + order.abroadFee + order.tariffFee
+        - order.promoFee - order.couponFee
+    // console.log('productFee',order.productFee)
+    // console.log('shipFee',order.shipFee)
+    // console.log('abroadFee',order.abroadFee)
+    // console.log('tariffFee',order.tariffFee)
+    // console.log('promoFee',order.promoFee)
+    // console.log('couponFee',order.couponFee)
+    totalFee = totalFee < 0.3 ? 0.3:totalFee
+    return totalFee
+}
 
 const rootReducer = combineReducers({
     orderByParam

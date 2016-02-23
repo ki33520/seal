@@ -182,6 +182,7 @@ class OrderDetail extends Component{
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
+        var paymentTitle = order.orderStatus === "STATUS_NOT_PAY" || order.orderStatus === "STATUS_CANCELED" ? "应付金额：" : "实付金额：";
         return (
             <div className="order-detail-content">
             <Header>订单详情</Header>
@@ -223,7 +224,7 @@ class OrderDetail extends Component{
                     <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
                 </div>
                 <div className=" bottom-line clearfix no-border">
-                    <div className="label">应付金额：</div>
+                    <div className="label">{paymentTitle}</div>
                     <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee.toFixed(2)}</span></div>
                 </div>
             </div>

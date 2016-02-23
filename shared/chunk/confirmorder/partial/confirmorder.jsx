@@ -34,7 +34,6 @@ class ConfirmOrder extends Component{
         )
     }
     renderTotal(order){
-        let couponFee = order.checkedCoupon ? order.checkedCoupon.couponFee : order.couponFee
         return (
             <div className="count-box">
                 <div className="title">
@@ -42,33 +41,33 @@ class ConfirmOrder extends Component{
                 </div>
                 <div className="count-box-line">
                     <div className="label">商品总价：</div>
-                    <div className="data">&yen;<span>{order.productFee}</span></div>
+                    <div className="data">&yen;<span>{order.productFee.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">国内运费：</div>
                     {order.shipFee>0?null:<div className="red-box">包邮</div>}
-                    <div className="data">&yen;<span>{order.shipFee}</span></div>
+                    <div className="data">&yen;<span>{order.shipFee.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">国际运费：</div>
-                    <div className="data">&yen;<span>{order.abroadFee}</span></div>
+                    <div className="data">&yen;<span>{order.abroadFee.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">关税：</div>
                     {order.tariffFee>0?null:<div className="red-box">免税</div>}
-                    <div className="data">&yen;<span>{order.tariffFee}</span></div>
+                    <div className="data">&yen;<span>{order.tariffFee.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠活动：</div>
-                    <div className="data"> - &yen;<span>{order.promoFee}</span></div>
+                    <div className="data"> - &yen;<span>{order.promoFee.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line intro">
                     <div className="label">优惠券：</div>
-                    <div className="data"> - &yen; <span id="coupon_money">{couponFee}</span></div>
+                    <div className="data"> - &yen; <span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
                 </div>
                 <div className=" count-box-line no-border">
                     <div className="label">应付金额：</div>
-                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalFee}</span></div>
+                    <div className="data red-w">&yen;<span id="total_amount_money">{order.totalFee.toFixed(2)}</span></div>
                 </div>
             </div>
         )
@@ -80,7 +79,7 @@ class ConfirmOrder extends Component{
         submitOrder("/submitorder",{
             itemIds:order.itemIds,
             buyeds:order.buyeds,
-            couponNo:checkedCoupon !== undefined?checkedCoupon.couponNo:"",
+            couponNo:checkedCoupon !== null?checkedCoupon.couponNo:"",
             receiverId:checkedReceiver !== null?checkedReceiver.id:"",
             couponFee:order.couponFee,
             totalFee:order.totalFee

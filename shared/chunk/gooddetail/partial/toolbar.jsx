@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import classNames from "classnames";
 import Popup from "../../../component/popup.jsx";
 import NumberPicker from "../../../component/numberpicker.jsx";
 
@@ -15,12 +16,30 @@ class Toolbar extends Component{
             cartCount:props.cartCount,
         };
     }
+    renderPrice(){
+        const {good} = this.props
+        let salePrice = good.salePrice
+        if(good.flashbuy["active"]){
+            salePrice = good.flashbuy["price"]
+        }
+        if(good["useMobilePrice"] && !good.flashbuy["active"]){
+            salePrice = good["mobilePrice"]
+        }
+        return <span>&yen;{salePrice}</span>
+    }
     render(){
         const {addToCart,directBuy,handleBuyedChanged,handleAttrToggle,
             popupActive,trigger,togglePopup,
             cartCount,selectedAttr,buyed,good} = this.props
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
         const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
+
+        const addCartClasses = classNames("goods_add",{
+            "disabled":good.stock === 0
+        })
+        const directBuyClasses = classNames("goods_buy",{
+            "disabled":good.stock === 0
+        })
         return (
             <div className="good-detail-toolbar">
             <div className="good-detail-btn">
@@ -28,16 +47,16 @@ class Toolbar extends Component{
                     <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount}</em>:null}</i>
                 </a>
                 {good.flashbuy["active"]?null:(
-                    <a href="javascript:void(null)" onClick={togglePopup.bind(this,"addToCart")} className="goods_add">加入购物车</a>
+                    <a href="javascript:void(null)" onClick={togglePopup.bind(this,"addToCart")} className={addCartClasses}>加入购物车</a>
                 )}
-                <a href="javascript:void(0);" onClick={togglePopup.bind(this,"directBuy")} className="goods_buy">立即购买</a>
+                <a href="javascript:void(0);" onClick={togglePopup.bind(this,"directBuy")} className={directBuyClasses}>立即购买</a>
             </div>
             <Popup direction="bottom" active={popupActive}>
                 <div className="con">
                     <div className="goodsSure">
                         <img src={good.mainImageUrl} alt="" />
                         <div className="left">
-                            <span>&yen;{good.salePrice}</span>
+                            {this.renderPrice()}
                             <em>库存<i>{good.stock}</i>件</em>
                         </div>
                         <i className="iconfont icon-close-circled" onClick={togglePopup.bind(this,null)}></i>

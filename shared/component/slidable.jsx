@@ -175,7 +175,7 @@ class Slidable extends Component{
     }
     handleTouchMove(e){
         e && e.preventDefault()
-        // e && e.stopPropagation();
+        e && e.stopPropagation();
         const {animateDuration,axis} = this.props;
         const {clientY,clientX} = e.changedTouches[0];
         const inTouchableRegion = dom.inTouchableRegion(clientX,clientY,e.currentTarget);

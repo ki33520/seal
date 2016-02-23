@@ -344,43 +344,43 @@
         }
     },
     "findProvince": {
-        "uri": "/sns/address/v1/findProvinceMap",
+        "uri": "/address/v1/findProvinceMap",
         "baseURL": {
-            "develop": "http://sns.e9448.com",
-            "test": "http://sns.e9448.com",
-            "production": "http://sns.e9448.com"
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
         }
     },
     "findCity": {
-        "uri": "/sns/address/v1/findCityMap",
+        "uri": "/address/v1/findCityMap",
         "baseURL": {
-            "develop": "http://sns.e9448.com",
-            "test": "http://sns.e9448.com",
-            "production": "http://sns.e9448.com"
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
         }
     },
     "findDistrict": {
-        "uri": "/sns/address/v1/findCountyMap",
+        "uri": "/address/v1/findCountyMap",
         "baseURL": {
-            "develop": "http://sns.e9448.com",
-            "test": "http://sns.e9448.com",
-            "production": "http://sns.e9448.com"
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
         }
     },
     "timestamp": {
-        "uri": "/sns/system/v1/timestamp",
+        "uri": "/system/v1/timestamp",
         "baseURL": {
-            "develop": "http://sns.e9448.com",
-            "test": "http://sns.e9448.com",
-            "production": "http://sns.e9448.com"
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
         }
     },
     "memberCardQRCode": {
-        "uri": "/sns/sso/v1/memberCardQRCode",
+        "uri": "/sso/v1/memberCardQRCode",
         "baseURL": {
-            "develop": "http://sns.e9448.com",
-            "test": "http://sns.e9448.com",
-            "production": "http://sns.e9448.com"
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
         }
     },
     "specialActivity": {

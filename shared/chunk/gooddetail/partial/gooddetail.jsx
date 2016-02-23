@@ -74,9 +74,11 @@ class GoodDetail extends Component{
         const prevSelectedItem = prevProps.goodById.good.selectedItem
         if(this.props.goodById.attrToggled){
             if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
-                    this.props.fetchGood({
-                        id:selectedItem.code
-                    })
+                    if(this.props.goodById.goodFetching !== true){
+                        this.props.fetchGood({
+                            id:selectedItem.code
+                        })
+                    }
             }
         }
     }
@@ -100,6 +102,9 @@ class GoodDetail extends Component{
         e && e.preventDefault();
         const {alert,addCart} = this.props;
         let {good} = this.props.goodById
+        if(good.stock === 0){
+            return
+        }
         const {buyed} = this.state;
         if(good.selectedItem === null){
             const attrName = _.findKey(good.attrs,(attr)=>{
@@ -134,6 +139,9 @@ class GoodDetail extends Component{
         e && e.preventDefault();
         const {alert} = this.props
         const {good} = this.props.goodById;
+        if(good.stock === 0){
+            return
+        }
         const {buyed} = this.state;
         if(good.selectedItem === null){
             const attrName = _.findKey(good.attrs,(attr)=>{
