@@ -17,10 +17,10 @@ function orderFilter(order) {
     _order["warehouse"] = order.warehouseName
     _order["totalFee"] = order.totalFee
     _order["productFee"] = order.salesTotalFee
-    _order["tariffFee"] = order.promoFee
-    _order["abroadFee"] = order.abroadFee ? order.abroadFee : "0.0"
-    _order["shipFee"] = order.logisticsFee ? order.logisticsFee : "0.0"
-    _order["couponFee"] = "0.0"
+    _order["tariffFee"] = order.tariffFee
+    _order["abroadFee"] = order.abroadFee ? order.abroadFee : 0
+    _order["shipFee"] = order.logisticsFee ? order.logisticsFee : 0
+    _order["couponFee"] = 0
     _order["promoFee"] = order.promoFee
 
     var promoList = []
@@ -51,6 +51,7 @@ function orderFilter(order) {
     }
     _order["checkedReceiver"] = checkedReceiver ? checkedReceiver : null
     _order["coupons"] = formatCoupons(order.couponList)
+    _order["checkedCoupon"] = null
         // order.coupons = formatCoupons(originResp.couponList)
     return _order;
 }
@@ -72,9 +73,6 @@ function formatCoupons(coupons) {
 var confirmOrder = function(req, res, next) {
     var param = util.decodeURLParam(req.params["param"])
     var user = req.session.user;
-    // user = {
-    //     memberId:"fc6804de52348ebe015239be28d00052"
-    // }
     util.fetchAPI("confirmOrder", {
         memberId: user.memberId,
         singleCodes: param.itemIds,
