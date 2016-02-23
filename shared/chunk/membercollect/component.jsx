@@ -18,9 +18,6 @@ class MembercollectList extends Component{
         dom.registerPullDownEvent(()=>{
             this.beginRefresh();
         }.bind(this));
-        window.onpageshow = function(event) {
-            console.log(event)
-        }
     }
     beginRefresh(){
         const {dispatch,fetchCollect} = this.props;
