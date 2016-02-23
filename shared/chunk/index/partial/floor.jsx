@@ -210,14 +210,18 @@ class Floor extends Component{
                         </a>
                     </li>
                     <li>
+                        {activityOne[1]?(
                         <a href={activityOne[1].jumpUrl}>
                             <img src={activityOne[1].imageUrl} alt="" />
                             <span></span>
                         </a>
+                        ):null}
+                        {activityOne[2]?(
                         <a href={activityOne[2].jumpUrl}>
                             <img src={activityOne[2].imageUrl} alt="" />
                             <span></span>
                         </a>
+                        ):null}
                     </li>
                 </ul>
                 </div>
