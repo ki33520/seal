@@ -334,7 +334,7 @@ class Cart extends Component {
         }
     }
     render() {
-        const {isUpdating} = this.props.cartByUser;
+        const {isUpdating,alertContent} = this.props.cartByUser;
         return (
             <div>
                 <Header>
@@ -346,7 +346,7 @@ class Cart extends Component {
                     onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
                 <Dialog active={this.state.alertActive}
                     onlyConfirm={true}
-                    onConfrim={this.state.alertOnConfirm}>商品价格发生变化，请重新结算!</Dialog>
+                    onConfrim={this.state.alertOnConfirm}>{alertContent}!</Dialog>
                 <Footer activeIndex="3"/>
             </div>
         )

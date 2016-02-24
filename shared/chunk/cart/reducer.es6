@@ -146,8 +146,7 @@ function cartByUser(state={},action){
         case START_CHECK_CART:
             return Object.assign({},state,{
                 isChecking:true,
-                isChecked:false,
-                allowSubmit:false
+                isChecked:false
             });
         case FINISH_CHECK_CART:
             var isChecked = false;
@@ -155,17 +154,25 @@ function cartByUser(state={},action){
             var {cartIndex,singleCodes,qtys} = action.param;
             var carts = [...state.carts];
             var cart = action.res.cart;
-    
+            var alertContent = '';
             if(action.res.isFetched){
                 isChecked = true;
-                if(carts[cartIndex].total !== cart.total){
-                    allowSubmit = true;
+                if(cart){
+                    if(carts[cartIndex].total === cart.total){
+                        allowSubmit = true;
+                    }else{
+                        alertContent = '商品价格发生变化，请重新结算!';
+                        carts[cartIndex] = cart;
+                    }
+                }else{
+                    carts.splice(cartIndex,1);
+                    alertContent = '该商品已下架!';
                 }
-                carts[cartIndex] = cart;
             }
             return Object.assign({},state,{
                 isChecking:false,
                 isChecked,
+                alertContent,
                 allowSubmit,
                 params:{
                     itemIds:singleCodes,
