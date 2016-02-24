@@ -43,7 +43,7 @@ class Floor extends Component{
                                         <div className="col col-right">
                                             <div className="title">{child.singleTitle}</div>
                                             <div className="price">
-                                                <span><i>￥</i>{child.salesPrice}</span>
+                                                <span><i>￥</i>{child.salesPrice.toFixed(2)}</span>
                                             </div>
                                         </div>
                                     </div>
