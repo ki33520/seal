@@ -13,3 +13,9 @@ if(typeof window.addEventListener){
 }else{
     window.attachEvent('onload',bootstrap);
 }
+
+window.onpageshow = function(event) {
+    if (event.persisted) {
+    	window.location.reload();
+    }
+}
