@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import moment from "moment";
+import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 
 class Floor extends Component{
     renderNode(list){
@@ -13,18 +14,24 @@ class Floor extends Component{
                         list.map((child,i)=>{
                             const key = "comment-" + i;
                             const crtTime = moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:mm:ss");
-                            var stars = [],
-                                imagesList = child.imageUrlList ? child.imageUrlList : [],
-                                picList = [];
-                            if(imagesList){
-                                picList = imagesList.map((v,k)=>{
-                                    return <li key={i}><img src={imagesList[k]} /></li>;
-                                });
+                            var stars = [];
+                            var picList = null;
+                            var content;
+                            var tabItems = child.imageUrlList.map((v,k)=>{
+                                return (
+                                    <SlideTabsItem key={k} navigator={()=><div key={k}><img src={v} /></div>} className="listMain">
+                                    </SlideTabsItem>
+                                )
+                            });
+                            if(child.imageUrlList.length > 0){
+                                picList = (
+                                    <div className="pic-list">
+                                        <SlideTabs ref="imgslide" axis="x" activeIndex={0} navbarSlidable={child.imageUrlList.length>3} >
+                                            {tabItems}
+                                        </SlideTabs>
+                                    </div>
+                                )
                             };
-                            const listclass = classNames({
-                                "pic-list": true,
-                                "hide": !picList.length
-                            })
                             for(let i=0;i<5;i++){
                                 let star;
                                 if(i<child.rate){
@@ -54,10 +61,7 @@ class Floor extends Component{
                                         <div className="date">{crtTime}</div>
                                     </div>
                                     <div className="content">{child.content || "没有评论内容"}</div>
-                                    <ul className={listclass}>
-                                        {picList}
-                                    </ul>
-                                    
+                                    {picList}
                                 </li>
                             )
                         })
