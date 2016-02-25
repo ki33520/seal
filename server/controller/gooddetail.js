@@ -36,11 +36,11 @@ var goodDetail = function(req, res, next) {
             if (ret["flashbuyByGood"].returnCode === 0) {
                 flashbuy = flashbuyFilter(ret["flashbuyByGood"].object)
                 if (moment().isBetween(moment(flashbuy["startTime"]), moment(flashbuy["endTime"]))) {
-                    // console.log('start')
+                    console.log('start')
                     flashbuy["active"] = true
                 }
             }
-            good.flashbuy = {active:false};
+            good.flashbuy = flashbuy;
 
             var promotions = {}
             if (ret["promotionsByGood"].returnCode === 0) {
@@ -118,7 +118,7 @@ function goodFilter(good) {
     _good["productCode"] = good.groupCode
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice
-    _good["stock"] = good.stock.localStock
+    _good["stock"] = good.stock.stock
     _good["originName"] = good.sourceArea.name
     _good["originFlag"] = config.imgServer + good.sourceArea.imageUrl
     _good["warehouseName"] = good.wareHouse.name
@@ -306,7 +306,7 @@ var isCollected = function(req, res, next) {
 var goodComments = function(req, res, next) {
     var productCode = req.query.productCode;
     var pageIndex = req.query.pageIndex || 1;
-    var pageSize = 5;
+    var pageSize = 100;
     util.fetchAPI("commentByGood", {
         productCode: productCode,
         pageNo: pageIndex,
