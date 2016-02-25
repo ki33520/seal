@@ -73,11 +73,9 @@ var cart = function(req, res, next) {
                 initialState = {
                     carts:carts
                 };
-
                 markup = util.getMarkupByComponent(CartApp({
                     initialState: initialState
                 }));
-
                 res.render('cart', {
                     markup:markup,
                     initialState:initialState
@@ -85,7 +83,7 @@ var cart = function(req, res, next) {
             }else{
                 next(new Error(resp.message));
             }
-        })
+        });
     }else{
         var localcart = req.session["localcart"]||[];
         var singleCodes = [];
@@ -161,7 +159,7 @@ var updateCart = function(req, res, next) {
                 res.json({
                     isUpdated: false,
                     errMsg: resp.message
-                })
+                });
             }
         });
     }else{
@@ -175,7 +173,6 @@ var updateCart = function(req, res, next) {
             isUpdated:true
         });
     }
-
 }
 
 var deleteCart = function(req, res, next) {
@@ -195,12 +192,12 @@ var deleteCart = function(req, res, next) {
                 res.json({
                     isDeleted: false,
                     errMsg: resp.message
-                })
+                });
             }
         }, function() {
             res.json({
                 apiResponded: false
-            })
+            });
         })
     }else{
         var localcart = req.session["localcart"];
@@ -220,8 +217,7 @@ var deleteCart = function(req, res, next) {
 
         res.json({
             isDeleted: isDeleted
-        })
-        
+        });
     }
 }
 
@@ -237,18 +233,18 @@ var fetchCart = function(req,res,next){
                 res.json({
                     isFetched: true,
                     cart:formatCarts(resp.object)[0]
-                })
+                });
             }else{
                 res.json({
                     isFetched: false,
                     errMsg: resp.message
-                })
+                });
             }
-        })
+        });
     }else{
         res.json({
             isFetched: false
-        })
+        });
     }
 }
 

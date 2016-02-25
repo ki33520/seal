@@ -8,6 +8,7 @@ import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
 import Checkbox from "../../component/form/checkbox.jsx";
+import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
 import {urlParam,base64Encode} from "../../lib/util.es6";
 
@@ -16,18 +17,37 @@ class Cart extends Component {
         super(props);
         this.state = {
             dialogActive:false,
-            dialogOnConfirm:null
+            dialogOnConfirm:null,
+            alertActive:false,
+            alertOnConfirm:null
         }
     }
-    checkout(cart){
-        if(!cart.checked){
+    componentWillReceiveProps(nextProps){
+        const {isChecked,allowSubmit,params} = nextProps.cartByUser;
+        if(isChecked){
+            if(allowSubmit){
+                const queryParam = base64Encode(urlParam(params));
+                window.location.assign(`/confirmorder/${queryParam}`);
+            }else{
+                this.setState({
+                    alertActive:true,
+                    alertOnConfirm:()=>{
+                        this.toggleAlert();
+                    }
+                });
+            }
+        }
+    }
+    checkout(cart,cartIndex){
+        const {isChecking} = this.props.cartByUser;
+        let itemIds = [];
+        let buyeds = [];
+        if(!cart.checked || isChecking){
             return false;
         }
         if(cart.total > cart.buyLimit){
             return false
         }
-        let itemIds = [];
-        let buyeds = [];
         cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
                 if(item.checked){
@@ -37,12 +57,11 @@ class Cart extends Component {
             })
         });
         if(itemIds.length&&buyeds.length){
-            let queryParam = base64Encode(urlParam({
-                itemIds:itemIds.join(","),
-                buyeds:buyeds.join(",")
-            })); 
-
-            window.location.assign(`/confirmorder/${queryParam}`);
+            this.props.checkCartInfo({
+                singleCodes:itemIds.join(","),
+                qtys:buyeds.join(","),
+                cartIndex
+            });
         }
     }
     handleChangeBuyed(goods,cartIndex,groupIndex,goodsIndex,buyed) {
@@ -134,10 +153,18 @@ class Cart extends Component {
             dialogActive:!this.state.dialogActive
         });
     }
+    toggleAlert(){
+        this.setState({
+            alertActive:!this.state.alertActive
+        });
+    }
     handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
         const {deleteCart,cartByUser} = this.props;
         const cart = cartByUser.carts[cartIndex];
         if(goods.checked === false){
+            return false;
+        }
+        if(this.props.cartByUser.isDeleting){
             return false;
         }
         let singleCodes = [];
@@ -275,7 +302,7 @@ class Cart extends Component {
                             <span>总计(不含运费、税金)：<em>&yen;{cart.total}</em></span>
                         </p>
                         <p>
-                            <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart)}/>
+                            <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart,i)}/>
                         </p>
                     </div>
                     {this.renderInfo(cart.total,cart.tax,cart.dutyFree,cart.buyLimit)}
@@ -307,7 +334,7 @@ class Cart extends Component {
         }
     }
     render() {
-        const {isUpdating} = this.props.cartByUser;
+        const {isUpdating,alertContent} = this.props.cartByUser;
         return (
             <div>
                 <Header>
@@ -317,6 +344,9 @@ class Cart extends Component {
                 <Dialog active={this.state.dialogActive} 
                     onCancel={this.toggleDialog.bind(this)}
                     onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
+                <Dialog active={this.state.alertActive}
+                    onlyConfirm={true}
+                    onConfrim={this.state.alertOnConfirm}>{alertContent}!</Dialog>
                 <Footer activeIndex="3"/>
             </div>
         )
