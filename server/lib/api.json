@@ -383,6 +383,14 @@
             "production": "http://sns.tepin.com/sns"
         }
     },
+    "promoterQr":{
+        "uri": "/member/v1/promoterQr",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "member.hwg.youayun.cn"
+        }
+    },
     "specialActivity": {
         "uri": "/content/v1/templetedetail/list",
         "baseURL": {
