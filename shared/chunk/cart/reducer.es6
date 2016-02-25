@@ -7,6 +7,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
+    START_CHECK_CART,FINISH_CHECK_CART,
     CHANGE_CART_BUYED
 } from "./constant.es6";
 
@@ -20,7 +21,7 @@ function cartByUser(state={},action){
         case FINISH_UPDATE_CART:
             var {cartIndex} = action.param;
             var {isUpdated,isFetched,cart} = action.res;
-            var carts = state.carts.slice();
+            var carts = [...state.carts];
             if(isUpdated){
                 if(isFetched){
                     carts[cartIndex] = cart;
@@ -40,7 +41,7 @@ function cartByUser(state={},action){
             });
         case FINISH_TOGGLE_ITEM:
             var {cartIndex,groupIndex,goodsIndex,singleCode,checked} = action.param;
-            var carts = state.carts.slice();
+            var carts = [...state.carts];
             var cart = {...carts[cartIndex]};
             var _cart = action.res.cart;
             if(action.res.isFetched){
@@ -74,7 +75,7 @@ function cartByUser(state={},action){
             });
         case FINISH_TOGGLE_ALL:
             var {cartIndex,checked} = action.param;
-            var carts = state.carts.slice();
+            var carts = [...state.carts];
             var cart;
             if(action.res.isFetched){
                 cart = action.res.cart;
@@ -109,7 +110,7 @@ function cartByUser(state={},action){
         case FINISH_DELETE_CART:
             var {cartIndex,groupIndex,goodsIndex} = action.param;
             var {isFetched,isDeleted,cart} = action.res;
-            var carts = state.carts.slice();
+            var carts = [...state.carts];
             var _cart = {...carts[cartIndex]};
          
             if(isDeleted){
@@ -133,7 +134,7 @@ function cartByUser(state={},action){
             });
         case CHANGE_CART_BUYED:
             var {cartIndex,groupIndex,goodsIndex,buyLimit,qty} = action.param;
-            var carts = state.carts.slice();
+            var carts = [...state.carts];
             if(qty<=buyLimit){
                 var cart = {...carts[cartIndex]};
                 cart.group[groupIndex].list[goodsIndex].qty=qty;
@@ -141,7 +142,44 @@ function cartByUser(state={},action){
             }
             return Object.assign({},state,{
                 carts
-            })
+            });
+        case START_CHECK_CART:
+            return Object.assign({},state,{
+                isChecking:true,
+                isChecked:false
+            });
+        case FINISH_CHECK_CART:
+            var isChecked = false;
+            var allowSubmit = false;
+            var {cartIndex,singleCodes,qtys} = action.param;
+            var carts = [...state.carts];
+            var cart = action.res.cart;
+            var alertContent = '';
+            if(action.res.isFetched){
+                isChecked = true;
+                if(cart){
+                    if(carts[cartIndex].total === cart.total){
+                        allowSubmit = true;
+                    }else{
+                        alertContent = '商品价格发生变化，请重新结算!';
+                        carts[cartIndex] = cart;
+                    }
+                }else{
+                    carts.splice(cartIndex,1);
+                    alertContent = '该商品已下架!';
+                }
+            }
+            return Object.assign({},state,{
+                isChecking:false,
+                isChecked,
+                alertContent,
+                allowSubmit,
+                params:{
+                    itemIds:singleCodes,
+                    buyeds:qtys
+                },
+                carts
+            });
         default:
             return state;
     }

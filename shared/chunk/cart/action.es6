@@ -5,6 +5,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
+    START_CHECK_CART,FINISH_CHECK_CART,
     CHANGE_CART_BUYED
 } from "./constant.es6";
 
@@ -68,6 +69,20 @@ function finishDeleteCart(param,res){
     }
 }
 
+function startCheckCart(param){
+    return {
+        type:START_CHECK_CART,
+        param
+    }
+}
+
+function finishCheckCart(param,res){
+    return {
+        type:FINISH_CHECK_CART,
+        param,
+        res
+    }
+}
 export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
@@ -80,7 +95,7 @@ export function updateCart(param){
             }else{
                 dispatch(finishUpdateCart(param,res));
             }
-        })
+        });
     }
 }
 
@@ -96,7 +111,7 @@ export function deleteCart(param){
             }else{
                 dispatch(finishDeleteCart(param,res));
             }
-        })
+        });
     }
 }
 
@@ -105,7 +120,7 @@ export function toggleCartItem(param){
         dispatch(toggleChecked(param));
         apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
             dispatch(finishChecked(param,res));
-        })
+        });
     }
 }
 
@@ -114,7 +129,7 @@ export function toggleCartAll(param){
         dispatch(toggleCheckedAll(param));
         apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
             dispatch(finishCheckedAll(param,res));
-        })
+        });
     }
 }
 
@@ -125,3 +140,11 @@ export function testBuyed(param){
     }
 }
 
+export function checkCartInfo(param){
+    return (dispatch)=>{
+        dispatch(startCheckCart(param));
+        apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
+            dispatch(finishCheckCart(param,res));
+        })
+    }
+}
