@@ -35,7 +35,7 @@ class OrderGoods extends Component{
                 })
                 let promoTitle = null
                 if(promo.promoType && promo.promoName){
-                    return (
+                    promoTitle =  (
                         <div className="orderConfirm_title clearfix">
                         <em>{promo.promoType}</em>
                         <span>{promo.promoName}</span>

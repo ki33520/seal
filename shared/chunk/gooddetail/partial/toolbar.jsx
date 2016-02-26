@@ -35,7 +35,7 @@ class Toolbar extends Component{
         const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
 
         const addCartClasses = classNames("goods_add",{
-            "disabled":good.stock === 0
+            "disabled":good.stock === 0 || good.flashbuy["active"]
         })
         const directBuyClasses = classNames("goods_buy",{
             "disabled":good.stock === 0
@@ -46,10 +46,8 @@ class Toolbar extends Component{
                 <a href="/cart" className="goods_cart">
                     <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount}</em>:null}</i>
                 </a>
-                {good.flashbuy["active"]?null:(
-                    <a href="javascript:void(null)" onClick={togglePopup.bind(this,"addToCart")} className={addCartClasses}>加入购物车</a>
-                )}
-                <a href="javascript:void(0);" onClick={togglePopup.bind(this,"directBuy")} className={directBuyClasses}>立即购买</a>
+                <a href="javascript:void(null)" onClick={togglePopup.bind(this,"addToCart")} className={addCartClasses}>加入购物车</a>
+                <a href="javascript:void(0);" onClick={togglePopup.bind(this,"directBuy")} className={directBuyClasses}>{good.stock===0?"已抢光":"立即购买"}</a>
             </div>
             <Popup direction="bottom" active={popupActive}>
                 <div className="con">

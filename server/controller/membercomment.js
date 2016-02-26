@@ -8,9 +8,15 @@ var config = require("../lib/config.js");
 
 function formatComment(object) {
    return object.map((child,i)=>{
+        var imageUrlList = [];
+        if(child.imageUrlList && child.imageUrlList.length>0){
+            imageUrlList = child.imageUrlList.map((v,k)=>{
+                return config.imgServer+v;
+            })
+        };
         return {
             content: child.content,
-            imageUrlList: child.imageUrlList,
+            imageUrlList: imageUrlList,
             imagesUrl: child.imagesUrl,
             createdAt: child.createdAt,
             updatedAt: child.updatedAt,

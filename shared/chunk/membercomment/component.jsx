@@ -46,10 +46,17 @@ class CommentList extends Component{
     }
     toggleFlag(flag,e){
         e && e.preventDefault();
+        var {allComment,showComment,isFetching} = this.props.commentByUser;
+        var comment = allComment;
         this.setState({
             displayFlag:flag
         });
-        this.beginRefresh(0,flag);
+        if(flag===1){
+            comment = showComment;
+        }
+        if(!comment && !isFetching){
+            this.beginRefresh(0,flag);
+        }
     }
     render(){
         var {allComment,showComment,isFetching} = this.props.commentByUser;
