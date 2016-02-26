@@ -32,7 +32,7 @@ class GoodComment extends Component{
                     <div className="comList" key={i}>
                         <div className="comList_title">
                             <img src={comment.avatar} />
-                            <span>{comment.nickName}</span>
+                            <span>{comment.isOpen===1?comment.nickName:"匿名用户"}</span>
                             <em>{comment.createdAt}</em>
                         </div>
                         {this.renderStars(comment.rate)}
