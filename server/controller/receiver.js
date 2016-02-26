@@ -61,7 +61,7 @@ function receiversFilter(receivers) {
     _.each(receivers, function(receiver) {
         var _receiver = receiverFilter(receiver)
         _receiver["id"] = receiver.recvAddressId
-        var idCard = _.words(receiver["idCard"],/\d{1}/g)
+        var idCard = _.words(receiver["idCard"],/\w{1}/g)
         idCard = _.map(idCard,function(v,i){
             if(i > 5 && i < 14){
                 v = "*"

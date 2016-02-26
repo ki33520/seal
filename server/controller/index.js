@@ -210,7 +210,6 @@ function floorFilter(floors) {
             goods: _floors["newRecommend"][0].activityProductList
         }
     }
-    // console.log(floors)
     return _floors
 }
 
