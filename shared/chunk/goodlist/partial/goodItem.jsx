@@ -24,7 +24,7 @@ class GoodItem extends Component{
                     	<i><img src={goods.sourceImageUrl} alt="" /></i>
                     	{goods.sourceName}
                     </div>
-                    <p>{goods.materTitle}</p>
+                    <p className="title">{goods.materTitle}</p>
                     <div>
                         <span className="now-price">&yen;{goods.salesPrice}</span>
                         <span className="old-price">&yen;{goods.originPrice}</span>

@@ -70,7 +70,6 @@ var activity = function(req, res, next) {
             next(new Error(resp.message));
         }
     });
-
 }
 
 module.exports = activity;
