@@ -124,7 +124,7 @@ class MemberCenter extends Component{
                     <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>
                     <div className="top">扫码分享</div>
                     <div className="center"><img src={member.cardImgUrl} /></div>
-                    <div className="bottom">邀请小伙伴扫一扫分享给TA</div>
+                    <div className="bottom">邀请小伙伴扫一扫<br />分享给TA</div>
                 </div>
             )
         }

@@ -72,6 +72,7 @@ function formatComment(object) {
         return {
             orderStatus: child.orderStatus,
             salesTotalFee: child.salesTotalFee,
+            paymentFee: child.paymentFee,
             orderId: child.id,
             createdAt: child.createdAt,
             itemList: itemList

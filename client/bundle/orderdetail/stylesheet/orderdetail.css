@@ -96,6 +96,7 @@
     flex: 1;
     text-align:center;
     font-size:.27rem;
+    color: #444;
 }
 .orderSpeed .rateText span.notTo{
     color:#999;
@@ -140,7 +141,7 @@
 }
 .J_moveRight > div {
     border-bottom: 1px solid #d7d7d7;
-    padding: .16rem .32rem;
+    padding: .24rem .32rem;
 }
 .J_moveRight > div:last-child{
     border-bottom:0;
@@ -149,17 +150,19 @@
     font-size: .3rem;
     line-height: .5rem;
 }
-.J_moveRight .img_wrap {
-    width: 2rem;
-    height: 2rem;
-    padding: .08rem;
-    border: 1px solid #d7d7d7;
-    background-color: #fff;
+.J_moveRight .J_ytag{
     float: left;
+    width: 25%;
+}
+.J_moveRight .img_wrap {
     font-size: 0;
     overflow: hidden;
-    margin-top: .1rem;
     display: block;
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid #d7d7d7;
+    background-color: #fff;
+    padding: .08rem;
 }
 .J_moveRight .img_wrap img {
     width: 100%;
@@ -167,7 +170,7 @@
 .J_moveRight .gd_info {
     position: relative;
     width: 75%;
-    padding-left: .266667rem;
+    padding-left: .1rem;
     /* padding-bottom: .266667rem; */
     overflow: hidden;
 }
@@ -175,7 +178,6 @@
     width: 100%;
     line-height: .5rem;
     height: 1rem;
-    margin: .16rem 0 0;
     word-wrap: break-word;
     word-break: break-all;
     overflow: hidden;
@@ -183,7 +185,7 @@
     float: left;
 }
 .J_moveRight .gd_info .name span {
-    font-size: .32rem;
+    font-size: .35rem;
     color: #333;
 }
 .J_moveRight .gd_info .value {
@@ -195,7 +197,7 @@
     margin: .16rem 0 0 0;
 }
 .J_moveRight .gd_info .value i {
-    font-size: .2rem;
+    font-size: .18rem;
     margin-right: .1rem;
 }
 .J_moveRight .gd_info .value span {
@@ -203,7 +205,7 @@
     margin-right: .24rem;
 }
 .J_moveRight .gd_info .value b {
-    font-size: .3rem;
+    font-size: .35rem;
     font-weight: normal;
     color: #333;
 }
@@ -225,6 +227,7 @@
     line-height: .96rem;
     position: relative;
     padding: 0 .32rem;
+    font-size: .38rem;
 }
 .count-box .bottom-line .label {
     float: left;
@@ -237,7 +240,7 @@
 }
 .count-box .bottom-line .data span {
     margin-left: .04rem;
-    font-size: .373333rem;
+    font-size: .38rem;
 }
 .bottom-line.intro .data {
     color: #27c241;
@@ -246,7 +249,7 @@
     color: #333;
 }
 .count-box .bottom-line .data.red-w {
-    color: #D32449;
+    color: #ed1a45;
 }
 .count-box .bottom-line .red-box {
     position: absolute;
@@ -258,11 +261,11 @@
     height: .54rem;
     line-height: .54rem;
     background: url(/client/asset/images/ico5.gif) right no-repeat;
-    background-size: auto 100%;
-    color: #D32449;
+    background-size: 100% 100%;
+    color: #ed1a45;
     font-size: .27rem;
     text-align: center;
-    padding-right: .12rem;
+    padding: 0 .13rem 0 0;
 }
 
 /* btns */
@@ -280,18 +283,18 @@
 }
 .confirmBtns a.confirm_btn {
     display: inline-block;
-    background-color: #dd1847;
+    background-color: #ed1a45;
     color: #fff;
     border-radius:20px;
     line-height: .94rem;
-    border: 1px solid #dd1847;
+    border: 1px solid #ed1a45;
     width: 40%;
     text-align: center;
     margin:0 2%;
 }
 .confirmBtns a.confirmBorder_btn{
     background-color:#fff;
-    color:#dd1847;
+    color:#ed1a45;
 }
 
 /* 物流信息 */
@@ -587,43 +590,6 @@
 .commentBaby .J_moveRight > div {
     padding: .32rem 0;
 }
-.commentBaby .J_moveRight .img_wrap {
-    width: 2.08rem;
-    height: 2.08rem;
-    padding: 2px;
-    border: 1px solid #d7d7d7;
-    background-color: #fff;
-    float: left;
-    font-size: 0;
-    overflow: hidden;
-    margin-right:.32rem;
-}
-.commentBaby .J_moveRight .img_wrap img {
-    width: 100%;
-    height: 100%;
-}
-.commentBaby .J_moveRight .gd_info {
-    position: relative;
-    width: auto;
-    padding-left: 0;
-    overflow: hidden;
-}
-.commentBaby .J_moveRight .gd_info .name {
-    width: 100%;
-    line-height: .54rem;
-    height: 1.08rem;
-    margin: 0 0 .4rem;
-    font-size: .32rem;
-    word-wrap: break-word;
-    word-break: break-all;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.commentBaby .J_moveRight .gd_info .value {
-    color: #666;
-    font-size: .32rem;
-    font-weight: bold;
-}
 .comment_area{
     padding:.16rem .16rem .4rem .32rem;
 }
@@ -656,16 +622,25 @@
     background-color:#f5f5f5;
     padding:.12rem;
     float:left;
-    width:84%;
+    width:100%;
 }
 .comment_area_con textarea{
     height:1.25rem;
     line-height:.5rem;
     width:100%;
     background:none;
-    color:#666;
+    color:#333;
     border: 0;
 }
+::-webkit-input-placeholder {
+    color: #d7d7d7; 
+} 
+:-moz-placeholder {
+    color: #d7d7d7; 
+} 
+::-moz-placeholder {
+    color: #d7d7d7; 
+} 
 .comment_area_con > a{
     padding:.36rem;
     float:right;

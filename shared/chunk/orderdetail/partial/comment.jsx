@@ -31,12 +31,11 @@ class Comment extends Component{
         const {saveComment} = this.props;
         var {order,isOpen} = this.props.orderByParam;
         var obj = order.itemList.map((v,k)=>{
-            v.isOpen = isOpen === undefined ? 1 : isOpen;
-            const {rate,id,content,isOpen} = v;
+            const {rate,id,content} = v;
             return {
                 rate: rate ? rate : 5,
                 content: content ? content : "",
-                isOpen,
+                isOpen: isOpen,
                 itemId: id,
             }
         })
@@ -75,8 +74,10 @@ class Comment extends Component{
                 <div className="commentBaby_list" key={k}>
                     <div className="J_moveRight">
                         <div className="clearfix">
-                            <a className="img_wrap J_ytag cartlist" href="#">
-                                <img src={v.singleImageUrl} />
+                            <a className="J_ytag cartlist" href={"/gooddetail/"+v.singleCode}>
+                                <span className="img_wrap">
+                                    <img src={v.singleImageUrl}/>
+                                </span>
                             </a>
                             <div className="gd_info">
                                 <p className="name">{v.singleTitle}</p>

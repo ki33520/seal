@@ -17,10 +17,21 @@ const orderStatusObj = {
 class StatusProgress extends Component{
     render(){
         const {orderStatusArr,orderStatus} =  this.props;
+        let imgUrl;
         if(orderStatus === "STATUS_CANCELED"){
-            return null;
+            imgUrl = "/client/asset/images/orderRate_05.gif";
+            return (
+                <div className="rate">
+                    <img src={imgUrl} />
+                    <div className="rateText">
+                        <span>待付款</span>
+                        <span>已取消</span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            )
         }else{
-            let imgUrl;
             orderStatusArr.map((v,k)=>{
                 if(v.active === true){
                     imgUrl = "/client/asset/images/orderRate_0"+(k+1)+".gif";
