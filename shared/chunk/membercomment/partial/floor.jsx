@@ -7,6 +7,7 @@ import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 
 class Floor extends Component{
     renderNode(list){
+        var {setPopQrImg} = this.props;
         if(list.length>0){
             return (
                 <ul className="comment-list">
@@ -19,7 +20,7 @@ class Floor extends Component{
                             var content;
                             var tabItems = child.imageUrlList.map((v,k)=>{
                                 return (
-                                    <SlideTabsItem key={k} navigator={()=><div key={k}><img src={v} /></div>} className="listMain">
+                                    <SlideTabsItem key={k} navigator={()=><div onClick={setPopQrImg.bind(this,v)} key={k}><img src={v} /></div>} className="listMain">
                                     </SlideTabsItem>
                                 )
                             });
