@@ -53,7 +53,7 @@
 				width:2.133333rem;
 				height:.906667rem;
 				line-height:.906667rem;
-				border:1px solid #fff;
+				border:px2rem(1) solid #fff;
 				color:#fff;
 				display:inline-block;
 				border-radius:20px;
@@ -124,7 +124,7 @@
 				-webkit-box-flex: 1;
 				-webkit-flex: 1;
 				flex: 1;
-				padding-top: 1px;
+				padding-top: px2rem(1);
 				text-align: center;
 				color:#fff;
 				position:relative;
@@ -135,15 +135,18 @@
 					display:block;
 					width:.666667rem;
 					height:.666667rem;
-					margin:.16rem auto 0;
+					margin:.15rem auto .05rem;
 				}
 				i{
 					display:block;
 					background-color:#e0073c;
+					font-family: arial;
 					font-size:.24rem;
+					height: .46rem;
+					min-width: .46rem;
 					position:absolute;
 					left: 50%;
-					margin-left: .3rem;
+					margin-left: .32rem;
 					top:.06rem;
 					border-radius:50%;
 					padding:.04rem .12rem;
@@ -176,7 +179,7 @@
 			dl{
 				background-color: #fff;
 				padding: .3rem .28rem;
-				border-bottom: 1px solid #d7d7d7;
+				border-bottom: px2rem(1) solid #d7d7d7;
 				height:1.16rem;
 				line-height:.56rem;
 				dt{
@@ -221,14 +224,14 @@
 	.pop-qr{
 		position: absolute;
 		border-radius: .2rem;
-		background-color: #fff;
+		overflow: hidden;
 		z-index: 999;
 		top: 50%;
 		left: 50%;
-		width: 8rem;
-		height: 10rem;
-		margin-left: -4rem;
-		margin-top: -5.5rem;
+		width: 7.2rem;
+		height: 9rem;
+		margin-left: -3.6rem;
+		margin-top: -5rem;
 		display: none;
 		text-align: center;
 		&.active{
@@ -236,32 +239,42 @@
 		}
 		& > .btn-close{
 			position: absolute;
+			box-sizing: content-box;
 			border-radius: 50%;
-			background-color: #fff;
-			line-height: 1rem;
-			font-size: .5rem;
-			width: 1rem;
-			height: 1rem;
-			right: -0.3rem;
-			top: -0.3rem;
+			border: px2rem(1) solid #fff;
+			color: #fff;
+			line-height: .7rem;
+			font-size: .45rem;
+			font-weight: bold;
+			width: .7rem;
+			height: .7rem;
+			text-align: center;
+			right: 0.3rem;
+			top: 0.2rem;
 		}
 		& > .top{
-			font-size: .55rem;
-			line-height: .8rem;
-			padding-top: .6rem;
-			margin-bottom: .5rem;
-			height: 1.4rem;
+			font-size: .45rem;
+			color: #fff;
+			line-height: 1.2rem;
+			height: 1.2rem;
+			background-color: #801fa0;
 		}
 		& > .center{
+			padding-top: .4rem;
 			line-height: 0;
+			height: 6.3rem;
+			background-color: #fff;
 			& > img{
 				width: 80%;
 			}
 		}
 		& > .bottom{
-			font-size: .48rem;
-			line-height: 1.4rem;
-			height: 1.4rem;
+			color: #801fa0;
+			font-size: .425rem;
+			line-height: .6rem;
+			height: 1.5rem;
+			padding-bottom: .3rem;
+			background-color: #fff;
 		}
 	}
 }

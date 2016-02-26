@@ -173,16 +173,57 @@ class OrderDetail extends Component{
                 </span>
             )
         }
-        if(orderStatus === "STATUS_CANCELED"){
-            return <span>订单已取消</span>
-        }
     }
-    render(){
-        const {order,alertActive,alertContent} = this.props.orderByParam;
+    renderCountbox(){
+        const {order,systemTime} = this.props.orderByParam;
+        const {orderCrtTime,timeoutTime,orderStatus} = order;
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
         var paymentTitle = order.orderStatus === "STATUS_NOT_PAY" || order.orderStatus === "STATUS_CANCELED" ? "应付金额：" : "实付金额：";
+        if(orderStatus === "STATUS_CANCELED"){
+            return null;
+        }else{
+            return (
+                <div className="count-box">
+                    <div className="title">
+                        <div className="fl title-txt">结算</div>
+                    </div>
+                    <div className="bottom-line clearfix">
+                        <div className="label">商品总价：</div>
+                        <div className="data"><i>&yen;</i><span>{order.salesTotalFee.toFixed(2)}</span></div>
+                    </div>
+                    <div className="bottom-line clearfix">
+                        <div className="label">国内运费：</div>
+                        <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{order.logisticsFee.toFixed(2)}</span></div>
+                    </div>
+                    <div className="bottom-line clearfix">
+                        <div className="label">国际运费：</div>
+                        <div className="data"><i>&yen;</i><span>{order.abroadFee.toFixed(2)}</span></div>
+                    </div>
+                    <div className="bottom-line clearfix">
+                        <div className="label">关税：</div>
+                        <div className="data">{tariffFeeBox}<i>&yen;</i><span>{order.tariffFee.toFixed(2)}</span></div>
+                    </div>
+                    <div className="bottom-line clearfix intro">
+                        <div className="label">优惠活动：</div>
+                        <div className="data">-<i>&yen;</i><span>{order.promoFee.toFixed(2)}</span></div>
+                    </div>
+                    <div className="bottom-line clearfix intro">
+                        <div className="label">优惠券：</div>
+                        <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
+                    </div>
+                    <div className=" bottom-line clearfix no-border">
+                        <div className="label">{paymentTitle}</div>
+                        <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee.toFixed(2)}</span></div>
+                    </div>
+                </div>
+            );
+        }
+        
+    }
+    render(){
+        const {order,alertActive,alertContent} = this.props.orderByParam;
         return (
             <div className="order-detail-content">
             <Header>订单详情</Header>
@@ -195,39 +236,7 @@ class OrderDetail extends Component{
             <div className="order-list">
                 <OrderGoods {...order}/>
             </div>
-            <div className="count-box">
-                <div className="title">
-                    <div className="fl title-txt">结算</div>
-                </div>
-                <div className="bottom-line clearfix">
-                    <div className="label">商品总价：</div>
-                    <div className="data"><i>&yen;</i><span>{order.salesTotalFee.toFixed(2)}</span></div>
-                </div>
-                <div className="bottom-line clearfix">
-                    <div className="label">国内运费：</div>
-                    <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{order.logisticsFee.toFixed(2)}</span></div>
-                </div>
-                <div className="bottom-line clearfix">
-                    <div className="label">国际运费：</div>
-                    <div className="data"><i>&yen;</i><span>{order.abroadFee.toFixed(2)}</span></div>
-                </div>
-                <div className="bottom-line clearfix">
-                    <div className="label">关税：</div>
-                    <div className="data">{tariffFeeBox}<i>&yen;</i><span>{order.tariffFee.toFixed(2)}</span></div>
-                </div>
-                <div className="bottom-line clearfix intro">
-                    <div className="label">优惠活动：</div>
-                    <div className="data">-<i>&yen;</i><span>{order.promoFee.toFixed(2)}</span></div>
-                </div>
-                <div className="bottom-line clearfix intro">
-                    <div className="label">优惠券：</div>
-                    <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
-                </div>
-                <div className=" bottom-line clearfix no-border">
-                    <div className="label">{paymentTitle}</div>
-                    <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee.toFixed(2)}</span></div>
-                </div>
-            </div>
+            {this.renderCountbox()}
             {this.renderFooter()}
             <Dialog active={this.state.dialogActive} 
                 onCancel={this.toggleDialog.bind(this)}

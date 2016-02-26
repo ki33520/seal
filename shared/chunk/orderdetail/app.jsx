@@ -28,6 +28,7 @@ class OrderDetailApp extends Component{
             orderByParam:{
                 isFetching:false,
                 isFetched,
+                isOpen:1,
                 order,
                 systemTime
             }

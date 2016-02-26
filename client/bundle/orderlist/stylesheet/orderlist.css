@@ -91,7 +91,7 @@ body{
     margin-left: 0;
 }
 .order-up .right em {
-    color: #ed1946;
+    color: #ed1a47;
     /*float: right;*/
     display:inline-block;
 }
@@ -171,7 +171,7 @@ body{
     display: inline-block;
 }
 .order-down span em {
-    color: #ed1946;
+    color: #ed1a47;
     font-size: .45rem;
     font-weight:bold;
     line-height: .8rem;
@@ -183,8 +183,8 @@ body{
 }
 .order-down a {
     float: right;
-    border: 1px solid #ed1946;
-    background-color:#ed1946;
+    border: 1px solid #ed1a47;
+    background-color: #ed1a47;
     color: #fff;
     position: relative;
     word-spacing: 8px;
@@ -207,5 +207,5 @@ body{
 }
 .order-down a.view_c{
     background-color:#fff;
-    color:#ed1946;
+    color:#ed1a47;
 }
