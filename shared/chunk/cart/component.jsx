@@ -54,7 +54,7 @@ class Cart extends Component {
                     itemIds.push(item.singleCode);
                     buyeds.push(item.qty); 
                 }
-            })
+            });
         });
         if(itemIds.length&&buyeds.length){
             this.props.checkCartInfo({
@@ -66,12 +66,14 @@ class Cart extends Component {
     }
     handleChangeBuyed(goods,cartIndex,groupIndex,goodsIndex,buyed) {
         const {carts,isUpdating} = this.props.cartByUser;
+        const singleCode = goods.singleCode;
         if(isUpdating){
             return false;
         }
         if(goods.checked===false){
-            this.props.testBuyed({
-                qty:buyed,
+            this.props.changeCartBuyed({
+                singleCodes:singleCode,
+                qtys:buyed,
                 buyLimit:goods.buyLimit,
                 cartIndex,
                 groupIndex,
@@ -85,17 +87,19 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.checked){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(goods.singleCode==item.singleCode?buyed:item.qty);
+                    buyeds.push(singleCode==item.singleCode?buyed:item.qty);
                 }
             });
         });
         this.props.updateCart({
-            singleCode:goods.singleCode,
+            singleCode,
             qty:buyed,
             buyLimit:goods.buyLimit,
             singleCodes:singleCodes.join(','),
             qtys:buyeds.join(','),
-            cartIndex
+            cartIndex,
+            groupIndex,
+            goodsIndex
         });
     }
     toggleAllChecked(cartIndex,checked){
