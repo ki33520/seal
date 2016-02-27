@@ -93,7 +93,7 @@ function calculateTotalFee(order){
     // console.log('tariffFee',order.tariffFee)
     // console.log('promoFee',order.promoFee)
     // console.log('couponFee',order.couponFee)
-    totalFee = totalFee < 0.3 ? 0.3:totalFee
+    totalFee = totalFee < 0.07 ? 0.07:totalFee
     return totalFee
 }
 

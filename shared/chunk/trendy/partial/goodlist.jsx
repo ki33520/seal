@@ -1,7 +1,7 @@
 'use strict';
 import React,{Component} from "react";
 import classNames from "classnames";
-
+import {formatPrice} from "../../../lib/util.es6";
 class GoodList extends Component{
     renderGoods(){
         const {list} = this.props.category;
@@ -16,6 +16,8 @@ class GoodList extends Component{
                     "mobile-price":goods.saleType ==='mobile',
                     "hide":goods.saleType===undefined
                 });
+                const salesPrice = formatPrice(goods.salesPrice);
+                const originPrice = formatPrice(goods.originPrice);
                 return (
                     <a href={"/gooddetail/"+goods.singleCode} className="clearfix" key={i}>
                         <div className={soldOut}></div>
@@ -26,8 +28,8 @@ class GoodList extends Component{
                             <span className="country">
                                 <i><img src={goods.sourceImageUrl} /></i>{goods.sourceName}
                             </span>
-                            <span className="now-price">&yen;{goods.salesPrice}</span>
-                            <span className="old-price">&yen;{goods.originPrice}</span>
+                            <span className="now-price">&yen;{salesPrice}</span>
+                            <span className="old-price">&yen;{originPrice}</span>
                         </div>
                     </a>
                 )

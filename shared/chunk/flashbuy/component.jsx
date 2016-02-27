@@ -6,33 +6,35 @@ import Icon from "../../component/icon.jsx";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
 import Timer from "../common/timer.jsx";
 import classNames from "classnames";
-
+import {formatPrice} from "../../lib/util.es6";
 class FlashBuy extends Component{
     renderGoods(groupGoods){
         if(groupGoods.length > 0){
-            return groupGoods.map((good,i)=>{
+            return groupGoods.map((goods,i)=>{
                 const soldOut = classNames({
-                    "sale-out":good.isSoldOut,
-                    "hide": good.isSoldOut?false:true
+                    "sale-out":goods.isSoldOut,
+                    "hide": goods.isSoldOut?false:true
                 });
                 const saleIcon = classNames({
-                    "flash-price":good.saleType==='flash',
-                    "mobile-price":good.saleType ==='mobile',
-                    "hide":good.saleType===undefined
+                    "flash-price":goods.saleType==='flash',
+                    "mobile-price":goods.saleType ==='mobile',
+                    "hide":goods.saleType===undefined
                 });
+                const salesPrice = formatPrice(goods.salesPrice);
+                const originPrice = formatPrice(goods.originPrice);
                 return (
-                    <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
+                    <a href={"/gooddetail/"+goods.singleCode} className="clearfix" key={i}>
                         <div className={soldOut}></div>
                         <div className={saleIcon}></div>
-                        <img src={good.imageUrl} />
+                        <img src={goods.imageUrl} />
                         <div className="right">
-                            <span className="name">{good.title}</span>
+                            <span className="name">{goods.title}</span>
                             <span className="country">
-                                <i><img src={good.sourceImageUrl} alt="" /></i>
-                                {good.sourceName}
+                                <i><img src={goods.sourceImageUrl} alt="" /></i>
+                                {goods.sourceName}
                             </span>
-                            <span className="nowPrice">&yen;{good.salesPrice}</span>
-                            <span className="oldPrice">&yen;{good.originPrice}</span>
+                            <span className="nowPrice">&yen;{salesPrice}</span>
+                            <span className="oldPrice">&yen;{originPrice}</span>
                         </div>
                     </a>
                 )

@@ -6,7 +6,7 @@ import {
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
     START_CHECK_CART,FINISH_CHECK_CART,
-    CHANGE_CART_BUYED
+    START_CART_BUYED,FINISH_CART_BUYED
 } from "./constant.es6";
 
 
@@ -83,6 +83,20 @@ function finishCheckCart(param,res){
         res
     }
 }
+
+function startChangeCartBuyed(param){
+    return {
+        type:START_CART_BUYED,
+        param
+    }
+}
+function finshChangeCartBuyed(param,res){
+    return {
+        type:FINISH_CART_BUYED,
+        param,
+        res
+    }
+}
 export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
@@ -133,10 +147,12 @@ export function toggleCartAll(param){
     }
 }
 
-export function testBuyed(param){
-    return {
-        type:CHANGE_CART_BUYED,
-        param
+export function changeCartBuyed(param){
+    return(dispatch)=>{
+        dispatch(startChangeCartBuyed(param));
+        apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
+            dispatch(finshChangeCartBuyed(param,res));
+        });
     }
 }
 
