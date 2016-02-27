@@ -3,14 +3,10 @@
 import React,{Component} from "react";
 import _ from "lodash";
 import classNames from "classnames";
-import dom from "../../lib/dom.es6";
-import MaskLayer from "../../component/masklayer.jsx";
-import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
-
-import {addCart,addFavorite} from "./action.es6";
-import {alert} from "../common/action.es6";
+import dom from "../../lib/dom.es6";
+import MaskLayer from "../../component/masklayer.jsx";
 
 class MemberCenter extends Component{
     constructor(props){
@@ -26,16 +22,10 @@ class MemberCenter extends Component{
             popupActive:!this.state.popupActive
         });
     }
-    closeAllPopups(){
-        this.setState({
-            maskActive:false,
-            popupActive:false
-        })
-    }
     renderBanner(){
         const {isLogined,member,api} = this.props.memberCenterByUser;
-        const {loginUrl,registerUrl} = api;
         if(isLogined === false){
+            const {loginUrl,registerUrl} = api;
             return (
                 <div className="userBtns">
                     <a href={registerUrl}>注&nbsp;册</a>
@@ -56,16 +46,16 @@ class MemberCenter extends Component{
     }
     renderLogout(){
         const {isLogined,api} = this.props.memberCenterByUser;
-        const {logoutUrl} = api;
         if(isLogined === false){
             return null;
         }else{
+            const {logoutUrl} = api;
             return (
                 <div className="helpList">
                     <a className="logoutBtn" href={logoutUrl}>
                         <dl>
                             <dt>
-                                退出登录
+                                <span>退出登录</span>
                             </dt>
                         </dl>
                     </a>
@@ -75,13 +65,13 @@ class MemberCenter extends Component{
         
     }
     renderOrderBanner(){
-        const {isLogined,countOrder} = this.props.memberCenterByUser;
+        const {countOrder} = this.props.memberCenterByUser;
         let count = {};
-        _.forIn(countOrder, function(value, key) {
-            if(value>0){
-                count[key] = value < 100 ? <i>{value}</i> : <i>99+</i>
+        _.forIn(countOrder, function(v, k) {
+            if(v>0){
+                count[k] = v < 100 ? <i>{v}</i> : <i>99+</i>
             }else{
-                count[key] = null;
+                count[k] = null;
             }
         });
         return (
@@ -123,15 +113,117 @@ class MemberCenter extends Component{
                 <div className={classes}>
                     <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>
                     <div className="top">扫码分享</div>
-                    <div className="center"><img src={member.cardImgUrl} /></div>
+                    <div className="center"><img src={member.promoterQr} /></div>
                     <div className="bottom">邀请小伙伴扫一扫<br />分享给TA</div>
                 </div>
             )
         }
         
     }
+    renderHelpList(){
+        return (
+            <div className="helpLists">
+                <div className="helpList">
+                    <a href="/orderlist">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_1.png" />
+                                <span>全部订单</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+                <div className="helpList">
+                    <a href="/receiver">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_2.png" />
+                                <span>收货地址</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                    <a href="/membercenter/collect">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_3.png" />
+                                <span>我的收藏</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                    <a href="/membercenter/comment">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_4.png" />
+                                <span>我的评论</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                    <a href="/coupon">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_5.png" />
+                                <span>优惠券</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                    <a href="/membercenter/update">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_6.png" />
+                                <span>账户设置</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+                <div className="helpList">
+                    <a href="/aboutus">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_7.png" />
+                                <span>关于我们</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+                <div className="helpList">
+                    <a href="/help">
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_8.png" />
+                                <span>帮助与反馈</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
+                </div>
+                {this.renderLogout()}
+            </div>
+        );
+    }
     render(){
-        const {isFetched, member, isLogined, api,countOrder} = this.props.memberCenterByUser;
         return (
             <div className="user">
                 <header>
@@ -143,109 +235,9 @@ class MemberCenter extends Component{
                     </div>
                     {this.renderOrderBanner()}
                 </header>
-                
-                <div className="helpList">
-                    <a href="/orderlist">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_1.png" />
-                                全部订单
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                </div>
-
-                <div className="helpList">
-                    <a href="/receiver">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_2.png" />
-                                收货地址
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                    <a href="/membercenter/collect">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_3.png" />
-                                我的收藏
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                    <a href="/membercenter/comment">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_4.png" />
-                                我的评论
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                    <a href="/coupon">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_5.png" />
-                                优惠券
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                    <a href="/membercenter/update">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_6.png" />
-                                账户设置
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                </div>
-                
-                <div className="helpList">
-                    <a href="/aboutus">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_7.png" />
-                                关于我们
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                </div>
-                
-                <div className="helpList">
-                    <a href="/help">
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_8.png" />
-                                帮助与反馈
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
-                </div>
-                {this.renderLogout()}
+                {this.renderHelpList()}
                 <Footer activeIndex="4" />
-                <MaskLayer visible={this.state.maskActive} handleClick={this.closeAllPopups.bind(this)}/>
+                <MaskLayer visible={this.state.maskActive} handleClick={this.togglePopupActive.bind(this)}/>
                 {this.renderPopQr()}
             </div>
         );
