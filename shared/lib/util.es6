@@ -39,6 +39,27 @@ export function urlParam(param){
     return paramStr.join("&");
 }
 
+export function formatPrice(price){
+    if(price == 0){
+        return "0.00"
+    }
+    if(_.isNumber(price) === false){
+        if(_.isString(price)){
+            if(/^(\d+)(\.)?(\d)*$/.test(price) === false){
+                return "0.00"
+            }           
+        }
+        price = parseFloat(price)
+        if(_.isNaN(price)){
+            return "0.00"
+        }
+    }
+    price = price * 100
+    let priceStr = `${price}`
+    priceStr = priceStr.replace(/(\d\d)$/,".$1")
+    return priceStr
+}
+
 export function validTimeRegion(startTime,endTime){
     if(moment().isBefore(startTime) === true){
         return -1
