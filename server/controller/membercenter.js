@@ -6,11 +6,37 @@ var bluebird = require("bluebird");
 var MembercenterApp = util.getSharedComponent("membercenter");
 var config = require("../lib/config");
 
+var filterMemberInfo = function(result){
+    var object = new Object();
+    object = {
+        email: result.email,
+        nickName: result.nickName,
+        userName: result.userName,
+        mobileNumber: result.mobileNumber,
+        lastLoginTime: result.lastLoginTime,
+        gender: result.gender,
+        birthday: result.birthday,
+        imageUrl: result.imageUrl,
+        registerTime: result.registerTime,
+        promoterQr: result.promoterQr
+    };
+    return object;
+}
+var filterCountOrder = function(result){
+    var object = new Object();
+    object = {
+        paymentNum: result.paymentNum,
+        sendNum: result.sendNum,
+        signNum: result.signNum,
+        commentNum: result.commentNum
+    };
+    return object;
+}
+
 var memberCenter = function(req, res, next) {
     var loginUrl = res.locals.loginUrl;
     var registerUrl = res.locals.registerUrl;
     var logoutUrl = res.locals.logoutUrl;
-    // req.session.user = undefined
     var authorized = req.session.user !== undefined;
 
     if (authorized === true) {
@@ -21,12 +47,16 @@ var memberCenter = function(req, res, next) {
             },false),
             memberCountOrder: util.fetchAPI("memberCountOrder", {
                 memberId: user.memberId
+            },false),
+            promoterQr: util.fetchAPI("promoterQr", {
+                memberId: user.memberId
             },false)
-        }).then(function(ret) {
-            if (ret.memberMemberInfo.returnCode === 0 && ret.memberCountOrder.returnCode === 0) {
-                var member = ret.memberMemberInfo.object;
-                member.cardImgUrl = util.getAPI("memberCardQRCode", { openId: user.openId});
-                var countOrder = ret.memberCountOrder.object;
+        }).then(function(resp) {
+            if (resp.memberMemberInfo.returnCode === 0 && resp.memberCountOrder.returnCode === 0) {
+                var member = filterMemberInfo(resp.memberMemberInfo.object);
+                member.promoterQr = resp.promoterQr.object;
+                var countOrder = filterCountOrder(resp.memberCountOrder.object);
+
                 var initialState = {
                     isFetched: true,
                     isLogined: authorized,
@@ -44,11 +74,11 @@ var memberCenter = function(req, res, next) {
                     initialState: initialState
                 })
             }else{
-                if(ret.memberMemberInfo.returnCode !== 0){
-                    next(new Error(ret.memberMemberInfo.message));
+                if(resp.memberMemberInfo.returnCode !== 0){
+                    next(new Error(resp.memberMemberInfo.message));
                 }
-                if(ret.memberCountOrder.returnCode !== 0){
-                    next(new Error(ret.memberCountOrder.message));
+                if(resp.memberCountOrder.returnCode !== 0){
+                    next(new Error(resp.memberCountOrder.message));
                 }
             }
         });
