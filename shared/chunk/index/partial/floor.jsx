@@ -9,7 +9,7 @@ import Image from "../../../component/image.jsx";
 import ScrollSpy from "../../../component/scrollspy.jsx";
 import Loading from "../../common/loading.jsx";
 import Timer from "../../common/timer.jsx";
-import {validTimeRegion} from "../../../lib/util.es6";
+import {validTimeRegion,formatPrice} from "../../../lib/util.es6";
 
 class Floor extends Component{
     constructor(props){
@@ -149,6 +149,7 @@ class Floor extends Component{
                     <span><i><img src="/client/asset/images/flashClock.png" />
                     </i>活动已结束</span>
                     )
+                    return null
                 }
                 return <a href={rushbuy.jumpUrl} key={i}>
                     <image src={rushbuy.imageUrl} />{timer}

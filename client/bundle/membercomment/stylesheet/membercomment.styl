@@ -161,6 +161,8 @@ body{
 			.content{
 				margin: 0 .2rem;
 				overflow: hidden;
+				word-break: break-all;
+				word-wrap: break-word;
 			}
 			.pic-list{
 				display: flex;
@@ -169,7 +171,7 @@ body{
 				.slide-tabs{
 					.slide-tabs-navbar{
 						width: auto;
-						height: 3.2rem;
+						height: 3rem;
 						border:0 none;
 						.slide-tabs-navbar-item{
 							background:#FFF;
@@ -180,11 +182,11 @@ body{
 								border-bottom: none;
 							}
 							&>div{
-								width: 2.88rem;
-								height: 2.88rem;
-								padding: 0.055rem;
+								width: 2.99rem;
+								height: 2.99rem;
+								padding: .055rem;
+								margin: 0 .1rem;
 								border: px2rem(1) solid #d7d7d7;
-								margin: 0 auto;
 								float: none;
 								display: block;
 								&>img{
@@ -198,6 +200,63 @@ body{
 					}
 				}
 			}
+		}
+	}
+	.pop-qr{
+		position: absolute;
+		overflow: hidden;
+		z-index: 999;
+		top: 50%;
+		left: 50%;
+		width: 8rem;
+		height: 9rem;
+		margin-left: -4rem;
+		margin-top: -5rem;
+		display: none;
+		text-align: center;
+		&.active{
+			display: block;
+		}
+		& > .btn-close{
+			position: absolute;
+			box-sizing: content-box;
+			border-radius: 50%;
+			border: px2rem(1) solid #fff;
+			color: #fff;
+			line-height: .7rem;
+			font-size: .45rem;
+			font-weight: bold;
+			width: .7rem;
+			height: .7rem;
+			text-align: center;
+			right: 0.3rem;
+			top: 0.2rem;
+		}
+		& > .top{
+			font-size: .45rem;
+			color: #fff;
+			line-height: 1.2rem;
+			height: 1.2rem;
+			border-radius: .2rem .2rem 0 0;
+			background-color: #801fa0;
+		}
+		& > .center{
+			padding-top: .4rem;
+			padding-bottom: .2rem;
+			line-height: 0;
+			height: 7.2rem;
+			background-color: #fff;
+			& > img{
+				width: 80%;
+			}
+		}
+		& > .bottom{
+			color: #801fa0;
+			font-size: .425rem;
+			line-height: .6rem;
+			border-radius: 0 0 .2rem .2rem;
+			padding-bottom: .3rem;
+			background-color: #fff;
 		}
 	}
 }

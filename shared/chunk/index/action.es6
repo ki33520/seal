@@ -61,7 +61,7 @@ function responseSingleRecommend(param,channelId,res){
 
 export function fetchSingleRecommend(param,channelId){
     param = Object.assign({},param,{
-        activityType:"ACTIVITY_DPTJ"
+        activityType:"ACTIVITY_TJ"
     })
     return (dispatch)=>{
         dispatch(requestSingleRecommend(param));
@@ -89,7 +89,7 @@ function responseNewRecommend(param,channelId,res){
 
 export function fetchNewRecommend(param,channelId){
     param = Object.assign({},param,{
-        activityType:"ACTIVITY_XPTJ"
+        activityType:"ACTIVITY_TJ"
     })
     return (dispatch)=>{
         dispatch(requestNewRecommend(param));
