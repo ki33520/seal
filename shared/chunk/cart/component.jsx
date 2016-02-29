@@ -199,6 +199,11 @@ class Cart extends Component {
     }
     renderGoods(goods,i,j,k) {
         const salePrice = formatPrice(goods.salePrice);
+        const limit = goods.buyLimit > 0 ? true : false;
+        const buyLimit = classNames({
+            hide:!limit,
+            limitBuy:limit
+        });
         return(
             <div className="group" key={"g-"+i+j+k}>
                 <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></a>
@@ -210,7 +215,7 @@ class Cart extends Component {
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href={"/gooddetail/"+goods.singleCode}>
                             <img width="100%" src={goods.imageUrl} /></a>
-                            <span className="limitBuy">限购{goods.buyLimit}件</span>
+                            <span className={buyLimit}>限购{goods.buyLimit}件</span>
                         </div>
                         <div className="gd_info">
                             <p className="name">
