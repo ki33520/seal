@@ -55,7 +55,13 @@ export function formatPrice(price){
         }
     }
     price = price * 100
+    price = parseInt(price)
     let priceStr = `${price}`
+    if(price < 100){
+        priceStr = `0${price}`
+    }else if(price < 10){
+        priceStr = `00${price}`
+    }
     priceStr = priceStr.replace(/(\d\d)$/,".$1")
     return priceStr
 }
