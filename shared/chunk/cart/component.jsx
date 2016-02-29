@@ -10,7 +10,7 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import Checkbox from "../../component/form/checkbox.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
-import {urlParam,base64Encode} from "../../lib/util.es6";
+import {urlParam,base64Encode,formatPrice} from "../../lib/util.es6";
 
 class Cart extends Component {
     constructor(props){
@@ -54,7 +54,7 @@ class Cart extends Component {
                     itemIds.push(item.singleCode);
                     buyeds.push(item.qty); 
                 }
-            })
+            });
         });
         if(itemIds.length&&buyeds.length){
             this.props.checkCartInfo({
@@ -66,12 +66,14 @@ class Cart extends Component {
     }
     handleChangeBuyed(goods,cartIndex,groupIndex,goodsIndex,buyed) {
         const {carts,isUpdating} = this.props.cartByUser;
+        const singleCode = goods.singleCode;
         if(isUpdating){
             return false;
         }
         if(goods.checked===false){
-            this.props.testBuyed({
-                qty:buyed,
+            this.props.changeCartBuyed({
+                singleCodes:singleCode,
+                qtys:buyed,
                 buyLimit:goods.buyLimit,
                 cartIndex,
                 groupIndex,
@@ -85,17 +87,19 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.checked){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(goods.singleCode==item.singleCode?buyed:item.qty);
+                    buyeds.push(singleCode==item.singleCode?buyed:item.qty);
                 }
             });
         });
         this.props.updateCart({
-            singleCode:goods.singleCode,
+            singleCode,
             qty:buyed,
             buyLimit:goods.buyLimit,
             singleCodes:singleCodes.join(','),
             qtys:buyeds.join(','),
-            cartIndex
+            cartIndex,
+            groupIndex,
+            goodsIndex
         });
     }
     toggleAllChecked(cartIndex,checked){
@@ -194,6 +198,7 @@ class Cart extends Component {
         });
     }
     renderGoods(goods,i,j,k) {
+        const salePrice = formatPrice(goods.salePrice);
         return(
             <div className="group" key={"g-"+i+j+k}>
                 <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></a>
@@ -210,7 +215,7 @@ class Cart extends Component {
                         <div className="gd_info">
                             <p className="name">
                               <b>{goods.title}</b>
-                              <span>&yen;{goods.salePrice}</span>
+                              <span>&yen;{salePrice}</span>
                               <em>x{goods.qty}</em>
                             </p>
                             <div className="act_wrap"> 
@@ -276,7 +281,9 @@ class Cart extends Component {
         let promo = classNames("depot_bot",{
             hide:!cart.promoName
         });
-         
+        const salesTotal = formatPrice(cart.salesTotal);
+        const promoTotal = formatPrice(cart.promoTotal);
+        const total = formatPrice(cart.total);
         return(
             <div className="onlyList clearfix" key={"cart-" + i}>
                 <div className="J_store clearfix">
@@ -293,13 +300,13 @@ class Cart extends Component {
                     <div className="cartFirst clearfix">
                         <span>已选商品{cart.qtys}件</span>
                         <div className="cartFirst_two">
-                            <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{cart.salesTotal}</p>
-                            <p>活动优惠：-&nbsp;&yen;&nbsp;{cart.promoTotal}</p>
+                            <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{salesTotal}</p>
+                            <p>活动优惠：-&nbsp;&yen;&nbsp;{promoTotal}</p>
                         </div>
                     </div>
                     <div id="J_wrapperCartTop">
                         <p>
-                            <span>总计(不含运费、税金)：<em>&yen;{cart.total}</em></span>
+                            <span>总计(不含运费、税金)：<em>&yen;{total}</em></span>
                         </p>
                         <p>
                             <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart,i)}/>
