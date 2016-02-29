@@ -26,6 +26,7 @@ class CommentApp extends Component{
         const {allComment,showComment,isFetched} = this.props.initialState;
         const initialState = {
             commentByUser:{
+                changeScene:this.props.changeScene,
                 allComment,
                 showComment,
                 isFetched,
