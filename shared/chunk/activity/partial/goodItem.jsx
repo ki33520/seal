@@ -6,31 +6,29 @@ class GoodItem extends Component{
     render(){
         const {goods} = this.props;
         const soldOut = classNames({
-            "sale-out":goods.isSoldOut,
-            "hide": goods.isSoldOut?false:true
+            "sale-out":goods.localStock>0?false:true
         });
         const saleIcon = classNames({
-            "flash-price":goods.saleType==='flash',
-            "mobile-price":goods.saleType ==='mobile',
-            "hide":goods.saleType===undefined
+            "flash-price":goods.flashPrice>0?true:false,
+            "mobile-price":goods.mobilePrice>0?true:false
         });
-        const salesPrice = formatPrice(goods.salesPrice);
+        const salesPrice = formatPrice(goods.flashPrice||goods.mobilePrice||goods.salesPrice);
         const originPrice = formatPrice(goods.originPrice);
         return (
             <div className="clearfix">
-                <a href={"/gooddetail/"+goods.singleCode} >
-                    	<div className={soldOut}></div>
-                        <div className={saleIcon}></div>
-                        <img src={goods.imageUrl} alt="" />
-                        <div className="country">
-                        	<i><img src={goods.sourceImageUrl} alt="" /></i>
-                        	{goods.sourceName}
-                        </div>
-                        <p className="title">{goods.title}</p>
-                        <div>
-                            <span className="now-price">&yen;{salesPrice}</span>
-                            <span className="old-price">&yen;{originPrice}</span>
-                        </div>
+                <a href={"/gooddetail/"+goods.singleCode}>
+                	<div className={soldOut}></div>
+                    <div className={saleIcon}></div>
+                    <img src={goods.imageUrl} alt="" />
+                    <div className="country">
+                    	<i><img src={goods.sourceImageUrl} alt="" /></i>
+                    	{goods.sourceName}
+                    </div>
+                    <p className="title">{goods.title}</p>
+                    <div>
+                        <span className="now-price">&yen;{salesPrice}</span>
+                        <span className="old-price">&yen;{originPrice}</span>
+                    </div>
     	        </a>
             </div>
         )
