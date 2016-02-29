@@ -49,7 +49,7 @@ class Floor extends Component{
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                         <img src={good.imageUrl} />
                         <span className="name">{good.title}</span>
-                        <p>{good.subTitle}</p>
+                        <p>{good.descriptionWap}</p>
                         <span className="country"><i><img src="/client/asset/images/ico_flag.png"/></i>荷兰直采</span>
                         <span className="singlePrice">
                             <span className="nowPrice">&yen;{good.salePrice}</span>
@@ -167,9 +167,15 @@ class Floor extends Component{
                 if(validTime === 0){
                     goods = flashbuy.goods.map((good,i)=>{
                         let timer = (
-                            <Timer endTime={flashbuy.endTime} dayEnable={true} 
+                            <Timer endTime={good.endTime} dayEnable={true} 
                             template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
                         )
+                        let salePrice = good.salePrice
+                        if(good.isFlashbuyActive){
+                            salePrice = good.flashPrice
+                        }else if(good.mobilePrice){
+                            salePrice = good.mobilePrice
+                        }
                         return (
                         <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                             <img src={good.imageUrl}/>
@@ -178,7 +184,7 @@ class Floor extends Component{
                                 <div className="flashDot"></div>
                                 <span className="name">{good.title}</span>
                                 <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                                <span className="nowPrice">&yen;{good.salePrice}</span>
+                                <span className="nowPrice">&yen;{salePrice}</span>
                                 <span className="oldPrice">&yen;{good.originPrice}</span>
                             </div>
                         </a>

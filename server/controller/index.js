@@ -176,14 +176,25 @@ function floorFilter(floors) {
         _floors["flashbuys"] = _.map(_floors["flashbuys"],function(flashbuy){
             flashbuy["id"] = 
             flashbuy["goods"] = [];
+            if(flashbuy["activityProductList"]){
             flashbuy["startTime"] = moment(new Date(flashbuy.startTime)).format("YYYY-MM-DD HH:mm:ss")
             flashbuy["endTime"] = moment(new Date(flashbuy.endTime)).format("YYYY-MM-DD HH:mm:ss")
-            if(flashbuy["activityProductList"]){
                 _.each(flashbuy["activityProductList"],function(good){
+                    var startTime = moment(new Date(good.beginDate)).format("YYYY-MM-DD HH:mm:ss")
+                    var endTime = moment(new Date(good.endDate)).format("YYYY-MM-DD HH:mm:ss")
+                    var isFlashbuyActive = false
+                    if (moment().isBetween(startTime,endTime)) {
+                        isFlashbuyActive = true
+                    }
                     flashbuy["goods"].push({
+                        startTime:startTime,
+                        endTime:endTime,
+                        isFlashbuyActive:isFlashbuyActive,
                         singleCode: good.singleCode,
                         imageUrl: config.imgServer + good.imageUrl,
-                        salePrice: good.wapPrice,
+                        salePrice: good.salesPrice,
+                        mobilePrice:good.mobilePrice,
+                        flashPrice:good.wapPrice,
                         originPrice: good.originPrice,
                         title: good.title
                     })

@@ -36,7 +36,6 @@ var goodDetail = function(req, res, next) {
             if (ret["flashbuyByGood"].returnCode === 0) {
                 flashbuy = flashbuyFilter(ret["flashbuyByGood"].object)
                 if (moment().isBetween(moment(flashbuy["startTime"]), moment(flashbuy["endTime"]))) {
-                    console.log('start')
                     flashbuy["active"] = true
                 }
             }

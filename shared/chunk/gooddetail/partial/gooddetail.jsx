@@ -167,7 +167,8 @@ class GoodDetail extends Component{
         if(good.flashbuy['active']){
             return (
                 <span className="countdown">
-                <i className="iconfont icon-time"></i>距本期结束<em><Timer endTime={good.flashbuy['endTime']}/></em>
+                <i className="iconfont icon-time"></i>距本期结束<em><Timer endTime={good.flashbuy['endTime']} dayEnable={true} 
+                template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/></em>
                 </span>
             )
         }
