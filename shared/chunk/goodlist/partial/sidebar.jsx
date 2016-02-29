@@ -59,7 +59,7 @@ class Sidebar extends Component{
                         <dd className="iconfont icon-right"></dd>
                     </dl>
                     <dl onClick={this.props.toggleFilter.bind(this,'area')}>
-                        <dt>产地</dt>
+                        <dt>国家</dt>
                         <dd className="iconfont icon-right"></dd>
                     </dl>
                 </div>

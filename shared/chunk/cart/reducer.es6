@@ -1,14 +1,13 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import _ from "lodash";
 import {
     START_DELETE_CART,FINISH_DELETE_CART,
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
     START_CHECK_CART,FINISH_CHECK_CART,
-    CHANGE_CART_BUYED
+    START_CART_BUYED,FINISH_CART_BUYED
 } from "./constant.es6";
 
 function cartByUser(state={},action){
@@ -19,13 +18,26 @@ function cartByUser(state={},action){
                 isUpdated:false
             });
         case FINISH_UPDATE_CART:
-            var {cartIndex} = action.param;
+            var {cartIndex,groupIndex,goodsIndex,qty,singleCode} = action.param;
             var {isUpdated,isFetched,cart} = action.res;
             var carts = [...state.carts];
-            if(isUpdated){
-                if(isFetched){
-                    carts[cartIndex] = cart;
-                }
+            if(isUpdated&&isFetched){
+                var _cart = {...carts[cartIndex]};
+                _cart.total = cart.total;
+                _cart.promoTotal = cart.promoTotal;
+                _cart.salesTotal = cart.salesTotal;
+                _cart.qtys = cart.qtys;
+                _cart.promoName = cart.promoName;
+                _cart.promoType = cart.promoType;
+                cart.group.forEach((items)=>{
+                    items.list.forEach((goods)=>{
+                        if(goods.singleCode===singleCode){
+                            qty = goods.stockFlag ? qty : goods.qty;
+                            _cart.group[groupIndex].list[goodsIndex].qty = qty;
+                        }
+                    });
+                });
+                carts[cartIndex] = _cart;
             }
             return Object.assign({},state,{
                 isUpdating:false,
@@ -132,15 +144,27 @@ function cartByUser(state={},action){
                 isUpdated:true,
                 carts
             });
-        case CHANGE_CART_BUYED:
-            var {cartIndex,groupIndex,goodsIndex,buyLimit,qty} = action.param;
+        case START_CART_BUYED:
+            return Object.assign({},state,{
+                isUpdating:true,
+                isUpdated:false
+            }); 
+        case FINISH_CART_BUYED:
+            var {cartIndex,groupIndex,goodsIndex,buyLimit,qtys} = action.param;
+            var {isFetched,cart} = action.res;
             var carts = [...state.carts];
-            if(qty<=buyLimit){
-                var cart = {...carts[cartIndex]};
-                cart.group[groupIndex].list[goodsIndex].qty=qty;
-                carts[cartIndex] = cart;
+          
+            if(isFetched){
+                var goods = cart.group[0].list[0];
+                if(qtys<=goods.buyLimit && goods.stockFlag){
+                    var _cart = {...carts[cartIndex]};
+                    _cart.group[groupIndex].list[goodsIndex].qty=qtys;
+                    carts[cartIndex] = _cart;
+                }  
             }
             return Object.assign({},state,{
+                isUpdating:false,
+                isUpdated:true,
                 carts
             });
         case START_CHECK_CART:
