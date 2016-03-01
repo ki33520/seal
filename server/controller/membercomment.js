@@ -73,6 +73,8 @@ var index = function(req, res, next) {
         }else{
             next(new Error(ret.allComment.message));
         }
+    }).fail(function(resp) {
+        next(new Error("api response failed"))
     });
 }
 

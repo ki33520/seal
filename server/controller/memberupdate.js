@@ -26,6 +26,8 @@ var update = function(req, res, next) {
         }else{
             next(new Error(ret.memberDetailByUser.message));
         }
+    }).fail(function(resp) {
+        next(new Error("api response failed"))
     });
 }
 

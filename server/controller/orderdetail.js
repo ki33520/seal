@@ -192,7 +192,9 @@ var orderDetail = function(req, res, next) {
                 next(new Error(resp.timestamp.message));
             }
         }
-    })
+    }).fail(function(resp) {
+        next(new Error("api response failed"))
+    });
 }
 var orderClose = function(req, res, next) {
     var orderNo = req.body.orderNo;
