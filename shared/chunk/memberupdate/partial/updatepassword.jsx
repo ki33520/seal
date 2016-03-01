@@ -79,22 +79,24 @@ class UpdatePassword extends Component{
         
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props
+        const {dispatch,changeScene} = this.props
+        const self = this;
         if(nextProps.passwordByForm.passwordChanging === false &&
            this.props.passwordByForm.passwordChanging === true){
             if(nextProps.passwordByForm.passwordChanged === true){
                 dispatch(alert(nextProps.passwordByForm.msg,2000));
-                setTimeout(()=>window.history.back(),2500);
+                setTimeout(()=>{changeScene.call(self,"index")},2500);
             }else{
                 dispatch(alert(nextProps.passwordByForm.msg,2000));
             }
         }
     }
     render(){
+        const {changeScene} = this.props;
         const {oldPassword,password,repeatPassword,alertContent,alertActive} = this.props.passwordByForm;
         return (
             <div className="formlist-content">
-                <Header>
+                <Header onGoBack={changeScene.bind(this,"index")}>
                     <span className="title">修改登录密码</span>
                 </Header>
                 <ul className="setup-form">

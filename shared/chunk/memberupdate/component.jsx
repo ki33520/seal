@@ -6,7 +6,7 @@ import UpdateBasic from "./partial/updatebasic.jsx";
 import UpdatePassword from "./partial/updatepassword.jsx";
 import UpdateMemberCard from "./partial/updatemembercard.jsx";
 import {Router} from "director";
-import {Switcher,SwitcherCase} from "../common/switcher.jsx";
+import {SceneGroup,Scene} from "../common/scene.jsx"
 
 class MemberUpdate extends Component{
     constructor(props){
@@ -16,43 +16,18 @@ class MemberUpdate extends Component{
             prevRoute:null
         }
     }
-    componentDidMount(){
-        Router({
-            "/basic":()=>{
-                this.setState({
-                    currentRoute:"basic",
-                    prevRoute:this.state.currentRoute
-                });
-            },
-            "/password":()=>{
-                this.setState({
-                    currentRoute:"password",
-                    prevRoute:this.state.currentRoute
-                });
-            },
-            "/membercard":()=>{
-                this.setState({
-                    currentRoute:"membercard",
-                    prevRoute:this.state.currentRoute
-                });
-            },
-            "/":()=>{
-                this.setState({
-                    currentRoute:"index",
-                    prevRoute:this.state.currentRoute
-                });
-            }
-        }).init("/");
+    handleSceneChange(){
+
     }
     render(){
         const {currentRoute,prevRoute} = this.state;
         return (
-            <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
-                <SwitcherCase name="index"><Update {...this.props}/></SwitcherCase>
-                <SwitcherCase name="basic"><UpdateBasic {...this.props}/></SwitcherCase>
-                <SwitcherCase name="password"><UpdatePassword {...this.props}/></SwitcherCase>
-                <SwitcherCase name="membercard"><UpdateMemberCard {...this.props}/></SwitcherCase>
-            </Switcher>
+            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
+                <Scene name="index"><Update {...this.props}/></Scene>
+                <Scene name="basic"><UpdateBasic {...this.props}/></Scene>
+                <Scene name="password"><UpdatePassword {...this.props}/></Scene>
+                <Scene name="membercard"><UpdateMemberCard {...this.props}/></Scene>
+            </SceneGroup>
         );
     }
 }
