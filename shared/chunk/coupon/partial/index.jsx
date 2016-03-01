@@ -54,24 +54,11 @@ class Coupon extends React.Component{
         }else{
             return this.renderNoCoupon("您目前没有友阿优惠券哟！");
         }
-    }
-    renderLegueCoupons(coupons){
-        if(coupons && coupons.length){
-            return coupons.map((item,i)=>{
-                return this.renderLegueCoupon(item,'l-'+i);
-            });
-        }else{
-            return this.renderNoCoupon("您目前没有联盟优惠券哟！");
-        }
-    }  
+    } 
     renderInvalidCoupons(coupons){
         if(coupons && coupons.length){
             return coupons.map((item,i)=>{
-                if(item.isLegue){
-                    return this.renderLegueCoupon(item,'il-'+i);
-                }else{
-                    return this.renderYouaCoupon(item,'iy-'+i);
-                }
+                return this.renderYouaCoupon(item,'iy-'+i);
             });
         }else{
             return this.renderNoCoupon("您目前没有失效优惠券哟！");
@@ -89,10 +76,7 @@ class Coupon extends React.Component{
         const canUse = !(coupon.used || coupon.expiried);
         const row = classNames("coupon",{
             "youa-invalid":!canUse,
-            "haitao":canUse && coupon.flag==='haitao',
-            "tepin":canUse && coupon.flag==='tepin',
-            "hnmall":canUse && coupon.flag==='hnmall',
-            "general":canUse && coupon.flag==="general",
+            "haitao":canUse
         });
         const status = classNames({
             used:coupon.used,
@@ -100,7 +84,6 @@ class Coupon extends React.Component{
         });
         return (
             <div className={row} key={i}>
-                <a href="javascript:;" onClick={this.props.changeScene.bind(this,"detail",{id:coupon.couponNo})}>
                     <div className="left">
                         <div className="price"><em>&yen;</em>{coupon.money}</div>
                         <div className="term">{coupon.songAccount}</div>
@@ -111,39 +94,6 @@ class Coupon extends React.Component{
                         <div className="explain">{coupon.couponDesc}</div>
                     </div>
                     <div className={status}></div>
-                </a>
-            </div>
-        );
-    }
-    renderLegueCoupon(coupon,i){
-        const invalid = coupon.used || coupon.expiried;
-        const classes = classNames("coupon",{
-            "union-invalid":invalid,
-            "union": true
-        });
-        const status = classNames({
-            used:coupon.used,
-            expiried:coupon.expiried
-        });
-
-        return (
-            <div className={classes} key={i}>
-                <a href="javascript:;" onClick={this.props.changeScene.bind(this,"detail",{id:coupon.couponNo})}>
-                    <div className="content">
-                        <div className="left">
-                            <div className="price">{coupon.shortName}</div>
-                        </div>
-                        <div className="right">
-                            <div className="company">{coupon.couponName}</div>
-                            <div className="explain">{coupon.description}</div>
-                        </div>
-                    </div>
-                    <div className="bottom">
-                        <div className="term">{coupon.useRules}</div>
-                        <div className="date">{coupon.expiryDate}</div>
-                    </div>
-                    <div className={status}></div>
-                </a>
             </div>
         );
     }
@@ -155,12 +105,8 @@ class Coupon extends React.Component{
                     <span className="title">优惠券</span>
                 </Header>
                 <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
-                    <SlideTabsItem navigator={()=>'友阿优惠券'}>
+                    <SlideTabsItem navigator={()=>'未使用优惠券'}>
                         {this.renderYouaCoupons(pagination.youa.coupons)}
-                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
-                    </SlideTabsItem>
-                    <SlideTabsItem navigator={()=>'联盟优惠券'}>
-                        {this.renderLegueCoupons(pagination.legue.coupons)}
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>

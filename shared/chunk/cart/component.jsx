@@ -165,10 +165,7 @@ class Cart extends Component {
     handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
         const {deleteCart,cartByUser} = this.props;
         const cart = cartByUser.carts[cartIndex];
-        if(goods.checked === false){
-            return false;
-        }
-        if(this.props.cartByUser.isDeleting){
+        if(!goods.checked||cartByUser.isDeleting){
             return false;
         }
         let singleCodes = [];
@@ -199,10 +196,12 @@ class Cart extends Component {
     }
     renderGoods(goods,i,j,k) {
         const salePrice = formatPrice(goods.salePrice);
-        const limit = goods.buyLimit > 0 ? true : false;
         const buyLimit = classNames({
-            hide:!limit,
-            limitBuy:limit
+            hide:goods.buyLimit<1,
+            limitBuy:goods.buyLimit>0
+        });
+        const soldout = classNames({
+            "sold-out":!goods.stockFlag
         });
         return(
             <div className="group" key={"g-"+i+j+k}>
@@ -214,14 +213,16 @@ class Cart extends Component {
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href={"/gooddetail/"+goods.singleCode}>
-                            <img width="100%" src={goods.imageUrl} /></a>
+                                <img width="100%" src={goods.imageUrl} />
+                                <div className={soldout}></div>
+                            </a>
                             <span className={buyLimit}>限购{goods.buyLimit}件</span>
                         </div>
                         <div className="gd_info">
                             <p className="name">
                               <b>{goods.title}</b>
-                              <span>&yen;{salePrice}</span>
-                              <em>x{goods.qty}</em>
+                              <span>{'￥'+salePrice}</span>
+                              <em>{'x'+goods.qty}</em>
                             </p>
                             <div className="act_wrap"> 
                                 <NumberPicker value={goods.qty} minimum={1} maximum={goods.buyLimit} 
@@ -235,7 +236,7 @@ class Cart extends Component {
     }
     renderGroup(group,i,j){
         let goodsList = [];
-        let manjian = classNames("manjian",{
+        const manjian = classNames("manjian",{
             hide:!group.promoName
         });
         group.list.map((goods,k)=>{
@@ -250,8 +251,8 @@ class Cart extends Component {
         );
     }
     renderInfo(total,tax, limitTax,limitMoney){
-        let notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
-        let warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
+        const notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
+        const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
         let message = null;
 
         if(total > limitMoney){
@@ -275,15 +276,15 @@ class Cart extends Component {
         let groupList = [];
         let allowBuy = cart.checked ? true : false;
         if(cart.total > cart.buyLimit || cart.total <=0){
-            allowBuy = false
+            allowBuy = false;
         }
         cart.group.forEach((group,j)=>{
             groupList.push(this.renderGroup(group,i,j));
         });
-        let button = classNames("btn_buy",{
+        const button = classNames("btn_buy",{
             "unable_buy":allowBuy===false
         });
-        let promo = classNames("depot_bot",{
+        const promo = classNames("depot_bot",{
             hide:!cart.promoName
         });
         const salesTotal = formatPrice(cart.salesTotal);
@@ -303,15 +304,15 @@ class Cart extends Component {
                 {groupList}
                 <div className="section_wrap cart_buy">
                     <div className="cartFirst clearfix">
-                        <span>已选商品{cart.qtys}件</span>
+                        <span>{'已选商品'+cart.qtys+'件'}</span>
                         <div className="cartFirst_two">
-                            <p>商品总额：&nbsp;&nbsp;&yen;&nbsp;{salesTotal}</p>
-                            <p>活动优惠：-&nbsp;&yen;&nbsp;{promoTotal}</p>
+                            <p>{'商品总额： ￥'+salesTotal}</p>
+                            <p>{'活动优惠： -￥'+promoTotal}</p>
                         </div>
                     </div>
                     <div id="J_wrapperCartTop">
                         <p>
-                            <span>总计(不含运费、税金)：<em>&yen;{total}</em></span>
+                            总计(不含运费、税金)：<em>{'￥'+total}</em>
                         </p>
                         <p>
                             <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart,i)}/>
@@ -324,7 +325,6 @@ class Cart extends Component {
     }
     renderCarts(){
         const {carts} = this.props.cartByUser;
-  
         if(carts && carts.length){
             let cartList = [];
             carts.forEach((cart,i)=>{
@@ -358,7 +358,7 @@ class Cart extends Component {
                     onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
                 <Dialog active={this.state.alertActive}
                     onlyConfirm={true}
-                    onConfrim={this.state.alertOnConfirm}>{alertContent}!</Dialog>
+                    onConfrim={this.state.alertOnConfirm}>{alertContent}</Dialog>
                 <Footer activeIndex="3"/>
             </div>
         )
