@@ -18,34 +18,30 @@ class PhotoList extends Component{
             }
         }
     }
-    componentDidUpdate(){
-        var {photos} = this.props;
-        console.log(photos)
-        if(photos){
-            console.log(ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[photos.activeIndex])
-            ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[photos.activeIndex].click();
-        }
-    }
     toggleFlag(index){
         var {photos} = this.props;
     }
     render(){
-        var {photos} = this.props;
+        var {photos,changeScene} = this.props;
         var {showComment} = this.props.commentByUser;
         if(photos){
             var titleName = photos.activeIndex+1+" / "+photos.data.length;
             var displayFlag = photos.activeIndex;
             return (
                 <div className="photo-content">
-                    <Header onGoBack={this.props.changeScene.bind(this,"index")}>
-                        <span className="title">晒单图片</span>
-                    </Header>
-                    <SlideTabs ref="slideTabs" axis="x" activeIndex={displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)} >
+                    <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)} >
                         {
                             photos.data.map((v,k)=>{
                                 var t = k+1+" / "+photos.data.length;
                                 return (
-                                    <SlideTabsItem key={k} navigator={()=><span><b>{t}</b></span>}>
+                                    <SlideTabsItem key={k} navigator={()=>{ 
+                                        return (
+                                            <span className="header">
+                                                <a href="javascript:void(null)" onClick={changeScene.bind(this,"index")} className="iconfont icon-back"></a>
+                                                <b>{t}</b>
+                                            </span>
+                                        )
+                                    }}>
                                         <img src={v} />
                                     </SlideTabsItem>
                                 )
