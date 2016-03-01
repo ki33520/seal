@@ -236,7 +236,7 @@ class Cart extends Component {
     }
     renderGroup(group,i,j){
         let goodsList = [];
-        let manjian = classNames("manjian",{
+        const manjian = classNames("manjian",{
             hide:!group.promoName
         });
         group.list.map((goods,k)=>{
@@ -251,8 +251,8 @@ class Cart extends Component {
         );
     }
     renderInfo(total,tax, limitTax,limitMoney){
-        let notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
-        let warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
+        const notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
+        const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
         let message = null;
 
         if(total > limitMoney){
@@ -276,15 +276,15 @@ class Cart extends Component {
         let groupList = [];
         let allowBuy = cart.checked ? true : false;
         if(cart.total > cart.buyLimit || cart.total <=0){
-            allowBuy = false
+            allowBuy = false;
         }
         cart.group.forEach((group,j)=>{
             groupList.push(this.renderGroup(group,i,j));
         });
-        let button = classNames("btn_buy",{
+        const button = classNames("btn_buy",{
             "unable_buy":allowBuy===false
         });
-        let promo = classNames("depot_bot",{
+        const promo = classNames("depot_bot",{
             hide:!cart.promoName
         });
         const salesTotal = formatPrice(cart.salesTotal);
@@ -304,7 +304,7 @@ class Cart extends Component {
                 {groupList}
                 <div className="section_wrap cart_buy">
                     <div className="cartFirst clearfix">
-                        <span>已选商品{cart.qtys}件</span>
+                        <span>{'已选商品'+cart.qtys+'件'}</span>
                         <div className="cartFirst_two">
                             <p>{'商品总额： ￥'+salesTotal}</p>
                             <p>{'活动优惠： -￥'+promoTotal}</p>
@@ -325,7 +325,6 @@ class Cart extends Component {
     }
     renderCarts(){
         const {carts} = this.props.cartByUser;
-  
         if(carts && carts.length){
             let cartList = [];
             carts.forEach((cart,i)=>{
