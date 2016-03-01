@@ -27,6 +27,8 @@ var index = function(req, res, next) {
         }else{
             next(new Error(resp.questionList.message));
         }
+    }).fail(function(resp) {
+        next(new Error("api response failed"))
     });
 }
 var sendFeedback = function(req, res, next) {
