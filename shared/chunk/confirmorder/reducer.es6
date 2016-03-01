@@ -87,12 +87,14 @@ function orderByParam(state={},action){
 function calculateTotalFee(order){
     let totalFee = order.productFee + order.shipFee + order.abroadFee + order.tariffFee
         - order.promoFee - order.couponFee
+    totalFee = Math.round(totalFee * 100) / 100
     // console.log('productFee',order.productFee)
     // console.log('shipFee',order.shipFee)
     // console.log('abroadFee',order.abroadFee)
     // console.log('tariffFee',order.tariffFee)
     // console.log('promoFee',order.promoFee)
     // console.log('couponFee',order.couponFee)
+    // console.log('totalFee',totalFee)
     totalFee = totalFee < 0.07 ? 0.07:totalFee
     return totalFee
 }

@@ -39,7 +39,6 @@ class OrderGoods extends Component{
                         <div className="orderConfirm_title clearfix">
                         <em>{promo.promoType}</em>
                         <span>{promo.promoName}</span>
-                        <i className="iconfont icon-right"></i>
                         </div>
                     )
                 }

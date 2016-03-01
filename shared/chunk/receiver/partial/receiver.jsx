@@ -19,7 +19,7 @@ class Receiver extends Component{
     }
     handleCheck(receiver){
         const {onCheck} = this.props
-        this.props.changeReceiver(receiver)
+        this.props.selectReceiver(receiver)
         onCheck(receiver)
         this.props.receiverByUser.changeScene("index")
     }
@@ -44,12 +44,16 @@ class Receiver extends Component{
             const {receivers} = nextProps;
             if(_.some(receivers,{id:checkedReceiver.id}) === false && checkable){
                 this.props.onCheck(receivers.length > 0 ?receivers[0]:null)
-                this.props.changeReceiver(receivers.length > 0 ?receivers[0]:null)
+                this.props.selectReceiver(receivers.length > 0 ?receivers[0]:null)
             }
         }
     }
     handleCheckableGoBack(){
-        this.props.receiverByUser.changeScene("index")
+        if(this.props.checkedReceiver){
+            this.handleCheck(this.props.checkedReceiver)
+        }else{
+            this.props.receiverByUser.changeScene("index")
+        }
     }
     setReceiverDefault(receiver){
         const {setDefault} = this.props;
