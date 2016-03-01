@@ -107,12 +107,13 @@ class UpdateBasic extends Component{
         
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
+        const {dispatch,changeScene} = this.props;
+        const self = this;
         if(nextProps.basicByForm.basicChanging === false &&
            this.props.basicByForm.basicChanging === true){
             if(nextProps.basicByForm.basicChanged === true){
                 dispatch(alert(nextProps.basicByForm.msg,2000));
-                setTimeout(()=>window.history.back(),2500);
+                setTimeout(()=>{changeScene.call(self,"index")},2500);
             }else{
                 dispatch(alert(nextProps.basicByForm.msg,2000));
             }
@@ -138,11 +139,11 @@ class UpdateBasic extends Component{
         dispatch(changeField(fieldName,birthday));
     }
     render(){
-        const {dispatch,basicByForm} = this.props;
+        const {dispatch,basicByForm,changeScene} = this.props;
         const {nickName,gender,birthday,fieldnickName,fieldgender,alertContent,alertActive} = basicByForm;
         return (
             <div className="basic-content">
-                <Header>
+                <Header onGoBack={changeScene.bind(this,"index")}>
                     <span className="title">基本信息</span>
                     <span className="btn-right" onClick={this.handleChangeBasic.bind(this)}><a>保存</a></span>
                 </Header>

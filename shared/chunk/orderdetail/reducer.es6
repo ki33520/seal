@@ -1,4 +1,6 @@
 'use strict';
+
+import _ from "lodash";
 import {
     CHANGE_FIELD,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY
 } from "./action.es6";
@@ -10,10 +12,14 @@ import {alertReducer} from "../common/reducer.es6";
 function orderByParam(state={},action){
     switch(action.type){
         case CHANGE_FIELD:
-            const {name,value,key} = action;
+            const {name,value,pid} = action;
             var order = {...state.order};
-            if(key!==undefined){
-                order.itemList[key][name] = value;
+            if(pid!==undefined){
+                order.itemList.forEach((v,k)=>{
+                    if(v.id === pid){
+                        v[name] = value;
+                    }
+                })
             }else{
                 state[name] = value;
             }
@@ -27,10 +33,21 @@ function orderByParam(state={},action){
                 msg:action.res?action.res.msg: null
             })
         case RESPONSE_SAVECOMMENT:
+            var order = {...state.order};
+            var items = action.param.json;
+            items.forEach((v,k)=>{
+                order.itemList.forEach((val,key)=>{
+                    if(val.id === v.itemId){
+                        val.hasComment = true;
+                        val.rate = v.rate;
+                    }
+                });
+            })
             return Object.assign({},state,{
                 saveCommentChanging:false,
                 saveCommentChanged: action.res.isChanged,
-                msg:action.res?action.res.msg: null
+                msg:action.res?action.res.msg: null,
+                order
             })
         case REQUEST_LOGISTICS:
             return Object.assign({},state,{

@@ -16,12 +16,12 @@ export const RESPONSE_PAYGATEWAY = "RESPONSE_PAYGATEWAY";
 import {alert} from "../common/action.es6";
 export {alert} from "../common/action.es6";
 
-export function changeField(name,value,key){
+export function changeField(name,value,pid){
     return {
         type:CHANGE_FIELD,
         name,
         value,
-        key
+        pid
     }
 }
 

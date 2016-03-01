@@ -19,45 +19,6 @@ class Comment extends Component{
             displayFlag: 0
         }
     }
-    // togglePopupActive(){
-    //     this.setState({
-    //         maskActive:!this.state.popupActive,
-    //         popupActive:!this.state.popupActive
-    //     });
-    // }
-    // setPopQrImg(str,key){
-    //     var tabs = (
-    //         <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} >
-    //             {
-    //                 str.map((v,k)=>{
-    //                     return (
-    //                         <SlideTabsItem key={k} navigator={()=>{<span><b>图片{k}</b></span>}}>
-    //                             <div className="img-wrap" key={k}><img src={v} /></div>
-    //                         </SlideTabsItem>
-    //                     );
-    //                 })
-    //             }
-    //         </SlideTabs>
-    //     );
-    //     this.setState({
-    //         popQrImg: tabs
-    //     });
-    //     this.togglePopupActive();
-    // }
-    // renderPopQr(){
-    //     const classes = classNames({
-    //         "pop-qr":true,
-    //         "active":this.state.popupActive
-    //     });
-    //     return (
-    //         <div className={classes}>
-    //             <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>
-    //             <div className="top">评论图片</div>
-    //             <div className="center">{this.state.popQrImg}</div>
-    //             <div className="bottom"></div>
-    //         </div>
-    //     )
-    // }
     beginRefresh(interval,flag){
         const {dispatch} = this.props;
         const {allComment,showComment,isFetching} =  this.props.commentByUser;

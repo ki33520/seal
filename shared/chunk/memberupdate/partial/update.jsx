@@ -7,7 +7,7 @@ import Header from "../../common/header.jsx";
 
 class Update extends Component{
     render(){
-        const {basicByForm} = this.props;
+        const {basicByForm,changeScene} = this.props;
         return (
             <div className="update-content">
                 <Header>
@@ -18,8 +18,8 @@ class Update extends Component{
                         <span>头像</span>
                         <div><img src={basicByForm.imageUrl || "/client/asset/images/headpic.png"} /></div>
                     </li>
-                    <li><a href="#/basic">基本信息</a></li>
-                    <li><a href="#/password">修改登录密码</a></li>
+                    <li><a href="javascript:void(null)" onClick={changeScene.bind(this,"basic")}>基本信息</a></li>
+                    <li><a href="javascript:void(null)" onClick={changeScene.bind(this,"password")}>修改登录密码</a></li>
                 </ul>
             </div>
         );
