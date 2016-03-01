@@ -81,8 +81,6 @@ var memberCenter = function(req, res, next) {
                     next(new Error(resp.memberCountOrder.message));
                 }
             }
-        }).fail(function(resp) {
-            next(new Error("api response failed"))
         });
     }else{
         var initialState = {
