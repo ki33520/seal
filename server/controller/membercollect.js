@@ -6,15 +6,19 @@ var bluebird = require("bluebird");
 var CollectApp = util.getSharedComponent("membercollect");
 var config = require("../lib/config.js");
 
-function formatComment(object) {
-   return object.map((child,i)=>{
+function filterPrice(param){
+    return param === null || param === "null" ? 0 : param; 
+}
+
+function formatComment(param) {
+   return param.map((child,i)=>{
         return {
             createdAt: child.createdAt,
             id: child.id,
             imageUrl: config.imgServer+child.imageUrl,
-            originPrice: child.originPrice,
+            originPrice: filterPrice(child.originPrice),
             productCode: child.productCode,
-            salesPrice: child.salesPrice,
+            salesPrice: filterPrice(child.salesPrice),
             singleCode: child.singleCode,
             sourceImage: config.imgServer+child.sourceImage,
             sourceName: child.sourceName,
