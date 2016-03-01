@@ -192,7 +192,7 @@ var orderDetail = function(req, res, next) {
                 next(new Error(resp.timestamp.message));
             }
         }
-    })
+    });
 }
 var orderClose = function(req, res, next) {
     var orderNo = req.body.orderNo;

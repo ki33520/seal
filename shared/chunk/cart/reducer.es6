@@ -182,7 +182,7 @@ function cartByUser(state={},action){
             if(action.res.isFetched){
                 isChecked = true;
                 if(cart){
-                    if(carts[cartIndex].total === cart.total){
+                    if(carts[cartIndex].total === cart.total && cart.total>0){
                         allowSubmit = true;
                     }else{
                         alertContent = '商品价格发生变化，请重新结算!';

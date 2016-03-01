@@ -274,7 +274,7 @@ class Cart extends Component {
     renderCart(cart,i){
         let groupList = [];
         let allowBuy = cart.checked ? true : false;
-        if(cart.total > cart.buyLimit){
+        if(cart.total > cart.buyLimit || cart.total <=0){
             allowBuy = false
         }
         cart.group.forEach((group,j)=>{

@@ -64,7 +64,7 @@ class MembercollectList extends Component{
                 <Floor handleDelete={this.handleDelete.bind(this)} {...collect} {...this.props} />
                 <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                 <Alert active={alertActive}>{alertContent}</Alert>
-                <GoTop relative={true}/>
+                <GoTop relative={false}/>
             </div>
         );
     }
