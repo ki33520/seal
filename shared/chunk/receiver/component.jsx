@@ -14,8 +14,8 @@ class ReceiverRouter extends Component{
         switch(currentScene){
             case "updatereceiver":
                 !this.props.updateReceiver.receiverFetching && fetchReceiver("/receiver/"+param.id)
-            case "index":
-                prevScene !== null && fetchReceivers()
+            // case "index":
+                // prevScene !== null && fetchReceivers()
         }
     }
     render(){

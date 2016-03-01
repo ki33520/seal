@@ -12,15 +12,13 @@ class FlashBuy extends Component{
         if(groupGoods.length > 0){
             return groupGoods.map((goods,i)=>{
                 const soldOut = classNames({
-                    "sale-out":goods.isSoldOut,
-                    "hide": goods.isSoldOut?false:true
+                    "sale-out":goods.localStock>0?false:true
                 });
                 const saleIcon = classNames({
-                    "flash-price":goods.saleType==='flash',
-                    "mobile-price":goods.saleType ==='mobile',
-                    "hide":goods.saleType===undefined
+                    "flash-price":goods.flashPrice>0?true:false,
+                    "mobile-price":goods.mobilePrice>0?true:false
                 });
-                const salesPrice = formatPrice(goods.salesPrice);
+                const salesPrice = formatPrice(goods.flashPrice||goods.mobilePrice||goods.salesPrice);
                 const originPrice = formatPrice(goods.originPrice);
                 return (
                     <a href={"/gooddetail/"+goods.singleCode} className="clearfix" key={i}>

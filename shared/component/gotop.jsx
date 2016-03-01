@@ -16,8 +16,7 @@ class GoTop extends Component{
     }
     toggleVisble(){
         const {relative} = this.props;
-        const scrollTop = relative?dom.scrollTop(this.scrollNode)
-        :dom.scrollTop();
+        const scrollTop = relative?dom.scrollTop(this.scrollNode):dom.scrollTop(window);
         if(scrollTop > 50){
             this.setState({active:true});
         }else{

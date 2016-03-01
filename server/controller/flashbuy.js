@@ -5,7 +5,7 @@ var bluebird = require("bluebird");
 var util = require("../lib/util");
 var FlashBuy = util.getSharedComponent("flashbuy");
 var sharedUtil = require("../../shared/lib/util.es6");
-var filter = require("../lib/filter.js");
+var config = require("../lib/config");
 
 function flashBuyFilter(flashbuys,systemTime){
     var flashGoods = [];
@@ -42,24 +42,21 @@ function flashBuyFilter(flashbuys,systemTime){
 }
 
 function goodsFilter(goodsList){
+    var imgServer = config.imgServer;
     return _.map(goodsList,function(goods,i){
-        var salesPrice = filter.price({
-            flashPrice:goods.wapPrice,
-            mobilePrice:goods.mobilePrice,
-            salesPrice:goods.salesPrice,
-            startTime:goods.beginDateStr,
-            endTime:goods.endDateStr
-        });
         return {
             singleCode:goods.singleCode,
             title:goods.title,
-            imageUrl:filter.imageUrl(goods.imageUrl),
+            flashPrice:goods.wapPrice,
+            mobilePrice:goods.mobilePrice,
+            salesPrice:goods.salesPrice,
             originPrice:goods.originPrice,
-            salesPrice:salesPrice,
+            startTime:goods.beginDateStr,
+            endTime:goods.endDateStr,
+            imageUrl:imgServer+goods.imageUrl,
             sourceName:goods.sourceName,
-            sourceImageUrl:filter.imageUrl(goods.sourceImageUrl),
-            isSaleOut:filter.isSoldOut(goods.localStock),
-            saleType:filter.saleType(goods)
+            sourceImageUrl:imgServer+goods.sourceImageUrl,
+            localStock:goods.localStock
         }
     });
 }

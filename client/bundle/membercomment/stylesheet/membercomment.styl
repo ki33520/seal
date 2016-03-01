@@ -3,6 +3,7 @@
 @import "../../common/header";
 @import "../../common/member";
 @import "../../component/slidetabs";
+@import "../../common/scene";
 @import "../../component/refresher";
 @import "../../component/masklayer";
 @import "../../component/gotop";
@@ -25,8 +26,11 @@ body{
 	}
 }
 .comment-content{
+	height: 100%;
+	overflow:hidden;
 	color: $gray-color;
 	padding: 0 0 0 0;
+	background-color: #f1f1f1;
 	.tab-content{
 		height: 100%;
 		overflow: hidden;
@@ -165,9 +169,22 @@ body{
 				word-wrap: break-word;
 			}
 			.pic-list{
-				display: flex;
-				padding: .3rem 0 0 0;
+				padding: .05rem 0 0 0;
 				overflow: hidden;
+				.pic-item{
+					float: left;
+					width: 33.33%;
+					margin-top: .25rem;
+					.img-wrap{
+						border: px2rem(1) solid #d7d7d7;
+						width: 92%;
+						height: 92%;
+						margin: 0 auto;
+						img{
+							width: 100%;
+						}
+					}
+				}
 				.slide-tabs{
 					.slide-tabs-navbar{
 						width: auto;
@@ -209,7 +226,7 @@ body{
 		top: 50%;
 		left: 50%;
 		width: 8rem;
-		height: 9rem;
+		height: 10rem;
 		margin-left: -4rem;
 		margin-top: -5rem;
 		display: none;
@@ -241,10 +258,7 @@ body{
 			background-color: #801fa0;
 		}
 		& > .center{
-			padding-top: .4rem;
-			padding-bottom: .2rem;
-			line-height: 0;
-			height: 7.2rem;
+			height: 8.2rem;
 			background-color: #fff;
 			& > img{
 				width: 80%;
@@ -257,6 +271,56 @@ body{
 			border-radius: 0 0 .2rem .2rem;
 			padding-bottom: .3rem;
 			background-color: #fff;
+		}
+		.slide-tabs{
+			.slide-tabs-navbar{
+				display: none;
+			}
+			.slide-tabs-content{
+				padding-bottom: 0;
+				overflow: hidden;
+				align-items: center;
+				.slide-tabs-item{
+					.img-wrap{
+						line-height: 0;
+						img{
+							width: 90%;
+							margin: 0 auto;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.photo-content{
+	height: 100%;
+	overflow: hidden;
+	.slide-tabs{
+		.slide-tabs-navbar{
+			display: block;
+			border-bottom: none;
+			.slide-tabs-navbar-item{
+				display: none;
+				width: 100%;
+				font-size: .42rem;
+				position: relative;
+				&.active{
+					display: block;
+				}
+				>span.header{
+					display: block;
+				}
+			}
+		}
+		.slide-tabs-content{
+			padding-bottom:px2rem(38);
+			.slide-tabs-item{
+				img{
+					margin: 0 auto;
+					width: 100%;
+				}
+			}
 		}
 	}
 }

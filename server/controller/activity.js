@@ -2,29 +2,25 @@
 var _ = require("lodash");
 var util = require("../lib/util.js");
 var ActivityApp = util.getSharedComponent("activity");
-var filter = require("../lib/filter.js");
+var config = require("../lib/config");
  
 function filterResult(goods){
     var list = [];
     if(goods && goods.length>0){
-        _.each(goods,function(item,i){
-            var salesPrice = filter.price({
-                flashPrice:item.wapPrice,
-                mobilePrice:item.mobilePrice,
-                salesPrice:item.salesPrice,
-                startTime:item.beginDateStr,
-                endTime:item.endDateStr
-            });
+        _.each(goods,function(item){
             list.push({
                 singleCode:item.singleCode,
                 title:item.title,
-                salesPrice:salesPrice,
+                flashPrice:item.wapPrice,
+                mobilePrice:item.mobilePrice,
+                salesPrice:item.salesPrice,
                 originPrice:item.originPrice,
-                imageUrl:filter.imageUrl(item.imageUrl),
+                startTime:item.beginDateStr,
+                endTime:item.endDateStr,
                 sourceName:item.sourceName,
-                sourceImageUrl:filter.imageUrl(item.sourceImageUrl),
-                isSoldOut:filter.isSoldOut(item.localStock),
-                saleType:filter.saleType(item)
+                imageUrl:config.imgServer+item.imageUrl,
+                sourceImageUrl:config.imgServer+item.sourceImageUrl,
+                localStock:item.localStock
             });
         });
     }
@@ -44,8 +40,7 @@ var activity = function(req, res, next) {
     }).then(function(resp) {
         if (resp.returnCode === 0) {
             var obj = resp.object;
-            var activityProductList = obj ? obj.activityProductList : [];
-            var list = filterResult(activityProductList);
+            var list = filterResult(obj.activityProductList);
 
             if (req.xhr === true) {
                 res.json(list);
@@ -54,7 +49,7 @@ var activity = function(req, res, next) {
                 var initialState = {
                     list,
                     totalPage,
-                    imageUrl:filter.imageUrl(obj.bannerImageUrl),
+                    imageUrl:config.imgServer + obj.bannerImageUrl,
                     title:obj.activityName
                 };
                 var markup = util.getMarkupByComponent(ActivityApp({

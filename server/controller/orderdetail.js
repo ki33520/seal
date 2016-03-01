@@ -75,32 +75,35 @@ function getStatus(str){
     });
     return statusArr;
 }
+function filterPrice(param){
+    return param === null || param === "null" ? 0 : param; 
+}
 function formatComment(object) {
     var itemList = object.itemList.map((v,k)=>{
         return {
             id: v.id,
             discount: v.discount,
             hasComment: v.hasComment,
-            logisticsFee: v.logisticsFee,
+            logisticsFee: filterPrice(v.logisticsFee),
             orderId: v.orderId,
-            originPrice: v.originPrice,
-            originalCost: v.originalCost,
-            payableFee: v.payableFee,
-            paymentFee: v.paymentFee,
+            originPrice: filterPrice(v.originPrice),
+            originalCost: filterPrice(v.originalCost),
+            payableFee: filterPrice(v.payableFee),
+            paymentFee: filterPrice(v.paymentFee),
             productCode: v.productCode,
-            promoFee: v.promoFee,
+            promoFee: filterPrice(v.promoFee),
             returnCount: v.returnCount,
-            salesPrice: v.salesPrice,
-            salesTotalFee: v.salesTotalFee,
+            salesPrice: filterPrice(v.salesPrice),
+            salesTotalFee: filterPrice(v.salesTotalFee),
             singleCode: v.singleCode,
             singleImageUrl: config.imgServer+v.singleImageUrl,
             singleProps: v.singleProps,
             singleTitle: v.singleTitle,
             skuCode: v.skuCode,
-            tariffFee: v.tariffFee,
+            tariffFee: filterPrice(v.tariffFee),
             qty: v.qty,
-            abroadFee: v.abroadFee,
-            couponFee: v.couponFee,
+            abroadFee: filterPrice(v.abroadFee),
+            couponFee: filterPrice(v.couponFee),
             updatedAt: v.updatedAt
         }
     });
@@ -125,13 +128,13 @@ function formatComment(object) {
         completeAddress: object.completeAddress,
         payType: object.payType,
         timeoutTime: object.timeoutTime,
-        salesTotalFee: object.salesTotalFee,
-        promoFee: object.promoFee,
-        abroadFee: object.abroadFee,
-        logisticsFee: object.logisticsFee,
-        tariffFee: object.tariffFee,
-        couponFee: object.couponFee,
-        paymentFee: object.paymentFee,
+        salesTotalFee: filterPrice(object.salesTotalFee),
+        promoFee: filterPrice(object.promoFee),
+        abroadFee: filterPrice(object.abroadFee),
+        logisticsFee: filterPrice(object.logisticsFee),
+        tariffFee: filterPrice(object.tariffFee),
+        couponFee: filterPrice(object.couponFee),
+        paymentFee: filterPrice(object.paymentFee),
         itemList: itemList,
         receiverObject: receiverObject,
         supplierName: object.supplierName
@@ -192,7 +195,7 @@ var orderDetail = function(req, res, next) {
                 next(new Error(resp.timestamp.message));
             }
         }
-    })
+    });
 }
 var orderClose = function(req, res, next) {
     var orderNo = req.body.orderNo;
@@ -237,10 +240,10 @@ var orderDelivery = function(req, res, next) {
 }
 var comments = function(req, res, next) {
     var user = req.session.user;
+    
     util.fetchAPI("commentsOrderById", {
         memberId: user.memberId,
         commentsJson: req.body.commentsJson
-        //'[{rate:5,content:nice,isOpen:1,itemId:S732000000195}]'
     },false,{ method: 'POST'}).then(function(resp) {
         if (resp.returnCode === 0) {
             res.json({

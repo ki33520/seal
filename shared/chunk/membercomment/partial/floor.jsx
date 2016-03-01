@@ -7,7 +7,6 @@ import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 
 class Floor extends Component{
     renderNode(list){
-        var {setPopQrImg} = this.props;
         if(list.length>0){
             return (
                 <ul className="comment-list">
@@ -18,18 +17,19 @@ class Floor extends Component{
                             var stars = [];
                             var picList = null;
                             var content;
-                            var tabItems = child.imageUrlList.map((v,k)=>{
-                                return (
-                                    <SlideTabsItem key={k} navigator={()=><div onClick={setPopQrImg.bind(this,v)} key={k}><img src={v} /></div>} className="listMain">
-                                    </SlideTabsItem>
-                                )
-                            });
                             if(child.imageUrlList.length > 0){
                                 picList = (
-                                    <div className="pic-list">
-                                        <SlideTabs ref="imgslide" axis="x" activeIndex={0} navbarSlidable={child.imageUrlList.length>3} >
-                                            {tabItems}
-                                        </SlideTabs>
+                                    <div className="pic-list clearfix">
+                                        {
+                                            child.imageUrlList.map((v,k)=>{
+                                                var object = {data:child.imageUrlList, activeIndex:k}
+                                                return (
+                                                    <div key={k} className="pic-item">
+                                                        <div className="img-wrap" onClick={this.props.changeScene.bind(this,"photo",object)}><img src={v} /></div>
+                                                    </div>
+                                                )
+                                            })
+                                        }
                                     </div>
                                 )
                             };
@@ -70,7 +70,7 @@ class Floor extends Component{
                 </ul>
             )
         }
-        const {floorIndex} = this.props;
+        const {floorIndex} = this.props; 
         var context = (function(){
             switch(floorIndex){
                 case 1:

@@ -115,6 +115,7 @@
     font-size: 0;
     overflow: hidden;
 	display:block;
+    position: relative;
 }
 .J_item .J_moveRight .limitBuy{
 	height:.5rem;
@@ -132,7 +133,6 @@
 .J_item .gd_info {
     position: relative;
     width: 56%;
-    height:2.3rem;
     padding-left:.266667rem;
     overflow: hidden;
 }
@@ -215,6 +215,8 @@
 }
 .gd_info .act_wrap {
     height: .7rem;
+    display: block;
+    float: left;
 }
 .gd_info .add {
     float: left;
@@ -308,7 +310,23 @@
 	background-color:#e6e6e6;
 	color:#999;
 }
-
- 
+.J_item  .J_moveRight:after{
+    content: " ";
+    display: block;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+}
+.sold-out {
+    width: 1.28rem;
+    height: 1.28rem;
+    background-image: url(/client/asset/images/ico_soldOut.png);
+    background-size: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -.64rem;
+    margin-top: -.64rem;
+}
  
  

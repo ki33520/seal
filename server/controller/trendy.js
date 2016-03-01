@@ -3,7 +3,7 @@
 var _ = require("lodash");
 var util = require("../lib/util.js");
 var Trendy = util.getSharedComponent("trendy");
-var filter = require("../lib/filter.js");
+var config = require("../lib/config");
  
 function filterItem(originalData){
     var list = [];
@@ -12,19 +12,16 @@ function filterItem(originalData){
             list.push({
                 singleCode:v.singleCode,
                 title:v.title,
-                imageUrl:filter.imageUrl(v.imageUrl),
-                salesPrice:filter.price({
-                    flashPrice:v.wapPrice,
-                    mobilePrice:v.mobilePrice,
-                    salesPrice:v.salesPrice,
-                    startTime:v.beginDateStr,
-                    endTime:v.endDateStr
-                }),
+                imageUrl:config.imgServer+v.imageUrl,
+                flashPrice:v.wapPrice,
+                mobilePrice:v.mobilePrice,
+                salesPrice:v.salesPrice,
+                startTime:v.beginDateStr,
+                endTime:v.endDateStr,
                 originPrice:v.originPrice,
                 sourceName:v.sourceName,
-                sourceImageUrl:filter.imageUrl(v.sourceImageUrl),
-                isSoldOut:filter.isSoldOut(v.localStock),
-                saleType:filter.saleType(v)
+                sourceImageUrl:config.imgServer+v.sourceImageUrl,
+                localStock:v.localStock
             })
         })
     }

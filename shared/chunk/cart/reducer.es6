@@ -32,8 +32,15 @@ function cartByUser(state={},action){
                 cart.group.forEach((items)=>{
                     items.list.forEach((goods)=>{
                         if(goods.singleCode===singleCode){
-                            qty = goods.stockFlag ? qty : goods.qty;
-                            _cart.group[groupIndex].list[goodsIndex].qty = qty;
+                            if(goods.stockFlag){
+                                _cart.group[groupIndex].list[goodsIndex].qty = qty;
+                            }else{
+                                _cart.group[groupIndex].list[goodsIndex].qty = 1;
+                                _cart.group[groupIndex].list[goodsIndex].checked = false;
+                                if(_cart.group.length===1&&_cart.group[groupIndex].list.length===1){
+                                    _cart.checked = false;
+                                }
+                            }
                         }
                     });
                 });
@@ -57,12 +64,19 @@ function cartByUser(state={},action){
             var cart = {...carts[cartIndex]};
             var _cart = action.res.cart;
             if(action.res.isFetched){
-                cart.group[groupIndex].list[goodsIndex].checked = checked;
+                if(_cart.group[groupIndex].list[goodsIndex].stockFlag){
+                    cart.group[groupIndex].list[goodsIndex].checked = checked;
+                    cart.checked = checked;
+                }else{
+                    cart.group[groupIndex].list[goodsIndex].checked = false;
+                    if(_cart.group.length===1&&_cart.group[groupIndex].list.length===1){
+                        _cart.checked = false;
+                    }
+                }
                 cart.total = _cart.total;
                 cart.qtys = _cart.qtys;
                 cart.promoTotal = _cart.promoTotal;
                 cart.salesTotal = _cart.salesTotal;
-                cart.checked = true;
                 carts[cartIndex] = cart;
             }else{
                 carts[cartIndex].checked = false;
@@ -182,7 +196,7 @@ function cartByUser(state={},action){
             if(action.res.isFetched){
                 isChecked = true;
                 if(cart){
-                    if(carts[cartIndex].total === cart.total){
+                    if(carts[cartIndex].total === cart.total && cart.total>0){
                         allowSubmit = true;
                     }else{
                         alertContent = '商品价格发生变化，请重新结算!';

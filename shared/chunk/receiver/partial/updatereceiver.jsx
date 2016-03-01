@@ -54,12 +54,14 @@ class UpdateReceiver extends Component{
         const {id,consignee,mobileNumber,idCard,address,isDefault,
             provinceCode,cityCode,districtCode
         } = receiver;
+        const provinceName = _.result(_.findWhere(provinces,{value:provinceCode}),"label");
+        const cityName = _.result(_.findWhere(cities,{value:cityCode}),"label");
+        const districtName = _.result(_.findWhere(districts,{value:districtCode}),"label");
         saveReceiver({
             id,consignee,mobileNumber,idCard,address,
             isDefault:isDefault,
-            provinceCode,
-            cityCode,
-            districtCode
+            provinceCode,cityCode,districtCode,
+            provinceName,cityName,districtName
         })
     }
     componentWillReceiveProps(nextProps){

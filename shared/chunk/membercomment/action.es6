@@ -4,6 +4,9 @@ import {apiRequest} from "../../lib/util.es6";
 export const REQUEST_COMMENT = "REQUEST_COMMENT";
 export const RECEIVE_COMMENT = "RECEIVE_COMMENT";
 
+import {alert} from "../common/action.es6";
+export {alert} from "../common/action.es6";
+
 function requestComment(param){
     return {
         type:REQUEST_COMMENT,

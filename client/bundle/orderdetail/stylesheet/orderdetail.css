@@ -581,7 +581,12 @@
 
 /* 评价宝贝 */
 .commentBaby{
-    background-color:#fff;
+}
+.commentBaby .context-none{
+    font-size: .5rem;
+    line-height: 1rem;
+    padding: 1rem 0;
+    text-align: center;
 }
 .commentBaby .J_moveRight {
     position: relative;
@@ -616,7 +621,7 @@
 }
 .comment_area_con{
     clear:both;
-    padding:0 .32rem .2rem;
+    padding:0 .32rem .1rem;
 }
 .comment_area_con .textArea{
     background-color:#f5f5f5;
@@ -659,6 +664,7 @@
     border-bottom:.266667rem solid #f5f5f5;
     padding-bottom:.32rem;
     color: #666;
+    background-color: #fff;
 }
 .comment_area_pic{
     display: -webkit-box;

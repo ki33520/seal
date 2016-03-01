@@ -2,29 +2,26 @@
 var _ = require("lodash");
 var util = require("../lib/util.js");
 var GoodListApp = util.getSharedComponent("goodlist");
-var filter = require("../lib/filter.js");
+var config = require("../lib/config");
 
 function filterGoodsList(result){
     var list = [];
+    var imgServer = config.imgServer;
     result && _.each(result,function(v){
-        var salesPrice = filter.price({
+        list.push({
+            singleCode:v.singleCode,
             flashPrice:v.flashPrice,
             mobilePrice:v.mobilePrice,
             salesPrice:v.salesPrice,
-            startTime:v.beginDateStr,
-            endTime:v.endDateStr
-        });
-        list.push({
-            singleCode:v.singleCode,
-            salesPrice:salesPrice,
             originPrice:v.originPrice,
+            startTime:v.beginDateStr,
+            endTime:v.endDateStr,
             discounts:v.discounts,
             materTitle:v.materTitle,
             sourceName:v.areaName,
-            smallImageUrl:filter.imageUrl(v.picUrl),
-            sourceImageUrl:filter.imageUrl(v.areaLogo),
-            isSoldOut:filter.isSoldOut(v.localStock),
-            saleType:filter.saleType(v)
+            smallImageUrl:imgServer+v.picUrl,
+            sourceImageUrl:imgServer+v.areaLogo,
+            localStock:v.localStock
         });
     });
     return list;
