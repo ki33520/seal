@@ -6,6 +6,9 @@ var util = require("../lib/util");
 var config = require("../lib/config.js");
 var OrderListApp = util.getSharedComponent("orderlist");
 
+function filterPrice(param){
+    return param === null || param === "null" ? 0 : param; 
+}
 function formatOrder(object) {
    return object.map((child,i)=>{
         var itemList = child.itemList.map((v,k)=>{
@@ -13,26 +16,26 @@ function formatOrder(object) {
                 id: v.id,
                 discount: v.discount,
                 hasComment: v.hasComment,
-                logisticsFee: v.logisticsFee,
+                logisticsFee: filterPrice(v.logisticsFee),
                 orderId: v.orderId,
-                originPrice: v.originPrice,
+                originPrice: filterPrice(v.originPrice),
                 originalCost: v.originalCost,
-                payableFee: v.payableFee,
-                paymentFee: v.paymentFee,
+                payableFee: filterPrice(v.payableFee),
+                paymentFee: filterPrice(v.paymentFee),
                 productCode: v.productCode,
-                promoFee: v.promoFee,
+                promoFee: filterPrice(v.promoFee),
                 returnCount: v.returnCount,
-                salesPrice: v.salesPrice,
-                salesTotalFee: v.salesTotalFee,
+                salesPrice: filterPrice(v.salesPrice),
+                salesTotalFee: filterPrice(v.salesTotalFee),
                 singleCode: v.singleCode,
                 singleImageUrl: config.imgServer+v.singleImageUrl,
                 singleProps: v.singleProps,
                 singleTitle: v.singleTitle,
                 skuCode: v.skuCode,
-                tariffFee: v.tariffFee,
+                tariffFee: filterPrice(v.tariffFee),
                 qty: v.qty,
-                abroadFee: v.abroadFee,
-                couponFee: v.couponFee,
+                abroadFee: filterPrice(v.abroadFee),
+                couponFee: filterPrice(v.couponFee),
                 updatedAt: v.updatedAt
             }
         });
@@ -44,17 +47,17 @@ function formatOrder(object) {
             orderNo: child.orderNo,
             orderReceiveId: child.orderReceiveId,
             orderStatus: child.orderStatus,
-            payableFee: child.payableFee,
-            paymentFee: child.paymentFee,
+            payableFee: filterPrice(child.payableFee),
+            paymentFee: filterPrice(child.paymentFee),
             payType: child.payType,
-            promoFee: child.promoFee,
+            promoFee: filterPrice(child.promoFee),
             promoName: child.promoName,
             promoType: child.promoType,
-            salesTotalFee: child.salesTotalFee,
+            salesTotalFee: filterPrice(child.salesTotalFee),
             sendWarehouseId: child.sendWarehouseId,
             sendWarehouseName: child.sendWarehouseName,
-            tariffFee: child.tariffFee,
-            totalFee: child.totalFee,
+            tariffFee: filterPrice(child.tariffFee),
+            totalFee: filterPrice(child.totalFee),
             createdAt: child.createdAt,
             timeoutTime: child.timeoutTime
         };

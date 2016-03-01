@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import _ from "lodash";
 import moment from "moment";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
@@ -113,12 +114,7 @@ class OrderDetail extends Component{
     renderFooter(){
         const {order} = this.props.orderByParam;
         const {orderStatus,orderId,itemList} = order;
-        var hasComment = false;
-        itemList.map((v,k)=>{
-            if(v.hasComment === true){
-                hasComment = true;
-            }
-        })
+        var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         switch(orderStatus){
             case "STATUS_NOT_PAY":
                 let {cashierParam} = order;
@@ -146,14 +142,14 @@ class OrderDetail extends Component{
                     </div>
                 )
             case "STATUS_FINISHED":
-                if(hasComment){
-                    return null
-                }else{
+                if(hasNotComment.length>0){
                     return (
                         <div className="confirmBtns">
                             <a href={"/orderdetail/"+orderId+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
                         </div>
-                    )
+                    );
+                }else{
+                    return null;
                 }
             default:
                 return null
