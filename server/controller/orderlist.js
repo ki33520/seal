@@ -156,8 +156,6 @@ var orderList = function(req, res,next) {
                 next(new Error(resp.timestamp.message));
             }
         }
-    }).fail(function(resp) {
-        next(new Error("api response failed"))
     });
 
 };

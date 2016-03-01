@@ -66,8 +66,6 @@ var collectlist = function(req, res, next) {
         }else{
             next(new Error(ret.memberCollectByUser.message));
         }
-    }).fail(function(resp) {
-        next(new Error("api response failed"))
     });
     
 }
