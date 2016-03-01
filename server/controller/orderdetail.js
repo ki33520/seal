@@ -240,30 +240,23 @@ var orderDelivery = function(req, res, next) {
 }
 var comments = function(req, res, next) {
     var user = req.session.user;
-    console.log(req.body)
-    setTimeout(function(){
-        res.json({
-            isChanged: true,
-            msg: "success"
-        })
-    },100)
     
-    // util.fetchAPI("commentsOrderById", {
-    //     memberId: user.memberId,
-    //     commentsJson: req.body.commentsJson
-    // },false,{ method: 'POST'}).then(function(resp) {
-    //     if (resp.returnCode === 0) {
-    //         res.json({
-    //             isChanged: true,
-    //             msg: resp.message
-    //         })
-    //     }else{
-    //         res.json({
-    //             isChanged: false,
-    //             msg: resp.message
-    //         })
-    //     }
-    // })
+    util.fetchAPI("commentsOrderById", {
+        memberId: user.memberId,
+        commentsJson: req.body.commentsJson
+    },false,{ method: 'POST'}).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                isChanged: true,
+                msg: resp.message
+            })
+        }else{
+            res.json({
+                isChanged: false,
+                msg: resp.message
+            })
+        }
+    })
 }
 
 var logistics = function(req, res, next) {
