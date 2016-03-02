@@ -140,7 +140,7 @@ function floorFilter(floors) {
         return {
             id: v.id,
             name: v.activityName,
-            jumpUrl: getJumpUrl(v),
+            jumpUrl: "/topic/"+v.id,
             imageUrl: config.imgServer + v.imageUrl,
         }
     })
