@@ -3,6 +3,16 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import {formatPrice} from "../../../lib/util.es6";
 class GoodList extends Component{
+    filterPrice(flash,mobile,salse){
+        console.log(flash)
+        if(flash && flash > 0){
+            return formatPrice(flash);
+        }else if(mobile && mobile > 0){
+            return formatPrice(mobile);
+        }else{
+            return formatPrice(salse);
+        }
+    }
     renderGoods(){
         const {list} = this.props.category;
         if(list.length > 0){
@@ -14,7 +24,7 @@ class GoodList extends Component{
                     "flash-price":goods.flashPrice>0?true:false,
                     "mobile-price":goods.mobilePrice>0?true:false
                 });
-                const salesPrice = formatPrice(goods.flashPrice||goods.mobilePrice||goods.salesPrice);
+                const salesPrice = this.filterPrice(goods.flashPrice,goods.mobilePrice,goods.salesPrice);
                 const originPrice = formatPrice(goods.originPrice);
                 return (
                     <a href={"/gooddetail/"+goods.singleCode} className="clearfix" key={i}>
