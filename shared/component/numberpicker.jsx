@@ -47,12 +47,23 @@ class NumberPicker extends Component{
             onChange(value);
         })
     }
+    handleChange(e){
+        e && e.preventDefault()
+        let inputValue = e.target.value
+        inputValue = parseInt(inputValue)
+        if(Number.isNaN(inputValue) || Number.isFinite(inputValue)){
+            return
+        }
+        this.setState({
+            value:inputValue
+        },()=>this.props.onChange(inputValue))
+    }
     render(){
-        const {readonly} = this.props;
+        const {readonly,type} = this.props;
         return (
             <div className="number-picker">
             <div onClick={this.handleDecrease.bind(this)}><Icon icon="minus"/></div>
-            <input type="text" readOnly={readonly} value={this.state.value}/>
+            <input type={type} readOnly={readonly} onChange={this.handleChange.bind(this)} value={this.state.value}/>
             <div onClick={this.handleIncrease.bind(this)}><Icon icon="plus"/></div>
             </div>
         )
@@ -61,6 +72,7 @@ class NumberPicker extends Component{
 
 NumberPicker.defaultProps = {
     value:0,
+    type:"text",
     readonly:true,
     minimum:0,
     maximum:null,
