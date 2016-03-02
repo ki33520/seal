@@ -18,6 +18,12 @@ class PhotoList extends Component{
             }
         }
     }
+    componentDidUpdate(){
+        var {photos} = this.props;
+        if(photos){
+            ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[photos.activeIndex].click();
+        }
+    }
     toggleFlag(index){
         var {photos} = this.props;
     }
