@@ -628,6 +628,15 @@
     float:left;
     width:100%;
 }
+.comment_area_con .hasCommented{
+    background-color: #fff;
+}
+.comment_area_con .hasCommented>div{
+    line-height:.5rem;
+    padding: .15rem .2rem;
+    width:100%;
+    color:#666;
+}
 .comment_area_con textarea{
     height:1.25rem;
     line-height:.5rem;
