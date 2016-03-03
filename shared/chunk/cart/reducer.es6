@@ -6,8 +6,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
-    START_CHECK_CART,FINISH_CHECK_CART,
-    START_CART_BUYED,FINISH_CART_BUYED
+    START_CHECK_CART,FINISH_CHECK_CART
 } from "./constant.es6";
 
 function cartByUser(state={},action){
@@ -18,34 +17,23 @@ function cartByUser(state={},action){
                 isUpdated:false
             });
         case FINISH_UPDATE_CART:
-            var {cartIndex,groupIndex,goodsIndex,qty,singleCode} = action.param;
+            var {cartIndex,groupIndex,goodsIndex,buyed,checked} = action.param;
             var {isUpdated,isFetched,cart} = action.res;
             var carts = [...state.carts];
             if(isUpdated){
                 if(isFetched){
-                    var _cart = {...carts[cartIndex]};
-                    _cart.total = cart.total;
-                    _cart.promoTotal = cart.promoTotal;
-                    _cart.salesTotal = cart.salesTotal;
-                    _cart.qtys = cart.qtys;
-                    _cart.promoName = cart.promoName;
-                    _cart.promoType = cart.promoType;
-                    cart.group.forEach((items)=>{
-                        items.list.forEach((goods)=>{
-                            if(goods.singleCode===singleCode){
-                                if(goods.stockFlag){
-                                    _cart.group[groupIndex].list[goodsIndex].qty = qty;
-                                }else{
-                                    _cart.group[groupIndex].list[goodsIndex].qty = 1;
-                                    _cart.group[groupIndex].list[goodsIndex].checked = false;
-                                    if(_cart.group.length===1&&_cart.group[groupIndex].list.length===1){
-                                        _cart.checked = false;
-                                    }
-                                }
-                            }
-                        });
-                    });
-                    carts[cartIndex] = _cart;
+                    if(checked){
+                        carts[cartIndex] = cart;
+                    }else{
+                        var _cart = {...carts[cartIndex]};
+                        _cart.total = cart.total;
+                        _cart.promoTotal = cart.promoTotal;
+                        _cart.salesTotal = cart.salesTotal;
+                        _cart.promoName = cart.promoName;
+                        _cart.promoType = cart.promoType;
+                        _cart.group[groupIndex].list[goodsIndex].qty = buyed;
+                        carts[cartIndex] = _cart;
+                    }
                 }
             }
             return Object.assign({},state,{
@@ -63,29 +51,24 @@ function cartByUser(state={},action){
         case FINISH_TOGGLE_ITEM:
             var {cartIndex,groupIndex,goodsIndex,singleCode,checked} = action.param;
             var carts = [...state.carts];
-            var cart = {...carts[cartIndex]};
-            var _cart = action.res.cart;
+            var cart = action.res.cart;
             if(action.res.isFetched){
-                if(_cart.group[groupIndex].list[goodsIndex].stockFlag){
-                    cart.group[groupIndex].list[goodsIndex].checked = checked;
-                    cart.checked = checked;
+                if(checked){
+                    carts[cartIndex]=cart;
                 }else{
-                    cart.group[groupIndex].list[goodsIndex].checked = false;
+                    var _cart = {...carts[cartIndex]};
+                    _cart.total = cart.total;
+                    _cart.qtys = cart.qtys;
+                    _cart.promoName=cart.promoName;
+                    _cart.promoType=cart.promoType;
+                    _cart.promoTotal = cart.promoTotal;
+                    _cart.salesTotal = cart.salesTotal;
+                    _cart.group[groupIndex].list[goodsIndex].checked = false;
                     if(_cart.group.length===1&&_cart.group[groupIndex].list.length===1){
                         _cart.checked = false;
                     }
+                    carts[cartIndex]=_cart;
                 }
-                cart.total = _cart.total;
-                cart.qtys = _cart.qtys;
-                cart.promoTotal = _cart.promoTotal;
-                cart.salesTotal = _cart.salesTotal;
-                carts[cartIndex] = cart;
-            }else{
-                carts[cartIndex].checked = false;
-                carts[cartIndex].total = '0.00';
-                carts[cartIndex].qtys = 0;
-                carts[cartIndex].promoTotal = '0.00';
-                carts[cartIndex].salesTotal = '0.00';
             }
             return Object.assign({},state,{
                 isToggleing:false,
@@ -104,23 +87,27 @@ function cartByUser(state={},action){
         case FINISH_TOGGLE_ALL:
             var {cartIndex,checked} = action.param;
             var carts = [...state.carts];
-            var cart;
+            var cart = action.res.cart;
             if(action.res.isFetched){
-                cart = action.res.cart;
-            }else{
-                cart = {...carts[cartIndex]};
-                cart.group.forEach((group)=>{
-                    group.list.forEach((item)=>{
-                        item.checked = false;
+                if(checked){
+                    carts[cartIndex]=cart;
+                }else{
+                    var _cart = {...carts[cartIndex]};
+                    _cart.total = cart.total;
+                    _cart.qtys = cart.qtys;
+                    _cart.promoName=cart.promoName;
+                    _cart.promoType=cart.promoType;
+                    _cart.promoTotal = cart.promoTotal;
+                    _cart.salesTotal = cart.salesTotal;
+                    _cart.group.forEach((group)=>{
+                        group.list.forEach((goods)=>{
+                            goods.checked = false;
+                        });
                     });
-                });
-                cart.checked = false;
-                cart.total = '0.00';
-                cart.qtys = 0;
-                cart.promoTotal = '0.00';
-                cart.salesTotal = '0.00';
+                    _cart.checked = false;
+                    carts[cartIndex]=_cart;
+                }
             }
-            carts[cartIndex] = cart;
             return Object.assign({},state,{
                 isAllToggling:false,
                 isAllToggled:true,
@@ -156,29 +143,6 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isDeleting:false,
                 isDeleted:true,
-                isUpdating:false,
-                isUpdated:true,
-                carts
-            });
-        case START_CART_BUYED:
-            return Object.assign({},state,{
-                isUpdating:true,
-                isUpdated:false
-            }); 
-        case FINISH_CART_BUYED:
-            var {cartIndex,groupIndex,goodsIndex,buyLimit,qtys} = action.param;
-            var {isFetched,cart} = action.res;
-            var carts = [...state.carts];
-          
-            if(isFetched){
-                var goods = cart.group[0].list[0];
-                if(qtys<=goods.buyLimit && goods.stockFlag){
-                    var _cart = {...carts[cartIndex]};
-                    _cart.group[groupIndex].list[goodsIndex].qty=qtys;
-                    carts[cartIndex] = _cart;
-                }  
-            }
-            return Object.assign({},state,{
                 isUpdating:false,
                 isUpdated:true,
                 carts

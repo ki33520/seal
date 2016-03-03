@@ -128,18 +128,7 @@ var cart = function(req, res, next) {
 var updateCart = function(req, res, next) {
     var user = req.session.user;
     var singleCode = req.body.singleCode;
-    var buyed = req.body.qty;
-    var singleCodes = req.body.singleCodes;
-    var qtys = req.body.qtys;
-    var buyLimit = req.body.buyLimit;
- 
-    if(buyed-buyLimit>0){
-        res.json({
-            isUpdated:false
-        });
-        return false;
-    }
-
+    var buyed = req.body.buyed;
     if(user){
         var memberId = user.memberId;
         util.fetchAPI('updateCart', {
@@ -160,6 +149,7 @@ var updateCart = function(req, res, next) {
             }
         });
     }else{
+        var buyLimit = req.body.limit;
         var carts = req.session["localcart"];
         util.saveLocalCart(carts,{
             singleCode,
@@ -221,28 +211,27 @@ var deleteCart = function(req, res, next) {
 var fetchCart = function(req,res,next){
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
-    if(singleCodes!==''||qtys!==''){
-        util.fetchAPI('cartByAnonymous', {
-            singleCodes:singleCodes,
-            qtys:qtys
-        }).then(function(resp) {
-            if(resp.returnCode === 0){
-                res.json({
-                    isFetched: true,
-                    cart:formatCarts(resp.object)[0]
-                });
-            }else{
-                res.json({
-                    isFetched: false,
-                    errMsg: resp.message
-                });
-            }
-        });
-    }else{
-        res.json({
-            isFetched: false
-        });
-    }
+    util.fetchAPI('cartByAnonymous', {
+        singleCodes:singleCodes,
+        qtys:qtys
+    }).then(function(resp) {
+        if(resp.returnCode === 0){
+            res.json({
+                isFetched: true,
+                cart:formatCarts(resp.object)[0]
+            });
+        }else{
+            res.json({
+                isFetched: true,
+                cart:{
+                    qtys:0,
+                    total:0,
+                    salesTotal:0
+                },
+                errMsg: resp.message
+            });
+        }
+    });
 }
 
 var checkCart = function(req,res,next){

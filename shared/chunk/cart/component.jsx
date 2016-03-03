@@ -73,18 +73,8 @@ class Cart extends Component {
     handleChangeBuyed(goods,cartIndex,groupIndex,goodsIndex,buyed) {
         const {carts,isUpdating} = this.props.cartByUser;
         const singleCode = goods.singleCode;
-        if(isUpdating){
-            return false;
-        }
-        if(goods.checked===false){
-            this.props.changeCartBuyed({
-                singleCodes:singleCode,
-                qtys:buyed,
-                buyLimit:goods.buyLimit,
-                cartIndex,
-                groupIndex,
-                goodsIndex
-            });
+        const limit = Math.min(goods.buyLimit,goods.stockCount);
+        if(isUpdating || buyed > limit){
             return false;
         }
         let singleCodes = [];
@@ -93,16 +83,21 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.checked){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(singleCode==item.singleCode?buyed:item.qty);
+                    buyeds.push(singleCode===item.singleCode?buyed:item.qty);
                 }
             });
         });
+        if(!buyeds.length){
+            singleCodes.push(singleCode);
+            buyeds.push(buyed);
+        }
         this.props.updateCart({
             singleCode,
-            qty:buyed,
-            buyLimit:goods.buyLimit,
+            buyed,
             singleCodes:singleCodes.join(','),
             qtys:buyeds.join(','),
+            limit,
+            checked:goods.checked,
             cartIndex,
             groupIndex,
             goodsIndex
