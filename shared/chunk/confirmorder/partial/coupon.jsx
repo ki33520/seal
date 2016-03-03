@@ -6,9 +6,13 @@ import Header from "../../common/header.jsx";
 
 class Coupon extends Component{
     handleCheck(coupon){
-        const {onCheck} = this.props;
-        onCheck(coupon)
-        this.props.changeScene("index")
+        const {onCheck,checkedCoupon} = this.props;
+        if(checkedCoupon && checkedCoupon.couponNo === coupon.couponNo){
+            onCheck(null)
+        }else{
+            onCheck(coupon)
+        }
+        // this.props.changeScene("index")
     }
     renderCouponRow(){
         const {coupons,checkedCoupon} = this.props;

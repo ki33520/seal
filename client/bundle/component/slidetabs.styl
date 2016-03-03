@@ -13,6 +13,7 @@
         .slide-tabs-navbar{
             display:flex;
             width:100%;
+            flex-direction:row;
             .slide-tabs-navbar-item{
                 width:auto;
                 flex:1
@@ -23,9 +24,8 @@
         // width:200%;
         background-color:#f3f4f6;
         border-bottom:px2rem(1) solid #E0E0E0;
-        display: -webkit-box;
+        display:flex;
         // clear:both;
-        -webkit-box-direction:normal;
         .slide-tabs-navbar-item{
             // display:table-cell;
             flex:1;
@@ -36,9 +36,6 @@
             line-height:px2rem(50);
             border-left:px2rem(1) solid #E0E0E0;
             text-align:center;
-            &>span{
-                font-size: .36rem;
-            }
             &.active{
                 background-color:#FFF;
             }
@@ -50,8 +47,7 @@
     .slide-tabs-content{
         flex:1
         // width:100%;
-        display: -webkit-box;
-        -webkit-box-direction:normal;
+        display:flex
         .slide-tabs-item{
             // border-left:px2rem(1) solid #E0E0E0;
             // display:table-cell;

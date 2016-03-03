@@ -701,3 +701,20 @@ header .globa:before {
 .bottomShare ul{
     padding:0;
 }
+
+.w-table {
+    width: 98%;
+    margin: 0 1% 0 1%;
+    border-collapse: collapse;
+}
+.w-table th {
+    white-space: nowrap;
+    background: #f7f7f7;
+    color: #666;
+    font-weight: 700;
+}
+.w-table td, .w-table th {
+    border: 1px solid #eaeaea;
+    padding: 2% 4%;
+    text-align: left;
+}
