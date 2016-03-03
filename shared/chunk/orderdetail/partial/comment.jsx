@@ -60,67 +60,61 @@ class Comment extends Component{
     }
     componentWillReceiveProps(nextProps){
         const {alert} = this.props;
+        const {order,alertContent} = this.props.orderByParam;
         if(nextProps.orderByParam.saveCommentChanging === false &&
            this.props.orderByParam.saveCommentChanging === true){
             if(nextProps.orderByParam.saveCommentChanged === true){
-                alert(nextProps.orderByParam.msg,2000);
-                setTimeout(()=>window.history.back(),2500);
-                console.log(this.props)
+                window.history.back();
+                alert(nextProps.orderByParam.msg,1000);
             }else{
-                alert(nextProps.orderByParam.msg,2000);
+                alert(nextProps.orderByParam.msg,1000);
             }
         }
     }
     renderItems(items){
         return items.map((v,k)=>{
             var {singleImageUrl,singleTitle,salesPrice,id,rate,hasComment} = v;
-            if(!rate){
-                rate = 5;
-            }
-            var stars = [];
-            for(let i=1;i<=5;i++){
-                const starClass = classNames({
-                    "iconfont":true,
-                    "hasCommented": hasComment,
-                    "icon-star-empty": rate<i,
-                    "icon-star-full": rate>=i
-                });
-                if(hasComment){
-                    stars.push(<div key={i} className={starClass}></div>)
-                }else{
+            rate = rate ? rate : 5;
+            if(!hasComment){
+                var stars = [];
+                for(let i=1;i<=5;i++){
+                    const starClass = classNames({
+                        "iconfont":true,
+                        "icon-star-empty": rate<i,
+                        "icon-star-full": rate>=i
+                    });
                     stars.push(<div key={i} onTouchStart={this.handleStar.bind(this,"rate",id,i)} className={starClass}></div>)
-                }
-            };
-            return (
-                <div className="commentBaby_list" key={k}>
-                    <div className="J_moveRight">
-                        <div className="clearfix">
-                            <a className="J_ytag cartlist" href={"/gooddetail/"+v.singleCode}>
-                                <span className="img_wrap">
-                                    <img src={v.singleImageUrl}/>
-                                </span>
-                            </a>
-                            <div className="gd_info">
-                                <p className="name">{v.singleTitle}</p>
-                                <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span></p>
+                };
+                return (
+                    <div className="commentBaby_list" key={k}>
+                        <div className="J_moveRight">
+                            <div className="clearfix">
+                                <a className="J_ytag cartlist" href={"/gooddetail/"+v.singleCode}>
+                                    <span className="img_wrap">
+                                        <img src={v.singleImageUrl}/>
+                                    </span>
+                                </a>
+                                <div className="gd_info">
+                                    <p className="name">{v.singleTitle}</p>
+                                    <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="comment_area clearfix">
-                        <span><em></em>评论</span>
-                        <div className="stars-culm">
-                            <div className={"stars"}>
-                                {stars}
+                        <div className="comment_area clearfix">
+                            <span><em></em>评论</span>
+                            <div className="stars-culm">
+                                <div className={"stars"}>
+                                    {stars}
+                                </div>
                             </div>
+                        </div>   
+                        <div className="comment_area_con clearfix">
+                            <div className="textArea"><textarea name="form-content" onChange={this.handleContent.bind(this,"content",id)} placeholder="亲~留下此次购物的宝贵意见吧！字数在1-500个字之间" value={v.content || ""}></textarea></div>
                         </div>
-                    </div>   
-                    <div className="comment_area_con clearfix">
-                        {
-                            hasComment ? <div className="hasCommented"><div>商品评论已完成</div></div> :<div className="textArea"><textarea name="form-content" onChange={this.handleContent.bind(this,"content",id)} placeholder="亲~留下此次购物的宝贵意见吧！字数在1-500个字之间" value={v.content || ""}></textarea></div>
-                        }
                     </div>
-                </div>
-            )
+                )
+            }
+            
         });
     }
     renderConfirmBtns(items){

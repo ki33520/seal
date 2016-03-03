@@ -82,10 +82,11 @@ class OrderDetail extends Component{
             orderNo:orderNo
         }
         fetchPayGateway(base64EncodeForURL(urlParam(message)));
-        
     }
     componentWillReceiveProps(nextProps){
-        const {alert} = this.props;
+        const {alert,fetchOrder} = this.props;
+        const {order,alertContent} = this.props.orderByParam;
+        const {orderId} = order;
         if(nextProps.orderByParam.closeOrderChanging === false &&
            this.props.orderByParam.closeOrderChanging === true){
             if(nextProps.orderByParam.closeOrderChanged === true){
@@ -101,6 +102,17 @@ class OrderDetail extends Component{
                 alert(nextProps.orderByParam.msg,2000);
             }else{
                 alert(nextProps.orderByParam.msg,2000);
+            }
+        }
+
+        if(nextProps.orderByParam.saveCommentChanging === false &&
+           this.props.orderByParam.saveCommentChanging === true){
+            if(nextProps.orderByParam.saveCommentChanged === true){
+                setTimeout(function(){
+                    fetchOrder("/orderdetail/"+orderId,{
+                        orderId
+                    });
+                },1000)
             }
         }
     }
