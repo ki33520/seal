@@ -65,61 +65,63 @@ class Comment extends Component{
             if(nextProps.orderByParam.saveCommentChanged === true){
                 alert(nextProps.orderByParam.msg,2000);
                 setTimeout(()=>window.history.back(),2500);
+                console.log(this.props)
             }else{
                 alert(nextProps.orderByParam.msg,2000);
             }
         }
     }
     renderItems(items){
-        if(items.length>0){
-            return items.map((v,k)=>{
-                var {singleImageUrl,singleTitle,salesPrice,id,rate,hasComment} = v;
-                if(!rate){
-                    rate = 5;
-                }
-                var stars = [];
-                for(let i=1;i<=5;i++){
-                    const starClass = classNames({
-                        "iconfont":true,
-                        "icon-star-empty": rate<i,
-                        "icon-star-full": rate>=i
-                    });
+        return items.map((v,k)=>{
+            var {singleImageUrl,singleTitle,salesPrice,id,rate,hasComment} = v;
+            if(!rate){
+                rate = 5;
+            }
+            var stars = [];
+            for(let i=1;i<=5;i++){
+                const starClass = classNames({
+                    "iconfont":true,
+                    "hasCommented": hasComment,
+                    "icon-star-empty": rate<i,
+                    "icon-star-full": rate>=i
+                });
+                if(hasComment){
+                    stars.push(<div key={i} className={starClass}></div>)
+                }else{
                     stars.push(<div key={i} onTouchStart={this.handleStar.bind(this,"rate",id,i)} className={starClass}></div>)
-                };
-                return (
-                    <div className="commentBaby_list" key={k}>
-                        <div className="J_moveRight">
-                            <div className="clearfix">
-                                <a className="J_ytag cartlist" href={"/gooddetail/"+v.singleCode}>
-                                    <span className="img_wrap">
-                                        <img src={v.singleImageUrl}/>
-                                    </span>
-                                </a>
-                                <div className="gd_info">
-                                    <p className="name">{v.singleTitle}</p>
-                                    <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="comment_area clearfix">
-                            <span><em></em>评论</span>
-                            <div className="stars-culm">
-                                <div className={"stars stars-"}>
-                                    {stars}
-                                </div>
-                            </div>
-                        </div>   
-                        <div className="comment_area_con clearfix">
-                            <div className="textArea">
-                                <textarea name="form-content" onChange={this.handleContent.bind(this,"content",id)} placeholder="亲~留下此次购物的宝贵意见吧！字数在1-500个字之间"></textarea>
+                }
+            };
+            return (
+                <div className="commentBaby_list" key={k}>
+                    <div className="J_moveRight">
+                        <div className="clearfix">
+                            <a className="J_ytag cartlist" href={"/gooddetail/"+v.singleCode}>
+                                <span className="img_wrap">
+                                    <img src={v.singleImageUrl}/>
+                                </span>
+                            </a>
+                            <div className="gd_info">
+                                <p className="name">{v.singleTitle}</p>
+                                <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span></p>
                             </div>
                         </div>
                     </div>
-                )
-            });
-        }else{
-            return <div className="context-none">当前订单商品已完成评论</div>
-        }
+                    <div className="comment_area clearfix">
+                        <span><em></em>评论</span>
+                        <div className="stars-culm">
+                            <div className={"stars"}>
+                                {stars}
+                            </div>
+                        </div>
+                    </div>   
+                    <div className="comment_area_con clearfix">
+                        {
+                            hasComment ? <div className="hasCommented"><div>商品评论已完成</div></div> :<div className="textArea"><textarea name="form-content" onChange={this.handleContent.bind(this,"content",id)} placeholder="亲~留下此次购物的宝贵意见吧！字数在1-500个字之间" value={v.content || ""}></textarea></div>
+                        }
+                    </div>
+                </div>
+            )
+        });
     }
     renderConfirmBtns(items){
         if(items.length>0){
@@ -145,7 +147,7 @@ class Comment extends Component{
             <div className="order-detail-content comment-content">
                 <Header>评论宝贝</Header>
                 <div className="commentBaby">
-                    {this.renderItems(hasNotComment)}
+                    {this.renderItems(itemList)}
                 </div>
                 
                 {this.renderConfirmBtns(hasNotComment)}

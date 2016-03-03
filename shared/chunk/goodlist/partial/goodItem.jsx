@@ -3,6 +3,15 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import {formatPrice} from "../../../lib/util.es6";
 class GoodItem extends Component{
+    filterPrice(flash,mobile,salse){
+        if(flash && flash > 0){
+            return formatPrice(flash);
+        }else if(mobile && mobile > 0){
+            return formatPrice(mobile);
+        }else{
+            return formatPrice(salse);
+        }
+    }
     render(){
     	const {goods} = this.props;
         const soldOut = classNames({
@@ -12,7 +21,7 @@ class GoodItem extends Component{
             "flash-price":goods.flashPrice>0?true:false,
             "mobile-price":goods.mobilePrice>0?true:false
         });
-        const salesPrice = formatPrice(goods.flashPrice||goods.mobilePrice||goods.salesPrice);
+        const salesPrice = this.filterPrice(goods.flashPrice,goods.mobilePrice,goods.salesPrice);
         const originPrice = formatPrice(goods.originPrice);
         return (
             <a href={"/gooddetail/"+goods.singleCode}>

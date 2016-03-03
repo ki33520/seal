@@ -4,43 +4,66 @@ import React,{Component} from "react";
 import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
 import classNames from "classnames";
-import {Tabs,TabsItem} from "../../component/tabs.jsx";
+import {formatPrice} from "../../lib/util.es6";
+import Refresher from "../../component/refresher.jsx";
 
 class Topic extends Component{
+    constructor(props){
+        super(props);    
+        this.state = {
+            maskActive:false,
+            shareActive:false,
+            pageIndex:1
+        }
+    }
+    beginRefresh(){
+        const {dispatch,totalPage,isFetching} = this.props;
+        let {pageIndex} = this.state;
+        let nextPage = pageIndex + 1;
+
+        if(isFetching || totalPage <= pageIndex){
+            return false;
+        }
+
+        this.setState({
+            pageIndex:nextPage
+        });
+
+        dispatch(fetchGoods(window.location.href,{
+            pageIndex:nextPage
+        }));
+    }
+
     render(){
-        const {title} = this.props.topic;
+        const {isFetching,list,imageUrl,title} = this.props;
+        let goods = [];
+ 
+        list.forEach(function(item,i){
+            const salesPrice = formatPrice(item.flashPrice||item.mobilePrice||item.salesPrice);
+            const originPrice = formatPrice(item.originPrice);
+            goods.push(
+                <a href={"/gooddetail/"+item.singleCode} className="clearfix" key={i}>
+                    <img src={item.imageUrl} />
+                    <div className="right">
+                        <span className="name">{item.title}</span>
+                        <span className="country">
+                        <i><img src={item.sourceImageUrl} alt="" /></i>
+                        {item.sourceName}
+                        </span>
+                        <span className="nowPrice">&yen;{salesPrice}</span>
+                        <span className="oldPrice">&yen;{originPrice}</span>
+                    </div>
+                </a>
+            )
+        });
+
         return (
             <div className="topic-content">
             <Header>{title}</Header>
             <div className="flashBuy">
-                <a href="/gooddetail/1" className="clearfix">
-                    <img src="/client/asset/images/pic8.gif" />
-                    <div className="right">
-                        <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
-                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                        <span className="nowPrice">&yen;99.0</span>
-                        <span className="oldPrice">&yen;199.0</span>
-                    </div>
-                </a>
-                <a href="/gooddetail/1" className="clearfix">
-                    <img src="/client/asset/images/pic8.gif" />
-                    <div className="right">
-                        <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
-                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                        <span className="nowPrice">&yen;99.0</span>
-                        <span className="oldPrice">&yen;199.0</span>
-                    </div>
-                </a>
-                <a href="/gooddetail/1" className="clearfix">
-                    <img src="/client/asset/images/pic8.gif" />
-                    <div className="right">
-                        <span className="name">荷兰原装Hero baby【免税店】奶粉1段（0-6个月）800g（...</span>
-                        <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                        <span className="nowPrice">&yen;99.0</span>
-                        <span className="oldPrice">&yen;199.0</span>
-                    </div>
-                </a>
+            {goods}
             </div>
+            <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
             </div>
         )
     }

@@ -194,6 +194,7 @@ var payGateway = function(req, res, next) {
     }).then(function(ret) {
         if (ret.returnCode === 0) {
             var message = messageFilter(ret.object)
+            // console.log('message',message)
 
             urlObj["pathname"] = "/orderdetail/" + message.id;
             var orderDetailURL = url.format(urlObj)
@@ -252,11 +253,12 @@ function messageFilter(order) {
         })
     }
     var _order = _.pick(order, [
-        "totalFee", "orderNo","id"
+        "paymentFee", "orderNo","id"
     ])
     _order["productList"] = JSON.stringify(productList) 
 
     var receiver = order.receiverObject
+    _order["totalFee"] = order.paymentFee
     _order["address"] = receiver.completeAddress
     _order["userName"] = receiver.receiverName
     _order["mobile"] = receiver.receiverMobile
