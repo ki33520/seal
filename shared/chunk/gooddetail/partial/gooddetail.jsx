@@ -242,7 +242,7 @@ class GoodDetail extends Component{
                     <i className="iconfont icon-comment"></i>用户评论<em>({good.comments?good.comments.totalCount:0})</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
-                <Origin good={good}/>
+                <Origin good={good} {...this.props}/>
                 <div className="assure">
                     <img src="/client/asset/images/assure.gif" />
                 </div>

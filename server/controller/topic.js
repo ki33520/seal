@@ -1,79 +1,71 @@
 'use strict';
-var util = require("../lib/util");
+var _ = require("lodash");
+var util = require("../lib/util.js");
 var Topic = util.getSharedComponent("topic");
 var config = require("../lib/config");
-
-var mobileOnly = function(req,res,next) {
-    util.fetchAPI("index",{},true).then(function(ret){
-        if(ret.code === "success"){
-            var initialState = {
-                data:ret.object,
-                title:"手机专享"
-            };
-            var markup = util.getMarkupByComponent(Topic({
-                initialState:initialState
-            }));
-            res.render("topic", {
-                markup: markup,
-                initialState:initialState
+ 
+function filterResult(goods){
+    var list = [];
+    if(goods && goods.length>0){
+        _.each(goods,function(item){
+            list.push({
+                singleCode:item.singleCode,
+                title:item.title,
+                flashPrice:item.wapPrice,
+                mobilePrice:item.mobilePrice,
+                salesPrice:item.salesPrice,
+                originPrice:item.originPrice,
+                startTime:item.beginDateStr,
+                endTime:item.endDateStr,
+                sourceName:item.sourceName,
+                imageUrl:config.imgServer+item.imageUrl,
+                sourceImageUrl:config.imgServer+item.sourceImageUrl,
+                localStock:item.localStock
             });
-
-        }else{
-            next(new Error(ret.msg))
-        }
-    },function(){
-        next(new Error("api request failed"))
-    })
-};
-var finest = function(req,res,next) {
-    util.fetchAPI("index",{},true).then(function(ret){
-        if(ret.code === "success"){
-            var initialState = {
-                data:ret.object,
-                title:"海外精选"
-            };
-            var markup = util.getMarkupByComponent(Topic({
-                initialState:initialState
-            }));
-            res.render("topic", {
-                markup: markup,
-                initialState:initialState
-            });
-
-        }else{
-            next(new Error(ret.msg))
-        }
-    },function(){
-        next(new Error("api request failed"))
-    })
-};
-var stockup = function(req,res,next) {
-    util.fetchAPI("index",{},true).then(function(ret){
-        if(ret.code === "success"){
-            var initialState = {
-                data:ret.object,
-                title:"今日海囤"
-            };
-            var markup = util.getMarkupByComponent(Topic({
-                initialState:initialState
-            }));
-            res.render("topic", {
-                markup: markup,
-                initialState:initialState
-            });
-
-        }else{
-            next(new Error(ret.msg))
-        }
-    },function(){
-        next(new Error("api request failed"))
-    })
-};
-
-module.exports = {
-    mobileOnly:mobileOnly,
-    stockup:stockup,
-    finest:finest,
+        });
+    }
+    return list;
 }
 
+var topic = function(req, res, next) {
 
+    var pageSize = 12;
+    var pageIndex = req.query.pageIndex || 1;
+    var activityId = req.params.id;
+ 
+    util.fetchAPI("specialActivity", {
+        activityId:activityId,
+        start: pageIndex,
+        limit: pageSize
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            var obj = resp.object;
+            var list = filterResult(obj.activityProductList);
+            if (req.xhr === true) {
+                res.json(list);
+            }else{
+                var totalPage = Math.ceil(obj.totalCount / pageSize);
+                var initialState = {
+                    list,
+                    totalPage,
+                    imageUrl:config.imgServer + obj.bannerImageUrl,
+                    title:obj.activityName
+                };
+                var markup = util.getMarkupByComponent(Topic({
+                    initialState: initialState
+                }));
+
+                res.render('topic', {
+                    markup: markup,
+                    initialState: initialState
+                });
+            }
+        } else {
+            next(new Error(resp.message));
+        }
+    });
+}
+
+module.exports = {
+    topic:topic
+};

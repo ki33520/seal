@@ -23,7 +23,8 @@ class Origin extends Component{
                 <dl>
                   <dt>关税：</dt>
                   <dd>
-                        <a href="#" className="tariff">
+                        <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"tariff")}
+                         className="tariff">
                             <span>税费=不含税商品单价*件数*商品税率</span>
                             <span>（根据海关规定，若订单税费≤50，海关予以免征）</span>
                             <i className="iconfont icon-right"></i>

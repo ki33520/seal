@@ -4,30 +4,39 @@ import {Provider,connect} from "react-redux";
 import {createStore} from "redux";
 import rootReducer from "./reducer.es6";
 import createStoreWithMiddleware from "../../lib/redux-helper.es6";
-import Navbar from "./component.jsx";
+import Topic from "./component.jsx";
 
 function selector(state){
-    return state
+    const {isFetching,list,imageUrl,title,totalPage} = state.goodsByParam
+    return {
+        list,
+        title,
+        imageUrl,
+        totalPage,
+        isFetching
+    };
 }
 
-let NavbarConnected = connect(selector)(Navbar);
+let TopicConnected = connect(selector)(Topic);
 
-class NavbarApp extends React.Component{
+class TopicApp extends React.Component{
     render(){
-        const {data,title} = this.props.initialState;
+        const {list,imageUrl,title,totalPage} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
-            topic:{
-                isFetching:false,
-                data,
-                title
+            goodsByParam:{
+                list,
+                imageUrl,
+                title,
+                totalPage,
+                isFetching:false
             }
         });
         return (
             <Provider store={store}>
-            <NavbarConnected />
+            <TopicConnected />
             </Provider>
         )
     }
 }
 
-export default NavbarApp;
+export default TopicApp;
