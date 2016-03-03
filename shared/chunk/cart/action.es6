@@ -159,7 +159,7 @@ export function changeCartBuyed(param){
 export function checkCartInfo(param){
     return (dispatch)=>{
         dispatch(startCheckCart(param));
-        apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
+        apiRequest('/checkCart',param,{method:"POST"}).then((res)=>{
             dispatch(finishCheckCart(param,res));
         })
     }

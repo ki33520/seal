@@ -21,30 +21,32 @@ function cartByUser(state={},action){
             var {cartIndex,groupIndex,goodsIndex,qty,singleCode} = action.param;
             var {isUpdated,isFetched,cart} = action.res;
             var carts = [...state.carts];
-            if(isUpdated&&isFetched){
-                var _cart = {...carts[cartIndex]};
-                _cart.total = cart.total;
-                _cart.promoTotal = cart.promoTotal;
-                _cart.salesTotal = cart.salesTotal;
-                _cart.qtys = cart.qtys;
-                _cart.promoName = cart.promoName;
-                _cart.promoType = cart.promoType;
-                cart.group.forEach((items)=>{
-                    items.list.forEach((goods)=>{
-                        if(goods.singleCode===singleCode){
-                            if(goods.stockFlag){
-                                _cart.group[groupIndex].list[goodsIndex].qty = qty;
-                            }else{
-                                _cart.group[groupIndex].list[goodsIndex].qty = 1;
-                                _cart.group[groupIndex].list[goodsIndex].checked = false;
-                                if(_cart.group.length===1&&_cart.group[groupIndex].list.length===1){
-                                    _cart.checked = false;
+            if(isUpdated){
+                if(isFetched){
+                    var _cart = {...carts[cartIndex]};
+                    _cart.total = cart.total;
+                    _cart.promoTotal = cart.promoTotal;
+                    _cart.salesTotal = cart.salesTotal;
+                    _cart.qtys = cart.qtys;
+                    _cart.promoName = cart.promoName;
+                    _cart.promoType = cart.promoType;
+                    cart.group.forEach((items)=>{
+                        items.list.forEach((goods)=>{
+                            if(goods.singleCode===singleCode){
+                                if(goods.stockFlag){
+                                    _cart.group[groupIndex].list[goodsIndex].qty = qty;
+                                }else{
+                                    _cart.group[groupIndex].list[goodsIndex].qty = 1;
+                                    _cart.group[groupIndex].list[goodsIndex].checked = false;
+                                    if(_cart.group.length===1&&_cart.group[groupIndex].list.length===1){
+                                        _cart.checked = false;
+                                    }
                                 }
                             }
-                        }
+                        });
                     });
-                });
-                carts[cartIndex] = _cart;
+                    carts[cartIndex] = _cart;
+                }
             }
             return Object.assign({},state,{
                 isUpdating:false,
@@ -187,36 +189,16 @@ function cartByUser(state={},action){
                 isChecked:false
             });
         case FINISH_CHECK_CART:
-            var isChecked = false;
-            var allowSubmit = false;
-            var {cartIndex,singleCodes,qtys} = action.param;
-            var carts = [...state.carts];
-            var cart = action.res.cart;
-            var alertContent = '';
-            if(action.res.isFetched){
-                isChecked = true;
-                if(cart){
-                    if(carts[cartIndex].total === cart.total && cart.total>0){
-                        allowSubmit = true;
-                    }else{
-                        alertContent = '商品价格发生变化，请重新结算!';
-                        carts[cartIndex] = cart;
-                    }
-                }else{
-                    carts.splice(cartIndex,1);
-                    alertContent = '该商品已下架!';
-                }
-            }
+            var {singleCodes,qtys} = action.param;
+            var allowSubmit = action.res.allowSubmit;
+            var alertContent = action.res.errMsg;
             return Object.assign({},state,{
                 isChecking:false,
-                isChecked,
+                isChecked:true,
                 alertContent,
                 allowSubmit,
-                params:{
-                    itemIds:singleCodes,
-                    buyeds:qtys
-                },
-                carts
+                singleCodes,
+                qtys
             });
         default:
             return state;
