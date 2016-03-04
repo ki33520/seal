@@ -41,10 +41,11 @@ router.get("/activity/:id", require("./controller/activity"));
 router.get("/trendy", require("./controller/trendy").trendy);
 router.post("/trendyActivity",require("./controller/trendy").activity);
 
-router.get("/cart",require("./controller/cart").cart);
+router.get("/cart",mainController.authorizeLocals,require("./controller/cart").cart);
 router.post("/updatecart",require("./controller/cart").updateCart);
 router.post("/deletecart",require("./controller/cart").deleteCart);
 router.post("/fetchcart",require("./controller/cart").fetchCart);
+router.post("/checkCart",mainController.requireAuthorize,require("./controller/cart").checkCart);
 
 router.get("/shipfee",mainController.requireAuthorize,require("./controller/confirmorder").shipFee);
 router.get("/paygateway/:param",mainController.requireAuthorize,require("./controller/confirmorder").payGateway);

@@ -23,10 +23,13 @@ class Cart extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        const {isChecked,allowSubmit,params} = nextProps.cartByUser;
+        const {isChecked,allowSubmit,singleCodes,qtys} = nextProps.cartByUser;
         if(isChecked){
             if(allowSubmit){
-                const queryParam = base64Encode(urlParam(params));
+                const queryParam = base64Encode(urlParam({
+                    itemIds:singleCodes,
+                    buyeds:qtys
+                }));
                 window.location.assign(`/confirmorder/${queryParam}`);
             }else{
                 this.setState({
@@ -38,15 +41,19 @@ class Cart extends Component {
             }
         }
     }
-    checkout(cart,cartIndex){
-        const {isChecking} = this.props.cartByUser;
+    checkout(cart){
+        const {isChecking,isLogined,loginUrl} = this.props.cartByUser;
         let itemIds = [];
         let buyeds = [];
         if(!cart.checked || isChecking){
             return false;
         }
-        if(cart.total > cart.buyLimit){
-            return false
+        if(cart.total > cart.buyLimit || cart.total <=0){
+            return false;
+        }
+        if(!isLogined){
+            location.href=loginUrl;
+            return false;
         }
         cart.group.forEach((group)=>{
             group.list.forEach((item)=>{
@@ -59,26 +66,15 @@ class Cart extends Component {
         if(itemIds.length&&buyeds.length){
             this.props.checkCartInfo({
                 singleCodes:itemIds.join(","),
-                qtys:buyeds.join(","),
-                cartIndex
+                qtys:buyeds.join(",")
             });
         }
     }
     handleChangeBuyed(goods,cartIndex,groupIndex,goodsIndex,buyed) {
         const {carts,isUpdating} = this.props.cartByUser;
         const singleCode = goods.singleCode;
-        if(isUpdating){
-            return false;
-        }
-        if(goods.checked===false){
-            this.props.changeCartBuyed({
-                singleCodes:singleCode,
-                qtys:buyed,
-                buyLimit:goods.buyLimit,
-                cartIndex,
-                groupIndex,
-                goodsIndex
-            });
+        const limit = Math.min(goods.buyLimit,goods.stockCount);
+        if(isUpdating || buyed > limit){
             return false;
         }
         let singleCodes = [];
@@ -87,16 +83,21 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.checked){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(singleCode==item.singleCode?buyed:item.qty);
+                    buyeds.push(singleCode===item.singleCode?buyed:item.qty);
                 }
             });
         });
+        if(!buyeds.length){
+            singleCodes.push(singleCode);
+            buyeds.push(buyed);
+        }
         this.props.updateCart({
             singleCode,
-            qty:buyed,
-            buyLimit:goods.buyLimit,
+            buyed,
             singleCodes:singleCodes.join(','),
             qtys:buyeds.join(','),
+            limit,
+            checked:goods.checked,
             cartIndex,
             groupIndex,
             goodsIndex
@@ -196,9 +197,11 @@ class Cart extends Component {
     }
     renderGoods(goods,i,j,k) {
         const salePrice = formatPrice(goods.salePrice);
-        const buyLimit = classNames({
-            hide:goods.buyLimit<1,
-            limitBuy:goods.buyLimit>0
+        const limit = Math.min(goods.buyLimit,goods.stockCount);
+        const buyed = goods.qty;
+        const limitStyle = classNames({
+            hide:buyed<limit,
+            limitBuy:buyed>=limit
         });
         const soldout = classNames({
             "sold-out":!goods.stockFlag
@@ -216,16 +219,16 @@ class Cart extends Component {
                                 <img width="100%" src={goods.imageUrl} />
                                 <div className={soldout}></div>
                             </a>
-                            <span className={buyLimit}>限购{goods.buyLimit}件</span>
+                            <span className={limitStyle}>限购{limit}件</span>
                         </div>
                         <div className="gd_info">
                             <p className="name">
                               <b>{goods.title}</b>
                               <span>{'￥'+salePrice}</span>
-                              <em>{'x'+goods.qty}</em>
+                              <em>{'x'+buyed}</em>
                             </p>
                             <div className="act_wrap"> 
-                                <NumberPicker value={goods.qty} minimum={1} maximum={goods.buyLimit} 
+                                <NumberPicker type="number" value={buyed} minimum={1} maximum={limit}
                                 onChange={this.handleChangeBuyed.bind(this,goods,i,j,k)} />
                             </div>
                         </div>
@@ -274,8 +277,8 @@ class Cart extends Component {
     }
     renderCart(cart,i){
         let groupList = [];
-        let allowBuy = cart.checked ? true : false;
-        if(cart.total > cart.buyLimit || cart.total <=0){
+        let allowBuy = true;
+        if(cart.total > cart.buyLimit ||cart.total <=0){
             allowBuy = false;
         }
         cart.group.forEach((group,j)=>{
@@ -315,7 +318,7 @@ class Cart extends Component {
                             总计(不含运费、税金)：<em>{'￥'+total}</em>
                         </p>
                         <p>
-                            <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart,i)}/>
+                            <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart)}/>
                         </p>
                     </div>
                     {this.renderInfo(cart.total,cart.tax,cart.dutyFree,cart.buyLimit)}

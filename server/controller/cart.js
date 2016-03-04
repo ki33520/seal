@@ -7,7 +7,6 @@ var config = require("../lib/config.js");
 
 function formatCarts(originalCarts) {
     var carts = [];
-
      _.each(originalCarts, function(originalCart) {
         var cart = {
             warehouseName: originalCart.warehouseName,
@@ -32,48 +31,43 @@ function formatCarts(originalCarts) {
                 promoFee:promoList.promoFee,
                 list:[]
             }
-
-            _.each(promoList.cartProductList,function(product){
-                var goods = {
-                    cartId:product.cartId,
-                    singleCode:product.singleCode,
-                    imageUrl:config.imgServer + product.imageUrl,
-                    title:product.title,
-                    props:product.props,
-                    originPrice:product.originPrice,
-                    salePrice:product.salesPrice,
-                    discount:product.discount,
-                    qty:product.qty,
-                    stockFlag:product.stockFlag,
-                    buyLimit:product.buyLimit,
+            _.each(promoList.cartProductList,function(goods){
+                var product = {
+                    cartId:goods.cartId,
+                    singleCode:goods.singleCode,
+                    imageUrl:config.imgServer + goods.imageUrl,
+                    title:goods.title,
+                    props:goods.props,
+                    originPrice:goods.originPrice,
+                    salePrice:goods.salesPrice,
+                    discount:goods.discount,
+                    qty:goods.qty,
+                    stockFlag:goods.stockFlag,
+                    stockCount:goods.stockCount,
+                    buyLimit:goods.buyLimit,
                     checked:true
                 }
-
-                group.list.push(goods);
+                group.list.push(product);
             });
-
             cart.group.push(group);
         });
-
         carts.push(cart);
     });
-    
     return carts;
 }
  
 var cart = function(req, res, next) {
     var user = req.session.user;
-    var markup,initialState,carts;
-    if(user){
+    if(user && user.memberId){
         util.fetchAPI("cartByUser",{
             memberId:user.memberId
         }).then(function(resp){
             if(resp.returnCode === 0){
-                carts = formatCarts(resp.object);
-                initialState = {
-                    carts:carts
+                var initialState = {
+                    carts:formatCarts(resp.object),
+                    isLogined: true
                 };
-                markup = util.getMarkupByComponent(CartApp({
+                var markup = util.getMarkupByComponent(CartApp({
                     initialState: initialState
                 }));
                 res.render('cart', {
@@ -85,6 +79,7 @@ var cart = function(req, res, next) {
             }
         });
     }else{
+        var loginUrl = res.locals.loginUrl;
         var localcart = req.session["localcart"]||[];
         var singleCodes = [];
         var buyeds = [];
@@ -98,11 +93,12 @@ var cart = function(req, res, next) {
                 qtys:buyeds.join(',')
             }).then(function(resp) {
                 if(resp.returnCode === 0){
-                    carts=formatCarts(resp.object);
-                    initialState = {
-                        carts:carts
+                    var initialState = {
+                        carts:formatCarts(resp.object),
+                        isLogined: false,
+                        loginUrl: loginUrl
                     };
-                    markup = util.getMarkupByComponent(CartApp({
+                    var markup = util.getMarkupByComponent(CartApp({
                         initialState: initialState
                     }));
                     res.render('cart', {
@@ -114,10 +110,10 @@ var cart = function(req, res, next) {
                 }
             })
         }else{
-            initialState = {
+            var initialState = {
                 carts:[]
             };
-            markup = util.getMarkupByComponent(CartApp({
+            var markup = util.getMarkupByComponent(CartApp({
                 initialState: initialState
             }));
             res.render('cart', {
@@ -131,18 +127,7 @@ var cart = function(req, res, next) {
 var updateCart = function(req, res, next) {
     var user = req.session.user;
     var singleCode = req.body.singleCode;
-    var buyed = req.body.qty;
-    var singleCodes = req.body.singleCodes;
-    var qtys = req.body.qtys;
-    var buyLimit = req.body.buyLimit;
- 
-    if(buyed-buyLimit>0){
-        res.json({
-            isUpdated:false
-        });
-        return false;
-    }
-
+    var buyed = req.body.buyed;
     if(user){
         var memberId = user.memberId;
         util.fetchAPI('updateCart', {
@@ -163,6 +148,7 @@ var updateCart = function(req, res, next) {
             }
         });
     }else{
+        var buyLimit = req.body.limit;
         var carts = req.session["localcart"];
         util.saveLocalCart(carts,{
             singleCode,
@@ -222,9 +208,15 @@ var deleteCart = function(req, res, next) {
 }
 
 var fetchCart = function(req,res,next){
+    var user = req.session.user;
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
-    if(singleCodes!==''||qtys!==''){
+    if(singleCodes===""||qtys===""){
+        res.json({
+            isFetched: true,
+            cart:null
+        });
+    }else{
         util.fetchAPI('cartByAnonymous', {
             singleCodes:singleCodes,
             qtys:qtys
@@ -241,16 +233,35 @@ var fetchCart = function(req,res,next){
                 });
             }
         });
-    }else{
-        res.json({
-            isFetched: false
-        });
     }
+}
+
+var checkCart = function(req,res,next){
+    var user = req.session.user;
+    var singleCodes = req.body.singleCodes;
+    var qtys = req.body.qtys;
+    util.fetchAPI('validateCartFee', {
+        memberId: user.memberId,
+        singleCodes:singleCodes,
+        qtys: qtys
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                allowSubmit:true
+            })
+        } else {
+            res.json({
+                allowSubmit: false,
+                errMsg: resp.message
+            });
+        }
+    });
 }
 
 module.exports = {
     cart: cart,
     updateCart: updateCart,
     deleteCart:deleteCart,
-    fetchCart:fetchCart
+    fetchCart:fetchCart,
+    checkCart:checkCart
 };

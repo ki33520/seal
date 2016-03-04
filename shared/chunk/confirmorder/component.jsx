@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import _ from "lodash";
 import ConfirmOrder from "./partial/confirmorder.jsx";
 import Receiver from "../receiver/app.jsx";
 import Coupon from "./partial/coupon.jsx";

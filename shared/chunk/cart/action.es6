@@ -5,8 +5,7 @@ import {
     START_UPDATE_CART,FINISH_UPDATE_CART,
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
-    START_CHECK_CART,FINISH_CHECK_CART,
-    START_CART_BUYED,FINISH_CART_BUYED
+    START_CHECK_CART,FINISH_CHECK_CART
 } from "./constant.es6";
 
 
@@ -83,32 +82,15 @@ function finishCheckCart(param,res){
         res
     }
 }
-
-function startChangeCartBuyed(param){
-    return {
-        type:START_CART_BUYED,
-        param
-    }
-}
-function finshChangeCartBuyed(param,res){
-    return {
-        type:FINISH_CART_BUYED,
-        param,
-        res
-    }
-}
+ 
 export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
         apiRequest('/updatecart',param,{method:"POST"}).then((res)=>{
-            if(res.isUpdated){
-                apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
-                    resp.isUpdated = true;
-                    dispatch(finishUpdateCart(param,resp));
-                });
-            }else{
-                dispatch(finishUpdateCart(param,res));
-            }
+            apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                resp.isUpdated = res.isUpdated;
+                dispatch(finishUpdateCart(param,resp));
+            });
         });
     }
 }
@@ -117,14 +99,10 @@ export function deleteCart(param){
     return (dispatch)=>{
         dispatch(startDeleteCart(param));
         apiRequest('/deletecart',param,{method:"POST"}).then((res)=>{
-            if(res.isDeleted){
-                apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
-                    resp.isDeleted = true;
-                    dispatch(finishDeleteCart(param,resp));
-                });
-            }else{
-                dispatch(finishDeleteCart(param,res));
-            }
+            apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                resp.isDeleted = res.isDeleted;
+                dispatch(finishDeleteCart(param,resp));
+            });
         });
     }
 }
@@ -146,20 +124,11 @@ export function toggleCartAll(param){
         });
     }
 }
-
-export function changeCartBuyed(param){
-    return(dispatch)=>{
-        dispatch(startChangeCartBuyed(param));
-        apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
-            dispatch(finshChangeCartBuyed(param,res));
-        });
-    }
-}
-
+ 
 export function checkCartInfo(param){
     return (dispatch)=>{
         dispatch(startCheckCart(param));
-        apiRequest('/fetchcart',param,{method:"POST"}).then((res)=>{
+        apiRequest('/checkCart',param,{method:"POST"}).then((res)=>{
             dispatch(finishCheckCart(param,res));
         })
     }

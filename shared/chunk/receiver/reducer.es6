@@ -190,7 +190,8 @@ function receiverByUser(state={},action){
             return Object.assign({},state,{receivers:receivers,checkedReceiver})
         case PUSH_RECEIVER:
             receivers.push(action.receiver)
-            return Object.assign({},state,{receivers:receivers})
+            checkedReceiver = action.receiver
+            return Object.assign({},state,{receivers,checkedReceiver})
         case REQUEST_RECEIVERS:
             return Object.assign({},state,{
                 receiversFetching:true,
