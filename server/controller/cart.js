@@ -58,7 +58,7 @@ function formatCarts(originalCarts) {
  
 var cart = function(req, res, next) {
     var user = req.session.user;
-    if(_.isObject(user)){
+    if(user && user.memberId){
         util.fetchAPI("cartByUser",{
             memberId:user.memberId
         }).then(function(resp){
@@ -83,7 +83,6 @@ var cart = function(req, res, next) {
         var localcart = req.session["localcart"]||[];
         var singleCodes = [];
         var buyeds = [];
-        console.log(res.locals)
         _.each(localcart,function(item){
             singleCodes.push(item.singleCode);
             buyeds.push(item.buyed);
@@ -209,29 +208,32 @@ var deleteCart = function(req, res, next) {
 }
 
 var fetchCart = function(req,res,next){
+    var user = req.session.user;
     var singleCodes = req.body.singleCodes;
     var qtys = req.body.qtys;
-    util.fetchAPI('cartByAnonymous', {
-        singleCodes:singleCodes,
-        qtys:qtys
-    }).then(function(resp) {
-        if(resp.returnCode === 0){
-            res.json({
-                isFetched: true,
-                cart:formatCarts(resp.object)[0]
-            });
-        }else{
-            res.json({
-                isFetched: true,
-                cart:{
-                    qtys:0,
-                    total:0,
-                    salesTotal:0
-                },
-                errMsg: resp.message
-            });
-        }
-    });
+    if(singleCodes===""||qtys===""){
+        res.json({
+            isFetched: true,
+            cart:null
+        });
+    }else{
+        util.fetchAPI('cartByAnonymous', {
+            singleCodes:singleCodes,
+            qtys:qtys
+        }).then(function(resp) {
+            if(resp.returnCode === 0){
+                res.json({
+                    isFetched: true,
+                    cart:formatCarts(resp.object)[0]
+                });
+            }else{
+                res.json({
+                    isFetched: false,
+                    errMsg: resp.message
+                });
+            }
+        });
+    }
 }
 
 var checkCart = function(req,res,next){

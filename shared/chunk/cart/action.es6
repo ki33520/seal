@@ -87,14 +87,10 @@ export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart());
         apiRequest('/updatecart',param,{method:"POST"}).then((res)=>{
-            if(res.isUpdated){
-                apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
-                    resp.isUpdated = true;
-                    dispatch(finishUpdateCart(param,resp));
-                });
-            }else{
-                dispatch(finishUpdateCart(param,res));
-            }
+            apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                resp.isUpdated = res.isUpdated;
+                dispatch(finishUpdateCart(param,resp));
+            });
         });
     }
 }
@@ -103,14 +99,10 @@ export function deleteCart(param){
     return (dispatch)=>{
         dispatch(startDeleteCart(param));
         apiRequest('/deletecart',param,{method:"POST"}).then((res)=>{
-            if(res.isDeleted){
-                apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
-                    resp.isDeleted = true;
-                    dispatch(finishDeleteCart(param,resp));
-                });
-            }else{
-                dispatch(finishDeleteCart(param,res));
-            }
+            apiRequest('/fetchcart',param,{method:"POST"}).then((resp)=>{
+                resp.isDeleted = res.isDeleted;
+                dispatch(finishDeleteCart(param,resp));
+            });
         });
     }
 }

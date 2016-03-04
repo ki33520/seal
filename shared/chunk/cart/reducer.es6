@@ -27,6 +27,7 @@ function cartByUser(state={},action){
                     }else{
                         var _cart = {...carts[cartIndex]};
                         _cart.total = cart.total;
+                        //_cart.qtys = cart.qtys;
                         _cart.promoTotal = cart.promoTotal;
                         _cart.salesTotal = cart.salesTotal;
                         _cart.promoName = cart.promoName;
@@ -53,22 +54,35 @@ function cartByUser(state={},action){
             var carts = [...state.carts];
             var cart = action.res.cart;
             if(action.res.isFetched){
-                if(checked){
-                    carts[cartIndex]=cart;
-                }else{
-                    var _cart = {...carts[cartIndex]};
+                var _cart = {...carts[cartIndex]};
+                _cart.group[groupIndex].list[goodsIndex].checked=checked;
+                if(cart){
                     _cart.total = cart.total;
                     _cart.qtys = cart.qtys;
                     _cart.promoName=cart.promoName;
                     _cart.promoType=cart.promoType;
                     _cart.promoTotal = cart.promoTotal;
                     _cart.salesTotal = cart.salesTotal;
-                    _cart.group[groupIndex].list[goodsIndex].checked = false;
-                    if(_cart.group.length===1&&_cart.group[groupIndex].list.length===1){
-                        _cart.checked = false;
-                    }
-                    carts[cartIndex]=_cart;
+                    var ischecked=0,count=0;
+                    _cart.group.forEach((group)=>{
+                        group.list.forEach((goods)=>{
+                            if(goods.checked){
+                                ischecked++;
+                            }
+                            count++;
+                        });
+                    });
+                    _cart.checked = ischecked===count?true:false;
+                }else{
+                    _cart.total = 0;
+                    _cart.qtys = 0;
+                    _cart.promoName=null;
+                    _cart.promoType=null;
+                    _cart.promoTotal = 0;
+                    _cart.salesTotal = 0;
+                    _cart.checked = false;
                 }
+                carts[cartIndex]=_cart;
             }
             return Object.assign({},state,{
                 isToggleing:false,
@@ -93,12 +107,12 @@ function cartByUser(state={},action){
                     carts[cartIndex]=cart;
                 }else{
                     var _cart = {...carts[cartIndex]};
-                    _cart.total = cart.total;
-                    _cart.qtys = cart.qtys;
-                    _cart.promoName=cart.promoName;
-                    _cart.promoType=cart.promoType;
-                    _cart.promoTotal = cart.promoTotal;
-                    _cart.salesTotal = cart.salesTotal;
+                    _cart.total = 0;
+                    _cart.qtys = 0;
+                    _cart.promoName=null;
+                    _cart.promoType=null;
+                    _cart.promoTotal = 0;
+                    _cart.salesTotal = 0;
                     _cart.group.forEach((group)=>{
                         group.list.forEach((goods)=>{
                             goods.checked = false;
@@ -126,18 +140,21 @@ function cartByUser(state={},action){
             var {cartIndex,groupIndex,goodsIndex} = action.param;
             var {isFetched,isDeleted,cart} = action.res;
             var carts = [...state.carts];
-            var _cart = {...carts[cartIndex]};
-         
             if(isDeleted){
                 if(isFetched){
-                    _cart.group[groupIndex].list.splice(goodsIndex,1);
-                    _cart.total = cart.total;
-                    _cart.qtys = cart.qtys;
-                    _cart.promoTotal = cart.promoTotal;
-                    _cart.salesTotal = cart.salesTotal;
-                    carts[cartIndex] = _cart;
-                }else{
-                    carts.splice(cartIndex,1);
+                    if(cart){
+                        var _cart = {...carts[cartIndex]};
+                        _cart.total = cart.total;
+                        _cart.promoTotal = cart.promoTotal;
+                        _cart.salesTotal = cart.salesTotal;
+                        _cart.promoName = cart.promoName;
+                        _cart.promoType = cart.promoType;
+                        _cart.group[groupIndex].list.splice(goodsIndex,1);
+                        _cart.qtys = cart.qtys;
+                        carts[cartIndex] = _cart;
+                    }else{
+                        carts.splice(cartIndex,1);
+                    }
                 }
             }
             return Object.assign({},state,{
