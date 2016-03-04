@@ -46,5 +46,13 @@
             "test": "http://order.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
+    },
+    "validateCartFee":{
+        "uri":"/cart/v1/validateCartFee",
+        "baseURL":{
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
     }
 }
