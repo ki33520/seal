@@ -6,14 +6,13 @@ import _ from "lodash";
 import moment from "moment";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
+import Dialog from "../../../component/dialog.jsx";
+import Alert from "../../../component/alert.jsx";
+import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 
+import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
-import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
-
-import Dialog from "../../../component/dialog.jsx";
-import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
-import Alert from "../../../component/alert.jsx";
 
 
 class OrderDetail extends Component{
@@ -173,6 +172,7 @@ class OrderDetail extends Component{
         const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
         const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
 
+        console.log(orderStatus, timeoutTime)
         if(orderStatus === "STATUS_NOT_PAY" && timeoutTime){
             return (
                 <span>
@@ -235,15 +235,9 @@ class OrderDetail extends Component{
         return (
             <div className="order-detail-content">
             <Header>订单详情</Header>
-            <div className="orderSpeed">
-                <div className="orderNum"><i>订单编号:</i><span>{order.orderNo}</span></div>
-                <StatusProgress {...order}/>
-                {this.renderOutTime()}
-            </div>
+            <StatusProgress renderOutTime={this.renderOutTime.bind(this)} {...order}/>
             {this.renderAddress(order)}
-            <div className="order-list">
-                <OrderGoods {...order}/>
-            </div>
+            <OrderGoods {...order}/>
             {this.renderCountbox()}
             {this.renderFooter()}
             <Dialog active={this.state.dialogActive} 

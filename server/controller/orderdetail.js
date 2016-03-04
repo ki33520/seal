@@ -59,8 +59,8 @@ var payType = [{
 }]
 function getStatus(str){
     var statusArr = [];
-    orderStatus.map((v, k)=>{
-        statusArr[k] = {
+    statusArr = orderStatus.map((v, k)=>{
+        return {
             value: v.value,
             text: v.text,
             active: v.active
