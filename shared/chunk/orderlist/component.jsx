@@ -99,6 +99,7 @@ class OrderList extends Component{
     render(){
         var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam} = this.props;
         cashierParam = cashierParam || {};
+        const tab_nav_item = ["全部","待付款","待发货","待收货","待评价"];
         return (
             <div className="order-list-content">
                 <header className="header">
@@ -114,32 +115,16 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}> 
-                    <SlideTabsItem navigator={()=><a href="/orderlist/0">全部</a>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={0} confirmDialog={this.confirmDialog.bind(this)} {...this.props} ref="floor"/>
-                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
-                        <GoTop relative={true}/>
-                    </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><a href="/orderlist/1">待付款</a>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={1} {...this.props} ref="floor"/>
-                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
-                        <GoTop relative={true}/>
-                    </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><a href="/orderlist/2">待发货</a>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={2} {...this.props} ref="floor"/>
-                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
-                        <GoTop relative={true}/>
-                    </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><a href="/orderlist/3">待收货</a>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={3} confirmDialog={this.confirmDialog.bind(this)} {...this.props} ref="floor"/>
-                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
-                        <GoTop relative={true}/>
-                    </SlideTabsItem>
-                    <SlideTabsItem navigator={()=><a href="/orderlist/4">待评价</a>} className="listMain">
-                        <Floor systemTime={systemTime} orderIndex={4} {...this.props} ref="floor"/>
-                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
-                        <GoTop relative={true}/>
-                    </SlideTabsItem>
+                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
+                    {
+                        tab_nav_item.map((v,k)=>{
+                            return <SlideTabsItem key={k} navigator={()=><a href={"/orderlist/"+k}>{v}</a>} className="listMain">
+                                <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
+                                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                                <GoTop relative={true}/>
+                            </SlideTabsItem>
+                        })
+                    }
                 </SlideTabs>
                 <Dialog active={this.state.dialogActive} 
                     onCancel={this.toggleDialog.bind(this)}

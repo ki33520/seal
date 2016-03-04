@@ -183,8 +183,8 @@ class OrderDetail extends Component{
         }
     }
     renderCountbox(){
-        const {order,systemTime} = this.props.orderByParam;
-        const {orderCrtTime,timeoutTime,orderStatus} = order;
+        const {order} = this.props.orderByParam;
+        const {orderStatus} = order;
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
