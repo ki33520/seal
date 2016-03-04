@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import _ from "lodash";
 import ConfirmOrder from "./partial/confirmorder.jsx";
 import Receiver from "../receiver/app.jsx";
 import Coupon from "./partial/coupon.jsx";
@@ -25,11 +26,18 @@ class ConfirmOrderRouter extends Component{
         dispatch(changeCoupon(coupon));
     }
     render(){
+        let {receivers,checkedReceiver} = this.props.order
+        if(checkedReceiver){
+            if(_.some(receivers,{id:checkedReceiver.id}) === false){
+                receivers.push(checkedReceiver)
+            }
+            receivers = _.sortBy(receivers,"id")
+        }
         const receiverInitialState = {
-            receivers:this.props.order.receivers,
+            receivers,
             checkable:true,
             onCheck:this.handleChangeReceiver.bind(this),
-            checkedReceiver:this.props.order.checkedReceiver
+            checkedReceiver
         }
         return (
             <SceneGroup>

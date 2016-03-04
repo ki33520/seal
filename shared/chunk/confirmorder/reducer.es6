@@ -6,6 +6,7 @@ import {
     START_SUBMITORDER,FINISH_SUBMITORDER,
     REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY,
     REQUEST_SHIPFEE,RESPONSE_SHIPFEE,
+    START_VERIFYORDER,FINISH_VERIFYORDER
 } from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -62,6 +63,17 @@ function orderByParam(state={},action){
                 orderSubmited:action.res.orderSubmited,
                 orderSubmiting:false,
             })
+        case START_VERIFYORDER:
+            return Object.assign({},state,{
+                orderVerifying:true,
+                orderVerified:false
+            })
+        case FINISH_VERIFYORDER:
+            return Object.assign({},state,{
+                orderVerifying:false,
+                orderVerified:action.res.isVerified,
+                orderVerifiedErrMsg:errMsgByCode(action.res.errCode)
+            })
         case REQUEST_PAYGATEWAY:
             return Object.assign({},state,{
                 paygatewayFetching:true,
@@ -82,6 +94,32 @@ function orderByParam(state={},action){
         default:
             return state;
     }
+}
+
+function errMsgByCode(errCode){
+    let errMsg = null
+    switch(errCode){
+        case -1:
+            errMsg = "校验失败,请检查网络是否可用"
+        case -402104:
+            // errMsg = "商品code不存在"
+            errMsg = "商品已下架，请重新提交!"
+        case -402105:
+            // errMsg = "商品库存不足"
+            errMsg = "超出库存数量，请重新提交!"
+        case -402107:
+            // errMsg = "商品购买数量已超出商品限购数"
+            errMsg = "超出限购数量，请重新提交!"
+        case -402109:
+            errMsg = "商品购买数量低于起购数"
+        case -402110:
+            // errMsg = "购买商品总额超出每日购买限额"
+            errMsg = "超出限购数量，请重新提交!"
+        case -402305:
+            errMsg = "超出库存数量，请重新提交!"
+            // errMsg = "订单支付金额计算错误"
+    }
+    return errMsg
 }
 
 function calculateTotalFee(order){

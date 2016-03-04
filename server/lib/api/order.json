@@ -23,6 +23,14 @@
             "production": "http://product.tepin.hk"
         }
     },
+    "verifyOrder": {
+        "uri": "/cart/v1/validateOrderFee",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
     "orderStatus": {
         "uri": "/pay/v1/findOrderStatus",
         "baseURL": {

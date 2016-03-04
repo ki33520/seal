@@ -52,15 +52,21 @@ function orderFilter(order) {
     _order["checkedReceiver"] = checkedReceiver ? checkedReceiver : null
     _order["coupons"] = formatCoupons(order.couponList)
     _order["checkedCoupon"] = null
+    if(_order["coupons"].length > 0){
+        // console.log('coupons',_order["coupons"])
+        _order["checkedCoupon"] = _order["coupons"][0]
+    }
         // order.coupons = formatCoupons(originResp.couponList)
     return _order;
 }
 
 function formatCoupons(coupons) {
     var _coupons = []
-    coupons = _.sortBy(coupons, function(coupon) {
-        return moment(new Date(coupon["startTime"])).format("X")
-    })
+    coupons = _.sortBy(coupons,[function(coupon){
+        return coupon.couponFee
+    },function(coupon) {
+        return moment(new Date(coupon["endTime"])).format("X")
+    }],["desc","asc"])
     _.each(coupons, function(v, k) {
             v["startTime"] = moment(new Date(v["startTime"])).format("YYYY.M.D")
             v["endTime"] = moment(new Date(v["endTime"])).format("YYYY.M.D")
@@ -126,6 +132,40 @@ var shipFee = function(req,res,next){
         res.json({
             isFetched:false,
             errMsg:"api request failed"
+        })
+    })
+}
+
+var verifyOrder = function(req,res,next){
+    var user = req.session.user
+    var itemIds = req.body.itemIds
+    var buyeds = req.body.buyeds
+    var couponNo = req.body.couponNo
+    var totalFee = req.body.totalFee
+    var receiverId = req.body.receiverId
+
+    util.fetchAPI("verifyOrder",{
+        memberId: user.memberId,
+        singleCodes: itemIds,
+        qtys: buyeds,
+        couponNo: couponNo,
+        memberDlvAddressId: receiverId,
+        paymentFee: 50
+    }).then(function(ret){
+        if(ret.returnCode === 0){
+            res.json({
+                isVerified:true,
+            })
+        }else{
+            res.json({
+                isVerified:false,
+                errCode:ret.returnCode
+            })
+        }
+    },function(){
+        res.json({
+            isVerified:false,
+            errCode:-1
         })
     })
 }
@@ -277,6 +317,7 @@ function messageFilter(order) {
 module.exports = {
     confirmOrder: confirmOrder,
     shipFee:shipFee,
+    verifyOrder:verifyOrder,
     submitOrder: submitOrder,
     payGateway: payGateway
 };

@@ -21,7 +21,7 @@ class OrderGoods extends Component{
                 </a>
                 <div className="gd_info">
                     <p className="name"><span>{good.title}</span></p>
-                    <p className="value"> <span>&yen;{good.salePrice}</span><b>X{good.qty}</b> </p>
+                    <p className="value"> <span>&yen;{good.salePrice.toFixed(2)}</span><b>X{good.qty}</b> </p>
                 </div>
             </div>
         )

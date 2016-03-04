@@ -6,6 +6,7 @@ import {
     START_SUBMITORDER,FINISH_SUBMITORDER,
     REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY,
     REQUEST_SHIPFEE,RESPONSE_SHIPFEE,
+    START_VERIFYORDER,FINISH_VERIFYORDER,
     CALCULATE_TOTALFEE
 } from "./constant.es6";
 
@@ -62,6 +63,32 @@ export function submitOrder(url,param){
         })
     }
 }
+
+function startVerifyOrder(param){
+    return {
+        type:START_VERIFYORDER,
+        param
+    }
+}
+
+function finishVerifyOrder(param,res){
+    return {
+        type:FINISH_VERIFYORDER,
+        param,
+        res,
+        responseAt:Date.now()
+    }
+}
+
+export function verifyOrder(param){
+    return (dispatch)=>{
+        dispatch(startVerifyOrder(param));
+        apiRequest("/verifyorder",param,{method:"POST"}).then((res)=>{
+            dispatch(finishVerifyOrder(param,res))
+        })
+    }
+}
+
 
 function requestShipFee(param){
     return {

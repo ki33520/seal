@@ -19,12 +19,19 @@ export class SceneGroup extends Component{
             setTimeout(()=>this.props.onChange(scene,param,prevScene),300)
         })
     }
+    resetScene(){
+        this.setState({
+            currentScene:this.props.defaultScene,
+            prevScene:null
+        })
+    }
     renderScene(child,i){
         const {currentScene,prevScene} = this.state;
         const {name} = child.props; 
         return React.cloneElement(child,Object.assign({},child.props,{
             active:currentScene === name,
             prev:prevScene === name,
+            resetScene:this.resetScene.bind(this),
             changeScene:this.handleChange.bind(this),
             key:i
         }))
@@ -46,7 +53,7 @@ SceneGroup.defaultProps = {
 
 export class Scene extends Component{
     render(){
-        const {key,active,prev,changeScene} = this.props;
+        const {key,active,prev,changeScene,resetScene} = this.props;
         const classes = classNames("scene",{
             active,
             prev
@@ -54,6 +61,7 @@ export class Scene extends Component{
         let child = React.Children.only(this.props.children)
         child = React.cloneElement(child,Object.assign({},child.props,{
             changeScene,
+            resetScene,
             active
         }))
         return (
