@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 import {
-    CHANGE_FIELD,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY
+    CHANGE_FIELD,REQUEST_ORDER,RESPONSE_ORDER,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY
 } from "./action.es6";
 import {combineReducers} from "redux";
 
@@ -26,6 +26,18 @@ function orderByParam(state={},action){
             return Object.assign({},state,{
                 order
             });
+        case REQUEST_ORDER:
+            return Object.assign({},state,{
+                orderChanging:true,
+                orderChanged:false,
+                msg:action.res?action.res.msg: null
+            })
+        case RESPONSE_ORDER:
+            return Object.assign({},state,{
+                orderChanging:false,
+                orderChanged:action.res.isFetched,
+                msg:action.res?action.res.msg: null
+            },action.res)
         case REQUEST_SAVECOMMENT:
             return Object.assign({},state,{
                 saveCommentChanging:true,
@@ -33,21 +45,20 @@ function orderByParam(state={},action){
                 msg:action.res?action.res.msg: null
             })
         case RESPONSE_SAVECOMMENT:
-            var order = {...state.order};
-            var items = action.param.json;
-            items.forEach((v,k)=>{
-                order.itemList.forEach((val,key)=>{
-                    if(val.id === v.itemId){
-                        val.hasComment = true;
-                        val.rate = v.rate;
-                    }
-                });
-            })
+            // var order = {...state.order};
+            // var items = action.param.json;
+            // items.forEach((v,k)=>{
+            //     order.itemList.forEach((val,key)=>{
+            //         if(val.id === v.itemId){
+            //             val.hasComment = true;
+            //             val.rate = v.rate;
+            //         }
+            //     });
+            // })
             return Object.assign({},state,{
                 saveCommentChanging:false,
                 saveCommentChanged: action.res.isChanged,
-                msg:action.res?action.res.msg: null,
-                order
+                msg:action.res?action.res.msg: null
             })
         case REQUEST_LOGISTICS:
             return Object.assign({},state,{
