@@ -21,7 +21,8 @@ function filterGoodsList(result){
             sourceName:v.areaName,
             smallImageUrl:imgServer+v.picUrl,
             sourceImageUrl:imgServer+v.areaLogo,
-            localStock:v.localStock
+            localStock:v.localStock,
+            useMobilePrice:!!v.useMobilePrice
         });
     });
     return list;

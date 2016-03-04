@@ -20,7 +20,8 @@ function filterResult(goods){
                 sourceName:item.sourceName,
                 imageUrl:config.imgServer+item.imageUrl,
                 sourceImageUrl:config.imgServer+item.sourceImageUrl,
-                localStock:item.localStock
+                localStock:item.localStock,
+                useMobilePrice:!!item.useMobilePrice
             });
         });
     }
