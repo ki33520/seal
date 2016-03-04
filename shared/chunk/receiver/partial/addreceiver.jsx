@@ -44,12 +44,14 @@ class AddReceiver extends Component{
         const {consignee,idCard,mobileNumber,address,isDefault,
             provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
+        const provinceName = _.result(_.findWhere(provinces,{value:provinceCode}),"label");
+        const cityName = _.result(_.findWhere(cities,{value:cityCode}),"label");
+        const districtName = _.result(_.findWhere(districts,{value:districtCode}),"label");
         createReceiver({
             consignee,idCard,mobileNumber,address,
             isDefault:0,
-            provinceCode,
-            cityCode,
-            districtCode,
+            provinceCode,cityCode,districtCode,
+            provinceName,cityName,districtName
         })
     }
     componentWillReceiveProps(nextProps){
@@ -58,7 +60,19 @@ class AddReceiver extends Component{
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
                 alert("提交成功!",2000);
-                setTimeout(()=>this.props.changeScene("index"),2500)
+                setTimeout(()=>{
+                    const {onCheck,receiver,checkable} = this.props
+                    if(checkable){
+                        this.props.selectReceiver(receiver)
+                        onCheck(receiver)
+                        // console.log('receiver',receiver)
+                        this.props.receiverByUser.changeScene("index")
+                        this.props.resetScene();
+                    }else{
+                        this.props.changeScene("index")
+                    }
+                },2500)
+                // setTimeout(()=>this.props.changeScene("index"),2500)
             }else{
                 alert(nextProps.errMsg,2000)
             }

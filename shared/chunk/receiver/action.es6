@@ -2,7 +2,7 @@
 import {apiRequest} from "../../lib/util.es6";
 
 import {
-    CHANGE_FIELD,CHANGE_RECEIVER,SELECT_RECEIVER,
+    CHANGE_FIELD,CHANGE_RECEIVER,SELECT_RECEIVER,PUSH_RECEIVER,
     REQUEST_PROVINCES,RESPONSE_PROVINCES,
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
@@ -19,6 +19,13 @@ export {alert} from "../common/action.es6";
 function changeReceiver(receiver){
     return {
         type:CHANGE_RECEIVER,
+        receiver
+    }
+}
+
+function pushReceiver(receiver){
+    return {
+        type:PUSH_RECEIVER,
         receiver
     }
 }
@@ -221,6 +228,9 @@ export function createReceiver(param){
         apiRequest("/createreceiver",param,{
             method:"POST"
         }).then((res)=>{
+            if(res.receiverSaved){
+                dispatch(pushReceiver(param))
+            }
             dispatch(finishCreateReceiver(param,res))
         })
     }
