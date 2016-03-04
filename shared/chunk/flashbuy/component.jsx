@@ -8,22 +8,26 @@ import Timer from "../common/timer.jsx";
 import classNames from "classnames";
 import {formatPrice} from "../../lib/util.es6";
 class FlashBuy extends Component{
-    renderGoods(groupGoods){
+     filterPrice(goods,status){
+        if(goods.flashPrice && goods.flashPrice > 0 && status==='ing'){
+            return formatPrice(goods.flashPrice);
+        }else if(goods.useMobilePrice&&goods.mobilePrice>0){
+            return formatPrice(goods.mobilePrice);
+        }else{
+            return formatPrice(goods.salesPrice);
+        }
+    }
+    renderGoods(groupGoods,status){
         if(groupGoods.length > 0){
             return groupGoods.map((goods,i)=>{
                 const soldOut = classNames({
                     "sale-out":goods.localStock>0?false:true
                 });
-                const saleIcon = classNames({
-                    "flash-price":goods.flashPrice>0?true:false,
-                    "mobile-price":goods.mobilePrice>0?true:false
-                });
-                const salesPrice = formatPrice(goods.flashPrice||goods.mobilePrice||goods.salesPrice);
+                const salesPrice = this.filterPrice(goods,status);
                 const originPrice = formatPrice(goods.originPrice);
                 return (
                     <a href={"/gooddetail/"+goods.singleCode} className="clearfix" key={i}>
                         <div className={soldOut}></div>
-                        <div className={saleIcon}></div>
                         <img src={goods.imageUrl} />
                         <div className="right">
                             <span className="name">{goods.title}</span>
@@ -54,7 +58,7 @@ class FlashBuy extends Component{
                                 template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
                             </p>
                         </div>
-                        <div className="flashBuy">{this.renderGoods(goods.goodsList)}</div>
+                        <div className="flashBuy">{this.renderGoods(goods.goodsList,'ing')}</div>
                     </div>
                 )
             })
@@ -72,7 +76,7 @@ class FlashBuy extends Component{
                         </div>
                         <div className="willFlash_con">
                             <div className="willFlash_time">开售时间<em>{goods.preSaleTime}</em></div>
-                            <div className="flashBuy">{this.renderGoods(goods.goodsList)}</div>
+                            <div className="flashBuy">{this.renderGoods(goods.goodsList,'pre')}</div>
                             <div className="willFlash_line"></div>
                         </div>
                     </div>
