@@ -4,7 +4,7 @@ import {combineReducers} from "redux";
 import _ from "lodash"
 
 import {
-    CHANGE_FIELD,CHANGE_RECEIVER,SELECT_RECEIVER,
+    CHANGE_FIELD,CHANGE_RECEIVER,SELECT_RECEIVER,PUSH_RECEIVER,
     REQUEST_PROVINCES,RESPONSE_PROVINCES,
     REQUEST_CITIES,RESPONSE_CITIES,
     REQUEST_DISTRICTS,RESPONSE_DISTRICTS,
@@ -71,10 +71,10 @@ function updateReceiver(state={},action){
 }
 
 function addReceiver(state={},action){
+    let receiver = {...state.receiver}
     switch(action.type){
         case CHANGE_FIELD:
             const {name,value} = action;
-            var receiver = {...state.receiver}
             receiver[name] = value;
             return Object.assign({},state,{
                 receiver
@@ -85,9 +85,15 @@ function addReceiver(state={},action){
                 receiverSaved:false
             });
         case FINISH_CREATERECEIVER:
+            if(action.res.receiverSaved){
+                receiver = Object.assign({},receiver,action.param,{
+                    id:action.res.result
+                }) 
+            }
             return Object.assign({},state,{
                 receiverSaving:false,
-                ...action.res
+                receiverSaved:action.res.receiverSaved,
+                receiver
             });
         case REQUEST_PROVINCES:
         case RESPONSE_PROVINCES:
@@ -164,15 +170,14 @@ function cascadeArea(state,action){
 }
 
 function receiverByUser(state={},action){
-    let receivers = state.receivers
+    let receivers = Object.assign([],state.receivers)
     switch(action.type){
         case SELECT_RECEIVER:
             return Object.assign({},state,{
                 checkedReceiver:action.receiver
             })
         case CHANGE_RECEIVER:
-            let _receivers = [...receivers]
-            _receivers = _receivers.map((_receiver)=>{
+            receivers = receivers.map((_receiver)=>{
                 if(_receiver.id === action.receiver.id){
                     _receiver = Object.assign({},_receiver,action.receiver)
                 }
@@ -182,7 +187,11 @@ function receiverByUser(state={},action){
             if(state.checkedReceiver && state.checkedReceiver.id === action.receiver.id){
                 checkedReceiver = Object.assign({},state.checkedReceiver,action.receiver)
             }
-            return Object.assign({},state,{receivers:_receivers,checkedReceiver})
+            return Object.assign({},state,{receivers:receivers,checkedReceiver})
+        case PUSH_RECEIVER:
+            receivers.push(action.receiver)
+            checkedReceiver = action.receiver
+            return Object.assign({},state,{receivers,checkedReceiver})
         case REQUEST_RECEIVERS:
             return Object.assign({},state,{
                 receiversFetching:true,

@@ -49,6 +49,8 @@ class ReceiverApp extends React.Component{
             },
             addReceiver:{
                 receiver:null,
+                onCheck,
+                checkable,
                 provinces:[{
                     value: "",
                     label: "请选择"

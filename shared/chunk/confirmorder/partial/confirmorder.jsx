@@ -13,8 +13,16 @@ import Invoice from "./invoice.jsx";
 import SubmitOrder from "./submitorder.jsx";
 
 import Alert from "../../../component/alert.jsx";
+import Dialog from "../../../component/dialog.jsx";
 
 class ConfirmOrder extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            dialogActive:false,
+            dialogContent:null
+        }
+    }
     renderReceiver(receiver){
         if(receiver === null){
             return (
@@ -72,6 +80,19 @@ class ConfirmOrder extends Component{
             </div>
         )
     }
+    verifyOrder(){
+        const {order,verifyOrder} = this.props
+        const {checkedCoupon,useBalance,useTicket,payPassword,
+            checkedDeliveryTime,checkedReceiver,checkedInvoice} = order;
+        verifyOrder({
+            itemIds:order.itemIds,
+            buyeds:order.buyeds,
+            couponNo:checkedCoupon !== null?checkedCoupon.couponNo:"",
+            receiverId:checkedReceiver !== null?checkedReceiver.id:"",
+            totalFee:order.totalFee
+        })
+
+    }
     submitOrder(){
         const {order,submitOrder} = this.props;
         const {checkedCoupon,useBalance,useTicket,payPassword,
@@ -87,6 +108,16 @@ class ConfirmOrder extends Component{
     }
     componentDidUpdate(prevProps,prevState){
         const {dispatch,paygatewayFetched,fetchPayGateway} = this.props;
+        if(prevProps.orderVerifying && !this.props.orderVerifying){
+            if(this.props.orderVerified){
+                // this.submitOrder()
+            }else{
+                this.setState({
+                    dialogActive:true,
+                    dialogContent:this.props.orderVerifiedErrMsg
+                })
+            }
+        }
         if(prevProps.orderSubmiting === true && 
             this.props.orderSubmiting === false){
             if(this.props.orderSubmited === true){
@@ -114,13 +145,25 @@ class ConfirmOrder extends Component{
             <div className="ckTo-box">
                 <div className="intro clearfix" onClick={this.props.changeScene.bind(this,"coupon")}>
                 <span>优惠券</span>
-                <span>{order.checkedCoupon?(<em>{order.checkedCoupon["couponName"]}</em>):null}<i className="iconfont icon-right"></i></span>
+                <span>{
+                    order.coupons.length === 0 ?(<em>暂无可用优惠券</em>):
+                    order.checkedCoupon?(<em>{order.checkedCoupon["couponName"]}</em>):null
+                }<i className="iconfont icon-right"></i></span>
                 </div>
             </div>
             {this.renderTotal(order)}
             <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
-            onSubmit={this.submitOrder.bind(this)} ref="SubmitOrder"/>
+            onSubmit={this.verifyOrder.bind(this)} ref="SubmitOrder"/>
             <Alert active={alertActive}>{alertContent}</Alert>
+            <Dialog onlyConfirm={true} active={this.state.dialogActive} 
+            onConfrim={()=>{
+                this.setState({
+                    dialogContent:""
+                },()=>{
+                    window.history.back()
+                })
+            }}
+            >{this.state.dialogContent}</Dialog>
             </div>
         )
     }

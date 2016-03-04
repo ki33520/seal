@@ -265,16 +265,19 @@ class Floor extends Component{
                     </li>
                     <li>
                         <div className="clearfix">
+                        {activityThree[1]?(
                         <a href={activityThree[1].jumpUrl}>
                             <img src={activityThree[1].imageUrl} alt=""/>
-                        </a>
+                        </a>):null}
+                        {activityThree[2]?(
                         <a href={activityThree[2].jumpUrl}>
                             <img src={activityThree[2].imageUrl} alt=""/>
-                        </a>
+                        </a>):null}
                         </div>
+                        {activityThree[3]?(
                         <a href={activityThree[3].jumpUrl}>
                             <img src={activityThree[3].imageUrl} alt=""/>
-                        </a>
+                        </a>):null}
                     </li>
                 </ul>
             )
