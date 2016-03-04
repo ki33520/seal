@@ -224,7 +224,8 @@ var createReceiver = function(req, res, next) {
         util.fetchAPI("addReceiver", receiver, false).then(function(resp) {
             if (resp.returnCode === 0) {
                 res.json({
-                    receiverSaved: true
+                    receiverSaved: true,
+                    result:resp.object
                 })
             } else {
                 res.json({
