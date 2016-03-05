@@ -21,7 +21,8 @@ class ReceiverRouter extends Component{
     }
     render(){
         return (
-            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
+            <SceneGroup onChange={this.handleSceneChange.bind(this)} 
+            defaultScene={this.props.receiverByUser.defaultScene}>
                 <Scene name="index">
                     <Receiver {...this.props.receiverByUser} {...this.props}/>
                 </Scene>

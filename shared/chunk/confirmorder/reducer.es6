@@ -116,7 +116,7 @@ function errMsgByCode(errCode){
             // errMsg = "购买商品总额超出每日购买限额"
             errMsg = "超出限购数量，请重新提交!"
         case -402305:
-            errMsg = "超出库存数量，请重新提交!"
+            errMsg = "订单支付金额计算错误!"
             // errMsg = "订单支付金额计算错误"
     }
     return errMsg

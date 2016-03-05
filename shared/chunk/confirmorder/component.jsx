@@ -25,6 +25,12 @@ class ConfirmOrderRouter extends Component{
         const {dispatch} = this.props;
         dispatch(changeCoupon(coupon));
     }
+    handleSceneChange(currentScene,param,prevScene){
+        // switch(currentScene){
+            // case "receiver":
+                // this.refs["receiver"].
+        // }
+    }
     render(){
         let {receivers,checkedReceiver} = this.props.order
         if(checkedReceiver){
@@ -36,11 +42,12 @@ class ConfirmOrderRouter extends Component{
         const receiverInitialState = {
             receivers,
             checkable:true,
+            defaultScene:"addreceiver",
             onCheck:this.handleChangeReceiver.bind(this),
             checkedReceiver
         }
         return (
-            <SceneGroup>
+            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
             <Scene name="index"><ConfirmOrder {...this.props}/></Scene>
             <Scene name="receiver"><Receiver initialState={receiverInitialState} {...this.props}/></Scene>
             <Scene name="coupon"><Coupon {...this.props.order} onCheck={this.handleChangeCoupon.bind(this)}/></Scene>

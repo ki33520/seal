@@ -12,7 +12,7 @@ class Tariff extends Component{
             <div className="tariff-container">
             <Header onGoBack={this.props.changeScene.bind(this,"index")}>完税价格表</Header>
             <div className="tariff-content">
-            <table className="w-table para" border="0" cellspacing="0" cellpadding="0">
+            <table className="w-table para" border="0" cellSpacing="0" cellPadding="0">
             <tbody>
             <tr>
                 <th width="100px">物品类别</th>
