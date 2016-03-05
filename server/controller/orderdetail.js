@@ -59,8 +59,8 @@ var payType = [{
 }]
 function getStatus(str){
     var statusArr = [];
-    orderStatus.map((v, k)=>{
-        statusArr[k] = {
+    statusArr = orderStatus.map((v, k)=>{
+        return {
             value: v.value,
             text: v.text,
             active: v.active
@@ -180,13 +180,18 @@ var orderDetail = function(req, res, next) {
                 order: order,
                 systemTime: systemTime
             };
-            var markup = util.getMarkupByComponent(OrderDetail({
-                initialState: initialState
-            }));
-            res.render('orderdetail', {
-                markup: markup,
-                initialState: initialState
-            })
+            if (req.xhr === true){
+                res.json(initialState);
+            } else {
+                var markup = util.getMarkupByComponent(OrderDetail({
+                    initialState: initialState
+                }));
+                res.render('orderdetail', {
+                    markup: markup,
+                    initialState: initialState
+                })
+            }
+            
         }else{
             if(resp.orderById.returnCode !== 0){
                 next(new Error(resp.orderById.message));

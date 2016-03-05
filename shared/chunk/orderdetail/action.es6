@@ -2,6 +2,8 @@
 import {apiRequest} from "../../lib/util.es6";
 
 export const CHANGE_FIELD= "CHANGE_FIELD";
+export const REQUEST_ORDER = "REQUEST_ORDER";
+export const RESPONSE_ORDER= "RESPONSE_ORDER";
 export const REQUEST_SAVECOMMENT = "REQUEST_SAVECOMMENT";
 export const RESPONSE_SAVECOMMENT= "RESPONSE_SAVECOMMENT";
 export const REQUEST_LOGISTICS = "REQUEST_LOGISTICS";
@@ -24,6 +26,31 @@ export function changeField(name,value,pid){
         pid
     }
 }
+
+function requestOrder(param){
+    return {
+        type:REQUEST_ORDER,
+        param
+    }
+}
+
+function responseOrder(param,res){
+    return {
+        type:RESPONSE_ORDER,
+        param,
+        res
+    }
+}
+
+export function fetchOrder(url,param){
+    return (dispatch)=>{
+        dispatch(requestOrder(param));
+        apiRequest(url,param).then((res)=>{
+            dispatch(responseOrder(param,res));
+        })
+    }
+}
+
 
 function requestSaveComment(param){
     return {

@@ -56,7 +56,8 @@ function goodsFilter(goodsList){
             imageUrl:imgServer+goods.imageUrl,
             sourceName:goods.sourceName,
             sourceImageUrl:imgServer+goods.sourceImageUrl,
-            localStock:goods.localStock
+            localStock:goods.localStock,
+            useMobilePrice:!!goods.useMobilePrice
         }
     });
 }

@@ -21,7 +21,8 @@ function filterItem(originalData){
                 originPrice:v.originPrice,
                 sourceName:v.sourceName,
                 sourceImageUrl:config.imgServer+v.sourceImageUrl,
-                localStock:v.localStock
+                localStock:v.localStock,
+                useMobilePrice:!!v.useMobilePrice
             })
         })
     }

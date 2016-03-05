@@ -115,7 +115,7 @@ var coupon = function(req, res, next) {
             }else{
                 var initialState = {
                     pagination: pagination,
-                    couponType:['youa','legue','invalid']
+                    couponType:['youa','invalid']
                 };
                 var markup = util.getMarkupByComponent(CouponApp({
                     initialState: initialState
