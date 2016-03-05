@@ -12,7 +12,7 @@ var receiversFilter = require("./receiver").receiversFilter;
 
 function orderFilter(order) {
     var _order = _.pick(order, [
-        "qtys", "promoName"
+        "qtys", "promoName","promoType"
     ]);
     _order["warehouse"] = order.warehouseName
     _order["totalFee"] = order.totalFee
@@ -55,6 +55,7 @@ function orderFilter(order) {
     if(_order["coupons"].length > 0){
         // console.log('coupons',_order["coupons"])
         _order["checkedCoupon"] = _order["coupons"][0]
+        _order["couponFee"] = _order["checkedCoupon"]["couponFee"]
     }
         // order.coupons = formatCoupons(originResp.couponList)
     return _order;

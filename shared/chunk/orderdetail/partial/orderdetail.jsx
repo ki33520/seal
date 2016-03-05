@@ -6,14 +6,13 @@ import _ from "lodash";
 import moment from "moment";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
+import Dialog from "../../../component/dialog.jsx";
+import Alert from "../../../component/alert.jsx";
+import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 
+import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
-import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
-
-import Dialog from "../../../component/dialog.jsx";
-import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
-import Alert from "../../../component/alert.jsx";
 
 
 class OrderDetail extends Component{
@@ -82,10 +81,11 @@ class OrderDetail extends Component{
             orderNo:orderNo
         }
         fetchPayGateway(base64EncodeForURL(urlParam(message)));
-        
     }
     componentWillReceiveProps(nextProps){
-        const {alert} = this.props;
+        const {alert,fetchOrder} = this.props;
+        const {order,alertContent} = this.props.orderByParam;
+        const {orderId} = order;
         if(nextProps.orderByParam.closeOrderChanging === false &&
            this.props.orderByParam.closeOrderChanging === true){
             if(nextProps.orderByParam.closeOrderChanged === true){
@@ -101,6 +101,17 @@ class OrderDetail extends Component{
                 alert(nextProps.orderByParam.msg,2000);
             }else{
                 alert(nextProps.orderByParam.msg,2000);
+            }
+        }
+
+        if(nextProps.orderByParam.saveCommentChanging === false &&
+           this.props.orderByParam.saveCommentChanging === true){
+            if(nextProps.orderByParam.saveCommentChanged === true){
+                setTimeout(function(){
+                    fetchOrder("/orderdetail/"+orderId,{
+                        orderId
+                    });
+                },1000)
             }
         }
     }
@@ -161,6 +172,7 @@ class OrderDetail extends Component{
         const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
         const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
 
+        console.log(orderStatus, timeoutTime)
         if(orderStatus === "STATUS_NOT_PAY" && timeoutTime){
             return (
                 <span>
@@ -171,8 +183,8 @@ class OrderDetail extends Component{
         }
     }
     renderCountbox(){
-        const {order,systemTime} = this.props.orderByParam;
-        const {orderCrtTime,timeoutTime,orderStatus} = order;
+        const {order} = this.props.orderByParam;
+        const {orderStatus} = order;
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
@@ -223,15 +235,9 @@ class OrderDetail extends Component{
         return (
             <div className="order-detail-content">
             <Header>订单详情</Header>
-            <div className="orderSpeed">
-                <div className="orderNum"><i>订单编号:</i><span>{order.orderNo}</span></div>
-                <StatusProgress {...order}/>
-                {this.renderOutTime()}
-            </div>
+            <StatusProgress renderOutTime={this.renderOutTime.bind(this)} {...order}/>
             {this.renderAddress(order)}
-            <div className="order-list">
-                <OrderGoods {...order}/>
-            </div>
+            <OrderGoods {...order}/>
             {this.renderCountbox()}
             {this.renderFooter()}
             <Dialog active={this.state.dialogActive} 

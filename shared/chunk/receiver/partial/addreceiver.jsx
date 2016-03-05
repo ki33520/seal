@@ -32,6 +32,11 @@ class AddReceiver extends Component{
             code:city
         },"addReceiver")
     }
+    componentDidMount(nextProps){
+        if(this.props.provinces.length === 1){
+            this.loadProvinces()
+        }
+    }
     componentDidUpdate(prevProps,prevState){
         if(this.props.active === true && prevProps.active === false &&
             this.props.provinces.length === 1){

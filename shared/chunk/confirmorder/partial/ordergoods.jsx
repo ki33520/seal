@@ -61,7 +61,7 @@ class OrderGoods extends Component{
             <div className="order-list">
             <div className="order-info">
                 <span>{this.props.warehouse}</span>
-                <span>{this.props.promoName}</span>
+                <span><em>{this.props.promoType}</em>{this.props.promoName}</span>
             </div>
             <div className="orderConfirm_l clearfix">
             {this.renderGroup(promoList)}
