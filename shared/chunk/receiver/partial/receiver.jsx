@@ -5,6 +5,7 @@ import Header from "../../common/header.jsx";
 import Icon from "../../../component/icon.jsx";
 import Dialog from "../../../component/dialog.jsx";
 import Radio from "../../../component/form/radio.jsx";
+import {formateIDCard} from "../../../lib/util.es6";
 import _ from "lodash";
 
 import Alert from "../../../component/alert.jsx";
@@ -73,7 +74,7 @@ class Receiver extends Component{
                         <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span>
                         {isDefault}
                         </p>
-                        <p>{receiver.idCard}<em>实名</em></p>
+                        <p>{formateIDCard(receiver.idCard)}<em>实名</em></p>
                         <p>{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
                         {checkbox}
                         <div className="toolsArea">

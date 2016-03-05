@@ -33,7 +33,7 @@ class AddReceiver extends Component{
         },"addReceiver")
     }
     componentDidMount(nextProps){
-        if(this.props.provinces.length === 1){
+        if(this.props.active === true && this.props.provinces.length === 1){
             this.loadProvinces()
         }
     }

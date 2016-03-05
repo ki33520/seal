@@ -66,6 +66,17 @@ export function formatPrice(price){
     return priceStr
 }
 
+export function formateIDCard(idCard){
+    idCard = _.words(idCard,/\w{1}/g)
+    idCard = _.map(idCard,function(v,i){
+        if(i > 5 && i < 14){
+            v = "*"
+        }
+        return v
+    })
+    return idCard.join("")
+}
+
 export function validTimeRegion(startTime,endTime){
     if(moment().isBefore(startTime) === true){
         return -1
