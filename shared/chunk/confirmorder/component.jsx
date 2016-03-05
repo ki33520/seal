@@ -42,7 +42,7 @@ class ConfirmOrderRouter extends Component{
         const receiverInitialState = {
             receivers,
             checkable:true,
-            defaultScene:"addreceiver",
+            defaultScene:receivers.length === 0?"addreceiver":"index",
             onCheck:this.handleChangeReceiver.bind(this),
             checkedReceiver
         }

@@ -6,7 +6,7 @@ import Icon from "../../../component/icon.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
 import Header from "../../common/header.jsx";
-import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
+import {urlParam,base64EncodeForURL,formateIDCard} from "../../../lib/util.es6";
 
 import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";
@@ -34,7 +34,7 @@ class ConfirmOrder extends Component{
             <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"receiver")}>
             <div className="order-time">
             <p>{receiver.consignee}<span className="mobNum">{receiver.mobileNumber}</span></p>
-            <p>{receiver.idCard}<em>实名</em></p>
+            <p>{formateIDCard(receiver.idCard)}<em>实名</em></p>
             <p className="fs12px">{receiver.provinceName+receiver.cityName+receiver.districtName+receiver.address}</p>
             <span className="order-icpe"><i className="iconfont icon-right"></i></span>
             </div>
