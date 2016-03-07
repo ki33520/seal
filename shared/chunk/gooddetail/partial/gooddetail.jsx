@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
-import {urlParam,base64Encode} from "../../../lib/util.es6";
+import {urlParam,base64Encode,formatPrice} from "../../../lib/util.es6";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import PullHook from "../../../component/pullhook.jsx";
@@ -24,7 +24,7 @@ class GoodDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
-            buyed:1,
+            buyed:props.goodById.good.buyed,
             popupActive:false,
             trigger:null,
             upperVisble:true,
@@ -184,12 +184,12 @@ class GoodDetail extends Component{
             salePrice = good["mobilePrice"]
             return (
                 <span>
-                <span className="nowPrice">&yen;{salePrice}</span>
+                <span className="nowPrice">&yen;{formatPrice(salePrice)}</span>
                 <span className="exclusive">手机专享价</span>
                 </span>
             )
         }
-        return <span className="nowPrice">&yen;{salePrice}</span>
+        return <span className="nowPrice">&yen;{formatPrice(salePrice)}</span>
     }
     render(){
         const {cartCount} = this.props.cartByUser;
@@ -232,7 +232,7 @@ class GoodDetail extends Component{
                 </div>
                  <div className="price clearfix">
                     {this.renderPrice()}
-                    <span className="oldPrice">市场价&yen;{good.originPrice}</span>
+                    <span className="oldPrice">市场价&yen;{formatPrice(good.originPrice)}</span>
                     {this.renderCountdown()}
                 </div>
                 <Promotions promotions={good.marketing}/>

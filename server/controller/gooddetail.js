@@ -109,11 +109,14 @@ function goodFilter(good) {
         "code", "discount", "isMain", "title", "subTitle", "detail",
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
-        "description", "addCount"
+        "description"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl
     })
+    _good["buyed"] = good.minAmount || 1
+    _good["buyedMinimum"] = good.minAmount || 1
+    _good["buyedStep"] = good.addCount || 1
     _good["showTaxRate"] = (good.showTaxRate * 100 + "%")
     _good["productCode"] = good.groupCode
     _good["salePrice"] = good.salesPrice
@@ -127,7 +130,7 @@ function goodFilter(good) {
         return {
             attrs: group.fattrs,
             code: group.code,
-            stock: group.stock ? group.stock.localStock : null
+            stock: group.stock ? group.stock.stock : null
         }
     })
     var attrs = {}

@@ -13,6 +13,7 @@ function filterResult(goods){
                 title:item.title,
                 flashPrice:item.wapPrice,
                 mobilePrice:item.mobilePrice,
+                useMobilePrice:item.useMobilePrice,
                 salesPrice:item.salesPrice,
                 originPrice:item.originPrice,
                 startTime:item.beginDateStr,

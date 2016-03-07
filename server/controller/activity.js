@@ -18,10 +18,11 @@ function filterResult(goods){
                 startTime:item.beginDateStr,
                 endTime:item.endDateStr,
                 sourceName:item.sourceName,
-                imageUrl:config.imgServer+item.imageUrl,
+                imageUrl:(item.picList && item.picList.length > 0)?
+                    config.imgServer+item.picList[0].url:null,
                 sourceImageUrl:config.imgServer+item.sourceImageUrl,
                 localStock:item.localStock,
-                useMobilePrice:!!item.useMobilePrice
+                useMobilePrice:item.useMobilePrice
             });
         });
     }

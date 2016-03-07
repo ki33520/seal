@@ -39,6 +39,20 @@ export function urlParam(param){
     return paramStr.join("&");
 }
 
+export function destPriceForGoods(goods){
+    if(goods.useMobilePrice){
+        return {
+            destPrice:goods.mobilePrice,
+            discount:goods.mobileDiscount
+        }  
+    }else{
+        return {
+            destPrice:goods.salesPrice,
+            discount:goods.discount
+        }
+    }
+}
+
 export function formatPrice(price){
     if(price == 0){
         return "0.00"

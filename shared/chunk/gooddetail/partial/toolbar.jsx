@@ -33,7 +33,6 @@ class Toolbar extends Component{
             cartCount,selectedAttr,buyed,good} = this.props
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
         const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
-
         const addCartClasses = classNames("goods_add",{
             "disabled":good.stock === 0 || good.flashbuy["active"]
         })
@@ -64,10 +63,12 @@ class Toolbar extends Component{
                     <div className="pro clearfix">
                         <div className="pro-name">
                             <span>购买数量</span>
-                            <em>（限购{good.buyLimit}件）</em>
+                            <em>（限购{buylimit}件）</em>
                         </div>
                         <div className="good-buyed">
-                        <NumberPicker value={buyed} onChange={handleBuyedChanged} minimum={1} maximum={buylimit}/>
+                        <NumberPicker value={buyed} onChange={handleBuyedChanged} 
+                        step={good.buyedStep}
+                        minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
                     </div>
                     <a href="javascript:void(0);" onClick={handleConfirm} className="goodsSureBtn">确定</a>

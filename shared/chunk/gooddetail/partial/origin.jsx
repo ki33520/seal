@@ -33,7 +33,7 @@ class Origin extends Component{
                 </dl>
                 <div className="smallLine"></div> 
                 <dl>
-                  <dt>税费：</dt>
+                  <dt>税率：</dt>
                   <dd>{good.showTaxRate}<a href="#" className="iconfont icon-ask"></a></dd>
                 </dl>
                 <dl>
