@@ -327,11 +327,13 @@ function activityGoodFilter(goods) {
         return {
             singleCode: good.singleCode,
             title: good.title,
-            subTitle: good.subTitle,
+            subTitle: good.descriptionWap,
             imageUrl: config.imgServer + good.imageUrl,
             brandName: good.brandName,
             originPrice: good.originPrice,
-            salePrice: good.salesPrice
+            useMobilePrice:good.useMobilePrice,
+            mobilePrice:good.mobilePrice,
+            salesPrice: good.salesPrice
         }
     })
     return _goods

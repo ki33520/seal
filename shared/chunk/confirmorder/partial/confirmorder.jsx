@@ -110,7 +110,7 @@ class ConfirmOrder extends Component{
         const {dispatch,paygatewayFetched,fetchPayGateway} = this.props;
         if(prevProps.orderVerifying && !this.props.orderVerifying){
             if(this.props.orderVerified){
-                // this.submitOrder()
+                this.submitOrder()
             }else{
                 this.setState({
                     dialogActive:true,

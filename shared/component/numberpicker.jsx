@@ -22,10 +22,10 @@ class NumberPicker extends Component{
         var value = this.state.value;
         // console.log(value)
         const {maximum,step,onChange} = this.props;
-        if(maximum !== null && value >= maximum){
+        value += step;
+        if(maximum !== null && value > maximum){
             return;
         }
-        value += step;
         this.setState({
             value
         },()=>{
@@ -37,10 +37,10 @@ class NumberPicker extends Component{
         var value = this.state.value;
         const {minimum,step,onChange} = this.props;
         // console.log(value,minimum)
-        if(minimum !== null && value <= minimum){
+        value -= step;
+        if(minimum !== null && value < minimum){
             return;
         }
-        value -= step;
         this.setState({
             value
         },()=>{

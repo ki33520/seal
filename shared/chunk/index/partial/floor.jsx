@@ -9,7 +9,7 @@ import Image from "../../../component/image.jsx";
 import ScrollSpy from "../../../component/scrollspy.jsx";
 import Loading from "../../common/loading.jsx";
 import Timer from "../../common/timer.jsx";
-import {validTimeRegion,formatPrice} from "../../../lib/util.es6";
+import {validTimeRegion,formatPrice,destPriceForGoods} from "../../../lib/util.es6";
 
 class Floor extends Component{
     constructor(props){
@@ -45,15 +45,16 @@ class Floor extends Component{
         let {singleRecommend} = this.props.channel.floors;
         if(singleRecommend && singleRecommend.goods && singleRecommend.goods.length > 0){
             let goods = singleRecommend.goods.map((good,i)=>{
+                let destPrice = destPriceForGoods(good).destPrice
                 return (
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                         <img src={good.imageUrl} />
                         <span className="name">{good.title}</span>
-                        <p>{good.descriptionWap}</p>
+                        <p>{good.subTitle}</p>
                         <span className="country"><i><img src="/client/asset/images/ico_flag.png"/></i>荷兰直采</span>
                         <span className="singlePrice">
-                            <span className="nowPrice">&yen;{good.salePrice}</span>
-                            <span className="oldPrice">&yen;{good.originPrice}</span>
+                            <span className="nowPrice">&yen;{formatPrice(destPrice)}</span>
+                            <span className="oldPrice">&yen;{formatPrice(good.originPrice)}</span>
                         </span>
                     </a>
                 )
@@ -73,14 +74,15 @@ class Floor extends Component{
         let {newRecommend} = this.props.channel.floors;
         if(newRecommend && newRecommend.goods && newRecommend.goods.length > 0){
             let goods = newRecommend.goods.map((good,i)=>{
+                let destPrice = destPriceForGoods(good).destPrice
                 return (
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                         <img src={good.imageUrl} />
                         <div className="right">
                             <span className="name">{good.title}</span>
                             <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                            <span className="nowPrice">&yen;{good.salePrice}</span>
-                            <span className="oldPrice">&yen;{good.originPrice}</span>
+                            <span className="nowPrice">&yen;{formatPrice(destPrice)}</span>
+                            <span className="oldPrice">&yen;{formatPrice(good.originPrice)}</span>
                         </div>
                     </a>
                 )   
@@ -184,8 +186,8 @@ class Floor extends Component{
                                 <div className="flashDot"></div>
                                 <span className="name">{good.title}</span>
                                 <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>
-                                <span className="nowPrice">&yen;{salePrice}</span>
-                                <span className="oldPrice">&yen;{good.originPrice}</span>
+                                <span className="nowPrice">&yen;{formatPrice(salePrice)}</span>
+                                <span className="oldPrice">&yen;{formatPrice(good.originPrice)}</span>
                             </div>
                         </a>
                         )
