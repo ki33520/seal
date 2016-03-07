@@ -4,9 +4,7 @@ import classNames from "classnames";
 import {formatPrice} from "../../../lib/util.es6";
 class GoodItem extends Component{
     filterPrice(goods){
-        if(goods.flashPrice && goods.flashPrice > 0){
-            return formatPrice(goods.flashPrice);
-        }else if(goods.useMobilePrice&&goods.mobilePrice>0){
+        if(goods.useMobilePrice&&goods.mobilePrice>0){
             return formatPrice(goods.mobilePrice);
         }else{
             return formatPrice(goods.salesPrice);

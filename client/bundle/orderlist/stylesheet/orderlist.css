@@ -91,7 +91,7 @@ body{
     margin-left: 0;
 }
 .order-up .right em {
-    color: #ed1a47;
+    color: #f17082;
     /*float: right;*/
     display:inline-block;
 }
@@ -162,6 +162,9 @@ body{
     font-size: .38rem;
     z-index: 98;
 }
+.J_moveRight .gd_info .value span .price_b{
+    font-size: .33rem;
+}
 .order-down>span{
     font-size: .34rem;
     line-height: .8rem;
@@ -180,6 +183,9 @@ body{
 .order-down span em:first-letter{
     font-size:.266667rem;
     padding-right:.06rem;
+}
+.order-down span em .price_b{
+    font-size: .35rem;
 }
 .order-down a {
     float: right;

@@ -60,6 +60,9 @@
     font-size:.27rem;
     padding-bottom:.32rem;
 }
+.orderSpeed > span span.timer{
+    margin-right: .1rem;
+}
 .orderSpeed .orderNum{
     padding:.32rem;
     margin-bottom: .32rem;
@@ -196,7 +199,7 @@
     text-align: left;
     margin: .16rem 0 0 0;
 }
-.J_moveRight .gd_info .value i {
+.J_moveRight .gd_info .value>i {
     font-size: .18rem;
     margin-right: .1rem;
 }
@@ -204,8 +207,11 @@
     font-size: .35rem;
     margin-right: .24rem;
 }
+.J_moveRight .gd_info .value span i.price_b{
+    font-size: .28rem;
+}
 .J_moveRight .gd_info .value b {
-    font-size: .35rem;
+    font-size: .28rem;
     font-weight: normal;
     color: #333;
 }

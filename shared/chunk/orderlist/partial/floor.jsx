@@ -31,6 +31,10 @@ class Floor extends Component{
             dialogActive:!this.state.dialogActive
         });
     }
+    formatPrice(price){
+        var _price = Number(price).toFixed(2).split('.');
+        return <span><i className="price_a">{_price[0]}</i><i className="price_dot">.</i><i className="price_b">{_price[1]}</i></span>
+    }
     handleDeliveryOrder(child,i,e){
         e && e.preventDefault();
         const {dispatch,confirmDialog} = this.props;
@@ -130,7 +134,7 @@ class Floor extends Component{
                         </span>
                         <div className="gd_info">
                             <p className="name">{good.singleTitle}</p>
-                            <p className="value">&yen;{salesPrice.toFixed(2)}</p>
+                            <p className="value">&yen;{this.formatPrice(salesPrice)}</p>
                         </div>
                     </div>
                 )
@@ -171,7 +175,7 @@ class Floor extends Component{
                         </div>
                         <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
-                            <span>合计：<em>&yen;{paymentFeeTotal.toFixed(2)}</em></span>
+                            <span>合计：<em>&yen;{this.formatPrice(paymentFeeTotal)}</em></span>
                             {this.renderButtons(child,i)}
                         </div>
                     </div>
