@@ -95,6 +95,9 @@ body{
     /*float: right;*/
     display:inline-block;
 }
+.order-up .right em.green{
+    color: #75d37f;
+}
 .comment .order-up .right em,
 .complete .order-up .right em{
     color:#27c241;
@@ -163,7 +166,7 @@ body{
     z-index: 98;
 }
 .J_moveRight .gd_info .value span .price_b{
-    font-size: .33rem;
+    //font-size: .33rem;
 }
 .order-down>span{
     font-size: .34rem;
@@ -185,7 +188,7 @@ body{
     padding-right:.06rem;
 }
 .order-down span em .price_b{
-    font-size: .35rem;
+    //font-size: .35rem;
 }
 .order-down a {
     float: right;

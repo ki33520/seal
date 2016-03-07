@@ -164,13 +164,16 @@ class Floor extends Component{
                 const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
                 const paymentFeeTotal = paymentFee !== undefined ? paymentFee : 0;
                 const crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD HH:mm:ss");
+                const classes = classNames({
+                    green: orderStatus === "STATUS_FINISHED"
+                });
                 return (
                     <div className="order-box" key={i}>
                         <div className="order-up">
                             <span>{crtTime}</span>
                             <div className="right">
                                 {this.renderOutTime(child)}
-                                <em>{orderStatusObj[orderStatus]}</em>
+                                <em className={classes}>{orderStatusObj[orderStatus]}</em>
                             </div>
                         </div>
                         <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
