@@ -5,6 +5,10 @@ import LazyLoad from "../../../component/lazyload/lazyload.jsx";
 import Image from "../../../component/lazyload/image.jsx";
 
 class OrderGoods extends Component{
+    formatPrice(price){
+        var _price = Number(price).toFixed(2).split('.');
+        return <span><i className="price_a">{_price[0]}</i><i className="price_dot">.</i><i className="price_b">{_price[1]}</i></span>
+    }
     renderGoods(){
         const {itemList} = this.props;
         if(itemList.length > 0){
@@ -23,7 +27,7 @@ class OrderGoods extends Component{
                                     <span>{v.singleTitle}</span>
                                 </a>
                             </p>
-                            <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span><i>X</i><b>{v.qty}</b></p>
+                            <p className="value"><i>&yen;</i>{this.formatPrice(v.salesPrice)}<i className="x">&times;</i><b>{v.qty}</b></p>
                         </div>
                     </div>
                 )

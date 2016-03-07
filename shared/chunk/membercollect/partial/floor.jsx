@@ -3,6 +3,10 @@
 import React,{Component} from "react";
 
 class Floor extends Component{
+    formatPrice(price){
+        var _price = Number(price).toFixed(2).split('.');
+        return <span><i className="price_a">{_price[0]}</i><i className="price_dot">.</i><i className="price_b">{_price[1]}</i></span>
+    }
     render(){
         const {list,handleDelete} = this.props;
         if(list.length>0){
@@ -22,8 +26,8 @@ class Floor extends Component{
                                             <div className="title"><a href={"/gooddetail/"+child.singleCode}>{child.title}</a></div>
                                             <div className="origin"><img src={child.sourceImage} />{child.sourceName}</div>
                                             <div className="price">
-                                                <span className="price-sales"><i>￥</i>{child.salesPrice.toFixed(2)}</span>
-                                                <span className="price-origin"><i>￥</i>{child.originPrice.toFixed(2)}</span>
+                                                <span className="price-sales"><i>￥</i>{this.formatPrice(child.salesPrice)}</span>
+                                                <span className="price-origin"><i>￥</i>{this.formatPrice(child.originPrice)}</span>
                                                 <span className="delete"><a onClick={handleDelete.bind(this,child)} className="iconfont icon-trash"></a></span>
                                             </div>
                                         </div>
