@@ -172,7 +172,6 @@ class OrderDetail extends Component{
         const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
         const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
 
-        console.log(orderStatus, timeoutTime)
         if(orderStatus === "STATUS_NOT_PAY" && timeoutTime){
             return (
                 <span>
