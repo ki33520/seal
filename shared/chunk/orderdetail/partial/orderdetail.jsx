@@ -172,11 +172,10 @@ class OrderDetail extends Component{
         const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
         const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
 
-        console.log(orderStatus, timeoutTime)
         if(orderStatus === "STATUS_NOT_PAY" && timeoutTime){
             return (
                 <span>
-                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
                     <i>后自动取消</i>
                 </span>
             )

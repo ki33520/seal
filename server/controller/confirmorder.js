@@ -151,7 +151,7 @@ var verifyOrder = function(req,res,next){
         qtys: buyeds,
         couponNo: couponNo,
         memberDlvAddressId: receiverId,
-        paymentFee: 50
+        paymentFee:totalFee
     }).then(function(ret){
         if(ret.returnCode === 0){
             res.json({

@@ -97,7 +97,7 @@ function orderByParam(state={},action){
 }
 
 function errMsgByCode(errCode){
-    let errMsg = null
+    let errMsg = "订单异常"
     switch(errCode){
         case -1:
             errMsg = "校验失败,请检查网络是否可用"

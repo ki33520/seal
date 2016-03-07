@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
 import classNames from "classnames";
-import {formatPrice} from "../../lib/util.es6";
+import {formatPrice,destPriceForGoods} from "../../lib/util.es6";
 import Refresher from "../../component/refresher.jsx";
 
 class Topic extends Component{
@@ -39,7 +39,7 @@ class Topic extends Component{
         let goods = [];
  
         list.forEach(function(item,i){
-            const salesPrice = formatPrice(item.flashPrice||item.mobilePrice||item.salesPrice);
+            const salesPrice = formatPrice(destPriceForGoods(item).destPrice);
             const originPrice = formatPrice(item.originPrice);
             goods.push(
                 <a href={"/gooddetail/"+item.singleCode} className="clearfix" key={i}>

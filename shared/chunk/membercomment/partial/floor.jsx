@@ -6,6 +6,10 @@ import moment from "moment";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 
 class Floor extends Component{
+    formatPrice(price){
+        var _price = Number(price).toFixed(2).split('.');
+        return <span><i className="price_a">{_price[0]}</i><i className="price_dot">.</i><i className="price_b">{_price[1]}</i></span>
+    }
     renderNode(list){
         if(list.length>0){
             return (
@@ -51,7 +55,7 @@ class Floor extends Component{
                                         <div className="col col-right">
                                             <div className="title">{child.singleTitle}</div>
                                             <div className="price">
-                                                <span><i>￥</i>{child.salesPrice.toFixed(2)}</span>
+                                                <span><i>￥</i>{this.formatPrice(child.salesPrice)}</span>
                                             </div>
                                         </div>
                                     </div>

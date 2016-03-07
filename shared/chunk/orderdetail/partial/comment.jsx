@@ -13,6 +13,10 @@ import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 class Comment extends Component{
+    formatPrice(price){
+        var _price = Number(price).toFixed(2).split('.');
+        return <span><i className="price_a">{_price[0]}</i><i className="price_dot">.</i><i className="price_b">{_price[1]}</i></span>
+    }
     handleStar(name,pid,val,e){
         const {changeField} = this.props;
         var rate = val>3 ? val : 3;
@@ -96,7 +100,7 @@ class Comment extends Component{
                                 </a>
                                 <div className="gd_info">
                                     <p className="name">{v.singleTitle}</p>
-                                    <p className="value"><i>&yen;</i><span>{v.salesPrice.toFixed(2)}</span></p>
+                                    <p className="value"><i>&yen;</i>{this.formatPrice(v.salesPrice)}</p>
                                 </div>
                             </div>
                         </div>
