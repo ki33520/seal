@@ -60,6 +60,9 @@
     font-size:.27rem;
     padding-bottom:.32rem;
 }
+.orderSpeed > span span.timer{
+    margin-right: .1rem;
+}
 .orderSpeed .orderNum{
     padding:.32rem;
     margin-bottom: .32rem;
