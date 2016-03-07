@@ -13,7 +13,6 @@ class OrderGoods extends Component{
         const {itemList} = this.props;
         if(itemList.length > 0){
             const goodItems = itemList.map((v,k)=>{
-                console.log(v)
                 return (
                     <div className="clearfix" key={k}>
                         <a className="J_ytag cartlist" href={"/gooddetail/"+v.singleCode}>

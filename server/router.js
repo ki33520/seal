@@ -63,6 +63,7 @@ router.get("/logistics",mainController.requireAuthorize,require("./controller/or
 
 router.get("/aboutus", require("./controller/aboutus"));
 router.get("/help", require("./controller/help").index);
+router.get("/question", require("./controller/help").question);
 router.post("/sendfeedback", require("./controller/help").sendFeedback);
 
 router.get("/membercenter",mainController.authorizeLocals,require("./controller/membercenter"));
