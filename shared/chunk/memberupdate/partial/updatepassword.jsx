@@ -31,31 +31,34 @@ class UpdatePassword extends Component{
         const rules = {
             oldPassword: {
                 reg: /^[A-Za-z0-9_]{1,}$/,
-                msg: "请输入旧密码"
+                msg: ["请输入旧密码","旧密码错误，请重新输入！"]
             },
             password: {
-                reg: /^[a-z0-9_-]{6,18}$/,
-                msg: "新密码长度需6-18个字符"
+                reg: /^[a-z0-9_-]{6,16}$/,
+                msg: ["请输入新密码，6-16个字符","新密码长度不符合要求，请重新输入正确的6-16个字符的密码！","新密码格式不符合要求，请重新输入正确的6-16个字符的密码！"]
             },
             repeatPassword: {
-                reg: /^[a-z0-9_-]{6,18}$/,
-                msg: "重复密码长度需6-18个字符"
+                reg: /^[a-z0-9_-]{6,16}$/,
+                msg: ["请重复新密码","重复新密码错误，请重新输入！"]
             }
         };
         if(typeof field === 'object'){
             for(let i in field){
                 let rule = rules[i];
                 if(rule){
-                    if(!rule.reg.test(field[i]) || !field[i]){
-                        dispatch(alert(rule.msg,1000));
-                        return false;
-                    };
-                }else{
-                    if(field.repeatPassword != field.password){
-                        dispatch(alert("新密码与重复密码不同",1000));
+                    if(field[i].length===0){
+                        dispatch(alert(rule.msg[0],2000));
                         return false;
                     }
-                    console.log(field[i])
+                    if(!rule.reg.test(field[i])){
+                        dispatch(alert(rule.msg[1],2000));
+                        return false;
+                    };
+                    if(i==="repeatPassword" && field.repeatPassword != field.password){
+                        dispatch(alert(rule.msg[1],2000));
+                        return false;
+                    }
+                }else{
                     field[i]();
                 }
             }
