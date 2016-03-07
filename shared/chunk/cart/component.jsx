@@ -200,8 +200,7 @@ class Cart extends Component {
         const limit = Math.min(goods.buyLimit,goods.stockCount);
         const buyed = goods.qty;
         const limitStyle = classNames({
-            hide:buyed<limit,
-            limitBuy:buyed>=limit
+            limitBuy:limit
         });
         const soldout = classNames({
             "sold-out":!goods.stockFlag

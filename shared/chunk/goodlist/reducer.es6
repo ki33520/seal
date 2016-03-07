@@ -18,10 +18,13 @@ function index(state={},action){
                 isFetching:true
             });
         case RECEIVE_GOODS:
+            var _list = state.list.slice();
+            var arr = _list.concat(action.res.list);
+            var list = _.uniq(arr);
             return Object.assign({},state,{
                 isFetching:false,
                 isFetched:action.res.isFetched,
-                list:action.res.list,
+                list:list,
                 params:action.params
             });
         case TOGGLE_CHECKED:
