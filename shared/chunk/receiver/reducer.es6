@@ -93,6 +93,7 @@ function addReceiver(state={},action){
             return Object.assign({},state,{
                 receiverSaving:false,
                 receiverSaved:action.res.receiverSaved,
+                errMsg:action.res.errMsg,
                 receiver
             });
         case REQUEST_PROVINCES:
