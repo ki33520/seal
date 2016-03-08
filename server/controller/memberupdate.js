@@ -73,15 +73,22 @@ var updatePassword = function(req, res, next) {
             rpassword: repeatPassword
         },false)
     }).then(function(ret) {
+        var msg = ret.updatePasswordByUser.message;
+        if(msg === "账号密码错误"){
+            msg = "旧密码错误，请重新输入！";
+        }
+        if(msg === "成功"){
+            msg = "修改成功";
+        }
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
                 isChanged: true,
-                msg:ret.updatePasswordByUser.message
+                msg: msg
             })
         }else{
             res.json({
                 isChanged:false,
-                msg:ret.updatePasswordByUser.message
+                msg: msg
             })
         }
     });

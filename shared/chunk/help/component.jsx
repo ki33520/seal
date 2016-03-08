@@ -14,16 +14,17 @@ import {alert} from "../common/action.es6";
 class HelpList extends Component{
     constructor(props){
         super(props);
+        const {questionCategory} = props;
         this.state = {
-            currentQuestion: 0
+            currentQuestion: questionCategory.result[0]
         }
     }
-    handleSceneChange(currentScene,key){
+    handleSceneChange(currentScene,value){
         const {fetchHotWord} = this.props
         switch(currentScene){
             case "question":
                 this.setState({
-                    currentQuestion: key
+                    currentQuestion: value
                 });
         }
     }
