@@ -31,9 +31,9 @@ class GoodItem extends Component{
                     	{goods.sourceName}
                     </div>
                     <p className="title">{goods.title}</p>
-                    <div>
-                        <span className="now-price">&yen;{salesPrice}</span>
-                        <span className="old-price">&yen;{originPrice}</span>
+                    <div className="prices">
+                        <span className="now-price">{'¥'+salesPrice}</span>
+                        <span className="old-price">{'¥'+originPrice}</span>
                     </div>
     	        </a>
             </div>
