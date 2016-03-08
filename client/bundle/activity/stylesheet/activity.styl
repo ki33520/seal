@@ -93,19 +93,23 @@
             -webkit-box-orient: vertical;
             white-space:normal;
         }
-        .now-price {
-            float: left;
-            color: #ed1946;
-            font-size: .6rem;
-            line-height: .6rem;
-            display: block;
-        }
-        .old-price {
-            text-decoration: line-through;
-            float: right;
-            color: #999;
-            display: inline-block;
-            line-height: .6rem;
+        .prices {
+            display: flex;
+            justify-content:space-between;
+            align-items: center;
+            .now-price {
+                font-size: .6rem;
+                line-height: .6rem;
+                color: #ed1946;
+            }
+            .old-price {
+                font-size: .32rem;
+                line-height: .6rem;
+                color: #999;
+                text-decoration: line-through;
+                 overflow: hidden;
+                 text-overflow:ellipsis;
+            }
         }
     }
 }
