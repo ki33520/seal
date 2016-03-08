@@ -169,9 +169,20 @@ class Floor extends Component{
                 if(validTime === 0){
                     goods = flashbuy.goods.map((good,i)=>{
                         let timer = (
+                            <p>距本期闪购结束<em>
                             <Timer endTime={good.endTime} dayEnable={true} 
                             template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                            </em></p>
                         )
+                        let validTime = validTimeRegion(good.startTime,good.endTime)
+                        if(validTime === -1){
+                            timer = <p>距本期闪购开始<em>
+                            <Timer endTime={good.startTime} dayEnable={true} 
+                            template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
+                            </em></p>
+                        }else if(validTime === 1){
+                            timer = <p>本期闪购已结束</p>
+                        }
                         let salePrice = good.salePrice
                         if(good.isFlashbuyActive){
                             salePrice = good.flashPrice
@@ -182,7 +193,7 @@ class Floor extends Component{
                         <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
                             <img src={good.imageUrl}/>
                             <div className="right">
-                                <p>距本期闪购结束<em>{timer}</em></p>
+                                {timer}
                                 <div className="flashDot"></div>
                                 <span className="name">{good.title}</span>
                                 <span className="country"><i><img src="/client/asset/images/ico_flag.png" alt="" /></i>荷兰</span>

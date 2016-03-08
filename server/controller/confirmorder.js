@@ -56,6 +56,7 @@ function orderFilter(order) {
         // console.log('coupons',_order["coupons"])
         _order["checkedCoupon"] = _order["coupons"][0]
         _order["couponFee"] = _order["checkedCoupon"]["couponFee"]
+        _order["totalFee"] = Math.round((_order["totalFee"] - _order["couponFee"]) * 100) / 100
     }
         // order.coupons = formatCoupons(originResp.couponList)
     return _order;

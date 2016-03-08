@@ -169,33 +169,33 @@ function receiverValidator(receiver){
             // return {isValid:false,errMsg:"姓名不合法"}
         }
     }else{
-        return {isValid:false,errMsg:"姓名不能为空"}
+        return {isValid:false,errMsg:"请输入收货人姓名"}
     }
     if(receiver.idCard){
         if(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/g.test(receiver.idCard) === false){
-            return {isValid:false,errMsg:"身份证不合法"}
+            return {isValid:false,errMsg:"身份证号输入有误"}
         }
     }else{
-        return {isValid:false,errMsg:"身份证不能为空"}
+        return {isValid:false,errMsg:"请输入收货人身份证号"}
     }
     if(receiver.recvMobile){
         if(/^1[3|4|5|7|8]\d{9}$/g.test(receiver.recvMobile) === false){
-            return {isValid:false,errMsg:"手机号码不合法"}
+            return {isValid:false,errMsg:"电话号码输入有误"}
         }
     }else{
-        return {isValid:false,errMsg:"手机号码不能为空"}
+        return {isValid:false,errMsg:"请输入收货人电话"}
     }
     if(!receiver.provinceCode){
-        return {isValid:false,errMsg:"省份不能为空"}
+        return {isValid:false,errMsg:"请选择省份"}
     }
     if(!receiver.cityCode){
-        return {isValid:false,errMsg:"城市不能为空"}
+        return {isValid:false,errMsg:"请选择城市"}
     }
     if(!receiver.areaCode){
-        return {isValid:false,errMsg:"区县不能为空"}
+        return {isValid:false,errMsg:"请选择区县"}
     }
     if(!receiver.address){
-        return {isValid:false,errMsg:"详细地址不能为空"}
+        return {isValid:false,errMsg:"请输入详细地址"}
     }
     return {isValid,errMsg}
 }
