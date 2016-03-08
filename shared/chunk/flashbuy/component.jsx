@@ -35,8 +35,8 @@ class FlashBuy extends Component{
                                 <i><img src={goods.sourceImageUrl} alt="" /></i>
                                 {goods.sourceName}
                             </span>
-                            <span className="nowPrice">&yen;{salesPrice}</span>
-                            <span className="oldPrice">&yen;{originPrice}</span>
+                            <span className="nowPrice">{'¥'+salesPrice}</span>
+                            <span className="oldPrice">{'¥'+originPrice}</span>
                         </div>
                     </a>
                 )

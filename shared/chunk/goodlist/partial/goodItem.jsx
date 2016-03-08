@@ -23,7 +23,7 @@ class GoodItem extends Component{
         return (
             <a href={"/gooddetail/"+goods.singleCode}>
             	<div className="clearfix">
-                	<div className={soldOut}></div>
+                    <div className={soldOut}></div>
                     <div className={saleIcon}></div>
                     <img src={goods.smallImageUrl} alt="" />
                     <div className="country">
@@ -31,12 +31,12 @@ class GoodItem extends Component{
                     	{goods.sourceName}
                     </div>
                     <p className="title">{goods.materTitle}</p>
-                    <div>
-                        <span className="now-price">&yen;{salesPrice}</span>
-                        <span className="old-price">&yen;{originPrice}</span>
+                    <div className="prices">
+                        <span className="now-price">{'¥'+salesPrice}</span>
+                        <span className="old-price">{'¥'+originPrice}</span>
                     </div>
-                </div>
-	        </a>
+             </div>
+	</a>
         )
     }
 }
