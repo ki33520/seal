@@ -15,16 +15,26 @@ function questionCategory(state={},action){
 function questionByForm(state={},action){
 	switch(action.type){
 	    case REQUEST_QUESTION:
+            var questionList = {...state.questionList};
+            var param = action.param;
+            if(questionList &&  questionList.catalogId !== param.catalogId){
+            	questionList.list = [];
+            	questionList.catalogName = param.catalogName;
+            }
 	        return Object.assign({},state,{
-	            questionChanging:true,
-	            questionChanged:false
-	        });
+	            isFetching:true,
+	            isFetched:false
+	        },{questionList:questionList});
 	    case RESPONSE_QUESTION:
-	    	console.log(action.res)
+            var questionList = {...state.questionList};
+	    	var newQuestionList = action.res.questionList;
+	    	if(questionList && questionList.catalogId === newQuestionList.catalogId){
+	    		newQuestionList.list = _.union(questionList.list,newQuestionList.list);
+	    	};
 	        return Object.assign({},state,{
-	            questionChanging:false,
-	            questionChanged:action.res.isFetched,
-                questionList: action.res.questionList,
+	            isFetching:false,
+	            isFetched:action.res.isFetched,
+	            questionList: newQuestionList,
 	            msg:action.res.msg
 	        });
 	    case SHOW_ALERT:

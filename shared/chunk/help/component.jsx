@@ -15,16 +15,15 @@ class HelpList extends Component{
     constructor(props){
         super(props);
         const {questionCategory} = props;
-        this.state = {
-            currentQuestion: questionCategory.result[0]
-        }
     }
     handleSceneChange(currentScene,value){
-        const {fetchHotWord} = this.props
+        const {fetchQuestion} = this.props;
         switch(currentScene){
             case "question":
-                this.setState({
-                    currentQuestion: value
+                fetchQuestion("/question",{
+                    catalogName: value.catalogName,
+                    catalogId: value.id,
+                    start: 1
                 });
         }
     }
@@ -32,14 +31,12 @@ class HelpList extends Component{
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
                 <Scene name="index"><HelpMain {...this.props}/></Scene>
-                <Scene name="question"><Question currentQuestion={this.state.currentQuestion} {...this.props}/></Scene>
+                <Scene name="question"><Question {...this.props}/></Scene>
                 <Scene name="onlineservice"><Onlineservice {...this.props}/></Scene>
                 <Scene name="feedback"><Feedback {...this.props}/></Scene>
             </SceneGroup>
         );
     }
-
 }
-
 
 export default HelpList;

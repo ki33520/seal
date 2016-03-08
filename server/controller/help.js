@@ -5,6 +5,10 @@ var util = require("../lib/util");
 var bluebird = require("bluebird");
 var HelpApp = util.getSharedComponent("help");
 
+var formatComment = function(object){
+    return object;
+}
+
 var index = function(req, res, next) {
     var user = req.session.user;
 
@@ -32,8 +36,9 @@ var index = function(req, res, next) {
 }
 var question = function(req, res, next) {
     var catalogId = req.query.catalogId;
-    var start = req.query.start ? req.query.start : 0;
-    var limit = req.query.limit ?req.query.limit : 10;
+    var catalogName = req.query.catalogName;
+    var start = req.query.start ? Number(req.query.start) : 1;
+    var limit = req.query.limit ? Number(req.query.limit) : 10;
     bluebird.props({
         questionList: util.fetchAPI("questionList", {
             catalogId: catalogId,
@@ -41,16 +46,26 @@ var question = function(req, res, next) {
             limit: limit
         },false)
     }).then(function(ret) {
-        console.log(ret)
-        var questionList = [];
         if (ret.questionList.returnCode === 0) {
-            questionList = ret.questionList.object;
-        }
-        if (req.xhr === true){
-            res.json({
-                isFetched: true,
-                questionList: questionList
-            });
+            var object = ret.questionList.object;
+            var questionList = {
+                totalCount: object.totalCount,
+                pageCount: Math.ceil(object.totalCount/limit),
+                list: object.result ? formatComment(object.result) : [],
+                pageIndex: start,
+                pageSize: limit,
+                catalogName: catalogName,
+                catalogId: catalogId
+            };
+
+            if (req.xhr === true){
+                res.json({
+                    isFetched: true,
+                    questionList: questionList
+                });
+            }
+        }else{
+            next(new Error(ret.questionList.message));
         }
     }).error(function() {
         next(new Error('api request failed'));

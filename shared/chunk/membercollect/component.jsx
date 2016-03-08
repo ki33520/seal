@@ -36,14 +36,6 @@ class MembercollectList extends Component{
             pageIndex:nextPage
         })
     }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.memberCollectByUser.isToggling === false &&
-           this.props.memberCollectByUser.isToggling === true){
-            if(nextProps.memberCollectByUser.isToggled === true){
-                this.beginRefresh();
-            }
-        }
-    }
     handleDelete(child,e){
         e && e.preventDefault();
         e && e.preventDefault();
