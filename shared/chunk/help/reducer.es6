@@ -1,18 +1,39 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {CHANGE_FIELD,START_CHANGE_FEEDBACK,FINISH_CHANGE_FEEDBACK} from "./action.es6";
+import {CHANGE_FIELD,REQUEST_QUESTION,RESPONSE_QUESTION,START_CHANGE_FEEDBACK,FINISH_CHANGE_FEEDBACK} from "./action.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/action.es6";
 import {alertReducer} from "../common/reducer.es6";
 
-function questionList(state={},action){
+function questionCategory(state={},action){
     switch(action.type){
         default:
             return state;
     }
 }
-
+function questionByForm(state={},action){
+	switch(action.type){
+	    case REQUEST_QUESTION:
+	        return Object.assign({},state,{
+	            questionChanging:true,
+	            questionChanged:false
+	        });
+	    case RESPONSE_QUESTION:
+	    	console.log(action.res)
+	        return Object.assign({},state,{
+	            questionChanging:false,
+	            questionChanged:action.res.isFetched,
+                questionList: action.res.questionList,
+	            msg:action.res.msg
+	        });
+	    case SHOW_ALERT:
+	    case HIDE_ALERT:
+	        return alertReducer(state,action)
+	    default:
+	        return state;
+    }
+}
 function feedbackByForm(state={},action){
     switch(action.type){
 	    case CHANGE_FIELD:
@@ -40,7 +61,8 @@ function feedbackByForm(state={},action){
 }
 
 const rootReducer = combineReducers({
-    questionList,
+    questionCategory,
+    questionByForm,
     feedbackByForm
 });
 

@@ -9,23 +9,48 @@ var index = function(req, res, next) {
     var user = req.session.user;
 
     bluebird.props({
-        questionList: util.fetchAPI("questionList", {
+        questionCategory: util.fetchAPI("questionCategory", {
         },false)
     }).then(function(ret) {
+        var questionCategory = [];
+        if (ret.questionCategory.returnCode === 0) {
+            questionCategory = ret.questionCategory.object;
+        }
+        var initialState = {
+            questionCategory : questionCategory
+        };
+        var markup = util.getMarkupByComponent(HelpApp({
+            initialState: initialState
+        }));
+        res.render('help', {
+            markup: markup,
+            initialState: initialState
+        });
+    }).error(function() {
+        next(new Error('api request failed'));
+    });
+}
+var question = function(req, res, next) {
+    var catalogId = req.query.catalogId;
+    var start = req.query.start ? req.query.start : 0;
+    var limit = req.query.limit ?req.query.limit : 10;
+    bluebird.props({
+        questionList: util.fetchAPI("questionList", {
+            catalogId: catalogId,
+            start: start,
+            limit: limit
+        },false)
+    }).then(function(ret) {
+        console.log(ret)
+        var questionList = [];
         if (ret.questionList.returnCode === 0) {
-            var questionList = ret.questionList.object;
-            var initialState = {
-                questionList : questionList
-            };
-            var markup = util.getMarkupByComponent(HelpApp({
-                initialState: initialState
-            }));
-            res.render('help', {
-                markup: markup,
-                initialState: initialState
-            })
-        }else{
-            next(new Error(ret.questionList.message));
+            questionList = ret.questionList.object;
+        }
+        if (req.xhr === true){
+            res.json({
+                isFetched: true,
+                questionList: questionList
+            });
         }
     }).error(function() {
         next(new Error('api request failed'));
@@ -55,5 +80,6 @@ var sendFeedback = function(req, res, next) {
 
 module.exports = {
     index: index,
+    question: question,
     sendFeedback: sendFeedback
 };

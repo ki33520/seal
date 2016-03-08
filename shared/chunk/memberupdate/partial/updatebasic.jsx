@@ -47,26 +47,25 @@ class UpdateBasic extends Component{
                         return true;
                     }
                 },
-                msg: "请按正确格式填写昵称"
+                msg: ["请输入昵称","昵称必须为4-20个字符"]
             },
             fieldgender: {
                 reg: function(str){
                     return /^[0-9]{1}$/.test(str);
                 },
-                msg: "请选择性别"
-            },
-            birthday:{
-                reg: function(str){
-                    return true;
-                }
+                msg: ["请选择性别","请选择性别"]
             }
         };
         if(typeof field === "object"){
             for(let i in field){
                 let rule = rules[i];
                 if(rule){
+                    if(field[i].length===0){
+                        dispatch(alert(rule.msg[0],2000));
+                        return false;
+                    }
                     if(!rule.reg(field[i])){
-                        dispatch(alert(rule.msg,1000));
+                        dispatch(alert(rule.msg[1],2000));
                         return false;
                     }
                 }else{

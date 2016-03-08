@@ -7,14 +7,15 @@ import Header from "../../common/header.jsx";
 
 class HelpMain extends Component{
     renderQuestion(){
-        const {questionList,changeScene} = this.props;
+        const {questionCategory,changeScene} = this.props;
+        const {result} = questionCategory;
         return (
             <div>
                 <ul className="list">
                     {
-                        questionList.map((v,k)=>{
+                        result.map((v,k)=>{
                             return (
-                                <li key={k}><a href="javascript:void(null)" onClick={changeScene.bind(this,"question",k)}>{v.questionName}</a></li>
+                                <li key={k}><a href="javascript:void(null)" onClick={changeScene.bind(this,"question",v)}>{v.catalogName}</a></li>
                             )
                         })
                     }

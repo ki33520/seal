@@ -215,6 +215,14 @@
             "production": "marketing.hwg.youayun.cn"
         }
     },
+    "questionCategory": {
+        "uri": "/content/v1/questioncategory/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    },
     "questionList": {
         "uri": "/content/v1/question/list",
         "baseURL": {

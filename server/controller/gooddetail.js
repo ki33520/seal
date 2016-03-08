@@ -5,6 +5,7 @@ var util = require("../lib/util");
 var bluebird = require("bluebird");
 var moment = require("moment");
 var GoodDetailApp = util.getSharedComponent("gooddetail");
+var ErrorContent = util.getSharedComponent("common", "error.jsx");
 var config = require("../lib/config");
 
 var goodDetail = function(req, res, next) {
@@ -65,6 +66,19 @@ var goodDetail = function(req, res, next) {
                     initialState: initialState
                 })
             }
+        } else if(ret["goodById"].returnCode === -202001 && req.xhr === false){
+            var initialState = {
+                code: "500",
+                msg:"啊噢~您查看的商品已下架咯..."
+            };
+            var markup = util.getMarkupByComponent(ErrorContent({
+                initialState: initialState
+            }));
+
+            res.render('error', {
+                markup: markup,
+                initialState: initialState
+            });
         } else {
             if (req.xhr) {
                 res.json({
@@ -109,7 +123,7 @@ function goodFilter(good) {
         "code", "discount", "isMain", "title", "subTitle", "detail",
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
-        "description"
+        "description","isMeiZhuang"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl
