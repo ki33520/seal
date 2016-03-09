@@ -197,10 +197,10 @@ class Cart extends Component {
     }
     renderGoods(goods,i,j,k) {
         const salePrice = formatPrice(goods.salePrice);
-        const limit = Math.min(goods.buyLimit,goods.stockCount);
+        const maxBuy = Math.min(goods.buyLimit,goods.stockCount);
         const buyed = goods.qty;
         const limitStyle = classNames({
-            limitBuy:limit
+            limitBuy:maxBuy
         });
         const soldout = classNames({
             "sold-out":!goods.stockFlag
@@ -218,7 +218,7 @@ class Cart extends Component {
                                 <img width="100%" src={goods.imageUrl} />
                                 <div className={soldout}></div>
                             </a>
-                            <span className={limitStyle}>限购{limit}件</span>
+                            <span className={limitStyle}>{'限购'+maxBuy+'件'}</span>
                         </div>
                         <div className="gd_info">
                             <p className="name">
@@ -227,7 +227,8 @@ class Cart extends Component {
                               <em>{'x'+buyed}</em>
                             </p>
                             <div className="act_wrap"> 
-                                <NumberPicker type="number" value={buyed} minimum={1} maximum={limit}
+                                <NumberPicker type="number" value={buyed} 
+                                minimum={goods.minBuyStep} maximum={maxBuy} step={goods.buyedStep}
                                 onChange={this.handleChangeBuyed.bind(this,goods,i,j,k)} />
                             </div>
                         </div>

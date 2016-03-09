@@ -45,7 +45,12 @@ function formatCarts(originalCarts) {
                     stockFlag:goods.stockFlag,
                     stockCount:goods.stockCount,
                     buyLimit:goods.buyLimit,
-                    checked:true
+                    "version": goods.version,
+                   "minBuyStep": goods.minBuyCount||1,
+                   "buyedStep": goods.addCount||1,
+                   "hasSystemUpQty": goods.hasSystemUpQty,
+                   "systemUpType": goods.systemUpType,
+                    checked:true,
                 }
                 group.list.push(product);
             });
