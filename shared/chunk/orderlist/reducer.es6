@@ -9,6 +9,12 @@ import {alertReducer} from "../common/reducer.es6";
 export function ordersByParam(state={},action){
     switch(action.type){
         case REQUEST_ORDER:
+            const status = action.param.status;
+            if(!state.orders[status]){
+                state.orders[status] = {}
+            }
+            state.orders[status].isFetched = false;
+            state.orders[status].isFetching = true;
             return Object.assign({},state,{
             	isFetched:false,
                 isFetching:true

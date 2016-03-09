@@ -62,6 +62,8 @@ var orderList = function(req, res,next) {
             order.totalCount = object.totalCount;
             order.pageCount = Math.ceil(order.totalCount/pageSize);
             order.list = object.result ? formatOrder(object.result) : [];
+            order.isFetched = true;
+            order.isFetching = false;
             orders[status] = order;
 
             if (req.xhr === true){
