@@ -17,14 +17,13 @@ function cartByUser(state={},action){
                 isUpdated:false
             });
         case FINISH_UPDATE_CART:
-            var {cartIndex,groupIndex,goodsIndex,buyed,checked} = action.param;
+            var {cartIndex,groupIndex,goodsIndex,buyed,checked,singleCode} = action.param;
             var {isUpdated,isFetched,cart} = action.res;
             var carts = [...state.carts];
             if(isUpdated){
                 if(isFetched){
                      var _cart = {...carts[cartIndex]};
                     if(cart){
-                        var goods = cart.group[groupIndex].list[goodsIndex];
                         _cart.total = cart.total;
                         _cart.buyeds = cart.buyeds;
                         _cart.promoName=cart.promoName;
@@ -32,7 +31,17 @@ function cartByUser(state={},action){
                         _cart.promoTotal = cart.promoTotal;
                         _cart.salesTotal = cart.salesTotal;
                         if(checked){
-                            _cart.group[groupIndex].list[goodsIndex]=goods;
+                            var find;
+                            cart.group.forEach((group)=>{
+                                if(find) return;
+                                group.list.forEach((goods)=>{
+                                    if(goods.singleCode===singleCode){
+                                        _cart.group[groupIndex].list[goodsIndex]=goods;
+                                        find  = true;
+                                        return;
+                                    }
+                                })
+                            });
                         }else{
                             _cart.group[groupIndex].list[goodsIndex].buyed=buyed;
                         }
@@ -60,9 +69,8 @@ function cartByUser(state={},action){
             var cart = action.res.cart;
             if(action.res.isFetched){
                 var _cart = {...carts[cartIndex]};
+                 _cart.group[groupIndex].list[goodsIndex].checked=checked;
                 if(cart){
-                    var goods = cart.group[groupIndex].list[goodsIndex];
-                    var _checked = (checked && goods.checked) ? true:false;
                     _cart.total = cart.total;
                     _cart.buyeds = cart.buyeds;
                     _cart.promoName=cart.promoName;
@@ -70,8 +78,7 @@ function cartByUser(state={},action){
                     _cart.promoTotal = cart.promoTotal;
                     _cart.salesTotal = cart.salesTotal;
                     _cart.collected=cart.collected;
-                    _cart.group[groupIndex].list[goodsIndex].checked=_checked;
-                    _cart.checked = _cart.children===cart.collected?true:false;
+                    _cart.checked = (_cart.children===cart.collected)?true:false;
                 }else{
                     _cart.total = 0;
                     _cart.buyeds = 0;
@@ -81,7 +88,6 @@ function cartByUser(state={},action){
                     _cart.salesTotal = 0;
                     _cart.checked = false;
                     _cart.collected=0;
-                    _cart.group[groupIndex].list[goodsIndex].checked=false;
                 }
                 carts[cartIndex]=_cart;
             }
