@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import Image from "../../../component/image.jsx";
@@ -54,12 +55,7 @@ class Floor extends Component{
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
-        var hasComment = true;
-        itemList.map((v,k)=>{
-            if(v.hasComment === false){
-                hasComment = false;
-            }
-        })
+        var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         switch(orderStatus){
             case "STATUS_NOT_PAY":
                 return (
@@ -92,14 +88,14 @@ class Floor extends Component{
                     </div>
                 )
             case "STATUS_FINISHED":
-                if(hasComment){
-                    return null
-                }else{
+                if(hasNotComment.length>0){
                     return (
                         <div className="order-buttons">
                             <a href={"/orderdetail/"+orderId+"#/comment"} className="view_c">评价晒单</a>
                         </div>
                     )
+                }else{
+                    return null
                 }
             default:
                 return (
