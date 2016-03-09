@@ -54,10 +54,10 @@ class Floor extends Component{
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
-        var hasComment = false;
+        var hasComment = true;
         itemList.map((v,k)=>{
-            if(v.hasComment === true){
-                hasComment = true;
+            if(v.hasComment === false){
+                hasComment = false;
             }
         })
         switch(orderStatus){
