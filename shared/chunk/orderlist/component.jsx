@@ -96,6 +96,9 @@ class OrderList extends Component{
             this.beginRefresh(0,flag);
         }
     }
+    handleLink(e){
+        e && e.stopPropagation();
+    }
     render(){
         var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam} = this.props;
         cashierParam = cashierParam || {};
@@ -118,7 +121,7 @@ class OrderList extends Component{
                 <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     {
                         tab_nav_item.map((v,k)=>{
-                            return <SlideTabsItem key={k} navigator={()=><a href={"/orderlist/"+k}>{v}</a>} className="listMain">
+                            return <SlideTabsItem key={k} navigator={()=><a onClick={this.handleLink.bind(this)} href={"/orderlist/"+k}>{v}</a>} className="listMain">
                                 <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
                                 <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                                 <GoTop relative={true}/>

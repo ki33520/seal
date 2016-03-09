@@ -13,72 +13,21 @@ function formatOrder(object) {
    return object.map((child,i)=>{
         var itemList = child.itemList.map((v,k)=>{
             return {
-                id: v.id,
-                discount: v.discount,
                 hasComment: v.hasComment,
-                logisticsFee: filterPrice(v.logisticsFee),
-                orderId: v.orderId,
-                originPrice: filterPrice(v.originPrice),
-                originalCost: v.originalCost,
-                payableFee: filterPrice(v.payableFee),
-                paymentFee: filterPrice(v.paymentFee),
-                productCode: v.productCode,
-                promoFee: filterPrice(v.promoFee),
-                returnCount: v.returnCount,
-                salesPrice: filterPrice(v.salesPrice),
-                salesTotalFee: filterPrice(v.salesTotalFee),
-                singleCode: v.singleCode,
-                singleImageUrl: config.imgServer+v.singleImageUrl,
-                singleProps: v.singleProps,
-                singleTitle: v.singleTitle,
-                skuCode: v.skuCode,
-                tariffFee: filterPrice(v.tariffFee),
-                qty: v.qty,
-                abroadFee: filterPrice(v.abroadFee),
-                couponFee: filterPrice(v.couponFee),
-                updatedAt: v.updatedAt
-            }
-        });
-        return {
-            orderId: child.id,
-            itemList: itemList,
-            memberId: child.memberId,
-            orderCrtTime: child.orderCrtTime,
-            orderNo: child.orderNo,
-            orderReceiveId: child.orderReceiveId,
-            orderStatus: child.orderStatus,
-            payableFee: filterPrice(child.payableFee),
-            paymentFee: filterPrice(child.paymentFee),
-            payType: child.payType,
-            promoFee: filterPrice(child.promoFee),
-            promoName: child.promoName,
-            promoType: child.promoType,
-            salesTotalFee: filterPrice(child.salesTotalFee),
-            sendWarehouseId: child.sendWarehouseId,
-            sendWarehouseName: child.sendWarehouseName,
-            tariffFee: filterPrice(child.tariffFee),
-            totalFee: filterPrice(child.totalFee),
-            createdAt: child.createdAt,
-            timeoutTime: child.timeoutTime
-        };
-    });
-}
-function formatComment(object) {
-   return object.map((child,i)=>{
-        var itemList = child.itemList.map((v,k)=>{
-            return {
                 singleImageUrl: config.imgServer+v.singleImageUrl,
                 singleTitle: v.singleTitle,
                 salesPrice: v.salesPrice
             }
         });
         return {
+            orderNo: child.orderNo,
             orderStatus: child.orderStatus,
             salesTotalFee: child.salesTotalFee,
             paymentFee: child.paymentFee,
             orderId: child.id,
+            itemList: itemList,
             createdAt: child.createdAt,
-            itemList: itemList
+            timeoutTime: child.timeoutTime
         };
     });
 }
@@ -91,24 +40,14 @@ var orderList = function(req, res,next) {
     var timeType = req.query.timeType !== undefined ? req.query.timeType : 0;
     var pageSize = 5;
     var fetchString,
-        fetchObj;
+        fetchObj = {memberId: user.memberId, pageNo: pageIndex, pageSize: pageSize};
     if(status === 4){
         fetchString = "orderWaitComments";
-        fetchObj = {
-            memberId: user.memberId,
-            pageNo: pageIndex,
-            pageSize: pageSize
-        }
     }else{
         fetchString = "orderByUser";
-        fetchObj = {
-            memberId: user.memberId,
-            timeType: timeType,
-            orderStatus: status,
-            pageNo: pageIndex,
-            pageSize: pageSize
-        }
+        fetchObj = Object.assign(fetchObj,{timeType: timeType,orderStatus: status});
     }
+    
     bluebird.props({
         orderByUser: util.fetchAPI(fetchString, fetchObj,false),
         timestamp: util.fetchAPI("timestamp",{},false)
@@ -122,12 +61,7 @@ var orderList = function(req, res,next) {
             order.pageSize = pageSize;
             order.totalCount = object.totalCount;
             order.pageCount = Math.ceil(order.totalCount/pageSize);
-            if(status === 4){
-                order.list = object.result ? formatComment(object.result) : [];
-            }else{
-                order.list = object.result ? formatOrder(object.result) : [];
-            }
-            
+            order.list = object.result ? formatOrder(object.result) : [];
             orders[status] = order;
 
             if (req.xhr === true){
