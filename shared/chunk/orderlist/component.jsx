@@ -64,10 +64,12 @@ class OrderList extends Component{
             fetchLink = "/orderlist",
             pageCount = 1,
             nextPage = 1;
-        if(order){
+        if(order && order.pageCount){
             pageCount = order.pageCount;
+        }
+        if(order && order.pageIndex){
             nextPage = order.pageIndex + interval;
-        };
+        }
         if(pageCount < nextPage || isFetching){
             return false;
         }
@@ -92,7 +94,7 @@ class OrderList extends Component{
         this.setState({
             displayFlag:flag
         });
-        if(!orders[flag]){
+        if(!orders[flag] || !orders[flag].list){
             this.beginRefresh(0,flag);
         }
     }
@@ -121,9 +123,10 @@ class OrderList extends Component{
                 <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     {
                         tab_nav_item.map((v,k)=>{
+                            var refresherActive = orders[k] && orders[k].isFetching || false;
                             return <SlideTabsItem key={k} navigator={()=><a onClick={this.handleLink.bind(this)} href={"/orderlist/"+k}>{v}</a>} className="listMain">
                                 <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
-                                <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                                <Refresher active={refresherActive} handleRefresh={this.beginRefresh.bind(this)} />
                                 <GoTop relative={true}/>
                             </SlideTabsItem>
                         })
