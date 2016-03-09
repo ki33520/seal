@@ -32,8 +32,8 @@ class GoodList extends Component{
                             <span className="country">
                                 <i><img src={goods.sourceImageUrl} /></i>{goods.sourceName}
                             </span>
-                            <span className="now-price">&yen;{salesPrice}</span>
-                            <span className="old-price">&yen;{originPrice}</span>
+                            <span className="now-price">{'¥'+salesPrice}</span>
+                            <span className="old-price">{'¥'+originPrice}</span>
                         </div>
                     </a>
                 )

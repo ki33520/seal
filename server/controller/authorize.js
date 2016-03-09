@@ -21,7 +21,7 @@ var loginGateway = function(req, res, next) {
                 user.memberId = resp.object.id
                 req.session.user = user;
                 // console.log('user',req.session["user"])
-                if (returnUrl.search(/:3000/g) && config.runtime === "develop") {
+                if (returnUrl.search(/:3000/g) && config.runtime === "hotfix") {
                     returnUrl = returnUrl.replace(":3000",":5000")
                 }
                 if(req.session["localcart"] && req.session["localcart"].length > 0){
@@ -55,8 +55,11 @@ var logoutGateway = function(req, res, next) {
     if (returnUrl === null) {
         location.replace("/membercenter");
     } else {
-        returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
         req.session.user = undefined;
+        returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
+        if (returnUrl.search(/:3000/g) && config.runtime === "hotfix") {
+            returnUrl = returnUrl.replace(":3000",":5000")
+        }
         res.redirect(returnUrl);
     }
 }

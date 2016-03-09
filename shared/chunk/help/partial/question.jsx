@@ -3,35 +3,42 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import Header from "../../common/header.jsx";
+import GoTop from "../../../component/gotop.jsx";
+import Refresher from "../../../component/refresher.jsx";
 
 class Question extends Component{
-    getQuestion(){
-        const {fetchQuestion,currentQuestion} = this.props;
-        console.log(currentQuestion.id)
+    beginRefresh(){
+        const {dispatch,fetchQuestion} = this.props;
+        const {questionList,isFetching} = this.props.questionByForm;
+        var pageCount = questionList.pageCount;
+        var pageIndex = questionList.pageIndex;
+        var nextPage = pageIndex + 1;
+        if(pageCount < nextPage){
+            return false;
+        }
+        if(isFetching === true){
+            return false;
+        }
         fetchQuestion("/question",{
-            catalogId: currentQuestion.id,
-            start: 0,
-            limit: 10
+            catalogId: questionList.catalogId,
+            catalogName: questionList.catalogName,
+            start: nextPage
         });
     }
-    componentDidMount(){
-        this.getQuestion();
-    }
     renderList(){
-        const {questionList} = this.props.questionByForm;
-        if(questionList){
-            const {result} = questionList;
+        const {questionList,isFetching} = this.props.questionByForm;
+        if(questionList && questionList.list.length > 0){
+            const {list} = questionList;
             return   (
-                <div className="help-text">
+                <div className="question-list">
                 {
-                    result.map((v,k)=>{
-                            console.log(v);
-                            return (
-                                <div key={k} className="help-item">
-                                    <div>{v.questionName}</div>
-                                    <div>{v.solution}</div>
-                                </div>
-                            )
+                    list.map((v,k)=>{
+                        return (
+                            <div key={k} className="question-item">
+                                <h3>{v.questionName}</h3>
+                                <p>{v.solution}</p>
+                            </div>
+                        )
                     })
                 }
                 </div>
@@ -39,18 +46,21 @@ class Question extends Component{
         }else{
             return null;
         }
-        
     }
     render(){
-        const {currentQuestion,changeScene} = this.props;
-        const {catalogName} =  currentQuestion;
+        const {changeScene} = this.props;
+        const {questionList,isFetching} = this.props.questionByForm;
         return (
-            <div className="help-content">
+            <div className="question-content">
                 <header className="header">
                     <a href="javascript:void(null)" onClick={changeScene.bind(this,"index")} className="iconfont icon-back"></a>
-                    <span className="title">{catalogName}</span>
+                    <span className="title">{questionList && questionList.catalogName}</span>
                 </header>
-                {this.renderList()}
+                <div className="question-list-wrap">
+                    {this.renderList()}
+                    <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
+                    <GoTop relative={false}/>
+                </div>
             </div>
         );
     }
