@@ -22,19 +22,24 @@ function cartByUser(state={},action){
             var carts = [...state.carts];
             if(isUpdated){
                 if(isFetched){
-                    if(checked){
-                        carts[cartIndex] = cart;
-                    }else{
-                        var _cart = {...carts[cartIndex]};
+                     var _cart = {...carts[cartIndex]};
+                    if(cart){
+                        var goods = cart.group[groupIndex].list[goodsIndex];
                         _cart.total = cart.total;
-                        //_cart.qtys = cart.qtys;
+                        _cart.buyeds = cart.buyeds;
+                        _cart.promoName=cart.promoName;
+                        _cart.promoType=cart.promoType;
                         _cart.promoTotal = cart.promoTotal;
                         _cart.salesTotal = cart.salesTotal;
-                        _cart.promoName = cart.promoName;
-                        _cart.promoType = cart.promoType;
-                        _cart.group[groupIndex].list[goodsIndex].qty = buyed;
-                        carts[cartIndex] = _cart;
+                        if(checked){
+                            _cart.group[groupIndex].list[goodsIndex]=goods;
+                        }else{
+                            _cart.group[groupIndex].list[goodsIndex].buyed=buyed;
+                        }
+                    }else{
+                        _cart.group[groupIndex].list[goodsIndex].buyed=buyed;
                     }
+                    carts[cartIndex]=_cart;
                 }
             }
             return Object.assign({},state,{
@@ -55,32 +60,28 @@ function cartByUser(state={},action){
             var cart = action.res.cart;
             if(action.res.isFetched){
                 var _cart = {...carts[cartIndex]};
-                _cart.group[groupIndex].list[goodsIndex].checked=checked;
                 if(cart){
+                    var goods = cart.group[groupIndex].list[goodsIndex];
+                    var _checked = (checked && goods.checked) ? true:false;
                     _cart.total = cart.total;
-                    _cart.qtys = cart.qtys;
+                    _cart.buyeds = cart.buyeds;
                     _cart.promoName=cart.promoName;
                     _cart.promoType=cart.promoType;
                     _cart.promoTotal = cart.promoTotal;
                     _cart.salesTotal = cart.salesTotal;
-                    var ischecked=0,count=0;
-                    _cart.group.forEach((group)=>{
-                        group.list.forEach((goods)=>{
-                            if(goods.checked){
-                                ischecked++;
-                            }
-                            count++;
-                        });
-                    });
-                    _cart.checked = ischecked===count?true:false;
+                    _cart.collected=cart.collected;
+                    _cart.group[groupIndex].list[goodsIndex].checked=_checked;
+                    _cart.checked = _cart.children===cart.collected?true:false;
                 }else{
                     _cart.total = 0;
-                    _cart.qtys = 0;
+                    _cart.buyeds = 0;
                     _cart.promoName=null;
                     _cart.promoType=null;
                     _cart.promoTotal = 0;
                     _cart.salesTotal = 0;
                     _cart.checked = false;
+                    _cart.collected=0;
+                    _cart.group[groupIndex].list[goodsIndex].checked=false;
                 }
                 carts[cartIndex]=_cart;
             }
@@ -108,11 +109,12 @@ function cartByUser(state={},action){
                 }else{
                     var _cart = {...carts[cartIndex]};
                     _cart.total = 0;
-                    _cart.qtys = 0;
+                    _cart.buyeds = 0;
                     _cart.promoName=null;
                     _cart.promoType=null;
                     _cart.promoTotal = 0;
                     _cart.salesTotal = 0;
+                    _cart.collected=0;
                     _cart.group.forEach((group)=>{
                         group.list.forEach((goods)=>{
                             goods.checked = false;
@@ -142,18 +144,25 @@ function cartByUser(state={},action){
             var carts = [...state.carts];
             if(isDeleted){
                 if(isFetched){
+                     var _cart = {...carts[cartIndex]};
+                      _cart.group[groupIndex].list.splice(goodsIndex,1);
                     if(cart){
-                        var _cart = {...carts[cartIndex]};
                         _cart.total = cart.total;
                         _cart.promoTotal = cart.promoTotal;
                         _cart.salesTotal = cart.salesTotal;
                         _cart.promoName = cart.promoName;
                         _cart.promoType = cart.promoType;
-                        _cart.group[groupIndex].list.splice(goodsIndex,1);
-                        _cart.qtys = cart.qtys;
+                        _cart.buyeds = cart.buyeds;
+                        _cart.children = cart.children;
+                        _cart.collected -= 1;
                         carts[cartIndex] = _cart;
                     }else{
-                        carts.splice(cartIndex,1);
+                        if( _cart.group[groupIndex].list.length===0){
+                            _cart.group.splice(groupIndex,1);
+                            if(_cart.group.length===0){
+                                carts.splice(cartIndex,1);
+                            }
+                        }
                     }
                 }
             }
@@ -170,7 +179,7 @@ function cartByUser(state={},action){
                 isChecked:false
             });
         case FINISH_CHECK_CART:
-            var {singleCodes,qtys} = action.param;
+            var {singleCodes,buyeds} = action.param;
             var allowSubmit = action.res.allowSubmit;
             var alertContent = action.res.errMsg;
             return Object.assign({},state,{
@@ -179,7 +188,7 @@ function cartByUser(state={},action){
                 alertContent,
                 allowSubmit,
                 singleCodes,
-                qtys
+                buyeds
             });
         default:
             return state;
