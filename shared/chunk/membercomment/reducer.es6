@@ -22,9 +22,7 @@ function commentByUser(state={},action){
             if(showComment){
                 showComment.list = cState.showComment && cState.showComment.list ? _.union(cState.showComment.list,showComment.list) : showComment.list;
             };
-            
             return Object.assign({},state,{
-                isFetched:true,
                 isFetching:false
             },action.res)
         case SHOW_ALERT:

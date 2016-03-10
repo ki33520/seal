@@ -6,6 +6,10 @@ var bluebird = require("bluebird");
 var CommentApp = util.getSharedComponent("membercomment");
 var config = require("../lib/config.js");
 
+function filterPrice(param){
+    return param === null || param === "null" ? 0 : param; 
+}
+
 function formatComment(object) {
    return object.map((child,i)=>{
         var imageUrlList = [];
@@ -17,20 +21,15 @@ function formatComment(object) {
         return {
             content: child.content,
             imageUrlList: imageUrlList,
-            imagesUrl: child.imagesUrl,
             createdAt: child.createdAt,
-            updatedAt: child.updatedAt,
             id: child.id,
-            orderItemId: child.orderItemId,
-            orderTime: child.orderTime,
-            isOpen: child.isOpen,
             isView: child.isView,
             productName: child.productName,
             singleCode: child.singleCode,
             singleImage: config.imgServer+child.singleImage,
             singleTitle: child.singleTitle,
             rate: child.rate,
-            salesPrice: child.salesPrice
+            salesPrice: filterPrice(child.salesPrice)
         };
     });
 }
@@ -56,6 +55,7 @@ var index = function(req, res, next) {
             allComment.pageSize = pageSize;
             if (req.xhr === true) {
                 res.json({
+                    isFetched: true,
                     allComment
                 });
             } else {
@@ -97,6 +97,7 @@ var showComment = function(req, res, next) {
             showComment.pageIndex = pageIndex;
             showComment.pageSize = pageSize;
             res.json({
+                isFetched: true,
                 showComment
             });
         }else{

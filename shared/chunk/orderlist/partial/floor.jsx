@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import Image from "../../../component/image.jsx";
@@ -54,12 +55,7 @@ class Floor extends Component{
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
-        var hasComment = false;
-        itemList.map((v,k)=>{
-            if(v.hasComment === true){
-                hasComment = true;
-            }
-        })
+        var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         switch(orderStatus){
             case "STATUS_NOT_PAY":
                 return (
@@ -92,14 +88,14 @@ class Floor extends Component{
                     </div>
                 )
             case "STATUS_FINISHED":
-                if(hasComment){
-                    return null
-                }else{
+                if(hasNotComment.length>0){
                     return (
                         <div className="order-buttons">
                             <a href={"/orderdetail/"+orderId+"#/comment"} className="view_c">评价晒单</a>
                         </div>
                     )
+                }else{
+                    return null
                 }
             default:
                 return (
@@ -159,6 +155,7 @@ class Floor extends Component{
         }
     }
     renderNode(list){
+        const {orderIndex} = this.props;
         if(list.length>0){
             return list.map((child,i)=>{
                 const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
@@ -176,7 +173,7 @@ class Floor extends Component{
                                 <em className={classes}>{orderStatusObj[orderStatus]}</em>
                             </div>
                         </div>
-                        <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
+                        <div className="order-list"><a href={"/orderdetail/"+orderId+"?back="+orderIndex}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
                             <span>合计：<em>&yen;{this.formatPrice(paymentFeeTotal)}</em></span>
                             {this.renderButtons(child,i)}
@@ -185,7 +182,6 @@ class Floor extends Component{
                 )
             });
         }
-        const {orderIndex} = this.props;
         var context = (function(){
             switch(orderIndex){
                 case 1:

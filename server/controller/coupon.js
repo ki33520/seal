@@ -4,37 +4,7 @@ var _ = require("lodash");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
 function flagOfCoupon(employCode) {
-    var obj = {
-        haitao:{name:"海外购",value:"haitao",title:"海外购www.tepin.hk"},
-        tepin:{name:"特品汇",value:"tepin",title:"特品汇www.tepin.com"},
-        hnmall:{name:"农博汇",value:"hnmall",title:"农博汇www.hnmall.com"},
-        general:{name:"全平台",value:"general",title:""},
-        unknow:{name:"",value:"general"}
-    }
-    if(employCode === null){
-        return obj.unknow;
-    }
-    if (employCode.length > 1) {
-        if(employCode.indexOf("hwg")!==-1 || employCode.indexOf("haiwaigou")!==-1){
-            return obj.haitao;
-        }
-        return obj.general;
-    }
-    if (employCode.length === 1) {
-        switch (employCode[0]) {
-            case "sap":
-                return obj.general;
-            case "tepin":
-                return obj.tepin;
-            case "hnmall":
-                return obj.hnmall;
-            case "hwg":
-            case "haiwaigou":
-                return obj.haitao;
-            default:
-                return obj.unknow;
-        }
-    }
+    return {name:"海外购",value:"haitao",title:"海外购www.tepin.hk"};
 }
 function filterCoupon(obj){
     var coupon = {};
@@ -72,7 +42,7 @@ function formatCoupons(originalCoupons) {
             useRules:v.useRules,
             couponDesc:v.couponDesc,
             shortName:v.shortName,
-            flag:flagOfCoupon(v.employCode).value,
+            flag:flagOfCoupon(v.employCode).title,
             description:ruleObject.description
         });
     });
