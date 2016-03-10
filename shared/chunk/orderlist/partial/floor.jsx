@@ -155,6 +155,7 @@ class Floor extends Component{
         }
     }
     renderNode(list){
+        const {orderIndex} = this.props;
         if(list.length>0){
             return list.map((child,i)=>{
                 const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
@@ -172,7 +173,7 @@ class Floor extends Component{
                                 <em className={classes}>{orderStatusObj[orderStatus]}</em>
                             </div>
                         </div>
-                        <div className="order-list"><a href={"/orderdetail/"+orderId}>{this.renderGoods(itemList)}</a></div>
+                        <div className="order-list"><a href={"/orderdetail/"+orderId+"?back="+orderIndex}>{this.renderGoods(itemList)}</a></div>
                         <div className="order-down">
                             <span>合计：<em>&yen;{this.formatPrice(paymentFeeTotal)}</em></span>
                             {this.renderButtons(child,i)}
@@ -181,7 +182,6 @@ class Floor extends Component{
                 )
             });
         }
-        const {orderIndex} = this.props;
         var context = (function(){
             switch(orderIndex){
                 case 1:
