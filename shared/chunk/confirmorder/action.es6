@@ -55,9 +55,9 @@ export function submitOrder(url,param){
             method:"POST"
         }).then((res)=>{
             if(res.orderSubmited){
-                dispatch(alert("提交成功!",3000))
+                // dispatch(alert("提交成功!",3000))
             }else{
-                dispatch(alert(res.errMsg,3000))
+                // dispatch(alert(res.errMsg,3000))
             }
             dispatch(finishSubmitOrder(param,res));
         })
