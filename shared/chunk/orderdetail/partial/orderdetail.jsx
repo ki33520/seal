@@ -25,7 +25,7 @@ class OrderDetail extends Component{
         }
     }
     queryString(str){
-        var sValue=location.search.match(new RegExp("[\?\&]"+str+"=([^\&]*)(\&?)","i"));
+        var sValue= window.location.search.match(new RegExp("[\?\&]"+str+"=([^\&]*)(\&?)","i"));
         return sValue?sValue[1]:sValue;
     }
     toggleDialog(){
