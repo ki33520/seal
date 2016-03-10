@@ -239,6 +239,9 @@ var payGateway = function(req, res, next) {
 
             urlObj["pathname"] = "/orderdetail/" + message.id;
             var orderDetailURL = url.format(urlObj)
+            urlObj["pathname"] = "/orderlist";
+            var orderListURL = url.format(urlObj)
+
 
             util.fetchAPI("customByWarehouse",{
                 relateIds:ret.object.sendWarehouseId
@@ -254,9 +257,11 @@ var payGateway = function(req, res, next) {
                         appName: "haiwaigou",
                         homeURL: homeURL,
                         orderStatusURL: orderStatusURL,
+                        orderList:orderListURL,
                         orderDetailURL: orderDetailURL,
                         version: "NEW"
                     })
+                    // console.log('message',message)
                     message = JSON.stringify({
                         "message": message
                     })

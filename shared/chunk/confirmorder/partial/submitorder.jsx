@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
 import moment from "moment";
 import {getSignatureByParam} from "../../../lib/util.es6";
 
@@ -9,12 +10,16 @@ class SubmitOrder extends Component{
         super(props);
     }
     render(){
+        const {submiting} = this.props
         let {cashierParam} = this.props.order;
         cashierParam = cashierParam || {}
+        const classes = classNames("confirm_btn",{
+            submiting
+        })
         return (
             <div className="confirmBtns">
-                <a href="javascript:void(0);" className="confirm_btn" 
-                onClick={this.props.onSubmit}>提交订单</a>
+                <a href="javascript:void(0);" className={classes} 
+                onClick={this.props.onSubmit}>{submiting?"提交中...":"提交订单"}</a>
                 <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
                     <input type="hidden" name="appId" value={cashierParam.appId} />
                     <input type="hidden" name="channel" value={cashierParam.channel} />

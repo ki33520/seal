@@ -85,7 +85,7 @@ function orderByParam(state={},action){
             var order = {...state.order,cashierParam}
             return Object.assign({},state,{
                 order,
-                paygatewayFetching:false,
+                paygatewayFetching:true,
                 paygatewayFetched:action.res.isFetched
             })
         case SHOW_ALERT:
