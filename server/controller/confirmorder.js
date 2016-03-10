@@ -236,39 +236,51 @@ var payGateway = function(req, res, next) {
     }).then(function(ret) {
         if (ret.returnCode === 0) {
             var message = messageFilter(ret.object)
-            // console.log('message',message)
 
             urlObj["pathname"] = "/orderdetail/" + message.id;
             var orderDetailURL = url.format(urlObj)
 
-            _.extend(message, {
-                wxOpenId: user.wxOpenId,
-                subject: "haiwaigouH5",
-                createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
-                endTime: moment().add(2, "h").format("YYYY-MM-DD HH:mm:ss"),
-                appName: "haiwaigou",
-                homeURL: homeURL,
-                orderStatusURL: orderStatusURL,
-                orderDetailURL: orderDetailURL,
-                version: "NEW"
-            })
-            message = JSON.stringify({
-                "message": message
-            })
-            var t = moment().format("X")
-            var param = {
-                appId: config.appId,
-                channel: "Mobile",
-                openId: user.openId,
-                t: t,
-                terminalType: "H5",
-                message: message
-            }
-            var h = util.getSignatureByParam(param, config.appKey)
-            param["h"] = h
-            res.json({
-                isFetched: true,
-                result: param
+            util.fetchAPI("customByWarehouse",{
+                relateIds:ret.object.sendWarehouseId
+            }).then(function(resp){
+                if(resp.returnCode === 0){
+                    var customsCode = resp.object.customs
+                    message["customsCode"] = customsCode
+                    _.extend(message, {
+                        wxOpenId: user.wxOpenId,
+                        subject: "haiwaigouH5",
+                        createTime: moment().format("YYYY-MM-DD HH:mm:ss"),
+                        endTime: moment().add(2, "h").format("YYYY-MM-DD HH:mm:ss"),
+                        appName: "haiwaigou",
+                        homeURL: homeURL,
+                        orderStatusURL: orderStatusURL,
+                        orderDetailURL: orderDetailURL,
+                        version: "NEW"
+                    })
+                    message = JSON.stringify({
+                        "message": message
+                    })
+                    var t = moment().format("X")
+                    var param = {
+                        appId: config.appId,
+                        channel: "Mobile",
+                        openId: user.openId,
+                        t: t,
+                        terminalType: "H5",
+                        message: message
+                    }
+                    var h = util.getSignatureByParam(param, config.appKey)
+                    param["h"] = h
+                    res.json({
+                        isFetched: true,
+                        result: param
+                    })
+                }else{
+                    res.json({
+                        isFetched: false,
+                        errMsg: ret.message
+                    })
+                }
             })
         } else {
             res.json({

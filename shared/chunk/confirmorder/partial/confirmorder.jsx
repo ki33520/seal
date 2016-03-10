@@ -131,7 +131,7 @@ class ConfirmOrder extends Component{
         if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
             setTimeout(()=>{
                 // console.log('submitOrder')
-                ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
+                // ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
             },1000)
         }
     }
@@ -158,10 +158,10 @@ class ConfirmOrder extends Component{
             <Dialog onlyConfirm={true} active={this.state.dialogActive} 
             onConfrim={()=>{
                 this.setState({
+                    dialogActive:false,
                     dialogContent:""
-                },()=>{
-                    window.history.back()
                 })
+                window.history.back()
             }}
             >{this.state.dialogContent}</Dialog>
             </div>

@@ -46,5 +46,13 @@
             "test": "http://order.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
+    },
+    "customByWarehouse": {
+        "uri": "/wareHouse/v1/single",
+        "baseURL": {
+            "develop": "http://product.hwg.youayun.cn:7989",
+            "test": "http://product.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
     }
 }
