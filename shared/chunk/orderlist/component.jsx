@@ -51,6 +51,7 @@ class OrderList extends Component{
            this.props.deliveryOrderChanging === true){
             if(nextProps.deliveryOrderChanged === true){
                 dispatch(alert(nextProps.msg,2000));
+                window.location.assign("/orderlist/4");
             }else{
                 dispatch(alert(nextProps.msg,2000));
             }
