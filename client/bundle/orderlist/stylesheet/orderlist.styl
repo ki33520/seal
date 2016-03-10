@@ -87,7 +87,7 @@ body {
 }
 
 .slide-tabs{
-    .slide-tabs-navbar{
+    >.slide-tabs-navbar{
         height: 1.16rem;
         border:0 none;
         .slide-tabs-navbar-item{
@@ -110,11 +110,16 @@ body {
             }
         }
     }
-    .slide-tabs-content{
+    >.slide-tabs-content{
         overflow:hidden;
         padding-bottom: 1.17rem;
+        height: 100%;
         .slide-tabs-item{
-            
+            height: 100%;
+            transform: translate3d(0, 0, 0);
+            .back-to-top{
+                bottom: 1.4825rem;
+            }
         }
     }
 }
