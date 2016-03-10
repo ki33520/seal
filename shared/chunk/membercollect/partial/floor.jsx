@@ -14,10 +14,16 @@ class Floor extends Component{
                 <ul className="collect-list">
                     {
                         list.map((child,key) => {
+                            var masker = null;
+                            console.log(child)
+                            if(child.version===0){
+                                masker = <div className="not_sell"></div>
+                            }
                             return (
                                 <li id={child.goodId} key={key}>
                                     <div className="col">
                                         <div className="col-left">
+                                            {masker}
                                             <a href={"/gooddetail/"+child.singleCode}>
                                                 <img src={child.imageUrl} />
                                             </a>
