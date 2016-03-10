@@ -19,7 +19,7 @@ function cartByUser(state={},action){
         case FINISH_UPDATE_CART:
             var {cartIndex,groupIndex,goodsIndex,buyed,checked,singleCode} = action.param;
             var {isUpdated,isFetched,cart} = action.res;
-            var carts = [...state.carts];
+            var carts = state.carts.slice();
             if(isUpdated){
                 if(isFetched){
                      var _cart = {...carts[cartIndex]};
@@ -36,7 +36,9 @@ function cartByUser(state={},action){
                                 if(find) return;
                                 group.list.forEach((goods)=>{
                                     if(goods.singleCode===singleCode){
-                                        _cart.group[groupIndex].list[goodsIndex]=goods;
+                                        _cart.group[groupIndex].list[goodsIndex].buyed=goods.buyed;
+                                        _cart.group[groupIndex].list[goodsIndex].onSale=goods.onSale;
+                                        _cart.group[groupIndex].list[goodsIndex].stockFlag=goods.stockFlag;
                                         find  = true;
                                         return;
                                     }
@@ -65,7 +67,7 @@ function cartByUser(state={},action){
             });
         case FINISH_TOGGLE_ITEM:
             var {cartIndex,groupIndex,goodsIndex,singleCode,checked} = action.param;
-            var carts = [...state.carts];
+            var carts = state.carts.slice();
             var cart = action.res.cart;
             if(action.res.isFetched){
                 var _cart = {...carts[cartIndex]};
@@ -79,6 +81,17 @@ function cartByUser(state={},action){
                     _cart.salesTotal = cart.salesTotal;
                     _cart.collected=cart.collected;
                     _cart.checked = (_cart.children===cart.collected)?true:false;
+                     var find;
+                    cart.group.forEach((group)=>{
+                        if(find) return;
+                        group.list.forEach((goods)=>{
+                            if(goods.singleCode===singleCode){
+                                _cart.group[groupIndex].list[goodsIndex].checked=goods.checked;
+                                find  = true;
+                                return;
+                            }
+                        })
+                    });
                 }else{
                     _cart.total = 0;
                     _cart.buyeds = 0;
@@ -107,7 +120,7 @@ function cartByUser(state={},action){
             });
         case FINISH_TOGGLE_ALL:
             var {cartIndex,checked} = action.param;
-            var carts = [...state.carts];
+            var carts = state.carts.slice();
             var cart = action.res.cart;
             if(action.res.isFetched){
                 if(checked){
@@ -147,29 +160,36 @@ function cartByUser(state={},action){
         case FINISH_DELETE_CART:
             var {cartIndex,groupIndex,goodsIndex} = action.param;
             var {isFetched,isDeleted,cart} = action.res;
-            var carts = [...state.carts];
+            var carts = state.carts.slice();
             if(isDeleted){
                 if(isFetched){
                      var _cart = {...carts[cartIndex]};
+                      _cart.children -= 1;
+                      _cart.collected -= 1;
                       _cart.group[groupIndex].list.splice(goodsIndex,1);
-                    if(cart){
-                        _cart.total = cart.total;
-                        _cart.promoTotal = cart.promoTotal;
-                        _cart.salesTotal = cart.salesTotal;
-                        _cart.promoName = cart.promoName;
-                        _cart.promoType = cart.promoType;
-                        _cart.buyeds = cart.buyeds;
-                        _cart.children = cart.children;
-                        _cart.collected -= 1;
-                        carts[cartIndex] = _cart;
-                    }else{
-                        if( _cart.group[groupIndex].list.length===0){
-                            _cart.group.splice(groupIndex,1);
-                            if(_cart.group.length===0){
-                                carts.splice(cartIndex,1);
-                            }
+                      if( _cart.group[groupIndex].list.length===0){
+                        _cart.group.splice(groupIndex,1);
+                        if(_cart.group.length===0){
+                            carts.splice(cartIndex,1);
                         }
-                    }
+                      }
+                        if(cart){
+                            _cart.total = cart.total;
+                            _cart.promoTotal = cart.promoTotal;
+                            _cart.salesTotal = cart.salesTotal;
+                            _cart.promoName = cart.promoName;
+                            _cart.promoType = cart.promoType;
+                            _cart.buyeds = cart.buyeds;
+                            carts[cartIndex] = _cart;
+                        }else if(carts[cartIndex]){
+                             _cart.total = 0;
+                            _cart.promoTotal = 0;
+                            _cart.salesTotal = 0;
+                            _cart.promoName = null;
+                            _cart.promoType = null;
+                            _cart.buyeds = 0;
+                            carts[cartIndex] = _cart;
+                        }
                 }
             }
             return Object.assign({},state,{

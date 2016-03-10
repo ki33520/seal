@@ -50,9 +50,10 @@ function formatCarts(originalCarts) {
                     "minBuyStep": goods.minBuyCount,
                     "buyedStep": goods.addCount,
                     "isAutoUpdated": goods.hasSystemUpQty,
-                    "updateCase": goods.systemUpType
+                    "updateCase": goods.systemUpType,
+                    checked:false
                 }
-                if(product.buyed > 0  && product.onSale==1){
+                if(product.stockFlag  && product.onSale==1){
                     product.checked = true;
                     collected++;
                 }
