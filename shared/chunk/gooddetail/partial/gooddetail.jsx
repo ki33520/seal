@@ -14,6 +14,8 @@ import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
+import GoTop from "../../../component/gotop.jsx";
+import Sticky from "../../../component/sticky.jsx";
 
 import Promotions from "./promotions.jsx";
 import Origin from "./origin.jsx";
@@ -56,9 +58,10 @@ class GoodDetail extends Component{
             productCode,
         })
 
-        dom.bindEvent(window,"scroll",(e)=>{
-            var scrollTop = dom.scrollTop(window);
-            if (document.documentElement.clientHeight + scrollTop >= document.documentElement.scrollHeight) {
+        let scrollEl = ReactDOM.findDOMNode(this)
+        dom.bindEvent(scrollEl,"scroll",(e)=>{
+            var scrollTop = dom.scrollTop(scrollEl);
+            if (scrollEl.clientHeight + scrollTop + 10 >= scrollEl.scrollHeight) {
                 if(this.state.upperVisble){
                     setTimeout(()=>{
                         this.setState({
@@ -217,6 +220,7 @@ class GoodDetail extends Component{
             "icon-xin":!isCollected
         })
         return (
+            <GoTop relative={true}>
             <div className="good-detail-content">
             <Header>商品详情<a className="globa" href="/"><i></i></a>
             <a className="goods_share"></a>
@@ -271,6 +275,7 @@ class GoodDetail extends Component{
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             <MaskLayer visible={this.state.popupActive} />
             </div>
+            </GoTop>
         )
     }
 }

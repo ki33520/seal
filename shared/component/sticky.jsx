@@ -34,10 +34,16 @@ class Sticky extends Component{
             position:"absolute",
             transform:"translate3D(0,0,0)",
             // transition:"transform .05s ease-in-out",
-            width:holder.offsetWidth
+            // width:holder.offsetWidth
         });
         if(checkResult === true){
-            const currentTop = top + scrollTop + "px";
+            if(this.scrollEl.clientHeight + scrollTop >= this.scrollEl.scrollHeight){
+                return
+            }
+            let currentTop = top + scrollTop + "px";
+            if(bottom && !top){
+                currentTop = (this.scrollEl.clientHeight - bottom + scrollTop) + "px"
+            }
             stickerStyle = Object.assign({},stickerStyle,{
                 transform:"translate3D(0," + currentTop + ",0)"
                 // top:currentTop
