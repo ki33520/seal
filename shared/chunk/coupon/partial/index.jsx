@@ -86,10 +86,10 @@ class Coupon extends React.Component{
             <div className={row} key={i}>
                     <div className="left">
                         <div className="price"><em>&yen;</em>{coupon.money}</div>
-                        <div className="term">{coupon.songAccount}</div>
+                        <div className="term">{'满'+coupon.songAccount+'使用'}</div>
                     </div>
                     <div className="right">
-                        <div className="kind">{coupon.flag.title}</div>
+                        <div className="kind">{coupon.flag}</div>
                         <div className="date">{coupon.expiryDate}</div>
                         <div className="explain">{coupon.couponDesc}</div>
                     </div>
