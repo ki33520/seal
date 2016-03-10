@@ -97,6 +97,9 @@ class ConfirmOrder extends Component{
         const {order,submitOrder} = this.props;
         const {checkedCoupon,useBalance,useTicket,payPassword,
             checkedDeliveryTime,checkedReceiver,checkedInvoice} = order;
+        if(this.props.orderSubmiting || this.props.paygatewayFetching){
+            return
+        }
         submitOrder("/submitorder",{
             itemIds:order.itemIds,
             buyeds:order.buyeds,
@@ -132,7 +135,7 @@ class ConfirmOrder extends Component{
             setTimeout(()=>{
                 // console.log('submitOrder')
                 ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
-            },1000)
+            },10)
         }
     }
     render(){
@@ -153,15 +156,16 @@ class ConfirmOrder extends Component{
             </div>
             {this.renderTotal(order)}
             <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
+            submiting={this.props.orderSubmiting || this.props.paygatewayFetching}
             onSubmit={this.verifyOrder.bind(this)} ref="SubmitOrder"/>
             <Alert active={alertActive}>{alertContent}</Alert>
             <Dialog onlyConfirm={true} active={this.state.dialogActive} 
             onConfrim={()=>{
                 this.setState({
+                    dialogActive:false,
                     dialogContent:""
-                },()=>{
-                    window.history.back()
                 })
+                window.history.back()
             }}
             >{this.state.dialogContent}</Dialog>
             </div>

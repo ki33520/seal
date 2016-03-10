@@ -23,12 +23,12 @@ class Cart extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        const {isChecked,allowSubmit,singleCodes,qtys} = nextProps.cartByUser;
+        const {isChecked,allowSubmit,singleCodes,buyeds} = nextProps.cartByUser;
         if(isChecked){
             if(allowSubmit){
                 const queryParam = base64Encode(urlParam({
                     itemIds:singleCodes,
-                    buyeds:qtys
+                    buyeds:buyeds
                 }));
                 window.location.assign(`/confirmorder/${queryParam}`);
             }else{
@@ -59,14 +59,14 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.checked){
                     itemIds.push(item.singleCode);
-                    buyeds.push(item.qty); 
+                    buyeds.push(item.buyed); 
                 }
             });
         });
         if(itemIds.length&&buyeds.length){
             this.props.checkCartInfo({
                 singleCodes:itemIds.join(","),
-                qtys:buyeds.join(",")
+                buyeds:buyeds.join(",")
             });
         }
     }
@@ -83,19 +83,15 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.checked){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(singleCode===item.singleCode?buyed:item.qty);
+                    buyeds.push(singleCode===item.singleCode?buyed:item.buyed);
                 }
             });
         });
-        if(!buyeds.length){
-            singleCodes.push(singleCode);
-            buyeds.push(buyed);
-        }
         this.props.updateCart({
             singleCode,
             buyed,
             singleCodes:singleCodes.join(','),
-            qtys:buyeds.join(','),
+            buyeds:buyeds.join(','),
             limit,
             checked:goods.checked,
             cartIndex,
@@ -112,14 +108,14 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(checked){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(item.qty);   
+                    buyeds.push(item.buyed);   
                 }
             });
         });
 
         this.props.toggleCartAll({
             singleCodes:singleCodes.join(','),
-            qtys:buyeds.join(','),
+            buyeds:buyeds.join(','),
             cartIndex,
             checked
         });
@@ -135,17 +131,17 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.checked && item.singleCode !== goods.singleCode){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(item.qty);
+                    buyeds.push(item.buyed);
                 }
             });
         });
         if(checked){
             singleCodes.push(goods.singleCode);
-            buyeds.push(goods.qty);
+            buyeds.push(goods.buyed);
         }
         this.props.toggleCartItem({
             singleCodes:singleCodes.join(','),
-            qtys:buyeds.join(','),
+            buyeds:buyeds.join(','),
             cartIndex,
             groupIndex,
             goodsIndex,
@@ -175,7 +171,7 @@ class Cart extends Component {
             group.list.forEach((item)=>{
                 if(item.singleCode !== goods.singleCode && item.checked){
                     singleCodes.push(item.singleCode);
-                    buyeds.push(item.qty);
+                    buyeds.push(item.buyed);
                 }
             })
         });
@@ -186,7 +182,7 @@ class Cart extends Component {
                 deleteCart({
                     cartId:goods.cartId,
                     singleCodes:singleCodes.join(','),
-                    qtys:buyeds.join(','),
+                    buyeds:buyeds.join(','),
                     singleCode:goods.singleCode,
                     cartIndex,
                     groupIndex,
@@ -198,7 +194,7 @@ class Cart extends Component {
     renderGoods(goods,i,j,k) {
         const salePrice = formatPrice(goods.salePrice);
         const maxBuy = Math.min(goods.buyLimit,goods.stockCount);
-        const buyed = goods.qty;
+        const buyed = goods.buyed;
         const limitStyle = classNames({
             limitBuy:maxBuy
         });
@@ -278,7 +274,8 @@ class Cart extends Component {
     renderCart(cart,i){
         let groupList = [];
         let allowBuy = true;
-        if(cart.total > cart.buyLimit ||cart.total <=0){
+
+        if(cart.total > cart.buyLimit ||cart.total <=0 || cart.buyeds<1){
             allowBuy = false;
         }
         cart.group.forEach((group,j)=>{
@@ -290,6 +287,7 @@ class Cart extends Component {
         const promo = classNames("depot_bot",{
             hide:!cart.promoName
         });
+        const tax = cart.total * cart.tariffFee;
         const salesTotal = formatPrice(cart.salesTotal);
         const promoTotal = formatPrice(cart.promoTotal);
         const total = formatPrice(cart.total);
@@ -307,7 +305,7 @@ class Cart extends Component {
                 {groupList}
                 <div className="section_wrap cart_buy">
                     <div className="cartFirst clearfix">
-                        <span>{'已选商品'+cart.qtys+'件'}</span>
+                        <span>{'已选商品'+cart.buyeds+'件'}</span>
                         <div className="cartFirst_two">
                             <p>{'商品总额： ￥'+salesTotal}</p>
                             <p>{'活动优惠： -￥'+promoTotal}</p>
@@ -321,7 +319,7 @@ class Cart extends Component {
                             <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart)}/>
                         </p>
                     </div>
-                    {this.renderInfo(cart.total,cart.tax,cart.dutyFree,cart.buyLimit)}
+                    {this.renderInfo(cart.total,tax,cart.dutyFree,cart.buyLimit)}
                 </div>
             </div>
         )

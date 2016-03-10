@@ -85,7 +85,7 @@ function orderByParam(state={},action){
             var order = {...state.order,cashierParam}
             return Object.assign({},state,{
                 order,
-                paygatewayFetching:false,
+                paygatewayFetching:true,
                 paygatewayFetched:action.res.isFetched
             })
         case SHOW_ALERT:
@@ -97,27 +97,37 @@ function orderByParam(state={},action){
 }
 
 function errMsgByCode(errCode){
-    let errMsg = "订单异常"
+    let errMsg = ""
     switch(errCode){
         case -1:
             errMsg = "校验失败,请检查网络是否可用"
+            break
         case -402104:
             // errMsg = "商品code不存在"
             errMsg = "商品已下架，请重新提交!"
+            break
         case -402105:
+        case -402106:
             // errMsg = "商品库存不足"
             errMsg = "超出库存数量，请重新提交!"
+            break
         case -402107:
             // errMsg = "商品购买数量已超出商品限购数"
             errMsg = "超出限购数量，请重新提交!"
+            break
         case -402109:
             errMsg = "商品购买数量低于起购数"
+            break
         case -402110:
             // errMsg = "购买商品总额超出每日购买限额"
             errMsg = "超出限购数量，请重新提交!"
+            break
         case -402305:
             errMsg = "订单金额有变更，请重新提交!"
-            // errMsg = "订单支付金额计算错误"
+            break
+        default:
+            errMsg = "数据异常，请重新提交订单!"
+            break
     }
     return errMsg
 }

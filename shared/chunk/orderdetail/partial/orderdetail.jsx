@@ -24,6 +24,10 @@ class OrderDetail extends Component{
             dialogOnConfirm:null
         }
     }
+    queryString(str){
+        var sValue= window.location.search.match(new RegExp("[\?\&]"+str+"=([^\&]*)(\&?)","i"));
+        return sValue?sValue[1]:sValue;
+    }
     toggleDialog(){
         this.setState({
             dialogActive:!this.state.dialogActive
@@ -231,9 +235,15 @@ class OrderDetail extends Component{
     }
     render(){
         const {order,alertActive,alertContent} = this.props.orderByParam;
+        const back_search = this.queryString("back");
+        const back_path = back_search === null ? "/orderlist" : "/orderlist/"+back_search;
+        
         return (
             <div className="order-detail-content">
-            <Header>订单详情</Header>
+            <header className="header">
+                <a href={back_path} className="iconfont icon-back"></a>
+                <span className="title">订单详情</span>
+            </header>
             <StatusProgress renderOutTime={this.renderOutTime.bind(this)} {...order}/>
             {this.renderAddress(order)}
             <OrderGoods {...order}/>

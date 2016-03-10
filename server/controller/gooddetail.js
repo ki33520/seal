@@ -192,7 +192,6 @@ var addCart = function(req, res, next) {
             figureUpFlag: true,
             channel: "Mobile"
         }).then(function(ret) {
-            // console.log('ret',ret)
             if (ret.returnCode === 0) {
                 res.json({
                     cartAdded: true
