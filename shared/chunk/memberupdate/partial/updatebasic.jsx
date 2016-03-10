@@ -36,18 +36,21 @@ class UpdateBasic extends Component{
                     var len = 0;  
                     for(var i=0; i<str.length; i++){
                         if(str.charCodeAt(i)>127 || str.charCodeAt(i)==94){
-                           len += 2;
-                        }else{  
-                           len ++;
+                            len += 2;
+                        }else{
+                            if(!/[a-z0-9|_|\-|@]/.test(str.charAt(i))){
+                                return false;
+                            }
+                            len ++;
                         }
                     }
-                    if(len<4 || len>20){
+                    if(len<2 || len>20){
                         return false;
                     }else{
                         return true;
                     }
                 },
-                msg: ["请输入昵称","昵称必须为4-20个字符"]
+                msg: ["请输入昵称","昵称必须为2-20位英文、数字及- _ @组合"]
             },
             fieldgender: {
                 reg: function(str){
@@ -68,8 +71,9 @@ class UpdateBasic extends Component{
                         dispatch(alert(rule.msg[1],2000));
                         return false;
                     }
-                }else{
-                    field["callback"]();
+                }
+                if(i=== "callback"){
+                    field[i]();
                 }
             }
         }
@@ -151,7 +155,7 @@ class UpdateBasic extends Component{
                         <label>昵称</label>
                         <input type="text" placeholder="请填写" name="nickName" value={fieldnickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
                     </div>
-                    <div className="tips">4-20个字符，可全部由字母组成，或数字、字母、“_”、“-”任意两种以上组合</div>
+                    <div className="tips">昵称允许输入2-20位字符，支持中英文、数字及“-”“_”“@” 组合</div>
                 </div>
                 <div className="form-item">
                     <div className="label-item">
