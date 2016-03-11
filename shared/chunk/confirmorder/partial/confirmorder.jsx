@@ -84,6 +84,10 @@ class ConfirmOrder extends Component{
         const {order,verifyOrder} = this.props
         const {checkedCoupon,useBalance,useTicket,payPassword,
             checkedDeliveryTime,checkedReceiver,checkedInvoice} = order;
+        if(checkedReceiver === null){
+            this.props.alert("请输入收货地址")
+            return
+        }
         verifyOrder({
             itemIds:order.itemIds,
             buyeds:order.buyeds,
