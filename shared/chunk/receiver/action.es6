@@ -229,7 +229,9 @@ export function createReceiver(param){
             method:"POST"
         }).then((res)=>{
             if(res.receiverSaved){
-                dispatch(pushReceiver(param))
+                dispatch(pushReceiver(Object.assign({},param,{
+                    id:res.result
+                })))
             }
             dispatch(finishCreateReceiver(param,res))
         })

@@ -3,7 +3,8 @@ import {combineReducers} from "redux";
 import _ from "lodash";
 
 import {
-    REQUEST_GOODS,RECEIVE_GOODS,
+    START_FETCH_GOODS,FINISH_FETCH_GOODS,
+    START_REQUEST_GOODS,FINISH_REQUEST_GOODS,
     TOGGLE_CHECKED,RESET_FILTER,
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD
@@ -13,19 +14,36 @@ import {CHANGE_FIELD} from "../common/constant.es6";
  
 function index(state={},action){
     switch(action.type){
-        case REQUEST_GOODS:
+        case START_FETCH_GOODS:
             return Object.assign({},state,{
-                isFetching:true
+                isFetching:true,
+                isFetched:false
             });
-        case RECEIVE_GOODS:
-            var _list = state.list.slice();
-            var arr = _list.concat(action.res.list);
-            var list = _.uniq(arr);
+        case FINISH_FETCH_GOODS:
             return Object.assign({},state,{
                 isFetching:false,
                 isFetched:action.res.isFetched,
-                list:list,
-                params:action.params
+                list:action.res.list,
+                params:action.param
+            });
+        case START_REQUEST_GOODS:
+            return Object.assign({},state,{
+                isFetching:true,
+                isFetched:false
+            });
+        case FINISH_REQUEST_GOODS:
+            var list = [];
+            state.list.forEach((item)=>{
+                list.push(item);
+            });
+            action.res.list.forEach((item)=>{
+                list.push(item);
+            });
+            return Object.assign({},state,{
+                isFetching:false,
+                isFetched:action.res.isFetched,
+                params:action.param,
+                list
             });
         case TOGGLE_CHECKED:
             var filters = {...state.filters};

@@ -1,8 +1,6 @@
 'use strict';
-
 import React,{Component} from "react";
 import classNames from "classnames";
-
 import{
     SORT_NORMAL,SORT_PRICE,SORT_SALES,SORT_ASC,SORT_DESC
 } from "../constant.es6";

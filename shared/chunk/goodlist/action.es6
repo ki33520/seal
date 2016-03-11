@@ -1,33 +1,56 @@
 'use strict'
 import {apiRequest} from "../../lib/util.es6";
 import {
-    RECEIVE_GOODS,REQUEST_GOODS,
+    START_FETCH_GOODS,FINISH_FETCH_GOODS,
+    START_REQUEST_GOODS,FINISH_REQUEST_GOODS,
     TOGGLE_CHECKED,RESET_FILTER,
     REQUEST_HOTWORD,RESPONSE_HOTWORD,
     RESPONSE_ASSOICATEWORD,REQUEST_ASSOICATEWORD
 } from "./constant.es6";
 
-function receiveGoods(params,res){
+function startFetchGoods(param){
     return {
-        type:RECEIVE_GOODS,
-        params,
+        type:START_FETCH_GOODS,
+        param
+    }
+}
+
+function finishFetchGoods (param,res) {
+    return {
+        type:FINISH_FETCH_GOODS,
+        param,
         res
     }
 }
-
-function requestGoods (params) {
+function startRequestGoods(param){
     return {
-        type:REQUEST_GOODS,
-        params
+        type:START_REQUEST_GOODS,
+        param
     }
 }
 
-export function fetchGoods(params){
+function finishRequestGoods (param,res) {
+    return {
+        type:FINISH_REQUEST_GOODS,
+        param,
+        res
+    }
+}
+export function fetchGoods(param){
     return (dispath)=>{
-        dispath(requestGoods(params));
-        return apiRequest('/search',params).then((res)=>{
-            dispath(receiveGoods(params,res))
-        })
+        dispath(startFetchGoods(param));
+        return apiRequest('/search',param).then((res)=>{
+            dispath(finishFetchGoods(param,res))
+        });
+    }
+}
+
+export function requestGoods(param){
+    return (dispath)=>{
+        dispath(startRequestGoods(param));
+        return apiRequest('/search',param).then((res)=>{
+            dispath(finishRequestGoods(param,res))
+        });
     }
 }
 
