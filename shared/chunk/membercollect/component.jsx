@@ -14,11 +14,6 @@ import Floor from "./partial/floor.jsx";
 import {alert} from "../common/action.es6";
 
 class MembercollectList extends Component{
-    componentDidMount(){
-        dom.registerPullDownEvent(()=>{
-            this.beginRefresh();
-        }.bind(this));
-    }
     beginRefresh(){
         const {dispatch,fetchCollect} = this.props;
         const {collect,isFetching} = this.props.memberCollectByUser;
@@ -53,10 +48,11 @@ class MembercollectList extends Component{
                 <Header>
                     <span className="title">我的收藏</span>
                 </Header>
+                <GoTop relative={true}>
                 <Floor handleDelete={this.handleDelete.bind(this)} {...collect} {...this.props} />
                 <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
                 <Alert active={alertActive}>{alertContent}</Alert>
-                <GoTop relative={false}/>
+                </GoTop>
             </div>
         );
     }

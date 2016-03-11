@@ -58,7 +58,8 @@ class UpdatePassword extends Component{
                         dispatch(alert(rule.msg[1],2000));
                         return false;
                     }
-                }else{
+                }
+                if(i=== "callback"){
                     field[i]();
                 }
             }

@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import {formatPrice} from "../../../lib/util.es6";
 
 class Origin extends Component{
     constructor(props){
@@ -9,7 +10,7 @@ class Origin extends Component{
     render(){
         const {good} = this.props;
         const {useOutlandLogistics,outlandLogisticsFee} = good
-        let logistics = useOutlandLogistics?<em>&yen;{outlandLogisticsFee}</em>:"包邮"
+        let logistics = useOutlandLogistics?<em>&yen;{formatPrice(outlandLogisticsFee)}</em>:"包邮"
         return (
             <div className="overView">
                 <dl>

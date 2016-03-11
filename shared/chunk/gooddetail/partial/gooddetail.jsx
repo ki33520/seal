@@ -72,6 +72,16 @@ class GoodDetail extends Component{
             }
         })
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.goodById.attrToggled){
+            if(this.props.goodById.good.selectedItem === null || 
+                nextProps.goodById.good.selectedItem.code !== this.props.goodById.good.selectedItem.code){
+                this.setState({
+                    buyed:nextProps.goodById.good.buyed
+                })
+            }
+        }
+    }
     componentDidUpdate(prevProps){
         const {selectedItem} = this.props.goodById.good
         const prevSelectedItem = prevProps.goodById.good.selectedItem
