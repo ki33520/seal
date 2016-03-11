@@ -126,9 +126,10 @@ class OrderList extends Component{
                         tab_nav_item.map((v,k)=>{
                             var refresherActive = orders[k] && orders[k].isFetching || false;
                             return <SlideTabsItem key={k} navigator={()=><a onClick={this.handleLink.bind(this)} href={"/orderlist/"+k}>{v}</a>} className="listMain">
+                                <GoTop relative={true}>
                                 <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
                                 <Refresher active={refresherActive} handleRefresh={this.beginRefresh.bind(this)} />
-                                <GoTop relative={true}/>
+                                </GoTop>
                             </SlideTabsItem>
                         })
                     }
