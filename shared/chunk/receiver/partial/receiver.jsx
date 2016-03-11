@@ -43,7 +43,7 @@ class Receiver extends Component{
         if(nextProps.receiverDeleted === true && this.props.receiverDeleted === false){
             const {checkedReceiver,checkable} = this.props;
             const {receivers} = nextProps;
-            if(_.some(receivers,{id:checkedReceiver.id}) === false && checkable){
+            if(checkable && _.some(receivers,{id:checkedReceiver.id}) === false){
                 this.props.onCheck(receivers.length > 0 ?receivers[0]:null)
                 this.props.selectReceiver(receivers.length > 0 ?receivers[0]:null)
             }
