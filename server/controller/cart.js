@@ -45,23 +45,23 @@ function formatCarts(originalCarts) {
                     buyed: goods.qty,
                     stockFlag: goods.stockFlag,
                     stockCount: goods.stockCount,
-                    buyLimit: goods.buyLimit,
+                    maxBuy: Math.min(goods.buyLimit,goods.stockCount),
                     "onSale": goods.version,
-                    "minBuyStep": goods.minBuyCount,
-                    "buyedStep": goods.addCount,
+                    "minStep": goods.minBuyCount,
+                    "step": goods.addCount,
                     "isAutoUpdated": goods.hasSystemUpQty,
                     "updateCase": goods.systemUpType,
-                    checked:false
+                    checked: false
                 }
-                if(product.stockFlag  && product.onSale==1){
+                if (product.stockFlag && product.onSale == 1) {
                     product.checked = true;
                     collected++;
                 }
                 group.list.push(product);
             });
-            cart.checked = (collected === children) ? true: false;
+            cart.checked = (collected === children) ? true : false;
             cart.children = children;
-            cart.collected=collected;
+            cart.collected = collected;
             cart.group.push(group);
         });
         carts.push(cart);
@@ -71,7 +71,14 @@ function formatCarts(originalCarts) {
 
 var cart = function(req, res, next) {
     var user = req.session.user;
-    var renderMarkup = function(initialState) {
+    var isLogined = (user && user.memberId)? true:false;
+    var loginUrl = res.locals.loginUrl;
+    var renderMarkup = function(arr) {
+        var initialState = {
+            carts: formatCarts(arr),
+            isLogined: isLogined,
+            loginUrl: loginUrl
+        };
         var markup = util.getMarkupByComponent(CartApp({
             initialState: initialState
         }));
@@ -80,47 +87,37 @@ var cart = function(req, res, next) {
             initialState: initialState
         });
     };
-    if (user && user.memberId) {
+    if (isLogined) {
         util.fetchAPI("cartByUser", {
             memberId: user.memberId
         }).then(function(resp) {
-            if (resp.returnCode === 0) {
-                renderMarkup({
-                    carts: formatCarts(resp.object),
-                    isLogined: true
-                });
-            } else {
+              if (resp.returnCode === 0) {
+                renderMarkup(resp.object);
+              } else {
                 next(new Error(resp.message));
-            }
+              }
         });
     } else {
-        var loginUrl = res.locals.loginUrl;
-        var localcart = req.session["localcart"] || [];
-        var singleCodes = [];
-        var buyeds = [];
-        _.each(localcart, function(item) {
-            singleCodes.push(item.singleCode);
-            buyeds.push(item.buyed);
-        });
-        if (singleCodes.length > 0 && buyeds.length > 0) {
+        var localcart = req.session["localcart"];
+        if (localcart && localcart.length > 0) {
+             var singleCodes = [];
+             var buyeds = [];
+              _.each(localcart, function(item) {
+                    singleCodes.push(item.singleCode);
+                    buyeds.push(item.buyed);
+              });
             util.fetchAPI('cartByAnonymous', {
                 singleCodes: singleCodes.join(','),
                 qtys: buyeds.join(',')
             }).then(function(resp) {
                 if (resp.returnCode === 0) {
-                    renderMarkup({
-                        carts: formatCarts(resp.object),
-                        isLogined: false,
-                        loginUrl: loginUrl
-                    });
+                    renderMarkup(resp.object);
                 } else {
                     next(new Error(resp.message));
                 }
             })
         } else {
-            renderMarkup({
-                carts: []
-            });
+            renderMarkup([]);
         }
     }
 }
@@ -129,66 +126,56 @@ var updateCart = function(req, res, next) {
     var user = req.session.user;
     var singleCode = req.body.singleCode;
     var buyed = req.body.buyed;
-    if (user && user.memberId) {
+    var isLogined = (user && user.memberId)? true:false;
+    var respone = function(isUpdated){
+        res.json({
+            isUpdated: isUpdated
+        });
+    }
+    if (isLogined) {
         util.fetchAPI('updateCart', {
             memberId: user.memberId,
             singleCode: singleCode,
             qty: buyed,
             figureUpFlag: false
         }).then(function(resp) {
-            if (resp.returnCode === 0) {
-                res.json({
-                    isUpdated: true
-                })
-            } else {
-                res.json({
-                    isUpdated: false,
-                    errMsg: resp.message
-                });
-            }
+            var isUpdated = resp.returnCode === 0;
+            respone(isUpdated);
         });
     } else {
-        var buyLimit = req.body.limit;
-        var carts = req.session["localcart"];
+        var maxBuy = req.body.maxBuy;
+        var carts = req.session["localcart"]||[];
         util.saveLocalCart(carts, {
-            singleCode,
-            buyed,
-            buyLimit
+            singleCode:singleCode,
+            buyed:buyed,
+            buyLimit:maxBuy,
         }, true);
-        res.json({
-            isUpdated: true
-        });
+        respone(true);
     }
 }
 
 var deleteCart = function(req, res, next) {
     var user = req.session.user;
-    if (user && user.memberId) {
+    var isLogined = (user && user.memberId)? true:false;
+    var respone = function(isDeleted){
+        res.json({
+            isDeleted: isDeleted
+        });
+    }
+    if (isLogined) {
         util.fetchAPI('deleteCart', {
             memberId: user.memberId,
             cartId: req.body.cartId
         }).then(function(resp) {
-            if (resp.returnCode === 0) {
-                res.json({
-                    isDeleted: true
-                })
-            } else {
-                res.json({
-                    isDeleted: false,
-                    errMsg: resp.message
-                });
-            }
+            var isDeleted = resp.returnCode === 0;
+            respone(isDeleted);
         }, function() {
-            res.json({
-                isDeleted: false,
-                apiResponded: false
-            });
+            respone(false);
         })
     } else {
         var localcart = req.session["localcart"];
         var singleCode = req.body.singleCode;
         var isDeleted = false;
-
         if (localcart && localcart.length > 0) {
             localcart.forEach(function(item, i) {
                 if (item.singleCode === singleCode) {
@@ -196,13 +183,8 @@ var deleteCart = function(req, res, next) {
                     isDeleted = true;
                 }
             });
-        } else {
-            isDeleted = true;
-        }
-
-        res.json({
-            isDeleted: isDeleted
-        });
+        } 
+        respone(isDeleted);
     }
 }
 
@@ -210,29 +192,38 @@ var fetchCart = function(req, res, next) {
     var user = req.session.user;
     var singleCodes = req.body.singleCodes;
     var buyeds = req.body.buyeds;
-    if (singleCodes === "" || buyeds === "") {
+   // var isLogined = (user && user.memberId) ? true : false;
+    var respone = function(cart, isFetched) {
         res.json({
-            isFetched: true,
-            cart: null
-        });
-    } else {
-        util.fetchAPI('cartByAnonymous', {
-            singleCodes: singleCodes,
-            qtys: buyeds
-        }).then(function(resp) {
-            if (resp.returnCode === 0) {
-                res.json({
-                    isFetched: true,
-                    cart: formatCarts(resp.object)[0]
-                });
-            } else {
-                res.json({
-                    isFetched: false,
-                    errMsg: resp.message
-                });
-            }
-        });
+            cart: cart,
+            isFetched: isFetched
+        })
     }
+    if(singleCodes==='' || buyeds===''){
+        return respone([{
+            promoType: null,
+            promoName: 0,
+            salesTotal: 0,
+            promoTotal: 0,
+            total: 0,
+            buyeds: 0,
+            tariffFee: 0,
+            dutyFree: 0,
+            buyLimit: 0,
+            collected:0
+        }],true);
+    }
+    util.fetchAPI('cartByAnonymous', {
+        singleCodes: singleCodes,
+        qtys: buyeds
+    }).then(function(resp) {
+        if (resp.returnCode === 0) {
+            var cart = formatCarts(resp.object);
+            respone(cart, true);
+        } else {
+            respone(null, false);
+        }
+    });
 }
 
 var checkCart = function(req, res, next) {
@@ -244,16 +235,10 @@ var checkCart = function(req, res, next) {
         singleCodes: singleCodes,
         qtys: buyeds
     }).then(function(resp) {
-        if (resp.returnCode === 0) {
-            res.json({
-                allowSubmit: true
-            })
-        } else {
-            res.json({
-                allowSubmit: false,
-                errMsg: resp.message
-            });
-        }
+        var returnCode = resp.returnCode;
+        res.json({
+            returnCode:returnCode
+        })
     });
 }
 

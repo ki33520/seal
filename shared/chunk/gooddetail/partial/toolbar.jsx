@@ -5,6 +5,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Popup from "../../../component/popup.jsx";
 import NumberPicker from "../../../component/numberpicker.jsx";
+import {formatPrice} from "../../../lib/util.es6";
 
 import dom from "../../../lib/dom.es6";
 import Attributes from "./attributes.jsx";
@@ -25,7 +26,7 @@ class Toolbar extends Component{
         if(good["useMobilePrice"] && !good.flashbuy["active"]){
             salePrice = good["mobilePrice"]
         }
-        return <span>&yen;{salePrice}</span>
+        return <span>&yen;{formatPrice(salePrice)}</span>
     }
     render(){
         const {addToCart,directBuy,handleBuyedChanged,handleAttrToggle,
