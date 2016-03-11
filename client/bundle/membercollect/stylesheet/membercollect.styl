@@ -73,14 +73,14 @@
 					position: absolute;
 					width: 100%;
 					height: 100%;
-					background-size: 80% 80%;
+					background-size: cover;
 					background-repeat: no-repeat;
 					background-position: center center;
-					&.not_sell{
-						background-image: url(/client/asset/images/ico_soldOut.png);
-					}
 					&.sold_out{
-						background-image: url(/client/asset/images/ico_soldOut.png);
+						background-image: url(/client/asset/images/cover_sold_out.png);
+					}
+					&.not_sell{
+						background-image: url(/client/asset/images/cover_not_sell.png);
 					}
 				}
 				&>a{

@@ -35,7 +35,7 @@ class Question extends Component{
                     list.map((v,k)=>{
                         return (
                             <div key={k} className="question-item">
-                                <h3>{v.questionName}</h3>
+                                <h3>{(k+1)+"."}{v.questionName}</h3>
                                 <p>{v.solution}</p>
                             </div>
                         )
@@ -57,9 +57,10 @@ class Question extends Component{
                     <span className="title">{questionList && questionList.catalogName}</span>
                 </header>
                 <div className="question-list-wrap">
+                    <GoTop relative={true}>
                     {this.renderList()}
                     <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)} />
-                    <GoTop relative={false}/>
+                    </GoTop>
                 </div>
             </div>
         );

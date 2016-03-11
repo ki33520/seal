@@ -153,7 +153,7 @@ class UpdateBasic extends Component{
                 <div className="form-item">
                     <div className="label-item">
                         <label>昵称</label>
-                        <input type="text" placeholder="请填写" name="nickName" value={fieldnickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
+                        <input type="text" placeholder="请填写" maxLength="20" name="nickName" value={fieldnickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
                     </div>
                     <div className="tips">昵称允许输入2-20位字符，支持中英文、数字及“-”“_”“@” 组合</div>
                 </div>
