@@ -15,7 +15,6 @@ class Floor extends Component{
                     {
                         list.map((child,key) => {
                             var masker = null;
-                            console.log(child)
                             if(child.version===0){
                                 masker = <div className="not_sell"></div>
                             }

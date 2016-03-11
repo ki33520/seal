@@ -160,9 +160,14 @@ function formatComment(object) {
 
     return order;
 }
+function queryString(a,b){
+    var sValue = a.match(new RegExp("[\?\&]"+b+"=([^\&]*)(\&?)","i"));
+    return sValue?sValue[1]:sValue;
+}
 
 var orderDetail = function(req, res, next) {
     var id = req.params.id;
+    var back_path = queryString(req.url,"back");
     bluebird.props({
         orderById: util.fetchAPI("orderById", {
             orderId: id
@@ -178,6 +183,7 @@ var orderDetail = function(req, res, next) {
             var initialState = {
                 isFetched: true,
                 order: order,
+                back_path: back_path,
                 systemTime: systemTime
             };
             if (req.xhr === true){

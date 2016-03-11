@@ -23,12 +23,13 @@ function configureStore(initialState){
 
 class OrderDetailApp extends Component{
     render(){
-        const {isFetched,order,systemTime} = this.props.initialState;
+        const {isFetched,order,back_path,systemTime} = this.props.initialState;
         const initialState = {
             orderByParam:{
                 isFetching:false,
                 isFetched,
                 isOpen:1,
+                back_path,
                 order,
                 systemTime
             }
