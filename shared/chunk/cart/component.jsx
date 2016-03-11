@@ -22,15 +22,36 @@ class Cart extends Component {
             alertOnConfirm:null
         }
     }
+    filterParamItems(cart) {
+        if(!cart) return {};
+        let singleCodes = [];
+        let buyeds = [];
+        cart.group.forEach((group) => {
+            group.list.forEach((item) => {
+                if (item.checked) {
+                    singleCodes.push(item.singleCode);
+                    buyeds.push(item.buyed);
+                }
+            });
+        });
+        return {
+            singleCodes:singleCodes.join(','),
+            buyeds:buyeds.join(',')
+        }
+    }
     componentWillReceiveProps(nextProps){
-        const {isChecked,allowSubmit,singleCodes,buyeds} = nextProps.cartByUser;
+        const {
+            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex
+        } = nextProps.cartByUser;
+        const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);
         if(isChecked){
-            if(allowSubmit){
+            if(isPassed){
                 const queryParam = base64Encode(urlParam({
                     itemIds:singleCodes,
-                    buyeds:buyeds
+                    buyeds
                 }));
                 window.location.assign(`/confirmorder/${queryParam}`);
+                return false;
             }else{
                 this.setState({
                     alertActive:true,
@@ -40,12 +61,18 @@ class Cart extends Component {
                 });
             }
         }
+        if(isUpdated||isToggled||isAllToggled||isDeleted){
+            this.props.fetchCart({
+                singleCodes,
+                buyeds,
+                cartIndex
+            });
+        }
     }
-    checkout(cart){
-        const {isChecking,isLogined,loginUrl} = this.props.cartByUser;
-        let itemIds = [];
-        let buyeds = [];
-        if(!cart.checked || isChecking){
+    checkout(cartIndex){
+        const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
+        const cart = carts[cartIndex];
+        if(cart.collected<1 || isChecking){
             return false;
         }
         if(cart.total > cart.buyLimit || cart.total <=0){
@@ -55,97 +82,46 @@ class Cart extends Component {
             location.href=loginUrl;
             return false;
         }
-        cart.group.forEach((group)=>{
-            group.list.forEach((item)=>{
-                if(item.checked){
-                    itemIds.push(item.singleCode);
-                    buyeds.push(item.buyed); 
-                }
-            });
+         const {singleCodes,buyeds} = this.filterParamItems(cart);
+        this.props.checkCartInfo({
+            singleCodes,
+            buyeds,
+            cartIndex
         });
-        if(itemIds.length&&buyeds.length){
-            this.props.checkCartInfo({
-                singleCodes:itemIds.join(","),
-                buyeds:buyeds.join(",")
-            });
-        }
     }
     handleChangeBuyed(goods,cartIndex,groupIndex,goodsIndex,buyed) {
-        const {carts,isUpdating} = this.props.cartByUser;
+        const {isUpdating} = this.props.cartByUser;
         const singleCode = goods.singleCode;
-        const limit = Math.min(goods.buyLimit,goods.stockCount);
-        if(isUpdating || buyed > limit){
+        const maxBuy = goods.maxBuy;
+        if(isUpdating || buyed > maxBuy){
             return false;
         }
-        let singleCodes = [];
-        let buyeds = [];
-        carts[cartIndex].group.forEach((group)=>{
-            group.list.forEach((item)=>{
-                if(item.checked){
-                    singleCodes.push(item.singleCode);
-                    buyeds.push(singleCode===item.singleCode?buyed:item.buyed);
-                }
-            });
-        });
         this.props.updateCart({
             singleCode,
             buyed,
-            singleCodes:singleCodes.join(','),
-            buyeds:buyeds.join(','),
-            limit,
-            checked:goods.checked,
+            maxBuy,
             cartIndex,
             groupIndex,
             goodsIndex
         });
     }
     toggleAllChecked(cartIndex,checked){
-        const {carts,isAllToggling} = this.props.cartByUser;
+        const {isAllToggling} = this.props.cartByUser;
         if(isAllToggling) return false;
-        let singleCodes = [];
-        let buyeds = [];
-        carts[cartIndex].group.forEach((group)=>{
-            group.list.forEach((item)=>{
-                if(checked){
-                    singleCodes.push(item.singleCode);
-                    buyeds.push(item.buyed);   
-                }
-            });
-        });
-
         this.props.toggleCartAll({
-            singleCodes:singleCodes.join(','),
-            buyeds:buyeds.join(','),
             cartIndex,
             checked
         });
     }
     toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
-        const {carts,isToggleing} = this.props.cartByUser;
+        const {isToggleing} = this.props.cartByUser;
         if(isToggleing) {
             return false;
         }
-        let singleCodes = [];
-        let buyeds = [];
-        carts[cartIndex].group.forEach((group)=>{
-            group.list.forEach((item)=>{
-                if(item.checked && item.singleCode !== goods.singleCode){
-                    singleCodes.push(item.singleCode);
-                    buyeds.push(item.buyed);
-                }
-            });
-        });
-        if(checked){
-            singleCodes.push(goods.singleCode);
-            buyeds.push(goods.buyed);
-        }
         this.props.toggleCartItem({
-            singleCodes:singleCodes.join(','),
-            buyeds:buyeds.join(','),
             cartIndex,
             groupIndex,
             goodsIndex,
-            singleCode:goods.singleCode,
             checked
         });
     }
@@ -160,29 +136,16 @@ class Cart extends Component {
         });
     }
     handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
-        const {deleteCart,cartByUser} = this.props;
-        const cart = cartByUser.carts[cartIndex];
-        if(!goods.checked||cartByUser.isDeleting){
+        const {isDeleting} = this.props.cartByUser;
+        if(!goods.checked||isDeleting){
             return false;
         }
-        let singleCodes = [];
-        let buyeds = [];
-        cart.group.forEach((group)=>{
-            group.list.forEach((item)=>{
-                if(item.singleCode !== goods.singleCode && item.checked){
-                    singleCodes.push(item.singleCode);
-                    buyeds.push(item.buyed);
-                }
-            })
-        });
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
                 this.toggleDialog();
-                deleteCart({
+                this.props.deleteCart({
                     cartId:goods.cartId,
-                    singleCodes:singleCodes.join(','),
-                    buyeds:buyeds.join(','),
                     singleCode:goods.singleCode,
                     cartIndex,
                     groupIndex,
@@ -191,15 +154,37 @@ class Cart extends Component {
             }
         });
     }
+    renderInfo(total,tax, limitTax,limitMoney){
+        const notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
+        const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
+        let message = null;
+
+        if(total > limitMoney){
+            message = warning;
+        }else if(tax > limitTax){
+            message = notice;
+        }
+
+        if(message===null) return null;
+
+        return(
+            <div className="cart-tips">
+                <div className="arrow"></div>
+                <div className="con">
+                    {message}
+                </div>
+            </div>
+        )
+    }
     renderGoods(goods,i,j,k) {
         const salePrice = formatPrice(goods.salePrice);
-        const maxBuy = Math.min(goods.buyLimit,goods.stockCount);
+        const maxBuy = goods.maxBuy;
         const buyed = goods.buyed;
         const limitStyle = classNames({
             limitBuy:maxBuy
         });
-        const soldout = classNames({
-            "sold-out":!goods.stockFlag
+        const saleOut = classNames({
+            "sale-out":!goods.stockFlag
         });
         return(
             <div className="group" key={"g-"+i+j+k}>
@@ -212,7 +197,7 @@ class Cart extends Component {
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href={"/gooddetail/"+goods.singleCode}>
                                 <img width="100%" src={goods.imageUrl} />
-                                <div className={soldout}></div>
+                                <div className={saleOut}></div>
                             </a>
                             <span className={limitStyle}>{'限购'+maxBuy+'件'}</span>
                         </div>
@@ -224,7 +209,7 @@ class Cart extends Component {
                             </p>
                             <div className="act_wrap"> 
                                 <NumberPicker type="number" value={buyed} 
-                                minimum={goods.minBuyStep} maximum={maxBuy} step={goods.buyedStep}
+                                minimum={goods.minStep} maximum={maxBuy} step={goods.step}
                                 onChange={this.handleChangeBuyed.bind(this,goods,i,j,k)} />
                             </div>
                         </div>
@@ -248,28 +233,6 @@ class Cart extends Component {
                 {goodsList}
             </div>
         );
-    }
-    renderInfo(total,tax, limitTax,limitMoney){
-        const notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
-        const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
-        let message = null;
-
-        if(total > limitMoney){
-            message = warning;
-        }else if(tax > limitTax){
-            message = notice;
-        }
-
-        if(message===null) return null;
-
-        return(
-            <div className="cart-tips">
-                <div className="arrow"></div>
-                <div className="con">
-                    {message}
-                </div>
-            </div>
-        )
     }
     renderCart(cart,i){
         let groupList = [];
@@ -316,7 +279,7 @@ class Cart extends Component {
                             总计(不含运费、税金)：<em>{'￥'+total}</em>
                         </p>
                         <p>
-                            <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,cart)}/>
+                            <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,i)}/>
                         </p>
                     </div>
                     {this.renderInfo(cart.total,tax,cart.dutyFree,cart.buyLimit)}
@@ -326,7 +289,7 @@ class Cart extends Component {
     }
     renderCarts(){
         const {carts} = this.props.cartByUser;
-        if(carts && carts.length){
+        if(carts && carts.length>0){
             let cartList = [];
             carts.forEach((cart,i)=>{
                 cartList.push(this.renderCart(cart,i));

@@ -318,7 +318,7 @@
     height: 0;
     clear: both;
 }
-.sold-out {
+.sale-out {
     width: 1.28rem;
     height: 1.28rem;
     background-image: url(/client/asset/images/ico_soldOut.png);
