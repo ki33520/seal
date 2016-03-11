@@ -47,6 +47,7 @@ function finishSubmitOrder(param,res){
 }
 
 import {alert} from "../common/action.es6";
+export {alert} from "../common/action.es6";
 
 export function submitOrder(url,param){
     return (dispatch)=>{
