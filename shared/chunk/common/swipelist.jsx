@@ -1,17 +1,23 @@
 'use strict';
 
 import React,{Component} from "react";
-import classNames from "classnames"
+import ReactDOM from "react-dom";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 
 class Swipelist extends Component{
+    componentDidUpdate(){
+        var {imgList,activeIndex} = this.props;
+        if(imgList && imgList.length >0){
+            ReactDOM.findDOMNode(this.refs["swipelist"]).children[1].children[activeIndex].click();
+        }
+    }
     render(){
         var {imgList,activeIndex,canBack,onGoBack} = this.props;
         if(imgList){
             return (
                 <div className="swipe-list">
                     <a href="javascript:void(null)" onClick={onGoBack} className="iconfont icon-back"></a>
-                    <SlideTabs ref="slideTabs" axis="x" activeIndex={activeIndex} navbarSlidable={false} >
+                    <SlideTabs ref="swipelist" axis="x" activeIndex={activeIndex} navbarSlidable={false} >
                         {
                             imgList.map((v,k)=>{
                                 var t = k+1+" / "+imgList.length;
