@@ -101,7 +101,7 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
         }
     }
 
-    if(isAttrSelected){
+    // if(isAttrSelected){
         let isNeedValidateStock = false
         if(_.keys(selectedAttrs).length === (_.keys(_good.attrs).length - 1)){
             isNeedValidateStock = true
@@ -120,8 +120,9 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
                     return _.isEqual(_.pick(item.attrs,_.keys(_selectedAttrs)),_selectedAttrs)
                 })
                 attrValue.disabled = !isAttrPairExist
-                if(isNeedValidateStock){
+                if(isNeedValidateStock && isAttrPairExist && isAttrSelected){
                     let validItem = _.find(_good.items,(item)=>{
+                        // console.log(item.attrs,_selectedAttrs)
                         return _.isEqual(item.attrs,_selectedAttrs)
                     })
                     // console.log('validItem',validItem,_selectedAttrs,selectedAttrs,selectedAttrName)
@@ -135,7 +136,7 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
                 return attrValue
             })
         }
-    }
+    // }
 
     if(_.keys(selectedAttrs).length === _.keys(_good.attrs).length){
         let selectedItem = _.findWhere(_good.items,{'attrs':selectedAttrs})
