@@ -274,7 +274,7 @@ class Cart extends Component {
                             <p>{'活动优惠： -￥'+promoTotal}</p>
                         </div>
                     </div>
-                    <div id="J_wrapperCartTop">
+                    <div className="J_wrapperCartTop">
                         <p>
                             总计(不含运费、税金)：<em>{'￥'+total}</em>
                         </p>

@@ -288,14 +288,15 @@
 }
 .cartFirst div.cartFirst_two p {
     color: #999;
-	font-size:.28rem;
-	line-height:.48rem;
+    text-align: right;
+    font-size:.28rem;
+    line-height:.48rem;
 }
-#J_wrapperCartTop p {
+.J_wrapperCartTop p {
     text-align: right;
     display: block;
     padding:.12rem 0;
-	font-size:.28rem;
+   font-size:.28rem;
 }
 .btn_buy {
 	width:1.86667rem;
