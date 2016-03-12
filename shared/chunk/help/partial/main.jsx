@@ -15,7 +15,7 @@ class HelpMain extends Component{
                     {
                         result.map((v,k)=>{
                             return (
-                                <li key={k}><a href="javascript:void(null)" onClick={changeScene.bind(this,"question",v)}>{v.catalogName}</a></li>
+                                <li key={k}><a href="javascript:void(null)" onClick={changeScene.bind(this,"question",v)}>{(k+1)+"."}{v.catalogName}</a></li>
                             )
                         })
                     }

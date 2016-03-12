@@ -80,7 +80,7 @@ class GoodListApp extends React.Component{
         let _params = Object.assign({},params,{
             pageIndex : curentPage + 1
         });
-        this.props.fetchGoods(_params);
+        this.props.requestGoods(_params);
     }
     render(){
         const {keyword,filters,list,isFetching} = this.props.index;

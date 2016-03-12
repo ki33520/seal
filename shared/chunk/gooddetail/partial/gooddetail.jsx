@@ -74,6 +74,9 @@ class GoodDetail extends Component{
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.goodById.attrToggled){
+            if(nextProps.goodById.good.selectedItem === null){
+                return
+            }
             if(this.props.goodById.good.selectedItem === null || 
                 nextProps.goodById.good.selectedItem.code !== this.props.goodById.good.selectedItem.code){
                 this.setState({
@@ -86,6 +89,9 @@ class GoodDetail extends Component{
         const {selectedItem} = this.props.goodById.good
         const prevSelectedItem = prevProps.goodById.good.selectedItem
         if(this.props.goodById.attrToggled){
+            if(selectedItem === null){
+                return
+            }
             if(prevSelectedItem === null || selectedItem.code !== prevSelectedItem.code){
                     if(this.props.goodById.goodFetching !== true){
                         this.props.fetchGood({

@@ -28,7 +28,8 @@ function questionByForm(state={},action){
 	    case RESPONSE_QUESTION:
             var questionList = {...state.questionList};
 	    	var newQuestionList = action.res.questionList;
-	    	if(questionList && questionList.catalogId === newQuestionList.catalogId){
+            var param = action.param;
+	    	if(questionList && questionList.catalogId === newQuestionList.catalogId && param.start !==1){
 	    		newQuestionList.list = _.union(questionList.list,newQuestionList.list);
 	    	};
 	        return Object.assign({},state,{
