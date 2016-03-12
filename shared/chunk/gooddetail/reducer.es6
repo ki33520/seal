@@ -101,34 +101,39 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
         }
     }
 
-    let isNeedValidateStock = false
-    for(let attrName in _good.attrs){
-        let attrValues = _good.attrs[attrName]
-        if(attrName === selectedAttrName){
-            continue;
-        }
-        // console.log('selectedAttrs',selectedAttrs)
-        _good.attrs[attrName] = attrValues.map((attrValue)=>{
-            let _selectedAttrs = Object.assign({},selectedAttrs,{
-                [attrName]:attrValue.value
-            })
-            let isAttrPairExist = _.some(_good.items,(item)=>{
-                return _.isEqual(_.pick(item.attrs,_.keys(_selectedAttrs)),_selectedAttrs)
-            })
-            attrValue.disabled = !isAttrPairExist
-            if(isNeedValidateStock){
-                let validItem = _.findWhere(_good.items,_selectedAttrs)
-                if(validItem === 0){
-                    attrValue.disabled = true
-                }
-            }
-            if(attrValue.disabled && attrValue.selected){
-                attrValue.selected = false
-            }
-            return attrValue
-        })
+    if(isAttrSelected){
+        let isNeedValidateStock = false
         if(_.keys(selectedAttrs).length === (_.keys(_good.attrs).length - 1)){
             isNeedValidateStock = true
+        }
+        for(let attrName in _good.attrs){
+            let attrValues = _good.attrs[attrName]
+            if(attrName === selectedAttrName){
+                continue;
+            }
+            _good.attrs[attrName] = attrValues.map((attrValue)=>{
+                let _selectedAttrs = Object.assign({},selectedAttrs,{
+                    [attrName]:attrValue.value
+                })
+                // console.log('selectedAttrs',_selectedAttrs)
+                let isAttrPairExist = _.some(_good.items,(item)=>{
+                    return _.isEqual(_.pick(item.attrs,_.keys(_selectedAttrs)),_selectedAttrs)
+                })
+                attrValue.disabled = !isAttrPairExist
+                if(isNeedValidateStock){
+                    let validItem = _.find(_good.items,(item)=>{
+                        return _.isEqual(item.attrs,_selectedAttrs)
+                    })
+                    // console.log('validItem',validItem,_selectedAttrs,selectedAttrs,selectedAttrName)
+                    if(validItem && validItem.stock === 0){
+                        attrValue.disabled = true
+                    }
+                }
+                if(attrValue.disabled && attrValue.selected){
+                    attrValue.selected = false
+                }
+                return attrValue
+            })
         }
     }
 
