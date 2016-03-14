@@ -1,13 +1,14 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
 import Icon from "./icon.jsx";
 
 class NumberPicker extends Component{
     constructor(props){
         super(props);
         this.state = {
-            value:this.props.value
+            value:this.props.value,
         }
     }
     componentWillReceiveProps(nextProps){
@@ -59,9 +60,13 @@ class NumberPicker extends Component{
         },()=>this.props.onChange(inputValue))
     }
     render(){
-        const {readonly,type} = this.props;
+        const {readonly,type,minimum,maximum} = this.props;
+        const classes = classNames("number-picker",{
+            "is-minimum":this.state.value === minimum,
+            "is-maximum":this.state.value === maximum
+        })
         return (
-            <div className="number-picker">
+            <div className={classes}>
             <div onClick={this.handleDecrease.bind(this)}><Icon icon="minus"/></div>
             <input type={type} readOnly={readonly} onChange={this.handleChange.bind(this)} value={this.state.value}/>
             <div onClick={this.handleIncrease.bind(this)}><Icon icon="plus"/></div>

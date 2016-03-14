@@ -1,7 +1,8 @@
 'use strict';
 
 import {
-    SHOW_ALERT,HIDE_ALERT
+    SHOW_ALERT,HIDE_ALERT,
+    SHOW_ACTIVITYINDICATOR,HIDE_ACTIVITYINDICATOR
 } from "./constant.es6";
 
 export function alertReducer(state={},action){
@@ -18,6 +19,21 @@ export function alertReducer(state={},action){
             });
         default:
             return state;
+    }
+}
+
+export function activityIndicatorReducer(state={},action){
+    switch(action.type){
+        case SHOW_ACTIVITYINDICATOR:
+            return Object.assign({},state,{
+                activityIndicatorContent:action.content,
+                activityIndicatorActive:true
+            })
+        case HIDE_ACTIVITYINDICATOR:
+            return Object.assign({},state,{
+                activityIndicatorActive:false,
+                activityIndicatorContent:action.content  
+            })
     }
 }
 

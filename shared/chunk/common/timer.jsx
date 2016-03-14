@@ -13,6 +13,7 @@ class Timer extends Component{
     }
     restOfTime(duration){
         if(duration <= 0){
+            this.props.onTimerExpire()
             return {
                 hour:"00",
                 second:"00",
@@ -86,6 +87,7 @@ Timer.defaultProps = {
     referTime:null,
     endTime:null,
     dayEnable:false,
+    onTimerExpire:()=>{},
     format:"YYYY-MM-DD HH:mm:ss",
     template:`<%= hour %>:<%= minute %>:<%= second %>`
 }
