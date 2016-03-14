@@ -8,7 +8,6 @@ import dom from "../../../lib/dom.es6";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
-import {fetchDeliveryOrder,fetchPayGateway} from "../action.es6";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import Timer from "../../common/timer.jsx";
@@ -44,14 +43,12 @@ class Floor extends Component{
     }
     handlePayGateway(child,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
+        const {fetchPayGateway} = this.props;
         const {orderNo} = child;
         let message = {
             orderNo:orderNo
         }
-        dispatch(
-            fetchPayGateway(base64EncodeForURL(urlParam(message)))
-        )
+        fetchPayGateway(base64EncodeForURL(urlParam(message)));
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
@@ -140,15 +137,23 @@ class Floor extends Component{
             <div className="J_moveRight">{content}</div>
         );
     }
+    timeOut(child){
+        const {changeOrder} = this.props;
+        if(child.orderStatus === "STATUS_NOT_PAY"){
+            setTimeout(()=>{
+                changeOrder(child,"STATUS_CANCELED");
+            },200);
+        }
+    }
     renderOutTime(child){
-        const {systemTime} = this.props;
+        const {systemTime} = this.props.ordersByParam;
         const {createdAt,timeoutTime,orderStatus} = child;
-        const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
-        const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
+        const currentTime = moment(new Date(systemTime));
+        const outTime = moment(new Date(timeoutTime));
         if(orderStatus === "STATUS_NOT_PAY" && outTime){
             return (
                 <i>
-                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
+                    <Timer onTimerExpire={this.timeOut.bind(this,child)} endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
                     <span>后自动取消</span>
                 </i>
             )
@@ -203,7 +208,8 @@ class Floor extends Component{
         )
     }
     render(){
-        const {orders,orderIndex} = this.props;
+        const {orderIndex} = this.props;
+        const {orders} = this.props.ordersByParam;
         const orderItem = orders[orderIndex];
         return (
             <div className={`order-content order-content-${orderIndex}`}>

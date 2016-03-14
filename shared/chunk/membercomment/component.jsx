@@ -15,11 +15,10 @@ class CommentList extends Component{
         }
     }
     handleSceneChange(currentScene,param){
+        const {changePhotos} =  this.props;
         switch(currentScene){
             case "photo":
-                this.setState({
-                    photos: param ? param : null
-                });
+                changePhotos(param);
         }
     }
     render(){
@@ -29,7 +28,7 @@ class CommentList extends Component{
                     <Comment {...this.props.commentByUser} {...this.props}/>
                 </Scene>
                 <Scene name="photo">
-                    <PhotoList {...this.state} {...this.props.commentByUser} {...this.props}/>
+                    <PhotoList {...this.props.commentByUser} {...this.props}/>
                 </Scene>
             </SceneGroup>
         );

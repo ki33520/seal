@@ -6,21 +6,18 @@ import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
-import {fetchOrder,fetchDeliveryOrder} from "./action.es6";
 
 import Floor from "./partial/floor.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 import Header from "../common/header.jsx";
-import {alert} from "../common/action.es6";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
-
 
 class OrderList extends Component{
     constructor(props){
         super(props);
         this.state = {
-            displayFlag: props.flag,
+            displayFlag: props.ordersByParam.flag,
             dialogActive:false,
             dialogContent: "确定已收货吗?",
             dialogOnConfirm:null
@@ -32,33 +29,34 @@ class OrderList extends Component{
         });
     }
     confirmDialog(orderNo,i){
-        const {dispatch} = this.props;
+        const {fetchDeliveryOrder} = this.props;
         this.setState({
             dialogActive:true,
             dialogContent: "确定已收货吗?",
             dialogOnConfirm:()=>{
                 this.toggleDialog();
-                dispatch(fetchDeliveryOrder("/deliveryorder",{
+                fetchDeliveryOrder("/deliveryorder",{
                     orderNo,
                     index: i
-                }));
+                });
             }
         });
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props;
-        if(nextProps.deliveryOrderChanging === false &&
-           this.props.deliveryOrderChanging === true){
-            if(nextProps.deliveryOrderChanged === true){
-                dispatch(alert(nextProps.msg,2000));
+        const {alert} = this.props;
+        if(nextProps.ordersByParam.deliveryOrderChanging === false &&
+           this.props.ordersByParam.deliveryOrderChanging === true){
+            if(nextProps.ordersByParam.deliveryOrderChanged === true){
+                alert(nextProps.msg,2000);
                 window.location.assign("/orderlist/4");
             }else{
-                dispatch(alert(nextProps.msg,2000));
+                alert(nextProps.msg,2000);
             }
         }
     }
     beginRefresh(interval,flag){
-        const {orders,isFetching,dispatch} =  this.props;
+        const {fetchOrder} = this.props;
+        const {orders,isFetching} =  this.props.ordersByParam;
         var flag = flag !== undefined ? flag: this.state.displayFlag,
             interval = interval !== undefined ? interval : 1,
             order = orders[flag],
@@ -74,24 +72,24 @@ class OrderList extends Component{
         if(pageCount < nextPage || isFetching){
             return false;
         }
-        dispatch(fetchOrder(fetchLink,{
+        fetchOrder(fetchLink,{
             status: flag,
             pageIndex:nextPage
-        }));
+        });
     }
     componentDidMount(){
         ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[this.state.displayFlag].click();
     }
     componentDidUpdate(prevProps,prevState){
-        if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
+        if(prevProps.ordersByParam.paygatewayFetched === false && this.props.ordersByParam.paygatewayFetched === true){
             setTimeout(()=>{
                 ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
-            },1000)
+            },10)
         }
     }
     toggleFlag(flag,e){
         e && e.preventDefault();
-        const {orders} = this.props;
+        const {orders} = this.props.ordersByParam;
         this.setState({
             displayFlag:flag
         });
@@ -103,7 +101,7 @@ class OrderList extends Component{
         e && e.stopPropagation();
     }
     render(){
-        var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam} = this.props;
+        var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam} = this.props.ordersByParam;
         cashierParam = cashierParam || {};
         const tab_nav_item = ["全部","待付款","待发货","待收货","待评价"];
         return (
