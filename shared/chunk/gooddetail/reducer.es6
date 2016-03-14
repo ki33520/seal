@@ -5,7 +5,7 @@ import {RESPONSE_GOOD,REQUEST_GOOD,TOGGLE_ATTR,
     START_ADD_CART,FINISH_ADD_CART,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
-    REQUEST_COMMENTS,RESPONSE_COMMENTS,
+    REQUEST_COMMENTS,RESPONSE_COMMENTS,SELECT_COMMENTIMAGE,
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
     REQUEST_FLASHBUY,RESPONSE_FLASHBUY,
 START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
@@ -75,6 +75,11 @@ function goodById(state={},action){
                 commentsFetched:action.res.commentsFetched,
                 commentsFetching:false
             })
+        case SELECT_COMMENTIMAGE:
+            return Object.assign({},state,{
+                selectedCommentImageIndex:action.index,
+                selectedCommentImages:action.list
+            })
         default:
             return state;
     }
@@ -103,7 +108,7 @@ function toggleAttr(good,selectedAttrName,selectedAttrValue){
 
     // if(isAttrSelected){
         let isNeedValidateStock = false
-        if(_.keys(selectedAttrs).length === (_.keys(_good.attrs).length - 1)){
+        if(_.keys(selectedAttrs).length >= (_.keys(_good.attrs).length - 1)){
             isNeedValidateStock = true
         }
         for(let attrName in _good.attrs){

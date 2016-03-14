@@ -7,7 +7,7 @@ import {
     REQUEST_GOOD,RESPONSE_GOOD,
     START_ADD_CART,FINISH_ADD_CART,
     START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED,
-    REQUEST_COMMENTS,RESPONSE_COMMENTS,
+    REQUEST_COMMENTS,RESPONSE_COMMENTS,SELECT_COMMENTIMAGE,
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
     REQUEST_FLASHBUY,RESPONSE_FLASHBUY
 } from "./constant.es6";
@@ -185,5 +185,13 @@ export function fetchComments(param){
         return apiRequest("/goodcomment",param).then((res)=>{
             dispatch(responseComments(param,res))
         })
+    }
+}
+
+export function selectCommentImage(index,list){
+    return {
+        type:SELECT_COMMENTIMAGE,
+        index,
+        list
     }
 }

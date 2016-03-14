@@ -8,7 +8,7 @@ class Timer extends Component{
     constructor(props){
         super(props);
         this.state = {
-            duration:0
+            duration:null
         }
     }
     restOfTime(duration){
@@ -72,6 +72,9 @@ class Timer extends Component{
     }
     render(){
         const {duration} = this.state
+        if(duration === null){
+            return null
+        }
         let {day,hour,minute,second} = this.restOfTime(duration)
         let compiled = _.template(this.props.template);
         let durationContent = compiled({
