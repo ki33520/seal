@@ -8,7 +8,6 @@ import dom from "../../../lib/dom.es6";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
-import {fetchDeliveryOrder,fetchPayGateway,changeOrder} from "../action.es6";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import Timer from "../../common/timer.jsx";
@@ -44,14 +43,12 @@ class Floor extends Component{
     }
     handlePayGateway(child,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
+        const {fetchPayGateway} = this.props;
         const {orderNo} = child;
         let message = {
             orderNo:orderNo
         }
-        dispatch(
-            fetchPayGateway(base64EncodeForURL(urlParam(message)))
-        )
+        fetchPayGateway(base64EncodeForURL(urlParam(message)));
     }
     renderButtons(child,i){
         const {orderStatus,orderId,itemList} = child;
@@ -141,17 +138,17 @@ class Floor extends Component{
         );
     }
     timeOut(child){
-        const {dispatch} = this.props;
+        const {changeOrder} = this.props;
         if(child.orderStatus === "STATUS_NOT_PAY"){
             setTimeout(()=>{
-                dispatch(changeOrder(child,"STATUS_CANCELED"))
+                changeOrder(child,"STATUS_CANCELED");
             },200);
         }
     }
     renderOutTime(child){
-        const {systemTime} = this.props;
+        const {systemTime} = this.props.ordersByParam;
         const {createdAt,timeoutTime,orderStatus} = child;
-        const currentTime = moment(new Date(systemTime));
+        const currentTime = moment(new Date(systemTime-1000*60*60*1));
         const outTime = moment(new Date(timeoutTime));
         if(orderStatus === "STATUS_NOT_PAY" && outTime){
             return (
@@ -211,7 +208,8 @@ class Floor extends Component{
         )
     }
     render(){
-        const {orders,orderIndex} = this.props;
+        const {orderIndex} = this.props;
+        const {orders} = this.props.ordersByParam;
         const orderItem = orders[orderIndex];
         return (
             <div className={`order-content order-content-${orderIndex}`}>
