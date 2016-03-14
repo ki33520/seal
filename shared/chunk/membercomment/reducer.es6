@@ -1,13 +1,17 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {RECEIVE_COMMENT,REQUEST_COMMENT} from "./action.es6";
+import {RECEIVE_COMMENT,REQUEST_COMMENT,CHANGE_PHOTOS} from "./action.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
 function commentByUser(state={},action){
     switch(action.type){
+        case CHANGE_PHOTOS:
+            return Object.assign({},state,{
+                photos: action.photos
+            })
         case REQUEST_COMMENT:
             return Object.assign({},state,{
                 isFetched:false,

@@ -3,6 +3,7 @@ import {apiRequest} from "../../lib/util.es6";
 
 export const REQUEST_COMMENT = "REQUEST_COMMENT";
 export const RECEIVE_COMMENT = "RECEIVE_COMMENT";
+export const CHANGE_PHOTOS = "CHANGE_PHOTOS";
 
 import {alert} from "../common/action.es6";
 export {alert} from "../common/action.es6";
@@ -29,5 +30,12 @@ export function fetchComment(url,param){
         return apiRequest(url,param).then((res)=>{
             dispatch(receiveComment(param,res));
         });
+    }
+}
+
+export function changePhotos(photos){
+    return {
+        type:CHANGE_PHOTOS,
+        photos
     }
 }
