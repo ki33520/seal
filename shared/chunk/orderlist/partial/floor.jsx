@@ -143,8 +143,8 @@ class Floor extends Component{
     renderOutTime(child){
         const {systemTime} = this.props;
         const {createdAt,timeoutTime,orderStatus} = child;
-        const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
-        const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
+        const currentTime = moment(new Date(systemTime));
+        const outTime = moment(new Date(timeoutTime));
         if(orderStatus === "STATUS_NOT_PAY" && outTime){
             return (
                 <i>
