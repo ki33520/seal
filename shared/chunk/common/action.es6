@@ -2,7 +2,8 @@
 import {
     CHANGE_FIELD,
     CHANGE_SCENE,
-    SHOW_ALERT,HIDE_ALERT
+    SHOW_ALERT,HIDE_ALERT,
+    SHOW_ACTIVITYINDICATOR,HIDE_ACTIVITYINDICATOR
 } from "./constant.es6"
 
 export function changeField(name,value){
@@ -35,6 +36,21 @@ export function alert(content="",delay=3000){
         },delay)
     }
 }
+
+export function showActivityIndicator(content){
+    return {
+        type:SHOW_ACTIVITYINDICATOR,
+        content
+    }
+}
+
+export function hideActivityIndicator(content){
+    return {
+        type:HIDE_ACTIVITYINDICATOR,
+        content
+    }
+}
+
 
 export function changeScene(param){
     return {

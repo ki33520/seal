@@ -14,7 +14,7 @@ import {
     START_SETDEFAULT,FINISH_SETDEFAULT
 } from "./constant.es6";
 
-export {alert} from "../common/action.es6";
+export {alert,showActivityIndicator,hideActivityIndicator} from "../common/action.es6";
 
 function changeReceiver(receiver){
     return {

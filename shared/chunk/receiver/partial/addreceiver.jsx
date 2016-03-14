@@ -6,6 +6,7 @@ import Header from "../../common/header.jsx";
 import CascadeArea from "./cascadearea.jsx";
 
 import {alert} from "../../common/action.es6";
+import ActivityIndicator from "../../common/activityindicator.jsx";
 import Alert from "../../../component/alert.jsx";
 
 class AddReceiver extends Component{
@@ -45,7 +46,7 @@ class AddReceiver extends Component{
     }
     handleSave(e){
         e && e.preventDefault();
-        const {receiver,provinces,cities,districts,createReceiver} = this.props
+        const {receiver,provinces,cities,districts,createReceiver,showActivityIndicator} = this.props
         const {consignee,idCard,mobileNumber,address,isDefault,
             provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
@@ -58,13 +59,15 @@ class AddReceiver extends Component{
             provinceCode,cityCode,districtCode,
             provinceName,cityName,districtName
         })
+        showActivityIndicator()
     }
     componentWillReceiveProps(nextProps){
-        const {alert} = this.props;
+        const {alert,hideActivityIndicator} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
-                alert("提交成功!",2000);
+                hideActivityIndicator()
+                alert("提交成功!",1500);
                 setTimeout(()=>{
                     const {onCheck,receiver,checkable} = this.props
                     if(checkable){
@@ -76,15 +79,16 @@ class AddReceiver extends Component{
                     }else{
                         this.props.changeScene("index")
                     }
-                },2500)
+                },2000)
                 // setTimeout(()=>this.props.changeScene("index"),2500)
             }else{
-                alert(nextProps.errMsg,2000)
+                alert(nextProps.errMsg,1500)
             }
         }
     }
     render(){
-        const {saveSuccess,alertActive,alertContent,receiver} = this.props
+        const {saveSuccess,alertActive,alertContent,
+            activityIndicatorActive,receiver} = this.props
         const {
             consignee,idCard,mobileNumber,zipcode,address,isDefault,
         } = (receiver === null?{}:receiver);
@@ -133,6 +137,7 @@ class AddReceiver extends Component{
                 </div>
             </div>
             </div>
+            <ActivityIndicator active={activityIndicatorActive}/>
             <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
