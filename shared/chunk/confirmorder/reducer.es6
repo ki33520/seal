@@ -109,11 +109,13 @@ function errMsgByCode(errCode){
         case -402105:
         case -402106:
             // errMsg = "商品库存不足"
-            errMsg = "超出库存数量，请重新提交!"
+            // errMsg = "超出库存数量，请重新提交!"
+            errMsg = "超出购买限制，请重新提交!"
             break
         case -402107:
             // errMsg = "商品购买数量已超出商品限购数"
-            errMsg = "超出限购数量，请重新提交!"
+            // errMsg = "超出限购数量，请重新提交!"
+            errMsg = "超出购买限制，请重新提交!"
             break
         case -402109:
             errMsg = "商品购买数量低于起购数"
