@@ -7,6 +7,15 @@ export const REQUEST_DELIVERYORDER = "REQUEST_DELIVERYORDER";
 export const RESPONSE_DELIVERYORDER= "RESPONSE_DELIVERYORDER";
 export const REQUEST_PAYGATEWAY = "REQUEST_PAYGATEWAY";
 export const RESPONSE_PAYGATEWAY = "RESPONSE_PAYGATEWAY";
+export const CHANGE_ORDER= "CHANGE_ORDER";
+
+export function changeOrder(order,status){
+    return {
+        type:CHANGE_ORDER,
+        order,
+        status
+    }
+}
 
 function requestOrder(param){
     return {

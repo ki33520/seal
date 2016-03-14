@@ -8,7 +8,7 @@ import dom from "../../../lib/dom.es6";
 import Image from "../../../component/image.jsx";
 import Icon from "../../../component/icon.jsx";
 import moment from "moment";
-import {fetchDeliveryOrder,fetchPayGateway} from "../action.es6";
+import {fetchDeliveryOrder,fetchPayGateway,changeOrder} from "../action.es6";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import Timer from "../../common/timer.jsx";
@@ -140,6 +140,14 @@ class Floor extends Component{
             <div className="J_moveRight">{content}</div>
         );
     }
+    timeOut(child){
+        const {dispatch} = this.props;
+        if(child.orderStatus === "STATUS_NOT_PAY"){
+            setTimeout(()=>{
+                dispatch(changeOrder(child,"STATUS_CANCELED"))
+            },200);
+        }
+    }
     renderOutTime(child){
         const {systemTime} = this.props;
         const {createdAt,timeoutTime,orderStatus} = child;
@@ -148,7 +156,7 @@ class Floor extends Component{
         if(orderStatus === "STATUS_NOT_PAY" && outTime){
             return (
                 <i>
-                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
+                    <Timer onTimerExpire={this.timeOut.bind(this,child)} endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
                     <span>后自动取消</span>
                 </i>
             )
