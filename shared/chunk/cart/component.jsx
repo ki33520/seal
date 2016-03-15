@@ -10,6 +10,7 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import Checkbox from "../../component/form/checkbox.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
+import ActivityIndicator from "../common/activityindicator.jsx";
 import {urlParam,base64Encode,formatPrice} from "../../lib/util.es6";
 
 class Cart extends Component {
@@ -314,7 +315,7 @@ class Cart extends Component {
         }
     }
     render() {
-        const {isUpdating,alertContent} = this.props.cartByUser;
+        const {isUpdating,isFetching,alertContent} = this.props.cartByUser;
         return (
             <div>
                 <Header>
@@ -328,6 +329,7 @@ class Cart extends Component {
                     onlyConfirm={true}
                     onConfrim={this.state.alertOnConfirm}>{alertContent}</Dialog>
                 <Footer activeIndex="3"/>
+                <ActivityIndicator active={isFetching} />
             </div>
         )
     }
