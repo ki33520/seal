@@ -44,13 +44,13 @@ class UpdateBasic extends Component{
                             len ++;
                         }
                     }
-                    if(len<2 || len>20){
+                    if(len<2 || len>12){
                         return false;
                     }else{
                         return true;
                     }
                 },
-                msg: ["请输入昵称","昵称必须为2-20位英文、数字及- _ @组合"]
+                msg: ["请输入昵称","昵称必须为2-12位英文、数字及- _ @组合"]
             },
             fieldgender: {
                 reg: function(str){
@@ -153,9 +153,9 @@ class UpdateBasic extends Component{
                 <div className="form-item">
                     <div className="label-item">
                         <label>昵称</label>
-                        <input type="text" placeholder="请填写" maxLength="20" name="nickName" value={fieldnickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
+                        <input type="text" placeholder="请填写" maxLength="12" name="nickName" value={fieldnickName} onChange={this.handleFieldChange.bind(this,"nickName")}/>
                     </div>
-                    <div className="tips">昵称允许输入2-20位字符，支持中英文、数字及“-”“_”“@” 组合</div>
+                    <div className="tips">昵称允许输入2-12位字符，支持中英文、数字及“-”“_”“@”组合。</div>
                 </div>
                 <div className="form-item">
                     <div className="label-item">

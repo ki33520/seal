@@ -1,6 +1,6 @@
 'use strict';
 import {combineReducers} from "redux";
-import {RECEIVE_ORDER,REQUEST_ORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY} from "./action.es6";
+import {RECEIVE_ORDER,REQUEST_ORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY,CHANGE_ORDER} from "./action.es6";
 import _ from "lodash";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -8,6 +8,17 @@ import {alertReducer} from "../common/reducer.es6";
 
 export function ordersByParam(state={},action){
     switch(action.type){
+        case CHANGE_ORDER:
+            var flag = state.flag;
+            var orders = {...state.orders};
+            orders[flag].list.map((v,k)=>{
+                if(v.orderId === action.order.orderId){
+                    v.orderStatus = action.status;
+                }
+            });
+            return Object.assign({},state,{
+                orders: orders
+            })
         case REQUEST_ORDER:
             const status = action.param.status;
             if(!state.orders[status]){
