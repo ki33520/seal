@@ -29,6 +29,18 @@ class MembercollectList extends Component{
             pageIndex:nextPage
         })
     }
+    componentWillReceiveProps(nextProps){
+        const {changeScene,fetchCollect} = this.props;
+        const self = this;
+        if(nextProps.memberCollectByUser.isToggling === false &&
+           this.props.memberCollectByUser.isToggling === true){
+            if(nextProps.memberCollectByUser.isToggled === true){
+                fetchCollect("/membercenter/collect",{
+                    pageIndex:1
+                })
+            }
+        }
+    }
     handleDelete(child,e){
         e && e.preventDefault();
         e && e.preventDefault();
