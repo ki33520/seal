@@ -11,6 +11,9 @@ export const FINISH_BIND_MEMBERCARD= "FINISH_BIND_MEMBERCARD";
 export const START_SEND_VERIFYCODE = "START_SEND_VERIFYCODE";
 export const FINISH_SEND_VERIFYCODE= "FINISH_SEND_VERIFYCODE";
 
+import {alert} from "../common/action.es6";
+export {alert} from "../common/action.es6";
+
 export function changeField(name,value){
     return {
         type:CHANGE_FIELD,
