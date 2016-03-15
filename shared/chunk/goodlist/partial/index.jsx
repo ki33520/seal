@@ -68,7 +68,7 @@ class GoodListApp extends React.Component{
     }
     toggleSort(order){
         const {params} = this.props.index;
-        let _params = Object.assign({},params,order);
+        let _params = Object.assign({},params,order,{pageIndex:1});
         this.props.fetchGoods(_params);
     }
     beginRefresh(){
