@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import Swipelist from "../../common/swipelist.jsx";
 
 class GoodComment extends Component{
     constructor(props){
@@ -26,7 +27,11 @@ class GoodComment extends Component{
         if(comments && comments["list"].length > 0){
             const commentsContent = comments["list"].map((comment,i)=>{
                 const commentImages = comment["commentImages"].map((img,i)=>{
-                    return <a href="javascript:void(null)" key={i}><img src={img}/></a>
+                    return <a href="javascript:void(null)" 
+                    onClick={()=>{
+                        this.props.changeScene("thumbnail",{index:i,list:comment["commentImages"]})}
+                    } 
+                    key={i}><img src={img}/></a>
                 })
                 return (
                     <div className="comList" key={i}>
@@ -55,7 +60,11 @@ class GoodComment extends Component{
         if(comments && comments["showup"].length > 0){
             const commentsContent = comments["showup"].map((comment,i)=>{
                 const commentImages = comment["commentImages"].map((img,i)=>{
-                    return <a href="javascript:void(null)" key={i}><img src={img}/></a>
+                    return <a href="javascript:void(null)" 
+                    onClick={()=>{
+                        this.props.changeScene("thumbnail",{index:i,list:comment["commentImages"]})}
+                    } 
+                    key={i}><img src={img}/></a>
                 })
                 return (
                     <div className="comList" key={i}>

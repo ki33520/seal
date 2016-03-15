@@ -6,6 +6,7 @@ import Header from "../../common/header.jsx";
 import CascadeArea from "./cascadearea.jsx";
 
 import Alert from "../../../component/alert.jsx";
+import ActivityIndicator from "../../common/activityindicator.jsx";
 
 class UpdateReceiver extends Component{
     loadProvinces(){
@@ -50,7 +51,7 @@ class UpdateReceiver extends Component{
     }
     handleSave(e){
         e && e.preventDefault();
-        const {receiver,saveReceiver,provinces,cities,districts} = this.props
+        const {receiver,saveReceiver,provinces,cities,districts,showActivityIndicator} = this.props
         const {id,consignee,mobileNumber,idCard,address,isDefault,
             provinceCode,cityCode,districtCode
         } = receiver;
@@ -63,21 +64,23 @@ class UpdateReceiver extends Component{
             provinceCode,cityCode,districtCode,
             provinceName,cityName,districtName
         })
+        showActivityIndicator()
     }
     componentWillReceiveProps(nextProps){
-        const {alert} = this.props;
+        const {alert,hideActivityIndicator} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
             if(nextProps.receiverSaved === true){
-                alert("提交成功!",2000);
-                setTimeout(()=>this.props.changeScene("index"),2500)
+                hideActivityIndicator()
+                alert("提交成功!",1500);
+                setTimeout(()=>this.props.changeScene("index"),2000)
             }else{
-                alert(nextProps.errMsg,2000)
+                alert(nextProps.errMsg,1500)
             }
         }
     }
     render(){
-        const {saveSuccess,alertActive,alertContent,receiver} = this.props
+        const {saveSuccess,alertActive,alertContent,receiver,activityIndicatorActive} = this.props
         const {
             consignee,idCard,mobileNumber,address,isDefault,
         } = (receiver === null?{}:receiver);
@@ -127,6 +130,7 @@ class UpdateReceiver extends Component{
             </div>
             </div>
             <Alert active={alertActive}>{alertContent}</Alert>
+            <ActivityIndicator active={activityIndicatorActive} />
             </div>
         )
     }

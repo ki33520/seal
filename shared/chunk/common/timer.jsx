@@ -8,11 +8,12 @@ class Timer extends Component{
     constructor(props){
         super(props);
         this.state = {
-            duration:0
+            duration:null
         }
     }
     restOfTime(duration){
         if(duration <= 0){
+            this.props.onTimerExpire()
             return {
                 hour:"00",
                 second:"00",
@@ -71,6 +72,9 @@ class Timer extends Component{
     }
     render(){
         const {duration} = this.state
+        if(duration === null){
+            return null
+        }
         let {day,hour,minute,second} = this.restOfTime(duration)
         let compiled = _.template(this.props.template);
         let durationContent = compiled({
@@ -86,6 +90,7 @@ Timer.defaultProps = {
     referTime:null,
     endTime:null,
     dayEnable:false,
+    onTimerExpire:()=>{},
     format:"YYYY-MM-DD HH:mm:ss",
     template:`<%= hour %>:<%= minute %>:<%= second %>`
 }

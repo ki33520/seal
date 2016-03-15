@@ -16,8 +16,8 @@ import {
     START_SETDEFAULT,FINISH_SETDEFAULT
 } from "./constant.es6";
 
-import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
-import {alertReducer} from "../common/reducer.es6";
+import {SHOW_ALERT,HIDE_ALERT,SHOW_ACTIVITYINDICATOR,HIDE_ACTIVITYINDICATOR} from "../common/constant.es6";
+import {alertReducer,activityIndicatorReducer} from "../common/reducer.es6";
 
 function updateReceiver(state={},action){
     switch(action.type){
@@ -65,6 +65,9 @@ function updateReceiver(state={},action){
         case SHOW_ALERT:
         case HIDE_ALERT:
             return alertReducer(state,action)
+        case SHOW_ACTIVITYINDICATOR:
+        case HIDE_ACTIVITYINDICATOR:
+            return activityIndicatorReducer(state,action)
         default:
             return state;
     }
@@ -109,6 +112,9 @@ function addReceiver(state={},action){
         case SHOW_ALERT:
         case HIDE_ALERT:
             return alertReducer(state,action)
+        case SHOW_ACTIVITYINDICATOR:
+        case HIDE_ACTIVITYINDICATOR:
+            return activityIndicatorReducer(state,action)
         default:
             return state;
     }
