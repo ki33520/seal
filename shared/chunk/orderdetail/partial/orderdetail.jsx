@@ -166,16 +166,25 @@ class OrderDetail extends Component{
                 return null
         }
     }
+    timeOut(){
+        const {changeOrder} = this.props;
+        const {order} = this.props.orderByParam;
+        if(order.orderStatus === "STATUS_NOT_PAY"){
+            setTimeout(()=>{
+                changeOrder(order,"STATUS_CANCELED");
+            },10);
+        }
+    }
     renderOutTime(){
         const {order,systemTime} = this.props.orderByParam;
         const {orderCrtTime,timeoutTime,orderStatus} = order;
-        const currentTime = moment(new Date(systemTime)).format("YYYY-MM-DD HH:mm:ss");
-        const outTime = moment(new Date(timeoutTime)).format("YYYY-MM-DD HH:mm:ss");
+        const currentTime = moment(new Date(systemTime));
+        const outTime = moment(new Date(timeoutTime));
 
         if(orderStatus === "STATUS_NOT_PAY" && timeoutTime){
             return (
                 <span>
-                    <Timer endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
+                    <Timer onTimerExpire={this.timeOut.bind(this)} endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>"/>
                     <i>后自动取消</i>
                 </span>
             )

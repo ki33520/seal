@@ -2,7 +2,7 @@
 
 import _ from "lodash";
 import {
-    CHANGE_FIELD,REQUEST_ORDER,RESPONSE_ORDER,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY
+    CHANGE_ORDER,CHANGE_FIELD,REQUEST_ORDER,RESPONSE_ORDER,REQUEST_SAVECOMMENT,RESPONSE_SAVECOMMENT,REQUEST_LOGISTICS,RESPONSE_LOGISTICS,REQUEST_ClOSEORDER,RESPONSE_ClOSEORDER,REQUEST_DELIVERYORDER,RESPONSE_DELIVERYORDER,REQUEST_PAYGATEWAY,RESPONSE_PAYGATEWAY
 } from "./action.es6";
 import {combineReducers} from "redux";
 
@@ -11,6 +11,12 @@ import {alertReducer} from "../common/reducer.es6";
 
 function orderByParam(state={},action){
     switch(action.type){
+        case CHANGE_ORDER:
+            var order = {...state.order};
+            order.orderStatus = action.status;
+            return Object.assign({},state,{
+                order: order
+            })
         case CHANGE_FIELD:
             const {name,value,pid} = action;
             var order = {...state.order};
