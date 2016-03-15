@@ -10,32 +10,15 @@ import {
     START_FETCH_CART,FINISH_FETCH_CART
 } from "./constant.es6";
  
-function getCode(code) {
-    var ercode = code+'';
-    switch (ercode) {
-        case "-402105":
-            return "商品已下架";
-        case "-402106":
-            return "商品库存不足";
-        case "-402107":
-            return "商品购买数量已超出商品限购数";
-        case "-402109":
-            return "商品购买数量低于起购数";
-        case "-402110":
-            return "购买商品总额超出每日购买限额";
-        case "-402111":
-            return "商品超出免税额度";
-        default:
-            console.log(code)
-            break;
-    }
-}
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
+import {alertReducer} from "../common/reducer.es6";
 
 function cartByUser(state={},action){
     switch(action.type){
         case START_UPDATE_CART:
             return Object.assign({},state,{
                 isUpdating:true,
+                 isFetching:true,
                 isUpdated:false
             });
         case FINISH_UPDATE_CART:
@@ -52,11 +35,12 @@ function cartByUser(state={},action){
              }
             return Object.assign({},state,{
                 isUpdating:false,
+                isFetching:false,
                 isUpdated:isUpdated,
+                singleCode:goods.singleCode,
                 cartIndex,
                 groupIndex,
                 goodsIndex,
-                singleCode:goods.singleCode,
                 carts
             });
         case START_FETCH_CART:
@@ -125,10 +109,10 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isToggleing:false,
                 isToggled:true,
+                singleCode:goods.singleCode,
                 cartIndex,
                 groupIndex,
                 goodsIndex,
-                singleCode:goods.singleCode,
                 carts:carts
             });
         case START_TOGGLE_ALL:
@@ -191,20 +175,23 @@ function cartByUser(state={},action){
         case START_CHECK_CART:
             return Object.assign({},state,{
                 isChecking:true,
+                isFetching:true,
                 isChecked:false,
                 isPassed:false
             });
         case FINISH_CHECK_CART:
             var {cartIndex} = action.param;
             var {returnCode} = action.res;
-            var alertContent = getCode(returnCode);
             return Object.assign({},state,{
                 isChecking:false,
+                isFetching:false,
                 isChecked:true,
-                isPassed:returnCode===0,
-                alertContent,
+                isPassed:returnCode===0||returnCode===-402111,
                 cartIndex
             });
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
         default:
             return state;
     }
