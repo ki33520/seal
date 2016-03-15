@@ -12,13 +12,12 @@ import Alert from "../../../component/alert.jsx";
 class UpdateMemberCard extends Component{
     handleFieldChange(e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
         const fieldName = e.target.name;
-        dispatch(changeField(fieldName,e.target.value));
+        this.props.changeField(fieldName,e.target.value);
     }
     handleFieldBlur(e){
         e && e.preventDefault();
-        const {dispatch,membercardByForm} = this.props;
+        const {membercardByForm} = this.props;
         const fieldName = e.target.name;
         let obj = {};
         obj[fieldName] = membercardByForm[fieldName]
@@ -26,7 +25,7 @@ class UpdateMemberCard extends Component{
     }
     formVerify(field,e){
         e && e.preventDefault();
-        const {dispatch,membercardByForm} = this.props;
+        const {membercardByForm} = this.props;
         const rules = {
             cardNo: {
                 reg: /^[0-9]{10}$/,
@@ -46,7 +45,7 @@ class UpdateMemberCard extends Component{
                 let rule = rules[i];
                 if(rule){
                     if(!rule.reg.test(field[i]) || !field[i]){
-                        dispatch(alert("请正确填写"+rule.msg,1000));
+                        this.props.alert("请正确填写"+rule.msg,1000);
                         return false;
                     };
                 }else{
@@ -57,52 +56,51 @@ class UpdateMemberCard extends Component{
     }
     handleBindMembercard(e){
         e && e.preventDefault();
-        const {dispatch,membercardByForm} = this.props;
+        const {membercardByForm} = this.props;
         const {cardNo,mobileNumber,verifyCode} = membercardByForm;
 
         this.formVerify({
             cardNo,mobileNumber,verifyCode,
             callback: function(){
-                dispatch(bindMembercard("/updatemembercard",{
+                this.props.bindMembercard("/updatemembercard",{
                     cardNo,mobileNumber,verifyCode
-                }));
+                });
             }
         },e);
         
     }
     handleSendVerifyCode(e){
         e && e.preventDefault();
-        const {dispatch,membercardByForm} = this.props;
+        const {membercardByForm} = this.props;
         const {cardNo,mobileNumber} = membercardByForm;
 
         this.formVerify({
             cardNo,
             mobileNumber,
             callback: function(){
-                dispatch(sendVerifyCode("/updatemembercardverifycode",{
+                this.props.sendVerifyCode("/updatemembercardverifycode",{
                     cardNo,mobileNumber
-                }));
+                });
             }
         },e);
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch} = this.props
         if(nextProps.membercardByForm.membercardChanging === false &&
            this.props.membercardByForm.membercardChanging === true){
             if(nextProps.membercardByForm.membercardChanged === true){
-                dispatch(alert("保存成功!",2000));
+                this.props.alert("保存成功!",2000);
                 setTimeout(()=>window.history.back(),2500);
             }else{
-                dispatch(alert(nextProps.membercardByForm.msg,2000));
+                this.props.alert(nextProps.membercardByForm.msg,2000);
             }
         }
         
         if(nextProps.membercardByForm.verifyCodeSending === false &&
            this.props.membercardByForm.verifyCodeSending === true){
             if(nextProps.membercardByForm.verifyCodeSended === true){
-                dispatch(alert("验证码发送成功!",2000));
+                this.props.alert("验证码发送成功!",2000);
             }else{
-                dispatch(alert(nextProps.membercardByForm.msg,2000));
+                this.props.alert(nextProps.membercardByForm.msg,2000);
             }
         }
     }

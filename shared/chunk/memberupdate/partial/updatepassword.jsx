@@ -13,13 +13,12 @@ import Alert from "../../../component/alert.jsx";
 class UpdatePassword extends Component{
     handleFieldChange(e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
         const fieldName = e.target.name;
-        dispatch(changeField(fieldName,e.target.value));
+        this.props.changeField(fieldName,e.target.value);
     }
     handleFieldBlur(e){
         e && e.preventDefault();
-        const {dispatch,passwordByForm} = this.props;
+        const {passwordByForm} = this.props;
         const fieldName = e.target.name;
         let obj = {};
         obj[fieldName] = passwordByForm[fieldName]
@@ -27,7 +26,7 @@ class UpdatePassword extends Component{
     }
     formVerify(field,e){
         e && e.preventDefault();
-        const {dispatch,passwordByForm} = this.props;
+        const {passwordByForm} = this.props;
         const rules = {
             oldPassword: {
                 reg: /^[A-Za-z0-9_]{1,}$/,
@@ -47,15 +46,15 @@ class UpdatePassword extends Component{
                 let rule = rules[i];
                 if(rule){
                     if(field[i].length===0){
-                        dispatch(alert(rule.msg[0],2000));
+                        this.props.alert(rule.msg[0],2000);
                         return false;
                     }
                     if(!rule.reg.test(field[i])){
-                        dispatch(alert(rule.msg[1],2000));
+                        this.props.alert(rule.msg[1],2000);
                         return false;
                     };
                     if(i==="repeatPassword" && field.repeatPassword != field.password){
-                        dispatch(alert(rule.msg[1],2000));
+                        this.props.alert(rule.msg[1],2000);
                         return false;
                     }
                 }
@@ -67,31 +66,29 @@ class UpdatePassword extends Component{
     }
     handleChangePassword(e){
         e && e.preventDefault();
-        const {dispatch,passwordByForm} = this.props;
+        const {changePassword,passwordByForm} = this.props;
         const {oldPassword,password,repeatPassword} = passwordByForm;
         const SHA1 = new Hashes.SHA1;
         this.formVerify({
             oldPassword,password,repeatPassword,
             callback: function(){
-                dispatch(changePassword("/updatepassword",{
+                changePassword("/updatepassword",{
                     oldPassword: SHA1.hex(oldPassword),
                     password: SHA1.hex(password),
                     repeatPassword: SHA1.hex(repeatPassword)
-                }));
+                });
             }
         },e);
         
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch,changeScene} = this.props
+        const {changeScene} = this.props
         const self = this;
         if(nextProps.passwordByForm.passwordChanging === false &&
            this.props.passwordByForm.passwordChanging === true){
+            this.props.alert(nextProps.passwordByForm.msg,2000);
             if(nextProps.passwordByForm.passwordChanged === true){
-                dispatch(alert(nextProps.passwordByForm.msg,2000));
                 setTimeout(()=>{changeScene.call(self,"index")},2500);
-            }else{
-                dispatch(alert(nextProps.passwordByForm.msg,2000));
             }
         }
     }
