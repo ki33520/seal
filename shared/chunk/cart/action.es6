@@ -8,6 +8,35 @@ import {
     START_CHECK_CART,FINISH_CHECK_CART,
     START_FETCH_CART,FINISH_FETCH_CART
 } from "./constant.es6";
+import {alert} from "../common/action.es6";
+
+function errMsgByCode(errCode) {
+    let errMsg = ""
+    switch (errCode) {
+        case -402105:
+            errMsg =  "商品已下架";
+            break;
+        case -402106:
+            errMsg =  "商品库存不足";
+            break;
+        case -402107:
+            errMsg =  "商品购买数量已超出商品限购数";
+            break;
+        case -402109:
+            errMsg =  "商品购买数量低于起购数";
+            break;
+        case -402110:
+            errMsg =  "购买商品总额超出每日购买限额";
+            break;
+        case -402111:
+            errMsg =  "商品超出免税额度";
+            break;
+        default:
+            errMsg="数据异常";
+            break;
+    }
+    return errMsg;
+}
 
 function startFetchCart(param){
     return {
@@ -95,6 +124,8 @@ function finishCheckCart(param,res){
         res
     }
 }
+
+export {alert} from "../common/action.es6";
  
 export function updateCart(param){
     return (dispatch)=>{
@@ -119,7 +150,7 @@ export function toggleCartItem(param){
         dispatch(toggleChecked(param));
          setTimeout(()=>{
             dispatch(finishChecked(param));
-         },100)
+         },50)
     }
 }
 
@@ -128,7 +159,7 @@ export function toggleCartAll(param){
         dispatch(toggleCheckedAll(param));
          setTimeout(()=>{
             dispatch(finishCheckedAll(param));
-         },100);
+         },50);
     }
 }
  
@@ -136,6 +167,10 @@ export function checkCartInfo(param){
     return (dispatch)=>{
         dispatch(startCheckCart(param));
         apiRequest('/checkCart',param,{method:"POST"}).then((res)=>{
+            if(res.returnCode !==0){
+                let content = errMsgByCode(res.returnCode);
+                dispatch(alert(content,3000))
+             }
             dispatch(finishCheckCart(param,res));
         })
     }
