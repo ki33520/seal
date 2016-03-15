@@ -10,6 +10,7 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import Checkbox from "../../component/form/checkbox.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
+import ActivityIndicator from "../common/activityindicator.jsx";
 import {urlParam,base64Encode,formatPrice} from "../../lib/util.es6";
 
 class Cart extends Component {
@@ -41,7 +42,7 @@ class Cart extends Component {
     }
     componentWillReceiveProps(nextProps){
         const {
-            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex
+            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex,groupIndex,goodsIndex,singleCode
         } = nextProps.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);
         if(isChecked){
@@ -65,7 +66,10 @@ class Cart extends Component {
             this.props.fetchCart({
                 singleCodes,
                 buyeds,
-                cartIndex
+                cartIndex,
+                groupIndex,
+                goodsIndex,
+                singleCode
             });
         }
     }
@@ -137,7 +141,7 @@ class Cart extends Component {
     }
     handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
         const {isDeleting} = this.props.cartByUser;
-        if(!goods.checked||isDeleting){
+        if(isDeleting){
             return false;
         }
         this.setState({
@@ -147,6 +151,7 @@ class Cart extends Component {
                 this.props.deleteCart({
                     cartId:goods.cartId,
                     singleCode:goods.singleCode,
+                    checked:goods.checked,
                     cartIndex,
                     groupIndex,
                     goodsIndex
@@ -310,7 +315,7 @@ class Cart extends Component {
         }
     }
     render() {
-        const {isUpdating,alertContent} = this.props.cartByUser;
+        const {isUpdating,isFetching,alertContent} = this.props.cartByUser;
         return (
             <div>
                 <Header>
@@ -324,6 +329,7 @@ class Cart extends Component {
                     onlyConfirm={true}
                     onConfrim={this.state.alertOnConfirm}>{alertContent}</Dialog>
                 <Footer activeIndex="3"/>
+                <ActivityIndicator active={isFetching} />
             </div>
         )
     }
