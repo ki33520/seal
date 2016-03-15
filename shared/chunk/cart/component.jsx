@@ -41,7 +41,7 @@ class Cart extends Component {
     }
     componentWillReceiveProps(nextProps){
         const {
-            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex
+            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex,groupIndex,goodsIndex,singleCode
         } = nextProps.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);
         if(isChecked){
@@ -65,7 +65,10 @@ class Cart extends Component {
             this.props.fetchCart({
                 singleCodes,
                 buyeds,
-                cartIndex
+                cartIndex,
+                groupIndex,
+                goodsIndex,
+                singleCode
             });
         }
     }
@@ -137,7 +140,7 @@ class Cart extends Component {
     }
     handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
         const {isDeleting} = this.props.cartByUser;
-        if(!goods.checked||isDeleting){
+        if(isDeleting){
             return false;
         }
         this.setState({
@@ -147,6 +150,7 @@ class Cart extends Component {
                 this.props.deleteCart({
                     cartId:goods.cartId,
                     singleCode:goods.singleCode,
+                    checked:goods.checked,
                     cartIndex,
                     groupIndex,
                     goodsIndex
