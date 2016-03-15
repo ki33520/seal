@@ -3,6 +3,7 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import MaskLayer from "../../../component/masklayer.jsx";
 import Refresher from "../../../component/refresher.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Header from "../../common/header.jsx";
 import Sidebar from "./sidebar.jsx";
 import GoodItem from "./goodItem.jsx";
@@ -113,42 +114,44 @@ class GoodListApp extends React.Component{
         });
         return (
             <div className="list-container">
-                <div className={popup}>
-                    <Header>
-                        <div className={searchBox}>
-                            <input type="search" defaultValue={keyword} 
-                            onClick={this.props.changeScene.bind(this,"search")}/>
-                            <span></span>
+                <GoTop relative={true}>
+                    <div className={popup}>
+                        <Header>
+                            <div className={searchBox}>
+                                <input type="search" defaultValue={keyword} 
+                                onClick={this.props.changeScene.bind(this,"search")}/>
+                                <span></span>
+                            </div>
+                            <div className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</div>
+                        </Header>
+                        <GoodSorter toggleSort={this.toggleSort.bind(this)} />
+                        <div className="special-activity-list clearfix">
+                            {goodList}
                         </div>
-                        <div className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</div>
-                    </Header>
-                    <GoodSorter toggleSort={this.toggleSort.bind(this)} />
-                    <div className="special-activity-list clearfix">
-                        {goodList}
                     </div>
-                </div>
-                <Sidebar
-                    popupActive={this.state.popupActive}
-                    toggleFilter={this.toggleFilterPopup.bind(this)}
-                    handleReset={this.handleReset.bind(this)}
-                    handlerSave={this.handlerSave.bind(this)} />
-                <Filter 
-                    list={filters.categoryNames}
-                    active={this.state.filterType==='category'}
-                    toggleChecked={this.toggleChecked.bind(this,'categoryNames')}
-                    handleGoBack ={this.toggleFilterPopup.bind(this)} />
-                <Filter 
-                    list={filters.brandNames}
-                    active={this.state.filterType==='brand'}
-                    toggleChecked={this.toggleChecked.bind(this,'brandNames')}
-                    handleGoBack ={this.toggleFilterPopup.bind(this)} />
-                <Filter 
-                    list={filters.areaNames}
-                    active={this.state.filterType==='area'}
-                    toggleChecked={this.toggleChecked.bind(this,'areaNames')}
-                    handleGoBack ={this.toggleFilterPopup.bind(this)} />
-                <MaskLayer visible={this.state.maskActive} />
-                <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
+                    <Sidebar
+                        popupActive={this.state.popupActive}
+                        toggleFilter={this.toggleFilterPopup.bind(this)}
+                        handleReset={this.handleReset.bind(this)}
+                        handlerSave={this.handlerSave.bind(this)} />
+                    <Filter 
+                        list={filters.categoryNames}
+                        active={this.state.filterType==='category'}
+                        toggleChecked={this.toggleChecked.bind(this,'categoryNames')}
+                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
+                    <Filter 
+                        list={filters.brandNames}
+                        active={this.state.filterType==='brand'}
+                        toggleChecked={this.toggleChecked.bind(this,'brandNames')}
+                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
+                    <Filter 
+                        list={filters.areaNames}
+                        active={this.state.filterType==='area'}
+                        toggleChecked={this.toggleChecked.bind(this,'areaNames')}
+                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
+                    <MaskLayer visible={this.state.maskActive} />
+                     <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
+                 </GoTop>
             </div>
         )
     }
