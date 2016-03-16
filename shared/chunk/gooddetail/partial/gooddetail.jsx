@@ -147,7 +147,11 @@ class GoodDetail extends Component{
     toggleCollected(e){
         e && e.preventDefault();
         const {toggleCollected} = this.props;
-        const {good,isCollected} = this.props.goodById;
+        const {good,isCollected,isAuthorized,loginUrl} = this.props.goodById;
+        if(!isAuthorized){
+            window.location.assign(loginUrl)
+            return
+        }
         toggleCollected({
             productCode:good.productCode,
             singleCode:good.code,

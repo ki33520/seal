@@ -10,6 +10,8 @@ var config = require("../lib/config");
 
 var goodDetail = function(req, res, next) {
     var singleCode = req.params.id;
+    var isAuthorized = req.session.user !== undefined;
+    var loginUrl = res.locals.loginUrl;
     // req.session["localcart"] = undefined
     bluebird.props({
         "goodById": util.fetchAPI("goodById", {
@@ -56,7 +58,9 @@ var goodDetail = function(req, res, next) {
                 })
             }else{
                 var initialState = {
-                    good: good
+                    good: good,
+                    isAuthorized:isAuthorized,
+                    loginUrl:loginUrl
                 }
                 var markup = util.getMarkupByComponent(GoodDetailApp({
                     initialState: initialState

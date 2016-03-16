@@ -36,12 +36,15 @@ function updateReceiver(state={},action){
                 receiver
             })
         case CHANGE_FIELD:
-            const {name,value} = action;
-            var receiver = {...state.receiver}
-            receiver[name] = value;
-            return Object.assign({},state,{
-                receiver
-            });
+            if(action.scene === "updateReceiver"){
+                const {name,value} = action;
+                var receiver = {...state.receiver}
+                receiver[name] = value;
+                return Object.assign({},state,{
+                    receiver
+                });
+            }
+            return state
         case REQUEST_PROVINCES:
         case RESPONSE_PROVINCES:
         case REQUEST_CITIES:
@@ -77,11 +80,14 @@ function addReceiver(state={},action){
     let receiver = {...state.receiver}
     switch(action.type){
         case CHANGE_FIELD:
-            const {name,value} = action;
-            receiver[name] = value;
-            return Object.assign({},state,{
-                receiver
-            });
+            if(action.scene === "addReceiver"){
+                const {name,value} = action;
+                receiver[name] = value;
+                return Object.assign({},state,{
+                    receiver
+                });
+            }
+            return state
         case START_CREATERECEIVER:
             return Object.assign({},state,{
                 receiverSaving:true,

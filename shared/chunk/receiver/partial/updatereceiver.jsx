@@ -27,31 +27,22 @@ class UpdateReceiver extends Component{
             code:city
         },"updateReceiver")
     }
-    componentDidUpdate(prevProps,prevState){
-        const {receiver,active} = this.props;
-        if(active === true && prevProps.active === false 
-            && this.props.provinces.length === 1){
-            this.loadProvinces()
-        }
-        if(receiver && this.props.provinces.length > 1){
-            if(this.props.cities.length === 1 && !this.props.cityFetching){
-                this.loadCities(receiver.provinceCode)
-            }
-        }
-        if(receiver && this.props.cities.length > 1){
-            if(this.props.districts.length === 1 && !this.props.districtFetching){
-                this.loadDistricts(receiver.cityCode)
-            }
-        }
-    }
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
         const {changeField} = this.props;
-        changeField(fieldName,e.target.value);
+        changeField(fieldName,e.target.value,"updateReceiver");
+    }
+    handleAreaChange(fieldName,fieldValue){
+        const {changeField} = this.props;
+        changeField(fieldName,fieldValue,"updateReceiver");
     }
     handleSave(e){
         e && e.preventDefault();
+        if(this.props.receiverSaving){
+            return
+        }
         const {receiver,saveReceiver,provinces,cities,districts,showActivityIndicator} = this.props
+        showActivityIndicator()
         const {id,consignee,mobileNumber,idCard,address,isDefault,
             provinceCode,cityCode,districtCode
         } = receiver;
@@ -64,14 +55,13 @@ class UpdateReceiver extends Component{
             provinceCode,cityCode,districtCode,
             provinceName,cityName,districtName
         })
-        showActivityIndicator()
     }
     componentWillReceiveProps(nextProps){
         const {alert,hideActivityIndicator} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
+            hideActivityIndicator()
             if(nextProps.receiverSaved === true){
-                hideActivityIndicator()
                 alert("提交成功!",1500);
                 setTimeout(()=>this.props.changeScene("index"),2000)
             }else{
@@ -119,6 +109,7 @@ class UpdateReceiver extends Component{
                 </div>
                 <CascadeArea loadCities={this.loadCities.bind(this)} 
                 loadDistricts={this.loadDistricts.bind(this)} 
+                handleAreaChange={this.handleAreaChange.bind(this)} 
                 {...this.props}/>
                 <div className="receiver-form-row receiver-form-textarea-row">
                 <i>*</i>
