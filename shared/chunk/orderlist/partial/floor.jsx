@@ -142,7 +142,7 @@ class Floor extends Component{
         if(child.orderStatus === "STATUS_NOT_PAY"){
             setTimeout(()=>{
                 changeOrder(child,"STATUS_CANCELED");
-            },200);
+            },10);
         }
     }
     renderOutTime(child){

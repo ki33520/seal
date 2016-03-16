@@ -15,6 +15,9 @@ function memberCollectByUser(state={},action){
             })
         case RECEIVE_COLLECT:
             var collect = {...state.collect};
+            if(action.res.pageIndex === 1){
+                collect.list = [];
+            }
             action.res.list = _.union(collect.list,action.res.list);
             return Object.assign({},state,{
                 isFetched:true,

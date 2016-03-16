@@ -16,6 +16,7 @@ function formatComment(param) {
             createdAt: child.createdAt,
             id: child.id,
             version: child.version,
+            stock: child.stock,
             imageUrl: config.imgServer+child.imageUrl,
             originPrice: filterPrice(child.originPrice),
             productCode: child.productCode,

@@ -166,8 +166,8 @@ function queryString(a,b){
 }
 
 var orderDetail = function(req, res, next) {
-    var id = req.params.id;
-    var back_path = queryString(req.url,"back");
+    var id = req.params.id.replace(/\?[\s|\S]{1,}/g,"");
+    var back_path = queryString(decodeURIComponent(req.url),"back");
     bluebird.props({
         orderById: util.fetchAPI("orderById", {
             orderId: id
