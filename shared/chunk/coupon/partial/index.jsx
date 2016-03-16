@@ -6,6 +6,7 @@ import Header from "../../common/header.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import Loading from "../../common/loading.jsx";
+import GoTop from "../../../component/gotop.jsx";
 
 class Coupon extends React.Component{
     constructor(props){
@@ -106,12 +107,16 @@ class Coupon extends React.Component{
                 </Header>
                 <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
                     <SlideTabsItem navigator={()=>'未使用优惠券'}>
+                       <GoTop relative={true}>
                         {this.renderYouaCoupons(pagination.youa.coupons)}
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
+                        </GoTop>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>
+                        <GoTop relative={true}>
                         {this.renderInvalidCoupons(pagination.invalid.coupons)}
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
+                         </GoTop>
                     </SlideTabsItem>
                 </SlideTabs>
                 <Loading active={isLoading}/>

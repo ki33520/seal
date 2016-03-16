@@ -10,48 +10,37 @@ import {
     START_FETCH_CART,FINISH_FETCH_CART
 } from "./constant.es6";
  
-function getCode(code) {
-    var ercode = code+'';
-    switch (ercode) {
-        case "-402105":
-            return "商品已下架";
-        case "-402106":
-            return "商品库存不足";
-        case "-402107":
-            return "商品购买数量已超出商品限购数";
-        case "-402109":
-            return "商品购买数量低于起购数";
-        case "-402110":
-            return "购买商品总额超出每日购买限额";
-        case "-402111":
-            return "商品超出免税额度";
-        default:
-            console.log(code)
-            break;
-    }
-}
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
+import {alertReducer} from "../common/reducer.es6";
 
 function cartByUser(state={},action){
     switch(action.type){
         case START_UPDATE_CART:
             return Object.assign({},state,{
                 isUpdating:true,
+                 isFetching:true,
                 isUpdated:false
             });
         case FINISH_UPDATE_CART:
              var carts = state.carts.slice();
              var {cartIndex,groupIndex,goodsIndex,buyed} = action.param;
              var cart = {...carts[cartIndex]};
+             var goods = {...cart.group[groupIndex].list[goodsIndex]};
              var isUpdated = false;
              if(action.res.isUpdated){
                 isUpdated = true;
-                cart.group[groupIndex].list[goodsIndex].buyed=buyed;
+                goods.buyed=buyed;
+                cart.group[groupIndex].list[goodsIndex]=goods;
                 carts[cartIndex] = cart;
              }
             return Object.assign({},state,{
                 isUpdating:false,
+                isFetching:false,
                 isUpdated:isUpdated,
+                singleCode:goods.singleCode,
                 cartIndex,
+                groupIndex,
+                goodsIndex,
                 carts
             });
         case START_FETCH_CART:
@@ -66,13 +55,22 @@ function cartByUser(state={},action){
             });
         case FINISH_FETCH_CART:
             var carts = state.carts.slice();
-            var {cartIndex} = action.param;
+            var {cartIndex,groupIndex,goodsIndex,singleCode,singleCodes} = action.param;
             var cart = action.res.cart[0];
             var isFetched = false;
             if(action.res.isFetched){
                 isFetched = true;
                 var _cart = {...carts[cartIndex]};
                 if(_cart.children>0){
+                    if(singleCodes.indexOf(singleCode)!= -1){
+                        cart.group.forEach((group)=>{
+                            group.list.forEach((item)=>{
+                                if(item.singleCode===singleCode){
+                                     _cart.group[groupIndex].list[goodsIndex] = item;
+                                }
+                            })
+                        })
+                    }
                      _cart.total = cart.total;
                     _cart.buyeds = cart.buyeds;
                     _cart.promoName=cart.promoName;
@@ -80,13 +78,13 @@ function cartByUser(state={},action){
                     _cart.promoTotal = cart.promoTotal;
                     _cart.salesTotal = cart.salesTotal;
                     _cart.collected=cart.collected;
+                    _cart.checked = _cart.children===_cart.collected;
                     carts[cartIndex] = _cart;
                 }
             }
             return Object.assign({},state,{
                 isFetching:false,
                 isFetched:isFetched,
-                param:null,
                 carts
             });
         case START_TOGGLE_ITEM:
@@ -111,7 +109,10 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isToggleing:false,
                 isToggled:true,
+                singleCode:goods.singleCode,
                 cartIndex,
+                groupIndex,
+                goodsIndex,
                 carts:carts
             });
         case START_TOGGLE_ALL:
@@ -143,13 +144,15 @@ function cartByUser(state={},action){
                 isDeleted:false
             });
         case FINISH_DELETE_CART:
-            var {cartIndex,groupIndex,goodsIndex} = action.param;
+            var {cartIndex,groupIndex,goodsIndex,checked} = action.param;
             var {isDeleted} = action.res;
             var carts = state.carts.slice();
             var cart = {...carts[cartIndex]};
             if(isDeleted){
                 cart.group[groupIndex].list.splice(goodsIndex,1);
-                cart.collected -=1;
+                if(checked){
+                    cart.collected -=1;
+                }
                 cart.children -=1;
                 if(cart.group[groupIndex].list.length===0){
                     cart.group.splice(groupIndex,1);
@@ -159,6 +162,7 @@ function cartByUser(state={},action){
                     }
                 }
                 if(cart){
+                    cart.checked = cart.collected===cart.children;
                     carts[cartIndex] = cart;
                 }
             }
@@ -171,20 +175,23 @@ function cartByUser(state={},action){
         case START_CHECK_CART:
             return Object.assign({},state,{
                 isChecking:true,
+                isFetching:true,
                 isChecked:false,
                 isPassed:false
             });
         case FINISH_CHECK_CART:
             var {cartIndex} = action.param;
             var {returnCode} = action.res;
-            var alertContent = getCode(returnCode);
             return Object.assign({},state,{
                 isChecking:false,
+                isFetching:false,
                 isChecked:true,
-                isPassed:returnCode===0,
-                alertContent,
+                isPassed:returnCode===0||returnCode===-402111,
                 cartIndex
             });
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
         default:
             return state;
     }

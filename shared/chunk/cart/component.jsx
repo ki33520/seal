@@ -10,6 +10,7 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import Checkbox from "../../component/form/checkbox.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
+import ActivityIndicator from "../common/activityindicator.jsx";
 import {urlParam,base64Encode,formatPrice} from "../../lib/util.es6";
 
 class Cart extends Component {
@@ -17,9 +18,7 @@ class Cart extends Component {
         super(props);
         this.state = {
             dialogActive:false,
-            dialogOnConfirm:null,
-            alertActive:false,
-            alertOnConfirm:null
+            dialogOnConfirm:null
         }
     }
     filterParamItems(cart) {
@@ -39,10 +38,10 @@ class Cart extends Component {
             buyeds:buyeds.join(',')
         }
     }
-    componentWillReceiveProps(nextProps){
+    componentDidUpdate(){
         const {
-            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex
-        } = nextProps.cartByUser;
+            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex,groupIndex,goodsIndex,singleCode
+        } = this.props.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);
         if(isChecked){
             if(isPassed){
@@ -52,20 +51,16 @@ class Cart extends Component {
                 }));
                 window.location.assign(`/confirmorder/${queryParam}`);
                 return false;
-            }else{
-                this.setState({
-                    alertActive:true,
-                    alertOnConfirm:()=>{
-                        this.toggleAlert();
-                    }
-                });
             }
         }
         if(isUpdated||isToggled||isAllToggled||isDeleted){
             this.props.fetchCart({
                 singleCodes,
                 buyeds,
-                cartIndex
+                cartIndex,
+                groupIndex,
+                goodsIndex,
+                singleCode
             });
         }
     }
@@ -130,14 +125,9 @@ class Cart extends Component {
             dialogActive:!this.state.dialogActive
         });
     }
-    toggleAlert(){
-        this.setState({
-            alertActive:!this.state.alertActive
-        });
-    }
     handleDeleteCart(goods,cartIndex,groupIndex,goodsIndex){
         const {isDeleting} = this.props.cartByUser;
-        if(!goods.checked||isDeleting){
+        if(isDeleting){
             return false;
         }
         this.setState({
@@ -147,6 +137,7 @@ class Cart extends Component {
                 this.props.deleteCart({
                     cartId:goods.cartId,
                     singleCode:goods.singleCode,
+                    checked:goods.checked,
                     cartIndex,
                     groupIndex,
                     goodsIndex
@@ -310,7 +301,7 @@ class Cart extends Component {
         }
     }
     render() {
-        const {isUpdating,alertContent} = this.props.cartByUser;
+        const {isUpdating,isFetching,alertContent,alertActive} = this.props.cartByUser;
         return (
             <div>
                 <Header>
@@ -320,10 +311,9 @@ class Cart extends Component {
                 <Dialog active={this.state.dialogActive} 
                     onCancel={this.toggleDialog.bind(this)}
                     onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
-                <Dialog active={this.state.alertActive}
-                    onlyConfirm={true}
-                    onConfrim={this.state.alertOnConfirm}>{alertContent}</Dialog>
+                <Alert active={alertActive} >{alertContent}</Alert>
                 <Footer activeIndex="3"/>
+                <ActivityIndicator active={isFetching}/>
             </div>
         )
     }

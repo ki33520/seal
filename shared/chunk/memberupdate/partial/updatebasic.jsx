@@ -6,8 +6,6 @@ import classNames from "classnames";
 import Header from "../../common/header.jsx";
 import Datepicker from "./datepicker.jsx";
 
-import {changeBasic,changeField} from "../action.es6";
-import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 class UpdateBasic extends Component{
@@ -29,7 +27,7 @@ class UpdateBasic extends Component{
     }
     formVerify(field,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
+        const {alert} = this.props;
         const rules = {
             fieldnickName: {
                 reg: function(str){
@@ -64,11 +62,11 @@ class UpdateBasic extends Component{
                 let rule = rules[i];
                 if(rule){
                     if(field[i].length===0){
-                        dispatch(alert(rule.msg[0],2000));
+                        alert(rule.msg[0],2000);
                         return false;
                     }
                     if(!rule.reg(field[i])){
-                        dispatch(alert(rule.msg[1],2000));
+                        alert(rule.msg[1],2000);
                         return false;
                     }
                 }
@@ -79,53 +77,46 @@ class UpdateBasic extends Component{
         }
     }
     componentDidMount(){
-        const {dispatch} = this.props;
         const {birthday} = this.props.basicByForm;
         if(birthday){
             const fieldBirthday = this.state.year+"-"+this.state.month+'-'+this.state.day;
-            dispatch(changeField("birthday",fieldBirthday));
+            this.props.changeField("birthday",fieldBirthday);
         }
     }
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
-        dispatch(changeField("field"+fieldName,e.target.value));
+        this.props.changeField("field"+fieldName,e.target.value);
     }
     handleChangeBasic(e){
         e && e.preventDefault();
-        const {dispatch,basicByForm} = this.props;
-        let {nickName,gender,birthday} = basicByForm;
-        let {fieldnickName,fieldgender} = basicByForm;
+        const {changeBasic,basicByForm} = this.props;
+        let {nickName,gender,birthday,fieldnickName,fieldgender} = basicByForm;
         gender = gender === "-1" ? null : gender;
         this.formVerify({
             fieldnickName,fieldgender,birthday,
             callback: function(){
-                dispatch(changeBasic("/updatebasic",{
+                changeBasic("/updatebasic",{
                     nickName: fieldnickName,
                     gender: fieldgender,
                     birthday: birthday
-                }));
+                });
             }
         });
         
     }
     componentWillReceiveProps(nextProps){
-        const {dispatch,changeScene} = this.props;
+        const {changeScene} = this.props;
         const self = this;
         if(nextProps.basicByForm.basicChanging === false &&
            this.props.basicByForm.basicChanging === true){
+            this.props.alert(nextProps.basicByForm.msg,2000);
             if(nextProps.basicByForm.basicChanged === true){
-                dispatch(alert(nextProps.basicByForm.msg,2000));
                 setTimeout(()=>{changeScene.call(self,"index")},2500);
-            }else{
-                dispatch(alert(nextProps.basicByForm.msg,2000));
             }
         }
     }
     birthdayChange(fieldName,e){
         e && e.preventDefault();
-        const {dispatch} = this.props;
-
         var object = {};
         const name = e.target.name;
         object[name] = e.target.value;
@@ -139,11 +130,11 @@ class UpdateBasic extends Component{
         }else{
             birthday = obj.year+"-"+obj.month+'-'+obj.day;
         }
-        dispatch(changeField(fieldName,birthday));
+        this.props.changeField(fieldName,birthday);
     }
     render(){
-        const {dispatch,basicByForm,changeScene} = this.props;
-        const {nickName,gender,birthday,fieldnickName,fieldgender,alertContent,alertActive} = basicByForm;
+        const {basicByForm,changeScene} = this.props;
+        const {fieldnickName,fieldgender,alertContent,alertActive} = basicByForm;
         return (
             <div className="basic-content">
                 <Header onGoBack={changeScene.bind(this,"index")}>

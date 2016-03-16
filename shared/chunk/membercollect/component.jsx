@@ -1,7 +1,6 @@
 'use strict'
 
 import React,{Component} from "react";
-import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
 import util,{apiRequest} from "../../lib/util.es6";
@@ -11,7 +10,6 @@ import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
 
 import Floor from "./partial/floor.jsx";
-import {alert} from "../common/action.es6";
 
 class MembercollectList extends Component{
     beginRefresh(){
@@ -30,6 +28,18 @@ class MembercollectList extends Component{
         fetchCollect("/membercenter/collect",{
             pageIndex:nextPage
         })
+    }
+    componentWillReceiveProps(nextProps){
+        const {changeScene,fetchCollect} = this.props;
+        const self = this;
+        if(nextProps.memberCollectByUser.isToggling === false &&
+           this.props.memberCollectByUser.isToggling === true){
+            if(nextProps.memberCollectByUser.isToggled === true){
+                fetchCollect("/membercenter/collect",{
+                    pageIndex:1
+                })
+            }
+        }
     }
     handleDelete(child,e){
         e && e.preventDefault();
