@@ -109,3 +109,20 @@ export function registerPullDownEvent(callback) {
         }
     });
 }
+
+export function disableHistoryForwardCacheThen(callback= ()=>{
+    document.body.style.display = "none"
+    window.location.reload()
+}){
+    let localStorage = window.localStorage
+    window.onpageshow = (evt)=>{
+        let id = md5(window.location.href)
+        if(localStorage.getItem(id)){
+            // console.log('reload because of history back')
+            localStorage.removeItem(id)
+            callback()
+        }else{
+            localStorage.setItem(id,true)
+        }
+    }
+}
