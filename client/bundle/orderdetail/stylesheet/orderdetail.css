@@ -356,6 +356,9 @@
 .org-wuliuStatusList .org-starBg {
     background: url(/client/asset/images/org_line.png) -7px -195px no-repeat;
 }
+.org-wuliuStatusList .org-starBg.org-curBg{
+    background: none;
+}
 .org-wuliuStatusList .org-wuliuStatus.org-curBg .org-wuLiuLeft .org-middle {
     width:.25rem;
     height:.25rem;
@@ -379,14 +382,20 @@
 }
 .org-wuliuStatusList .org-wuliuStatus .org-wuLiuFont span {
     display: inline-block;
+    padding-bottom: 0.3rem;
     font-size:.32rem;
     color:#666;
 }
 .org-wuliuStatusList .org-wuliuStatus .org-wuLiuFont .org-wuLiuTime {
     width: 100%;
-    padding: 0.37333333rem 0;
+    padding-bottom: 0.35rem;
     border-bottom: 1px solid #e0e0e0;
     color:#333;
+}
+.org-wuliuStatusList .org-wuliuStatus .org-wuLiuFont .org-none{
+    width: 100%;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid #e0e0e0;
 }
 .org-wuliuStatusList .org-wuliuStatus.org-curBg .org-wuLiuFont span{
     color: #1ba11b;
