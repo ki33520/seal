@@ -57,32 +57,34 @@ var goodDetail = function(req, res, next) {
                     result: good
                 })
             }else{
-                var initialState = {
-                    good: good,
-                    isAuthorized:isAuthorized,
-                    loginUrl:loginUrl
-                }
-                var markup = util.getMarkupByComponent(GoodDetailApp({
-                    initialState: initialState
-                }));
-                res.render('gooddetail', {
-                    markup: markup,
-                    initialState: initialState
-                })
-            }
-        } else if(ret["goodById"].returnCode === -202001 && req.xhr === false){
-            var initialState = {
-                code: "500",
-                msg:"啊噢~您查看的商品已下架咯..."
-            };
-            var markup = util.getMarkupByComponent(ErrorContent({
-                initialState: initialState
-            }));
+                if(good["version"] === 2){
+                    var initialState = {
+                        code: "500",
+                        msg:"啊噢~您查看的商品已下架咯..."
+                    };
+                    var markup = util.getMarkupByComponent(ErrorContent({
+                        initialState: initialState
+                    }));
 
-            res.render('error', {
-                markup: markup,
-                initialState: initialState
-            });
+                    res.render('error', {
+                        markup: markup,
+                        initialState: initialState
+                    });
+                }else{
+                    var initialState = {
+                        good: good,
+                        isAuthorized:isAuthorized,
+                        loginUrl:loginUrl
+                    }
+                    var markup = util.getMarkupByComponent(GoodDetailApp({
+                        initialState: initialState
+                    }));
+                    res.render('gooddetail', {
+                        markup: markup,
+                        initialState: initialState
+                    })
+                }
+            }
         } else {
             if (req.xhr) {
                 res.json({
@@ -127,7 +129,7 @@ function goodFilter(good) {
         "code", "discount", "isMain", "title", "subTitle", "detail",
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
-        "description","isMeiZhuang"
+        "description","isMeiZhuang","version"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl

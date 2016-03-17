@@ -248,7 +248,9 @@ var payGateway = function(req, res, next) {
             }).then(function(resp){
                 if(resp.returnCode === 0){
                     var customsCode = resp.object.customs
+                    var countryType = resp.object.countryType
                     message["customsCode"] = customsCode
+                    message["goodsOriginType"] = countryType
                     _.extend(message, {
                         wxOpenId: user.wxOpenId,
                         subject: "haiwaigouH5",
