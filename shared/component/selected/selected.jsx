@@ -110,9 +110,9 @@ class Selected extends Component{
         return {selectedLabels,items};
     }
     renderStatus(labels){
-        return labels.map((label)=>{
+        return labels.map((label,i)=>{
             return (
-                <div className="selected-label">{label}</div>
+                <div className="selected-label" key={i}>{label}</div>
             );
         })
     }
@@ -121,7 +121,10 @@ class Selected extends Component{
             "selected":true
         });
         
-        const {items,selectedLabels} = this.renderItem();
+        let {items,selectedLabels} = this.renderItem();
+        if(!this.props.multiple){
+            selectedLabels = selectedLabels.slice(0,1)
+        }
         const status = (
             <span className="status">{selectedLabels.length > 0?
             (selectedLabels.length > 1?this.renderStatus(selectedLabels):
@@ -132,7 +135,7 @@ class Selected extends Component{
         )
 
         const itemsStyle = {
-            maxHeight:this.props.maxHeight
+            // maxHeight:this.props.maxHeight
         }
         return (
             <Dropdown className={classes} title={status} ref="dropdown" {...this.props}>
