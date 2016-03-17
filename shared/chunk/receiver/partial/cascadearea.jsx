@@ -5,17 +5,20 @@ import Selected from "../../../component/selected/selected.jsx";
 
 class CascadeArea extends Component{
     handleDistrictChange(districtCode){
-        const {changeField} = this.props;
-        changeField("districtCode",districtCode);
+        const {handleAreaChange} = this.props;
+        handleAreaChange("districtCode",districtCode);
     }
     handleProvinceChange(provinceCode){
-        const {loadCities,changeField} = this.props;
-        changeField("provinceCode",provinceCode)
+        const {loadCities,handleAreaChange} = this.props;
+        handleAreaChange("provinceCode",provinceCode)
+        handleAreaChange("cityCode","")
+        handleAreaChange("districtCode","")
         loadCities(provinceCode)
     }
     handleCityChange(cityCode){
-        const {loadDistricts,changeField} = this.props;
-        changeField("cityCode",cityCode)
+        const {loadDistricts,handleAreaChange} = this.props;
+        handleAreaChange("cityCode",cityCode)
+        handleAreaChange("districtCode","")
         loadDistricts(cityCode)
     }
     renderProvince(){

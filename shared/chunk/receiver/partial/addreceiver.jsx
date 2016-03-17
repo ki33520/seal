@@ -8,12 +8,18 @@ import CascadeArea from "./cascadearea.jsx";
 import {alert} from "../../common/action.es6";
 import ActivityIndicator from "../../common/activityindicator.jsx";
 import Alert from "../../../component/alert.jsx";
+import noBounceScroll from "../../../lib/dom/nobounce-scroll.es6";
+
 
 class AddReceiver extends Component{
     handleFieldChange(fieldName,e){
         e && e.preventDefault();
         const {changeField} = this.props;
-        changeField(fieldName,e.target.value);
+        changeField(fieldName,e.target.value,"addReceiver");
+    }
+    handleAreaChange(fieldName,fieldValue){
+        const {changeField} = this.props;
+        changeField(fieldName,fieldValue,"addReceiver");
     }
     loadProvinces(){
         const {fetchProvinces} = this.props;
@@ -37,6 +43,7 @@ class AddReceiver extends Component{
         if(this.props.active === true && this.props.provinces.length === 1){
             this.loadProvinces()
         }
+        noBounceScroll.enable()
     }
     componentDidUpdate(prevProps,prevState){
         if(this.props.active === true && prevProps.active === false &&
@@ -46,7 +53,11 @@ class AddReceiver extends Component{
     }
     handleSave(e){
         e && e.preventDefault();
+        if(this.props.receiverSaving){
+            return
+        }
         const {receiver,provinces,cities,districts,createReceiver,showActivityIndicator} = this.props
+        showActivityIndicator()
         const {consignee,idCard,mobileNumber,address,isDefault,
             provinceCode,cityCode,districtCode
         } = (receiver === null?{}:receiver);
@@ -59,14 +70,13 @@ class AddReceiver extends Component{
             provinceCode,cityCode,districtCode,
             provinceName,cityName,districtName
         })
-        showActivityIndicator()
     }
     componentWillReceiveProps(nextProps){
         const {alert,hideActivityIndicator} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
+            hideActivityIndicator()
             if(nextProps.receiverSaved === true){
-                hideActivityIndicator()
                 alert("提交成功!",1500);
                 setTimeout(()=>{
                     const {onCheck,receiver,checkable} = this.props
@@ -127,6 +137,7 @@ class AddReceiver extends Component{
                 </div>
                 <CascadeArea loadCities={this.loadCities.bind(this)} 
                 loadDistricts={this.loadDistricts.bind(this)} 
+                handleAreaChange={this.handleAreaChange.bind(this)} 
                 {...this.props} />
                 <div className="receiver-form-row receiver-form-textarea-row">
                 <i>*</i>

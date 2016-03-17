@@ -13,6 +13,9 @@
 body {
     background: #F1F1F1;
 }
+html,body{
+    overflow:hidden;
+}
 
 .receiver-container{
     height:100%;
@@ -22,6 +25,10 @@ body {
     .scene-group>.scene.active{
     background:#ededed;
     }
+}
+
+.empty a.empty_btn{
+    font-size:12px;
 }
 
 .selectArea{
@@ -46,6 +53,8 @@ body {
 
 .receiver-form-content {
     background:#EDEDED;
+    height:100%;
+    overflow:hidden;
     .receiver-form {
         .receiver-form-fieldset {
             @extend .receiver-panel;

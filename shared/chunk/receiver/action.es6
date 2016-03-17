@@ -76,16 +76,32 @@ export function fetchReceiver(url){
     return (dispatch)=>{
         dispatch(requestReceiver());
         apiRequest(url).then((res)=>{
+            if(res.isFetched){
+                dispatch(fetchProvinces({
+                    code:""
+                },"updateReceiver"))
+                if(res.receiver.provinceCode){
+                    dispatch(fetchCities({
+                        code:res.receiver.provinceCode
+                    },"updateReceiver"))
+                }
+                if(res.receiver.cityCode){
+                    dispatch(fetchDistricts({
+                        code:res.receiver.cityCode
+                    },"updateReceiver"))
+                }
+            }
             dispatch(responseReceiver(res));
         })
     }
 }
 
-export function changeField(name,value){
+export function changeField(name,value,scene){
     return {
         type:CHANGE_FIELD,
         name,
-        value
+        value,
+        scene
     }
 }
 

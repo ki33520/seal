@@ -137,17 +137,30 @@ class GoodDetail extends Component{
             return;
         }else if(good.selectedItem !== null && buyed > 0){
             this.togglePopup("addToCart")
-            addCart({
-                buyed:buyed,
-                buylimit:good.buyLimit,
-                singlecode:good.selectedItem.code
-            });
+            if(good.flashbuy['active']){
+                let singleCode = good.selectedItem.code
+                let queryParam = base64Encode(urlParam({
+                    itemIds:singleCode,
+                    buyeds:buyed
+                }))
+                window.location.assign(`/confirmorder/${queryParam}`)
+            }else{
+                addCart({
+                    buyed:buyed,
+                    buylimit:good.buyLimit,
+                    singlecode:good.selectedItem.code
+                });
+            }
         }
     }
     toggleCollected(e){
         e && e.preventDefault();
         const {toggleCollected} = this.props;
-        const {good,isCollected} = this.props.goodById;
+        const {good,isCollected,isAuthorized,loginUrl} = this.props.goodById;
+        if(!isAuthorized){
+            window.location.assign(loginUrl)
+            return
+        }
         toggleCollected({
             productCode:good.productCode,
             singleCode:good.code,

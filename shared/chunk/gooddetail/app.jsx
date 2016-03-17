@@ -23,9 +23,10 @@ function configureStore(initialState){
 
 class GoodDetailApp extends Component{
     render(){
-        const {good,cartCount} = this.props.initialState;
+        const {good,cartCount,isAuthorized,loginUrl} = this.props.initialState;
         const initialState = {
             goodById:{
+                isAuthorized,loginUrl,
                 good
             },
             cartByUser:{

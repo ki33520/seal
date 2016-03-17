@@ -92,7 +92,7 @@ class Coupon extends React.Component{
                     <div className="right">
                         <div className="kind">{coupon.flag}</div>
                         <div className="date">{coupon.expiryDate}</div>
-                        <div className="explain">{coupon.couponDesc}</div>
+                        <div className="explain">{coupon.description}</div>
                     </div>
                     <div className={status}></div>
             </div>
