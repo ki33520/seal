@@ -20,10 +20,12 @@ function formatCarts(originalCarts) {
             tariffFee: originalCart.tariffFee,
             dutyFree: originalCart.dutyFree,
             buyLimit: originalCart.buyLimit,
+            totalTax:0,
             group: []
         };
         var collected = 0;
         var children = 0;
+        var totalTax = 0;
         _.each(originalCart.cartMKTList, function(promoList) {
             var group = {
                 promoType: promoList.promoType,
@@ -46,15 +48,16 @@ function formatCarts(originalCarts) {
                     stockFlag: goods.stockFlag,
                     stockCount: goods.stockCount,
                     maxBuy: Math.min(goods.buyLimit,goods.stockCount),
-                    "onSale": goods.version===1,
-                    "minStep": goods.minBuyCount,
-                    "step": goods.addCount,
-                    "isAutoUpdated": goods.hasSystemUpQty,
-                    "updateCase": goods.systemUpType,
+                    onSale: goods.version===1,
+                    minStep: goods.minBuyCount,
+                    step: goods.addCount,
+                    isAutoUpdated: goods.hasSystemUpQty,
+                    updateCase: goods.systemUpType,
                     checked: false
                 }
                 if (product.stockFlag && product.onSale) {
                     product.checked = true;
+                    totalTax += parseInt(goods.taxRate * goods.salesPrice*100)/100;
                     collected++;
                 }
                 group.list.push(product);
@@ -62,6 +65,7 @@ function formatCarts(originalCarts) {
             cart.checked = (collected === children) ? true : false;
             cart.children = children;
             cart.collected = collected;
+            cart.totalTax = totalTax;
             cart.group.push(group);
         });
         carts.push(cart);

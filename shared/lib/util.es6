@@ -109,3 +109,22 @@ export function registerPullDownEvent(callback) {
         }
     });
 }
+
+export function disableHistoryForwardCacheThen(callback=false){
+    let localStorage = window.localStorage
+    window.onpageshow = (evt)=>{
+        let id = md5(window.location.href)
+        if(localStorage.getItem(id)){
+            localStorage.removeItem(id)
+            if(callback){
+                callback()
+                localStorage.setItem(id,true)
+            }else{
+                document.body.style.display = "none"
+                window.location.reload()
+            }
+        }else{
+            localStorage.setItem(id,true)
+        }
+    }
+}

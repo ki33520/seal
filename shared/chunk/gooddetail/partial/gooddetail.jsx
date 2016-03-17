@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
-import {urlParam,base64Encode,formatPrice} from "../../../lib/util.es6";
+import {urlParam,base64Encode,formatPrice,disableHistoryForwardCacheThen} from "../../../lib/util.es6";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import PullHook from "../../../component/pullhook.jsx";
@@ -41,6 +41,9 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
+        disableHistoryForwardCacheThen(()=>{
+            console.log('disableHistoryForwardCacheThen')
+        })
         const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
