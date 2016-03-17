@@ -41,6 +41,9 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
+        disableHistoryForwardCacheThen(()=>{
+            console.log('disableHistoryForwardCacheThen')
+        })
         const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
