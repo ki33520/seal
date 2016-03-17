@@ -135,7 +135,7 @@ class Selected extends Component{
         )
 
         const itemsStyle = {
-            maxHeight:this.props.maxHeight
+            // maxHeight:this.props.maxHeight
         }
         return (
             <Dropdown className={classes} title={status} ref="dropdown" {...this.props}>

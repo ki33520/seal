@@ -14,8 +14,8 @@
         }
     }
     .selected-items {
-        overflow-x: hidden;
-        overflow-y: auto;
+        // overflow-x: hidden;
+        // overflow-y: auto;
         li {
             line-height: px2rem(20);
             clear: both;
@@ -50,6 +50,8 @@
     }
     &>.dropdown-content {
         padding:0;
+        overflow-x:hidden;
+        overflow-y:auto;
         &::before,
         &::after {
             content: "";
@@ -72,7 +74,7 @@
         }
         &.active {
             margin-top: px2rem(10);
-            overflow:visible;
+            // overflow:visible;
             border: px2rem(1) solid #CCC;
             box-shadow: 0 px2rem(2) px2rem(4) 0 rgba(34, 36, 38, .12),
              0 px2rem(2) px2rem(10) 0 rgba(34, 36, 38, .08);
