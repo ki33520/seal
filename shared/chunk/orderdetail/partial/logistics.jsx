@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
+import moment from "moment";
 import Header from "../../common/header.jsx";
 import StatusProgress from "./statusprogress.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
@@ -42,7 +43,7 @@ class Logistics extends Component{
                                     </div>
                                     <p className="org-wuLiuFont org-wuLiuCur">
                                         <span>{v.context}</span>
-                                        <span className="org-wuLiuTime">{v.eventTime}</span>
+                                        <span className="org-wuLiuTime">{moment(new Date(v.eventTime)).format("YYYY-MM-DD HH:mm:ss")}</span>
                                     </p>
                                 </div>
                             )
@@ -53,12 +54,12 @@ class Logistics extends Component{
         }else{
             return (
                 <div className="org-wuliuStatusList">
-                    <div className="org-wuliuStatus org-curBg">
+                    <div className="org-wuliuStatus org-starBg org-curBg">
                         <div className="org-wuLiuLeft">
                             <em className="org-middle"></em>
                         </div>
                         <p className="org-wuLiuFont org-wuLiuCur">
-                            <span>暂无物流动态信息</span>
+                            <span className="org-none">暂无物流动态信息</span>
                         </p>
                     </div>
                 </div>

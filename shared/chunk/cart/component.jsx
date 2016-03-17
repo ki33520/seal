@@ -11,7 +11,7 @@ import Checkbox from "../../component/form/checkbox.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
 import ActivityIndicator from "../common/activityindicator.jsx";
-import {urlParam,base64Encode,formatPrice} from "../../lib/util.es6";
+import {urlParam,base64Encode,formatPrice,disableHistoryForwardCacheThen} from "../../lib/util.es6";
 
 class Cart extends Component {
     constructor(props){
@@ -63,6 +63,9 @@ class Cart extends Component {
                 singleCode
             });
         }
+    }
+    componentDidMount(){
+        disableHistoryForwardCacheThen();
     }
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;

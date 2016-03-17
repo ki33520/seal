@@ -22,6 +22,7 @@ function filterItem(originalData){
                 sourceName:v.sourceName,
                 sourceImageUrl:config.imgServer+v.sourceImageUrl,
                 localStock:v.stock,
+                onSale:v.version===1,
                 useMobilePrice:!!v.useMobilePrice
             })
         })
