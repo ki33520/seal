@@ -284,8 +284,7 @@
     left: 0;
     width: 100%;
     background-color: #fff;
-    z-index: 21;
-    text-align:center;
+    z-index: 1002;
 }
 .confirmBtns a.confirm_btn {
     display: inline-block;
@@ -526,17 +525,6 @@
     display: block;
 }
 
-.confirmBtns {
-    border-top: 1px solid #d1d1d1;
-    padding: .18rem .32rem;
-    text-align: right;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    z-index: 21;
-}
 .confirmBtns .confirmLeft{
     float:left;
     padding-top:.24rem;
