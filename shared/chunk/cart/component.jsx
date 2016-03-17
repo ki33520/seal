@@ -175,8 +175,8 @@ class Cart extends Component {
             limitBuy:maxBuy
         });
         const saleOut = classNames({
-            "sale-out":goods.stockFlag===false&&goods.onSale===1,
-            "put-off":goods.onSale===2
+            "sale-out":goods.stockFlag===false&&goods.onSale,
+            "put-off":!goods.onSale
         });
         return(
             <div className="group" key={"g-"+i+j+k}>
