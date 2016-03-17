@@ -7,6 +7,7 @@ import moment from "moment";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Dialog from "../../../component/dialog.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Alert from "../../../component/alert.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 

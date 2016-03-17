@@ -18,7 +18,7 @@ function cartByUser(state={},action){
         case START_UPDATE_CART:
             return Object.assign({},state,{
                 isUpdating:true,
-                 isFetching:true,
+                isFetching:true,
                 isUpdated:false
             });
         case FINISH_UPDATE_CART:
@@ -35,7 +35,6 @@ function cartByUser(state={},action){
              }
             return Object.assign({},state,{
                 isUpdating:false,
-                isFetching:false,
                 isUpdated:isUpdated,
                 singleCode:goods.singleCode,
                 cartIndex,
@@ -78,6 +77,7 @@ function cartByUser(state={},action){
                     _cart.promoTotal = cart.promoTotal;
                     _cart.salesTotal = cart.salesTotal;
                     _cart.collected=cart.collected;
+                    _cart.totalTax = cart.totalTax;
                     _cart.checked = _cart.children===_cart.collected;
                     carts[cartIndex] = _cart;
                 }
