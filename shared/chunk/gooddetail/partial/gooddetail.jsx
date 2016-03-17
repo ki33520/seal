@@ -268,7 +268,7 @@ class GoodDetail extends Component{
                     <span className="oldPrice">市场价&yen;{formatPrice(good.originPrice)}</span>
                     {this.renderCountdown()}
                 </div>
-                <Promotions promotions={good.marketing}/>
+                <Promotions promotions={good.promotions}/>
                  <a onClick={this.props.changeScene.bind(this,"comment",{productCode:good.productCode})} 
                  href="javascript:void(null)" className="goComment clearfix">
                     <div className="left">
