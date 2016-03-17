@@ -11,7 +11,7 @@ import Checkbox from "../../component/form/checkbox.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
 import ActivityIndicator from "../common/activityindicator.jsx";
-import {urlParam,base64Encode,formatPrice} from "../../lib/util.es6";
+import {urlParam,base64Encode,formatPrice,disableHistoryForwardCacheThen} from "../../lib/util.es6";
 
 class Cart extends Component {
     constructor(props){
@@ -63,6 +63,9 @@ class Cart extends Component {
                 singleCode
             });
         }
+    }
+    componentDidMount(){
+        disableHistoryForwardCacheThen();
     }
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
@@ -146,14 +149,14 @@ class Cart extends Component {
         });
     }
     renderInfo(total,tax, limitTax,limitMoney,buyeds){
-        const notice = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
+        const tips = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
         const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
         let message = null;
 
         if(total > limitMoney&&buyeds>1){
             message = warning;
         }else if(tax > limitTax){
-            message = notice;
+            message = tips;
         }
 
         if(message===null) return null;
@@ -175,8 +178,8 @@ class Cart extends Component {
             limitBuy:maxBuy
         });
         const saleOut = classNames({
-            "sale-out":goods.stockFlag===false&&goods.onSale===1,
-            "put-off":goods.onSale===2
+            "sale-out":goods.stockFlag===false&&goods.onSale,
+            "put-off":!goods.onSale
         });
         return(
             <div className="group" key={"g-"+i+j+k}>
@@ -242,7 +245,6 @@ class Cart extends Component {
         const promo = classNames("depot_bot",{
             hide:!cart.promoName
         });
-        const tax = cart.total * cart.tariffFee;
         const salesTotal = formatPrice(cart.salesTotal);
         const promoTotal = formatPrice(cart.promoTotal);
         const total = formatPrice(cart.total);
@@ -274,7 +276,7 @@ class Cart extends Component {
                             <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,i)}/>
                         </p>
                     </div>
-                    {this.renderInfo(cart.total,tax,cart.dutyFree,cart.buyLimit,cart.buyeds)}
+                    {this.renderInfo(cart.total,cart.totalTax,cart.dutyFree,cart.buyLimit,cart.buyeds)}
                 </div>
             </div>
         )

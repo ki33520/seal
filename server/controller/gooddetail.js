@@ -12,7 +12,6 @@ var goodDetail = function(req, res, next) {
     var singleCode = req.params.id;
     var isAuthorized = req.session.user !== undefined;
     var loginUrl = res.locals.loginUrl;
-    // req.session["localcart"] = undefined
     bluebird.props({
         "goodById": util.fetchAPI("goodById", {
             code: singleCode,

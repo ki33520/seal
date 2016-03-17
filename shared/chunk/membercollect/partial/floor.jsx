@@ -25,8 +25,8 @@ class Floor extends Component{
                                 <li id={child.goodId} key={key}>
                                     <div className="col">
                                         <div className="col-left">
-                                            {masker}
                                             <a href={"/gooddetail/"+child.singleCode}>
+                                                {masker}
                                                 <img src={child.imageUrl} />
                                             </a>
                                         </div>

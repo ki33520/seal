@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
-import {urlParam,base64Encode,formatPrice} from "../../../lib/util.es6";
+import {urlParam,base64Encode,formatPrice,disableHistoryForwardCacheThen} from "../../../lib/util.es6";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import PullHook from "../../../component/pullhook.jsx";
@@ -96,6 +96,9 @@ class GoodDetail extends Component{
                     if(this.props.goodById.goodFetching !== true){
                         this.props.fetchGood({
                             id:selectedItem.code
+                        })
+                        this.props.fetchIsCollected({
+                            singleCode:selectedItem.code
                         })
                     }
             }
@@ -227,7 +230,7 @@ class GoodDetail extends Component{
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
         const {buyed} = this.state;
-
+        console.log(formatPrice(0.1))
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
             const key = "slide-" + i;

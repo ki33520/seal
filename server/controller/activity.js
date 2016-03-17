@@ -18,10 +18,10 @@ function filterResult(goods){
                 startTime:item.beginDateStr,
                 endTime:item.endDateStr,
                 sourceName:item.sourceName,
-                imageUrl:(item.picList && item.picList.length > 0)?
-                    config.imgServer+item.picList[0].url:null,
+                imageUrl:(item.picList && item.picList.length > 0)?config.imgServer+item.picList[0].url:null,
                 sourceImageUrl:config.imgServer+item.sourceImageUrl,
                 localStock:item.stock,
+                onSale:item.version===1,
                 useMobilePrice:item.useMobilePrice
             });
         });

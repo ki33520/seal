@@ -71,7 +71,7 @@ export function formatPrice(price){
     price = price * 100
     price = parseInt(price)
     let priceStr = `${price}`
-    if(price < 100 && price > 10){
+    if(price < 100 && price >= 10){
         priceStr = `0${price}`
     }else if(price < 10){
         priceStr = `00${price}`
@@ -108,4 +108,23 @@ export function registerPullDownEvent(callback) {
             callback();
         }
     });
+}
+
+export function disableHistoryForwardCacheThen(callback=false){
+    let localStorage = window.localStorage
+    window.onpageshow = (evt)=>{
+        let id = md5(window.location.href)
+        if(localStorage.getItem(id)){
+            localStorage.removeItem(id)
+            if(callback){
+                callback()
+                localStorage.setItem(id,true)
+            }else{
+                document.body.style.display = "none"
+                window.location.reload()
+            }
+        }else{
+            localStorage.setItem(id,true)
+        }
+    }
 }

@@ -14,8 +14,9 @@ class GoodList extends Component{
         const {list} = this.props.category;
         if(list.length > 0){
             return list.map((goods,i)=>{
-                const soldOut = classNames({
-                    "sale-out":goods.localStock>0?false:true
+                const saleState = classNames({
+                    "sale-out":goods.localStock<1&&goods.onSale,
+                    "put-off":!goods.onSale
                 });
                 const saleIcon = classNames({
                     "mobile-price":goods.useMobilePrice
@@ -24,7 +25,7 @@ class GoodList extends Component{
                 const originPrice = formatPrice(goods.originPrice);
                 return (
                     <a href={"/gooddetail/"+goods.singleCode} className="clearfix" key={i}>
-                        <div className={soldOut}></div>
+                        <div className={saleState}></div>
                         <div className={saleIcon}></div>
                         <img src={goods.imageUrl}/>
                         <div className="right">
