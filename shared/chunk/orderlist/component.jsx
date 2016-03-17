@@ -47,10 +47,10 @@ class OrderList extends Component{
         if(nextProps.ordersByParam.deliveryOrderChanging === false &&
            this.props.ordersByParam.deliveryOrderChanging === true){
             if(nextProps.ordersByParam.deliveryOrderChanged === true){
-                alert(nextProps.msg,2000);
+                alert(nextProps.ordersByParam.msg,2000);
                 window.location.assign("/orderlist/4");
             }else{
-                alert(nextProps.msg,2000);
+                alert(nextProps.ordersByParam.msg,2000);
             }
         }
     }
