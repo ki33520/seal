@@ -137,11 +137,20 @@ class GoodDetail extends Component{
             return;
         }else if(good.selectedItem !== null && buyed > 0){
             this.togglePopup("addToCart")
-            addCart({
-                buyed:buyed,
-                buylimit:good.buyLimit,
-                singlecode:good.selectedItem.code
-            });
+            if(good.flashbuy['active']){
+                let singleCode = good.selectedItem.code
+                let queryParam = base64Encode(urlParam({
+                    itemIds:singleCode,
+                    buyeds:buyed
+                }))
+                window.location.assign(`/confirmorder/${queryParam}`)
+            }else{
+                addCart({
+                    buyed:buyed,
+                    buylimit:good.buyLimit,
+                    singlecode:good.selectedItem.code
+                });
+            }
         }
     }
     toggleCollected(e){
@@ -259,7 +268,7 @@ class GoodDetail extends Component{
                     <span className="oldPrice">市场价&yen;{formatPrice(good.originPrice)}</span>
                     {this.renderCountdown()}
                 </div>
-                <Promotions promotions={good.marketing}/>
+                <Promotions promotions={good.promotions}/>
                  <a onClick={this.props.changeScene.bind(this,"comment",{productCode:good.productCode})} 
                  href="javascript:void(null)" className="goComment clearfix">
                     <div className="left">

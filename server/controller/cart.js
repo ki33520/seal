@@ -46,14 +46,14 @@ function formatCarts(originalCarts) {
                     stockFlag: goods.stockFlag,
                     stockCount: goods.stockCount,
                     maxBuy: Math.min(goods.buyLimit,goods.stockCount),
-                    "onSale": goods.version,
+                    "onSale": goods.version===1,
                     "minStep": goods.minBuyCount,
                     "step": goods.addCount,
                     "isAutoUpdated": goods.hasSystemUpQty,
                     "updateCase": goods.systemUpType,
                     checked: false
                 }
-                if (product.stockFlag && product.onSale == 1) {
+                if (product.stockFlag && product.onSale) {
                     product.checked = true;
                     collected++;
                 }
