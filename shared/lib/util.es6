@@ -71,7 +71,7 @@ export function formatPrice(price){
     price = price * 100
     price = parseInt(price)
     let priceStr = `${price}`
-    if(price < 100 && price > 10){
+    if(price < 100 && price >= 10){
         priceStr = `0${price}`
     }else if(price < 10){
         priceStr = `00${price}`

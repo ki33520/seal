@@ -2,7 +2,7 @@
 import GoodDetail from "../../../shared/chunk/gooddetail/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
-// import {disableHistoryForwardCache} from "../../../shared/lib/util.es6";
+// import {disableHistoryForwardCacheThen} from "../../../shared/lib/util.es6";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);

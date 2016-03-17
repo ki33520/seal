@@ -41,9 +41,6 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
-        disableHistoryForwardCacheThen(()=>{
-            console.log('disableHistoryForwardCacheThen')
-        })
         const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
@@ -99,6 +96,9 @@ class GoodDetail extends Component{
                     if(this.props.goodById.goodFetching !== true){
                         this.props.fetchGood({
                             id:selectedItem.code
+                        })
+                        this.props.fetchIsCollected({
+                            singleCode:selectedItem.code
                         })
                     }
             }
@@ -230,7 +230,7 @@ class GoodDetail extends Component{
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
         const {buyed} = this.state;
-
+        console.log(formatPrice(0.1))
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
             const key = "slide-" + i;
