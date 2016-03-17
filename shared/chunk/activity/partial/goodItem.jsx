@@ -12,8 +12,9 @@ class GoodItem extends Component{
     }
     render(){
         const {goods} = this.props;
-        const soldOut = classNames({
-            "sale-out":goods.localStock>0?false:true
+        const saleState = classNames({
+            "sale-out":goods.localStock<1&&goods.onSale,
+            "put-off":!goods.onSale
         });
         const saleIcon = classNames({
             "mobile-price":goods.useMobilePrice
@@ -23,7 +24,7 @@ class GoodItem extends Component{
         return (
             <div className="clearfix">
                 <a href={"/gooddetail/"+goods.singleCode}>
-                	<div className={soldOut}></div>
+                	<div className={saleState}></div>
                     <div className={saleIcon}></div>
                     <img src={goods.imageUrl} alt="" />
                     <div className="country">
