@@ -224,6 +224,53 @@ function floorFilter(floors) {
     return _floors
 }
 
+var updateGoods = function(req,res,next){
+    var ids = req.query.ids
+    util.fetchAPI("updateGoods",{
+        codes:ids
+    }).then(function(ret){
+        if(ret.returnCode === 0){
+            var result = updatedGoodsFilter(ret.object)
+            res.json({
+                goodsUpdated:true,
+                result
+            })
+        }else{
+            res.json({
+                goodsUpdated:false,
+                errMsg:ret.msg
+            })
+        }
+    })
+}
+
+function updatedGoodsFilter(result){
+    var _result = {}
+    _result = _.mapValues(result,function(good){
+        good.flashbuy = {}
+        if(good.flashSalesObject){
+            var startTime = moment(new Date(good.flashSalesObject.beginDate)).format("YYYY-MM-DD HH:mm:ss")
+            var endTime = moment(new Date(good.flashSalesObject.endDate)).format("YYYY-MM-DD HH:mm:ss")
+            var isFlashbuyActive = false
+            if (moment().isBetween(startTime,endTime)) {
+                isFlashbuyActive = true
+            }
+            good["flashbuy"]["isActive"] = isFlashbuyActive
+            good["flashbuy"]["flashPrice"] = good.flashSalesObject.wapPrice            
+        }
+        if(good.singleObject){
+            good["originPrice"] = good.singleObject.originPrice
+            good["salesPrice"] = good.singleObject.salesPrice
+            good["discount"] = good.singleObject.discount
+            good["stock"] = good.singleObject.stock.stock
+            good["useMobilePrice"] = good.singleObject.useMobilePrice
+            good["mobilePrice"] = good.singleObject.mobilePrice
+        }
+        return good
+    })
+    return _result
+}
+
 var searchHotWords = function(req, res, next) {
     util.fetchAPI("fetchHotKeywords", {}).then(function(ret) {
         if (ret.returnCode === 0) {
@@ -342,6 +389,7 @@ function activityGoodFilter(goods) {
 module.exports = {
     index: index,
     floorFilter:floorFilter,
+    updateGoods:updateGoods,
     channel: channel,
     searchHistory:searchHistory,
     purgeSearchHistory:purgeSearchHistory,

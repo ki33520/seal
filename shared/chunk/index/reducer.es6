@@ -7,7 +7,8 @@ import {
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
-    REQUEST_CHANNEL,RESPONSE_CHANNEL
+    REQUEST_CHANNEL,RESPONSE_CHANNEL,
+    REQUEST_UPDATEGOODS,RESPONSE_UPDATEGOODS
 } from "./constant.es6";
 import {CHANGE_FIELD} from "../common/constant.es6";
 import {combineReducers} from "redux";
@@ -146,9 +147,31 @@ function index(state={},action){
             return Object.assign({},state,{
                 channels,
             })
+        case REQUEST_UPDATEGOODS:
+            return Object.assign({},state,{
+                goodsUpdated:false,
+                goodsUpdating:true
+            })
+        case RESPONSE_UPDATEGOODS:
+            if(action.res.goodsUpdated){
+                channels = channels.map((channel)=>{
+                    if(channel.id = action.channelId){
+                        if(action.floor === "flashbuys"){
+                            // channel["floors"][action.floor] = 
+                        }
+                    }
+                })
+            }
         default:
             return state
     }
+}
+
+function floorGoods(goods,updateGoods){
+    let _goods = goods.map((good)=>{
+        
+    })
+
 }
 
 const rootReducer = combineReducers({
