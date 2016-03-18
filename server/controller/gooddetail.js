@@ -12,6 +12,8 @@ var goodDetail = function(req, res, next) {
     var singleCode = req.params.id;
     var isAuthorized = req.session.user !== undefined;
     var loginUrl = res.locals.loginUrl;
+    var tag = req.query.tag?req.query.tag:""
+    res.cookie("tag",tag)
     bluebird.props({
         "goodById": util.fetchAPI("goodById", {
             code: singleCode,

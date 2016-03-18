@@ -78,12 +78,81 @@ body{
             position:relative;
         }
     }
-    
 }
 
 .indexSingle{
     padding:.266rem 0 0;
     margin:0 .32rem;
+    &>a{
+        position:relative;
+        .sale-out {
+            width: px2rem(100);
+            height: px2rem(100);
+            background: url(/client/asset/images/ico_soldOut.png) no-repeat 50% 50%;
+            background-size: 66%;
+            position: absolute;
+            left:px2rem(105);
+            top:px2rem(110);
+        }
+        .put-off {
+            width: px2rem(100);
+            height: px2rem(100);
+            background-image:url(/client/asset/images/cover_not_sell.png);
+            background-size: 100%;
+            position: absolute;
+            left:px2rem(105);
+            top:px2rem(110);
+        }
+    }
+}
+
+.activityGeneral{
+    &>a{
+        position:relative;
+        .sale-out {
+            width: px2rem(100);
+            height: px2rem(100);
+            background: url(/client/asset/images/ico_soldOut.png) no-repeat 50% 50%;
+            background-size: 66%;
+            position: absolute;
+            left:px2rem(15);
+            top:px2rem(35);
+        }
+        .put-off {
+            width: px2rem(100);
+            height: px2rem(100);
+            background-image:url(/client/asset/images/cover_not_sell.png);
+            background-size: 100%;
+            position: absolute;
+            left:px2rem(15);
+            top:px2rem(35);
+        }
+    }
+}
+
+.flashBuy{
+    &>a{
+        position:relative;
+        .sale-out {
+            width: px2rem(100);
+            height: px2rem(100);
+            background: url(/client/asset/images/ico_soldOut.png) no-repeat 50% 50%;
+            background-size: 66%;
+            position: absolute;
+            left:px2rem(15);
+            top:px2rem(35);
+        }
+        .put-off {
+            width: px2rem(100);
+            height: px2rem(100);
+            background-image:url(/client/asset/images/cover_not_sell.png);
+            background-size: 100%;
+            position: absolute;
+            left:px2rem(15);
+            top:px2rem(35);
+        }
+    }
+
 }
 
 .slider .control-nav{

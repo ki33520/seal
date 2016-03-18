@@ -18,7 +18,8 @@ var config = {
     }
 };
 var runtime = process.env["NODE_ENV"];
-runtime = "test"
+runtime = "hotfix"
+//runtime = "test"
 config["runtime"] = runtime;
 if (runtime === "develop") {
     // config.apiServer = "http://wsns.tepin.youayun.cn";

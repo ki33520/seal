@@ -160,7 +160,7 @@ class ConfirmOrder extends Component{
             </div>
             {this.renderTotal(order)}
             <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
-            submiting={this.props.orderSubmiting || this.props.paygatewayFetching}
+            submiting={this.props.orderVerifying || this.props.orderSubmiting || this.props.paygatewayFetching}
             onSubmit={this.verifyOrder.bind(this)} ref="SubmitOrder"/>
             <Alert active={alertActive}>{alertContent}</Alert>
             <Dialog onlyConfirm={true} active={this.state.dialogActive} 

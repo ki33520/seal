@@ -202,6 +202,7 @@ let dom = {
         dom.bindEvent(element,"touchstart",cancelScroll);
 
         var start,t,y,x;
+        // var rAF = window.requestAnimationFrame
         rAF(function render(){
             // if(!scrollInProgress){
             //     return;

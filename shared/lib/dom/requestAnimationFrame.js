@@ -6,7 +6,7 @@ var nativeRAF = global.requestAnimationFrame ||
 
 var lastTime = 0;
 
-var requestAnimationFrame = nativeRAF ||
+let requestAnimationFrame = nativeRAF ||
   function(callback) {
     var currTime = Date.now();
     var timeDelay = Math.max(0, 16 - (currTime - lastTime));
@@ -18,6 +18,9 @@ var requestAnimationFrame = nativeRAF ||
   };
 
 // Works around a rare bug in Safari 6 where the first request is never invoked.
-requestAnimationFrame(function() {});
+if(typeof window !== "undefined"){
+  window.requestAnimationFrame = requestAnimationFrame
+  window.requestAnimationFrame(function() {});
+}
 
 module.exports = requestAnimationFrame;
