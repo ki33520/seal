@@ -21,7 +21,7 @@ router.get("/searchhistory", require("./controller/index.js").searchHistory);
 router.get("/purgesearchhistory", require("./controller/index.js").purgeSearchHistory);
 router.post("/searchassociate", require("./controller/index.js").searchAssociate);
 router.get("/activitygood", require("./controller/index.js").activityGood);
-route.get("/updategoods",require("./controller/index.js").updateGoods);
+router.get("/updategoods",require("./controller/index.js").updateGoods);
 router.get("/topic/:id", require("./controller/topic.js").topic);
 router.get("/flashbuy/:id", require("./controller/flashbuy.js"));
 router.get("/polymer",mainController.staticize,require("./controller/polymer").polymer);

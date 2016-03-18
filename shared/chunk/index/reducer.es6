@@ -153,10 +153,25 @@ function index(state={},action){
                 goodsUpdating:true
             })
         case RESPONSE_UPDATEGOODS:
-                
+            if(action.res.goodsUpdated){
+                channels = channels.map((channel)=>{
+                    if(channel.id = action.channelId){
+                        if(action.floor === "flashbuys"){
+                            // channel["floors"][action.floor] = 
+                        }
+                    }
+                })
+            }
         default:
             return state
     }
+}
+
+function floorGoods(goods,updateGoods){
+    let _goods = goods.map((good)=>{
+        
+    })
+
 }
 
 const rootReducer = combineReducers({

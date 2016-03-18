@@ -259,6 +259,7 @@ function updatedGoodsFilter(result){
             good["flashbuy"]["flashPrice"] = good.flashSalesObject.wapPrice            
         }
         if(good.singleObject){
+            good["originPrice"] = good.singleObject.originPrice
             good["salesPrice"] = good.singleObject.salesPrice
             good["discount"] = good.singleObject.discount
             good["stock"] = good.singleObject.stock.stock
