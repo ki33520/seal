@@ -249,10 +249,12 @@ class OrderDetail extends Component{
                 <a href={back_url} className="iconfont icon-back"></a>
                 <span className="title">订单详情</span>
             </header>
+            <div className="order-detail-info">
             <StatusProgress renderOutTime={this.renderOutTime.bind(this)} {...order}/>
             {this.renderAddress(order)}
             <OrderGoods {...order}/>
             {this.renderCountbox()}
+            </div>
             {this.renderFooter()}
             <Dialog active={this.state.dialogActive} 
                 onCancel={this.toggleDialog.bind(this)}

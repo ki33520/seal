@@ -285,6 +285,7 @@
     width: 100%;
     background-color: #fff;
     z-index: 1002;
+    height: 1.3rem;
 }
 .confirmBtns a.confirm_btn {
     display: inline-block;
@@ -292,6 +293,7 @@
     color: #fff;
     border-radius:20px;
     line-height: .94rem;
+    height: .94rem;
     border: 1px solid #ed1a45;
     width: 40%;
     text-align: center;
@@ -304,6 +306,7 @@
 
 /* 物流信息 */
 .logistics{
+    padding-bottom: 1.17rem;
 }
 .logistics .info{
     margin-top: .266667rem;
@@ -584,6 +587,9 @@
 
 /* 评价宝贝 */
 .commentBaby{
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 1.17rem;
 }
 .commentBaby .context-none{
     font-size: .5rem;
