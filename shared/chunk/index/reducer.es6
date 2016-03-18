@@ -7,7 +7,8 @@ import {
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
-    REQUEST_CHANNEL,RESPONSE_CHANNEL
+    REQUEST_CHANNEL,RESPONSE_CHANNEL,
+    REQUEST_UPDATEGOODS,RESPONSE_UPDATEGOODS
 } from "./constant.es6";
 import {CHANGE_FIELD} from "../common/constant.es6";
 import {combineReducers} from "redux";
@@ -146,6 +147,13 @@ function index(state={},action){
             return Object.assign({},state,{
                 channels,
             })
+        case REQUEST_UPDATEGOODS:
+            return Object.assign({},state,{
+                goodsUpdated:false,
+                goodsUpdating:true
+            })
+        case RESPONSE_UPDATEGOODS:
+                
         default:
             return state
     }
