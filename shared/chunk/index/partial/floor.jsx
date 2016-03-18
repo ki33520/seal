@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import classNames from "classnames";
 import _ from "lodash"
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
@@ -25,7 +26,21 @@ class Floor extends Component{
             if(singleRecommend && singleRecommend.goods === null){
                 fetchSingleRecommend({activityId:singleRecommend.id},this.props.channel.id)
             }
+            this.updateFlashbuyGoods()
         }
+    }
+    updateFlashbuyGoods(){
+        let {flashbuys} = this.props.channel.floors;
+        let ids = []
+        if(flashbuys){
+            flashbuys.forEach((flashbuy)=>{
+                flashbuy.goods.forEach((good)=>{
+                    ids.push(good.singleCode)
+                })
+            })
+        }
+        // console.log(ids)
+        this.props.updateGoods({ids:ids.join(",")},"flashbuys",this.props.channel.id)
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.active && !this.props.active){
@@ -46,8 +61,13 @@ class Floor extends Component{
         if(singleRecommend && singleRecommend.goods && singleRecommend.goods.length > 0){
             let goods = singleRecommend.goods.map((good,i)=>{
                 let destPrice = destPriceForGoods(good).destPrice
+                const saleState = classNames({
+                    "sale-out":good.stock === 0,
+                    "put-off":good.isOff === true
+                });
                 return (
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
+                        <div className={saleState}></div>
                         <img src={good.imageUrl} />
                         <span className="name">{good.title}</span>
                         <p>{good.subTitle}</p>
@@ -75,8 +95,13 @@ class Floor extends Component{
         if(newRecommend && newRecommend.goods && newRecommend.goods.length > 0){
             let goods = newRecommend.goods.map((good,i)=>{
                 let destPrice = destPriceForGoods(good).destPrice
+                const saleState = classNames({
+                    "sale-out":good.stock === 0,
+                    "put-off":good.isOff === true
+                });
                 return (
                     <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
+                        <div className={saleState}></div>
                         <img src={good.imageUrl} />
                         <div className="right">
                             <span className="name">{good.title}</span>
@@ -183,14 +208,19 @@ class Floor extends Component{
                         }else if(validTime === 1){
                             timer = <p>本期闪购已结束</p>
                         }
-                        let salePrice = good.salePrice
+                        let salePrice = good.salesPrice
                         if(good.isFlashbuyActive){
                             salePrice = good.flashPrice
                         }else if(good.mobilePrice){
                             salePrice = good.mobilePrice
                         }
+                        const saleState = classNames({
+                            "sale-out":good.stock === 0,
+                            "put-off":good.isOff === true
+                        });
                         return (
                         <a href={"/gooddetail/"+good.singleCode} className="clearfix" key={i}>
+                            <div className={saleState}></div>
                             <img src={good.imageUrl}/>
                             <div className="right">
                                 {timer}

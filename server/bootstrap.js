@@ -1,6 +1,7 @@
 var express = require("express"),
     http = require("http"),
     bodyParser = require("body-parser"),
+    cookieParser = require('cookie-parser'),
     methodOverride = require("method-override"),
     session = require("express-session"),
     cons = require("consolidate");
@@ -15,6 +16,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(methodOverride());
+app.use(cookieParser());
 
 // var RedisStore = require('connect-redis')(session)
 var MemcachedStore = require("connect-memcached")(session)

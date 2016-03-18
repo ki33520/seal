@@ -192,7 +192,7 @@ function floorFilter(floors) {
                         isFlashbuyActive:isFlashbuyActive,
                         singleCode: good.singleCode,
                         imageUrl: config.imgServer + good.imageUrl,
-                        salePrice: good.salesPrice,
+                        salesPrice: good.salesPrice,
                         mobilePrice:good.mobilePrice,
                         flashPrice:good.wapPrice,
                         originPrice: good.originPrice,
@@ -247,7 +247,6 @@ var updateGoods = function(req,res,next){
 function updatedGoodsFilter(result){
     var _result = {}
     _result = _.mapValues(result,function(good){
-        good.flashbuy = {}
         if(good.flashSalesObject){
             var startTime = moment(new Date(good.flashSalesObject.beginDate)).format("YYYY-MM-DD HH:mm:ss")
             var endTime = moment(new Date(good.flashSalesObject.endDate)).format("YYYY-MM-DD HH:mm:ss")
@@ -255,16 +254,20 @@ function updatedGoodsFilter(result){
             if (moment().isBetween(startTime,endTime)) {
                 isFlashbuyActive = true
             }
-            good["flashbuy"]["isActive"] = isFlashbuyActive
-            good["flashbuy"]["flashPrice"] = good.flashSalesObject.wapPrice            
+            good["startTime"] = startTime
+            good["endTime"] = endTime
+            good["isFlashbuyActive"] = isFlashbuyActive
+            good["flashPrice"] = good.flashSalesObject.wapPrice            
         }
         if(good.singleObject){
             good["originPrice"] = good.singleObject.originPrice
             good["salesPrice"] = good.singleObject.salesPrice
+            // good["salesPrice"] = 555
             good["discount"] = good.singleObject.discount
             good["stock"] = good.singleObject.stock.stock
             good["useMobilePrice"] = good.singleObject.useMobilePrice
             good["mobilePrice"] = good.singleObject.mobilePrice
+            good["isOff"] = (good.singleObject.version == 2)
         }
         return good
     })
@@ -355,9 +358,30 @@ var activityGood = function(req, res, next) {
     }).then(function(ret) {
         if (ret.returnCode === 0) {
             var goods = activityGoodFilter(ret.object.result)
-            res.json({
-                result: goods,
-                goodFetched: true
+            var ids = []
+            _.each(goods,function(good){
+                ids.push(good.singleCode)
+            })
+            util.fetchAPI("updateGoods",{
+                codes:ids.join(",")
+            }).then(function(subRet){
+                if(subRet.returnCode === 0){
+                    var result = updatedGoodsFilter(subRet.object)
+                    var _goods = _.map(goods,function(good){
+                        let updatedGood = result[good.singleCode]
+                        good = Object.assign({},good,updatedGood)
+                        return good
+                    })
+                    res.json({
+                        result: _goods,
+                        goodFetched: true
+                    })
+                }else{
+                    res.json({
+                        goodFetched:false,
+                        errMsg:res.msg
+                    })
+                }
             })
         } else {
             res.json({

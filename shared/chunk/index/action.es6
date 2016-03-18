@@ -60,10 +60,10 @@ function responseUpdateGoods(param,res,floor,channelId){
     }
 }
 
-function updateGoods(param,floor,channelId){
+export function updateGoods(param,floor,channelId){
     return (dispatch)=>{
         dispatch(requestUpdateGoods(param))
-        apiRequest("/updategoods",param).then((ret)=>{
+        apiRequest("/updategoods",param).then((res)=>{
             dispatch(responseUpdateGoods(param,res,floor,channelId))
         })
     }

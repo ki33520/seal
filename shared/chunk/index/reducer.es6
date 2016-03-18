@@ -12,6 +12,7 @@ import {
 } from "./constant.es6";
 import {CHANGE_FIELD} from "../common/constant.es6";
 import {combineReducers} from "redux";
+import _ from "lodash";
 
 function search(state={},action){
     let history = null;
@@ -91,7 +92,7 @@ function index(state={},action){
         case RESPONSE_SINGLERECOMMEND:
             if(action.res.goodFetched){
                 channels = channels.map((channel)=>{
-                    if(channel.id === action.channelId){
+                    if(channel.id === action.channelId && channel["floors"].singleRecommend){
                         channel["floors"].singleRecommend.goods = action.res.result
                     }
                     return channel
@@ -110,7 +111,7 @@ function index(state={},action){
         case RESPONSE_NEWRECOMMEND:
             if(action.res.goodFetched){
                 channels = channels.map((channel)=>{
-                    if(channel.id === action.channelId){
+                    if(channel.id === action.channelId && channel["floors"].newRecommend){
                         channel["floors"].newRecommend.goods = action.res.result
                     }
                     return channel
@@ -157,7 +158,16 @@ function index(state={},action){
                 channels = channels.map((channel)=>{
                     if(channel.id = action.channelId){
                         if(action.floor === "flashbuys"){
-                            // channel["floors"][action.floor] = 
+                            if(channel["floors"]["flashbuys"]){
+                            channel["floors"]["flashbuys"] = channel["floors"]["flashbuys"].map((flashbuy)=>{
+                                flashbuy["goods"] = floorGoods(flashbuy["goods"],
+                                action.res.result)
+                                return flashbuy
+                            })
+                            }
+                        }else{
+                            channel["floors"][action.floor]["goods"] = floorGoods(channel["floors"][action.floor]["goods"],
+                                action.res.result)
                         }
                     }
                 })
@@ -167,11 +177,13 @@ function index(state={},action){
     }
 }
 
-function floorGoods(goods,updateGoods){
+function floorGoods(goods,updatedGoods){
     let _goods = goods.map((good)=>{
-        
+        let updatedGood = updatedGoods[good.singleCode]
+        good = Object.assign({},good,updatedGood)
+        return good
     })
-
+    return _goods
 }
 
 const rootReducer = combineReducers({

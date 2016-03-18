@@ -15,7 +15,7 @@ function orderFilter(order) {
         "qtys", "promoName","promoType"
     ]);
     _order["warehouse"] = order.warehouseName
-    _order["totalFee"] = order.totalFee
+    _order["totalFee"] = order.totalFee < 0.07?0.07:order.totalFee
     _order["productFee"] = order.salesTotalFee
     _order["tariffFee"] = order.tariffFee
     _order["abroadFee"] = order.abroadFee ? order.abroadFee : 0
@@ -180,6 +180,7 @@ var submitOrder = function(req, res, next) {
     var receiverId = req.body.receiverId;
     var couponFee = req.body.couponFee;
     var totalFee = req.body.totalFee;
+    var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
     // console.log({
     //     memberId: user.memberId,
     //     itemCodes: receiverId,
@@ -199,7 +200,8 @@ var submitOrder = function(req, res, next) {
         couponNo: couponNo,
         memberDlvAddressId: receiverId,
         couponFee: couponFee,
-        paymentFee: totalFee
+        paymentFee: totalFee,
+        guiderCode:guiderCode
     }).then(function(resp) {
         if (resp.returnCode === 0) {
             var orderNo = resp.object;
