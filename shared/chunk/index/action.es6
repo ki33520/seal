@@ -8,6 +8,7 @@ import {
     REQUEST_SINGLERECOMMEND,RESPONSE_SINGLERECOMMEND,
     REQUEST_NEWRECOMMEND,RESPONSE_NEWRECOMMEND,
     REQUEST_CHANNEL,RESPONSE_CHANNEL,
+    REQUEST_UPDATEGOODS,RESPONSE_UPDATEGOODS
 } from "./constant.es6";
 
 function requestChannel(param){
@@ -39,6 +40,31 @@ export function fetchChannel(param){
                 }
             }
             dispatch(responseChannel(param,res));
+        })
+    }
+}
+
+function requestUpdateGoods(param){
+    return {
+        type:REQUEST_UPDATEGOODS,
+        param
+    }
+}
+
+function responseUpdateGoods(param,res,floor,channelId){
+    return {
+        type:RESPONSE_UPDATEGOODS,
+        res,
+        param,
+        floor,channelId
+    }
+}
+
+function updateGoods(param,floor,channelId){
+    return (dispatch)=>{
+        dispatch(requestUpdateGoods(param))
+        apiRequest("/updategoods",param).then((ret)=>{
+            dispatch(responseUpdateGoods(param,res,floor,channelId))
         })
     }
 }

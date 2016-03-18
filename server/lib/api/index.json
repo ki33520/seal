@@ -14,5 +14,13 @@
             "test": "http://search.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
+    },
+    "updateGoods":{
+        "uri":  "/marketing/v1/findStockAndPrice",
+        "baseURL": {
+            "develop":"http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
     }
 }
