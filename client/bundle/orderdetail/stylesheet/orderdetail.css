@@ -285,6 +285,7 @@
     width: 100%;
     background-color: #fff;
     z-index: 1002;
+    height: 1.3rem;
 }
 .confirmBtns a.confirm_btn {
     display: inline-block;
@@ -292,6 +293,7 @@
     color: #fff;
     border-radius:20px;
     line-height: .94rem;
+    height: .94rem;
     border: 1px solid #ed1a45;
     width: 40%;
     text-align: center;
