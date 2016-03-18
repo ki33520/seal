@@ -125,12 +125,11 @@ function cartByUser(state={},action){
             var carts = state.carts.slice();
             var cart = {...carts[cartIndex]};
             cart.checked = checked;
-            cart.group.forEach((group)=>{
-                group.list.forEach((goods)=>{
-                    goods.checked = checked;
-                });
+            _.each(cart.group,(group,i)=>{
+                _.each(group.list,(goods,j)=>{
+                    cart.group[i].list[j] = {...goods,checked}
+                })
             });
-            cart.collected = checked ? cart.children : 0;
             carts[cartIndex] = cart;
             return Object.assign({},state,{
                 isAllToggling:false,
