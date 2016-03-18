@@ -12,7 +12,7 @@ import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
 import ActivityIndicator from "../common/activityindicator.jsx";
 import {urlParam,base64Encode,formatPrice,disableHistoryForwardCacheThen} from "../../lib/util.es6";
-
+ 
 class Cart extends Component {
     constructor(props){
         super(props);
@@ -20,6 +20,7 @@ class Cart extends Component {
             dialogActive:false,
             dialogOnConfirm:null
         }
+        this.stack=[];
     }
     filterParamItems(cart) {
         if(!cart) return {};
@@ -66,6 +67,7 @@ class Cart extends Component {
     }
     componentDidMount(){
         disableHistoryForwardCacheThen();
+        this.stack=[];
     }
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
@@ -91,17 +93,28 @@ class Cart extends Component {
         const {isUpdating} = this.props.cartByUser;
         const singleCode = goods.singleCode;
         const maxBuy = goods.maxBuy;
+        let stack = this.stack;
         if(isUpdating || buyed > maxBuy){
             return false;
         }
-        this.props.updateCart({
-            singleCode,
-            buyed,
-            maxBuy,
-            cartIndex,
-            groupIndex,
-            goodsIndex
-        });
+        var updateCart = (buyed)=>{
+            this.props.updateCart({
+                singleCode,
+                buyed,
+                maxBuy,
+                cartIndex,
+                groupIndex,
+                goodsIndex
+            });
+        }
+        const timerId=setTimeout(()=>{
+            stack.forEach((item)=>{
+                clearTimeout(item.timerId);
+            });
+            let arg = stack.pop();
+            updateCart(arg.buyed)
+        },500);
+        stack.push({timerId,buyed})
     }
     toggleAllChecked(cartIndex,checked){
         const {isAllToggling} = this.props.cartByUser;
