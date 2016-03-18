@@ -145,7 +145,9 @@ class Comment extends Component{
             <div className="order-detail-content comment-content">
                 <Header>评论宝贝</Header>
                 <div className="commentBaby">
+                    <GoTop relative={true}>
                     {this.renderItems(itemList)}
+                    </GoTop>
                 </div>
                 
                 {this.renderConfirmBtns(hasNotComment)}

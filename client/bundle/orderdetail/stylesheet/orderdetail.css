@@ -306,6 +306,7 @@
 
 /* 物流信息 */
 .logistics{
+    padding-bottom: 1.17rem;
 }
 .logistics .info{
     margin-top: .266667rem;
@@ -586,6 +587,9 @@
 
 /* 评价宝贝 */
 .commentBaby{
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 1.17rem;
 }
 .commentBaby .context-none{
     font-size: .5rem;
