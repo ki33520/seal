@@ -20,7 +20,7 @@ class Cart extends Component {
             dialogActive:false,
             dialogOnConfirm:null
         }
-        this.stack=[];
+        this.buyedStack=[];
     }
     filterParamItems(cart) {
         if(!cart) return {};
@@ -67,7 +67,6 @@ class Cart extends Component {
     }
     componentDidMount(){
         disableHistoryForwardCacheThen();
-        this.stack=[];
     }
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
@@ -93,7 +92,7 @@ class Cart extends Component {
         const {isUpdating} = this.props.cartByUser;
         const singleCode = goods.singleCode;
         const maxBuy = goods.maxBuy;
-        let stack = this.stack;
+        let stack = this.buyedStack;
         if(isUpdating || buyed > maxBuy){
             return false;
         }
@@ -108,11 +107,10 @@ class Cart extends Component {
             });
         }
         const timerId=setTimeout(()=>{
-            stack.forEach((item)=>{
-                clearTimeout(item.timerId);
-            });
-            let arg = stack.pop();
-            updateCart(arg.buyed)
+            let arg = stack.shift();
+            if(stack.length===0){
+                updateCart(arg.buyed);
+            }
         },500);
         stack.push({timerId,buyed})
     }
@@ -213,7 +211,6 @@ class Cart extends Component {
                             <p className="name">
                               <b>{goods.title}</b>
                               <span>{'￥'+salePrice}</span>
-                              <em>{'x'+buyed}</em>
                             </p>
                             <div className="act_wrap"> 
                                 <NumberPicker type="number" value={buyed} 
