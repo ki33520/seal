@@ -37,7 +37,8 @@ class GoTop extends Component{
         dom.unbindEvent(this.scrollNode,'scroll',_.debounce(this.handleScroll.bind(this),10))
     }
     backToTop(){
-        smoothScroll(this.scrollNode);
+        dom.scrollTop(this.scrollNode,0)
+        // smoothScroll(this.scrollNode);
     }
     renderButton(){
         const classes = classNames({

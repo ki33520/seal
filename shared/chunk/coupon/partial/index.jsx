@@ -99,7 +99,11 @@ class Coupon extends React.Component{
         );
     }
     render(){
-        const {pagination,isFetching,isLoading} = this.props.index;
+        const {pagination,couponType,isFetching,isLoading} = this.props.index;
+        const index = this.state.activeIndex;
+        const type = couponType[index];
+        const totalPage = Number(pagination[type].totalPage);
+        const pageIndex = Number(pagination[type].pageIndex);
         return (
             <div className="inner-scroll">
                 <Header>
@@ -109,13 +113,15 @@ class Coupon extends React.Component{
                     <SlideTabsItem navigator={()=>'未使用优惠券'}>
                        <GoTop relative={true}>
                         {this.renderYouaCoupons(pagination.youa.coupons)}
-                        <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
+                        <Refresher active={isFetching}  handleRefresh={this.beginRefresh.bind(this)}/>
+                        {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                         </GoTop>
                     </SlideTabsItem>
                     <SlideTabsItem navigator={()=>'已失效优惠券'}>
                         <GoTop relative={true}>
                         {this.renderInvalidCoupons(pagination.invalid.coupons)}
                         <Refresher active={isFetching} handleRefresh={this.beginRefresh.bind(this)}/>
+                         {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                          </GoTop>
                     </SlideTabsItem>
                 </SlideTabs>

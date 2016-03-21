@@ -57,7 +57,7 @@ function orderFilter(order) {
         _order["checkedCoupon"] = _order["coupons"][0]
         _order["couponFee"] = _order["checkedCoupon"]["couponFee"]
         _order["totalFee"] = Math.round((_order["totalFee"] - _order["couponFee"]) * 100) / 100
-        _order["totalFee"] = _order["totalFee"] < 0.3 ? 0.3:_order["totalFee"]
+        _order["totalFee"] = _order["totalFee"] < 0.07 ? 0.07:_order["totalFee"]
     }
         // order.coupons = formatCoupons(originResp.couponList)
     return _order;
@@ -182,6 +182,7 @@ var submitOrder = function(req, res, next) {
     var couponFee = req.body.couponFee;
     var totalFee = req.body.totalFee;
     var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
+    console.log(req.cookies,guiderCode)
     // console.log({
     //     memberId: user.memberId,
     //     itemCodes: receiverId,
