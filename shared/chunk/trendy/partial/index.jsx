@@ -12,6 +12,9 @@ import Footer from "../../common/footer.jsx";
 import Loading from "../../common/loading.jsx";
 
 class Trendy extends React.Component{
+    constructor(props){
+        super(props)
+    }
     beginRefresh(index){
         const {categories} = this.props.trendy;
         let curentPage = categories[index].pageIndex
@@ -44,7 +47,11 @@ class Trendy extends React.Component{
             return (
                 <SlideTabsItem navigator={()=><i>{category.name}</i>} key={i}>
                     <div><GoodList category={category} />
-                    <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={category.isFetching}/>
+                    <Refresher handleRefresh={this.beginRefresh.bind(this,i)} 
+                    active={category.isFetching}/>
+                    {category.pageIndex == category.totalPage?(
+                        <div className="no-more">已显示全部内容</div>
+                    ):null}
                     <Loading active={category.isFetching}/>
                     </div>
                 </SlideTabsItem>
