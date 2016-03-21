@@ -13,7 +13,6 @@ class GoTop extends Component{
         this.state = {
             active:false
         };
-        this.scrollNode = window
     }
     toggleVisble(scrollTop){
         if(scrollTop > 50){
@@ -28,6 +27,7 @@ class GoTop extends Component{
         this.props.onScroll(this.scrollNode)
     }
     componentDidMount(){
+        this.scrollNode = window
         if(this.props.relative){
             this.scrollNode = ReactDOM.findDOMNode(this.refs["scrollNode"])
         }

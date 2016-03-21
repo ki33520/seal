@@ -18,15 +18,7 @@ class Floor extends Component{
     }
     componentDidMount(){
         if(this.props.active){
-            const {fetchNewRecommend,fetchSingleRecommend} = this.props;
-            const {newRecommend,singleRecommend} = this.props.channel.floors
-            if(newRecommend && newRecommend.goods === null){
-                fetchNewRecommend({activityId:newRecommend.id},this.props.channel.id)
-            }
-            if(singleRecommend && singleRecommend.goods === null){
-                fetchSingleRecommend({activityId:singleRecommend.id},this.props.channel.id)
-            }
-            this.updateFlashbuyGoods()
+            this.handleActive()
         }
     }
     updateFlashbuyGoods(){
@@ -45,16 +37,25 @@ class Floor extends Component{
     componentWillReceiveProps(nextProps){
         if(nextProps.active && !this.props.active){
             if(_.isEmpty(this.props.channel.floors)){
+                const {fetchChannel,channel} = this.props
+                fetchChannel({
+                    id:channel.id
+                })
                 this.handleActive()
             }
         }
     }
     handleActive(){
         // const {fetchSingleRecommend,fetchNewRecommend} = this.props;
-        const {fetchChannel,channel} = this.props;
-        fetchChannel({
-            id:channel.id
-        })
+        const {fetchNewRecommend,fetchSingleRecommend} = this.props;
+        const {newRecommend,singleRecommend} = this.props.channel.floors
+        if(newRecommend && newRecommend.goods === null){
+            fetchNewRecommend({activityId:newRecommend.id},this.props.channel.id)
+        }
+        if(singleRecommend && singleRecommend.goods === null){
+            fetchSingleRecommend({activityId:singleRecommend.id},this.props.channel.id)
+        }
+        this.updateFlashbuyGoods()
     }
     renderSingleRecommend(){
         let {singleRecommend} = this.props.channel.floors;

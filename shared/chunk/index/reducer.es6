@@ -155,23 +155,31 @@ function index(state={},action){
             })
         case RESPONSE_UPDATEGOODS:
             if(action.res.goodsUpdated){
-                channels = channels.map((channel)=>{
-                    if(channel.id = action.channelId){
+                let _channels = []
+                channels.forEach((channel)=>{
+                    let _channel = Object.assign({},channel)
+                    if(_channel.id = action.channelId){
                         if(action.floor === "flashbuys"){
-                            if(channel["floors"]["flashbuys"]){
-                            channel["floors"]["flashbuys"] = channel["floors"]["flashbuys"].map((flashbuy)=>{
+                            if(_channel["floors"]["flashbuys"]){
+                            _channel["floors"]["flashbuys"] = _channel["floors"]["flashbuys"].map((flashbuy)=>{
                                 flashbuy["goods"] = floorGoods(flashbuy["goods"],
                                 action.res.result)
                                 return flashbuy
                             })
                             }
                         }else{
-                            channel["floors"][action.floor]["goods"] = floorGoods(channel["floors"][action.floor]["goods"],
+                            _channel["floors"][action.floor]["goods"] = floorGoods(_channel["floors"][action.floor]["goods"],
                                 action.res.result)
                         }
                     }
+                    _channels.push(_channel)
                 })
             }
+            return Object.assign({},state,{
+                goodsUpdated:action.res.goodsUpdated,
+                goodsUpdating:false,
+                channels,
+            })
         default:
             return state
     }
