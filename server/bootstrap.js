@@ -16,7 +16,9 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(methodOverride());
-app.use(cookieParser());
+app.use(cookieParser("seal",{
+    maxAge:-1
+}));
 
 // var RedisStore = require('connect-redis')(session)
 var MemcachedStore = require("connect-memcached")(session)
