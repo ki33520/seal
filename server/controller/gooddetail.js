@@ -53,6 +53,14 @@ var goodDetail = function(req, res, next) {
             }
             good.promotions = promotions
 
+            var destPrice = good.salePrice
+            if(good.flashbuy["active"]){
+                destPrice = good.flashbuy["price"]
+            }
+            if(good["useMobilePrice"] && !good.flashbuy["active"]){
+                destPrice = good["mobilePrice"]
+            }
+            good["destPrice"] = destPrice
             if (req.xhr) {
                 res.json({
                     isFetched: true,
