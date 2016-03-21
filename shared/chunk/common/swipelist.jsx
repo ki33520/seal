@@ -17,7 +17,7 @@ class Swipelist extends Component{
             return (
                 <div className="swipe-list">
                     <a href="javascript:void(null)" onClick={onGoBack} className="iconfont icon-back"></a>
-                    <SlideTabs ref="swipelist" axis="x" activeIndex={activeIndex} navbarSlidable={false} >
+                    <SlideTabs ref="swipelist" axis="x" activeIndex={activeIndex} contentSlidable={imgList.length > 1} navbarSlidable={false} >
                         {
                             imgList.map((v,k)=>{
                                 var t = k+1+" / "+imgList.length;
@@ -29,7 +29,7 @@ class Swipelist extends Component{
                                             </span>
                                         )
                                     }}>
-                                        <img src={v} />
+                                        <img key={Math.random()} src={v} />
                                     </SlideTabsItem>
                                 )
                             })
