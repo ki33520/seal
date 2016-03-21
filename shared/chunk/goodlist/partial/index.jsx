@@ -69,22 +69,23 @@ class GoodListApp extends React.Component{
     }
     toggleSort(order){
         const {params} = this.props.index;
-        let _params = Object.assign({},params,order,{pageIndex:1});
+        const _params = Object.assign({},params,order,{pageIndex:1});
         this.props.fetchGoods(_params);
     }
     beginRefresh(){
         const {params,totalPage,isFetching} = this.props.index;
-        let curentPage = params.pageIndex;
+        const curentPage = params.pageIndex;
         if(isFetching || totalPage <= curentPage){
             return false;
         }
-        let _params = Object.assign({},params,{
+        const _params = Object.assign({},params,{
             pageIndex : curentPage + 1
         });
         this.props.requestGoods(_params);
     }
     render(){
-        const {keyword,filters,list,isFetching} = this.props.index;
+        const {keyword,totalPage,filters,list,params,isFetching} = this.props.index;
+        const pageIndex = params.pageIndex;
         const goodList = [];
         if(list.length===0){
             return (
@@ -151,6 +152,7 @@ class GoodListApp extends React.Component{
                         handleGoBack ={this.toggleFilterPopup.bind(this)} />
                     <MaskLayer visible={this.state.maskActive} />
                      <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
+                     {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                  </GoTop>
             </div>
         )
