@@ -36,6 +36,7 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isUpdating:false,
                 isUpdated:isUpdated,
+                isFetching:false,
                 singleCode:goods.singleCode,
                 cartIndex,
                 groupIndex,
@@ -176,7 +177,8 @@ function cartByUser(state={},action){
                 isChecking:true,
                 isFetching:true,
                 isChecked:false,
-                isPassed:false
+                isPassed:false,
+                isWarning:false
             });
         case FINISH_CHECK_CART:
             var {cartIndex} = action.param;
@@ -185,7 +187,8 @@ function cartByUser(state={},action){
                 isChecking:false,
                 isFetching:false,
                 isChecked:true,
-                isPassed:returnCode===0||returnCode===-402111,
+                isPassed:returnCode===0,
+                isWarning:returnCode===-402111,
                 cartIndex
             });
         case SHOW_ALERT:

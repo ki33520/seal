@@ -18,7 +18,9 @@ class Cart extends Component {
         super(props);
         this.state = {
             dialogActive:false,
-            dialogOnConfirm:null
+            dialogMesg:null,
+            dialogOnConfirm:null,
+            dialogOnCancel:null
         }
         this.buyedStack=[];
     }
@@ -39,30 +41,61 @@ class Cart extends Component {
             buyeds:buyeds.join(',')
         }
     }
+    componentWillReceiveProps(nextProps){
+        const {isChecked,isWarning, carts,cartIndex,groupIndex,goodsIndex,singleCode} = nextProps.cartByUser;
+         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);       
+        if(isChecked&&isWarning){
+             this.setState({
+                dialogActive:true,
+                dialogMesg:'商品超出免税额度,是否调整订单?',
+                dialogOnCancel:()=>{
+                    this.toggleDialog();
+                    const queryParam = base64Encode(urlParam({
+                        itemIds:singleCodes,
+                        buyeds
+                    }));
+                    window.location.assign(`/confirmorder/${queryParam}`);
+                },
+                dialogOnConfirm:()=>{
+                     this.toggleDialog(),
+                     this.props.fetchCart({
+                        singleCodes,
+                        buyeds,
+                        cartIndex,
+                        groupIndex,
+                        goodsIndex,
+                        singleCode
+                    });
+                }
+            });
+        }
+        return true;
+    }
     componentDidUpdate(){
         const {
-            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,carts,cartIndex,groupIndex,goodsIndex,singleCode
+            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,isWarning,
+            carts,cartIndex,groupIndex,goodsIndex,singleCode
         } = this.props.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);
-        if(isChecked){
+        if(isUpdated||isToggled||isAllToggled||isDeleted||isChecked){
             if(isPassed){
                 const queryParam = base64Encode(urlParam({
                     itemIds:singleCodes,
                     buyeds
                 }));
                 window.location.assign(`/confirmorder/${queryParam}`);
-                return false;
+            }else if(isWarning){
+                return true;
+            }else{
+                this.props.fetchCart({
+                    singleCodes,
+                    buyeds,
+                    cartIndex,
+                    groupIndex,
+                    goodsIndex,
+                    singleCode
+                });
             }
-        }
-        if(isUpdated||isToggled||isAllToggled||isDeleted){
-            this.props.fetchCart({
-                singleCodes,
-                buyeds,
-                cartIndex,
-                groupIndex,
-                goodsIndex,
-                singleCode
-            });
         }
     }
     componentDidMount(){
@@ -146,8 +179,12 @@ class Cart extends Component {
         }
         this.setState({
             dialogActive:true,
+            dialogMesg:'确定要删除吗?',
+            dialogOnCancel:()=>{
+                 this.toggleDialog()
+            },
             dialogOnConfirm:()=>{
-                this.toggleDialog();
+                 this.toggleDialog(),
                 this.props.deleteCart({
                     cartId:goods.cartId,
                     singleCode:goods.singleCode,
@@ -322,8 +359,8 @@ class Cart extends Component {
                 </Header>
                 {this.renderCarts()}
                 <Dialog active={this.state.dialogActive} 
-                    onCancel={this.toggleDialog.bind(this)}
-                    onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
+                    onCancel={this.state.dialogOnCancel}
+                    onConfrim={this.state.dialogOnConfirm}>{this.state.dialogMesg}</Dialog>
                 <Alert active={alertActive} >{alertContent}</Alert>
                 <Footer activeIndex="3"/>
                 <ActivityIndicator active={isFetching}/>
