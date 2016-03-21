@@ -23,7 +23,7 @@ var index = function(req, res, next) {
             channels = _.sortBy(channels, function(channel) {
                 return channel.sort
             })
-            console.log('channels',channels)
+            // console.log('channels',channels)
             return channels
         } else {
             return next(new Error(ret.message))

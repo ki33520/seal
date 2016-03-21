@@ -2,10 +2,14 @@
 
 import React,{Component} from "react";
 import Dropdown from "../../../component/dropdown.jsx";
+import _ from "lodash";
 
 class Promotions extends Component{
     render(){
         var promotions = [],promotionBriefs = [];
+        if(_.isEmpty(this.props.promotions)){
+            return null
+        }
         if(this.props.promotions){
             var i = 0;
             for(let k in this.props.promotions){
@@ -19,8 +23,6 @@ class Promotions extends Component{
                 ))
                 promotionBriefs.push((<span key={key}>{k}</span>));
             }
-        }else{
-            return null
         }
         return (
             <div className="promotion clearfix">

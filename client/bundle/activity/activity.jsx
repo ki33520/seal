@@ -7,6 +7,7 @@ function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
     ReactDOM.render(<ActivityApp initialState={initialState} />,document.getElementById('activity'));
 }
+Object.assign = Object.assign || require('object-assign')
 
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);

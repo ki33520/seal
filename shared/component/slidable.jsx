@@ -233,6 +233,13 @@ class Slidable extends Component{
         let translateNode = ReactDOM.findDOMNode(this);
         let maxBeyondY = translateNode.offsetHeight - translateNode.parentNode.offsetHeight;
         let maxBeyondX = translateNode.offsetWidth - translateNode.parentNode.offsetWidth;
+        if(maxBeyondY < 0 && axis === "y"){
+            // console.log('cant translateY')
+            this.translateY = 0
+        }
+        if(maxBeyondX < 0 && axis === "x"){
+            this.translateX = 0
+        }
         if(maxBeyondY <= (- this.translateY) && maxBeyondY > 0 && axis === "y"){
             this.translateY = - maxBeyondY
         }else if(maxBeyondX <= (- this.translateX) && maxBeyondX > 0 && axis === "x"){

@@ -197,8 +197,14 @@ body{
     white-space:normal
 }
 
-.indexSingle a p{
-    mutiple-text-overflow()
-    white-space:normal
-    -webkit-line-clamp: 3;
-}
+.indexSingle a{
+    border-bottom:1px solid #d7d7d7;
+    &:last-child{
+        border-bottom:0 none;
+    }
+    p{
+        mutiple-text-overflow()
+        white-space:normal
+        -webkit-line-clamp: 3;
+    }
+} 

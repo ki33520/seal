@@ -24,12 +24,12 @@ class Coupon extends Component{
                     onClick={this.handleCheck.bind(this,coupon)}>
                         <div className="left">
                             <div className="price"><em>&yen;</em>{coupon.couponFee}</div>
-                            <div className="term">{coupon.couponRule}</div>
+                            <div className="term">{coupon.couponName}</div>
                         </div>
                         <div className="right">
-                            <div className="kind">{coupon.couponName}</div>
+                            <div className="kind">海外购www.tepin.hk</div>
                             <div className="date">{coupon.startTime}-{coupon.endTime}</div>
-                            <div className="explain">{coupon.couponDesc}</div>
+                            <div className="explain">{coupon.couponRule}</div>
                         </div>
                         {checkedCoupon && checkedCoupon.couponNo === coupon.couponNo?(
                             <div className="selected"></div>

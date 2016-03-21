@@ -8,7 +8,7 @@ function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
         ReactDOM.render(<GoodDetail initialState={initialState} />,document.getElementById('good-detail'));
 }
-
+Object.assign = Object.assign || require('object-assign')
 // disableHistoryForwardCacheThen()
 
 if(typeof window.addEventListener){

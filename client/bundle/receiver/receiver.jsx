@@ -8,6 +8,8 @@ function bootstrap(){
         ReactDOM.render(<Receiver initialState={initialState} />,document.getElementById('receiver'));
 }
 
+Object.assign = Object.assign || require('object-assign')
+
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{
