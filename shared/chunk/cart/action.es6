@@ -167,9 +167,11 @@ export function checkCartInfo(param){
     return (dispatch)=>{
         dispatch(startCheckCart(param));
         apiRequest('/checkCart',param,{method:"POST"}).then((res)=>{
-            if(res.returnCode !==0){
-                let content = errMsgByCode(res.returnCode);
-                dispatch(alert(content,3000))
+             if(res.returnCode !==0){
+                if(res.returnCode !== -402111){
+                    let content = errMsgByCode(res.returnCode);
+                    dispatch(alert(content,3000));
+                }
              }
             dispatch(finishCheckCart(param,res));
         })
