@@ -18,8 +18,8 @@ class Activity extends React.Component{
     }
     beginRefresh(){
         const {dispatch,totalPage,isFetching} = this.props;
-        let {pageIndex} = this.state;
-        let nextPage = pageIndex + 1;
+        const {pageIndex} = this.state;
+        const nextPage = pageIndex + 1;
 
         if(isFetching || totalPage <= pageIndex){
             return false;
@@ -46,9 +46,9 @@ class Activity extends React.Component{
         });
     }
     render(){
-        const {isFetching,list,imageUrl,title} = this.props;
+        const {isFetching,totalPage,list,imageUrl,title} = this.props;
+        const {pageIndex} = this.state;
         let goods = [];
- 
         list.forEach(function(item,i){
             goods.push(<GoodItem goods={item} key={"good-"+i} />)
         });
@@ -67,6 +67,7 @@ class Activity extends React.Component{
                     </div>
                 </div>
                 <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
+                {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
             </div>
         )
     }
