@@ -209,8 +209,10 @@ var orderDetail = function(req, res, next) {
     });
 }
 var orderClose = function(req, res, next) {
+    var user = req.session.user;
     var orderNo = req.body.orderNo;
     util.fetchAPI('closedOrderById', {
+        memberId: user.memberId,
         orderNo: orderNo
     }).then(function(resp) {
         if (resp.returnCode === 0) {
