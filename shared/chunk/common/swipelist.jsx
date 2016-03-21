@@ -8,7 +8,7 @@ class Swipelist extends Component{
     componentDidUpdate(){
         var {imgList,activeIndex} = this.props;
         if(imgList && imgList.length >0){
-            ReactDOM.findDOMNode(this.refs["swipelist"]).children[1].children[activeIndex].click();
+            ReactDOM.findDOMNode(this.refs["swipelist"]).children[0].children[activeIndex].click();
         }
     }
     render(){

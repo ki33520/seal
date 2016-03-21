@@ -78,7 +78,7 @@ class OrderList extends Component{
         });
     }
     componentDidMount(){
-        ReactDOM.findDOMNode(this.refs["slideTabs"]).children[1].children[this.state.displayFlag].click();
+        ReactDOM.findDOMNode(this.refs["slideTabs"]).children[0].children[this.state.displayFlag].click();
     }
     componentDidUpdate(prevProps,prevState){
         if(prevProps.ordersByParam.paygatewayFetched === false && this.props.ordersByParam.paygatewayFetched === true){
