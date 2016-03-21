@@ -92,8 +92,8 @@ export class SlideTabs extends Component{
         }
         return (
             <div className={classes}>
-            {tabsContent}
             {this.renderNavbar()}
+            {tabsContent}
             </div>
         )
     }

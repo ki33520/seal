@@ -6,7 +6,7 @@ var nativeRAF = global.requestAnimationFrame ||
 
 var lastTime = 0;
 
-let requestAnimationFrame = nativeRAF ||
+global.requestAnimationFrame = nativeRAF ||
   function(callback) {
     var currTime = Date.now();
     var timeDelay = Math.max(0, 16 - (currTime - lastTime));

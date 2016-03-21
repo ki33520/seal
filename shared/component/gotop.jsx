@@ -13,23 +13,28 @@ class GoTop extends Component{
         this.state = {
             active:false
         };
+        this.scrollNode = window
     }
-    toggleVisble(){
-        const {relative} = this.props;
-        const scrollTop = relative?dom.scrollTop(this.scrollNode):dom.scrollTop(window);
+    toggleVisble(scrollTop){
         if(scrollTop > 50){
             this.setState({active:true})
         }else{
             this.setState({active:false});
         }
     }
+    handleScroll(){
+        const scrollTop = dom.scrollTop(this.scrollNode)
+        this.toggleVisble(scrollTop)
+        this.props.onScroll(this.scrollNode)
+    }
     componentDidMount(){
-        const {relative} = this.props;
-        this.scrollNode = relative?ReactDOM.findDOMNode(this):window;
-        dom.bindEvent(this.scrollNode,'scroll',_.debounce(this.toggleVisble.bind(this),10))
+        if(this.props.relative){
+            this.scrollNode = ReactDOM.findDOMNode(this.refs["scrollNode"])
+        }
+        dom.bindEvent(this.scrollNode,'scroll',_.debounce(this.handleScroll.bind(this),10))
     }
     componentWillUnmount(){
-        dom.unbindEvent(this.scrollNode,'scroll',_.debounce(this.toggleVisble.bind(this),10))
+        dom.unbindEvent(this.scrollNode,'scroll',_.debounce(this.handleScroll.bind(this),10))
     }
     backToTop(){
         smoothScroll(this.scrollNode);
@@ -52,7 +57,9 @@ class GoTop extends Component{
             return (
                 <div className="back-to-top-container">
                 {this.renderButton()}
+                <div className="back-to-top-inner" ref="scrollNode">
                 {this.props.children}
+                </div>
                 </div>
             )
         }
@@ -62,6 +69,7 @@ class GoTop extends Component{
 
 GoTop.defaultProps = {
     relative:false,
+    onScroll:()=>{}
 }
 
 export default GoTop;

@@ -55,22 +55,21 @@ class GoodDetail extends Component{
             singleCode:code
         })
         fetchComments({
-            productCode,
+            productCode:productCode
         })
-
-        let scrollEl = ReactDOM.findDOMNode(this)
-        dom.bindEvent(scrollEl,"scroll",(e)=>{
-            var scrollTop = dom.scrollTop(scrollEl);
-            if (scrollEl.clientHeight + scrollTop + 10 >= scrollEl.scrollHeight) {
-                if(this.state.upperVisble){
-                    setTimeout(()=>{
-                        this.setState({
-                            downVisble:true
-                        })
-                    },1200)
-                }
+    }
+    handleScroll(scrollNode){
+        const scrollTop = dom.scrollTop(scrollNode)
+        // console.log('scrollTop',scrollTop,scrollNode)
+        if (scrollNode.clientHeight + scrollTop + 10 >= scrollNode.scrollHeight) {
+            if(this.state.upperVisble){
+                setTimeout(()=>{
+                    this.setState({
+                        downVisble:true
+                    })
+                },1200)
             }
-        })
+        }
     }
     componentWillReceiveProps(nextProps){
         if(nextProps.goodById.attrToggled){
@@ -230,7 +229,6 @@ class GoodDetail extends Component{
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
         const {buyed} = this.state;
-        console.log(formatPrice(0.1))
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
             const key = "slide-" + i;
@@ -252,7 +250,7 @@ class GoodDetail extends Component{
             "icon-xin":!isCollected
         })
         return (
-            <GoTop relative={true}>
+            <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
             <div className="good-detail-content">
             <Header>商品详情<a className="globa" href="/"><i></i></a>
             <a className="goods_share"></a>

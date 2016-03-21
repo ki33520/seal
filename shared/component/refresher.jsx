@@ -38,6 +38,7 @@ class Refresher extends React.Component{
 }
 
 Refresher.defaultProps = {
+    active:false,
     threshold:10,
     handleRefresh:()=>{}
 }
