@@ -24,7 +24,7 @@ gulp.task("develop-webpack", function() {
         var sources = gulp.src(_.union(cssFiles, jsFiles), {
             read: false
         });
-        console.log('jsFiles',jsFiles)
+        // console.log('jsFiles',jsFiles)
         gulp.src(injectTarget).pipe(inject(sources, {
             relative: true,
             empty:true,
