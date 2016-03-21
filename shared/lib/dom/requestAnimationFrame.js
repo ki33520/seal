@@ -18,9 +18,9 @@ global.requestAnimationFrame = nativeRAF ||
   };
 
 // Works around a rare bug in Safari 6 where the first request is never invoked.
-if(typeof window !== "undefined"){
-  window.requestAnimationFrame = requestAnimationFrame
-  window.requestAnimationFrame(function() {});
-}
+// if(typeof window !== "undefined"){
+//   window.requestAnimationFrame = requestAnimationFrame
+//   window.requestAnimationFrame(function() {});
+// }
 
 module.exports = requestAnimationFrame;
