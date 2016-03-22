@@ -6,6 +6,7 @@ import {RESPONSE_GOOD,REQUEST_GOOD,TOGGLE_ATTR,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_COMMENTS,RESPONSE_COMMENTS,SELECT_COMMENTIMAGE,
+    REQUEST_SHOWUPS,RESPONSE_SHOWUPS,
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
     REQUEST_FLASHBUY,RESPONSE_FLASHBUY,
 START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
@@ -68,12 +69,31 @@ function goodById(state={},action){
             })
         case RESPONSE_COMMENTS:
             if(action.res.commentsFetched){
-                good.comments = action.res.result
+                good.comments["list"] = _.union(good.comments["list"],action.res.pagination.list)
+                good.comments["pageIndex"] = action.res.pagination.pageIndex
+                good.comments["totalPage"] = action.res.pagination.totalPage
+                good.comments["totalCount"] = action.res.pagination.totalCount
             }
             return Object.assign({},state,{
                 good,
                 commentsFetched:action.res.commentsFetched,
                 commentsFetching:false
+            })
+        case REQUEST_SHOWUPS:
+            return Object.assign({},state,{
+                showupFetching:true,
+                showupFetched:false,
+            })
+        case RESPONSE_SHOWUPS:
+            if(action.res.commentsFetched){
+                good.showups["list"] = _.union(good.showups["list"],action.res.pagination.list)
+                good.showups["pageIndex"] = action.res.pagination.pageIndex
+                good.showups["totalPage"] = action.res.pagination.totalPage
+            }
+            return Object.assign({},state,{
+                good,
+                showupFetched:action.res.commentsFetched,
+                showupFetching:false
             })
         case SELECT_COMMENTIMAGE:
             return Object.assign({},state,{

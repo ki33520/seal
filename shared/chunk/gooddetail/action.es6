@@ -8,6 +8,7 @@ import {
     START_ADD_CART,FINISH_ADD_CART,
     START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED,
     REQUEST_COMMENTS,RESPONSE_COMMENTS,SELECT_COMMENTIMAGE,
+    REQUEST_SHOWUPS,RESPONSE_SHOWUPS,
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
     REQUEST_FLASHBUY,RESPONSE_FLASHBUY
 } from "./constant.es6";
@@ -182,8 +183,36 @@ function responseComments(param,res){
 export function fetchComments(param){
     return (dispatch)=>{
         dispatch(requestComments(param))
-        return apiRequest("/goodcomment",param).then((res)=>{
+        return apiRequest("/goodcomment",Object.assign({},param,{
+            hasImage:false
+        })).then((res)=>{
             dispatch(responseComments(param,res))
+        })
+    }
+}
+
+function requestShowups(param){
+    return {
+        type:REQUEST_SHOWUPS,
+        param
+    }
+}
+
+function responseShowups(param,res){
+    return {
+        type:RESPONSE_SHOWUPS,
+        param,
+        res
+    }
+}
+
+export function fetchShowups(param){
+    return (dispatch)=>{
+        dispatch(requestShowups(param))
+        return apiRequest("/goodcomment",Object.assign({},param,{
+            hasImage:true
+        })).then((res)=>{
+            dispatch(responseShowups(param,res))
         })
     }
 }

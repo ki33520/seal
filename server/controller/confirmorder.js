@@ -57,10 +57,21 @@ function orderFilter(order) {
         _order["checkedCoupon"] = _order["coupons"][0]
         _order["couponFee"] = _order["checkedCoupon"]["couponFee"]
         _order["totalFee"] = Math.round((_order["totalFee"] - _order["couponFee"]) * 100) / 100
-        _order["totalFee"] = _order["totalFee"] < 0.07 ? 0.07:_order["totalFee"]
+        // console.log(_order["totalFee"],"totalFee")
     }
+    _order["totalFee"] = calculateTotalFee(_order)
         // order.coupons = formatCoupons(originResp.couponList)
     return _order;
+}
+
+function calculateTotalFee(order){
+    var productFee = (order.productFee - order.couponFee) < 0? 0 : (order.productFee - order.couponFee)
+    // console.log('productFee',productFee)
+    var totalFee = productFee + order.shipFee + order.abroadFee + order.tariffFee
+        - order.promoFee
+    totalFee = Math.round(totalFee * 100) / 100
+    totalFee = totalFee < 0.07 ? 0.07:totalFee
+    return totalFee
 }
 
 function formatCoupons(coupons) {
@@ -182,7 +193,7 @@ var submitOrder = function(req, res, next) {
     var couponFee = req.body.couponFee;
     var totalFee = req.body.totalFee;
     var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
-    console.log(req.cookies,guiderCode)
+    // console.log(req.cookies,guiderCode)
     // console.log({
     //     memberId: user.memberId,
     //     itemCodes: receiverId,

@@ -48,7 +48,7 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
-        const {fetchCartCount,fetchIsCollected,fetchComments} = this.props;
+        const {fetchCartCount,fetchIsCollected,fetchComments,fetchShowups} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             // let selectedAttr = _.findWhere(attrs,{attrName:k})
@@ -60,9 +60,6 @@ class GoodDetail extends Component{
         fetchCartCount()
         fetchIsCollected({
             singleCode:code
-        })
-        fetchComments({
-            productCode:productCode
         })
     }
     handleScroll(scrollNode){
