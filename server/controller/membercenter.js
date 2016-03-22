@@ -38,7 +38,8 @@ var memberCenter = function(req, res, next) {
     var registerUrl = res.locals.registerUrl;
     var logoutUrl = res.locals.logoutUrl;
     var authorized = req.session.user !== undefined;
-
+    var ua = req.headers["user-agent"];
+    var microMessenger = ua.match(/MicroMessenger/i)=="micromessenger" ? true : false;
     if (authorized === true) {
         var user = req.session.user;
         bluebird.props({
@@ -60,6 +61,7 @@ var memberCenter = function(req, res, next) {
                 var initialState = {
                     isFetched: true,
                     isLogined: authorized,
+                    ua: ua,
                     member: member,
                     countOrder: countOrder,
                     api: {
@@ -88,6 +90,7 @@ var memberCenter = function(req, res, next) {
         var initialState = {
             isFetched: true,
             isLogined: authorized,
+            ua: ua,
             api: {
                 loginUrl: loginUrl,
                 registerUrl: registerUrl
