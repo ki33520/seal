@@ -109,19 +109,21 @@ class Receiver extends Component{
             <div className="receiver-content">
             {this.props.checkable?(<Header onGoBack={this.handleCheckableGoBack.bind(this)}>选择收货地址</Header>):(
             <Header>收货地址</Header>)}
-            <div className="selectArea">
-            {this.renderReceivers()}
+            <div className="receiver-inner">
+                <div className="selectArea">
+                {this.renderReceivers()}
+                </div>
             </div>
-            <Dialog active={this.state.dialogActive} 
-            onCancel={this.toggleDialog.bind(this)}
-            onConfrim={this.state.dialogOnConfirm} 
-            >确定要删除吗?</Dialog>
             {this.props.receivers.length > 0?(
             <div className="addBtns">
                 <a href="javascript:void(null)" 
                 onClick={handleAddReceiver} className="addBtn">添加新地址</a>
             </div>
             ):null}
+            <Dialog active={this.state.dialogActive} 
+            onCancel={this.toggleDialog.bind(this)}
+            onConfrim={this.state.dialogOnConfirm} 
+            >确定要删除吗?</Dialog>
             <Alert active={this.props.alertActive}>{this.props.alertContent}</Alert>
             </div>
         )
