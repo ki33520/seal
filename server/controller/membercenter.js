@@ -39,6 +39,7 @@ var memberCenter = function(req, res, next) {
     var logoutUrl = res.locals.logoutUrl;
     var authorized = req.session.user !== undefined;
     var ua = req.headers["user-agent"];
+    var microMessenger = ua.match(/MicroMessenger/i)=="micromessenger" ? true : false;
     if (authorized === true) {
         var user = req.session.user;
         bluebird.props({
