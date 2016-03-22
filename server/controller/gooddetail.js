@@ -61,6 +61,14 @@ var goodDetail = function(req, res, next) {
                 destPrice = good["mobilePrice"]
             }
             good["destPrice"] = destPrice
+
+            console.log("isAuthorized",isAuthorized)
+            var tag = ""
+            if(isAuthorized){
+                tag = req.session.user["mobileNumber"]
+            }
+            good["sharedQRCode"] = (config.sharedQRCodePath + "/resource/qr?code="
+             + good["code"] + "&tag=" + tag)
             if (req.xhr) {
                 res.json({
                     isFetched: true,
@@ -372,7 +380,7 @@ function commentsFilter(comments) {
             "singleCode",
             "content", "rate", "isView", "isOpen", "nickName"
         ])
-        _comment["avatar"] = comment["imagesUrl"]
+        _comment["avatar"] = comment["headImage"]
         _comment["commentImages"] = comment["imageUrlList"] ? _.map(comment["imageUrlList"], function(v, i) {
             return config.imgServer + v
         }) : []

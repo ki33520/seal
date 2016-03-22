@@ -15,7 +15,8 @@ var config = {
     "imgServer":"http://imgtest.tepin.com/",
     "cacheServer":{
         "hosts":["memcached.hwg.youayun.cn:11211"]
-    }
+    },
+    "sharedQRCodePath":"http://product.hwg.youayun.cn"
 };
 var runtime = process.env["NODE_ENV"];
 runtime = "hotfix"
@@ -26,6 +27,7 @@ if (runtime === "develop") {
     config.oathServer = "https://ssl.e9448.com";
     config.appKey = "b320de0549a24ff6995dc0e2c38ff491";
     config.appId = "haiwaigou";
+    config.sharedQRCodePath = "http://product.hwg.youayun.cn:7989";
 }
 if(runtime === "test"){
     // config.apiServer = "http://wsns.tepin.youayun.cn";
