@@ -92,7 +92,7 @@
 		}
 	}
 	.right {
-	    padding: 28px 0 0px 0;
+	    padding: .325rem 0 0 0;
 	    float: right;
 	    width: 56%;
 	    margin-right: 3%;
@@ -110,12 +110,16 @@
 		    background: url(/client/asset/images/rightLine.png) left top no-repeat;
 		    background-size: 80% 3px;
 		    padding: .12rem 0;
-		    overflow: hidden;
-		    height: .5rem;
+
+		    height: 1rem;
 		    line-height: .5rem;
 		    width: 100%;
 		    font-size: .266667rem;
-		    white-space:nowrap;
+		    text-overflow: ellipsis;
+		    display: -webkit-box;
+		    -webkit-line-clamp: 2;
+		    -webkit-box-orient: vertical;
+		    white-space:normal;
 		}
 	}
 }
