@@ -195,6 +195,16 @@
     left:1rem;
     top:2rem;
 }
+.flashBuy .put-off {
+    width: 1.813rem;
+    height: 1.813rem;
+    background-image: url(/client/asset/images/cover_not_sell.png);
+    background-size: 100%;
+    position: absolute;
+    left:1rem;
+    top:2rem;
+    transform: scale(1.5);
+}
 .flashBuy .right .nowPrice:first-letter{
     font-size:.32rem;
     font-weight:normal;

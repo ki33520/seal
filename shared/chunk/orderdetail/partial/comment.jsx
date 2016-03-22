@@ -64,11 +64,12 @@ class Comment extends Component{
     }
     componentWillReceiveProps(nextProps){
         const {alert} = this.props;
-        const {order,alertContent} = this.props.orderByParam;
+        const {order,alertContent,back_path} = this.props.orderByParam;
+        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
         if(nextProps.orderByParam.saveCommentChanging === false &&
            this.props.orderByParam.saveCommentChanging === true){
             if(nextProps.orderByParam.saveCommentChanged === true){
-                window.history.back();
+                window.location.href = back_url;
                 alert(nextProps.orderByParam.msg,1000);
             }else{
                 alert(nextProps.orderByParam.msg,1000);
@@ -138,12 +139,16 @@ class Comment extends Component{
         }
     }
     render(){
-        const {logistics,order,alertActive,alertContent} = this.props.orderByParam;
+        const {logistics,order,alertActive,alertContent,back_path} = this.props.orderByParam;
         const {itemList} = order;
+        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         return (
             <div className="order-detail-content comment-content">
-                <Header>评论宝贝</Header>
+                <header className="header">
+                    <a href={back_url} className="iconfont icon-back"></a>
+                    <span className="title">评论宝贝</span>
+                </header>
                 <div className="commentBaby">
                     <GoTop relative={true}>
                     {this.renderItems(itemList)}

@@ -57,6 +57,7 @@ function goodsFilter(goodsList){
             sourceName:goods.sourceName,
             sourceImageUrl:imgServer+goods.sourceImageUrl,
             localStock:goods.stock,
+            onSale:goods.version===1,
             useMobilePrice:!!goods.useMobilePrice
         }
     });
@@ -68,7 +69,7 @@ var flashBuy = function(req,res,next) {
         goods:util.fetchAPI("flashBuy",{
             manageId:id,
             start:0,
-            limit:10
+            limit:100
         }),
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp){

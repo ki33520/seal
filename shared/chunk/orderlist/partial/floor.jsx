@@ -51,6 +51,7 @@ class Floor extends Component{
         fetchPayGateway(base64EncodeForURL(urlParam(message)));
     }
     renderButtons(child,i){
+        const {orderIndex} = this.props;
         const {orderStatus,orderId,itemList} = child;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         switch(orderStatus){
@@ -69,14 +70,14 @@ class Floor extends Component{
                 return (
                     <div className="order-buttons">
                         <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
-                        <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
+                        <a href={"/orderdetail/"+orderId+"?back="+orderIndex+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_SENDED":
                 return (
                     <div className="order-buttons">
                         <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
-                        <a href={"/orderdetail/"+orderId+"#/logistics"} className="view_c">查看物流</a>
+                        <a href={"/orderdetail/"+orderId+"?back="+orderIndex+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_CANCELED":
@@ -88,7 +89,7 @@ class Floor extends Component{
                 if(hasNotComment.length>0){
                     return (
                         <div className="order-buttons">
-                            <a href={"/orderdetail/"+orderId+"#/comment"} className="view_c">评价晒单</a>
+                            <a href={"/orderdetail/"+orderId+"?back="+orderIndex+"#/comment"} className="view_c">评价晒单</a>
                         </div>
                     )
                 }else{

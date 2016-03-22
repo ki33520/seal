@@ -20,14 +20,15 @@ class FlashBuy extends Component{
     renderGoods(groupGoods,status){
         if(groupGoods.length > 0){
             return groupGoods.map((goods,i)=>{
-                const soldOut = classNames({
-                    "sale-out":goods.localStock>0?false:true
+                const saleState = classNames({
+                    "sale-out":goods.localStock<1&&goods.onSale,
+                    "put-off":!goods.onSale
                 });
                 const salesPrice = this.filterPrice(goods,status);
                 const originPrice = formatPrice(goods.originPrice);
                 return (
                     <a href={"/gooddetail/"+goods.singleCode} className="clearfix" key={i}>
-                        <div className={soldOut}></div>
+                        <div className={saleState}></div>
                         <img src={goods.imageUrl} />
                         <div className="right">
                             <span className="name">{goods.title}</span>
