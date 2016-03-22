@@ -2,7 +2,7 @@
 import TrendyApp from "../../../shared/chunk/trendy/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
-
+Object.assign = Object.assign || require('object-assign')
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
         ReactDOM.render(<TrendyApp initialState={initialState} />,document.getElementById('trendy'));
