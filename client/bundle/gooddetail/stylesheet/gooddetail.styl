@@ -11,6 +11,7 @@
 @import "../../component/slider.styl"
 @import "../../component/popup.styl"
 @import "../../component/gotop.styl"
+@import "../../component/refresher.styl"
 @import "../../component/swipelist.styl"
 @import "./goods.css"
 @import "./comment.css"
@@ -294,6 +295,9 @@ $pink-color = #ED1946;
     display:flex;
     align-items:center;
     justify-content:space-around;
+    &>a{
+        display:block;
+    }
     &>a:first-child{
         flex:1;
         text-align:center;
@@ -364,4 +368,22 @@ $pink-color = #ED1946;
 
 .good-desc,.faq{
     min-height:px2rem(30);
+}
+
+.good-comment{
+    height:100%;
+    .slide-tabs{
+        padding-bottom:px2rem(40);
+    }
+    .slide-tabs-content{
+        // padding-bottom:px2rem(40);
+        height:100%;
+        box-sizing:border-box;
+    }
+    .slide-tabs .slide-tabs-content .slide-tabs-item{
+        height:100%;
+        padding-bottom:px2rem(40);
+        overflow:hidden;
+        transform:translate3D(0,0,0);
+    }
 }
