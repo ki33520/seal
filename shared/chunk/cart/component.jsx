@@ -250,7 +250,7 @@ class Cart extends Component {
                               <span>{'￥'+salePrice}</span>
                             </p>
                             <div className="act_wrap"> 
-                                <NumberPicker type="number" value={buyed} 
+                                <NumberPicker type="text" value={buyed} 
                                 minimum={goods.minStep} maximum={maxBuy} step={goods.step}
                                 onChange={this.handleChangeBuyed.bind(this,goods,i,j,k)} />
                             </div>
