@@ -116,13 +116,13 @@ class Slider extends Component{
         }
     }
     handleTouchStart(e){
+        if(this.props.touchEnabled === false){
+            return
+        }
         // e && e.preventDefault();
         e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
-        }
-        if(this.touchEnabled === false){
-            return
         }
         const {clientY,clientX} = e.changedTouches[0];
         this.startTouchX = clientX;
@@ -131,13 +131,13 @@ class Slider extends Component{
         // console.log('touch start',e.changedTouches,e.targetTouches,e.touches)
     }
     handleTouchEnd(e){
+        if(this.props.touchEnabled === false){
+            return
+        }
         // e && e.preventDefault();
         e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
-        }
-        if(this.touchEnabled === false){
-            return
         }
 
         const {clientY,clientX} = e.changedTouches[0];
@@ -201,11 +201,11 @@ class Slider extends Component{
     handleTouchMove(e){
         // e && e.preventDefault();
         // e && e.stopPropagation();
+        if(this.props.touchEnabled === false){
+            return
+        }
         if(this.animateSlide() === true){
             return;
-        }
-        if(this.touchEnabled === false){
-            return
         }
 
         const {clientY,clientX} = e.changedTouches[0];
@@ -546,7 +546,6 @@ class Slider extends Component{
             this.slides.push(pseudoFirstNode);
             this.slides.unshift(pseudoLastNode);
         }
-        // console.log('processSlides',this.props.children.length,this.slides.length)
     }
     componentWillMount(){
         this.processSlides();
@@ -565,7 +564,7 @@ class Slider extends Component{
             sliderStyle = null;
             slidesStyle = null;
         }
-        // console.log('render slider',this.getActiveIndex())
+        console.log('render slider',this.getActiveIndex())
         return (
             <div className={classes} 
             style={sliderStyle}

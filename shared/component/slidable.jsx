@@ -119,45 +119,57 @@ class Slidable extends Component{
             if(this.props.onlyInside && !inTouchableRegion){
                 return;
             }
-            if(this.props.handleActiveChange === false){
-                return;
-            }
+            // if(this.props.handleActiveChange === false){
+            //     return;
+            // }
             // let touchDirection = Math.abs(this.endTouchX - this.startTouchX) > Math.abs(this.endTouchY - this.startTouchY) ?
             // "x":"y";
             if(this.moveDirection !== axis){
                 return;
             }
-            let nextIndex = this.state.activeIndex;
+            let activeIndex = this.state.activeIndex;
             let itemNode = ReactDOM.findDOMNode(this).firstChild
             if(axis === "y"){
                 let itemHeight = itemNode.offsetHeight;
-                let activeIndex = Math.abs(this.translateY) / itemHeight
+                // let activeIndex = Math.abs(this.translateY) / itemHeight
                 let step = (this.endTouchY - this.startTouchY) / itemHeight
-                activeIndex = (Math.abs(step) > thresholdOfChange && step < 0) ? Math.ceil(activeIndex):Math.floor(activeIndex)
-                activeIndex = (Math.abs(step) > thresholdOfChange && step > 0) ? Math.floor(activeIndex):Math.ceil(activeIndex)
+                // activeIndex = (Math.abs(step) > thresholdOfChange && step < 0) ? Math.ceil(activeIndex):Math.floor(activeIndex)
+                // activeIndex = (Math.abs(step) > thresholdOfChange && step > 0) ? Math.floor(activeIndex):Math.ceil(activeIndex)
+                if(Math.abs(step) > thresholdOfChange){
+                    if(step > 0){
+                        activeIndex -= 1
+                    }else if(step < 0){
+                        activeIndex += 1
+                    }
+                }
                 if(this.lastY !== this.startTouchY && activeIndex !== this.state.activeIndex){
-                    nextIndex = activeIndex;
                     this.setState({
                         activeIndex:activeIndex
                     },()=>this.props.handleActiveChange(activeIndex))
                 }
-                this.translateY = (nextIndex * itemNode.offsetHeight) > 0 ?
-                - (nextIndex * itemNode.offsetHeight) :0;
+                this.translateY = (activeIndex * itemNode.offsetHeight) > 0 ?
+                - (activeIndex * itemNode.offsetHeight) :0;
             }else if(axis === "x"){
                 let itemWidth = itemNode.offsetWidth;
-                let activeIndex = Math.abs(this.translateX) / itemWidth
+                // let activeIndex = Math.abs(this.translateX) / itemWidth
                 let step = (this.endTouchX - this.startTouchX) / itemWidth
-                // console.log('step',this.endTouchX,this.startTouchX,step)
-                activeIndex = (Math.abs(step) > thresholdOfChange && step < 0) ? Math.ceil(activeIndex):Math.floor(activeIndex)
-                activeIndex = (Math.abs(step) > thresholdOfChange && step > 0) ? Math.floor(activeIndex):Math.ceil(activeIndex)
+                if(Math.abs(step) > thresholdOfChange){
+                    if(step > 0){
+                        activeIndex -= 1
+                    }else if(step < 0){
+                        activeIndex += 1
+                    }
+                }
+                // activeIndex = (Math.abs(step) > thresholdOfChange && step < 0) ? Math.ceil(activeIndex):Math.floor(activeIndex)
+                // activeIndex = (Math.abs(step) > thresholdOfChange && step > 0) ? Math.floor(activeIndex):Math.ceil(activeIndex)
+                console.log('step',step,activeIndex)
                 if(this.lastX !== this.startTouchX && activeIndex !== this.state.activeIndex){
-                    nextIndex = activeIndex;
                     this.setState({
                         activeIndex:activeIndex
                     },()=>this.props.handleActiveChange(activeIndex))
                 }
-                this.translateX = (nextIndex * itemNode.offsetWidth) > 0 ?
-                - (nextIndex * itemNode.offsetWidth) :0;
+                this.translateX = (activeIndex * itemNode.offsetWidth) > 0 ?
+                - (activeIndex * itemNode.offsetWidth) :0;
             }
             this.checkBound()
             // console.log('this.translateX',Math.abs(this.endTouchX - this.startTouchX),Math.abs(this.endTouchY - this.startTouchY))
@@ -165,10 +177,11 @@ class Slidable extends Component{
             // this.transitionTouch(this.props.animateDuration)
             // if(this.touchDirection() === axis){
             let transitionTouch = this.transitionTouch.bind(this,animateDuration)
-            this.timeout = setTimeout(()=>{
-                transitionTouch()
-                clearTimeout(this.timeout)
-            },30)
+            // this.timeout = setTimeout(()=>{
+            //     transitionTouch()
+            //     clearTimeout(this.timeout)
+            // },10)
+            transitionTouch()
             // rAF(this.transitionTouch.bind(this,animateDuration))
             dom.removeClass(ReactDOM.findDOMNode(this),"sliding")
         }
@@ -184,13 +197,14 @@ class Slidable extends Component{
         }
         let moveY = Math.abs(clientY - this.startTouchY);
         let moveX = Math.abs(clientX - this.startTouchX);
-        if(axis === "x" && moveX < 30){
-            return
-        }else if(axis === "y" && moveY < 10){
-            return
+        if(axis === "x" && moveX < 3){
+            // return
+        }else if(axis === "y" && moveY < 3){
+            // return
         }
         let touchAngle = Math.atan2(moveY,moveX) * 180 / Math.PI
-        let moveDirection = touchAngle < 45 ?"x":"y"
+        // console.log('touchAngle',touchAngle,moveY,moveX)
+        let moveDirection = touchAngle < 15 ?"x":"y"
         // let moveDirection =  moveY > moveX ?"y":"x"
         if(this.moveDirection && this.moveDirection !== moveDirection){
             return
@@ -290,7 +304,7 @@ Slidable.defaultProps = {
     pinMode:false,
     transitionMove:true,
     simulateTranslate:false,
-    handleActiveChange:false
+    handleActiveChange:()=>{}
 }
 
 export default Slidable;
