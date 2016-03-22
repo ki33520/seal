@@ -12,6 +12,7 @@ import PullHook from "../../../component/pullhook.jsx";
 import Alert from "../../../component/alert.jsx";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
+import Share from "../../common/share.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
 import GoTop from "../../../component/gotop.jsx";
@@ -28,6 +29,7 @@ class GoodDetail extends Component{
         this.state = {
             buyed:props.goodById.good.buyed,
             popupActive:false,
+            shareActive:false,
             trigger:null,
             upperVisble:true,
             downVisble:false
@@ -38,6 +40,11 @@ class GoodDetail extends Component{
         this.setState({
             trigger,
             popupActive:!this.state.popupActive
+        })
+    }
+    toggleShare(){
+        this.setState({
+            shareActive:!this.state.shareActive
         })
     }
     componentDidMount(){
@@ -253,7 +260,7 @@ class GoodDetail extends Component{
             <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
             <div className="good-detail-content">
             <Header>商品详情<a className="globa" href="/"><i></i></a>
-            <a className="goods_share"></a>
+            <a className="goods_share" onClick={this.toggleShare.bind(this)}></a>
             </Header>
             <div className={upperClasses}>
                 {good.slides.length > 0?(
@@ -304,6 +311,10 @@ class GoodDetail extends Component{
             </div>
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             <MaskLayer visible={this.state.popupActive} />
+            <Share active={this.state.shareActive} onClose={this.toggleShare.bind(this)}>
+            <div className="center"><img src={good.sharedQRCode} /></div>
+            <div className="bottom">邀请小伙伴扫一扫<br />分享给TA</div>
+            </Share>
             </div>
             </GoTop>
         )

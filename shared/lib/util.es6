@@ -68,7 +68,7 @@ export function formatPrice(price){
             return "0.00"
         }
     }
-    price = price * 100
+    price = Math.floor(price * 1000 / 10)
     price = parseInt(price)
     let priceStr = `${price}`
     if(price < 100 && price >= 10){
