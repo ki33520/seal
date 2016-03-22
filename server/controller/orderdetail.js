@@ -78,7 +78,7 @@ function getStatus(str){
 function filterPrice(param){
     return param === null || param === "null" ? 0 : param; 
 }
-function formatComment(object) {
+function formatData(object) {
     var itemList = object.itemList.map((v,k)=>{
         return {
             id: v.id,
@@ -175,11 +175,8 @@ var orderDetail = function(req, res, next) {
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp) {
         if (resp.orderById.returnCode === 0 && resp.timestamp.returnCode === 0){
-            var order = formatComment(resp.orderById.object),
+            var order = formatData(resp.orderById.object),
                 systemTime = resp.timestamp.systemTime;
-            // if(order.promoTotal > 0){
-            //     order.totalFee = order.totalFee + order.promoTotal;
-            // }
             var initialState = {
                 isFetched: true,
                 order: order,

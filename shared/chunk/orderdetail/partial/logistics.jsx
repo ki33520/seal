@@ -88,7 +88,9 @@ class Logistics extends Component{
         )
     }
     render(){
-        const {logistics,order} = this.props.orderByParam;
+        const {logistics,order,back_path} = this.props.orderByParam;
+        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
+
         var content,
             parcel = [];
         for(var i in logistics){
@@ -131,7 +133,10 @@ class Logistics extends Component{
         };
         return (
             <div className="order-detail-content logistics-content">
-                <Header>物流信息</Header>
+                <header className="header">
+                    <a href={back_url} className="iconfont icon-back"></a>
+                    <span className="title">物流信息</span>
+                </header>
                 {content}
             </div>
         )
