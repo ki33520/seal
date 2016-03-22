@@ -104,17 +104,17 @@ class Cart extends Component {
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
         const cart = carts[cartIndex];
-        if(cart.collected<1 || isChecking){
+        const {singleCodes,buyeds} = this.filterParamItems(cart);
+        if(isChecking){
             return false;
         }
-        if(cart.total > cart.buyLimit &&cart.buyeds>1){
+        if(this.checkSubmit(cart)==false){
             return false;
         }
         if(!isLogined){
             location.href=loginUrl;
             return false;
         }
-         const {singleCodes,buyeds} = this.filterParamItems(cart);
         this.props.checkCartInfo({
             singleCodes,
             buyeds,
@@ -196,14 +196,14 @@ class Cart extends Component {
             }
         });
     }
-    renderInfo(total,tax, limitTax,limitMoney,buyeds){
-        const tips = "省钱贴士：单笔订单税金"+limitTax+"元以内，可以免税哦！";
-        const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+limitMoney+"哦，请您分多次购买。";
+    renderInfo(cart){
+        const tips = "省钱贴士：单笔订单税金"+cart.dutyFree+"元以内，可以免税哦！";
+        const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+cart.buyLimit+"哦，请您分多次购买。";
         let message = null;
 
-        if(total > limitMoney&&buyeds>1){
+        if(cart.total > cart.buyLimit&&cart.buyeds>1 && cart.hasRate===true){
             message = warning;
-        }else if(tax > limitTax){
+        }else if(cart.totalTax > cart.dutyFree){
             message = tips;
         }
 
@@ -276,13 +276,21 @@ class Cart extends Component {
             </div>
         );
     }
+    checkSubmit(cart){
+        if(cart.total <=0){
+            return false;
+        }
+        if(cart.buyeds<1){
+            return false;
+        }
+        if(cart.total > cart.buyLimit&&cart.buyeds>1 && cart.hasRate===true){
+            return false;
+        }
+        return true;
+    }
     renderCart(cart,i){
         let groupList = [];
-        let allowBuy = true;
-
-        if(cart.total > cart.buyLimit&&cart.buyeds>1 ||cart.total <=0 || cart.buyeds<1){
-            allowBuy = false;
-        }
+        const allowBuy = this.checkSubmit(cart);
         cart.group.forEach((group,j)=>{
             groupList.push(this.renderGroup(group,i,j));
         });
@@ -323,7 +331,7 @@ class Cart extends Component {
                             <input type="button"  className={button} value="结算" onClick={this.checkout.bind(this,i)}/>
                         </p>
                     </div>
-                    {this.renderInfo(cart.total,cart.totalTax,cart.dutyFree,cart.buyLimit,cart.buyeds)}
+                    {this.renderInfo(cart)}
                 </div>
             </div>
         )

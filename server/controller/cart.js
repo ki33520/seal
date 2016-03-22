@@ -20,6 +20,7 @@ function formatCarts(originalCarts) {
             tariffFee: originalCart.tariffFee,
             dutyFree: originalCart.dutyFree,
             buyLimit: originalCart.buyLimit,
+            hasRate:originalCart.hasRate,
             totalTax:0,
             group: []
         };
