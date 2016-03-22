@@ -23,12 +23,13 @@ function configureStore(initialState){
 
 class MembercenterApp extends Component{
     render(){
-        const {isFetched,member,isLogined,api,countOrder} = this.props.initialState;
+        const {isFetched,member,isLogined,api,countOrder,ua} = this.props.initialState;
         const initialState = {
             memberCenterByUser:{
                 isFetching:false,
                 isFetched,
                 member,
+                ua,
                 countOrder,
                 isLogined,
                 api

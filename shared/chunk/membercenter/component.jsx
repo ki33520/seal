@@ -45,8 +45,9 @@ class MemberCenter extends Component{
         }
     }
     renderLogout(){
-        const {isLogined,api} = this.props.memberCenterByUser;
-        if(isLogined === false){
+        const {isLogined,api,ua} = this.props.memberCenterByUser;
+        var microMessenger = ua.match(/MicroMessenger/i)=="micromessenger" ? true : false;
+        if(isLogined === false || microMessenger){
             return null;
         }else{
             const {logoutUrl} = api;
