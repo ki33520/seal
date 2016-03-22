@@ -10,9 +10,10 @@ class Update extends Component{
         const {basicByForm,changeScene} = this.props;
         return (
             <div className="update-content">
-                <Header>
+                <header className="header">
+                    <a href="/membercenter" className="iconfont icon-back"></a>
                     <span className="title">账户设置</span>
-                </Header>
+                </header>
                 <ul className="list">
                     <li>
                         <span>头像</span>
