@@ -103,7 +103,9 @@ class Logistics extends Component{
         const tabs = parcel.map((item,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{"包裹"+cnNumbers[i]}</i>} key={i}>
+                    <GoTop relative={true}>
                     {this.renderContent(item)}
+                    </GoTop>
                 </SlideTabsItem>
             )
         });
