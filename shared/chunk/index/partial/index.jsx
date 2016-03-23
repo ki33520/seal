@@ -4,7 +4,7 @@ import classNames from "classnames";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
-
+import Loading from "../../common/loading.jsx";
 
 import Header from "./header.jsx";
 import Footer from "../../common/footer.jsx";
@@ -32,9 +32,14 @@ class Index extends Component{
             let props = Object.assign({},this.props,{
                 active: i === this.state.activeChannel
             })
+            let {channelFetching}  = channel
+            if(!props.active && _.isEmpty(channel.floors)){
+                channelFetching = channelFetching || true
+            }
             return (
                 <SlideTabsItem navigator={()=><span><b>{channel.name}</b></span>} key={i}>
                 <Floor channel={channel} {...props}/>
+                <Loading active={channelFetching}/>
                 </SlideTabsItem>
             )
         })

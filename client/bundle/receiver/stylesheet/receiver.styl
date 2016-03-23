@@ -24,6 +24,19 @@ html,body{
     }
     .scene-group>.scene.active{
     background:#ededed;
+    height:100%;
+    // overflow:hidden;
+    }
+    .receiver-content{
+        height:100%;
+        display:flex;
+        flex-direction:column;
+        .receiver-inner{
+            flex:1;
+            overflow-x:hidden;
+            overflow-y:auto;
+            // -webkit-overflow-scrolling:touch;
+        }
     }
 }
 
@@ -32,7 +45,10 @@ html,body{
 }
 
 .selectArea{
-    padding-bottom:px2rem(38);
+    // padding-bottom:px2rem(38);
+    // padding-top:px2rem(43);
+    // height:100%;
+    // box-sizing:border-box;
     .radio{
         position:absolute;
         top:.38rem;
@@ -179,4 +195,8 @@ html,body{
         transform:translateY(0);
         opacity:1;
     }
+}
+
+.addBtns{
+    bottom:0;
 }

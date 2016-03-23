@@ -81,7 +81,7 @@ export class SlideTabs extends Component{
         if(this.props.contentSlidable === true){
             tabsContent = (
                 <Slidable axis={this.props.axis} name="content" 
-                transitionMove={true} 
+                transitionMove={true} thresholdOfChange={0.1}
                 onlyInside={true}
                 simulateTranslate={true}
                 handleActiveChange={this.handleContentActiveChange.bind(this)} 
@@ -117,14 +117,17 @@ export class SlideTabsItem extends Component{
     componentDidMount(){
         let contentNode = ReactDOM.findDOMNode(this)
         let itemStyle = {}
+        const itemWidth = contentNode.parentNode.parentNode.offsetWidth
+        const itemHeight = contentNode.parentNode.parentNode.offsetHeight
         if(this.props.axis === "x"){
-            itemStyle.width = contentNode.parentNode.parentNode.offsetWidth
+            // itemStyle.width = itemWidth
+            contentNode.style.width = `${itemWidth}px`
         }else{
-            itemStyle.height = contentNode.parentNode.parentNode.offsetHeight
+            itemStyle.height = itemHeight
         }
-        this.setState({
-            itemStyle
-        })
+        // this.setState({
+        //     itemStyle
+        // })
     }
     handleTouchStart(e){
         const {clientY,clientX} = e.changedTouches[0];
@@ -150,7 +153,7 @@ export class SlideTabsItem extends Component{
             active
         })
         return (
-            <div className={classes} key={identify} style={this.state.itemStyle} 
+            <div className={classes} key={identify}
             onTouchMove={this.handleTouchMove.bind(this)} 
             onTouchStart={this.handleTouchStart.bind(this)}>
             {this.props.children}

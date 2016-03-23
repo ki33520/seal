@@ -2,7 +2,7 @@
 import PolymerApp from "../../../shared/chunk/polymer/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
-
+Object.assign = Object.assign || require('object-assign');
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
     ReactDOM.render(<PolymerApp initialState={initialState} />,document.getElementById('polymer'));

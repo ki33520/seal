@@ -36,7 +36,7 @@ class Toolbar extends Component{
 
         const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
         const addCartClasses = classNames("goods_add",{
-            "disabled":good.stock === 0 || good.flashbuy["active"] || good["isMeiZhuang"] || good["destPrice"] > 1000
+            "disabled":good.stock === 0 || good.flashbuy["active"] || good["isMeiZhuang"] || !good["canAddCart"] 
         })
         const directBuyClasses = classNames("goods_buy",{
             "disabled":good.stock === 0

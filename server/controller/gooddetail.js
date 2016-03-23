@@ -13,8 +13,10 @@ var goodDetail = function(req, res, next) {
     var isAuthorized = req.session.user !== undefined;
     var loginUrl = res.locals.loginUrl;
     var tag = req.query.tag?req.query.tag:""
-    res.cookie("tag",tag)
-    // console.log('singleCode',singleCode)
+    if(req.cookies["tag"] == undefined){
+        res.cookie("tag",tag)
+    }
+    // console.log('singleCode',req.cookies["tag"])
     bluebird.props({
         "goodById": util.fetchAPI("goodById", {
             code: singleCode,
@@ -34,6 +36,8 @@ var goodDetail = function(req, res, next) {
             var slides = good.imageUrl;
             good.slides = slides;
             good.mainImageUrl = good.imageUrl[0]
+            good.comments = {list:[]}
+            good.showups = {list:[]}
 
             var flashbuy = {
                 active: false
@@ -62,7 +66,6 @@ var goodDetail = function(req, res, next) {
             }
             good["destPrice"] = destPrice
 
-            console.log("isAuthorized",isAuthorized)
             var tag = ""
             if(isAuthorized){
                 tag = req.session.user["mobileNumber"]
@@ -139,7 +142,20 @@ function flashbuyFilter(flashbuy) {
 
 function promotionsFilter(promotions) {
     var _promotions = {};
-    return promotions
+    _.each(promotions,function(v,k){
+        var promotionType = ""
+        // console.log('k',k)
+        switch(k){
+            case "MONEYMONEY":
+                promotionType = "满减"
+                break
+            case "MONEYDISC":
+                promotionType = "满折"
+                break
+        }
+        _promotions[promotionType] = v
+    })
+    return _promotions
 }
 
 function goodFilter(good) {
@@ -147,7 +163,7 @@ function goodFilter(good) {
         "code", "discount", "isMain", "title", "subTitle", "detail",
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
-        "description","isMeiZhuang","version"
+        "description","isMeiZhuang","version","canAddCart"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl
@@ -345,17 +361,24 @@ var isCollected = function(req, res, next) {
 
 var goodComments = function(req, res, next) {
     var productCode = req.query.productCode;
+    var hasImage = req.query.hasImage;
     var pageIndex = req.query.pageIndex || 1;
-    var pageSize = 100;
+    var pageSize = 4;
     util.fetchAPI("commentByGood", {
         productCode: productCode,
+        hasImage:hasImage,
         pageNo: pageIndex,
         pageSize: pageSize
     }).then(function(ret) {
         if (ret.returnCode === 0) {
+            var comments = commentsFilter(ret.object)
+            var pagination = {list:comments["list"]}
+            pagination["totalCount"] = comments["totalCount"]
+            pagination["pageIndex"] = pageIndex
+            pagination["totalPage"] = Math.ceil(comments["totalCount"] / pageSize)
             res.json({
                 commentsFetched: true,
-                result: commentsFilter(ret.object)
+                pagination:pagination
             })
         } else {
             res.json({
@@ -389,9 +412,9 @@ function commentsFilter(comments) {
             // console.log('createAt',comment["createdAt"])
         _comments["list"].push(_comment)
     })
-    _comments["showup"] = _.filter(_comments["list"], function(v) {
-        return v["commentImages"].length > 0
-    })
+    // _comments["showup"] = _.filter(_comments["list"], function(v) {
+    //     return v["commentImages"].length > 0
+    // })
     return _comments
 }
 
