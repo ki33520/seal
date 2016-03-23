@@ -163,7 +163,7 @@ function goodFilter(good) {
         "code", "discount", "isMain", "title", "subTitle", "detail",
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
-        "description","isMeiZhuang","version"
+        "description","isMeiZhuang","version","canAddCart"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl

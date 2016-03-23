@@ -299,7 +299,7 @@ Slidable.defaultProps = {
     activeIndex:0,
     onlyInside:false,
     axis:"y",
-    thresholdOfChange:0.3,
+    thresholdOfChange:0.2,
     animateDuration:0.3,
     pinMode:false,
     transitionMove:true,
