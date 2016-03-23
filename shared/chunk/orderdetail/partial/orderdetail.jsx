@@ -113,7 +113,7 @@ class OrderDetail extends Component{
                     fetchOrder("/orderdetail/"+orderId,{
                         orderId
                     });
-                },1000)
+                },2000)
             }
         }
     }
