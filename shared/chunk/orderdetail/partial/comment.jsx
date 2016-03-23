@@ -61,12 +61,18 @@ class Comment extends Component{
     componentWillReceiveProps(nextProps){
         const {alert} = this.props;
         const {order,alertContent,back_path} = this.props.orderByParam;
-        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
+        const back_url = back_path === null ? null : "/orderlist/"+back_path;
         if(nextProps.orderByParam.saveCommentChanging === false &&
            this.props.orderByParam.saveCommentChanging === true){
             if(nextProps.orderByParam.saveCommentChanged === true){
-                window.location.href = back_url;
                 alert(nextProps.orderByParam.msg,1000);
+                setTimeout(function(){
+                    if(back_url){
+                        window.location.assign(back_url);
+                    }else{
+                        window.history.back();
+                    }
+                },2000)
             }else{
                 alert(nextProps.orderByParam.msg,1000);
             }
