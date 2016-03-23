@@ -32,7 +32,7 @@ function formatComment(param) {
 var collectlist = function(req, res, next) {
     var user = req.session.user;
     var pageIndex = req.query.pageIndex !== undefined ? Number(req.query.pageIndex) : 1;
-    var pageSize = 5;
+    var pageSize = 10;
     bluebird.props({
         memberCollectByUser: util.fetchAPI("memberCollectByUser", {
             memberId: user.memberId,
