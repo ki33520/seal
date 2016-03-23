@@ -81,7 +81,7 @@ export class SlideTabs extends Component{
         if(this.props.contentSlidable === true){
             tabsContent = (
                 <Slidable axis={this.props.axis} name="content" 
-                transitionMove={true} thresholdOfChange={0.1}
+                transitionMove={true} thresholdOfChange={0.1} animateDuration={0.1} 
                 onlyInside={true}
                 simulateTranslate={true}
                 handleActiveChange={this.handleContentActiveChange.bind(this)} 
