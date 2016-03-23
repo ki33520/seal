@@ -8,6 +8,7 @@
 @import "../../component/alert.styl"
 @import "../../component/numberpicker.styl"
 @import "../../component/slidetabs.styl"
+@import "../../component/tabs.styl"
 @import "../../component/slider.styl"
 @import "../../component/popup.styl"
 @import "../../component/gotop.styl"
@@ -216,10 +217,10 @@ $pink-color = #ED1946;
     font-size:.65rem;
 }
 
-.slide-tabs .slide-tabs-navbar{
+.tabs .tabs-nav{
     background:#FFF;
     border-bottom:0 none;
-    .slide-tabs-navbar-item{
+    &>span{
         line-height:1.15rem;
         border-left:0 none;
         border-bottom:px2rem(1) solid #D7D7D7;
@@ -244,15 +245,16 @@ $pink-color = #ED1946;
         }
     }
     .good-detail-down{
-        // display:none;
-        visibility:hidden;
-        top:0;
-        height:0;
-        overflow:hidden;
+        display:none;
+        // visibility:hidden;
+        // top:0;
+        // height:0;
+        // overflow:hidden;
         &.visible{
-            visibility:visible;
-            height:auto;
-            // display:block;
+            // visibility:visible;
+            // min-height:px2rem(150);
+            // height:auto;
+            display:block;
         }
         &>.pull-trigger{
             margin:0 0 .5rem 0;

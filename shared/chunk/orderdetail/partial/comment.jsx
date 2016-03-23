@@ -7,16 +7,13 @@ import Header from "../../common/header.jsx";
 import StatusProgress from "./statusprogress.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import GoTop from "../../../component/gotop.jsx";
+import {formatPrice} from "../../../lib/util.es6";
 
 import {changeField,saveComment} from "../action.es6";
 import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 class Comment extends Component{
-    formatPrice(price){
-        var _price = Number(price).toFixed(2).split('.');
-        return <span><i className="price_a">{_price[0]}</i><i className="price_dot">.</i><i className="price_b">{_price[1]}</i></span>
-    }
     handleStar(name,pid,val,e){
         const {changeField} = this.props;
         var rate = val>3 ? val : 3;
@@ -40,7 +37,7 @@ class Comment extends Component{
         var obj = new Array();
         hasNotComment.map((v,k)=>{
             const {rate,id,content} = v;
-            var len = content ? content.length : 0;
+            let len = content ? content.length : 0;
             if(len>0 && len<501){
                 obj.push({
                     rate: rate ? rate : 5,
@@ -49,7 +46,6 @@ class Comment extends Component{
                     itemId: id,
                 })
             }
-            
         });
         if(obj.length>0){
             if(this.props.orderByParam.saveCommentChanging !== true){
@@ -65,12 +61,18 @@ class Comment extends Component{
     componentWillReceiveProps(nextProps){
         const {alert} = this.props;
         const {order,alertContent,back_path} = this.props.orderByParam;
-        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
+        const back_url = back_path === null ? null : "/orderlist/"+back_path;
         if(nextProps.orderByParam.saveCommentChanging === false &&
            this.props.orderByParam.saveCommentChanging === true){
             if(nextProps.orderByParam.saveCommentChanged === true){
-                window.location.href = back_url;
                 alert(nextProps.orderByParam.msg,1000);
+                setTimeout(function(){
+                    if(back_url){
+                        window.location.assign(back_url);
+                    }else{
+                        window.history.back();
+                    }
+                },2000)
             }else{
                 alert(nextProps.orderByParam.msg,1000);
             }
@@ -101,7 +103,7 @@ class Comment extends Component{
                                 </a>
                                 <div className="gd_info">
                                     <p className="name">{v.singleTitle}</p>
-                                    <p className="value"><i>&yen;</i>{this.formatPrice(v.salesPrice)}</p>
+                                    <p className="value"><i>&yen;</i>{formatPrice(v.salesPrice)}</p>
                                 </div>
                             </div>
                         </div>
@@ -119,7 +121,6 @@ class Comment extends Component{
                     </div>
                 )
             }
-            
         });
     }
     renderConfirmBtns(items){
@@ -139,26 +140,33 @@ class Comment extends Component{
         }
     }
     render(){
-        const {logistics,order,alertActive,alertContent,back_path} = this.props.orderByParam;
+        const {currentRoute} = this.props;
+        const {order,alertActive,alertContent,back_path} = this.props.orderByParam;
         const {itemList} = order;
-        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
+        const back_url = back_path === null ? null : "/orderlist/"+back_path;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
-        return (
-            <div className="order-detail-content comment-content">
-                <header className="header">
-                    <a href={back_url} className="iconfont icon-back"></a>
-                    <span className="title">评论宝贝</span>
-                </header>
-                <div className="commentBaby">
-                    <GoTop relative={true}>
-                    {this.renderItems(itemList)}
-                    </GoTop>
+        if(currentRoute === "comment"){
+            return (
+                <div className="order-detail-content comment-content">
+                    <Header canBack={!back_url}>
+                        {
+                            back_url ? <a href={back_url} className="iconfont icon-back"></a> : back_url
+                        }
+                        <span className="title">评论宝贝</span>
+                    </Header>
+                    <div className="commentBaby">
+                        <GoTop relative={true}>
+                        {this.renderItems(itemList)}
+                        </GoTop>
+                    </div>
+                    
+                    {this.renderConfirmBtns(hasNotComment)}
+                    <Alert active={alertActive}>{alertContent}</Alert>
                 </div>
-                
-                {this.renderConfirmBtns(hasNotComment)}
-                <Alert active={alertActive}>{alertContent}</Alert>
-            </div>
-        )
+            )
+        }else{
+            return null;
+        }
     }
 }
 

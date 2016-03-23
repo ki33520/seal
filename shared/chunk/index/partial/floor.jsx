@@ -348,7 +348,6 @@ class Floor extends Component{
                 <div className="activity_3">{this.renderActivityThree()}</div>
                 {this.renderSingleRecommend()}
                 {this.renderNewRecommend()}
-                <Loading active={channelFetching}/>
             </div>
         )
     }

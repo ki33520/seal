@@ -7,7 +7,7 @@ export class Tabs extends Component{
     constructor(props){
         super(props);
         this.state = {
-            activeIndex:props.activeIndex,
+            activeIndex:props.activeIndex !== undefined?props.activeIndex:0,
             prevIndex:null
         }
     }
@@ -15,7 +15,7 @@ export class Tabs extends Component{
         if(nextProps.activeIndex !== undefined && 
             nextProps.activeIndex !== this.props.activeIndex){
             this.setState({
-                prevIndex:this.props.activeIndex,
+                prevIndex:this.prop.activeIndex,
                 activeIndex:nextProps.activeIndex
             })
         }
@@ -23,8 +23,6 @@ export class Tabs extends Component{
     handleClick(index,e){
         e && e.preventDefault();
         const prevIndex = this.state.activeIndex;
-        const {handleToggleFlag} = this.props;
-        handleToggleFlag && handleToggleFlag(index,e);
         this.setState({
             activeIndex:index,
             prevIndex
@@ -43,15 +41,15 @@ export class Tabs extends Component{
                 active:i === this.state.activeIndex
             });
             return (
-                <li className={classes} key={"tab-nav-"+i} 
-                onClick={this.handleClick.bind(this,i)}>{title}</li>
+                <span className={classes} key={"tab-nav-"+i} 
+                onClick={this.handleClick.bind(this,i)}>{title}</span>
             );
         })
     }
     renderContent(child,index){
         return React.cloneElement(child,{
             active:index === this.state.activeIndex,
-            index:child.key ? child.key:index
+            key:child.key ? child.key:index
         });
     }
     render(){
@@ -62,10 +60,8 @@ export class Tabs extends Component{
         })
         return(
             <div className="tabs">
-                <div className="polyTabs">
-                    <ul>{this.renderNav()}</ul>
-                </div>
-                <div className={contentClasses}>{React.Children.map(this.props.children,this.renderContent.bind(this))}</div>
+            <div className="tabs-nav">{this.renderNav()}</div>
+            <div className={contentClasses}>{React.Children.map(this.props.children,this.renderContent.bind(this))}</div>
             </div>
         )
     }
@@ -73,44 +69,17 @@ export class Tabs extends Component{
 
 Tabs.defaultProps = {
     effect:"fade",
-    activeIndex:0,
     onSelect:function(){}
 }
 
 export class TabsItem extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            activeIndex:props.activeIndex,
-            prevIndex:null
-        }
-    }
-    handleTouch(index,e){
-        e && e.preventDefault();
-        var index = index===0? 1: 0;
-        const prevIndex = this.state.activeIndex;
-        const {handleTouch} = this.props;
-        handleTouch && handleTouch(index,e);
-        this.setState({
-            activeIndex:index,
-            prevIndex
-        },()=>{
-            this.props.onSelect(index);
-        })
-    }
     render(){
-        const {active,index,handleTouch} = this.props;
+        const {active,key} = this.props;
         const classes = classNames("tabs-item",{
             active
         })
-        // onClick={this.handleTouch.bind(this,index)}
         return (
-            <div className={classes} key={"tabs-item-" + index}>{this.props.children}</div>
+            <div className={classes} key={"tabs-item-" + key}>{this.props.children}</div>
         )
     }
-}
-
-TabsItem.defaultProps = {
-    activeIndex:0,
-    onSelect:function(){}
 }

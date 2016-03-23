@@ -19,7 +19,6 @@ class MembercollectList extends Component{
         var pageIndex = collect.pageIndex;
         var nextPage = pageIndex + 1;
         if(pageCount < nextPage){
-            // this.setState({isFetching:false});
             return false;
         }
         if(isFetching === true){

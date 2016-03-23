@@ -564,7 +564,7 @@ class Slider extends Component{
             sliderStyle = null;
             slidesStyle = null;
         }
-        console.log('render slider',this.getActiveIndex())
+        // console.log('render slider',this.getActiveIndex())
         return (
             <div className={classes} 
             style={sliderStyle}

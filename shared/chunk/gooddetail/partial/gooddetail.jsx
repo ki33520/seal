@@ -14,6 +14,7 @@ import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Share from "../../common/share.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Sticky from "../../../component/sticky.jsx";
@@ -295,16 +296,16 @@ class GoodDetail extends Component{
             addToCart={this.addToCart.bind(this)}>
             </Toolbar>
             <div className={downClasses}>
-                <SlideTabs axis="x" navbarSlidable={false} ref="slidetabs">
-                <SlideTabsItem navigator={()=><span>图文详情</span>}>
-                <div className="good-desc" dangerouslySetInnerHTML={{__html:good.detail}}></div>
-                </SlideTabsItem>
-                <SlideTabsItem navigator={()=><span>保税FAQ</span>}>
-                <div className="faq">
-                <img src="/client/asset/images/FAQshow.gif" />
-                </div>
-                </SlideTabsItem>
-                </SlideTabs>
+                <Tabs>
+                    <TabsItem title="图文详情">
+                    <div className="good-desc" dangerouslySetInnerHTML={{__html:good.detail}}></div>
+                    </TabsItem>
+                    <TabsItem title="保税FAQ">
+                    <div className="faq">
+                    <img src="/client/asset/images/FAQshow.gif" />
+                    </div>
+                    </TabsItem>
+                </Tabs>
             </div>
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             <MaskLayer visible={this.state.popupActive} />

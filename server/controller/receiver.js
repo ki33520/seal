@@ -172,7 +172,7 @@ function receiverValidator(receiver){
         return {isValid:false,errMsg:"请输入收货人姓名"}
     }
     if(receiver.idCard){
-        if(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/g.test(receiver.idCard) === false){
+        if(/(^\d{17}([0-9]|X)$)/g.test(receiver.idCard) === false){
             return {isValid:false,errMsg:"身份证号输入有误"}
         }
     }else{

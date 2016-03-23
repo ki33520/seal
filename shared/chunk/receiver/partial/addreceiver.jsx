@@ -44,6 +44,9 @@ class AddReceiver extends Component{
             this.loadProvinces()
         }
         noBounceScroll.enable()
+        window.onresize = (e)=>{
+            console.log('resize')
+        }
     }
     componentDidUpdate(prevProps,prevState){
         if(this.props.active === true && prevProps.active === false &&
