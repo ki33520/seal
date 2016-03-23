@@ -35,8 +35,12 @@ class Toolbar extends Component{
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
 
         const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
+        let canAddCart = good["canAddCart"]?good["canAddCart"]:true
+        if(good.stock === 0 || good.flashbuy["active"]){
+            canAddCart = false
+        }
         const addCartClasses = classNames("goods_add",{
-            "disabled":good.stock === 0 || good.flashbuy["active"] || good["isMeiZhuang"] || !good["canAddCart"] 
+            "disabled":canAddCart
         })
         const directBuyClasses = classNames("goods_buy",{
             "disabled":good.stock === 0

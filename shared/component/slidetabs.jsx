@@ -103,7 +103,7 @@ SlideTabs.defaultProps = {
     activeIndex:0,
     axis:"x",
     navbarSlidable:true,
-    contentSlidable:true,
+    contentSlidable:false,
     onSelect:()=>{}
 }
 
