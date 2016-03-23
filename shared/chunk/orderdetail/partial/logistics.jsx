@@ -88,8 +88,9 @@ class Logistics extends Component{
         )
     }
     render(){
+        const {currentRoute} = this.props;
         const {logistics,order,back_path} = this.props.orderByParam;
-        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
+        const back_url = back_path === null ? null : "/orderlist/"+back_path;
 
         var content,
             parcel = [];
@@ -111,35 +112,24 @@ class Logistics extends Component{
                 {tabs}
             </SlideTabs>
         );
-        if(parcel.length>1){
+        if(parcel.length>0){
             content = slideTabs;
+        }
+        if(currentRoute === "logistics"){
+            return (
+                <div className="order-detail-content logistics-content">
+                    <Header canBack={!back_url}>
+                        {
+                            back_url ? <a href={back_url} className="iconfont icon-back"></a> : back_url
+                        }
+                        <span className="title">物流信息</span>
+                    </Header>
+                    {content}
+                </div>
+            )
         }else{
-            if(parcel.length>0){
-                content = (
-                    <div className="slide-tabs slide-tabs-fixed">
-                        <div className="slide-tabs-content fixed">
-                            <div className="slide-tabs-item">
-                                {this.renderContent(parcel[0])}
-                            </div>
-                        </div>
-                        <div className="slide-tabs-navbar">
-                            <div className="slide-tabs-navbar-item active">
-                                <i>{"包裹"+cnNumbers[0]}</i>
-                            </div>
-                        </div>
-                    </div>
-                );
-            }
-        };
-        return (
-            <div className="order-detail-content logistics-content">
-                <header className="header">
-                    <a href={back_url} className="iconfont icon-back"></a>
-                    <span className="title">物流信息</span>
-                </header>
-                {content}
-            </div>
-        )
+            return null;
+        }
     }
 }
 
