@@ -4,12 +4,13 @@ import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
 import moment from "moment";
+import classNames from "classnames";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Dialog from "../../../component/dialog.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Alert from "../../../component/alert.jsx";
-import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
+import {urlParam,base64EncodeForURL,formatPrice} from "../../../lib/util.es6";
 
 import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
 import StatusProgress from "./statusprogress.jsx";
@@ -20,9 +21,9 @@ class OrderDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
-            dialogActive:false,
+            dialogActive: false,
             dialogContent: "确定要取消订单吗?",
-            dialogOnConfirm:null
+            dialogOnConfirm: null
         }
     }
     toggleDialog(){
@@ -197,7 +198,7 @@ class OrderDetail extends Component{
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
-        var paymentTitle = order.orderStatus === "STATUS_NOT_PAY" || order.orderStatus === "STATUS_CANCELED" ? "应付金额：" : "实付金额：";
+        var paymentTitle = !order.canFlow ? "应付金额：" : "实付金额：";
         if(orderStatus === "STATUS_CANCELED"){
             return null;
         }else{
@@ -208,31 +209,31 @@ class OrderDetail extends Component{
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">商品总价：</div>
-                        <div className="data"><i>&yen;</i><span>{order.salesTotalFee.toFixed(2)}</span></div>
+                        <div className="data"><i>&yen;</i><span>{formatPrice(order.salesTotalFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">国内运费：</div>
-                        <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{order.logisticsFee.toFixed(2)}</span></div>
+                        <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{formatPrice(order.logisticsFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">国际运费：</div>
-                        <div className="data"><i>&yen;</i><span>{order.abroadFee.toFixed(2)}</span></div>
+                        <div className="data"><i>&yen;</i><span>{formatPrice(order.abroadFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">关税：</div>
-                        <div className="data">{tariffFeeBox}<i>&yen;</i><span>{order.tariffFee.toFixed(2)}</span></div>
+                        <div className="data">{tariffFeeBox}<i>&yen;</i><span>{formatPrice(order.tariffFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix intro">
                         <div className="label">优惠活动：</div>
-                        <div className="data">-<i>&yen;</i><span>{order.promoFee.toFixed(2)}</span></div>
+                        <div className="data">-<i>&yen;</i><span>{formatPrice(order.promoFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix intro">
                         <div className="label">优惠券：</div>
-                        <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
+                        <div className="data">-<i>&yen;</i><span id="coupon_money">{formatPrice(order.couponFee)}</span></div>
                     </div>
-                    <div className=" bottom-line clearfix no-border">
+                    <div className="bottom-line clearfix no-border">
                         <div className="label">{paymentTitle}</div>
-                        <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee.toFixed(2)}</span></div>
+                        <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{formatPrice(order.paymentFee)}</span></div>
                     </div>
                 </div>
             );
@@ -242,14 +243,17 @@ class OrderDetail extends Component{
     render(){
         const {order,back_path,alertActive,alertContent} = this.props.orderByParam;
         const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
-        
+        const class_detail = classNames({
+            "order-detail-info": true,
+            "order-bottom": this.renderFooter() != null
+        })
         return (
             <div className="order-detail-content">
             <header className="header">
                 <a href={back_url} className="iconfont icon-back"></a>
                 <span className="title">订单详情</span>
             </header>
-            <div className="order-detail-info">
+            <div className={class_detail}>
             <StatusProgress renderOutTime={this.renderOutTime.bind(this)} {...order}/>
             {this.renderAddress(order)}
             <OrderGoods {...order}/>

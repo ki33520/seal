@@ -41,9 +41,9 @@ class OrderDetailRouter extends Component{
         const {currentRoute,prevRoute} = this.state;
         return (
             <Switcher currentRoute={currentRoute} prevRoute={prevRoute}>
-            <SwitcherCase name="index"><OrderDetail {...this.props}/></SwitcherCase>
-            <SwitcherCase name="logistics"><Logistics {...this.props}/></SwitcherCase>
-            <SwitcherCase name="comment"><Comment {...this.props}/></SwitcherCase>
+            <SwitcherCase name="index"><OrderDetail {...this.state} {...this.props}/></SwitcherCase>
+            <SwitcherCase name="logistics"><Logistics {...this.state} {...this.props}/></SwitcherCase>
+            <SwitcherCase name="comment"><Comment {...this.state} {...this.props}/></SwitcherCase>
             </Switcher>
         );
     }

@@ -11,52 +11,66 @@ var orderStatus = [
         value: "STATUS_NOT_PAY",
         text:"待付款",
         active:false
-    }, {
+    },
+    {
         value: "STATUS_CONFIRMED",
         text: "待发货",
         active: false
-    }, {
+    },
+    {
         value: "STATUS_OUT_HOUSE",
         text: "待收货",
         active: false
-    }, {
+    },
+    {
         value: "STATUS_FINISHED",
         text: "已完成",
         active: false
     }
 ];
 
-var payType = [{
-    value: "ALIPAYGLOBAL",
-    text: "支付宝"
-}, {
-    value: "2",
-    text: "银联支付"
-}, {
-    value: "3",
-    text: "账户金额支付"
-}, {
-    value: "4",
-    text: "财付通"
-}, {
-    value: "5",
-    text: "余额现金支付"
-}, {
-    value: "6",
-    text: "余额非现金支付"
-}, {
-    value: "7",
-    text: "折扣券"
-}, {
-    value: "8",
-    text: "移动和包支付"
-}, {
-    value: "9",
-    text: "电子券支付"
-}, {
-    value: "10",
-    text: "微信支付"
-}]
+var payType = [
+    {
+        value: "ALIPAYGLOBAL",
+        text: "支付宝"
+    },
+    {
+        value: "2",
+        text: "银联支付"
+    },
+    {
+        value: "3",
+        text: "账户金额支付"
+    },
+    {
+        value: "4",
+        text: "财付通"
+    },
+    {
+        value: "5",
+        text: "余额现金支付"
+    },
+    {
+        value: "6",
+        text: "余额非现金支付"
+    },
+    {
+        value: "7",
+        text: "折扣券"
+    },
+    {
+        value: "8",
+        text: "移动和包支付"
+    },
+    {
+        value: "9",
+        text: "电子券支付"
+    },
+    {
+        value: "10",
+        text: "微信支付"
+    }
+]
 function getStatus(str){
     var statusArr = [];
     statusArr = orderStatus.map((v, k)=>{
@@ -141,6 +155,8 @@ function formatData(object) {
     }
     if (order.orderStatus == 'STATUS_NOT_PAY' || order.orderStatus == 'STATUS_CANCELED') {
         order.canFlow = false;
+    }else{
+        order.canFlow = true;
     }
     order.orderStatusArr = getStatus(order.orderStatus);
     _.each(payType, function(v, k) {
