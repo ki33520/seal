@@ -3,6 +3,7 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import _ from "lodash";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import Loading from "../../common/loading.jsx";
@@ -47,7 +48,7 @@ class Index extends Component{
         return (
             <div className={classes}>
             <Header {...this.props}/>
-            <SlideTabs axis="x" activeIndex={activeIndex} contentSlidable={true} 
+            <SlideTabs axis="x" activeIndex={activeIndex} contentSlidable={false} 
             onSelect={this.handleSelect.bind(this)}>
             {tabs}
             </SlideTabs>

@@ -33,7 +33,19 @@ export class SlideTabs extends Component{
         this.setState({
             activeIndex:i
         },()=>{
-            this.props.onSelect(i)   
+            this.props.onSelect(i) 
+            if(this.props.contentSlidable === false){
+                let transform = null
+                if(this.props.axis === "x"){
+                    let translateX = (this.state.activeIndex * window.innerWidth) > 0 ?
+                    - (this.state.activeIndex * window.innerWidth) :0;
+                    translateX = window.px2rem ? window.px2rem(translateX) + "rem" : `${translateX}px`;
+                    transform = `translate3D(${translateX},0,0)`;
+                }
+                let contentNode = ReactDOM.findDOMNode(this.refs["contentNode"])
+                contentNode.style.WebkitTransform = transform
+                contentNode.style.transitionDuration = "0.15s"
+            }
         })
     }
     handleContentActiveChange(i,e){
@@ -75,13 +87,13 @@ export class SlideTabs extends Component{
             "slide-tabs-vertical":this.props.axis === "y"
         })
         let tabsContent = (
-            <div className="slide-tabs-content"
+            <div className="slide-tabs-content slide-tabs-content-fixed" ref="contentNode"
             >{React.Children.map(this.props.children,this.renderTabsItem.bind(this))}</div>
         ) 
         if(this.props.contentSlidable === true){
             tabsContent = (
-                <Slidable axis={this.props.axis} name="content" 
-                transitionMove={true} thresholdOfChange={0.1} animateDuration={0.1} 
+                <Slidable axis={this.props.axis} ref="contentNode" 
+                transitionMove={true} thresholdOfChange={0.1}
                 onlyInside={true}
                 simulateTranslate={true}
                 handleActiveChange={this.handleContentActiveChange.bind(this)} 
@@ -130,22 +142,22 @@ export class SlideTabsItem extends Component{
         // })
     }
     handleTouchStart(e){
-        const {clientY,clientX} = e.changedTouches[0];
-        this.startTouchY = clientY;
-        this.startTouchX = clientX;
-        this.moveDirection = null;
+        // const {clientY,clientX} = e.changedTouches[0];
+        // this.startTouchY = clientY;
+        // this.startTouchX = clientX;
+        // this.moveDirection = null;
     }
     handleTouchMove(e){
-        const {clientY,clientX} = e.changedTouches[0];
-        let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
-        if(this.moveDirection && this.moveDirection !== moveDirection){
-            return
-        }
-        this.moveDirection = moveDirection
-        // console.log(this.moveDirection,"this.moveDirection")
-        if(this.moveDirection === "y"){
-            e.stopPropagation()
-        }
+        // const {clientY,clientX} = e.changedTouches[0];
+        // let moveDirection = Math.abs(clientY - this.startTouchY) > Math.abs(clientX - this.startTouchX) ?"y":"x"
+        // if(this.moveDirection && this.moveDirection !== moveDirection){
+        //     return
+        // }
+        // this.moveDirection = moveDirection
+        // // console.log(this.moveDirection,"this.moveDirection")
+        // if(this.moveDirection === "y"){
+        //     e.stopPropagation()
+        // }
     }
     render(){
         const {identify,active} = this.props;
@@ -153,9 +165,10 @@ export class SlideTabsItem extends Component{
             active
         })
         return (
-            <div className={classes} key={identify}
-            onTouchMove={this.handleTouchMove.bind(this)} 
-            onTouchStart={this.handleTouchStart.bind(this)}>
+            <div className={classes} 
+            // onTouchMove={this.handleTouchMove.bind(this)} 
+            // onTouchStart={this.handleTouchStart.bind(this)} 
+            key={identify}>
             {this.props.children}
             </div>
         )
