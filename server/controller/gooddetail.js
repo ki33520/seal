@@ -142,7 +142,20 @@ function flashbuyFilter(flashbuy) {
 
 function promotionsFilter(promotions) {
     var _promotions = {};
-    return promotions
+    _.each(promotions,function(v,k){
+        var promotionType = ""
+        // console.log('k',k)
+        switch(k){
+            case "MONEYMONEY":
+                promotionType = "满减"
+                break
+            case "MONEYDISC":
+                promotionType = "满折"
+                break
+        }
+        _promotions[promotionType] = v
+    })
+    return _promotions
 }
 
 function goodFilter(good) {
