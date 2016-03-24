@@ -106,19 +106,27 @@
             display: flex;
             justify-content:space-between;
             align-items: center;
+            width: 100%;
             .now-price {
-                font-size: .6rem;
+                display: block;
+                font-size: .5rem;
                 line-height: .6rem;
                 color: #ed1946;
+                flex-shrink:0;
+                min-width: 50%;
             }
             .old-price {
+                display: block;
                 font-size: .32rem;
+                height: .5rem;
                 line-height: .6rem;
                 color: #999;
                 text-decoration: line-through;
-                 overflow: hidden;
-                 text-overflow:ellipsis;
-                 text-indent:.25rem;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                flex-shrink:1;
+                max-width: 40%;
+                padding-left: .1rem;
             }
         }
     }
