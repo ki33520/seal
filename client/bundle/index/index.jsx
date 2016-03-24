@@ -10,7 +10,7 @@ function bootstrap(){
         ReactDOM.render(<WeatherApp initialState={initialState} />,document.getElementById('index'));
 }
 
-document.documentElement.style.fontSize = window.innerWidth/3.75 + 'px'
+document.documentElement.style.fontSize = window.innerWidth / 3.75 + 'px'
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

@@ -1,8 +1,8 @@
 @import "../../common/common";
 @import "../../common/iconfont";
-@import "../../common/router";
+// @import "../../common/router";
 @import "../../common/scene";
-@import "../../common/footer";
+@import "./footer";
 @import "../../common/loading";
 @import "../../component/slidetabs";
 @import "../../component/slider";
@@ -16,6 +16,7 @@ html,body{
 }
 html{
     font-size:calc(100vw / 37.5);
+    // font-size:100px;
 }
 body{
     font-size:rem4px(14);
@@ -118,6 +119,8 @@ body{
                             width:rem4px(26);
                             height:rem4px(21);
                             margin-bottom:rem4px(3.75);
+                            overflow:hidden;
+                            display:block;
                         }
                         span{
                             font-size:rem4px(12);
@@ -198,7 +201,7 @@ body{
         .sale-out {
             width: rem4px(100);
             height: rem4px(100);
-            background: url(/client/asset/images/ico_soldOut.png) no-repeat 50% 50%;
+            background: url(/client/asset/images/cover_sold_out.png) no-repeat 50% 50%;
             background-size: 66%;
             position: absolute;
             left:rem4px(105);
@@ -222,7 +225,7 @@ body{
         .sale-out {
             width: rem4px(100);
             height: rem4px(100);
-            background: url(/client/asset/images/ico_soldOut.png) no-repeat 50% 50%;
+            background: url(/client/asset/images/cover_sold_out.png) no-repeat 50% 50%;
             background-size: 66%;
             position: absolute;
             left:rem4px(15);
@@ -246,8 +249,8 @@ body{
         .sale-out {
             width: rem4px(100);
             height: rem4px(100);
-            background: url(/client/asset/images/ico_soldOut.png) no-repeat 50% 50%;
-            background-size: 66%;
+            background: url(/client/asset/images/cover_sold_out.png) no-repeat 50% 50%;
+            background-size: 100%;
             position: absolute;
             left:rem4px(15);
             top:rem4px(35);

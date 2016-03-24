@@ -10,7 +10,7 @@ import GoTop from "../../../component/gotop.jsx";
 import Loading from "../../common/loading.jsx";
 
 import Header from "./header.jsx";
-import Footer from "../../common/footer.jsx";
+import Footer from "./footer.jsx";
 import Floor from "./floor.jsx";
 
 class Index extends Component{
