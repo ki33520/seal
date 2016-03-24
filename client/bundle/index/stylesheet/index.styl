@@ -108,22 +108,75 @@ body{
             }
             footer{
                 height:rem4px(50);
+                position:absolute;
+                background-color:#fff;
+                bottom:0;
+                width:100%;
                 &>ul{
                     height:rem4px(50);
                     &>li{
                         padding:rem4px(5.6) 0 rem4px(1.9);
+                        float:left;
+                        width:20%;
                         a{
                             font-size:rem4px(12);
+                            display:block;
+                            text-align:center;
+                            &.nav-hover{
+                                color:#801da1;
+                            }
                         }
                         i{
                             width:rem4px(26);
                             height:rem4px(21);
-                            margin-bottom:rem4px(3.75);
                             overflow:hidden;
                             display:block;
+                            margin:0 auto;
+                            margin-bottom:rem4px(3.75);
+                            background-image:url(/client/asset/images/botNav.png);
                         }
                         span{
                             font-size:rem4px(12);
+                        }
+                        &:nth-child(1) i{
+                            background-position:0 0;
+                            background-size:100%;
+                        }
+                        &:nth-child(1) a.nav-hover i{
+                            background-position:0 -21px;
+                            background-size:100%;
+                        }
+                        &:nth-child(2) i{
+                            background-position:0 -42px;
+                            background-size:100%;
+                        }
+                        &:nth-child(2) a.nav-hover i{
+                            background-position:0 -62px;
+                            background-size:100%;
+                        }
+                        &:nth-child(3) i{
+                            background-position:0 -83px;
+                            background-size:100%;
+                        }
+                        &:nth-child(3) a.nav-hover i{
+                            background-position:0 -104px;
+                            background-size:100%;
+                        }
+                        &:nth-child(4) i{
+                            background-position:0 -125px;
+                            background-size:100%;
+                        }
+                        &:nth-child(4) a.nav-hover i{
+                            background-position:0 -146px;
+                            background-size:100%;
+                        }
+                        &:nth-child(5) i{
+                            background-position:0 -168px;
+                            background-size:100%;
+                        }
+                        &:nth-child(5) a.nav-hover i{
+                            background-position:0 -189px;
+                            background-size:100%;
                         }
                     }
                 }
