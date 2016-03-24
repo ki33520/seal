@@ -192,21 +192,34 @@ body {
 			display: flex;
 			justify-content:space-between;
 			align-items: center;
+			overflow: hidden;
+			width: 100%;
 			.now-price {
-			    font-size: .54rem;
+			    display: block;
+			    font-size: .5rem;
 			    line-height: .6rem;
 			    color: #ed1946;
 			    display: block;
+			    &:first-letter{
+			    	font-size:.4rem;
+			    	font-weight:normal;
+			    	padding-right:.06rem;
+			    }
+			    flex-shrink:0;
+			    min-width: 50%;
 			}
 			.old-price {
+		 	    display: block;
+		 	    height: .5rem;
 			    font-size: .32rem;
 			    line-height: .6rem;
 			    color: #999;
 			    text-decoration: line-through;
-			     overflow: hidden;
-		 	     text-overflow:ellipsis;
-		 	     text-indent:.25rem;
-		 	     display: block;
+			    overflow: hidden;
+		 	    text-overflow:ellipsis;
+		 	    flex-grow:1;
+		 	    max-width: 40%;
+                padding-left: .1rem;
 			}
 		}
 	}
