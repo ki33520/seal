@@ -375,13 +375,14 @@ $pink-color = #ED1946;
 }
 
 .good-desc,.faq{
-    min-height:px2rem(30);
+    // min-height:px2rem(30);
+    padding-bottom:px2rem(10);
 }
 
 .good-comment{
     height:100%;
     .slide-tabs{
-        padding-bottom:px2rem(40);
+        // padding-bottom:px2rem(40);
         .slide-tabs-navbar{
             height:1.16rem;
             background:#FFF;
@@ -404,8 +405,16 @@ $pink-color = #ED1946;
     }
     .slide-tabs .slide-tabs-content .slide-tabs-item{
         height:100%;
-        padding-bottom:px2rem(40);
+        // padding-bottom:px2rem(40);
         overflow:hidden;
         transform:translate3D(0,0,0);
+    }
+}
+
+.back-to-top-container{
+    .back-to-top{
+        &.active{
+            z-index:200;
+        }
     }
 }

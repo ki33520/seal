@@ -98,7 +98,7 @@ class GoodComment extends Component{
     handleRefreshComments(){
         const {pageIndex,totalPage} = this.props.goodById.good.comments
         const {commentsFetching,productCode} = this.props.goodById.good
-        let nextPage = pageIndex + 1
+        let nextPage = parseInt(pageIndex) + 1
         if(commentsFetching || totalPage <= pageIndex){
             return false;
         }
