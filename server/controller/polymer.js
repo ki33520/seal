@@ -40,7 +40,7 @@ function categoryFilter(categories){
         _.each(category.children,function(child){
             _category["children"].push({
                 name:child.name,
-                imageUrl:config.imgServer + child.imageUrl,
+                imageUrl: child.imageUrl ? config.imgServer + child.imageUrl : "/client/asset/images/hwg_space.png",
                 id:child.id
             })
         })
