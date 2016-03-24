@@ -48,14 +48,14 @@ export class SceneGroup extends Component{
 
 SceneGroup.defaultProps = {
     defaultScene:"index",
-    scrollable:true,
     onChange:()=>{}
 }
 
 export class Scene extends Component{
     render(){
-        const {key,active,prev,changeScene,resetScene} = this.props;
+        const {key,active,prev,changeScene,resetScene,scrollable} = this.props;
         const classes = classNames("scene",{
+            scrollable,
             active,
             prev
         })
@@ -69,4 +69,8 @@ export class Scene extends Component{
             <div className={classes} key={key}>{child}</div>
         )
     }
+}
+
+Scene.defaultProps = {
+    scrollable:true
 }

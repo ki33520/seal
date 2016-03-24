@@ -34,8 +34,8 @@ class Floor extends Component{
         // console.log(ids)
         this.props.updateGoods({ids:ids.join(",")},"flashbuys",this.props.channel.id)
     }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.active && !this.props.active){
+    componentDidUpdate(prevProps){
+        if(this.props.active && !prevProps.active){
             if(_.isEmpty(this.props.channel.floors)){
                 const {fetchChannel,channel} = this.props
                 fetchChannel({
