@@ -15,7 +15,7 @@ html,body{
     height: auto;
 }
 html{
-    font-size:calc(100vw / 37.5);
+    font-size:calc(100vw / 10);
     // font-size:100px;
 }
 body{
@@ -106,80 +106,12 @@ body{
                     }
                 }           
             }
-            footer{
-                height:rem4px(50);
+            nav.bottomNav{
+                // height:rem4px(50);
                 position:absolute;
                 background-color:#fff;
                 bottom:0;
                 width:100%;
-                &>ul{
-                    height:rem4px(50);
-                    &>li{
-                        padding:rem4px(5.6) 0 rem4px(1.9);
-                        float:left;
-                        width:20%;
-                        a{
-                            font-size:rem4px(12);
-                            display:block;
-                            text-align:center;
-                            &.nav-hover{
-                                color:#801da1;
-                            }
-                        }
-                        i{
-                            width:rem4px(26);
-                            height:rem4px(21);
-                            overflow:hidden;
-                            display:block;
-                            margin:0 auto;
-                            margin-bottom:rem4px(3.75);
-                            background-image:url(/client/asset/images/botNav.png);
-                        }
-                        span{
-                            font-size:rem4px(12);
-                        }
-                        &:nth-child(1) i{
-                            background-position:0 0;
-                            background-size:100%;
-                        }
-                        &:nth-child(1) a.nav-hover i{
-                            background-position:0 rem4px(-21);
-                            background-size:100%;
-                        }
-                        &:nth-child(2) i{
-                            background-position:0 rem4px(-42);
-                            background-size:100%;
-                        }
-                        &:nth-child(2) a.nav-hover i{
-                            background-position:0 rem4px(-62);
-                            background-size:100%;
-                        }
-                        &:nth-child(3) i{
-                            background-position:0 rem4px(-83);
-                            background-size:100%;
-                        }
-                        &:nth-child(3) a.nav-hover i{
-                            background-position:0 rem4px(-104);
-                            background-size:100%;
-                        }
-                        &:nth-child(4) i{
-                            background-position:0 rem4px(-125);
-                            background-size:100%;
-                        }
-                        &:nth-child(4) a.nav-hover i{
-                            background-position:0 rem4px(-146);
-                            background-size:100%;
-                        }
-                        &:nth-child(5) i{
-                            background-position:0 rem4px(-168);
-                            background-size:100%;
-                        }
-                        &:nth-child(5) a.nav-hover i{
-                            background-position:0 rem4px(-189);
-                            background-size:100%;
-                        }
-                    }
-                }
             }
         }
     }

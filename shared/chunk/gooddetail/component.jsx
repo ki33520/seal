@@ -20,7 +20,7 @@ class GoodDetailRouter extends Component{
     render(){
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
-            <Scene name="index"><GoodDetail {...this.props}/></Scene>
+            <Scene name="index" scrollable={false}><GoodDetail {...this.props}/></Scene>
             <Scene name="comment"><GoodComment {...this.props}/></Scene>
             <Scene name="tariff"><Tariff {...this.props}/></Scene>
             <Scene name="thumbnail"><Thumbnail {...this.props}/></Scene>

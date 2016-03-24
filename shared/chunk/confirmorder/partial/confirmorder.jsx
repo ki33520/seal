@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import Icon from "../../../component/icon.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
 import Header from "../../common/header.jsx";
@@ -145,6 +146,11 @@ class ConfirmOrder extends Component{
     render(){
         const {order,alertActive,alertContent} = this.props;
         return (
+            <GoTop relative={true} renderFixed={()=>(
+                <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
+            submiting={this.props.orderVerifying || this.props.orderSubmiting || this.props.paygatewayFetching}
+            onSubmit={this.verifyOrder.bind(this)} ref="SubmitOrder"/>
+            )}>
             <div className="confirm-order-content">
             <Header>确认订单</Header>
             {this.renderReceiver(order.checkedReceiver)}
@@ -159,9 +165,6 @@ class ConfirmOrder extends Component{
                 </div>
             </div>
             {this.renderTotal(order)}
-            <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
-            submiting={this.props.orderVerifying || this.props.orderSubmiting || this.props.paygatewayFetching}
-            onSubmit={this.verifyOrder.bind(this)} ref="SubmitOrder"/>
             <Alert active={alertActive}>{alertContent}</Alert>
             <Dialog onlyConfirm={true} active={this.state.dialogActive} 
             onConfrim={()=>{
@@ -173,6 +176,7 @@ class ConfirmOrder extends Component{
             }}
             >{this.state.dialogContent}</Dialog>
             </div>
+            </GoTop>
         )
     }
 }

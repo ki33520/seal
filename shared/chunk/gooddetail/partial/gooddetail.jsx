@@ -230,6 +230,19 @@ class GoodDetail extends Component{
         }
         return <span className="nowPrice">&yen;{formatPrice(salePrice)}</span>
     }
+    renderToolbar(){
+        const {cartCount} = this.props.cartByUser;
+        const {good} = this.props.goodById
+        const {buyed} = this.state;
+        return <Toolbar cartCount={cartCount} good={good} 
+            popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
+            buyed={buyed}
+            handleAttrToggle={this.handleAttrToggle.bind(this)}
+            handleBuyedChanged={this.handleBuyedChanged.bind(this)}
+            directBuy={this.directBuy.bind(this)} 
+            addToCart={this.addToCart.bind(this)}>
+            </Toolbar>
+    }
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected} = this.props.goodById
@@ -255,7 +268,8 @@ class GoodDetail extends Component{
             "icon-xin":!isCollected
         })
         return (
-            <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
+            <GoTop relative={true} renderFixed={this.renderToolbar.bind(this)}
+            onScroll={this.handleScroll.bind(this)}>
             <div className="good-detail-content">
             <Header>商品详情<a className="globa" href="/"><i></i></a>
             <a className="goods_share" onClick={this.toggleShare.bind(this)}></a>
@@ -287,14 +301,6 @@ class GoodDetail extends Component{
                 </div>
                 {this.state.downVisble?null:<div className="teyla">上拉显示商品详情</div>}
             </div>
-            <Toolbar cartCount={cartCount} good={good} 
-            popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
-            buyed={buyed}
-            handleAttrToggle={this.handleAttrToggle.bind(this)}
-            handleBuyedChanged={this.handleBuyedChanged.bind(this)}
-            directBuy={this.directBuy.bind(this)} 
-            addToCart={this.addToCart.bind(this)}>
-            </Toolbar>
             <div className={downClasses}>
                 <Tabs>
                     <TabsItem title="图文详情">

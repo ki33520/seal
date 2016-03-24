@@ -48,7 +48,7 @@ class ConfirmOrderRouter extends Component{
         }
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
-            <Scene name="index"><ConfirmOrder {...this.props}/></Scene>
+            <Scene name="index" scrollable={false}><ConfirmOrder {...this.props}/></Scene>
             <Scene name="receiver"><Receiver initialState={receiverInitialState} {...this.props}/></Scene>
             <Scene name="coupon"><Coupon {...this.props.order} onCheck={this.handleChangeCoupon.bind(this)}/></Scene>
             </SceneGroup>

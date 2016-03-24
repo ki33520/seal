@@ -55,9 +55,11 @@ class GoTop extends Component{
     }
     render(){
         if(this.props.relative){
+            const {renderFixed} = this.props
             return (
                 <div className="back-to-top-container">
                 {this.renderButton()}
+                {renderFixed()}
                 <div className="back-to-top-inner" ref="scrollNode">
                 {this.props.children}
                 </div>
@@ -70,6 +72,7 @@ class GoTop extends Component{
 
 GoTop.defaultProps = {
     relative:false,
+    renderFixed:()=>{},
     onScroll:()=>{}
 }
 
