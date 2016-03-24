@@ -44,11 +44,15 @@
         }
     }
     .list{
+        padding:.3rem 0;
         li{
             border-top: 1px solid #d7d7d7;
             background-color: #fff;
             display: flex;
             align-items: center;
+            &:first-child{
+                border-top:0;
+            }
             >span{
                 flex: 2;
                 padding-left: .5rem;
@@ -172,12 +176,14 @@
             &>input,
             &>.inner{
                 flex:10;
+                display: block;
             }
             &>.inner{
             	display: flex;
                 align-items: center;
             	&>input{
             		flex: 6;
+                    display: block;
             	}
             	&>a{
 	                display: block;

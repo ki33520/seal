@@ -98,9 +98,6 @@ class Cart extends Component {
             }
         }
     }
-    componentDidMount(){
-        disableHistoryForwardCacheThen();
-    }
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
         const cart = carts[cartIndex];
