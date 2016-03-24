@@ -137,7 +137,7 @@ body{
 .activityGeneral .sale-out{
 	width:1.813rem;
 	height:1.813rem;
-	background-image:url(/client/asset/images/ico_soldOut.png);
+	background-image:url(/client/asset/images/cover_sold_out.png);
 	background-size:100%;
 	position:absolute;
 	left:1rem;
