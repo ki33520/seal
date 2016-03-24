@@ -1,0 +1,176 @@
+.search-wrap{
+    height:100%;
+    background:#F7F7F7;
+    .search-box{
+        &>input{
+            box-sizing:border-box;
+            border:0 none;
+        }
+        &>span{
+            font-size:rem4px(12);
+        }
+        &>.reset{
+            width:rem4px(13);
+            height:rem4px(17);
+            display:block;
+            visibility:hidden;
+            opacity:0;
+            color:#999;
+            vertical-align:middle;
+            top:rem4px(5);
+            &.active{
+                visibility:visible;
+                opacity:1;
+                transition:opacity .3s ease-in;
+            }
+        }
+    }
+    .searchOut{
+        display:block;
+    }
+}
+
+body.grey{
+    background-color:#f7f7f7;
+}
+.searchResult header{
+        background: #fff url(/client/asset/images/headerBg_2.png) 0 bottom no-repeat;
+}
+.searchResult{
+    background-color:#fff;
+}
+.search-wrap {
+    width: 100%;
+}
+.search-header {
+    height:rem4px(43);
+    background-color: #fff;
+    border-bottom:1px solid #d7d7d7;
+}
+.search-box {
+    position: absolute;
+    left:rem4px(0.266667 * 37.5);
+    top:rem4px(0.133333 * 37.5);
+    right:rem4px(1.6 * 37.5);
+    overflow: hidden;
+}
+.searchResult .search-box {
+    left:rem4px(1.6 * 37.5);
+    top:rem4px(0.16 * 37.5);
+}
+.search-btn {
+    float:right;
+    width:60px;
+    text-align: center;
+    line-height:rem4px(1.16 * 37.5);
+    color:#801da1;
+}
+.search-box input{
+    background-color: #E3E3E6;
+    border-radius:5px;
+    height: rem4px(.8 * 37.5);
+    color: #333;
+    font-size: rem4px(0.32 * 37.5);
+    width: 100%;
+    padding-left:rem4px(0.86 * 37.5);
+    line-height:normal;
+}
+.search-box span{
+    position: absolute;
+    color: #666;
+    width:17px;
+    height:17px;
+    text-align: center;
+    top: rem4px(0.15 * 37.5);
+    left: rem4px(0.2 * 37.5);
+    background:url(/client/asset/images/searchIcon.png) 0 0 no-repeat;
+    background-size:100%;
+}
+.search-box.searchFoucs span{
+    background:url(/client/asset/images/searchIcon.png) 0 -25px no-repeat;
+    background-size:100%;
+}
+.search-box .reset{
+    position:absolute;
+    left:auto;
+    right:rem4px(0.18 * 37.5);
+    top:rem4px(0.08 * 37.5);
+    display:none;
+    line-height:normal;
+}
+.search-box .reset .iconfont{
+    font-size:rem4px(0.42 * 37.5);
+}
+
+.searchHot{
+    border-bottom:1px solid #d7d7d7;
+    padding:rem4px(0.16 * 37.5) rem4px(.32 * 37.5);
+    background-color:#fdfdfd;
+}
+.searchHot span{
+    display:inline-block;
+    line-height:rem4px(1.2 * 37.5);
+}
+.searchHot div{
+    float:right;
+    width:88%;
+}
+.searchHot a{
+    padding:rem4px(0.14 * 37.5) rem4px(.18 * 37.5);
+    display:inline-block;
+    border-radius:5px;
+    border:1px solid #999;
+    margin:rem4px(0.16 * 37.5) rem4px(.13 * 37.5);
+    line-height:rem4px(0.38 * 37.5);
+    font-size:rem4px(0.32 * 37.5);
+}
+.searchList{
+    padding:0 rem4px(.32 * 37.5);
+    background-color:#f7f7f7;
+}
+.searchList span{
+    display:block;
+    border-bottom:1px solid #d7d7d7;
+    height:rem4px(1.33334 * 37.5);
+    margin-top:rem4px(0.4 * 37.5);
+}
+.searchList span em{
+    float:left;
+    display:block;
+    font-size:rem4px(0.38 * 37.5);
+    line-height:rem4px(1.1 * 37.5);
+}
+.searchList span i{
+    float:right;
+    color:#801da1;
+    border:1px solid #801da1;
+    display:block;
+    border-radius:3px;
+    padding:rem4px(0.12 * 37.5) rem4px(.16 * 37.5);
+    line-height:rem4px(0.6 * 37.5);
+    font-size:rem4px(0.38 * 37.5);
+}
+.searchList a{
+    display:block;
+    border-bottom:1px solid #d7d7d7;
+    height:rem4px(1.2 * 37.5);
+    line-height:rem4px(1.2 * 37.5);
+    width:100%;
+    overflow:hidden;
+    font-size:rem4px(0.32 * 37.5);
+}
+
+.searchOut{
+    padding:0 rem4px(0.32 * 37.5);
+    background-color:#f7f7f7;
+    display:none;
+}
+.searchOut a{
+    display:block;
+    border-bottom:1px solid #d7d7d7;
+    height:rem4px(1.2 * 37.5);
+    line-height:rem4px(1.2 * 37.5);
+    width:100%;
+    overflow:hidden;
+    font-size:rem4px(0.32 * 37.5);
+}

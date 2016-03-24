@@ -7,6 +7,7 @@ import Footer from "../../common/footer.jsx";
 import Icon from "../../../component/icon.jsx";
 import classNames from "classnames";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import Category from "./category.jsx";
 import Brand from "./brand.jsx";
 import Origin from "./origin.jsx";
@@ -32,17 +33,17 @@ class Polymer extends Component{
                     </div>
                 </Header>
                 <div className="polymer-list">
-                    <SlideTabs navbarSlidable={false} onSelect={this.handleSelect.bind(this)}>
-                        <SlideTabsItem navigator={()=><i>类别</i>}>
+                    <Swiper onSelect={this.handleSelect.bind(this)}>
+                    <SwiperItem control={()=><b>类别</b>}>
                             <Category {...this.props.allCategory} {...this.props}/>
-                        </SlideTabsItem>
-                        <SlideTabsItem navigator={()=><i>品牌</i>}>
+                    </SwiperItem>
+                    <SwiperItem control={()=><b>品牌</b>}>
                             <Brand {...this.props}/>
-                        </SlideTabsItem>
-                        <SlideTabsItem navigator={()=><i>国家</i>}>
+                    </SwiperItem>
+                    <SwiperItem control={()=><b>国家</b>}>
                             <Origin {...this.props}/>
-                        </SlideTabsItem>
-                    </SlideTabs>
+                    </SwiperItem>
+                    </Swiper>
                 </div>
                 <Footer activeIndex="1"/>
             </div>

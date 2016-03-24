@@ -48,6 +48,7 @@ export class SceneGroup extends Component{
 
 SceneGroup.defaultProps = {
     defaultScene:"index",
+    scrollable:true,
     onChange:()=>{}
 }
 

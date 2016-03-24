@@ -3,15 +3,18 @@
     height:100%;
     &>.scene{
         width:100%;
-        overflow-x:hidden;
-        overflow-y:auto;
-        -webkit-overflow-scrolling: touch;
         height:100%;
+        overflow:hidden;
         visibility:hidden;
         position:absolute;
         z-index:1000;
         background:#FFF;
         opacity:0;
+        &.scrollable{
+            overflow-x:hidden;
+            overflow-y:auto;
+            -webkit-overflow-scrolling: touch;
+        }
         &.prev{
             z-index:1001;
             opacity:0.3;

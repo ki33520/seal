@@ -6,6 +6,7 @@ import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Loading from "../../common/loading.jsx";
 
 import Header from "./header.jsx";
@@ -39,23 +40,28 @@ class Index extends Component{
                 channelFetching = channelFetching || true
             }
             return (
-                <SlideTabsItem navigator={()=><span><b>{channel.name}</b></span>} key={i}>
+                <TabsItem title={channel.name} key={i}>
+                <GoTop relative={true}>
                 <Floor channel={channel} {...props}/>
                 <Loading active={channelFetching}/>
-                </SlideTabsItem>
+                </GoTop>
+                </TabsItem>
             )
         })
         return (
             <div className={classes}>
             <Header {...this.props}/>
-            <SlideTabs axis="x" activeIndex={activeIndex} contentSlidable={false} 
-            onSelect={this.handleSelect.bind(this)}>
+            <Tabs navbarSlidable={true} onSelect={this.handleSelect.bind(this)}>
             {tabs}
-            </SlideTabs>
+            </Tabs>
             <Footer activeIndex="0"/>
             </div>
         )
     }
+}
+
+Index.defaultProps = {
+    changeScene:()=>{}
 }
 
 export default Index;

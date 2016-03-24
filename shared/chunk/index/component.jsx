@@ -17,7 +17,7 @@ class IndexRouter extends Component{
     }
     render(){
         return (
-            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
+            <SceneGroup onChange={this.handleSceneChange.bind(this)} scrollable={false}>
                 <Scene name="index"><Index {...this.props}/></Scene>
                 <Scene name="search"><SearchBox {...this.props}/></Scene>
             </SceneGroup>

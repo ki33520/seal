@@ -9,6 +9,8 @@ function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
         ReactDOM.render(<WeatherApp initialState={initialState} />,document.getElementById('index'));
 }
+
+document.documentElement.style.fontSize = window.innerWidth/3.75 + 'px'
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

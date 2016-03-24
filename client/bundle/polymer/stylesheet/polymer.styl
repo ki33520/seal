@@ -7,6 +7,7 @@
 @import "../../common/search";
 @import "../../component/slidetabs";
 @import "../../component/scrollnav";
+@import "../../component/swiper";
 @import "../../common/error.styl";
 @import "./allbrands";
 @import "./catePoly.css";
@@ -19,37 +20,31 @@
             height:100%;
             overflow:hidden;
             .polymer-list{
-                height:100%;
-                padding-bottom:px2rem(37);
+                width:100%;
+                bottom:px2rem(45);
+                top:px2rem(37);
                 box-sizing:border-box;
                 overflow:hidden;
+                position:absolute;
             }
         }
     }
 }
 
 .polymer-list{
-    &>.slide-tabs{
-        padding-bottom:px2rem(44);
-        box-sizing:border-box;
-        &>.slide-tabs-navbar{
-            background:#FFF;
+    &>.swiper{
+        top:0;
+        bottom:0;
+        &>.swiper-control{
+            width:100%;
+            height:43px;
             border-bottom:1px solid #d7d7d7;
-            &>.slide-tabs-navbar-item{
-                line-height:px2rem(37);
-                border-left:0 none;
-                &.active{
-                    i{
-                        color:#801da1;
-                        border-bottom:px2rem(1) solid #801da1;
-                    }
-                }
+            &>.swiper-control-item{
+                line-height:43px;
             }
         }
-        &>.slide-tabs-content{
-            &>.slide-tabs-item{
-                position:relative;
-            }
+        &>.swiper-content{
+            top:43px;
         }
     }
 }
@@ -59,6 +54,32 @@
     width:100%;
     position:absolute;
     overflow:hidden;
+    &>.swiper-vertical{
+        top:0;
+        display:flex;
+        background:#F7F7F7;
+        &>.swiper-control{
+            width:25%;
+            position:static;
+            background:#F7F7F7;
+            &>.swiper-control-item{
+                border-right:0 none;
+                line-height:px2rem(41);
+                display:block;
+                text-align:center;
+                border-bottom:1px solid #E0E0E0;
+                &.active{
+                    border-left:px2rem(5) solid #801da1;
+                    animation:shake 0.5s;
+                    background:#FFF;
+                }
+            }
+        }
+        &>.swiper-content{
+            // position:static;
+            height:100%;
+        }
+    }
     &>.slide-tabs{
         background:#F7F7F7;
         .slide-tabs-navbar{
@@ -69,6 +90,7 @@
             .slide-tabs-navbar-item{
                 border-right:0 none;
                 line-height:px2rem(41);
+                width:100%;
                 &.active{
                     border-left:px2rem(5) solid #801da1;
                     animation:shake 0.5s;

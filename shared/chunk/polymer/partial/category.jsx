@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 
 class Category extends Component{
     constructor(props){
@@ -44,14 +45,14 @@ class Category extends Component{
         let {categories} = this.props
         const tabs = categories.map((category,i)=>{
             return (
-                <SlideTabsItem navigator={()=><span>{category.name}</span>} key={i}>{this.renderCategory(category)}</SlideTabsItem>
+                <SwiperItem control={()=><span>{category.name}</span>} key={i}>{this.renderCategory(category)}</SwiperItem>
             )
         })
         return (
             <div className="category-list">
-                <SlideTabs axis="y" contentSlidable={false} onSelect={this.handleSelect.bind(this)}>
+                <Swiper axis="y" onSelect={this.handleSelect.bind(this)}>
                 {tabs}
-                </SlideTabs>
+                </Swiper>
             </div>
         )
     }
