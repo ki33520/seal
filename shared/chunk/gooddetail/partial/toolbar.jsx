@@ -39,8 +39,9 @@ class Toolbar extends Component{
         if(good.stock === 0 || good.flashbuy["active"]){
             canAddCart = false
         }
+        // console.log('canAddCart',canAddCart)
         const addCartClasses = classNames("goods_add",{
-            "disabled":canAddCart
+            "disabled":!canAddCart
         })
         const directBuyClasses = classNames("goods_buy",{
             "disabled":good.stock === 0

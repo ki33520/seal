@@ -27,11 +27,15 @@
             width: 100%;
             transform: translateX(-100%);
             opacity: 0;
+            display:none;
             visibility: hidden;
+            overflow:hidden;
             &.active {
                 opacity: 1;
                 transform: translateX(0);
                 visibility: visible;
+                display:block;
+                padding-bottom:px2rem(36);
             }
             &.active ~ * {
                 transform: translateX(100%);
