@@ -32,9 +32,10 @@ class SearchBox extends Component{
     }
     renderHistory(){
         if(this.props.search.history && this.props.search.history.length > 0){
-            const history = this.props.search.history.map((keyword,i)=>{
+            let history = this.props.search.history.map((keyword,i)=>{
                 return <a href={"/search?k="+keyword} key={i}>{keyword}</a>
             })
+            history = history.slice(0,10)
             return (
                 <div className="searchList">
                     <span className="clearfix">

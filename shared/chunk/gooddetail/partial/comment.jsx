@@ -92,7 +92,7 @@ class GoodComment extends Component{
     }
     componentDidMount(){
         const {productCode} = this.props.goodById.good
-        // this.props.fetchComments({productCode})
+        this.props.fetchComments({productCode})
         this.props.fetchShowups({productCode})
     }
     handleRefreshComments(){
