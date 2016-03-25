@@ -61,17 +61,13 @@ class Comment extends Component{
     componentWillReceiveProps(nextProps){
         const {alert} = this.props;
         const {order,alertContent,back_path} = this.props.orderByParam;
-        const back_url = back_path === null ? null : "/orderlist/"+back_path;
+        const back_url = back_path.back === null ? "/orderdetail/"+order.orderId+"?back="+back_path.detail : "/orderlist/"+back_path.back;
         if(nextProps.orderByParam.saveCommentChanging === false &&
            this.props.orderByParam.saveCommentChanging === true){
             if(nextProps.orderByParam.saveCommentChanged === true){
                 alert(nextProps.orderByParam.msg,1000);
                 setTimeout(function(){
-                    if(back_url){
-                        window.location.assign(back_url);
-                    }else{
-                        window.history.back();
-                    }
+                    window.location.assign(back_url);
                 },2000)
             }else{
                 alert(nextProps.orderByParam.msg,1000);
@@ -143,7 +139,7 @@ class Comment extends Component{
         const {currentRoute} = this.props;
         const {order,alertActive,alertContent,back_path} = this.props.orderByParam;
         const {itemList} = order;
-        const back_url = back_path === null ? null : "/orderlist/"+back_path;
+        const back_url = back_path.back === null ? null : "/orderlist/"+back_path.back;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         if(currentRoute === "comment"){
             return (
