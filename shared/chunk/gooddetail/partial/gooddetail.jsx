@@ -62,6 +62,7 @@ class GoodDetail extends Component{
         fetchIsCollected({
             singleCode:code
         })
+        // fetchComments({productCode})
     }
     handleScroll(scrollNode){
         const scrollTop = dom.scrollTop(scrollNode)
