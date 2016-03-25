@@ -66,6 +66,7 @@
                 padding: .2rem 1rem .2rem 0;
                 text-align: right;
                 line-height: 0;
+                width: 50%;
                 img{
                     border-radius:100%;
                     width: 50%;
@@ -270,7 +271,8 @@
         height: 1.2rem;
         margin-right: .1rem;
         margin-left: .1rem;
-        &.year{
+        &.year,
+        &.gender{
             margin-left: .3rem;
             button {
                 .dropdown-status{
@@ -281,6 +283,8 @@
         button {
             padding: 0;
             line-height: 1.2rem;
+            height: 100%;
+            overflow: hidden;
             border: 0 none;
             width: 100%;
             .dropdown-status{

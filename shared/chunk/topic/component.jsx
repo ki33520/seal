@@ -42,8 +42,13 @@ class Topic extends Component{
         list.forEach(function(item,i){
             const salesPrice = formatPrice(destPriceForGoods(item).destPrice);
             const originPrice = formatPrice(item.originPrice);
+            const saleState = classNames({
+                "sale-out":goods.localStock<1&&goods.onSale,
+                "put-off":!goods.onSale
+            });
             goods.push(
                 <a href={"/gooddetail/"+item.singleCode} className="clearfix" key={i}>
+                    <div className={saleState}></div>
                     <img src={item.imageUrl} />
                     <div className="right">
                         <span className="name">{item.title}</span>
