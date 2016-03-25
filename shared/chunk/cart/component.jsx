@@ -42,8 +42,8 @@ class Cart extends Component {
         }
     }
     componentWillReceiveProps(nextProps){
-        const {isChecked,isWarning, carts,cartIndex,groupIndex,goodsIndex,singleCode} = nextProps.cartByUser;
-         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);       
+        const {isChecked,isWarning,carts,cartIndex,groupIndex,goodsIndex,singleCode} = nextProps.cartByUser;
+        const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);       
         if(isChecked&&isWarning){
              this.setState({
                 dialogActive:true,
