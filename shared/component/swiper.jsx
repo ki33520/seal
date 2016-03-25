@@ -90,7 +90,7 @@ Swiper.defaultProps = {
     effect:"fade",
     axis:"x",
     controlSliding:false,
-    contentSliding:true,
+    contentSliding:false,
     onSelect:function(){}
 }
 
