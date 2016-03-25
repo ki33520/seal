@@ -36,7 +36,7 @@ class Topic extends Component{
     }
 
     render(){
-        const {isFetching,list,imageUrl,title} = this.props;
+        const {isFetching,list,imageUrl,title,totalPage} = this.props;
         let goods = [];
  
         list.forEach(function(item,i){
@@ -66,6 +66,7 @@ class Topic extends Component{
                     {goods}
                     </div>
                     <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
+                    {this.state.pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                 </GoTop>
             </div>
         )
