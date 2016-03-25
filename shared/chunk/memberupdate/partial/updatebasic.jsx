@@ -5,6 +5,7 @@ import _ from "lodash";
 import classNames from "classnames";
 import Header from "../../common/header.jsx";
 import Datepicker from "./datepicker.jsx";
+import Selected from "../../../component/selected/selected.jsx";
 
 import Alert from "../../../component/alert.jsx";
 
@@ -87,6 +88,10 @@ class UpdateBasic extends Component{
         e && e.preventDefault();
         this.props.changeField("field"+fieldName,e.target.value);
     }
+    handleSelectChange(fieldName,value,e){
+        e && e.preventDefault();
+        this.props.changeField("field"+fieldName,value);
+    }
     handleChangeBasic(e){
         e && e.preventDefault();
         const {changeBasic,basicByForm} = this.props;
@@ -133,6 +138,11 @@ class UpdateBasic extends Component{
     render(){
         const {basicByForm,changeScene} = this.props;
         const {fieldnickName,fieldgender,alertContent,alertActive} = basicByForm;
+
+        var optionGender = [{label:"请选择",value:"-1"}];
+        _.map(["保密","男","女"],function(a,b){
+            optionGender.push({label:a,value:b.toString()});
+        })
         return (
             <div className="basic-content">
                 <Header onGoBack={changeScene.bind(this,"index")}>
@@ -149,14 +159,9 @@ class UpdateBasic extends Component{
                 <div className="form-item">
                     <div className="label-item">
                         <label>性别</label>
-                        <select value={fieldgender} name="gender" onChange={this.handleFieldChange.bind(this,"gender")}>
-                            <option value="-1">请选择</option>
-                            {
-                                _.map(["保密","男","女"],function(a,b){
-                                    return (<option key={b} value={b}>{a}</option>);
-                                })
-                            }
-                        </select>
+                        <Selected placeholder="请选择" className="selected gender" options={optionGender} closeOnSelect={true} 
+                            maxHeight="5rem" 
+                            value={fieldgender} onChange={this.handleSelectChange.bind(this,"gender")}/>
                     </div>
                 </div>
                 <div className="form-item">
