@@ -35,7 +35,7 @@ class Toolbar extends Component{
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
 
         const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
-        let canAddCart = good["canAddCart"]?good["canAddCart"]:true
+        let canAddCart = good["canAddCart"]
         if(good.stock === 0 || good.flashbuy["active"]){
             canAddCart = false
         }
