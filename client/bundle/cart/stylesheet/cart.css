@@ -322,7 +322,7 @@
 .sale-out {
     width: 1.28rem;
     height: 1.28rem;
-    background-image: url(/client/asset/images/cover_sold_out.png);
+    background-image: url(/client/asset/images/icon_sold_out.png);
     background-size: 100%;
     position: absolute;
     left: 50%;
@@ -334,7 +334,7 @@
  .put-off {
     width: 1.28rem;
     height: 1.28rem;
-    background-image: url(/client/asset/images/cover_not_sell.png);
+    background-image: url(/client/asset/images/icon_not_sell.png);
     background-size: 100%;
     position: absolute;
     left: 50%;
