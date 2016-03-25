@@ -10,6 +10,7 @@
         z-index:1000;
         background:#FFF;
         opacity:0;
+        display:none;
         // -webkit-backface-visibility: hidden;
         &.scrollable{
             overflow-x:hidden;
@@ -24,6 +25,7 @@
         &.active{
             z-index:1002;
             opacity:1;
+            display:block;
             box-shadow:0 px2rem(2) px2rem(2) 0 rgba(0,0,0,.14),
             0 px2rem(3) px2rem(1) px2rem(-2) rgba(0,0,0,.2),
             0 px2rem(1) px2rem(5) 0 rgba(0,0,0,.12)
