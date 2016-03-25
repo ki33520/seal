@@ -8,6 +8,7 @@
 @import "../../component/alert.styl"
 @import "../../component/numberpicker.styl"
 @import "../../component/slidetabs.styl"
+@import "../../component/swiper.styl"
 @import "../../component/tabs.styl"
 @import "../../component/slider.styl"
 @import "../../component/popup.styl"
@@ -381,12 +382,22 @@ $pink-color = #ED1946;
 
 .good-comment{
     height:100%;
-    .slide-tabs{
+    width:100%;
+    overflow:hidden;
+    &>header{
+        position:absolute;
+        width:100%;
+    }
+    .swiper{
         // padding-bottom:px2rem(40);
-        .slide-tabs-navbar{
+        bottom:px2rem(1);
+        .swiper-control{
             height:1.16rem;
             background:#FFF;
-            .slide-tabs-navbar-item{
+            width:100%;
+            border-bottom:.03125rem solid #e0e0e0;
+            border-top:.03125rem solid #e0e0e0;
+            .swiper-control-item{
                 line-height:1.16rem;
                 border:0 none;
                 &.active{
@@ -417,8 +428,22 @@ $pink-color = #ED1946;
             z-index:200;
         }
     }
+    .back-to-top-inner{
+        transform:translate3D(0,0,0)
+    }
 }
 
 .mask-layer{
     z-index:100;
+}
+
+.scene-group{
+    // position:absolute;
+    // width:100%;
+    .scene{
+        display:none;
+        &.active{
+            display:block;
+        }
+    }
 }
