@@ -3,6 +3,7 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import Sticky from "../../../component/sticky.jsx";
 import Icon from "../../../component/icon.jsx";
@@ -46,14 +47,12 @@ class Trendy extends React.Component{
         const tabs = categories.map((category,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{category.name}</i>} key={i}>
-                    <div><GoodList category={category} />
-                    <Refresher handleRefresh={this.beginRefresh.bind(this,i)} 
-                    active={category.isFetching}/>
-                    {category.pageIndex == category.totalPage?(
-                        <div className="no-more">已显示全部内容</div>
-                    ):null}
-                    <Loading active={category.isFetching}/>
-                    </div>
+                    <GoTop relative={true}>
+                        <GoodList category={category} />
+                        <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={category.isFetching}/>
+                        {category.pageIndex == category.totalPage?(<div className="no-more">已显示全部内容</div>):null}
+                        <Loading active={category.isFetching}/>
+                    </GoTop>
                 </SlideTabsItem>
             )
         });

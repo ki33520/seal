@@ -125,7 +125,7 @@ class OrderDetail extends Component{
         }
     }
     renderFooter(){
-        const {order,back_path} = this.props.orderByParam;
+        const {order} = this.props.orderByParam;
         const {orderStatus,orderId,itemList} = order;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         switch(orderStatus){
@@ -155,11 +155,10 @@ class OrderDetail extends Component{
                     </div>
                 )
             case "STATUS_FINISHED":
-                const index = back_path.back === null ? 0 : back_path.back;
                 if(hasNotComment.length>0){
                     return (
                         <div className="confirmBtns">
-                            <a href={"/orderdetail/"+orderId+"?detail="+index+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
+                            <a href={"/orderdetail/"+orderId+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
                         </div>
                     );
                 }else{
@@ -243,7 +242,7 @@ class OrderDetail extends Component{
     }
     render(){
         const {order,back_path,alertActive,alertContent} = this.props.orderByParam;
-        const back_url = back_path.back === null ? "/orderlist" : "/orderlist/"+back_path.back;
+        const back_url = back_path === null ? "/orderlist" : "/orderlist/"+back_path;
         const class_detail = classNames({
             "order-detail-info": true,
             "order-bottom": this.renderFooter() != null
