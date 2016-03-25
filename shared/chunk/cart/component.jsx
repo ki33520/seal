@@ -218,6 +218,7 @@ class Cart extends Component {
     renderGoods(goods,i,j,k) {
         const salePrice = formatPrice(goods.salePrice);
         const maxBuy = goods.maxBuy;
+        const minBuy = goods.minStep;
         const buyed = goods.buyed;
         const limitStyle = classNames({
             limitBuy:maxBuy
@@ -248,7 +249,7 @@ class Cart extends Component {
                             </p>
                             <div className="act_wrap"> 
                                 <NumberPicker value={buyed} 
-                                minimum={goods.minStep} maximum={maxBuy} step={goods.step}
+                                minimum={minBuy>maxBuy?buyed:minBuy} maximum={maxBuy?maxBuy:buyed} step={goods.step}
                                 onChange={this.handleChangeBuyed.bind(this,goods,i,j,k)} />
                             </div>
                         </div>
