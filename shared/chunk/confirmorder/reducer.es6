@@ -72,6 +72,7 @@ function orderByParam(state={},action){
             return Object.assign({},state,{
                 orderVerifying:false,
                 orderVerified:action.res.isVerified,
+                orderVerifiedErrCode:action.res.errCode,
                 orderVerifiedErrMsg:errMsgByCode(action.res.errCode)
             })
         case REQUEST_PAYGATEWAY:
@@ -103,10 +104,11 @@ function errMsgByCode(errCode){
             errMsg = "校验失败,请检查网络是否可用"
             break
         case -402104:
-            // errMsg = "商品code不存在"
-            errMsg = "商品已下架，请重新提交!"
-            break
         case -402105:
+            // errMsg = "商品code不存在"
+            // errMsg = "商品已下架，请重新提交!"
+            errMsg = "超出购买限制，请重新提交!"
+            break
         case -402106:
         case -402112:
             // errMsg = "商品库存不足"
@@ -119,7 +121,8 @@ function errMsgByCode(errCode){
             errMsg = "超出购买限制，请重新提交!"
             break
         case -402109:
-            errMsg = "商品购买数量低于起购数"
+            // errMsg = "商品购买数量低于起购数"
+            errMsg = "超出购买限制，请重新提交!"
             break
         case -402110:
             // errMsg = "购买商品总额超出每日购买限额"

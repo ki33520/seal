@@ -23,8 +23,8 @@ class Dialog extends Component{
         const {onlyConfirm} = this.props;
         return (
             <div className="dialog-btns">
-                {onlyConfirm?null:<button onClick={this.handleCancel.bind(this)}>取消</button>}
-                <button onClick={this.handleConfirm.bind(this)}>确定</button>
+                {onlyConfirm?null:<button onClick={this.handleCancel.bind(this)}>{this.props.cancelText}</button>}
+                <button onClick={this.handleConfirm.bind(this)}>{this.props.confirmText}</button>
             </div>
         )
     }
@@ -47,6 +47,8 @@ class Dialog extends Component{
 Dialog.defaultProps = {
     active:false,
     title:'提示',
+    confirmText:"确定",
+    cancelText:"取消",
     onlyConfirm:false,
     onConfrim:()=>{},
     onCancel:()=>{}
