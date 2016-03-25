@@ -133,13 +133,13 @@ class ConfirmOrder extends Component{
                 let message = {
                     orderNo:orderNo,
                 }
-                // fetchPayGateway(base64EncodeForURL(urlParam(message)))
+                fetchPayGateway(base64EncodeForURL(urlParam(message)))
             }
         }
         if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
             setTimeout(()=>{
                 // console.log('submitOrder')
-                // ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
+                ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
             },10)
         }
     }
