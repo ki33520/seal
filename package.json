@@ -37,6 +37,7 @@
     "jshashes": "^1.0.5",
     "lodash": "^3.10.1",
     "md5": "^2.0.0",
+    "memory-cache": "^0.1.4",
     "method-override": "^2.3.3",
     "moment": "^2.10.6",
     "normalize.css": "^3.0.3",
