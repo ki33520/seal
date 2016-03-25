@@ -42,12 +42,13 @@ body{
 	}
 	.slide-tabs-content{
 		padding-bottom:px2rem(83);
-		&.slide-tabs-content-fixed {
-			height: 100%;
-		}
 		.slide-tabs-item{
 			position:relative;
-			height: 100%;
+			.back-to-top{
+				position:absolute;
+				top:px2rem(30);
+			}
+			// overflow-y:scroll;
 		}
 	}
 }
@@ -69,7 +70,4 @@ body{
     height:.78rem;
     background:url(/client/asset/images/indexTitle_1.png) no-repeat;
     background-size:95% 95%;
-}
-.no-more {
-	margin-bottom: 1.38rem;
 }

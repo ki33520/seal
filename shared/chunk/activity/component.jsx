@@ -3,10 +3,9 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import util from "../../lib/util.es6";
 import Refresher from "../../component/refresher.jsx";
-import GoTop from "../../component/gotop.jsx";
 import Header from "../common/header.jsx";
 import GoodItem from "./partial/goodItem.jsx";
-import fetchGoods from "./action.es6";
+import fetchGoods from "./action.es6"; 
 
 class Activity extends React.Component{
     constructor(props){
@@ -56,21 +55,19 @@ class Activity extends React.Component{
 
         return (
             <div className="inner-scroll">
-                <GoTop relative={true}>
-                    <Header>
-                        <span className="title">{title}</span>
-                    </Header>
-                    <div className="specialActivity">
-                        <div className="banner">
-                          <img src={imageUrl} alt="" />
-                        </div>
-                        <div className="specialActivity_list clearfix">
-                            {goods}
-                        </div>
+                <Header>
+                    <span className="title">{title}</span>
+                </Header>
+                <div className="specialActivity">
+                    <div className="banner">
+                      <img src={imageUrl} alt="" />
                     </div>
-                    <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
-                    {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
-                </GoTop>
+                    <div className="specialActivity_list clearfix">
+                        {goods}
+                    </div>
+                </div>
+                <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
+                {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
             </div>
         )
     }

@@ -6,7 +6,6 @@ import Icon from "../../component/icon.jsx";
 import classNames from "classnames";
 import {formatPrice,destPriceForGoods} from "../../lib/util.es6";
 import Refresher from "../../component/refresher.jsx";
-import GoTop from "../../component/gotop.jsx";
 
 class Topic extends Component{
     constructor(props){
@@ -36,7 +35,7 @@ class Topic extends Component{
     }
 
     render(){
-        const {isFetching,list,imageUrl,title,totalPage} = this.props;
+        const {isFetching,list,imageUrl,title} = this.props;
         let goods = [];
  
         list.forEach(function(item,i){
@@ -60,14 +59,11 @@ class Topic extends Component{
 
         return (
             <div className="topic-content">
-                <GoTop relative={true}>
-                    <Header>{title}</Header>
-                    <div className="flashBuy">
-                    {goods}
-                    </div>
-                    <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
-                    {this.state.pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
-                </GoTop>
+            <Header>{title}</Header>
+            <div className="flashBuy">
+            {goods}
+            </div>
+            <Refresher handleRefresh={this.beginRefresh.bind(this)} active={isFetching}/>
             </div>
         )
     }
