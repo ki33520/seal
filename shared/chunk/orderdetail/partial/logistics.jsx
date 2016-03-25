@@ -90,7 +90,7 @@ class Logistics extends Component{
     render(){
         const {currentRoute} = this.props;
         const {logistics,order,back_path} = this.props.orderByParam;
-        const back_url = back_path.back === null ? null : "/orderlist/"+back_path.back;
+        const back_url = back_path === null ? null : "/orderlist/"+back_path;
 
         var content,
             parcel = [];

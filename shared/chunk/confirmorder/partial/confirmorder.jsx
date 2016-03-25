@@ -139,8 +139,7 @@ class ConfirmOrder extends Component{
         if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
             setTimeout(()=>{
                 // console.log('submitOrder')
-                document.getElementById("submitForm").submit()
-                // ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
+                ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
             },10)
         }
     }
@@ -184,7 +183,7 @@ class ConfirmOrder extends Component{
             <GoTop relative={true} renderFixed={()=>(
                 <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
             submiting={this.props.orderVerifying || this.props.orderSubmiting || this.props.paygatewayFetching}
-            onSubmit={this.verifyOrder.bind(this)}/>
+            onSubmit={this.verifyOrder.bind(this)} ref="SubmitOrder"/>
             )}>
             <div className="confirm-order-content">
             <Header>确认订单</Header>
