@@ -60,6 +60,10 @@ export class Swiper extends Component{
             key:child.key ? child.key:index
         });
     }
+    renderSlidingContent(){
+        let contentItems = React.Children.map(this.props.children,this.renderContent.bind(this))
+        return <div className="swiper-sliding-content">{contentItems}</div>
+    }
     render(){
         const classes = classNames({
             "swiper":this.props.axis === "x",
@@ -68,13 +72,15 @@ export class Swiper extends Component{
         })
         const {effect} = this.props;
         const contentClasses = classNames("swiper-content",{
-            "swiper-content-fade":effect === "fade",
-            "swiper-content-slide":effect === "slide"
+            // "swiper-content-fade":effect === "fade",
+            // "swiper-content-slide":effect === "slide"
         })
         return(
             <div className={classes}>
             {this.renderControl()}
-            <div className={contentClasses}>{React.Children.map(this.props.children,this.renderContent.bind(this))}</div>
+            <div className={contentClasses}>{this.props.contentSliding?
+                this.renderSlidingContent():
+                React.Children.map(this.props.children,this.renderContent.bind(this))}</div>
             </div>
         )
     }
@@ -84,6 +90,7 @@ Swiper.defaultProps = {
     effect:"fade",
     axis:"x",
     controlSliding:false,
+    contentSliding:true,
     onSelect:function(){}
 }
 

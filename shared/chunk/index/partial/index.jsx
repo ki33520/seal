@@ -2,8 +2,8 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import _ from "lodash";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {Tabs,TabsItem} from "../../../component/tabs.jsx";
+// import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import GoTop from "../../../component/gotop.jsx";
