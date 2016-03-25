@@ -3,10 +3,15 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import {fetchHotWord} from "../action.es6"
+import Dialog from "../../../component/dialog.jsx";
 
 class SearchBox extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            dialogActive:false,
+            dialogMsg:""
+        }
     }
     renderHotWord(){
         let {hotwords} = this.props.search;
@@ -40,7 +45,7 @@ class SearchBox extends Component{
                 <div className="searchList">
                     <span className="clearfix">
                         <em>历史搜索</em>
-                        <i onClick={this.handlePurgeHistory.bind(this)}>清空记录</i>
+                        <i onClick={this.shouldPurgeHistory.bind(this)}>清空记录</i>
                     </span>
                     {history}
                 </div>
@@ -48,8 +53,23 @@ class SearchBox extends Component{
         }
         return null
     }
-    handlePurgeHistory(e){
-        e && e.preventDefault()
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        })
+    }
+    shouldPurgeHistory(e){
+        e & e.preventDefault()
+        this.setState({
+            dialogActive:true,
+            dialogOnConfirm:()=>{
+                this.toggleDialog()
+                this.handlePurgeHistory()
+            }
+        })
+    }
+    handlePurgeHistory(){
+        // e && e.preventDefault()
         this.props.purgeSearchHistory()
     }
     renderSearchList(){
@@ -99,6 +119,9 @@ class SearchBox extends Component{
                     onClick={this.props.changeScene.bind(this,"index")}>取消</a></div>
                 </div>
                 {keyword?this.renderAssociate():this.renderSearchList()}
+                <Dialog active={this.state.dialogActive} 
+                onCancel={this.toggleDialog.bind(this)} 
+                onConfrim={this.state.dialogOnConfirm}>确定清空历史记录?</Dialog>
             </div>
         )
     }
