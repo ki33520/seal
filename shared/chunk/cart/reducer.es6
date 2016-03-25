@@ -19,20 +19,21 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isUpdating:true,
                 isFetching:true,
-                isUpdated:false
+                isUpdated:false,
+                isChecked:false
             });
         case FINISH_UPDATE_CART:
-             var carts = state.carts.slice();
-             var {cartIndex,groupIndex,goodsIndex,buyed} = action.param;
-             var cart = {...carts[cartIndex]};
-             var goods = {...cart.group[groupIndex].list[goodsIndex]};
-             var isUpdated = false;
-             if(action.res.isUpdated){
+            var carts = state.carts.slice();
+            var {cartIndex,groupIndex,goodsIndex,buyed} = action.param;
+            var cart = {...carts[cartIndex]};
+            var goods = {...cart.group[groupIndex].list[goodsIndex]};
+            var isUpdated = false;
+            if(action.res.isUpdated){
                 isUpdated = true;
                 goods.buyed=buyed;
                 cart.group[groupIndex].list[goodsIndex]=goods;
                 carts[cartIndex] = cart;
-             }
+            }
             return Object.assign({},state,{
                 isUpdating:false,
                 isUpdated:isUpdated,
@@ -51,7 +52,8 @@ function cartByUser(state={},action){
                 isToggled:false,
                 isAllToggled:false,
                 isDeleted:false,
-                isChecked:false
+                isChecked:false,
+                isPassed:false
             });
         case FINISH_FETCH_CART:
             var carts = state.carts.slice();
@@ -91,7 +93,8 @@ function cartByUser(state={},action){
         case START_TOGGLE_ITEM:
             return Object.assign({},state,{
                 isToggleing:true,
-                isToggled:false
+                isToggled:false,
+                isChecked:false
             });
         case FINISH_TOGGLE_ITEM:
             var {cartIndex,groupIndex,goodsIndex,checked} = action.param;
@@ -119,7 +122,8 @@ function cartByUser(state={},action){
         case START_TOGGLE_ALL:
             return Object.assign({},state,{
                 isAllToggling:true,
-                isAllToggled:false
+                isAllToggled:false,
+                isChecked:false
             });
         case FINISH_TOGGLE_ALL:
             var {cartIndex,checked} = action.param;
@@ -141,7 +145,8 @@ function cartByUser(state={},action){
         case START_DELETE_CART:
             return Object.assign({},state,{
                 isDeleting:true,
-                isDeleted:false
+                isDeleted:false,
+                isChecked:false
             });
         case FINISH_DELETE_CART:
             var {cartIndex,groupIndex,goodsIndex,checked} = action.param;
