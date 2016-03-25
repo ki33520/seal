@@ -96,17 +96,12 @@ Swiper.defaultProps = {
 
 export class SwiperItem extends Component{
     render(){
-        const {active,scrollable,key} = this.props;
+        const {active,key} = this.props;
         const classes = classNames("swiper-item",{
-            active,
-            scrollable
+            active
         })
         return (
             <div className={classes} key={key}>{this.props.children}</div>
         )
     }
-}
-
-SwiperItem.defaultProps = {
-    scrollable:true
 }
