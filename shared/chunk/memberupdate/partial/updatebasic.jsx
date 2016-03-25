@@ -115,14 +115,12 @@ class UpdateBasic extends Component{
             }
         }
     }
-    birthdayChange(fieldName,e){
-        e && e.preventDefault();
+    birthdayChange(fieldName,type,value){
         var object = {};
-        const name = e.target.name;
-        object[name] = e.target.value;
-
+        object[type] = value;
         var obj = Object.assign({},this.state,object);
         object.max = (new Date(obj.year,obj.month, 0)).getDate();
+        obj.day = object.max < obj.day ? object.max : obj.day;
         this.setState(object);
         let birthday;
         if(obj.year === "-1" || obj.month === "-1" || obj.day === "-1"){
