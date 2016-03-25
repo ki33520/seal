@@ -42,8 +42,9 @@ class Index extends Component{
             return (
                 <TabsItem title={channel.name} key={i}>
                 <GoTop relative={true}>
-                <Floor channel={channel} {...props}/>
+                <Floor channel={channel} {...props}/>{i>0?(
                 <Loading active={channelFetching}/>
+                ):null}
                 </GoTop>
                 </TabsItem>
             )

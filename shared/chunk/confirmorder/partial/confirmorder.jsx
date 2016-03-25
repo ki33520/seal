@@ -143,6 +143,40 @@ class ConfirmOrder extends Component{
             },10)
         }
     }
+    renderDialog(){
+        let onlyConfirm = true;
+        if(this.props.orderVerifiedErrCode == -402111){
+            onlyConfirm = false
+            return (
+                <Dialog onlyConfirm={true} active={this.state.dialogActive} 
+                onConfrim={()=>{
+                    this.setState({
+                        dialogActive:false,
+                        dialogContent:""
+                    })
+                    window.history.back()
+                }} 
+                onCancel={()=>{
+                    this.setState({
+                        dialogActive:false,
+                        dialogContent:""
+                    })
+                }}
+                >{this.state.dialogContent}</Dialog>
+            )
+        }
+        return (
+            <Dialog onlyConfirm={true} active={this.state.dialogActive} 
+            onConfrim={()=>{
+                this.setState({
+                    dialogActive:false,
+                    dialogContent:""
+                })
+                window.history.back()
+            }}
+            >{this.state.dialogContent}</Dialog>
+        )
+    }
     render(){
         const {order,alertActive,alertContent} = this.props;
         return (
@@ -165,16 +199,8 @@ class ConfirmOrder extends Component{
                 </div>
             </div>
             {this.renderTotal(order)}
+            {this.renderDialog()}
             <Alert active={alertActive}>{alertContent}</Alert>
-            <Dialog onlyConfirm={true} active={this.state.dialogActive} 
-            onConfrim={()=>{
-                this.setState({
-                    dialogActive:false,
-                    dialogContent:""
-                })
-                window.history.back()
-            }}
-            >{this.state.dialogContent}</Dialog>
             </div>
             </GoTop>
         )
