@@ -129,9 +129,19 @@ $gray-color = #555
 }
 
 .listMain .list_youa .coupon .explain{
-    mutiple-text-overflow()
-    // overflow:auto;
-    height:1rem;
+    color: #999;
+    background: url(/client/asset/images/rightLine.png) left top no-repeat;
+    background-size: 80% 3px;
+    padding: .12rem 0;
+
+    height: 1rem;
+    line-height: .5rem;
+    width: 100%;
+    font-size: .266667rem;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     white-space:normal;
 }
 
