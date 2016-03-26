@@ -68,12 +68,15 @@ function cartByUser(state={},action){
                         cart.group.forEach((group)=>{
                             group.list.forEach((item)=>{
                                 if(item.singleCode===singleCode){
-                                     _cart.group[groupIndex].list[goodsIndex] = item;
+                                    var _goods = _cart.group[groupIndex].list[goodsIndex];
+                                    var cartId = _goods.cartId;
+                                    _cart.group[groupIndex].list[goodsIndex] = item;
+                                    _cart.group[groupIndex].list[goodsIndex].cartId=cartId;
                                 }
                             })
                         })
                     }
-                     _cart.total = cart.total;
+                    _cart.total = cart.total;
                     _cart.buyeds = cart.buyeds;
                     _cart.promoName=cart.promoName;
                     _cart.promoType=cart.promoType;
