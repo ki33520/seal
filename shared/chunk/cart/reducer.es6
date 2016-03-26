@@ -20,7 +20,8 @@ function cartByUser(state={},action){
                 isUpdating:true,
                 isFetching:true,
                 isUpdated:false,
-                isChecked:false
+                isChecked:false,
+                isPassed:false
             });
         case FINISH_UPDATE_CART:
             var carts = state.carts.slice();
@@ -97,7 +98,8 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isToggleing:true,
                 isToggled:false,
-                isChecked:false
+                isChecked:false,
+                isPassed:false
             });
         case FINISH_TOGGLE_ITEM:
             var {cartIndex,groupIndex,goodsIndex,checked} = action.param;
@@ -126,7 +128,8 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isAllToggling:true,
                 isAllToggled:false,
-                isChecked:false
+                isChecked:false,
+                isPassed:false
             });
         case FINISH_TOGGLE_ALL:
             var {cartIndex,checked} = action.param;
@@ -149,7 +152,8 @@ function cartByUser(state={},action){
             return Object.assign({},state,{
                 isDeleting:true,
                 isDeleted:false,
-                isChecked:false
+                isChecked:false,
+                isPassed:false
             });
         case FINISH_DELETE_CART:
             var {cartIndex,groupIndex,goodsIndex,checked} = action.param;
