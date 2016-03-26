@@ -41,9 +41,12 @@
         position:absolute;
     }
     .back-to-top-inner{
-        overflow-x:hidden;
-        overflow-y:auto;
         height:100%;
-        -webkit-overflow-scrolling:touch;
+        overflow:hidden;
+        &.scrollable{
+            overflow-x:hidden;
+            overflow-y:auto;
+            -webkit-overflow-scrolling:touch;
+        }
     }
 }

@@ -1,5 +1,6 @@
 'use strict';
 import React,{Component} from "react";
+import ReactDOM from "react-dom";
 import classNames from "classnames"
 
 export class SceneGroup extends Component{
@@ -37,8 +38,13 @@ export class SceneGroup extends Component{
         }))
     }
     render(){
+        const {currentScene,prevScene} = this.state;
+        const leftToRight = (currentScene !== this.props.defaultScene)
+        const rightToLeft = ((currentScene === this.props.defaultScene) && prevScene !== null)
         const classes = classNames("scene-group",{
-            "animation-disabled":this.state.prevScene === null
+            "animation-disabled":this.state.prevScene === null,
+            "left-to-right":leftToRight,
+            "right-to-left":rightToLeft
         })
         return (
             <div className={classes}>{React.Children.map(this.props.children,this.renderScene.bind(this))}</div>

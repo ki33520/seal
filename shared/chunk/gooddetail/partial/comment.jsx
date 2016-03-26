@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import Swipelist from "../../common/swipelist.jsx";
@@ -124,8 +125,8 @@ class GoodComment extends Component{
         return (
             <div className="good-comment">
             <Header onGoBack={this.props.changeScene.bind(this,"index")}>商品评论</Header>
-            <SlideTabs navbarSlidable={false}>
-            <SlideTabsItem navigator={()=><span>全部评论</span>}>
+            <Swiper>
+            <SwiperItem control={()=><span>全部评论</span>}>
             <GoTop relative={true}>
             {this.renderComments()}
             <Refresher active={commentsFetching} handleRefresh={this.handleRefreshComments.bind(this)} />
@@ -133,8 +134,8 @@ class GoodComment extends Component{
                 <div className="no-more">已显示全部内容</div>
             ):null}
             </GoTop>
-            </SlideTabsItem>
-            <SlideTabsItem navigator={()=><span>晒单</span>}>
+            </SwiperItem>
+            <SwiperItem control={()=><span>晒单</span>}>
             <GoTop relative={true}>
             {this.renderShowups()}
             <Refresher active={showupFetching} handleRefresh={this.handleRefreshShowups.bind(this)} />
@@ -142,8 +143,8 @@ class GoodComment extends Component{
                 <div className="no-more">已显示全部内容</div>
             ):null}
             </GoTop>
-            </SlideTabsItem>
-            </SlideTabs>
+            </SwiperItem>
+            </Swiper>
             </div>
         )
     }

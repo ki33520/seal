@@ -20,7 +20,7 @@ class SubmitOrder extends Component{
             <div className="confirmBtns">
                 <a href="javascript:void(0);" className={classes} 
                 onClick={this.props.onSubmit}>{submiting?"提交中...":"提交订单"}</a>
-                <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" id="submitForm">
                     <input type="hidden" name="appId" value={cashierParam.appId} />
                     <input type="hidden" name="channel" value={cashierParam.channel} />
                     <input type="hidden" name="openId" value={cashierParam.openId} />

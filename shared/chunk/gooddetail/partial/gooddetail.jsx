@@ -14,6 +14,7 @@ import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Share from "../../common/share.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
 import GoTop from "../../../component/gotop.jsx";
@@ -29,6 +30,7 @@ class GoodDetail extends Component{
         super(props);
         this.state = {
             buyed:props.goodById.good.buyed,
+            scrollable:true,
             popupActive:false,
             shareActive:false,
             trigger:null,
@@ -40,7 +42,8 @@ class GoodDetail extends Component{
         e && e.preventDefault();
         this.setState({
             trigger,
-            popupActive:!this.state.popupActive
+            popupActive:!this.state.popupActive,
+            scrollable:this.state.popupActive
         })
     }
     toggleShare(){
@@ -269,7 +272,8 @@ class GoodDetail extends Component{
             "icon-xin":!isCollected
         })
         return (
-            <GoTop relative={true} renderFixed={this.renderToolbar.bind(this)}
+            <GoTop relative={true} scrollable={this.state.scrollable} 
+            renderFixed={this.renderToolbar.bind(this)}
             onScroll={this.handleScroll.bind(this)}>
             <div className="good-detail-content">
             <Header>商品详情<a className="globa" href="/"><i></i></a>
