@@ -10,6 +10,7 @@
 @import "../../component/slidetabs.styl"
 @import "../../component/tabs.styl"
 @import "../../component/slider.styl"
+@import "../../component/swiper.styl"
 @import "../../component/popup.styl"
 @import "../../component/gotop.styl"
 @import "../../component/refresher.styl"
@@ -36,10 +37,24 @@ html,body{
 }
 .popup-bottom{
     opacity:1;
-    position:fixed;
+    position:absolute;
     height:auto;
-    bottom:-100%;
+    display:none;
     z-index:101;
+    &.active{
+        display:block;
+        animation:bottom-to-top .3s ease-in;
+        transform:translate3D(0,0,0);
+    }
+}
+
+@keyframes bottom-to-top{
+    from{
+        transform:translate3d(0,30%,0)
+    }
+    to{
+        transform:translate3d(0,0,0)
+    }
 }
 
 .slider .control-nav{
@@ -381,6 +396,18 @@ $pink-color = #ED1946;
 
 .good-comment{
     height:100%;
+    .swiper{
+        .swiper-control{
+            width:100%;
+            height:1.16rem;
+            border-bottom:.03125rem solid #e0e0e0;
+            .swiper-control-item{
+                &.active{
+                    border-bottom:.08rem solid #801da1;
+                }
+            }
+        }
+    }
     .slide-tabs{
         // padding-bottom:px2rem(40);
         .slide-tabs-navbar{
@@ -411,14 +438,6 @@ $pink-color = #ED1946;
     }
 }
 
-.back-to-top-container{
-    .back-to-top{
-        &.active{
-            // z-index:200;
-        }
-    }
-}
-
 .mask-layer{
-    // z-index:500;
+    z-index:100;
 }

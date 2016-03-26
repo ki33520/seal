@@ -14,6 +14,7 @@ import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Share from "../../common/share.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
 import GoTop from "../../../component/gotop.jsx";
