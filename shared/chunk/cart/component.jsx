@@ -230,8 +230,11 @@ class Cart extends Component {
             "sale-out":goods.stockFlag===false&&goods.onSale,
             "put-off":!goods.onSale
         });
+        const invalid = classNames("group",{
+            invalid:goods.stockFlag===false||goods.onSale===false
+        })
         return(
-            <div className="group" key={"g-"+i+j+k}>
+            <div className={invalid} key={"g-"+i+j+k}>
                 <div className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></div>
                 <div className="J_moveRight">
                     <Checkbox checked={goods.checked}
@@ -252,7 +255,7 @@ class Cart extends Component {
                             </p>
                             <div className="act_wrap"> 
                                 <NumberPicker value={buyed} 
-                                minimum={minBuy>maxBuy?buyed:minBuy} maximum={maxBuy?maxBuy:buyed} step={goods.step}
+                                minimum={minBuy} maximum={maxBuy} step={goods.step}
                                 onChange={this.handleChangeBuyed.bind(this,goods,i,j,k)} />
                             </div>
                         </div>
