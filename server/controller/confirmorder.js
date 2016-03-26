@@ -56,6 +56,9 @@ function orderFilter(order) {
         // console.log('coupons',_order["coupons"])
         _order["checkedCoupon"] = _order["coupons"][0]
         _order["couponFee"] = _order["checkedCoupon"]["couponFee"]
+        if(_order["productFee"] < _order["couponFee"]){
+            _order["couponFee"] = _order["productFee"]
+        }
         _order["totalFee"] = Math.round((_order["totalFee"] - _order["couponFee"]) * 100) / 100
         // console.log(_order["totalFee"],"totalFee")
     }

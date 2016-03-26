@@ -22,7 +22,11 @@ function orderByParam(state={},action){
         case CHANGE_COUPON:
             var order = {...state.order,checkedCoupon:action.checkedCoupon}
             if(action.checkedCoupon){
-                order.couponFee = order.checkedCoupon.couponFee
+                let couponFee = order.checkedCoupon.couponFee
+                if((order.productFee - couponFee) < 0){
+                    couponFee = order.productFee
+                }
+                order.couponFee =  couponFee
             }else{
                 order.couponFee = 0
             }
