@@ -45,7 +45,7 @@ class Cart extends Component {
         const {isChecked,isWarning,carts,cartIndex,groupIndex,goodsIndex,singleCode} = nextProps.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);       
         if(isChecked&&isWarning){
-             this.setState({
+            this.setState({
                 dialogActive:true,
                 dialogMesg:'商品超出免税额度,是否调整订单?',
                 dialogOnCancel:()=>{
@@ -72,6 +72,9 @@ class Cart extends Component {
         return true;
     }
     componentDidUpdate(){
+        if(this.state.dialogActive){
+            return false;
+        }
         const {
             isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,isWarning,
             carts,cartIndex,groupIndex,goodsIndex,singleCode
@@ -178,10 +181,10 @@ class Cart extends Component {
             dialogActive:true,
             dialogMesg:'确定要删除吗?',
             dialogOnCancel:()=>{
-                 this.toggleDialog()
+                this.toggleDialog()
             },
             dialogOnConfirm:()=>{
-                 this.toggleDialog(),
+                this.toggleDialog(),
                 this.props.deleteCart({
                     cartId:goods.cartId,
                     singleCode:goods.singleCode,
@@ -229,7 +232,7 @@ class Cart extends Component {
         });
         return(
             <div className="group" key={"g-"+i+j+k}>
-                <a className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></a>
+                <div className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></div>
                 <div className="J_moveRight">
                     <Checkbox checked={goods.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
