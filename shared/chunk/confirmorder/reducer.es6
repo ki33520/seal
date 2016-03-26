@@ -131,6 +131,9 @@ function errMsgByCode(errCode){
         case -402305:
             errMsg = "订单金额有变更，请重新提交!"
             break
+        case 0:
+            errMsg = ""
+            break
         default:
             errMsg = "数据异常，请重新提交订单!"
             break
