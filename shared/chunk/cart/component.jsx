@@ -362,7 +362,7 @@ class Cart extends Component {
     render() {
         const {isUpdating,isFetching,alertContent,alertActive} = this.props.cartByUser;
         return (
-            <div>
+            <div className="container">
                 <Header>
                     <span className="title">购物车</span>
                 </Header>
