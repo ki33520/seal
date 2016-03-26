@@ -46,21 +46,22 @@ body.grey{
     height:rem4px(43);
     background-color: #fff;
     border-bottom:1px solid #d7d7d7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:0 0 0 rem4px(10);
 }
 .search-box {
-    position: absolute;
-    left:rem4px(0.266667 * 37.5);
-    top:rem4px(0.133333 * 37.5);
-    right:rem4px(1.6 * 37.5);
     overflow: hidden;
+    flex:1;
+    position:relative;
 }
 .searchResult .search-box {
     left:rem4px(1.6 * 37.5);
     top:rem4px(0.16 * 37.5);
 }
 .search-btn {
-    float:right;
-    width:60px;
+    width:rem4px(60);
     text-align: center;
     line-height:rem4px(1.16 * 37.5);
     color:#801da1;
@@ -76,13 +77,13 @@ body.grey{
     line-height:normal;
 }
 .search-box span{
-    position: absolute;
     color: #666;
-    width:17px;
-    height:17px;
+    position:absolute;
+    top: .15rem;
+    left: .2rem;
+    width:rem4px(17);
+    height:rem4px(17);
     text-align: center;
-    top: rem4px(0.15 * 37.5);
-    left: rem4px(0.2 * 37.5);
     background:url(/client/asset/images/searchIcon.png) 0 0 no-repeat;
     background-size:100%;
 }
