@@ -4,6 +4,7 @@ import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import Icon from "../../../component/icon.jsx";
 import Dialog from "../../../component/dialog.jsx";
+import GoTop from "../../../component/gotop.jsx";
 import Radio from "../../../component/form/radio.jsx";
 import {formateIDCard} from "../../../lib/util.es6";
 import _ from "lodash";
