@@ -29,6 +29,7 @@ class GoodDetail extends Component{
         super(props);
         this.state = {
             buyed:props.goodById.good.buyed,
+            scrollable:true,
             popupActive:false,
             shareActive:false,
             trigger:null,
@@ -40,7 +41,8 @@ class GoodDetail extends Component{
         e && e.preventDefault();
         this.setState({
             trigger,
-            popupActive:!this.state.popupActive
+            popupActive:!this.state.popupActive,
+            scrollable:this.state.popupActive
         })
     }
     toggleShare(){
@@ -269,7 +271,8 @@ class GoodDetail extends Component{
             "icon-xin":!isCollected
         })
         return (
-            <GoTop relative={true} renderFixed={this.renderToolbar.bind(this)}
+            <GoTop relative={true} scrollable={this.state.scrollable} 
+            renderFixed={this.renderToolbar.bind(this)}
             onScroll={this.handleScroll.bind(this)}>
             <div className="good-detail-content">
             <Header>商品详情<a className="globa" href="/"><i></i></a>

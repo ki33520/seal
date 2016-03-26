@@ -56,11 +56,18 @@ class GoTop extends Component{
     render(){
         if(this.props.relative){
             const {renderFixed} = this.props
+            const classes = classNames("back-to-top-inner",{
+                scrollable:this.props.scrollable
+            })
             return (
                 <div className="back-to-top-container">
                 {this.renderButton()}
                 {renderFixed()}
-                <div className="back-to-top-inner" ref="scrollNode">
+                <div className={classes} ref="scrollNode"
+                onTouchMove={(e)=>{
+                    // e.stopPropagation()
+                    // e.stopImmediatePropagation()
+                }}>
                 {this.props.children}
                 </div>
                 </div>
@@ -71,6 +78,7 @@ class GoTop extends Component{
 }
 
 GoTop.defaultProps = {
+    scrollable:true,
     relative:false,
     renderFixed:()=>{},
     onScroll:()=>{}
