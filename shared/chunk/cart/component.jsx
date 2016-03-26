@@ -247,8 +247,8 @@ class Cart extends Component {
                         </div>
                         <div className="gd_info">
                             <p className="name">
-                              <b>{goods.title}</b>
-                              <span>{'￥'+salePrice}</span>
+                                <b>{goods.title}</b>
+                                <span>{'￥'+salePrice}</span>
                             </p>
                             <div className="act_wrap"> 
                                 <NumberPicker value={buyed} 

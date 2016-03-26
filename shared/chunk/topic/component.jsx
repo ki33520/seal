@@ -43,8 +43,8 @@ class Topic extends Component{
             const salesPrice = formatPrice(destPriceForGoods(item).destPrice);
             const originPrice = formatPrice(item.originPrice);
             const saleState = classNames({
-                "sale-out":goods.localStock<1&&goods.onSale,
-                "put-off":!goods.onSale
+                "sale-out":item.localStock<1&&item.onSale,
+                "put-off":!item.onSale
             });
             goods.push(
                 <a href={"/gooddetail/"+item.singleCode} className="clearfix" key={i}>
