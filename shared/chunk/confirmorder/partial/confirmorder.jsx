@@ -134,6 +134,8 @@ class ConfirmOrder extends Component{
                     orderNo:orderNo,
                 }
                 fetchPayGateway(base64EncodeForURL(urlParam(message)))
+            }else{
+                // this.props.alert("")
             }
         }
         if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){

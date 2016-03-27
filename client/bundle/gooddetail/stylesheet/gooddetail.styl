@@ -382,6 +382,38 @@ $pink-color = #ED1946;
     } 
 }
 
+.goods_top .price{
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    flex-flow:row wrap;
+    .nowPrice{
+        float:none;
+        display:block;
+        // flex-shrink:0;
+        // flex-grow:2;
+        margin:0;
+        padding-bottom:rem4px(3);
+    }
+    .countdown{
+        // flex-shrink:1
+        // flex-grow:2;
+        float:none;
+        display:block;
+        padding-bottom:rem4px(3);
+    }
+    .oldPrice{
+        float:none;
+        display:block;
+        padding-left:rem4px(7.5);
+        padding-bottom:rem4px(3);
+        // flex-shrink:0;
+        // text-overflow();
+        // flex-grow:1;
+        // flex-basis:rem4px(35);
+    }
+}
+
 .comList p{
     white-space:break-all;
     word-wrap:break-word;
