@@ -27,7 +27,6 @@ var requireAuthorize = function(req, res, next) {
 }
 
 var staticize = function(req,res,next){
-    // var pageName =
     var pageContent = util.readPage(md5(req.originalUrl))
         // console.log('pageContent',pageContent)
     if(pageContent){

@@ -2,8 +2,8 @@
 import React,{Component} from "react";
 import classNames from "classnames";
 import _ from "lodash";
-import {Tabs,TabsItem} from "../../../component/tabs.jsx";
-// import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
+// import {Tabs,TabsItem} from "../../../component/tabs.jsx";
+import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import GoTop from "../../../component/gotop.jsx";
@@ -31,26 +31,27 @@ class Index extends Component{
         // console.log('channel',channel)
         const {fetchSingleRecommend,fetchNewRecommend} = this.props
         const {newRecommend,singleRecommend} = channel.floors
-        if((singleRecommend === undefined || singleRecommend.pageIndex == singleRecommend.totalPage) && newRecommend.totalPage === undefined){
-            if(channel.newRecommendFetching){
-                return false
+        if(channel.singleRecommendFetching || channel.newRecommendFetching){
+            return false
+        }
+        // console.log('singleRecommend',singleRecommend,newRecommend)
+        if(singleRecommend === undefined){
+            if(newRecommend && newRecommend.pageIndex === undefined){
+                fetchNewRecommend({activityId:newRecommend.id,pageIndex:1},channel.id)
             }
-            // console.log('start newRecommend')
-            fetchNewRecommend({activityId:newRecommend.id,pageIndex:1},channel.id)
-        }else if(singleRecommend && singleRecommend.pageIndex < singleRecommend.totalPage && singleRecommend.pageIndex > 1){
-            if(channel.singleRecommendFetching){
-                return false
+        }else if(singleRecommend.pageIndex == singleRecommend.totalPage){
+            if(newRecommend && newRecommend.pageIndex === undefined){
+                fetchNewRecommend({activityId:newRecommend.id,pageIndex:1},channel.id)
             }
+        }else if(singleRecommend.pageIndex < singleRecommend.totalPage){
             fetchSingleRecommend({
                 activityId:singleRecommend.id,
                 pageIndex:singleRecommend.pageIndex + 1
             },channel.id)
         }
-        if(newRecommend.pageIndex < newRecommend.totalPage && newRecommend.pageIndex > 1){
-            if(channel.newRecommendFetching){
-                return false
-            }
-            // console.log('newRecommend',newRecommend)
+        if(newRecommend === undefined || newRecommend.pageIndex === newRecommend.totalPage){
+            return false
+        }else if(newRecommend.pageIndex < newRecommend.totalPage){
             fetchNewRecommend({
                 activityId:newRecommend.id,
                 pageIndex:newRecommend.pageIndex + 1
@@ -87,25 +88,26 @@ class Index extends Component{
                 }
             }
             return (
-                <TabsItem title={channel.name} key={i}>
+                <SwiperItem control={()=><b>{channel.name}</b>} key={i} scrollable={false}>
                 <GoTop relative={true}>
                 <Floor channel={channel} {...props}/>{i>0?(
                 <Loading active={channelFetching}/>
                 ):null}
-                <Refresher handleRefresh={this.beginRefresh.bind(this,channel)} 
+                <Refresher handleRefresh={this.beginRefresh.bind(this,channel)} threshold={30}
                 active={channel.singleRecommendFetching || channel.newRecommendFetching}/>
                 {isNoMore?
                     (<div className="no-more">已显示全部内容</div>):null}
                 </GoTop>
-                </TabsItem>
+                </SwiperItem>
             )
         })
         return (
             <div className={classes}>
             <Header {...this.props}/>
-            <Tabs navbarSlidable={true} onSelect={this.handleSelect.bind(this)}>
+            <Swiper controlSliding={true} 
+            onSelect={this.handleSelect.bind(this)}>
             {tabs}
-            </Tabs>
+            </Swiper>
             <Footer activeIndex="0"/>
             </div>
         )
