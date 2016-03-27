@@ -137,10 +137,12 @@ var util = {
     },
     saveSearchHistory(history,record){
         history = history || [];
-        if(_.some(history,record) === false){
+        var index = _.findIndex(history,{"keyword":record.keyword})
+        if(index === -1){
             history.push(record)
+        }else if(index >=0){
+            // history[index] = record
         }
-        // console.log('history',history)
         return history
     },
     syncLocalCart(memberId,carts){
