@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
+import GoTop from "../../component/gotop.jsx";
 import {Tabs,TabsItem} from "../../component/tabs.jsx";
 import Timer from "../common/timer.jsx";
 import classNames from "classnames";
@@ -100,10 +101,12 @@ class FlashBuy extends Component{
         }
         return (
             <div className="flashbuy-content">
-                <Header>闪购</Header>
-                {flashing}
-                {preflash}
-                {emptyMsg}
+                <GoTop relative={true}>
+                    <Header>闪购</Header>
+                    {flashing}
+                    {preflash}
+                    {emptyMsg}
+                </GoTop>
             </div>
         )
     }
