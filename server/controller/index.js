@@ -7,7 +7,7 @@ var md5 = require("md5");
 var moment = require("moment");
 
 var index = function(req, res, next) {
-    util.fetchAPI("indexChannels", {
+    util.fetchCachedAPI("indexChannels", {
         channel: "Mobile"
     }).then(function(ret) {
         if (ret.returnCode === 0) {
@@ -30,7 +30,7 @@ var index = function(req, res, next) {
         }
     }).then(function(channels) {
         if(channels && channels.length > 0){
-            util.fetchAPI("floorsByChannel", {
+            util.fetchCachedAPI("floorsByChannel", {
                 channel: "Mobile",
                 manageId: channels[0].id,
                 start: 0,
@@ -61,7 +61,7 @@ var index = function(req, res, next) {
 
 var channel = function(req, res, next) {
     var id = req.query.id
-    util.fetchAPI("floorsByChannel", {
+    util.fetchCachedAPI("floorsByChannel", {
         channel: "Mobile",
         manageId: id,
         start: 0,
