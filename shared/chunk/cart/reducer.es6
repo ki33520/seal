@@ -86,6 +86,7 @@ function cartByUser(state={},action){
                     _cart.collected=cart.collected;
                     _cart.totalTax = cart.totalTax;
                     _cart.checked = _cart.children===_cart.collected;
+                    _cart.isAllowSubmit=cart.isAllowSubmit;
                     carts[cartIndex] = _cart;
                 }
             }
@@ -195,13 +196,17 @@ function cartByUser(state={},action){
         case FINISH_CHECK_CART:
             var {cartIndex} = action.param;
             var {returnCode} = action.res;
+            var carts = state.carts.slice();
+            var cart = {...carts[cartIndex],isAllowSubmit:false};
+            carts[cartIndex] = cart;
             return Object.assign({},state,{
                 isChecking:false,
                 isFetching:false,
                 isChecked:true,
                 isPassed:returnCode===0,
                 isWarning:returnCode===-402111,
-                cartIndex
+                cartIndex,
+                carts
             });
         case SHOW_ALERT:
         case HIDE_ALERT:

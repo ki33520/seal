@@ -5,6 +5,18 @@ var util = require("../lib/util");
 var CartApp = util.getSharedComponent("cart");
 var config = require("../lib/config.js");
 
+function checkIsAllowSubmit(cart){
+    if(cart.buyeds<1){
+        return false;
+    }
+    if(cart.total <0.07){
+        return false;
+    }
+    if(cart.total > cart.buyLimit&&cart.buyeds>1 && cart.hasRate===true){
+        return false;
+    }
+    return true;
+}
 function formatCarts(originalCarts) {
     var carts = [];
     _.each(originalCarts, function(originalCart) {
@@ -67,6 +79,7 @@ function formatCarts(originalCarts) {
             cart.children = children;
             cart.collected = collected;
             cart.totalTax = totalTax;
+            cart.isAllowSubmit = checkIsAllowSubmit(cart);
             cart.group.push(group);
         });
         carts.push(cart);
