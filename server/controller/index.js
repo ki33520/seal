@@ -61,7 +61,7 @@ var index = function(req, res, next) {
 
 var channel = function(req, res, next) {
     var id = req.query.id
-    util.fetchAPI("floorsByChannel", {
+    util.fetchCachedAPI("floorsByChannel", {
         channel: "Mobile",
         manageId: id,
         start: 0,
