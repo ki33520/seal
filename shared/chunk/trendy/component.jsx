@@ -17,7 +17,7 @@ class TrendyRouter extends Component{
     render(){
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
-                <Scene name="index"><Index {...this.props}/></Scene>
+                <Scene name="index" scrollable={false}><Index {...this.props}/></Scene>
                 <Scene name="search"><SearchBox {...this.props}/></Scene>
             </SceneGroup>
         );
