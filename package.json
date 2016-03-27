@@ -27,6 +27,8 @@
     "babel-core": "^5.8.22",
     "babel-runtime": "^6.0.14",
     "body-parser": "^1.13.2",
+    "cache-manager": "^2.0.0",
+    "cache-manager-fs": "^1.0.4",
     "classnames": "^2.2.0",
     "connect-memcached": "^0.1.0",
     "consolidate": "^0.13.1",

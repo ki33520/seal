@@ -10,6 +10,8 @@ var moment = require("moment");
 var reqwest = require("reqwest");
 var fs = require("fs");
 var path = require('path');
+var bluebird = require("bluebird");
+var memoryCache = require("memory-cache");
 
 var util = {
     getAuthGatewayUrl: function(req, authPath) {
@@ -35,7 +37,7 @@ var util = {
     },
     fetchAPI: function(apiName, param, isMock,options) {
         isMock = isMock || false;
-        console.log('runtime',config.runtime)
+        // console.log('runtime',config.runtime)
         param = _.extend(param,{
             appId:config.appId,
             channel:"Mobile",
@@ -45,12 +47,33 @@ var util = {
         var signature = this.getSignatureByParam(param,config.appKey)
         // console.log('signature',signature)
         param = _.extend(param,{h:signature})
-        console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
+        // console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param,options)
         } else {
             var listenPort = process.env.LISTEN_PORT || 3000;
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
+        }
+    },
+    fetchCachedAPI:function(apiName,param,options){
+        options = options || {}
+        var isMock = options.isMock || false
+        var maxAge = (options.maxAge * 1000 * 60) || 1000 * 60 *15
+        // console.log('maxAge',maxAge)
+        options = _.omit(options,["isMock","maxAge"])
+        var cacheKey = apiName + JSON.stringify(param)
+        if(memoryCache.get(cacheKey) === null){
+            console.log(apiName,'need cached')
+            return this.fetchAPI(apiName,param,isMock,options).then(function(res){
+                memoryCache.put(cacheKey,res,maxAge) //15 minutes
+                return res
+            })
+        }else{
+            console.log(apiName,'return from cache')
+            // return bluebird.delay(100).then(function(){
+            //     return memoryCache.get(cacheKey)
+            // })
+            return bluebird.resolve(memoryCache.get(cacheKey))
         }
     },
     getAPI(apiName,param){

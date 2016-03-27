@@ -7,7 +7,7 @@ var Polymer = util.getSharedComponent("polymer");
 var config = require("../lib/config");
 
 var polymer = function(req, res, next) {
-    util.fetchAPI("allCategory",{}).then(function(resp) {
+    util.fetchCachedAPI("allCategory",{}).then(function(resp) {
         if(resp.returnCode===0){
             var categories = categoryFilter(resp.object)
             var initialState = {
@@ -51,7 +51,7 @@ function categoryFilter(categories){
 
 var categoryActivity = function(req,res,next){
     var code = req.query.code
-    util.fetchAPI("categoryActivity",{
+    util.fetchCachedAPI("categoryActivity",{
         categorysCode:code
     }).then(function(ret){
         if(ret.returnCode === 0){
@@ -100,7 +100,7 @@ function getJumpUrl(activity) {
 }
 
 var categoryBrands = function(req,res,next){
-    util.fetchAPI("categoryBrands",{}).then(function(ret){
+    util.fetchCachedAPI("categoryBrands",{}).then(function(ret){
         if(ret.returnCode === 0){
             var categorybrands = ret.object
             categorybrands = categoryBrandsFilter(categorybrands)
@@ -149,7 +149,7 @@ function categoryBrandsFilter(categorybrands){
 }
 
 var allBrands = function(req,res,next){
-    util.fetchAPI("allBrands",{}).then(function(ret){
+    util.fetchCachedAPI("allBrands",{}).then(function(ret){
         if(ret.returnCode === 0){
             var allbrands = ret.object
             allbrands = allBrandsFilter(allbrands);
@@ -181,7 +181,7 @@ function allBrandsFilter(allbrands){
 }
 
 var allOrigins = function(req,res,next){
-    util.fetchAPI("allOrigins",{}).then(function(ret){
+    util.fetchCachedAPI("allOrigins",{}).then(function(ret){
         if(ret.returnCode === 0){
             var allorigins = ret.object
             allorigins = allOriginsFilter(allorigins)

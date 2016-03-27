@@ -35,7 +35,7 @@ var topic = function(req, res, next) {
     var pageIndex = req.query.pageIndex || 1;
     var activityId = req.params.id;
  
-    util.fetchAPI("specialActivity", {
+    util.fetchCachedAPI("specialActivity", {
         activityId:activityId,
         start: pageIndex,
         limit: pageSize

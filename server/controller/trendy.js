@@ -47,7 +47,7 @@ function filterList(originalData,pageSize){
 
 var trendy = function(req, res, next) {
     var pageSize = 10;
-    util.fetchAPI("fetchTendyGoods", {
+    util.fetchCachedAPI("fetchTendyGoods", {
         start: 1,
         Limit: pageSize
     }).then(function(resp) {
@@ -73,7 +73,7 @@ var activity = function(req, res, next) {
     var pageIndex = Number(req.body.pageIndex) || 1;
     var id = req.body.id;
     var pageSize = 10;
-    util.fetchAPI("fetchActivityTendyGoods", {
+    util.fetchCachedAPI("fetchActivityTendyGoods", {
         activityId:id,
         activityType:'ACTIVITY_BK',
         start: pageIndex,
