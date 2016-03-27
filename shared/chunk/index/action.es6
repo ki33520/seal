@@ -69,10 +69,10 @@ export function updateGoods(param,floor,channelId){
     }
 }
 
-function requestSingleRecommend(param){
+function requestSingleRecommend(param,channelId){
     return {
         type:REQUEST_SINGLERECOMMEND,
-        param
+        param,channelId
     }
 }
 
@@ -90,17 +90,18 @@ export function fetchSingleRecommend(param,channelId){
         activityType:"ACTIVITY_TJ"
     })
     return (dispatch)=>{
-        dispatch(requestSingleRecommend(param));
+        dispatch(requestSingleRecommend(param,channelId));
         apiRequest("/activitygood",param).then((res)=>{
             dispatch(responseSingleRecommend(param,channelId,res));
         })
     }
 }
 
-function requestNewRecommend(param){
+function requestNewRecommend(param,channelId){
     return {
         type:REQUEST_NEWRECOMMEND,
-        param
+        param,
+        channelId
     }
 }
 
@@ -118,7 +119,7 @@ export function fetchNewRecommend(param,channelId){
         activityType:"ACTIVITY_TJ"
     })
     return (dispatch)=>{
-        dispatch(requestNewRecommend(param));
+        dispatch(requestNewRecommend(param,channelId));
         apiRequest("/activitygood",param).then((res)=>{
             dispatch(responseNewRecommend(param,channelId,res));
         })
