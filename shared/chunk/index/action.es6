@@ -36,7 +36,7 @@ export function fetchChannel(param){
                     // dispatch(fetchNewRecommend({activityId:newRecommend.id},param.id))
                 }
                 if(singleRecommend){
-                    // dispatch(fetchSingleRecommend({activityId:singleRecommend.id},param.id))
+                    dispatch(fetchSingleRecommend({activityId:singleRecommend.id},param.id))
                 }
             }
             dispatch(responseChannel(param,res));
