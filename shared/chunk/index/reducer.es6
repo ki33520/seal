@@ -86,7 +86,7 @@ function index(state={},action){
     switch(action.type){
         case REQUEST_SINGLERECOMMEND:
             channels = channels.map((channel)=>{
-                if(channel.id === action.param.id){
+                if(channel.id === action.channelId){
                     channel.singleRecommendFetching = true
                     channel.singleRecommendFetched = false
                 }
@@ -106,6 +106,7 @@ function index(state={},action){
                     }
                     channel.singleRecommendFetched = action.res.goodFetched
                     channel.singleRecommendFetching = false
+                    channel.newRecommendFetching = false
                     return channel
                 })
             return Object.assign({},state,{
@@ -113,7 +114,8 @@ function index(state={},action){
             })
         case REQUEST_NEWRECOMMEND:
             channels = channels.map((channel)=>{
-                if(channel.id === action.param.id){
+                if(channel.id === action.channelId){
+                    console.log('channel',channel.id)
                     channel.newRecommendFetching = true
                     channel.newRecommendFetched = false
                 }

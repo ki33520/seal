@@ -28,7 +28,6 @@ class Index extends Component{
         })
     }
     beginRefresh(channel){
-        // console.log('channel',channel)
         const {fetchSingleRecommend,fetchNewRecommend} = this.props
         const {newRecommend,singleRecommend} = channel.floors
         if(channel.singleRecommendFetching || channel.newRecommendFetching){
