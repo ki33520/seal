@@ -48,7 +48,10 @@ var search = function(req, res, next) {
     };
     if(req.query.k){
         var keyword = req.query.k;
-        var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword);
+        var searchhistory = util.saveSearchHistory(req.session["searchhistory"],{
+            keyword:keyword,
+            createAt:Date.now()
+        });
         options.searchKey=keyword;
         req.session["searchhistory"] = searchhistory;
     }

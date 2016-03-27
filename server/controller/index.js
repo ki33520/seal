@@ -301,7 +301,7 @@ var searchHotWords = function(req, res, next) {
 var searchHistory = function(req,res,next){
     if(req.xhr === true){
         var history = req.session["searchhistory"] || []
-        // console.log('history',history)
+        history = _.sortByOrder(history,"createAt","desc")
         res.json({
             isFetched:true,
             result:history
