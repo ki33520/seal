@@ -19,7 +19,7 @@ class PolymerRouter extends Component{
     render(){
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
-                <Scene name="index"><Polymer {...this.props}/></Scene>
+                <Scene name="index" scrollable={false}><Polymer {...this.props}/></Scene>
                 <Scene name="allbrands"><AllBrands {...this.props}/></Scene>
                 <Scene name="search"><SearchBox {...this.props}/></Scene>
             </SceneGroup>

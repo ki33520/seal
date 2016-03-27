@@ -30,7 +30,6 @@ function filterResult(goods){
 }
 
 var activity = function(req, res, next) {
-
     var pageSize = 12;
     var pageIndex = req.query.pageIndex || 1;
     var activityId = req.params.id;
