@@ -85,42 +85,58 @@ function index(state={},action){
     let channels = state.channels
     switch(action.type){
         case REQUEST_SINGLERECOMMEND:
+            channels = channels.map((channel)=>{
+                if(channel.id === action.param.id){
+                    channel.singleRecommendFetching = true
+                    channel.singleRecommendFetched = false
+                }
+                return channel
+            })
             return Object.assign({},state,{
-                singleRecommendFetched:false,
-                singleRecommendFetching:true
+                channels
             });
         case RESPONSE_SINGLERECOMMEND:
-            if(action.res.goodFetched){
                 channels = channels.map((channel)=>{
-                    if(channel.id === action.channelId && channel["floors"].singleRecommend){
-                        channel["floors"].singleRecommend.goods = action.res.result
+                    if(action.res.goodFetched){
+                        if(channel.id === action.channelId && channel["floors"].singleRecommend){
+                            channel["floors"].singleRecommend.goods = _.union(channel["floors"].singleRecommend.goods,action.res.result.list)
+                            channel["floors"].singleRecommend.totalPage = action.res.result.totalPage
+                            channel["floors"].singleRecommend.pageIndex = action.res.result.pageIndex
+                        }
                     }
+                    channel.singleRecommendFetched = action.res.goodFetched
+                    channel.singleRecommendFetching = false
                     return channel
                 })
-            }
             return Object.assign({},state,{
                 channels,
-                singleRecommendFetched:action.res.goodFetched,
-                singleRecommendFetching:false
             })
         case REQUEST_NEWRECOMMEND:
+            channels = channels.map((channel)=>{
+                if(channel.id === action.param.id){
+                    channel.newRecommendFetching = true
+                    channel.newRecommendFetched = false
+                }
+                return channel
+            })
             return Object.assign({},state,{
-                newRecommendFetched:false,
-                newRecommendFetching:true
+                channels
             });
         case RESPONSE_NEWRECOMMEND:
-            if(action.res.goodFetched){
                 channels = channels.map((channel)=>{
-                    if(channel.id === action.channelId && channel["floors"].newRecommend){
-                        channel["floors"].newRecommend.goods = action.res.result
+                    if(action.res.goodFetched){
+                        if(channel.id === action.channelId && channel["floors"].newRecommend){
+                            channel["floors"].newRecommend.goods = _.union(channel["floors"].newRecommend.goods,action.res.result.list)
+                            channel["floors"].newRecommend.totalPage = action.res.result.totalPage
+                            channel["floors"].newRecommend.pageIndex = action.res.result.pageIndex
+                        }
                     }
+                    channel.newRecommendFetched = action.res.goodFetched
+                    channel.newRecommendFetching = false
                     return channel
                 })
-            }
             return Object.assign({},state,{
-                channels,
-                newRecommendFetched:action.res.goodFetched,
-                newRecommendFetching:false
+                channels
             })
         case REQUEST_CHANNEL:
             channels = channels.map((channel)=>{

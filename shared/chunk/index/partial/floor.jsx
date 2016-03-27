@@ -7,8 +7,7 @@ import _ from "lodash"
 import Slider from "../../../component/slider/slider.jsx";
 import Slide from "../../../component/slider/slide.jsx";
 import Image from "../../../component/image.jsx";
-import ScrollSpy from "../../../component/scrollspy.jsx";
-import Loading from "../../common/loading.jsx";
+import Refresher from "../../../component/refresher.jsx";
 import Timer from "../../common/timer.jsx";
 import {validTimeRegion,formatPrice,destPriceForGoods} from "../../../lib/util.es6";
 
@@ -50,10 +49,10 @@ class Floor extends Component{
         const {fetchNewRecommend,fetchSingleRecommend} = this.props;
         const {newRecommend,singleRecommend} = this.props.channel.floors
         if(newRecommend && newRecommend.goods === null){
-            fetchNewRecommend({activityId:newRecommend.id},this.props.channel.id)
+            // fetchNewRecommend({activityId:newRecommend.id},this.props.channel.id)
         }
         if(singleRecommend && singleRecommend.goods === null){
-            fetchSingleRecommend({activityId:singleRecommend.id},this.props.channel.id)
+            fetchSingleRecommend({activityId:singleRecommend.id,pageIndex:1},this.props.channel.id)
         }
         this.updateFlashbuyGoods()
     }
@@ -329,7 +328,8 @@ class Floor extends Component{
         return null
     }
     render(){
-        let {channelFetching}  = this.props.channel
+        const {channel} = this.props;
+        let {channelFetching}  = channel
         if(!this.props.active && _.isEmpty(this.props.channel.floors)){
             channelFetching = channelFetching || true
         }

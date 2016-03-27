@@ -7,7 +7,7 @@ var md5 = require("md5");
 var moment = require("moment");
 
 var index = function(req, res, next) {
-    util.fetchCachedAPI("indexChannels", {
+    util.fetchAPI("indexChannels", {
         channel: "Mobile"
     }).then(function(ret) {
         if (ret.returnCode === 0) {
@@ -30,7 +30,7 @@ var index = function(req, res, next) {
         }
     }).then(function(channels) {
         if(channels && channels.length > 0){
-            util.fetchCachedAPI("floorsByChannel", {
+            util.fetchAPI("floorsByChannel", {
                 channel: "Mobile",
                 manageId: channels[0].id,
                 start: 0,
@@ -61,7 +61,7 @@ var index = function(req, res, next) {
 
 var channel = function(req, res, next) {
     var id = req.query.id
-    util.fetchCachedAPI("floorsByChannel", {
+    util.fetchAPI("floorsByChannel", {
         channel: "Mobile",
         manageId: id,
         start: 0,
@@ -212,6 +212,8 @@ function floorFilter(floors) {
             id: _floors["singleRecommend"][0].id,
             goods: _floors["singleRecommend"][0].activityProductList
         }
+        // _floors["singleRecommend"].goods = _floors["singleRecommend"].goods?_floors["singleRecommend"].goods:[]
+        // console.log(_floors["singleRecommend"].goods,"singleRecommend")
     }
     _floors["newRecommend"] = _.result(_.findWhere(floors, {
         manageCode: "ACTIVITY_XPTJ"
@@ -221,6 +223,7 @@ function floorFilter(floors) {
             id: _floors["newRecommend"][0].id,
             goods: _floors["newRecommend"][0].activityProductList
         }
+        // _floors["newRecommend"].goods = _floors["newRecommend"].goods?_floors["newRecommend"].goods:[]
     }
     return _floors
 }
@@ -348,17 +351,22 @@ var searchAssociate = function(req, res, next) {
 }
 
 var activityGood = function(req, res, next) {
+    var pageSize = 12;
+    var pageIndex = Number(req.query.pageIndex) || 1;
+
     var activityId = req.query.activityId;
     var activityType = req.query.activityType;
     util.fetchAPI("activityGood", {
         channel: "Mobile",
         activityId: activityId,
         activityType: activityType,
-        start: 0,
-        limit: 10
+        start: pageIndex,
+        limit: pageSize
     }).then(function(ret) {
         if (ret.returnCode === 0) {
             var goods = activityGoodFilter(ret.object.result)
+            var totalPage = Math.ceil(ret.object.totalCount / pageSize);
+
             var ids = []
             _.each(goods,function(good){
                 ids.push(good.singleCode)
@@ -373,8 +381,15 @@ var activityGood = function(req, res, next) {
                         good = Object.assign({},good,updatedGood)
                         return good
                     })
+
+                    var pagination = {
+                        totalPage:totalPage,
+                        pageIndex:pageIndex,
+                        list:_goods
+                    }
+
                     res.json({
-                        result: _goods,
+                        result:pagination,
                         goodFetched: true
                     })
                 }else{
