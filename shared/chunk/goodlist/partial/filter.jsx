@@ -52,7 +52,7 @@ class Filter extends Component{
  
         return (
             <div className={classess}>
-            	<Header handleGoBack={handleGoBack.bind(this)}>
+            	<Header onGoBack={handleGoBack.bind(this)}>
                     <span className="btn-right" onClick={handleGoBack.bind(this)}>确定</span>
                 </Header>
                 {this.renderNav(list)}
