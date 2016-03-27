@@ -33,10 +33,10 @@ export function fetchChannel(param){
             if(res.channelFetched){
                 const {newRecommend,singleRecommend} = res.result
                 if(newRecommend){
-                    dispatch(fetchNewRecommend({activityId:newRecommend.id},param.id))
+                    // dispatch(fetchNewRecommend({activityId:newRecommend.id},param.id))
                 }
                 if(singleRecommend){
-                    dispatch(fetchSingleRecommend({activityId:singleRecommend.id},param.id))
+                    // dispatch(fetchSingleRecommend({activityId:singleRecommend.id},param.id))
                 }
             }
             dispatch(responseChannel(param,res));
