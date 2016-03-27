@@ -108,7 +108,7 @@ class Cart extends Component {
         if(isChecking){
             return false;
         }
-        if(this.checkSubmit(cart)==false){
+        if(cart.isAllowSubmit===false){
             return false;
         }
         if(!isLogined){
@@ -280,21 +280,10 @@ class Cart extends Component {
             </div>
         );
     }
-    checkSubmit(cart){
-        if(cart.total <=0){
-            return false;
-        }
-        if(cart.buyeds<1){
-            return false;
-        }
-        if(cart.total > cart.buyLimit&&cart.buyeds>1 && cart.hasRate===true){
-            return false;
-        }
-        return true;
-    }
+ 
     renderCart(cart,i){
         let groupList = [];
-        const allowBuy = this.checkSubmit(cart);
+        const allowBuy = cart.isAllowSubmit;
         cart.group.forEach((group,j)=>{
             groupList.push(this.renderGroup(group,i,j));
         });
