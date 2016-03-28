@@ -36,14 +36,17 @@ class Toolbar extends Component{
 
         const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
         let canAddCart = good["canAddCart"]
-        if(good.stock === 0 || good.flashbuy["active"]){
+        if(good.flashbuy["active"]){
             canAddCart = false
         }
         // console.log('canAddCart',canAddCart)
         const addCartClasses = classNames("goods_add",{
-            "disabled":!canAddCart
+            "disabled":!canAddCart || good.stock === 0
         })
         const directBuyClasses = classNames("goods_buy",{
+            "disabled":good.stock === 0
+        })
+        const confrimButtonClasses = classNames("goodsSureBtn",{
             "disabled":good.stock === 0
         })
         return (
@@ -78,7 +81,8 @@ class Toolbar extends Component{
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
                     </div>
-                    <a href="javascript:void(0);" onClick={handleConfirm} className="goodsSureBtn">确定</a>
+                    <a href="javascript:void(0);" onClick={handleConfirm} className={confrimButtonClasses}>{canAddCart
+                        ?"确定":"立即购买"}</a>
                 </div>
             </Popup>
             </div>

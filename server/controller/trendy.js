@@ -96,6 +96,8 @@ var activity = function(req, res, next) {
                 errMsg:resp.message
             });
         }
+    },function(){
+        next(new Error('api request failed'));
     });
 
 }

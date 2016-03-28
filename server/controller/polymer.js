@@ -64,7 +64,7 @@ var categoryActivity = function(req,res,next){
             res.json({
                 isFetched:false,
                 errMsg:ret.message
-            })
+            });
         }
     },function(){
         res.json({
