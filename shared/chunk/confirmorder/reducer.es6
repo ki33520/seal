@@ -146,8 +146,12 @@ function errMsgByCode(errCode){
 }
 
 function calculateTotalFee(order){
-    let totalFee = order.productFee + order.shipFee + order.abroadFee + order.tariffFee
-        - order.promoFee - order.couponFee
+    // let totalFee = order.productFee + order.shipFee + order.abroadFee + order.tariffFee
+    //     - order.promoFee - order.couponFee
+    let productFee = (order.reduceFee - order.couponFee) < 0? 0 : (order.reduceFee - order.couponFee)
+    // console.log('productFee',productFee)
+    let totalFee = productFee + order.shipFee + order.abroadFee + order.tariffFee
+
     totalFee = Math.round(totalFee * 100) / 100
     // console.log('productFee',order.productFee)
     // console.log('shipFee',order.shipFee)
