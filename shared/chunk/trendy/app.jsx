@@ -24,10 +24,12 @@ function configureStore(initialState){
 
 class TrendyApp extends Component{
     render(){
-        const {categories} = this.props.initialState;
+        const {categories,isFetched} = this.props.initialState;
         const initialState = {
             trendy:{
-                categories
+                isFetching:false,
+                categories,
+                isFetched
             },
             search:{
                 keyword:''

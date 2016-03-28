@@ -150,28 +150,28 @@
     overflow: hidden;
     margin-bottom:.24rem;
     font-size:.32rem;
-    word-wrap: break-word;
-    word-break: break-all;
-    overflow: hidden;
-    text-overflow: ellipsis;
 	display:block;
 }
 .J_item .gd_info .name b {
-    width:70%;
+    max-width:69%;
     display:block;
 	float:left;
     height:.8rem;
 	line-height:.42rem;
     overflow: hidden;
 	font-weight:normal;
-	font-size:.32rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 	color:#333;
 }
 .J_item .gd_info .name > span {
     font-size:.32rem;
-    vertical-align: top;
     float: right;
+    max-width: 31%;
 	font-weight:bold;
+    text-align: right;
 }
 .J_item .gd_info .name em {
     position: absolute;
