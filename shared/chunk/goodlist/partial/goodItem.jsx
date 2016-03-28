@@ -1,15 +1,8 @@
 'use strict';
 import React,{Component} from "react";
 import classNames from "classnames";
-import {formatPrice} from "../../../lib/util.es6";
+import {formatPrice,destPriceForGoods} from "../../../lib/util.es6";
 class GoodItem extends Component{
-    filterPrice(goods){
-        if(goods.useMobilePrice&&goods.mobilePrice>0){
-            return formatPrice(goods.mobilePrice);
-        }else{
-            return formatPrice(goods.salesPrice);
-        }
-    }
     render(){
         const {goods} = this.props;
         const soldOut = classNames({
@@ -18,7 +11,7 @@ class GoodItem extends Component{
         const saleIcon = classNames({
             "mobile-price":goods.useMobilePrice
         });
-        const salesPrice = this.filterPrice(goods);
+        const salesPrice = formatPrice(destPriceForGoods(goods).destPrice);
         const originPrice = formatPrice(goods.originPrice);
         return (
             <a href={"/gooddetail/"+goods.singleCode}>
@@ -35,8 +28,8 @@ class GoodItem extends Component{
                         <span className="now-price">{'¥'+salesPrice}</span>
                         <span className="old-price">{'¥'+originPrice}</span>
                     </div>
-             </div>
-	</a>
+                </div>
+	        </a>
         )
     }
 }
