@@ -79,8 +79,8 @@ function cartByUser(state={},action){
                     }
                     _cart.total = cart.total;
                     _cart.buyeds = cart.buyeds;
-                    _cart.promoName=cart.promoName;
-                    _cart.promoType=cart.promoType;
+                    //_cart.promoName=cart.promoName;
+                    //_cart.promoType=cart.promoType;
                     _cart.promoTotal = cart.promoTotal;
                     _cart.salesTotal = cart.salesTotal;
                     _cart.collected=cart.collected;
