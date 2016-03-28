@@ -116,8 +116,17 @@ var search = function(req, res, next) {
                 })
             }
         } else {
-            next(new Error(resp.message));
+            if(req.xhr===true){
+                res.json({
+                    list:[],
+                    isFetched:false
+                });
+            }else{
+                next(new Error(resp.message));
+            }
         }
+    },function(){
+        next(new Error('api request failed'));
     });
 }
 
