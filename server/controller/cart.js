@@ -228,7 +228,8 @@ var fetchCart = function(req, res, next) {
             tariffFee: 0,
             dutyFree: 0,
             buyLimit: 0,
-            collected:0
+            collected:0,
+            isAllowSubmit:false
         }],true);
     }
     util.fetchAPI('cartByAnonymous', {
