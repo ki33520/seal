@@ -78,7 +78,7 @@ class Toolbar extends Component{
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
                     </div>
-                    <a href="javascript:void(0);" onClick={handleConfirm} className="goodsSureBtn">确定</a>
+                    <a href="javascript:void(0);" onClick={handleConfirm} className="goodsSureBtn">{canAddCart?"确定":"立即购买"}</a>
                 </div>
             </Popup>
             </div>

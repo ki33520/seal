@@ -148,7 +148,7 @@ class GoodDetail extends Component{
             return;
         }else if(good.selectedItem !== null && buyed > 0){
             this.togglePopup("addToCart")
-            if(good.flashbuy['active']){
+            if(good.flashbuy['active'] || !good["canAddCart"]){
                 let singleCode = good.selectedItem.code
                 let queryParam = base64Encode(urlParam({
                     itemIds:singleCode,
