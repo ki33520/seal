@@ -39,6 +39,17 @@ class Toolbar extends Component{
         if(good.flashbuy["active"]){
             canAddCart = false
         }
+
+        let handleAddCartPopup = ()=>{
+           if(canAddCart){
+                togglePopup("addToCart")
+           }
+        }
+        let handleDirectBuyPopup = ()=>{
+            if(good.stock !== 0){
+                togglePopup("directBuy")    
+            }
+        }
         // console.log('canAddCart',canAddCart)
         const addCartClasses = classNames("goods_add",{
             "disabled":!canAddCart || good.stock === 0
@@ -55,8 +66,8 @@ class Toolbar extends Component{
                 <a href="/cart" className="goods_cart">
                     <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount}</em>:null}</i>
                 </a>
-                <a href="javascript:void(null)" onClick={togglePopup.bind(this,"addToCart")} className={addCartClasses}>加入购物车</a>
-                <a href="javascript:void(0);" onClick={togglePopup.bind(this,"directBuy")} className={directBuyClasses}>{good.stock===0?"已抢光":"立即购买"}</a>
+                <a href="javascript:void(null)" onClick={handleAddCartPopup} className={addCartClasses}>加入购物车</a>
+                <a href="javascript:void(0);" onClick={handleDirectBuyPopup} className={directBuyClasses}>{good.stock===0?"已抢光":"立即购买"}</a>
             </div>
             <Popup direction="bottom" active={popupActive}>
                 <div className="con">

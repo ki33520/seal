@@ -226,7 +226,7 @@ class GoodDetail extends Component{
         if(good["useMobilePrice"] && !good.flashbuy["active"]){
             salePrice = good["mobilePrice"]
             return (
-                <span>
+                <span className="mobilePrice">
                 <span className="nowPrice">&yen;{formatPrice(salePrice)}</span>
                 <span className="exclusive">手机专享价</span>
                 </span>
