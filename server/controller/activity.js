@@ -44,7 +44,10 @@ var activity = function(req, res, next) {
             var list = filterResult(obj.activityProductList);
 
             if (req.xhr === true) {
-                res.json(list);
+                res.json({
+                    list:list,
+                    isFetched:true
+                });
             }else{
                 var totalPage = Math.ceil(obj.totalCount / pageSize);
                 var initialState = {
@@ -63,7 +66,14 @@ var activity = function(req, res, next) {
                 });
             }
         } else {
-            next(new Error(resp.message));
+            if (req.xhr === true) {
+                res.json({
+                    list:[],
+                    isFetched:false
+                });
+            }else{
+                next(new Error(resp.message));
+            }
         }
     },function(){
         next(new Error('api request failed'));

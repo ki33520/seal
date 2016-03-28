@@ -37,7 +37,7 @@ html,body{
 }
 .popup-bottom{
     opacity:1;
-    position:absolute;
+    position:fixed;
     height:auto;
     display:none;
     z-index:101;
@@ -393,7 +393,7 @@ $pink-color = #ED1946;
     justify-content:flex-start;
     align-items:center;
     flex-flow:row wrap;
-    .nowPrice{
+    &>.nowPrice{
         float:none;
         display:block;
         // flex-shrink:0;
@@ -401,14 +401,18 @@ $pink-color = #ED1946;
         margin:0;
         padding-bottom:rem4px(3);
     }
-    .countdown{
+    &>.mobilePrice{
+        display:block;
+        padding-bottom:rem4px(3);
+    }
+    &>.countdown{
         // flex-shrink:1
         // flex-grow:2;
         float:none;
         display:block;
         padding-bottom:rem4px(3);
     }
-    .oldPrice{
+    &>.oldPrice{
         float:none;
         display:block;
         padding-left:rem4px(7.5);

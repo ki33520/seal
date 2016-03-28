@@ -14,11 +14,12 @@ function goodsByParam(state={},action){
                 isFetched:false
             });
         case RECEIVE_GOODS:
-            let list = _.union(state.list,action.res);
+            const {list,isFetched} = action.res;
+            let _list = _.union(state.list,list);
             return Object.assign({},state,{
                 isFetching:false,
-                isFetched:true,
-                list:list
+                list:_list,
+                isFetched
             });
         default:
             return state;

@@ -25,11 +25,12 @@ function configureStore(initialState){
  
 class CouponApp extends Component{
     render(){
-        const {pagination,couponType} = this.props.initialState;
+        const {pagination,couponType,isFetched} = this.props.initialState;
         const initialState = {
             index:{
                 pagination,
                 couponType,
+                isFetched,
                 isFetching:false
             },
             detail:{

@@ -54,7 +54,7 @@ function formatCoupons(originalCoupons) {
 var coupon = function(req, res, next) {
     var user = req.session.user;
     var pageSize = 10;
-    var pageIndex = req.query.pageIndex || 1;
+    var pageIndex = Number(req.query.pageIndex) || 1;
     var type = req.query.type||'youa';
     var options = {
         youa:{status:0,isMerchants:0},
@@ -68,12 +68,12 @@ var coupon = function(req, res, next) {
     });
  
     util.fetchAPI("couponByUser", param).then(function(resp) {
+        var pagination = {
+            youa:{},
+            legue:{},
+            invalid:{}
+        };
         if(resp.returnCode===0){
-            var pagination = {
-                youa:{},
-                legue:{},
-                invalid:{}
-            };
             var obj = resp.object;
             pagination[type] = {
                 coupons:formatCoupons(obj.result),
@@ -81,11 +81,15 @@ var coupon = function(req, res, next) {
                 totalPage:Math.ceil(obj.totalCount / pageSize)
             };
             if (req.xhr === true) {
-                res.json(pagination[type]);
+                res.json({
+                    pagination:pagination[type],
+                    isFetched:true
+                });
             }else{
                 var initialState = {
                     pagination: pagination,
-                    couponType:['youa','invalid']
+                    couponType:['youa','invalid'],
+                    isFetched:true
                 };
                 var markup = util.getMarkupByComponent(CouponApp({
                     initialState: initialState
@@ -96,7 +100,14 @@ var coupon = function(req, res, next) {
                 })
             }
         }else{
-            next(new Error(resp.message));
+            if (req.xhr === true) {
+                res.json({
+                    pagination:{},
+                    isFetched:false
+                });
+            }else{
+                next(new Error(resp.message)); 
+            }
         }
     },function(){
         next(new Error('api request failed'));
