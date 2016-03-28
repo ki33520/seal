@@ -1,31 +1,24 @@
 'use strict'
 import React,{Component} from "react";
 import classNames from "classnames";
-import dom from "../../../lib/dom.es6";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
-import GoTop from "../../../component/gotop.jsx";
-import Refresher from "../../../component/refresher.jsx";
-import Sticky from "../../../component/sticky.jsx";
-import Icon from "../../../component/icon.jsx";
-import GoodList from "./goodlist.jsx";
 import Header from "../../common/header.jsx";
 import Footer from "../../common/footer.jsx";
 import Loading from "../../common/loading.jsx";
+import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
+import GoTop from "../../../component/gotop.jsx";
+import Refresher from "../../../component/refresher.jsx";
+import Icon from "../../../component/icon.jsx";
+import GoodList from "./goodlist.jsx";
 
 class Trendy extends React.Component{
-    constructor(props){
-        super(props)
-    }
     beginRefresh(index){
-        const {categories} = this.props.trendy;
-        let curentPage = categories[index].pageIndex
-        let totalPage = categories[index].totalPage
-        let nextPage = curentPage + 1
-        let isFetching = categories[index].isFetching
+        const {categories,isFetching} = this.props.trendy;
+        const curentPage = categories[index].pageIndex;
+        const totalPage = categories[index].totalPage;
+        const nextPage = curentPage + 1;
         if(isFetching || totalPage <= curentPage){
             return false;
         }
-
         this.props.fetchGoods({
             id:categories[index].id,
             pageIndex:nextPage,
@@ -43,15 +36,15 @@ class Trendy extends React.Component{
         }
     }
     render(){
-        const {categories} = this.props.trendy;
+        const {categories,isFetched,isFetching} = this.props.trendy;
         const tabs = categories.map((category,i)=>{
             return (
                 <SlideTabsItem navigator={()=><i>{category.name}</i>} key={i}>
                     <GoTop relative={true}>
                         <GoodList category={category} />
-                        <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={category.isFetching}/>
+                        <Refresher handleRefresh={this.beginRefresh.bind(this,i)} active={isFetching}/>
                         {category.pageIndex == category.totalPage?(<div className="no-more">已显示全部内容</div>):null}
-                        <Loading active={category.isFetching}/>
+                        <Loading active={isFetching}/>
                     </GoTop>
                 </SlideTabsItem>
             )
@@ -72,7 +65,5 @@ class Trendy extends React.Component{
         )
     }
 }
-
- 
 
 export default Trendy;

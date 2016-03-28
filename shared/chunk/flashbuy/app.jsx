@@ -23,10 +23,11 @@ function configureStore(initialState){
 
 class NavbarApp extends React.Component{
     render(){
-        const {groupGoods} = this.props.initialState;
+        const {groupGoods,isFetched} = this.props.initialState;
         var store = configureStore({
             flashBuy:{
                 isFetching:false,
+                isFetched,
                 groupGoods
             }
         });

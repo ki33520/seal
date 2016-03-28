@@ -74,8 +74,10 @@ var flashBuy = function(req,res,next) {
         timestamp: util.fetchAPI("timestamp",{},false)
     }).then(function(resp){
         if(resp.goods.returnCode === 0 && resp.timestamp.returnCode===0){
+            var groupGoods = flashBuyFilter(resp.goods.object,resp.timestamp.systemTime);
             var initialState = {
-                groupGoods:flashBuyFilter(resp.goods.object,resp.timestamp.systemTime)
+                groupGoods:groupGoods,
+                isFetched:true
             };
             var markup = util.getMarkupByComponent(FlashBuy({
                 initialState:initialState
