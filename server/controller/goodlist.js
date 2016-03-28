@@ -37,7 +37,6 @@ function filterNames(result){
             isChecked:false
         });
     });
-
     return list;
 }
 
@@ -113,7 +112,7 @@ var search = function(req, res, next) {
                 res.render('goodlist', {
                     markup: markup,
                     initialState: initialState
-                })
+                });
             }
         } else {
             if(req.xhr===true){

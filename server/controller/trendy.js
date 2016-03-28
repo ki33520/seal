@@ -54,7 +54,8 @@ var trendy = function(req, res, next) {
         if (resp.returnCode === 0) {
             var categories = filterList(resp.object,pageSize);
             var initialState = {
-                categories
+                categories:categories,
+                isFetched:true
             };
             var markup = util.getMarkupByComponent(Trendy({
                 initialState: initialState
@@ -66,6 +67,8 @@ var trendy = function(req, res, next) {
         } else {
             next(new Error(resp.message))
         }
+    },function(){
+        next(new Error('api request failed'));
     });
 }
 

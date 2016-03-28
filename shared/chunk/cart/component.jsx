@@ -126,7 +126,7 @@ class Cart extends Component {
         const singleCode = goods.singleCode;
         const maxBuy = goods.maxBuy;
         let stack = this.buyedStack;
-        if(isUpdating || buyed > maxBuy){
+        if(isUpdating || buyed > maxBuy||false===goods.onSale||goods.stockCount<1){
             return false;
         }
         var updateCart = (buyed)=>{
@@ -148,8 +148,10 @@ class Cart extends Component {
         stack.push({timerId,buyed})
     }
     toggleAllChecked(cartIndex,checked){
-        const {isAllToggling} = this.props.cartByUser;
-        if(isAllToggling) return false;
+        const {isAllToggling,carts} = this.props.cartByUser;
+        if(isAllToggling||carts[cartIndex].isAllowSubmit===false) {
+            return false;
+        }
         this.props.toggleCartAll({
             cartIndex,
             checked
@@ -157,7 +159,7 @@ class Cart extends Component {
     }
     toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
         const {isToggleing} = this.props.cartByUser;
-        if(isToggleing) {
+        if(isToggleing||false===goods.onSale||goods.stockCount<1) {
             return false;
         }
         this.props.toggleCartItem({
@@ -249,10 +251,12 @@ class Cart extends Component {
                             <span className={limitStyle}>{'限购'+maxBuy+'件'}</span>
                         </div>
                         <div className="gd_info">
-                            <p className="name">
-                                <b>{goods.title}</b>
-                                <span>{'￥'+salePrice}</span>
-                            </p>
+                            <a href={"/gooddetail/"+goods.singleCode}>
+                                <p className="name">
+                                    <b>{goods.title}</b>
+                                    <span>{'￥'+salePrice}</span>
+                                </p>
+                            </a>
                             <div className="act_wrap"> 
                                 <NumberPicker value={buyed} 
                                 minimum={minBuy} maximum={maxBuy} step={goods.step}
@@ -293,12 +297,17 @@ class Cart extends Component {
         const promo = classNames("depot_bot",{
             hide:!cart.promoName
         });
+        const toggleWrap = classNames({
+            "J_store":true,
+            "clearfix":true,
+            "invalid":allowBuy?false:true
+        })
         const salesTotal = formatPrice(cart.salesTotal);
         const promoTotal = formatPrice(cart.promoTotal);
         const total = formatPrice(cart.total);
         return(
             <div className="onlyList clearfix" key={"cart-" + i}>
-                <div className="J_store clearfix">
+                <div className={toggleWrap}>
                     <Checkbox checked={cart.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
                     onChange={this.toggleAllChecked.bind(this,i)}/>
