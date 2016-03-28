@@ -148,8 +148,10 @@ class Cart extends Component {
         stack.push({timerId,buyed})
     }
     toggleAllChecked(cartIndex,checked){
-        const {isAllToggling} = this.props.cartByUser;
-        if(isAllToggling) return false;
+        const {isAllToggling,carts} = this.props.cartByUser;
+        if(isAllToggling||carts[cartIndex].isAllowSubmit===false) {
+            return false;
+        }
         this.props.toggleCartAll({
             cartIndex,
             checked
@@ -295,12 +297,17 @@ class Cart extends Component {
         const promo = classNames("depot_bot",{
             hide:!cart.promoName
         });
+        const toggleWrap = classNames({
+            "J_store":true,
+            "clearfix":true,
+            "invalid":allowBuy?false:true
+        })
         const salesTotal = formatPrice(cart.salesTotal);
         const promoTotal = formatPrice(cart.promoTotal);
         const total = formatPrice(cart.total);
         return(
             <div className="onlyList clearfix" key={"cart-" + i}>
-                <div className="J_store clearfix">
+                <div className={toggleWrap}>
                     <Checkbox checked={cart.checked}
                     checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
                     onChange={this.toggleAllChecked.bind(this,i)}/>
