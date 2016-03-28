@@ -102,8 +102,7 @@ class Coupon extends React.Component{
         const {pagination,couponType,isFetching,isLoading} = this.props.index;
         const index = this.state.activeIndex;
         const type = couponType[index];
-        const totalPage = Number(pagination[type].totalPage);
-        const pageIndex = Number(pagination[type].pageIndex);
+        const {totalPage,pageIndex} = pagination[type];
         return (
             <div className="inner-scroll">
                 <Header>

@@ -16,17 +16,18 @@ function index(state={},action){
             });
     	case FINISH_FETCH_COUPON:
             const type = action.param.type;
-            const res = action.res;
-            let pagination = {...state.pagination};
-            let coupons = _.union(pagination[type].coupons,res.coupons);
-            pagination[type].pageIndex = res.pageIndex;
-            pagination[type].totalPage = res.totalPage;
-            pagination[type].coupons = coupons;
+            const {isFetched,pagination} = action.res;
+            const {pageIndex,totalPage,coupons} = pagination;
+            let _pagination = {...state.pagination};
+            const _coupons = _.union(_pagination[type].coupons,coupons);
+            _pagination[type].pageIndex = pageIndex;
+            _pagination[type].totalPage = totalPage;
+            _pagination[type].coupons = _coupons;
     		return Object.assign({},state,{
                 isFetching:false,
-                isFetched:true,
+                isFetched,
                 isLoading:false,
-                pagination:pagination
+                pagination:_pagination
             });
         default:
             return state;

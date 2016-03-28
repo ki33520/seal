@@ -95,7 +95,8 @@ var cart = function(req, res, next) {
         var initialState = {
             carts: formatCarts(arr),
             isLogined: isLogined,
-            loginUrl: loginUrl
+            loginUrl: loginUrl,
+            isFetched:true
         };
         var markup = util.getMarkupByComponent(CartApp({
             initialState: initialState
@@ -109,21 +110,21 @@ var cart = function(req, res, next) {
         util.fetchAPI("cartByUser", {
             memberId: user.memberId
         }).then(function(resp) {
-              if (resp.returnCode === 0) {
+            if (resp.returnCode === 0) {
                 renderMarkup(resp.object);
-              } else {
+            } else {
                 next(new Error(resp.message));
-              }
+            }
         });
     } else {
         var localcart = req.session["localcart"];
         if (localcart && localcart.length > 0) {
-             var singleCodes = [];
-             var buyeds = [];
-              _.each(localcart, function(item) {
-                    singleCodes.push(item.singleCode);
-                    buyeds.push(item.buyed);
-              });
+            var singleCodes = [];
+            var buyeds = [];
+            _.each(localcart, function(item) {
+                singleCodes.push(item.singleCode);
+                buyeds.push(item.buyed);
+            });
             util.fetchAPI('cartByAnonymous', {
                 singleCodes: singleCodes.join(','),
                 qtys: buyeds.join(',')
