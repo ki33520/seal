@@ -130,7 +130,7 @@ class GoodComment extends Component{
             <GoTop relative={true}>
             {this.renderComments()}
             <Refresher active={commentsFetching} handleRefresh={this.handleRefreshComments.bind(this)} />
-            {(comments.pageIndex == comments.totalPage) && comments.totalPage > 1?(
+            {(comments.pageIndex == comments.totalPage) && comments.totalPage > 0?(
                 <div className="no-more">已显示全部内容</div>
             ):null}
             </GoTop>
@@ -139,7 +139,7 @@ class GoodComment extends Component{
             <GoTop relative={true}>
             {this.renderShowups()}
             <Refresher active={showupFetching} handleRefresh={this.handleRefreshShowups.bind(this)} />
-            {(showups.pageIndex == showups.totalPage) && showups.length > 1?(
+            {(showups.pageIndex == showups.totalPage) && showups.totalPage > 0?(
                 <div className="no-more">已显示全部内容</div>
             ):null}
             </GoTop>
