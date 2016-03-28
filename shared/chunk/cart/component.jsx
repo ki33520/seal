@@ -249,10 +249,12 @@ class Cart extends Component {
                             <span className={limitStyle}>{'限购'+maxBuy+'件'}</span>
                         </div>
                         <div className="gd_info">
-                            <p className="name">
-                                <b>{goods.title}</b>
-                                <span>{'￥'+salePrice}</span>
-                            </p>
+                            <a href={"/gooddetail/"+goods.singleCode}>
+                                <p className="name">
+                                    <b>{goods.title}</b>
+                                    <span>{'￥'+salePrice}</span>
+                                </p>
+                            </a>
                             <div className="act_wrap"> 
                                 <NumberPicker value={buyed} 
                                 minimum={minBuy} maximum={maxBuy} step={goods.step}
