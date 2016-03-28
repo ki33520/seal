@@ -126,7 +126,7 @@ class Cart extends Component {
         const singleCode = goods.singleCode;
         const maxBuy = goods.maxBuy;
         let stack = this.buyedStack;
-        if(isUpdating || buyed > maxBuy){
+        if(isUpdating || buyed > maxBuy||false===goods.onSale||goods.stockCount<1){
             return false;
         }
         var updateCart = (buyed)=>{
@@ -157,7 +157,7 @@ class Cart extends Component {
     }
     toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
         const {isToggleing} = this.props.cartByUser;
-        if(isToggleing) {
+        if(isToggleing||false===goods.onSale||goods.stockCount<1) {
             return false;
         }
         this.props.toggleCartItem({
