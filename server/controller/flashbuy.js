@@ -92,6 +92,8 @@ var flashBuy = function(req,res,next) {
                 next(new Error(resp.timestamp.message));
             }
         }
+    }).error(function() {
+        next(new Error('api request failed'));
     });
      
 };

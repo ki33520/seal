@@ -126,7 +126,7 @@ var search = function(req, res, next) {
             }
         }
     },function(){
-        next(new Error('api response failed'));
+        next(new Error('api request failed'));
     });
 }
 
