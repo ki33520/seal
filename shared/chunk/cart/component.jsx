@@ -54,7 +54,9 @@ class Cart extends Component {
                         itemIds:singleCodes,
                         buyeds
                     }));
-                    window.location.assign(`/confirmorder/${queryParam}`);
+                    setTimeout(()=>{
+                        window.location.assign(`/confirmorder/${queryParam}`);
+                    },200);
                 },
                 dialogOnConfirm:()=>{
                      this.toggleDialog(),

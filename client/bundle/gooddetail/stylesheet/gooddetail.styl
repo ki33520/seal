@@ -30,6 +30,9 @@ html,body{
     height:100%;
     #good-detail{
         height:100%;
+        .back-to-top{
+            z-index: 101;
+        }
         .good-detail-content{
             // height:100%;
         }
@@ -281,6 +284,7 @@ $pink-color = #ED1946;
             // visibility:visible;
             // min-height:px2rem(150);
             // height:auto;
+            border-top:.2666rem solid #f7f7f7;
             display:block;
         }
         &>.pull-trigger{
@@ -388,6 +392,19 @@ $pink-color = #ED1946;
     } 
 }
 
+.goods_top .title{
+    position:relative;
+    padding-bottom:rem4px(5);
+    .goods_fav{
+        right:0;
+        top:rem4px(8);
+        position:absolute;
+    }
+    &>span{
+        height:auto;
+    }
+}
+
 .goods_top .price{
     display:flex;
     justify-content:flex-start;
@@ -408,6 +425,7 @@ $pink-color = #ED1946;
     &>.countdown{
         // flex-shrink:1
         // flex-grow:2;
+        width:100%;
         float:none;
         display:block;
         padding-bottom:rem4px(3);
