@@ -98,7 +98,8 @@ class GoodComment extends Component{
     }
     handleRefreshComments(){
         const {pageIndex,totalPage} = this.props.goodById.good.comments
-        const {commentsFetching,productCode} = this.props.goodById.good
+        const {productCode} = this.props.goodById.good
+        const {commentsFetching} = this.props.goodById
         let nextPage = parseInt(pageIndex) + 1
         if(commentsFetching || totalPage <= pageIndex){
             return false;
@@ -110,7 +111,8 @@ class GoodComment extends Component{
     }
     handleRefreshShowups(){
         const {pageIndex,totalPage} = this.props.goodById.good.showups
-        const {showupFetching,productCode} = this.props.goodById.good
+        const {productCode} = this.props.goodById.good
+        const {showupFetching} = this.props.goodById
         let nextPage = pageIndex + 1
         if(showupFetching || totalPage <= pageIndex){
             return false;
