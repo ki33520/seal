@@ -1,0 +1,26 @@
+@import "../common/common";
+@import "../common/util";
+.refresher{
+    display:none;
+    font-size:px2rem(14);
+    text-align:center;
+    padding:px2rem(5) 0;
+    &.refresher-active{
+        display:block;
+        animation:refresher-moveUp .5s ease-in-out;
+    }
+    &>span{
+        margin-right:px2rem(5);
+    }
+}
+
+@keyframes refresher-moveUp{
+    from{
+        transform:translateY(px2rem(20));
+        opacity:0;
+    }
+    to{
+        transform:translateY(0);
+        opacity:1;
+    }
+}

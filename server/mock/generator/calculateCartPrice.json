@@ -1,0 +1,10 @@
+{
+    "code": "success",
+    "msg": "访问成功", 
+    "time": 1427188628187, 
+    "priceObject": {
+        "originPrice":"59.00",
+        "discountPrice":"0",
+        "totalPrice":"59.00"
+    }
+}

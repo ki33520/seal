@@ -1,0 +1,53 @@
+@import "../../common/common";
+@import "../../common/iconfont";
+@import "../../common/header";
+@import "../../component/gotop.styl";
+@import "../../component/lazyload.styl";
+@import "./flashbuy.css";
+
+.flashbuy-container,.flashbuy-content{
+    height: 100%;
+}
+#flashbuy {
+    height: 100%;
+}
+.empty span{
+  display: inline;
+}
+
+.tips {
+    text-align: center;
+}
+
+.flash-price {
+    position:absolute;
+    left:.4rem;
+    top:.3rem;
+    width:.78rem;
+    height:.78rem;
+    background:url(/client/asset/images/jpsg.png) no-repeat;
+    background-size:100%;
+}
+.mobile-price{
+    position:absolute;
+    left:.4rem;
+    top:.3rem;
+    width:.78rem;
+    height:.78rem;
+    background:url(/client/asset/images/indexTitle_1.png) no-repeat;
+    background-size:95% 95%;
+}
+
+.timer i {
+    color: #ed1946;
+    font-size: .5rem;
+    font-weight: bold;
+    padding: 0 .24rem;
+}
+
+.placeholder{
+    width:rem4px(351);
+    height:rem4px(200);
+    background:url(/client/asset/images/load.png) no-repeat rem4px(-10) 50%;
+    background-size:50%;
+}

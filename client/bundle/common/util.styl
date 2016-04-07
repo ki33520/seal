@@ -1,0 +1,25 @@
+/*function*/
+px2rem($px){
+    return $px / 32 * 1rem;
+}
+
+rem4px($px){
+    return $px / 37.5 * 1rem;
+    // return $px / 100 * 1rem;
+}
+
+/*mixin*/
+text-overflow(){
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+mutiple-text-overflow(){
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space:normal;
+}

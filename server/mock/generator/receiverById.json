@@ -1,0 +1,30 @@
+{
+    "code": "success",
+    "msg": null,
+    "time": 1446109259323,
+    "object": {
+        "id": "40289e0b5089524001508959ac520000",
+        "createdAt": "2015-10-21 15:42:47",
+        "updatedAt": "2015-10-21 15:42:47",
+        "inserter": "m13786157052",
+        "updater": null,
+        "start": 0,
+        "limit": 15,
+        "recordStatus": "EXIST",
+        "address": "湖南长沙",
+        "cityCode": "0024",
+        "cityName": "长沙",
+        "contactNumber": "88888888",
+        "defaultChecked": 0,
+        "districtCode": "0003",
+        "districtName": "测试小区",
+        "memberId": "fc6804de507eac5601507eb104990000",
+        "mobileNumber": "13712345678",
+        "name": "王小明",
+        "provinceCode": "11100",
+        "provinceName": "湖南省",
+        "streetCode": "0014",
+        "streetName": "测试小街",
+        "zipcode": "410000"
+    }
+}

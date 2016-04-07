@@ -1,0 +1,31 @@
+@import "../common/common";
+@import "../common/util";
+.popover {
+    position: absolute;
+    color: #fff;
+    background: rgba(0, 0, 0, .9);
+    line-height:px2rem(22);
+    top: px2rem(-28);
+    text-align: center;
+    font-size: px2rem(13);
+    border-radius: px2rem(4);
+    white-space: nowrap;
+    padding: 0 px2rem(5);
+    left: 0;
+    display:none;
+    &.active{
+        display:block;
+    }
+    &:after {
+        border: px2rem(4) solid transparent;
+        border-top: px2rem(4) solid #000;
+        opacity: .9;
+        width: 0;
+        height: 0;
+        position: absolute;
+        bottom: px2rem(-8);
+        left: px2rem(8);
+        content: '';
+        margin-left: 0;
+    }
+}

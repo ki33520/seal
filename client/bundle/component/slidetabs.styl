@@ -1,0 +1,98 @@
+@import "../common/common";
+@import "../common/util";
+.slide-tabs{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    flex-direction:column;
+    // overflow:hidden;
+    box-sizing:border-box;
+    height:100%;
+    width:100%;
+    &.slide-tabs-fixed{
+        .slide-tabs-navbar{
+            display:flex;
+            width:100%;
+            flex-direction:row;
+            .slide-tabs-navbar-item{
+                width:auto;
+                flex:1
+            }
+        }
+    }
+    .slide-tabs-navbar{
+        // width:200%;
+        background-color:#f3f4f6;
+        border-bottom:px2rem(1) solid #E0E0E0;
+        display:flex;
+        // clear:both;
+        .slide-tabs-navbar-item{
+            // display:table-cell;
+            flex:1;
+            cursor:pointer;
+            // float:left;
+            width:px2rem(120);
+            // display:inline-block;
+            line-height:px2rem(50);
+            border-left:px2rem(1) solid #E0E0E0;
+            text-align:center;
+            &.active{
+                background-color:#FFF;
+            }
+            a{
+                text-decoration:none;
+            }
+        }
+    }
+    .slide-tabs-content{
+        flex:1
+        // width:100%;
+        display:flex
+        .slide-tabs-item{
+            // border-left:px2rem(1) solid #E0E0E0;
+            // display:table-cell;
+            width:10rem;
+            flex:1;
+            overflow-y:auto;
+            overflow-x:hidden;
+            // -webkit-overflow-scrolling: touch;
+        }
+        &.sliding{
+            .slide-tabs-item{
+                overflow:hidden;
+            }
+        }
+    }
+    
+    &.slide-tabs-vertical{
+        flex-direction:row;
+        width:100%;
+        .slide-tabs-navbar{
+            width:px2rem(60);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            flex-direction:column;
+            .slide-tabs-navbar-item{
+                width:100%;
+                flex:1;
+                // height:30%;
+                line-height:px2rem(40);
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                border-right:px2rem(1) solid #E0E0E0;
+                border-bottom:px2rem(1) solid #E0E0E0;
+            }
+        }
+        .slide-tabs-content{
+            width:auto;
+            flex-direction:column;
+            // height:100%;
+            .slide-tabs-item{
+                display:block;
+                overflow:hidden;
+            }
+        }
+    }
+}

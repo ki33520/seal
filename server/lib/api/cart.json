@@ -1,0 +1,58 @@
+{
+    "cartCount": {
+        "uri": "/cart/v1/countNumber",
+        "baseURL": {
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "cartByUser": {
+        "uri": "/cart/v1/findCarts",
+        "baseURL": {
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "updateCart": {
+        "uri": "/cart/v1/saveOrUpdateCart",
+        "baseURL": {
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "cartByAnonymous":{
+        "uri": "/cart/v1/findCartsNotLogin",
+        "baseURL": {
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "deleteCart": {
+        "uri": "/cart/v1/deleteCartById",
+        "baseURL": {
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "batchUpdateCart":{
+        "uri": "/cart/v1/batchSaveCarts",
+        "baseURL": {
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "validateCartFee":{
+        "uri":"/cart/v1/validateCartFee",
+        "baseURL":{
+            "develop":"http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    }
+}

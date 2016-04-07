@@ -1,0 +1,175 @@
+@import "../../common/common";
+@import "../../common/iconfont";
+@import "../../common/header";
+@import "../../component/slidetabs";
+@import "../../common/loading";
+@import "../../component/refresher";
+@import "../../component/masklayer";
+@import "../../component/gotop";
+@import "../../component/alert";
+@import "../../component/dialog";
+@import "../../component/lazyload.styl";
+@import "./orderlist.css";
+$gray-color = #555
+body {
+    background: #F1F1F1;
+    padding:0;
+}
+
+.right{
+    float:right;
+}
+
+.order-down{
+    &>.order-buttons{
+        float:right;
+    }
+}
+
+.order-list-container{
+    height:100%;
+    &>div{
+        height:100%;
+    }
+}
+.order-list-content{
+    height:100%;
+    overflow:hidden;
+}
+.order-content{
+    .empty-result{
+        background-image:url(/client/asset/images/empty_order.png);
+        background-repeat: no-repeat;
+        background-position: center top;
+        background-size:100%;
+        width: 100%;
+        margin-top: 1rem;
+        padding-top: 5.5rem;
+        text-align: center;
+        h3{
+            color: #666;
+            font-weight: normal;
+            font-size: .4rem;
+            line-height: 150%;
+            margin-bottom: .3rem;
+        }
+        .btn-link{
+            width: 4rem;
+            height: 1rem;
+            line-height: 1rem;
+            text-align: center;
+            display: inline-block;
+            color: #811da1;
+            border: 1px solid #811da1;
+            border-radius: .5rem;
+        }
+    }
+    &.order-content-1{
+        .empty-result{
+            background-image:url(/client/asset/images/empty_daifukuan.png);
+        }
+    }
+    &.order-content-2{
+        .empty-result{
+            background-image:url(/client/asset/images/empty_daifahuo.png);
+        }
+    }
+    &.order-content-3{
+        .empty-result{
+            background-image:url(/client/asset/images/empty_daishouhuo.png);
+        }
+    }
+    &.order-content-4{
+        .empty-result{
+            background-image:url(/client/asset/images/empty_daipinglun.png);
+        }
+    }
+}
+
+.slide-tabs{
+    >.slide-tabs-navbar{
+        flex-direction:row;
+        height: 1.16rem;
+        border:0 none;
+        .slide-tabs-navbar-item{
+            background:#FFF;
+            border:0 none;
+            border-bottom:px2rem(1) solid #D7D7D7;
+            line-height:px2rem(36);
+            &.active{
+                border-bottom:px2rem(2) solid #801da1;
+                &>a{
+                    color: #801da1;
+                }
+            }
+            &>a{
+                display: block;
+                text-align: center;
+            }
+            &>span{
+                padding-bottom:px2rem(3);
+            }
+        }
+    }
+    >.slide-tabs-content{
+        flex-direction:row;
+        overflow:hidden;
+        padding-bottom: 1.17rem;
+        height: 100%;
+        .slide-tabs-item{
+            width: 10rem;
+            max-width: 100%;
+            height: 100%;
+            padding-bottom: 1.17rem;
+            transform: translate3d(0, 0, 0);
+            .back-to-top{
+                display: none;
+                bottom: 1.4825rem;
+            }
+        }
+    }
+}
+
+.J_moveRight .slide-img-block{
+    .slide-tabs{
+        overflow: hidden;
+        .slide-tabs-navbar{
+            width: auto;
+            height: 2.08rem;
+            border:0 none;
+            .slide-tabs-navbar-item{
+                background:#FFF;
+                border:0 none;
+                line-height: 0;
+                width: 2.3rem;
+                &.active{
+                    border-bottom: none;
+                }
+                &>span{
+                    width: 2.08rem;
+                    height: 2.08rem;
+                    padding: 0.055rem;
+                    border: px2rem(1) solid #d7d7d7;
+                    margin: 0 auto;
+                    float: none;
+                    display: block;
+                }
+            }
+        }
+        .slide-tabs-content{
+            display: none;
+        }
+    }
+}
+
+.lazyload-image{
+    height: 100%;
+    .lazyload-image-inner{
+        height: 100%;
+        .placeholder{
+            height: 100%;
+            background:url(/client/asset/images/load.png) no-repeat 50% 50%;
+            background-size:100%;
+        }
+    }
+}

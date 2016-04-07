@@ -1,0 +1,28 @@
+{
+    "returnCode": 0,
+    "message": "成功",
+    "object": [
+        {
+            "wordName": "美妆",
+            "id": "2abaf2b9-9e43-11e5-8634-00e0814ca4d0",
+            "createdAt": "Dec 9, 2015 3:05:02 PM",
+            "updatedAt": "Dec 9, 2015 3:05:02 PM",
+            "inserter": "hwj",
+            "updater": "hwj",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        },
+        {
+            "wordName": "保健品",
+            "id": "2ac47064-9e43-11e5-8634-00e0814ca4d0",
+            "createdAt": "Dec 9, 2015 3:05:02 PM",
+            "updatedAt": "Dec 9, 2015 3:05:02 PM",
+            "inserter": "hwj",
+            "updater": "hwj",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        }
+    ]
+}

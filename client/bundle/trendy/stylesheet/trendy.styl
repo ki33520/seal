@@ -1,0 +1,73 @@
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/header.styl";
+@import "../../common/footer.styl";
+@import "../../common/error.styl";
+@import "../../common/loading.styl";
+@import "../../component/refresher.styl";
+@import "../../component/gotop.styl";
+@import "../../component/slidetabs.styl";
+@import "../../component/swiper.styl";
+@import "../../component/lazyload.styl";
+@import "../../common/scene.styl";
+@import "../../common/search.styl";
+@import "../../component/dialog";
+@import "./explo.css";
+
+body{
+	padding:0;
+}
+.container {
+	height: 100%;
+	.trendy-content{
+		height:100%;
+		overflow:hidden;
+	}
+}
+
+.swiper{
+    .swiper-control{
+        width:100%;
+        height:rem4px(42.5);
+	    border-bottom:rem4px(1) solid #d7d7d7;
+        .swiper-control-item{
+            line-height:rem4px(42.5);
+            border:none;
+            &.active{
+                i {
+                    color: #801da1;
+                    border-bottom:.053333rem solid #801da1;
+                }
+            }
+        }   
+    }
+}
+
+.flash-price {
+    position:absolute;
+    left:.4rem;
+    top:.3rem;
+    width:.78rem;
+    height:.78rem;
+    background:url(/client/asset/images/jpsg.png) no-repeat;
+    background-size:100%;
+}
+.mobile-price{
+    position:absolute;
+    left:.4rem;
+    top:.3rem;
+    width:.78rem;
+    height:.78rem;
+    background:url(/client/asset/images/indexTitle_1.png) no-repeat;
+    background-size:95% 95%;
+}
+.no-more {
+	// margin-bottom: 1.38rem;
+}
+
+.trendy-placeholder{
+    width:rem4px(110);
+    height:rem4px(160);
+    background:url(/client/asset/images/load.png) no-repeat 50% 50%;
+    background-size:100%;
+}

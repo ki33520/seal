@@ -1,0 +1,67 @@
+@import "../common/common";
+@import "../common/util";
+.activity-indicator{
+    &.active{
+        .mask-layer{
+            visibility:visible;
+            opacity:1;
+            .spinner{
+                opacity:1;
+                transform:translateY(0);
+                transition:transform .3s ease-in,opacity .2s linear;
+            }
+        }
+    }
+    .mask-layer{
+        position:fixed;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        z-index:1000;
+        visibility:hidden;
+        opacity:0;
+        .spinner{
+            position:absolute;
+            top:50%;
+            left:50%;
+            width:px2rem(60);
+            height:px2rem(50);
+            margin-top:px2rem(-25);
+            margin-left:px2rem(-30);
+            background:rgba(255,255,255,1);
+            border-radius:px2rem(5);
+            box-shadow:px2rem(2) px2rem(2) px2rem(10) rgba(0, 0, 0, .45);
+            text-align:center;
+            padding:px2rem(5) 0;
+            color:#666;
+            opacity:0.5;
+            transform:translateY(-5px);
+            .iconfont{
+                font-size:px2rem(22);
+                display: inline-block;
+                animation: spin 2s infinite linear;
+            }
+            p{
+                margin-top:px2rem(2);
+                font-size:12px;
+            }
+        }
+    }
+}
+
+@keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -moz-transform: rotate(359deg);
+    -o-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}

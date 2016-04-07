@@ -1,0 +1,18 @@
+{% extends "./layout.html" %}
+{% block title %}收货地址－友阿海外购{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div class="receiver-container">
+    <div id="receiver">{{ markup|safe }}</div>
+</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/hmr/react.js"></script>
+<script src="/hmr/receiver.js"></script>
+<!-- endinject -->
+{% endblock %}

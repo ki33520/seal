@@ -1,0 +1,43 @@
+{
+  "returnCode": 0,
+  "message": "成功",
+  "object": {
+    "couponDefCode": null,
+    "couponDefName": "海外购重构满300减80",
+    "couponNo": "4854935100000001",
+    "money": 80,
+    "status": 3,
+    "statusName": "可使用",
+    "shortName": null,
+    "couponDesc": null,
+    "useRules": null,
+    "issueDate": "2016-01-22 15:57:37",
+    "validityDate": "2016-05-01 15:57:37",
+    "issueStartTime": "2016-01-22 15:57:37",
+    "employName": null,
+    "employCode": null,
+    "ruleObject": {
+      "batchCode": "485493",
+      "batchName": null,
+      "typeComment": null,
+      "couponName": "满300减80",
+      "songAccount": 80,
+      "ruleChannel": "WEB,Mobile",
+      "excepSupplier": null,
+      "excepWh": null,
+      "excepBrand": null,
+      "excepAttr": null,
+      "description": "",
+      "id": "fc6804de528204480152828328490002",
+      "createdAt": "Jan 27, 2016 5:56:20 PM",
+      "updatedAt": "Jan 27, 2016 5:56:20 PM",
+      "inserter": "admin",
+      "updater": null,
+      "start": 0,
+      "limit": 15,
+      "recordStatus": "EXIST"
+    },
+    "qrCode": "a878b66a022d43e4a806c981e36f28e9,485493,4854935100000001,80.00,1453449457000,1462089457000,1455440333",
+    "remark": "海外购重构满300减80"
+  }
+}

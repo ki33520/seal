@@ -1,0 +1,58 @@
+{
+    "confirmOrder": {
+        "uri": "/cart/v1/confirmOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "shipFeeByReceiver": {
+        "uri": "/logistics/v1/findPostage",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "saveOrder": {
+        "uri": "/order/v1/createOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "verifyOrder": {
+        "uri": "/cart/v1/validateOrderFee",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "orderStatus": {
+        "uri": "/pay/v1/findOrderStatus",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "orderByNo": {
+        "uri": "/order/v1/findOrderDetail",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "customByWarehouse": {
+        "uri": "/wareHouse/v1/single",
+        "baseURL": {
+            "develop": "http://product.hwg.youayun.cn:7989",
+            "test": "http://product.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    }
+}

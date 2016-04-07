@@ -1,0 +1,16 @@
+{% extends "./layout.html" %}
+{% block title %}专场活动－友阿海外购{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div id="activity" class="container">{{ markup|safe }}</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/hmr/react.js"></script>
+<script src="/hmr/activity.js"></script>
+<!-- endinject -->
+{% endblock %}

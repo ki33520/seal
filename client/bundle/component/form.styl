@@ -1,0 +1,23 @@
+@import "../common/common";
+@import "../common/iconfont";
+@import "../common/util";
+.checkbox,.radio {
+    position: relative;
+    display: inline-block;
+    width: px2rem(20);
+    height: px2rem(20);
+    &>span {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        &:before {
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            width: 100%;
+            height: 100%;
+            font-size: px2rem(16);
+        }
+    }
+}

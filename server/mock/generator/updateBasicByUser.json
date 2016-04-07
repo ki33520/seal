@@ -1,0 +1,10 @@
+{
+    "returnCode": 0,
+    "message": "成功",
+    "object":{
+        "memberId": "12345",
+        "nickname": "jones1",
+        "gender": "2",
+        "birthdy": "1998-01-23"
+    }
+}

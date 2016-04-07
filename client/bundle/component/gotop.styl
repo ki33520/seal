@@ -1,0 +1,57 @@
+@import "../common/common";
+@import "../common/util";
+.back-to-top {
+    // position: fixed;
+    bottom: px2rem(40);
+    right: px2rem(10);
+    // background: rgba(0, 0, 0, .75);
+    width: px2rem(40);
+    height:px2rem(40);
+    border-radius: px2rem(40);
+    z-index: 100;
+    text-align: center;
+    opacity:0;
+    display: none;
+    transition:opacity .3s ease-in;
+    &.active{
+        display: block;
+        opacity:1;
+        transition:opacity .3s ease-in;
+    }
+    a {
+        width:100%;
+        height:100%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        background: url(/client/asset/images/toTop.png) center center;
+        background-size: 100% 100%;
+        span {
+            display: none;
+            font-size:px2rem(18);
+            color: #FFF;
+        }
+    }
+}
+
+.back-to-top-container{
+    height:100%;
+    width:100%;
+    overflow:hidden;
+    .back-to-top{
+        position:absolute;
+    }
+    .back-to-top-inner{
+        height:100%;
+        overflow:hidden;
+        &.scrollable{
+            overflow-x:hidden;
+            overflow-y:auto;
+            -webkit-overflow-scrolling:touch;
+            // position:relative;
+        }
+        &.smooth{
+            overflow:hidden;
+        }
+    }
+}

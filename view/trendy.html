@@ -1,0 +1,16 @@
+{% extends "./layout.html" %}
+{% block title %}爆款－友阿海外购{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div id="trendy" class="container">{{ markup|safe }}</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/hmr/react.js"></script>
+<script src="/hmr/trendy.js"></script>
+<!-- endinject -->
+{% endblock %}

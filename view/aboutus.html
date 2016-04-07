@@ -1,0 +1,18 @@
+{% extends "./layout.html" %}
+{% block title %}关于我们－友阿海外购{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div class="aboutus-container">
+    <div id="aboutus">{{ markup|safe }}</div>
+</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/hmr/react.js"></script>
+<script src="/hmr/aboutus.js"></script>
+<!-- endinject -->
+{% endblock %}

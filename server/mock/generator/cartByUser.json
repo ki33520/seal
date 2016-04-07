@@ -1,0 +1,59 @@
+{
+    "returnCode": 0,
+    "message": "成功",
+    "object": [
+        {
+            "promoFee": 0,
+            "promoName":"再购1件立享【98元任选2件】",
+            "cartMKTList": [
+                {
+                    "promoFee": 0,
+                    "promoType":"满减",
+                    "promoName":"购物满200减30，满300减80，满400减120",
+                    "cartProductList": [
+                        {
+                            "cartId": "40289eeb516ce64a01516cf303430000",
+                            "salesPrice": 70,
+                            "fee": 210,
+                            "discount": 0.7,
+                            "originPrice": 100,
+                            "title": "美国进口babyganics甘尼克果蔬奶瓶清洗液柑橘香型补充装946ml",
+                            "stockFlag": true,
+                            "props": "尺寸:大;颜色:白色",
+                            "taxRate": 0,
+                            "buyLimit": 6,
+                            "abroadFee": 0,
+                            "tariffFee": 0,
+                            "imageUrl": "http://youahaitao.oss-cn-hangzhou.aliyuncs.com/images/201507/thumb_img/878_thumb_G_1438295153599.jpg",
+                            "qty": 3,
+                            "singleCode": "S0002938123"
+                        },
+                        {
+                            "cartId": "40289eeb516ce64a01516cf303430001",
+                            "salesPrice": 60,
+                            "fee": 210,
+                            "discount": 0.7,
+                            "originPrice": 100,
+                            "title": "美国进口蔬奶瓶清洗液柑橘香型补充装945ml",
+                            "stockFlag": true,
+                            "props": "尺寸:大;颜色:白色",
+                            "taxRate": 0,
+                            "buyLimit": 3,
+                            "abroadFee": 0,
+                            "tariffFee": 0,
+                            "imageUrl": "http://youahaitao.oss-cn-hangzhou.aliyuncs.com/images/201507/thumb_img/878_thumb_G_1438295153599.jpg",
+                            "qty": 1,
+                            "singleCode": "S0002938124"
+                        }
+                    ]
+                }
+            ],
+            "warehouseId": "402880a551240c440151240c4ccf0004",
+            "totalFee": 270,
+            "tariffFee": 0,
+            "qtys": 4,
+            "warehouseName": "宁波保税区一号仓1",
+            "salesTotalFee": 270
+        }
+    ]
+}

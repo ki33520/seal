@@ -1,0 +1,82 @@
+
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/header.styl";
+@import "../../common/footer.styl";
+@import "../../common/activityindicator.styl";
+@import "../../component/masklayer.styl";
+@import "../../component/numberpicker.styl";
+@import "../../component/form.styl";
+@import "../../component/dialog.styl";
+@import "../../component/alert.styl";
+@import "./cart.css";
+
+.container {
+    height: 100%;
+}
+.empty {
+    height: 100%;
+}
+.dialog-btns>button{
+    display: block;
+}
+.number-picker{
+    border: 1px #e5e5e5 solid;
+    border-radius: 3px;
+    &>div {
+	    height: .62rem;
+	    width: .62rem;
+	    line-height: .62rem;
+	    padding: 0;
+    }
+    &>input{
+    	height: .62rem;
+    	max-width: 1rem;
+	    line-height: .62rem;
+	    border: 1px #dcdcdc solid;
+	    border-top: 0;
+	    border-bottom: 0;
+    }
+}
+
+.cart-tips{
+    background-color: #f5f5f5;
+    color: #ff7800;
+    clear: both;
+    width: 100%;
+    padding: .48rem .92rem .24rem;
+    overflow: hidden;
+    position: relative;
+    .con{
+        font-size: .32rem;
+        line-height: .54rem;
+        padding-left: .8rem;
+    }
+    .arrow {
+        background:url(/client/asset/images/cart_bulb.png) 0 0 no-repeat;
+        width: .54rem;
+        height: .54rem;
+        background-size: 100%;
+        margin-right: .24rem;
+        position: absolute;
+        top: .42rem;
+        left: .92rem;
+    }
+}
+.checkbox {
+    width: .43rem;
+    height: .43rem;
+    color: #27C65C;
+}
+.invalid {
+    color: gray;
+    .checkbox {
+        color: rgb(225, 234, 226);
+    }
+    .J_moveRight .limitBuy {
+        color: gray;
+    }
+    .gd_info .name b {
+        color: gray;
+    }
+}

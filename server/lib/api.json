@@ -1,0 +1,410 @@
+{
+    "indexChannels": {
+        "uri": "/content/v1/manage/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "floorsByChannel": {
+        "uri": "/content/v1/template/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "activityGood": {
+        "uri": "/content/v1/activityproduct/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "allOrigins": {
+        "uri": "/sourceArea/v1/findListWap",
+        "baseURL": {
+            "develop": "http://product.hwg.youayun.cn:7989",
+            "test": "http://product.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "categoryBrands": {
+        "uri": "/content/v1/introduce/list/all",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "allBrands": {
+        "uri": "/brand/v1/findListWap",
+        "baseURL": {
+            "develop": "http://product.hwg.youayun.cn:7989",
+            "test": "http://product.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "allCategory": {
+        "uri": "/single/v1/findShowCategories",
+        "baseURL": {
+            "develop": "http://product.hwg.youayun.cn:7989",
+            "test": "http://product.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "categoryActivity": {
+        "uri": "/content/v1/activitycategory/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "goodById": {
+        "uri": "/single/v1/detail",
+        "baseURL": {
+            "develop": "http://product.hwg.youayun.cn:7989",
+            "test": "http://product.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "goodPromotions": {
+        "uri": "/marketing/v1/singleDetailPromotion",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "flashbuyByGood": {
+        "uri": "/marketing/v1/findFlashSales",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "regiestOrLogin": {
+        "uri": "/member/v1/regiestOrLogin",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "memberMemberInfo": {
+        "uri": "/member/v1/findMemberInfo",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "memberDetailByUser": {
+        "uri": "/member/v1/findMemberDetail",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "memberCollectByUser": {
+        "uri": "/collect/v1/findByPage",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "memberCommentByUser": {
+        "uri": "/comments/v1/findDoneComments",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://order.tepin.hk"
+        }
+    },
+    "commentByGood": {
+        "uri": "/comments/v1/findByProductCode",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://order.tepin.hk"
+        }
+    },
+    "updateBasicByUser": {
+        "uri": "/member/v1/saveMemberInfo",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "updatePasswordByUser": {
+        "uri": "/member/v1/changePassword",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "memberCountOrder": {
+        "uri": "/order/v1/countOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://order.tepin.hk"
+        }
+    },
+    "loginByCode": {
+        "uri": "/member/v1/regiestOrLogin",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "couponByUser": {
+        "uri": "/coupon/v1/findUserCouponList",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://marketing.tepin.hk"
+        }
+    },
+    "couponDetail": {
+        "uri": "/coupon/v1/findCouponDetail",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "http://marketing.tepin.hk"
+        }
+    },
+    "fetchGoodsList": {
+        "uri": "/search/v1/findListByParamsWap",
+        "baseURL": {
+            "develop": "http://search.hwg.youayun.cn:7988",
+            "test": "http://search.hwg.youayun.cn",
+            "production": "http://product.tepin.hk"
+        }
+    },
+    "fetchTendyGoods": {
+        "uri": "/content/v1/templatebk/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    },
+    "fetchActivityTendyGoods": {
+        "uri": "/content/v1/activityproduct/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    },
+    "fetchHotKeywords": {
+        "uri": "/content/v1/hotword/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    },
+    "questionCategory": {
+        "uri": "/content/v1/questioncategory/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    },
+    "questionList": {
+        "uri": "/content/v1/question/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    },
+    "orderByUser": {
+        "uri": "/order/v1/findOrderList",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "orderWaitComments": {
+        "uri": "/comments/v1/findMobileWaitComments",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "orderById": {
+        "uri": "/order/v1/findOrderDetailById",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "orderItemList": {
+        "uri": "/comments/v1/findOrderItemList",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "closedOrderById": {
+        "uri": "/order/v1/closedOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "deliveryOrderById": {
+        "uri": "/order/v1/orderDelivery",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "commentsOrderById": {
+        "uri": "/comments/v1/batchAdd",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "logisticsByOrder": {
+        "uri": "/order/v1/searchRoute",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "waitCommentsByUser": {
+        "uri": "/comments/v1/findWaitComments",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "order.hwg.youayun.cn"
+        }
+    },
+    "receiverByUser": {
+        "uri": "/address/v1/findAddressList",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "receiverById": {
+        "uri": "/address/v1/findAddressById",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "updateReceiver": {
+        "uri": "/address/v1/update",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "addReceiver": {
+        "uri": "/address/v1/add",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "deleteReceiver": {
+        "uri": "/address/v1/delete",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "setDefaultReceiver": {
+        "uri": "/address/v1/editDefault",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "findProvince": {
+        "uri": "/address/v1/findProvinceMap",
+        "baseURL": {
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
+        }
+    },
+    "findCity": {
+        "uri": "/address/v1/findCityMap",
+        "baseURL": {
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
+        }
+    },
+    "findDistrict": {
+        "uri": "/address/v1/findCountyMap",
+        "baseURL": {
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
+        }
+    },
+    "timestamp": {
+        "uri": "/system/v1/timestamp",
+        "baseURL": {
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
+        }
+    },
+    "memberCardQRCode": {
+        "uri": "/sso/v1/memberCardQRCode",
+        "baseURL": {
+            "develop": "http://sns.e9448.com/sns",
+            "test": "http://sns.e9448.com/sns",
+            "production": "http://sns.tepin.com/sns"
+        }
+    },
+    "promoterQr":{
+        "uri": "/member/v1/promoterQr",
+        "baseURL": {
+            "develop": "http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "member.hwg.youayun.cn"
+        }
+    },
+    "specialActivity": {
+        "uri": "/content/v1/templetedetail/list",
+        "baseURL": {
+            "develop": "http://marketing.hwg.youayun.cn:7985",
+            "test": "http://marketing.hwg.youayun.cn",
+            "production": "marketing.hwg.youayun.cn"
+        }
+    }
+}

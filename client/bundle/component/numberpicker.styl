@@ -1,0 +1,42 @@
+@import "../common/common";
+@import "../common/util";
+@import "../common/iconfont";
+.number-picker {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:px2rem(4);
+    border:px2rem(1) solid #AAA;
+    &.is-minimum>div:first-child{
+        &>span{
+            color:#CCC;
+        }
+    }
+    &.is-maximum>div:last-child{
+        &>span{
+            color:#CCC;
+        }
+    }
+    &>div {
+        font-size:px2rem(14);
+        padding: 0 px2rem(10);
+        cursor: pointer;
+        height: px2rem(30);
+        line-height:px2rem(30);
+        width:px2rem(35);
+        text-align:center;
+        box-sizing:border-box;
+    }
+    &>input {
+        margin:0;
+        padding:0;
+        border:0 none;
+        border-left:px2rem(1) solid #AAA;
+        border-right:px2rem(1) solid #AAA;
+        line-height: px2rem(30);
+        padding: 0;
+        text-align: center;
+        border-radius: 0;
+        flex:1;
+    }
+}

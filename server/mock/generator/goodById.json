@@ -1,0 +1,215 @@
+{
+    "returnCode": 0,
+    "object": {
+        "title": "【两支】日本进口 资生堂 完美超微粒 洗面奶120G/支",
+        "subTitle": "",
+        "detail": "",
+        "stock": {
+            "singleCode": "S732000000195",
+            "currentStock": 80,
+            "localStock": 80,
+            "safetyStock": 80,
+            "id": "fc6804de5233e86d015234c303ce0148",
+            "createdAt": "Jan 12, 2016 3:35:42 PM",
+            "updatedAt": "Jan 22, 2016 7:28:18 PM",
+            "inserter": "lich",
+            "updater": "lich",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        },
+        "erp": "T177000000225",
+        "sku": "SKUS732000000195",
+        "code": "S732000000195",
+        "groupCode": "T177000000225",
+        "isMain": 1,
+        "channel": "WEB,Mobile",
+        "originPrice": 88.00,
+        "salesPrice": 78.00,
+        "discount": 1.00,
+        "picList": [
+            "null/prt/m/8/4/1452579562473512.jpg",
+            "null/prt/v/0/s/1452579569204806.jpg"
+        ],
+        "attrs": {},
+        "fattrs": {
+            "瓶": "一瓶,两瓶",
+            "支": "1支,2支"
+        },
+        "salesCount": 0,
+        "collection": 0,
+        "relCategory": "fc6804de522fd3b601522ffc7bc60035",
+        "storehouseId": "fc6804de522fd3b601522ff1662c0015",
+        "wareHouse": {
+            "name": "杭州保税区二号仓",
+            "code": "9",
+            "supplierId": "fc6804de522fd3b60152300ca7a1006d",
+            "supplierName": "杭州佳亲儿童用品有限公司",
+            "id": "fc6804de522fd3b601522ff1662c0015",
+            "createdAt": "Jan 11, 2016 5:08:16 PM",
+            "updatedAt": "Jan 11, 2016 5:08:16 PM",
+            "inserter": "hejw",
+            "updater": "hejw",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        },
+        "brand": {
+            "name": "迪士尼宝宝",
+            "engName": "Disney baby",
+            "firstLetter": "D",
+            "logoUrl": "null/tepin-test/i/i/r/1452562619887716.png",
+            "imageWebUrl": "null/tepin-test/d/t/2/1452562618990224.png",
+            "imageWapUrl": "null/tepin-test/2/i/9/1452562619655271.png",
+            "summary": "Disney baby是迪士尼公司旗下的知名婴童品牌。",
+            "description": "<p><span style=\"color: rgb(102, 102, 102); font-family: arial, 宋体, sans-serif; font-size: 12px; line-height: 22px; text-indent: 24px; background-color: rgb(255, 255, 255);\">Disney baby是迪士尼公司旗下的知名婴童品牌，专业经营迪士尼宝宝米妮、米奇、小熊维尼系列0至6岁宝宝床品、服装等产品。Disney baby特别针对0至6岁的小朋友而设计，通过一系列的经典卡通图案，将孩子们带入梦幻的迪士尼乐园，与宝宝一起享受快乐的童年，每一件迪士尼产品，都演绎着一段动人的故事，洋溢着欢乐与梦想，给人温馨与幸福感。</span></p>",
+            "categorysName": "fc6804de522fd3b601522ff472300021,fc6804de522fd3b601522ff49a040022,fc6804de522fd3b601522ff4c6eb0023,fc6804de522fd3b601522ff4f4970024,fc6804de522fd3b601522ff517cd0025,fc6804de522fd3b601522ff7de2f0027,fc6804de522fd3b601522ff88bd20029,fc6804de522fd3b601522ff960c6002b,fc6804de522fd3b601522ff99a39002c,fc6804de522fd3b601522ff9f4e7002d,fc6804de522fd3b601522ffa2578002e,fc6804de522fd3b601522ffa563b002f,fc6804de522fd3b601522ffa83cf0030",
+            "id": "fc6804de522fd3b60152337a9edc00e6",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        },
+        "supplier": {
+            "wareHouseSet": [{
+                "name": "杭州保税区二号仓",
+                "code": "9",
+                "supplierId": "fc6804de522fd3b60152300ca7a1006d",
+                "supplierName": "杭州佳亲儿童用品有限公司",
+                "id": "fc6804de522fd3b601522ff1662c0015",
+                "start": 0,
+                "limit": 15,
+                "recordStatus": "EXIST"
+            }],
+            "wareIds": "fc6804de522fd3b601522ff1662c0015",
+            "wareNames": "杭州保税区二号仓",
+            "name": "杭州佳亲儿童用品有限公司",
+            "provinceName": "浙江",
+            "provinceCode": "330000000000",
+            "cityName": "杭州市",
+            "cityCode": "330100000000",
+            "districtName": "滨江区",
+            "districtCode": "330108000000",
+            "address": "杭州市萧山区闻堰镇五金路53号13栋",
+            "telPhone": "15967121346",
+            "companySize": "100-500人",
+            "linkName": "江向前",
+            "linkPhone": "15967121346",
+            "linkEmail": "llbsmile@qq.com",
+            "licence": "2324",
+            "operatorRange": "3434",
+            "licenceImage": "",
+            "deptImage": "",
+            "ratePayImage": "",
+            "deptCode": "23432",
+            "accountNameBank": "343",
+            "accountNumBank": "234",
+            "concatNameBank": "234",
+            "concatNumBank": "2432",
+            "bankImage": "",
+            "balanceNameBank": "234",
+            "balanceAccountBank": "32",
+            "balanceConcatBank": "234",
+            "balanceConcatNumBank": "342",
+            "numTax": "2342",
+            "codeTax": "234",
+            "taxImage": "",
+            "state": 1,
+            "isBalance": 0,
+            "protocolImage": "",
+            "endDate": "Jan 29, 2018 12:00:00 AM",
+            "startDate": "Jan 10, 2016 12:00:00 AM",
+            "protocolCode": "243",
+            "balanceCycle": 2,
+            "salerPromiseMoney": 2.00,
+            "platformCost": 2.00,
+            "wuliuCostAvg": 2.00,
+            "tongguanCostAvg": 2.00,
+            "baozhuangCostAvg": 2.00,
+            "remark": "通过",
+            "id": "fc6804de522fd3b60152300ca7a1006d",
+            "createdAt": "Jan 11, 2016 5:38:02 PM",
+            "updatedAt": "Jan 11, 2016 5:43:18 PM",
+            "inserter": "hejw",
+            "updater": "hejw",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        },
+        "sourceAreaId": "fc6804de522fd3b601522feddef10012",
+        "sourceArea": {
+            "name": "泰国",
+            "imageUrl": "null/tepin-test/x/4/q/1453097303324634.jpg",
+            "backGroupImageUrl": "null/tepin-test/y/7/8/1452503060293481.png",
+            "id": "fc6804de522fd3b601522feddef10012",
+            "start": 0,
+            "limit": 15,
+            "recordStatus": "EXIST"
+        },
+        "taxRate": 1.00,
+        "buyLimit": 100,
+        "useTaxRate": false,
+        "useInlandLogistics": false,
+        "useOutlandLogistics": false,
+        "outlandLogisticsFee": 5.00,
+        "description": "【两支】日本进口 资生堂 完美超微粒 洗面奶120G/支",
+        "canUseTicket": false,
+        "minAmount": 2,
+        "showTaxRate": 0.00,
+        "addCount": 2,
+        "productName": "【两支】日本进口 资生堂 完美超微粒 洗面奶120G/支",
+        "groups": [{
+            "code": "S732000000195",
+            "fattrs": {
+                "瓶": "一瓶",
+                "支": "1支"
+            },
+            "stock": {
+                "singleCode": "S732000000195",
+                "currentStock": 80,
+                "localStock": 95,
+                "safetyStock": 80,
+                "id": "fc6804de5233e86d015234c303ce0148"
+            }
+        }, {
+            "code": "S732000000196",
+            "fattrs": {
+                "瓶": "一瓶",
+                "支": "2支"
+            },
+            "stock": {
+                "singleCode": "S732000000196",
+                "currentStock": 80,
+                "localStock": 96,
+                "safetyStock": 80,
+                "id": "fc6804de5233e86d015234c303ce0148"
+            }
+        }, {
+            "code": "S732000000197",
+            "fattrs": {
+                "瓶": "两瓶",
+                "支": "1支"
+            },
+            "stock": {
+                "singleCode": "S732000000197",
+                "currentStock": 80,
+                "localStock": 97,
+                "safetyStock": 80,
+                "id": "fc6804de5233e86d015234c303ce0148"
+            }
+        }, {
+            "code": "S732000000198",
+            "fattrs": {
+                "瓶": "两瓶",
+                "支": "2支"
+            },
+            "stock": {
+                "singleCode": "S732000000198",
+                "currentStock": 80,
+                "localStock": 98,
+                "safetyStock": 80,
+                "id": "fc6804de5233e86d015234c303ce0148"
+            }
+        }],
+        "version": 1
+    }
+}

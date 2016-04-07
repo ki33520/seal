@@ -1,0 +1,108 @@
+{
+  "returnCode": 0,
+  "message": "成功",
+  "object": {
+    "result": [
+      {
+        "couponDefCode": "398169",
+        "couponDefName": "测试优惠券1209",
+        "couponNo": "3981697300000053",
+        "money": 10,
+        "status": 2,
+        "statusName": "已过期",
+        "shortName": "测试优惠券1209",
+        "couponDesc": "测试",
+        "useRules": "无门槛优惠券",
+        "issueDate": "2016-01-08 14:46:48",
+        "validityDate": "2016-01-18 14:46:48",
+        "issueStartTime": "2016-01-08 14:46:48",
+        "employName": [
+          "农博汇",
+          "特品汇",
+          "线下门店",
+          "海外购",
+          "微信测试",
+          "全渠道"
+        ],
+        "employCode": [
+          "hnmall",
+          "tepin",
+          "md",
+          "haiwaigou",
+          "wxtest",
+          "sap"
+        ],
+        "ruleObject": null,
+        "qrCode": null,
+        "remark": null
+      },
+      {
+        "couponDefCode": "398169",
+        "couponDefName": "测试优惠券1209",
+        "couponNo": "3981697300000054",
+        "money": 10,
+        "status": 2,
+        "statusName": "已过期",
+        "shortName": "测试优惠券1209",
+        "couponDesc": "测试",
+        "useRules": "无门槛优惠券",
+        "issueDate": "2016-01-08 14:46:52",
+        "validityDate": "2016-01-18 14:46:52",
+        "issueStartTime": "2016-01-08 14:46:52",
+        "employName": [
+          "农博汇",
+          "特品汇",
+          "线下门店",
+          "海外购",
+          "微信测试",
+          "全渠道"
+        ],
+        "employCode": [
+          "hnmall",
+          "tepin",
+          "md",
+          "haiwaigou",
+          "wxtest",
+          "sap"
+        ],
+        "ruleObject": null,
+        "qrCode": null,
+        "remark": null
+      },
+      {
+        "couponDefCode": "398169",
+        "couponDefName": "测试优惠券1209",
+        "couponNo": "3981691100000055",
+        "money": 10,
+        "status": 2,
+        "statusName": "已过期",
+        "shortName": "测试优惠券1209",
+        "couponDesc": "测试",
+        "useRules": "无门槛优惠券",
+        "issueDate": "2016-01-08 14:46:52",
+        "validityDate": "2016-01-18 14:46:52",
+        "issueStartTime": "2016-01-08 14:46:52",
+        "employName": [
+          "农博汇",
+          "特品汇",
+          "线下门店",
+          "海外购",
+          "微信测试",
+          "全渠道"
+        ],
+        "employCode": [
+          "hnmall",
+          "tepin",
+          "md",
+          "haiwaigou",
+          "wxtest",
+          "sap"
+        ],
+        "ruleObject": null,
+        "qrCode": null,
+        "remark": null
+      }
+    ],
+    "totalCount": 3
+  }
+}

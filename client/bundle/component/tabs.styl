@@ -1,0 +1,55 @@
+@import "../common/common";
+@import "../common/util";
+.tabs {
+    .tabs-nav {
+        background: #FFF;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &>span {
+            flex: 1;
+            display: block;
+            text-align: center;
+            line-height: px2rem(35);
+            border-left: px2rem(1) solid #DEDEDE;
+            border-bottom: px2rem(2) solid #DEDEDE;
+            &.active {
+                border-bottom: px2rem(2) solid #801da1;
+                color: #801da1;
+            }
+        }
+    }
+    .tabs-content {
+        // position: relative;
+        .tabs-item {
+            // position: absolute;
+            z-index: 100;
+            width: 100%;
+            transform: translateX(-100%);
+            opacity: 0;
+            display:none;
+            visibility: hidden;
+            overflow:hidden;
+            &.active {
+                opacity: 1;
+                transform: translateX(0);
+                visibility: visible;
+                display:block;
+                padding-bottom:px2rem(36);
+            }
+            &.active ~ * {
+                transform: translateX(100%);
+            }
+        }
+        &.tabs-content-fade {
+            .tabs-item {
+                transition: opacity .2s linear 0s;
+            }
+        }
+        &.tabs-content-slide {
+            .tabs-item {
+                transition: transform .2s linear 0s;
+            }
+        }
+    }
+}

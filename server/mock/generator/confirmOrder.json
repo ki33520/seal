@@ -1,0 +1,109 @@
+{
+  "returnCode": 0,
+  "message": "成功",
+  "object": {
+    "warehouseName": "宁波保税区一号仓",
+    "warehouseId": "fc6804de522fd3b601522fe58e6f0008",
+    "promoType": null,
+    "promoName": null,
+    "qtys": 1,
+    "salesTotalFee": 432.0,
+    "promoFee": 0.0,
+    "totalFee": 444.26,
+    "abroadFee": 0.0,
+    "logisticsFee": 12.26,
+    "tariffFee": 0.0,
+    "buyLimit": null,
+    "dutyFree": null,
+    "cartMKTList": [
+      {
+        "promoType": "闪购",
+        "promoName": null,
+        "promoFee": 0,
+        "cartProductList": [
+          {
+            "cartId": null,
+            "singleCode": "S585000000188",
+            "title": "【2罐装 单罐仅184元】德国进口爱他美Aptamil奶粉2段（6-10个月 800g）",
+            "imageUrl": "null/prt/s/d/x/1452578344852700.jpg",
+            "props": "罐装:",
+            "originPrice": 442,
+            "salesPrice": 432,
+            "discount": 100,
+            "qty": 1,
+            "fee": 432,
+            "stockFlag": true,
+            "buyLimit": 1,
+            "abroadFee": 0,
+            "tariffFee": 0,
+            "taxRate": 0,
+            "version": 1
+          }
+        ]
+      }
+    ],
+    "couponList": null,
+    "memberAddrList": [
+      {
+        "recvAddressId": "188",
+        "recvLinkman": "aliz",
+        "recvMobile": "13786157055",
+        "recvPhone": null,
+        "idCard": "430524198303220014",
+        "provinceName": "湖南",
+        "provinceCode": "430000000000",
+        "cityName": "长沙市",
+        "cityCode": "430100000000",
+        "countyName": "芙蓉区",
+        "countyCode": "430102000000",
+        "address": "1234",
+        "isDefault": 0
+      },
+      {
+        "recvAddressId": "196",
+        "recvLinkman": "测试",
+        "recvMobile": "13786157055",
+        "recvPhone": null,
+        "idCard": "430524198303220014",
+        "provinceName": "湖南",
+        "provinceCode": "430000000000",
+        "cityName": "长沙市",
+        "cityCode": "430100000000",
+        "countyName": "芙蓉区",
+        "countyCode": "430102000000",
+        "address": "1234",
+        "isDefault": 0
+      },
+      {
+        "recvAddressId": "197",
+        "recvLinkman": "测试",
+        "recvMobile": "13786156052",
+        "recvPhone": null,
+        "idCard": "430524198303220014",
+        "provinceName": "内蒙古",
+        "provinceCode": "150000000000",
+        "cityName": "呼和浩特市",
+        "cityCode": "150100000000",
+        "countyName": "新城区",
+        "countyCode": "150102000000",
+        "address": "测试地址",
+        "isDefault": 0
+      },
+      {
+        "recvAddressId": "198",
+        "recvLinkman": "测试2",
+        "recvMobile": "13786157051",
+        "recvPhone": null,
+        "idCard": "430524198303220014",
+        "provinceName": "江西",
+        "provinceCode": "360000000000",
+        "cityName": "景德镇市",
+        "cityCode": "360200000000",
+        "countyName": "珠山区",
+        "countyCode": "360203000000",
+        "address": "测试对称",
+        "isDefault": 0
+      }
+    ]
+  }
+}

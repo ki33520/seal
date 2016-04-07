@@ -1,0 +1,19 @@
+{% extends "./layout.html" %}
+{% block title %}商品评论－友阿海外购{% endblock %}
+{% block css %}
+<!-- inject:css -->
+<link rel="stylesheet" href="/client/bundle/goodcomment/dist/goodcomment-69547ed5a253fbf3e1e9.css">
+<!-- endinject -->
+{% endblock %} 
+{% block content %}
+<div class="goodcomment-container">
+    <div id="good-comment">{{ markup|safe }}</div>
+</div>
+<script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
+{% endblock %}
+{% block js %}
+<!-- inject:js -->
+<script src="/client/vendor/dist/react-69547ed5a253fbf3e1e9.js"></script>
+<script src="/client/bundle/goodcomment/dist/goodcomment-69547ed5a253fbf3e1e9.js"></script>
+<!-- endinject -->
+{% endblock %}

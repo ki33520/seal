@@ -1,0 +1,53 @@
+@import "../common/common";
+@import "../common/util";
+.accordion {
+    border:px2rem(1) solid #DEDEDE;
+    background: #FFF;
+    margin-bottom: px2rem(20);
+    .accordion-item {
+        line-height:0;
+        font-size:0;
+        border-top:px2rem(1) solid #DEDEDE;
+        &:first-child {
+            border-top:0 none;
+        }
+        dt {
+            padding: px2rem(8) px2rem(10);
+            line-height: px2rem(24);
+            cursor: pointer;
+            font-size:px2rem(14);
+            position:relative;
+            &>.iconfont{
+                position:absolute;
+                right:3%;
+                top:50%;
+                font-size:px2rem(14);
+                margin-top:px2rem(-8);
+                line-height:1;
+                transform:rotate(0);
+                transition:transform .3s linear;
+            }
+        }
+        dd {
+            display: none;
+            overflow:hidden;
+            .accordion-content {
+                font-size:px2rem(14);
+                line-height:px2rem(20);
+                padding:px2rem(8) px2rem(10);
+            }
+        }
+        &.active {
+            dt {
+                background: #F5F5F5;
+                box-shadow:px2rem(1) px2rem(1) px2rem(1) #DEDEDE;
+                &>.iconfont{
+                    transform:rotate(90deg);
+                }
+            }
+            dd {
+                display: block;
+            }
+        }
+    }
+}

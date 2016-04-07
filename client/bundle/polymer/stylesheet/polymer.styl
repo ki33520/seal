@@ -1,0 +1,176 @@
+@import "../../common/common";
+@import "../../common/iconfont";
+@import "../../common/header";
+@import "../../common/footer";
+@import "../../common/loading";
+@import "../../common/scene";
+@import "../../common/search";
+@import "../../component/slidetabs";
+@import "../../component/scrollnav";
+@import "../../component/swiper";
+@import "../../common/error.styl";
+@import "../../component/dialog.styl";
+@import "../../component/lazyload.styl";
+@import "../../component/gotop.styl";
+@import "./search.styl";
+@import "./allbrands.styl";
+@import "./catePoly.css";
+
+.polymer-container{
+    height:100%;
+    &>div{
+        height:100%;
+        .polymer-content{
+            height:100%;
+            overflow:hidden;
+            .polymer-list{
+                width:100%;
+                bottom:px2rem(45);
+                top:px2rem(37);
+                box-sizing:border-box;
+                overflow:hidden;
+                position:absolute;
+            }
+        }
+    }
+}
+
+.polymer-list{
+    &>.swiper{
+        top:0;
+        bottom:0;
+        &>.swiper-control{
+            width:100%;
+            height:43px;
+            border-bottom:1px solid #d7d7d7;
+            &>.swiper-control-item{
+                line-height:43px;
+            }
+        }
+        &>.swiper-content{
+            top:43px;
+        }
+    }
+}
+
+.category-list{
+    height:100%;
+    width:100%;
+    position:absolute;
+    overflow:hidden;
+    &>.swiper-vertical{
+        top:0;
+        display:flex;
+        background:#F7F7F7;
+        &>.swiper-control{
+            width:25%;
+            position:static;
+            background:#F7F7F7;
+            &>.swiper-control-item{
+                border-right:0 none;
+                line-height:px2rem(41);
+                display:block;
+                text-align:center;
+                border-bottom:1px solid #d7d7d7;
+                background-color: #f3f4f6;
+                &.active{
+                    border-left:px2rem(5) solid #801da1;
+                    animation:shake 0.5s;
+                    background:#FFF;
+                }
+            }
+        }
+        &>.swiper-content{
+            // position:static;
+            height:100%;
+        }
+    }
+    &>.slide-tabs{
+        background:#F7F7F7;
+        .slide-tabs-navbar{
+            background:#F7F7F7;
+            width:25%;
+            border-bottom:0 none;
+            align-self:flex-start;
+            .slide-tabs-navbar-item{
+                border-right:0 none;
+                line-height:px2rem(41);
+                width:100%;
+                &.active{
+                    border-left:px2rem(5) solid #801da1;
+                    animation:shake 0.5s;
+                }
+            }
+        }
+        .slide-tabs-content{
+            background:#FFF;
+            position:relative;
+            .slide-tabs-item{
+                // position:absolute;
+                // top:0;
+                // left:0;
+                z-index:20;
+                opacity:0;
+                visibility:hidden;
+                display:none;
+                background:#FFF;
+                overflow-y:auto;
+                overflow-x:hidden;
+                &.active{
+                    visibility:visible;
+                    display:block;
+                    // position:static;
+                    z-index:1;
+                    opacity:1;
+                    // transition:opacity .3s ease-in;
+                }
+            }
+        }
+    }
+    
+    .rightCon{
+        float:none;
+        width:100%;
+        // height:100%;
+        padding:px2rem(10);
+        box-sizing:border-box;
+        &>div{
+            display:block;
+        }
+    }
+}
+
+.search-wrap{
+    height:100%;
+    background:#F7F7F7;
+    .search-box{
+        &>input{
+            box-sizing:border-box;
+            border:0 none;
+        }
+        &>span{
+            font-size:px2rem(12);
+        }
+    }
+}
+
+.brandList{
+    a{
+        &>div{
+            margin:rem4px(5);
+        }
+    }
+}
+
+.origin-placeholder{
+    width:rem4px(702 / 2);
+    height:rem4px(308 / 2);
+    background:url(/client/asset/images/load.png) no-repeat 50% 50%;
+    background-size:60%;
+}
+.brand-placeholder{
+    width:rem4px(110);
+    height:rem4px(110);
+    background:url(/client/asset/images/load.png) no-repeat 50% 50%;
+    background-size:100%;
+}

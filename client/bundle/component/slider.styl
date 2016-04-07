@@ -1,0 +1,113 @@
+@import "../common/common";
+@import "../common/util";
+@import "../common/variable";
+.slider {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    overflow-x:hidden;
+    line-height:0;
+    .control-nav {
+        position: absolute;
+        height: px2rem(10);
+        bottom: px2rem(10);
+        left: 0;
+        right: 0;
+        z-index: 12;
+        text-align: center;
+        padding: 0;
+        font-size: 0;
+        &>span {
+            display: inline-block;
+            width: px2rem(10);
+            height: px2rem(10);
+            background: #333;
+            opacity: .5;
+            border-radius: 100%;
+            margin: 0 px2rem(5);
+            &.active {
+                background: $pink-color;
+            }
+        }
+    }
+    .direction-nav {
+        &>div {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 15%;
+            z-index: 100;
+            font-size: 0;
+            background: #FFF;
+            opacity: 0.3;
+            display: flex;
+            justify-content: center;
+            &>span {
+                width: px2rem(20);
+                height: px2rem(20);
+                display: block;
+                align-self: center;
+                font-size: px2rem(20);
+            }
+        }
+        .direction-nav-prev {
+            left: 0;
+        }
+        .direction-nav-next {
+            right: 0;
+        }
+    }
+}
+
+.slides {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    line-height:0;
+    &>.slide {
+        display:table-cell;
+        width: 100%;
+        font-size:0;
+        line-height: 0;
+        &.active {
+            opacity: 1;
+        }
+        a {
+            line-height: 0;
+            display: inline-block;
+        }
+        img {
+            width: 100%;
+        }
+    }
+}
+
+.slider-fade {
+    .slides {
+        &>.slide {
+            display: none;
+            &.active {
+                display: table-cell;
+                opacity: 1;
+            }
+        }
+    }
+}
+
+@keyframes slide-fade {
+    0% {
+        display: none;
+    }
+    30% {
+        display: table-cell;
+        opacity: 0.75;
+    }
+    50% {
+        display: table-cell;
+        opacity: 0.85;
+    }
+    100% {
+        display: table-cell;
+        opacity: 1;
+    }
+}
