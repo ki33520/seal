@@ -1,5 +1,5 @@
 'use strict'
-import React,{Component} from "react";
+import React from "react";
 import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
@@ -21,7 +21,7 @@ function configureStore(initialState){
     return store
 }
 
-class NavbarApp extends Component{
+class NavbarApp extends React.Component{
     render(){
         const {groupGoods,isFetched} = this.props.initialState;
         var store = configureStore({

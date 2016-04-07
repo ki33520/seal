@@ -1,6 +1,9 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
+import Header from "../../common/header.jsx";
+
 
 class Normal extends Component{
     render(){

@@ -15,7 +15,7 @@ class GoodSorter extends Component{
         }
     }
     sortBy(type){
-        const {toggleSort} = this.props;
+        const {toggleSort} = this.props
         switch(type){
             case SORT_NORMAL:
                 toggleSort({

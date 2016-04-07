@@ -42,7 +42,7 @@ class ActivityApp extends Component{
         var store = configureStore(initialState);
         return (
             <Provider store={store}>
-                <ActivityConnected />
+            <ActivityConnected />
             </Provider>
         )
     }

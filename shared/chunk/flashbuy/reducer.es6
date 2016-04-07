@@ -1,5 +1,6 @@
 'use strict'
 import {combineReducers} from "redux";
+import _ from "lodash";
 import {REQUEST_GOODS,RECEIVE_GOODS} from "./action.es6";
 
 function flashBuy(state={},action){

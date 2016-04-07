@@ -1,6 +1,8 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
+import Header from "../../common/header.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import {urlPrefix} from "../../../lib/jumpurl.es6";

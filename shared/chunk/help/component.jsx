@@ -5,9 +5,12 @@ import HelpMain from "./partial/main.jsx";
 import Question from "./partial/question.jsx";
 import Onlineservice from "./partial/onlineservice.jsx";
 import Feedback from "./partial/feedback.jsx";
+import {Router} from "director";
+import {Switcher,SwitcherCase} from "../common/switcher.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx"
 import {urlPrefix} from "../../lib/jumpurl.es6";
 
+import {alert} from "../common/action.es6";
 
 class HelpList extends Component{
     constructor(props){

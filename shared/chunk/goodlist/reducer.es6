@@ -1,11 +1,14 @@
 'use strict'
 import {combineReducers} from "redux";
-import {search} from "../common/reducer.es6";
+import _ from "lodash";
+
 import {
     START_FETCH_GOODS,FINISH_FETCH_GOODS,
     START_REQUEST_GOODS,FINISH_REQUEST_GOODS,
     TOGGLE_CHECKED,RESET_FILTER,
 } from "./constant.es6";
+
+import {search} from "../common/reducer.es6";
  
 function index(state={},action){
     switch(action.type){

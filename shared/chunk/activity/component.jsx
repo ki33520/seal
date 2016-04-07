@@ -12,6 +12,8 @@ class Activity extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            maskActive:false,
+            shareActive:false,
             pageIndex:1
         }
     }
@@ -19,12 +21,15 @@ class Activity extends React.Component{
         const {dispatch,totalPage,isFetching} = this.props;
         const {pageIndex} = this.state;
         const nextPage = pageIndex + 1;
+
         if(isFetching || totalPage <= pageIndex){
             return false;
         }
+
         this.setState({
             pageIndex:nextPage
         });
+
         dispatch(fetchGoods(window.location.href,{
             pageIndex:nextPage
         }));
@@ -34,6 +39,18 @@ class Activity extends React.Component{
             this.beginRefresh()
         }
     }
+    handleShare(){
+        this.setState({
+            shareActive:true,
+            maskActive:true
+        });
+    }
+    cancelShare(){
+        this.setState({
+            shareActive:false,
+            maskActive:false
+        });
+    }
     render(){
         const {isFetching,totalPage,activityList,imageUrl,activityName} = this.props;
         const {pageIndex} = this.state;
@@ -41,6 +58,7 @@ class Activity extends React.Component{
         activityList.forEach(function(item,i){
             goods.push(<GoodItem goods={item} key={"good-"+i} />)
         });
+
         return (
             <div className="inner-scroll">
                 <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
@@ -62,5 +80,7 @@ class Activity extends React.Component{
         )
     }
 }
+
+ 
 
 export default Activity;
