@@ -73,7 +73,7 @@ class Coupon extends React.Component{
     renderNoCoupon(message){
         return (
             <div className="empty">
-                <img src="/client/asset/images/empty_coupon.png" />
+                <img src="/client/asset/images/empty_selectCoupon.png" />
                 <span>{message}</span>
             </div>
         )
