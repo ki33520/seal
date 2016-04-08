@@ -4,7 +4,7 @@
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "shipFeeByReceiver": {
@@ -12,7 +12,7 @@
         "baseURL": {
             "develop": "http://marketing.hwg.youayun.cn:7985",
             "test": "http://marketing.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://marketing.tepin.hk"
         }
     },
     "saveOrder": {
@@ -20,7 +20,7 @@
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "verifyOrder": {
@@ -28,7 +28,7 @@
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "orderStatus": {
@@ -36,7 +36,7 @@
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "orderByNo": {
@@ -44,7 +44,7 @@
         "baseURL": {
             "develop": "http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "customByWarehouse": {

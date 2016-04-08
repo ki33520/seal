@@ -4,7 +4,7 @@
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "cartByUser": {
@@ -12,7 +12,7 @@
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "updateCart": {
@@ -20,7 +20,7 @@
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "cartByAnonymous":{
@@ -28,7 +28,7 @@
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "deleteCart": {
@@ -36,7 +36,7 @@
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "batchUpdateCart":{
@@ -44,7 +44,7 @@
         "baseURL": {
             "develop":"http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     },
     "validateCartFee":{
@@ -52,7 +52,7 @@
         "baseURL":{
             "develop":"http://order.hwg.youayun.cn:7986",
             "test": "http://order.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://order.tepin.hk"
         }
     }
 }
