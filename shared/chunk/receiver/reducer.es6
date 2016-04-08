@@ -183,7 +183,8 @@ function cascadeArea(state,action){
 }
 
 function receiverByUser(state={},action){
-    let receivers = Object.assign([],state.receivers)
+    // let receivers = Object.assign([],state.receivers)
+    let receivers = _.cloneDeep(state.receivers)
     switch(action.type){
         case SELECT_RECEIVER:
             return Object.assign({},state,{

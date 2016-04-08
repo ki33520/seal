@@ -21,7 +21,8 @@ class ConfirmOrder extends Component{
         super(props)
         this.state = {
             dialogActive:false,
-            dialogContent:null
+            dialogContent:null,
+            scrollable:true
         }
     }
     renderReceiver(receiver){
@@ -94,7 +95,8 @@ class ConfirmOrder extends Component{
             buyeds:order.buyeds,
             couponNo:checkedCoupon !== null?checkedCoupon.couponNo:"",
             receiverId:checkedReceiver !== null?checkedReceiver.id:"",
-            totalFee:order.totalFee
+            // totalFee:order.totalFee
+            totalFee:10.0
         })
 
     }
@@ -121,6 +123,7 @@ class ConfirmOrder extends Component{
                 this.submitOrder()
             }else{
                 this.setState({
+                    scrollable:false,
                     dialogActive:true,
                     dialogContent:this.props.orderVerifiedErrMsg
                 })
@@ -183,11 +186,11 @@ class ConfirmOrder extends Component{
     render(){
         const {order,alertActive,alertContent} = this.props;
         return (
-            <GoTop relative={true} renderFixed={()=>(
+            <GoTop relative={true} scrollable={this.state.scrollable} renderFixed={()=>(
                 <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
             submiting={this.props.orderVerifying || this.props.orderSubmiting || this.props.paygatewayFetching}
             onSubmit={this.verifyOrder.bind(this)}/>
-            )}>
+            )} ref="gotop">
             <div className="confirm-order-content">
             <Header>确认订单</Header>
             {this.renderReceiver(order.checkedReceiver)}

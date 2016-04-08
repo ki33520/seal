@@ -4,7 +4,7 @@
         "baseURL": {
             "develop":"http://member.hwg.youayun.cn:7987",
             "test": "http://member.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://member.tepin.hk"
         }
     },
     "removeCollected":{
@@ -12,7 +12,7 @@
         "baseURL": {
             "develop":"http://member.hwg.youayun.cn:7987",
             "test": "http://member.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://member.tepin.hk"
         }
     },
     "isCollected":{
@@ -20,7 +20,7 @@
         "baseURL": {
             "develop":"http://member.hwg.youayun.cn:7987",
             "test": "http://member.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://member.tepin.hk"
         }
     }
 }

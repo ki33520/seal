@@ -20,7 +20,7 @@ var config = {
     "sharedQRCodePath":"http://product.hwg.youayun.cn"
 };
 var runtime = process.env["NODE_ENV"];
-// runtime = "hotfix"
+runtime = "hotfix"
 //runtime = "test"
 config["runtime"] = runtime;
 if (runtime === "develop") {
@@ -36,20 +36,27 @@ if(runtime === "test"){
     config.appKey = "0236fe7659864b1b881cb6e94709de3f";
     config.appId = "hwg";
 }
+if(runtime === "production"){
+    config.oathServer = "login.tepin.com";
+    config.appKey = "0236fe7659864b1b881cb6e94709de3f";
+    config.appId = "hwg";
+    config.sharedQRCodePath = "http://product.tepin.hk"
+    config.imgServer = "http://img.tepin.hk"
+}
 config.loginUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap&responseType=code";
+    "/score/member/"+config.appId+"/haiwaigou-wap/wap/login.html?responseType=code";
 config.logoutUrl = config.oathServer +
-    "/score/member/v1/logout?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap";
+    "/score/member/"+config.appId+"/haiwaigou-wap/wap/logout.html?responseType=code";
 config.registerUrl = config.oathServer +
-    "/score/member/v1/authorize?skin=haiwaigou-wap&clientId="+config.appId+"&channel=wap&responseType=code&startPage=register";
-config.cardUrl = config.oathServer +
-    "/score/member/v1/cardInfo?"
+    "/score/member/"+config.appId+"/haiwaigou-wap/wap/register.html?responseType=code";
 
 config.api = _.mapValues(api, function(v) {
     if(runtime === "develop"){
         v.url = v.baseURL["develop"]?v.baseURL["develop"] + v.uri:config.apiServer
     }else if(runtime === "test"){
         v.url = v.baseURL["test"]?v.baseURL["test"] + v.uri:config.apiServer
+    }else if(runtime === "production"){
+        v.url = v.baseURL["production"] + v.uri
     }else{
         v.url = v.baseURL["test"]?v.baseURL["test"] + v.uri:config.apiServer
     }
