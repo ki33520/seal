@@ -20,7 +20,7 @@ var config = {
     "sharedQRCodePath":"http://product.hwg.youayun.cn"
 };
 var runtime = process.env["NODE_ENV"];
-runtime = "hotfix"
+// runtime = "hotfix"
 //runtime = "test"
 config["runtime"] = runtime;
 if (runtime === "develop") {
