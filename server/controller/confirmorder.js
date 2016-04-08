@@ -263,9 +263,9 @@ var payGateway = function(req, res, next) {
         if (ret.returnCode === 0) {
             var message = messageFilter(ret.object)
 
-            urlObj["pathname"] = "/orderdetail/" + message.id;
+            urlObj["pathname"] = config.urlPrefix + "/orderdetail/" + message.id;
             var orderDetailURL = url.format(urlObj)
-            urlObj["pathname"] = "/orderlist";
+            urlObj["pathname"] =config.urlPrefix + "/orderlist";
             var orderListURL = url.format(urlObj)
 
 

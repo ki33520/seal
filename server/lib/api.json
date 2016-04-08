@@ -4,7 +4,7 @@
         "baseURL": {
             "develop": "http://marketing.hwg.youayun.cn:7985",
             "test": "http://marketing.hwg.youayun.cn",
-            "production": "http://product.tepin.hk"
+            "production": "http://marketing.tepin.hk"
         }
     },
     "floorsByChannel": {
