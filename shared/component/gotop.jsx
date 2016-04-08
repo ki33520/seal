@@ -93,10 +93,10 @@ class GoTop extends Component{
             return (
                 <div className="back-to-top-container">
                 {this.renderButton()}
-                {renderFixed()}
                 <div className={classes} ref="scrollNode">
                 {this.props.children}
                 </div>
+                {renderFixed()}
                 </div>
             )
         }

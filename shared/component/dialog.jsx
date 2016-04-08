@@ -8,6 +8,15 @@ class Dialog extends Component{
     constructor(props){
         super(props);
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.active !== this.props.active){
+            if(nextProps.active === true){
+                document.body.style["overflow-y"] = "hidden";
+            }else{
+                document.body.style["overflow-y"] = "";
+            }
+        }
+    }
     handleConfirm(e){
         e && e.preventDefault();
         this.props.onConfrim()
