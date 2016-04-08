@@ -189,17 +189,19 @@
     color: #733C93;
     font-size: 13px;
 }
-.J_item div.J_moveRight div.checkboxRed {
-    width: .43rem;
-    height: .43rem;
-    background: #CD0933;
+.checkbox {
     float: left;
     margin: 0 10px 5px 0;
-    border-radius: 100%;
     position: relative;
+}
+.checkbox-off {
     background: url(/client/asset/images/checkbox-off.png) no-repeat center;
     background-size: 100% 100%;
-    padding: 0;
+}
+
+.checkbox-on {
+    background: url(/client/asset/images/checkbox-on.png) no-repeat center;
+    background-size: 100% 100%;
 }
 
 .J_item .directDown{

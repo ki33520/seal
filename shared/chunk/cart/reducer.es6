@@ -199,7 +199,7 @@ function cartByUser(state={},action){
             var {cartIndex} = action.param;
             var {returnCode} = action.res;
             var carts = state.carts.slice();
-            var cart = {...carts[cartIndex],isAllowSubmit:false};
+            var cart = {...carts[cartIndex]};
             carts[cartIndex] = cart;
             return Object.assign({},state,{
                 isChecking:false,
