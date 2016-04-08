@@ -37,7 +37,7 @@ function finishFetchCouponDetail(param,res){
 export function fetchCoupons(param){
 	return (dispatch)=>{
         dispatch(requestCoupon(param));
-        apiRequest(urlPrefix+'/coupon',param).then((res)=>{
+        apiRequest(urlPrefix+'/coupon.html',param).then((res)=>{
             dispatch(receiveCoupon(param,res));
         });
     }
