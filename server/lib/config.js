@@ -38,8 +38,8 @@ if(runtime === "test"){
 }
 if(runtime === "production"){
     config.oathServer = "login.tepin.com";
-    config.appKey = "0236fe7659864b1b881cb6e94709de3f";
-    config.appId = "hwg";
+    config.appKey = "35c33163124346fa9dabb7d8435a811d";
+    config.appId = "haiwaigou";
     config.sharedQRCodePath = "http://product.tepin.hk"
     config.imgServer = "http://img.tepin.hk"
 }
