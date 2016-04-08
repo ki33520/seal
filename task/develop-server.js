@@ -64,7 +64,7 @@ gulp.task("start", ["nodemon"], function() {
     }
     browserSync({
         proxy: {
-            target: "http://192.168.0.136:" + listenPort,
+            target: "http://"+ipv4+":" + listenPort,
             middleware: [
                 webpackDevMiddleware(bundler, {
                     publicPath: config.output.publicPath,
