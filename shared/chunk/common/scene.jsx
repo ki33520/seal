@@ -19,7 +19,10 @@ export class SceneGroup extends Component{
             currentScene:scene,
             prevScene
         },()=>{
-            rAF(()=>{this.transitionWithGroup()})
+            // rAF(function(){
+            this.transitionWithGroup()
+            // })
+            // rAF(()=>{this.transitionWithGroup()})
             setTimeout(()=>this.props.onChange(scene,param,prevScene),300)
         })
     }

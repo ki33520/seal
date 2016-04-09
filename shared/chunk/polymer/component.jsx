@@ -8,12 +8,15 @@ import {SceneGroup,Scene} from "../common/scene.jsx"
 
 class PolymerRouter extends Component{
     handleSceneChange(currentScene,prevScene){
-        const {fetchHotWord,fetchAllBrands} = this.props
+        const {fetchHotWord,fetchSearchHistory,fetchAllBrands} = this.props
         switch(currentScene){
             case "search":
                 !this.props.search.hotwordFetched && fetchHotWord()
+                !this.props.search.historyFetched && fetchSearchHistory()
+                break
             case "allbrands":
                 !this.props.allBrand.brandsFetched && fetchAllBrands()
+                break
         }
     }
     render(){

@@ -40,17 +40,10 @@ export function urlParam(param){
 }
 
 export function destPriceForGoods(goods){
-    if(goods.useMobilePrice){
-        return {
-            destPrice:goods.mobilePrice,
-            discount:goods.mobileDiscount
-        }  
-    }else{
-        return {
-            destPrice:goods.salesPrice,
-            discount:goods.discount
-        }
-    }
+    return {
+        destPrice:goods.mobilePrice,
+        discount:goods.discount
+    }  
 }
 
 export function formatPrice(price){
