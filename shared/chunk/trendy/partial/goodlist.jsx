@@ -63,7 +63,7 @@ class GoodList extends Component{
                 )
             })
         }
-        return '<div>暂无商品</div>';
+        return (<div>暂无商品</div>);
     }
     render(){
         const {category,index} = this.props;
