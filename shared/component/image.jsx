@@ -32,7 +32,6 @@ class Image extends Component{
     componentDidMount(){
         var imgNode = ReactDOM.findDOMNode(this);
         this.initialHeight = imgNode.clientWidth;
-        // console.log(this.initialHeight)
     }
     render(){
         let {animation} = this.props;
