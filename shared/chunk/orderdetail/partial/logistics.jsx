@@ -4,12 +4,9 @@ import React,{Component} from "react";
 import classNames from "classnames";
 import moment from "moment";
 import Header from "../../common/header.jsx";
-import StatusProgress from "./statusprogress.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
-
-import {fetchLogistics} from "../action.es6";
 
 class Logistics extends Component{
     constructor(props){

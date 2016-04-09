@@ -3,9 +3,7 @@
 import React,{Component} from "react";
 import _ from "lodash";
 import classNames from "classnames";
-import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
-import dom from "../../lib/dom.es6";
 import MaskLayer from "../../component/masklayer.jsx";
 import {jumpURL,urlPrefix} from "../../lib/jumpurl.es6";
 
@@ -17,10 +15,10 @@ class MemberCenter extends Component{
             popupActive:false
         }
     }
-    togglePopupActive(){
+    togglePopupActive(type){
         this.setState({
-            maskActive:!this.state.popupActive,
-            popupActive:!this.state.popupActive
+            maskActive: type,
+            popupActive: type
         });
     }
     renderBanner(){
@@ -38,7 +36,7 @@ class MemberCenter extends Component{
                 <div className="userInfo">
                     <div className="userInfo_con">
                         <a href={jumpURL("update")}><img src={member.imageUrl || "/client/asset/images/headpic.png"} /></a>
-                        <a className="user-qr" href="javascript:void(0);" onClick={this.togglePopupActive.bind(this)}></a>
+                        <a className="user-qr" href="javascript:void(0);" onClick={this.togglePopupActive.bind(this,true)}></a>
                     </div>
                     <span>{member.nickName}</span>
                 </div>
@@ -113,7 +111,7 @@ class MemberCenter extends Component{
         }else{
             return (
                 <div className={classes}>
-                    <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this)}></div>
+                    <div className="btn-close iconfont icon-close" onClick={this.togglePopupActive.bind(this,false)}></div>
                     <div className="top">扫码分享</div>
                     <div className="center"><img src={member.promoterQr} /></div>
                     <div className="bottom">邀请小伙伴扫一扫<br />分享给TA</div>
@@ -239,7 +237,7 @@ class MemberCenter extends Component{
                 </header>
                 {this.renderHelpList()}
                 <Footer activeIndex="4" />
-                <MaskLayer visible={this.state.maskActive} handleClick={this.togglePopupActive.bind(this)}/>
+                <MaskLayer visible={this.state.maskActive} handleClick={this.togglePopupActive.bind(this,false)}/>
                 {this.renderPopQr()}
             </div>
         );

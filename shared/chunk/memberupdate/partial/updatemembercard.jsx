@@ -1,12 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import _ from "lodash";
-import classNames from "classnames";
 import Header from "../../common/header.jsx";
-
-import {bindMembercard,sendVerifyCode,changeField} from "../action.es6";
-import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 import {urlPrefix} from "../../../lib/jumpurl.es6";
 

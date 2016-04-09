@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require("lodash");
 var util = require("../lib/util");
 var bluebird = require("bluebird");
 var MemberupdateApp = util.getSharedComponent("memberupdate");

@@ -4,14 +4,9 @@ import React,{Component} from "react";
 import _ from "lodash";
 import classNames from "classnames";
 import Header from "../../common/header.jsx";
-import StatusProgress from "./statusprogress.jsx";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import {formatPrice} from "../../../lib/util.es6";
 import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
-
-import {changeField,saveComment} from "../action.es6";
-import {alert} from "../../common/action.es6";
 import Alert from "../../../component/alert.jsx";
 
 class Comment extends Component{

@@ -5,8 +5,6 @@ import Comment from "./partial/comment.jsx";
 import PhotoList from "./partial/photolist.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx"
 
-import {fetchComment} from "./action.es6";
-
 class CommentList extends Component{
     constructor(props){
         super(props);

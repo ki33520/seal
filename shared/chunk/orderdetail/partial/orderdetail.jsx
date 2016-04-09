@@ -5,18 +5,14 @@ import ReactDOM from "react-dom";
 import _ from "lodash";
 import moment from "moment";
 import classNames from "classnames";
-import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Dialog from "../../../component/dialog.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Alert from "../../../component/alert.jsx";
 import {urlParam,base64EncodeForURL,formatPrice} from "../../../lib/util.es6";
-
-import {fetchCloseOrder,fetchDeliveryOrder,fetchLogistics,fetchPayGateway} from "../action.es6";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
 import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
-
 
 class OrderDetail extends Component{
     constructor(props){
@@ -83,7 +79,7 @@ class OrderDetail extends Component{
         let message = {
             orderNo:orderNo
         }
-        fetchPayGateway(base64EncodeForURL(urlParam(message)));
+        fetchPayGateway(urlPrefix+"/paygateway/",base64EncodeForURL(urlParam(message)));
     }
     componentWillReceiveProps(nextProps){
         const {alert,fetchOrder} = this.props;
