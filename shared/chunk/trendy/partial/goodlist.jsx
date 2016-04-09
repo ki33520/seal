@@ -62,8 +62,14 @@ class GoodList extends Component{
                     </a>
                 )
             })
+        }else{
+            return (
+                <div className="empty">
+                    <img src="/client/asset/images/empty_search.png" />
+                    <span>暂无商品</span>
+                </div>
+            )
         }
-        return (<div>暂无商品</div>);
     }
     render(){
         const {category,index} = this.props;
