@@ -25,7 +25,7 @@ router.get(urlPrefix + "/activitygood", require("./controller/index.js").activit
 router.get(urlPrefix + "/updategoods",require("./controller/index.js").updateGoods);
 router.get(urlPrefix + "/topic/:id.html", require("./controller/topic.js").topic);
 router.get(urlPrefix + "/flashbuy/:id.html", require("./controller/flashbuy.js"));
-router.get(urlPrefix + "/polymer.html",mainController.staticize,require("./controller/polymer").polymer);
+router.get(urlPrefix + "/polymer.html",require("./controller/polymer").polymer);
 router.get(urlPrefix + "/categorybrands", require("./controller/polymer").categoryBrands);
 router.get(urlPrefix + "/allbrands", require("./controller/polymer").allBrands);
 router.get(urlPrefix + "/allorigins", require("./controller/polymer").allOrigins);
