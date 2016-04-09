@@ -9,7 +9,7 @@ function checkIsAllowSubmit(cart){
     if(cart.buyeds<1){
         return false;
     }
-    if(cart.total <0.07){
+    if(cart.total<0){
         return false;
     }
     if(cart.total > cart.buyLimit&&cart.buyeds>1 && cart.hasRate===true){

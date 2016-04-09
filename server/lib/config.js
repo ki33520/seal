@@ -37,7 +37,7 @@ if(runtime === "test"){
     config.appId = "hwg";
 }
 if(runtime === "production"){
-    config.oathServer = "login.tepin.com";
+    config.oathServer = "http://login.tepin.com";
     config.appKey = "35c33163124346fa9dabb7d8435a811d";
     config.appId = "haiwaigou";
     config.sharedQRCodePath = "http://product.tepin.hk"
