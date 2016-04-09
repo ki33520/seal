@@ -8,7 +8,6 @@ export const FINISH_TOGGLE_COLLECTED = "RECEIVE_DELETE";
 
 import {alert} from "../common/action.es6";
 export {alert} from "../common/action.es6";
-import {urlPrefix} from "../../lib/jumpurl.es6";
 
 function requestCollect(param){
     return {
@@ -52,10 +51,10 @@ function finishToggleCollected(param,res){
     }
 }
 
-export function toggleCollected(param){
+export function toggleCollected(url,param){
     return (dispatch)=>{
         dispatch(startToggleCollected(param));
-        apiRequest(urlPrefix+"/togglecollected",param).then((res)=>{
+        apiRequest(url,param).then((res)=>{
             let alertMsg = "";
             if(res.isToggled){
                 alertMsg = param.status ? "添加收藏成功!":"取消收藏成功!"
