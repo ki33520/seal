@@ -10,7 +10,7 @@ class GoodSorter extends Component{
     constructor(props){
         super(props);
         this.state = {
-            viewType:SORT_DESC,
+            viewType:SORT_ASC,
             sortType:SORT_NORMAL
         }
     }
@@ -47,8 +47,8 @@ class GoodSorter extends Component{
             "active":sortType===SORT_NORMAL
         });
         const price=classNames("price",{
-            "active":sortType===SORT_PRICE && viewType===SORT_DESC,
-            "price-asc":sortType===SORT_PRICE && viewType===SORT_ASC
+            "active":sortType===SORT_PRICE && viewType===SORT_ASC,
+            "price-desc":sortType===SORT_PRICE && viewType===SORT_DESC
         });
         const sales=classNames('sales',{
             "active":sortType===SORT_SALES

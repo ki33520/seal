@@ -7,7 +7,6 @@ import Header from "../common/header.jsx";
 import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import NumberPicker from "../../component/numberpicker.jsx";
-import Checkbox from "../../component/form/checkbox.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
 import ActivityIndicator from "../common/activityindicator.jsx";
@@ -154,21 +153,24 @@ class Cart extends Component {
         },500);
         stack.push({timerId,buyed})
     }
-    toggleAllChecked(cartIndex,checked){
+    toggleAllChecked(cartIndex){
         const {isAllToggling,carts} = this.props.cartByUser;
+        const cart = carts[cartIndex];
         if(isAllToggling) {
             return false;
         }
-        if(carts[cartIndex].isDisabled){
+        if(cart.isDisabled){
             return false;
         }
+        const checked = !cart.checked;
         this.props.toggleCartAll({
             cartIndex,
             checked
         });
     }
-    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex,checked){
+    toggleItemChecked(goods,cartIndex,groupIndex,goodsIndex){
         const {isToggleing} = this.props.cartByUser;
+        const checked = !goods.checked;
         if(isToggleing||false===goods.onSale||goods.stockCount<1) {
             return false;
         }
@@ -248,13 +250,17 @@ class Cart extends Component {
         const invalid = classNames("group",{
             invalid:isInvalid
         })
+        const checkbox = classNames({
+            "checkbox-on" : goods.checked===true,
+            "checkbox-off": goods.checked===false
+        })
         return(
             <div className={invalid} key={"g-"+i+j+k}>
                 <div className="shanchu" onClick={this.handleDeleteCart.bind(this,goods,i,j,k)}></div>
                 <div className="J_moveRight">
-                    <Checkbox checked={goods.checked} disabled={isInvalid}
-                    checkedIcon="checkbox-full" uncheckIcon="checkbox-empty"
-                    onChange={this.toggleItemChecked.bind(this,goods,i,j,k)} />
+                    <div className="checkbox" onClick={this.toggleItemChecked.bind(this,goods,i,j,k)}>
+                        <span className={checkbox}></span>
+                    </div>
                     <div>
                         <div className="img_wrap">
                             <a className="J_ytag cartlist" href={jumpURL("gooddetail",[goods.singleCode])}>
@@ -312,16 +318,21 @@ class Cart extends Component {
         const toggleWrap=classNames("J_store",{
             "clearfix":true,
             "invalid":cart.isDisabled
-        })
+        });
         const salesTotal = formatPrice(cart.salesTotal);
         const promoTotal = formatPrice(cart.promoTotal);
         const total = formatPrice(cart.total);
+        const checkbox = classNames({
+            "checkbox-on" : cart.checked===true,
+            "checkbox-off": cart.checked===false
+        })
         return(
             <div className="onlyList clearfix" key={"cart-" + i}>
                 <div className={toggleWrap}>
-                    <Checkbox checked={cart.checked} disabled={cart.isDisabled}
-                    checkedIcon="checkbox-full" uncheckIcon="checkbox-empty" 
-                    onChange={this.toggleAllChecked.bind(this,i)}/>
+                <div className="checkbox" onClick={this.toggleAllChecked.bind(this,i)}>
+                        <span className={checkbox}></span>
+                    </div>
+                     
                     <div className="depot">
                         <span>{cart.warehouseName}</span>
                         <div className={promo}><em>{cart.promoType}</em>{cart.promoName}</div>
