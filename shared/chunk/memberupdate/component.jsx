@@ -5,7 +5,6 @@ import Update from "./partial/update.jsx";
 import UpdateBasic from "./partial/updatebasic.jsx";
 import UpdatePassword from "./partial/updatepassword.jsx";
 import UpdateMemberCard from "./partial/updatemembercard.jsx";
-import {Router} from "director";
 import {SceneGroup,Scene} from "../common/scene.jsx"
 
 class MemberUpdate extends Component{

@@ -1,10 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import classNames from "classnames";
-import Header from "../../common/header.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
-
 
 class Update extends Component{
     render(){
