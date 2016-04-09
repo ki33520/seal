@@ -51,7 +51,7 @@ var util = {
         var signature = this.getSignatureByParam(param,config.appKey)
         // console.log('signature',signature)
         param = _.extend(param,{h:signature})
-        console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
+        // console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param,options)
         } else {
