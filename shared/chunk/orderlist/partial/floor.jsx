@@ -10,7 +10,7 @@ import moment from "moment";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import Timer from "../../common/timer.jsx";
-import {jumpURL} from "../../../lib/jumpurl.es6";
+import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
 import LazyLoad from "../../../component/lazyload/lazyload.jsx";
 import Image from "../../../component/lazyload/image.jsx";
 
@@ -50,7 +50,7 @@ class Floor extends Component{
         let message = {
             orderNo:orderNo
         }
-        fetchPayGateway(base64EncodeForURL(urlParam(message)));
+        fetchPayGateway(urlPrefix+"/paygateway/",base64EncodeForURL(urlParam(message)));
     }
     renderButtons(child,i){
         const {orderIndex} = this.props;
