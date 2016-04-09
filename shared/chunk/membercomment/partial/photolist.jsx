@@ -1,11 +1,6 @@
 'use strict';
 
 import React,{Component} from "react";
-import ReactDOM from "react-dom";
-import classNames from "classnames";
-
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
-import Header from "../../common/header.jsx";
 import Swipelist from "../../common/swipelist.jsx";
 
 class PhotoList extends Component{

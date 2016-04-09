@@ -1,17 +1,12 @@
 'use strict';
 
 import React,{Component} from "react";
-import classNames from "classnames";
-
 import GoTop from "../../../component/gotop.jsx";
 import Refresher from "../../../component/refresher.jsx";
-import MaskLayer from "../../../component/masklayer.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import Header from "../../common/header.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 import Loading from "../../common/loading.jsx";
-
-import {fetchComment} from "../action.es6";
 import Floor from "./floor.jsx";
 
 class Comment extends Component{
@@ -22,7 +17,7 @@ class Comment extends Component{
         }
     }
     beginRefresh(interval,flag){
-        const {dispatch} = this.props;
+        const {dispatch,fetchComment} = this.props;
         const {allComment,showComment,isFetching} =  this.props.commentByUser;
         var flag = flag !== undefined ? flag: this.state.displayFlag,
             interval = interval !== undefined ? interval : 1,
@@ -41,9 +36,9 @@ class Comment extends Component{
         if(pageCount < nextPage || isFetching){
             return false;
         }
-        dispatch(fetchComment(fetchLink,{
+        fetchComment(fetchLink,{
             pageIndex:nextPage
-        }));
+        });
     }
     toggleFlag(flag,e){
         e && e.preventDefault();
