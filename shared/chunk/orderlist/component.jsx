@@ -2,17 +2,12 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
-import classNames from "classnames";
-import dom from "../../lib/dom.es6";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
-
 import Floor from "./partial/floor.jsx";
 import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
-import Header from "../common/header.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
-import Loading from "../common/loading.jsx";
 import {jumpURL,urlPrefix} from "../../lib/jumpurl.es6";
 
 class OrderList extends Component{

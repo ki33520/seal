@@ -7,10 +7,11 @@ import {SceneGroup,Scene} from "../common/scene.jsx";
 
 class TrendyRouter extends Component{
     handleSceneChange(currentScene,prevScene){
-        const {fetchHotWord,search} = this.props
+        const {fetchHotWord,fetchSearchHistory,search} = this.props
         switch(currentScene){
             case "search":
                 !search.hotwordFetched && fetchHotWord();
+                !this.props.search.historyFetched && fetchSearchHistory()
                 break;
         }
     }

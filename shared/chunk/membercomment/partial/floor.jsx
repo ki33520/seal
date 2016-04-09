@@ -1,9 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import classNames from "classnames";
 import moment from "moment";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 import LazyLoad from "../../../component/lazyload/lazyload.jsx";
 import Image from "../../../component/lazyload/image.jsx";

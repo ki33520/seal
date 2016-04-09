@@ -1,15 +1,11 @@
 'use strict'
 
 import React,{Component} from "react";
-import classNames from "classnames";
-import dom from "../../lib/dom.es6";
-import util,{apiRequest} from "../../lib/util.es6";
 import Alert from "../../component/alert.jsx";
 import Header from "../common/header.jsx";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
-import {jumpURL} from "../../lib/jumpurl.es6";
-
+import {jumpURL,urlPrefix} from "../../lib/jumpurl.es6";
 import Floor from "./partial/floor.jsx";
 
 class MembercollectList extends Component{
@@ -45,7 +41,7 @@ class MembercollectList extends Component{
         e && e.preventDefault();
         e && e.preventDefault();
         const {toggleCollected} = this.props;
-        toggleCollected({
+        toggleCollected(urlPrefix+"/togglecollected",{
             productCode:child.productCode,
             singleCode:child.singleCode,
             status: false

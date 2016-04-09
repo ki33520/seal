@@ -2,8 +2,6 @@
 
 import React,{Component} from "react";
 import {formatPrice} from "../../../lib/util.es6";
-import LazyLoad from "../../../component/lazyload/lazyload.jsx";
-import Image from "../../../component/lazyload/image.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 class OrderGoods extends Component{

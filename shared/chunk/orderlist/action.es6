@@ -11,7 +11,6 @@ export const CHANGE_ORDER= "CHANGE_ORDER";
 
 import {alert} from "../common/action.es6";
 export {alert} from "../common/action.es6";
-import {urlPrefix} from "../../lib/jumpurl.es6";
 
 export function changeOrder(order,status){
     return {
@@ -87,10 +86,10 @@ function responsePayGateway(param,res){
     }
 }
 
-export function fetchPayGateway(param){
+export function fetchPayGateway(url,param){
     return (dispatch)=>{
         dispatch(requestPayGateway(param))
-        apiRequest(urlPrefix+"/paygateway/"+ param,{}).then((res)=>{
+        apiRequest(url+param,{}).then((res)=>{
             dispatch(responsePayGateway(param,res))
         })
     }
