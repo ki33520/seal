@@ -19,7 +19,7 @@ function filterGoodsList(result){
             discounts:v.discounts,
             materTitle:v.materTitle,
             sourceName:v.areaName,
-            smallImageUrl:imgServer+v.picUrl+'@378w_378h_4e',
+            smallImageUrl:imgServer+v.picUrl+'@500w_500h_4e',
             sourceImageUrl:imgServer+v.areaLogo,
             localStock:v.localStock,
             useMobilePrice:!!v.useMobilePrice
