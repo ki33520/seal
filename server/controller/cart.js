@@ -29,7 +29,6 @@ function formatCarts(originalCarts) {
             promoTotal: originalCart.promoFee,
             total: originalCart.totalFee,
             buyeds: originalCart.qtys,
-            tariffFee: originalCart.tariffFee,
             dutyFree: originalCart.dutyFree,
             buyLimit: originalCart.buyLimit,
             hasRate:originalCart.hasRate,
@@ -38,7 +37,7 @@ function formatCarts(originalCarts) {
         };
         var collected = 0;
         var children = 0;
-        var totalTax = 0;
+        //var totalTax = 0;
         _.each(originalCart.cartMKTList, function(promoList) {
             var group = {
                 promoType: promoList.promoType,
@@ -70,7 +69,7 @@ function formatCarts(originalCarts) {
                 }
                 if (product.stockFlag && product.onSale) {
                     product.checked = true;
-                    totalTax += parseInt(goods.taxRate * goods.salesPrice*100)/100;
+                    //totalTax += parseInt(goods.taxRate * goods.salesPrice*100)/100;
                     collected++;
                 }
                 group.list.push(product);
@@ -78,7 +77,7 @@ function formatCarts(originalCarts) {
             cart.checked = (collected === children) ? true : false;
             cart.children = children;
             cart.collected = collected;
-            cart.totalTax = totalTax;
+            //cart.totalTax = totalTax;
             cart.isDisabled=children&&collected===0;
             cart.isAllowSubmit = checkIsAllowSubmit(cart);
             cart.group.push(group);
@@ -227,7 +226,6 @@ var fetchCart = function(req, res, next) {
             promoTotal: 0,
             total: 0,
             buyeds: 0,
-            tariffFee: 0,
             dutyFree: 0,
             buyLimit: 0,
             collected:0,

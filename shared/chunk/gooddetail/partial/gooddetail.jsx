@@ -325,7 +325,7 @@ class GoodDetail extends Component{
                     </TabsItem>
                     <TabsItem title="保税FAQ">
                     <div className="faq">
-                    <img src="/client/asset/images/FAQshow.gif" />
+                    <img src="/client/asset/images/FAQ.png" />
                     </div>
                     </TabsItem>
                 </Tabs>

@@ -47,6 +47,7 @@ class Cart extends Component {
         const {isChecked,isWarning,carts,cartIndex,groupIndex,goodsIndex,singleCode} = nextProps.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);       
         if(isChecked&&isWarning){
+            /**
             this.setState({
                 dialogActive:true,
                 dialogMesg:'商品超出免税额度,是否调整订单?',
@@ -74,8 +75,8 @@ class Cart extends Component {
                     });
                 }
             });
+            */
         }
-        return true;
     }
     componentDidUpdate(){
         if(this.state.dialogActive){
@@ -87,14 +88,12 @@ class Cart extends Component {
         } = this.props.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);
         if(isUpdated||isToggled||isAllToggled||isDeleted||isChecked){
-            if(isPassed){
+            if(isPassed||isWarning){
                 const queryParam = base64Encode(urlParam({
                     itemIds:singleCodes,
                     buyeds
                 }));
                 window.location.assign(jumpURL("confirmorder",[queryParam]));
-            }else if(isWarning){
-                return true;
             }else{
                 this.props.fetchCart({
                     singleCodes,
@@ -213,16 +212,18 @@ class Cart extends Component {
         });
     }
     renderInfo(cart){
-        const tips = "省钱贴士：单笔订单税金"+cart.dutyFree+"元以内，可以免税哦！";
+        //const tips = "省钱贴士：单笔订单税金"+cart.dutyFree+"元以内，可以免税哦！";
         const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+cart.buyLimit+"哦，请您分多次购买。";
         let message = null;
 
         if(cart.total > cart.buyLimit&&cart.buyeds>1 && cart.hasRate===true){
             message = warning;
-        }else if(cart.dutyFree > 0 && cart.totalTax > cart.dutyFree){
-            message = tips;
         }
-
+        /* 
+            else if(cart.dutyFree > 0 && cart.totalTax > cart.dutyFree){
+                message = tips;
+            }
+        */
         if(message===null) return null;
 
         return(
