@@ -4,6 +4,7 @@ import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
 import dom from "../../lib/dom.es6";
+import {browserVersion} from "../../lib/dom/browserDetector.es6";
 
 class Slider extends Component{
     constructor(props){
@@ -120,7 +121,7 @@ class Slider extends Component{
             return
         }
         // e && e.preventDefault();
-        e && e.stopPropagation();
+        // e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
         }
@@ -229,8 +230,9 @@ class Slider extends Component{
             return
         }
         this.moveDirection = moveDirection
-        if(this.moveDirection === oriention){
-            e.preventDefault()
+        if(browserVersion().android && !browserVersion().weixin 
+            && moveDirection === "x"){
+            e && e.preventDefault()
         }
 
         const offsetX = Math.abs(this.startTouchX) - Math.abs(clientX);
