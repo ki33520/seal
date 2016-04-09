@@ -25,9 +25,9 @@ class MemberUpdate extends Component{
                 <Scene name="index"><Update {...this.props}/></Scene>
                 <Scene name="basic"><UpdateBasic {...this.props}/></Scene>
                 <Scene name="password"><UpdatePassword {...this.props}/></Scene>
-                <Scene name="membercard"><UpdateMemberCard {...this.props}/></Scene>
             </SceneGroup>
         );
+        //<Scene name="membercard"><UpdateMemberCard {...this.props}/></Scene>
     }
 }
 

@@ -61,7 +61,7 @@ class UpdateBasic extends Component{
             for(let i in field){
                 let rule = rules[i];
                 if(rule){
-                    if(field[i].length===0){
+                    if(field[i]===null || field[i].length===0){
                         alert(rule.msg[0],2000);
                         return false;
                     }
