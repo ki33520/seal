@@ -90,7 +90,6 @@ router.post(urlPrefix + "/deletereceiver",mainController.requireAuthorize,requir
 router.post(urlPrefix + "/setdefaultreceiver",mainController.requireAuthorize,require("./controller/receiver").setDefaultReceiver);
 
 router.get(urlPrefix + "/coupon.html",mainController.requireAuthorize, require("./controller/coupon").list);
-router.get(urlPrefix + "/coupon/:id.html",mainController.requireAuthorize, require("./controller/coupon").detail);
 
 router.post("/api/v1/build/index",require("./controller/api").buildIndexPage);
 router.post("/api/v1/publish/index",require("./controller/api").publishIndexPage);

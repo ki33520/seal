@@ -3,7 +3,6 @@
 import React,{Component} from "react";
 import Index from "./partial/index.jsx";
 import CouponDetail from "./partial/detail.jsx";
-import CouponRules from "./partial/rules.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
 class IndexRouter extends Component{

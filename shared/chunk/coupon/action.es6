@@ -2,17 +2,16 @@
 import {apiRequest} from "../../lib/util.es6";
 import {
     START_FETCH_COUPON,FINISH_FETCH_COUPON,
-    START_FETCH_DETAIL,FINISH_FETCH_DETAIL,
-    FETCH_COUPON_ID
+    START_FETCH_DETAIL,FINISH_FETCH_DETAIL
 } from "./constant.es6";
 import {urlPrefix} from "../../lib/jumpurl.es6";
+
 function requestCoupon(param){
     return {
         type:START_FETCH_COUPON,
         param
     }
 }
-
 function receiveCoupon(param,res){
 	return {
         type:FINISH_FETCH_COUPON,
@@ -20,7 +19,6 @@ function receiveCoupon(param,res){
         param,
     }
 }
-
 function startFetchCouponDetail(param){
     return {
         type:START_FETCH_DETAIL,
@@ -46,15 +44,8 @@ export function fetchCoupons(param){
 export function fetchCouponDetail(param){
     return (dispatch)=>{
         dispatch(startFetchCouponDetail(param));
-        apiRequest(urlPrefix+'/coupon/'+param.id,{}).then((res)=>{
+        apiRequest(urlPrefix+'/coupon.html/'+param.id,{}).then((res)=>{
             dispatch(finishFetchCouponDetail(param,res));
         });
-    }
-}
-
-export function fetchCouponId(param){
-    return {
-        type:FETCH_COUPON_ID,
-        param
     }
 }

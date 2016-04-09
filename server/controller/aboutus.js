@@ -1,8 +1,8 @@
 'use strict';
 
-var _ = require("lodash");
+//var _ = require("lodash");
+//var bluebird = require("bluebird");
 var util = require("../lib/util");
-var bluebird = require("bluebird");
 var AboutUs = util.getSharedComponent("aboutus");
 
 var aboutus = function(req, res, next) {
