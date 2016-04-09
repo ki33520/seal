@@ -154,7 +154,7 @@ class Slider extends Component{
         if(oriention === "vertical"){
             offsetY = Math.abs(clientY) - Math.abs(this.startTouchY);
             const absOfOffsetY = Math.abs(offsetY);
-            if(absOfOffsetY >= offsetHeight / 2){
+            if(absOfOffsetY >= offsetHeight / 4){
                 if(offsetY < 0){
                     if(activeIndex === this.props.children.length && this.needPseudoNode()){
                         return
@@ -178,20 +178,20 @@ class Slider extends Component{
             offsetX = Math.abs(clientX) - Math.abs(this.startTouchX);
             const absOfOffsetX = Math.abs(offsetX);
             // console.log('distance',Math.abs(clientX),Math.abs(this.startTouchX))
-            if(absOfOffsetX >= offsetWidth / 2){
+            if(absOfOffsetX >= offsetWidth / 4){
                 if(offsetX < 0){
                     if(activeIndex === this.props.children.length && this.needPseudoNode()){
                         console.log('stop next')
                         return
                     }
-                    setTimeout(this.next.bind(this),100);
+                    setTimeout(this.next.bind(this),10);
                     // console.log('next X');
                 }else if(offsetX > 0){
                     if(activeIndex === 1 && this.needPseudoNode()){
                         console.log('stop prev')
                         return
                     }
-                    setTimeout(this.prev.bind(this),100);
+                    setTimeout(this.prev.bind(this),10);
                 }
             }else{
                 absOfOffsetX > 0 && this.restorePosition()
@@ -217,7 +217,7 @@ class Slider extends Component{
         const {oriention} = this.props;
         let moveY = Math.abs(clientY - this.startTouchY);
         let moveX = Math.abs(clientX - this.startTouchX);
-        if(oriention === "horizontal" && moveX < 30){
+        if(oriention === "horizontal" && moveX < 10){
             return
         }else if(oriention === "vertical" && moveY < 10){
             return
