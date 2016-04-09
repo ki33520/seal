@@ -87,8 +87,8 @@ class UpdatePassword extends Component{
         const self = this;
         if(nextProps.passwordByForm.passwordChanging === false &&
            this.props.passwordByForm.passwordChanging === true){
+            this.props.alert(nextProps.passwordByForm.msg,2000);
             if(nextProps.passwordByForm.passwordChanged === true){
-                this.props.alert(nextProps.passwordByForm.msg,2000);
                 setTimeout(()=>{changeScene.call(self,"index")},2500);
             }
         }

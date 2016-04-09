@@ -12,7 +12,7 @@ var loginGateway = function(req, res, next) {
     }).then(function(resp) {
         if (resp.returnCode === 0) {
             if (returnUrl === null) {
-                location.replace("/membercenter");
+                location.replace(config.urlPrefix+"/membercenter.html");
             } else {
                 returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
                 var user = _.pick(resp.object, [
@@ -53,7 +53,7 @@ var loginGateway = function(req, res, next) {
 var logoutGateway = function(req, res, next) {
     var returnUrl = req.query.returnUrl;
     if (returnUrl === null) {
-        location.replace("/membercenter");
+        location.replace(config.urlPrefix+"/membercenter.html");
     } else {
         req.session.user = undefined;
         returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));

@@ -20,7 +20,7 @@ var polymer = function(req, res, next) {
                 markup: markup,
                 initialState: initialState
             },function(err,html){
-                util.writePage(md5(req.originalUrl),html)
+                // util.writePage(md5(req.originalUrl),html)
                 res.send(html)
             });
         }else{

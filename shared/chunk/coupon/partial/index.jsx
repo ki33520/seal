@@ -16,61 +16,53 @@ class Coupon extends React.Component{
         }
     }
     handleClick(index){
-        const {pagination,couponType} = this.props.index;
-        const type = couponType[index];
-        const {coupons,pageIndex,totalPage} = pagination[type];
-        const _pageIndex = pageIndex || 1;
+        const {coupons,isFetching} = this.props.index;
+        const {pageIndex} = coupons[index];
         this.setState({
             activeIndex:index
         });
-        if(coupons){
+        if(isFetching||pageIndex>1){
             return false;
         }
-        this.fetchCouponsByParam(type,_pageIndex,true);
+        this.fetchCouponsByParam(index,pageIndex);
     }
     beginRefresh(){
-        const {pagination,couponType,isFetching} = this.props.index;
+        const {coupons,isFetching} = this.props.index;
         const index = this.state.activeIndex;
-        const type = couponType[index];
-        const totalPage = pagination[type].totalPage;
-        const pageIndex = Number(pagination[type].pageIndex);
-        const nextPage = pageIndex + 1;
-        if(totalPage <= pageIndex||isFetching === true){
+        const {totalPage,pageIndex} = coupons[index];
+        if(isFetching||totalPage <= pageIndex){
             return false;
         }
-        this.fetchCouponsByParam(type,nextPage,false);
+        this.fetchCouponsByParam(index,pageIndex+1);
     }
     handleScroll(scrollNode,scrollTop){
         if((scrollNode.offsetHeight + scrollTop + 30) >= scrollNode.scrollHeight){
             this.beginRefresh()
         }
     }
-    fetchCouponsByParam(couponType,pageIndex,isLoading){
+    fetchCouponsByParam(index,pageIndex){
         this.props.fetchCoupons({
-            type:couponType,
-            pageIndex,
-            isLoading
+            index,
+            pageIndex
         });
     }
-    renderYouaCoupons(coupons){
-        if(coupons && coupons.length){
-            return coupons.map((item,i)=>{
-                return this.renderYouaCoupon(item,'y-'+i);
+    renderCoupons(coupons){
+        const {list,title} = coupons;
+        if(list && list.length>0){
+            return list.map((item,i)=>{
+                return this.renderCoupon(item,i);
             });
         }else{
-            return this.renderNoCoupon("您目前没有友阿优惠券哟！");
+            return this.renderNoCoupon(title);
         }
     } 
-    renderInvalidCoupons(coupons){
-        if(coupons && coupons.length){
-            return coupons.map((item,i)=>{
-                return this.renderYouaCoupon(item,'iy-'+i);
-            });
+    renderNoCoupon(title){
+        let message = null;
+        if(title==='未使用优惠券'){
+            message = '您目前没有友阿优惠券哦！';
         }else{
-            return this.renderNoCoupon("您目前没有失效优惠券哟！");
+            message = '您目前没有未使用的优惠券哦！';
         }
-    }
-    renderNoCoupon(message){
         return (
             <div className="empty">
                 <img src="/client/asset/images/empty_coupon.png" />
@@ -78,7 +70,7 @@ class Coupon extends React.Component{
             </div>
         )
     }
-    renderYouaCoupon(coupon,i){
+    renderCoupon(coupon,key){
         const canUse = !(coupon.used || coupon.expiried);
         const row = classNames("coupon",{
             "youa-invalid":!canUse,
@@ -89,47 +81,42 @@ class Coupon extends React.Component{
             expiried:coupon.expiried
         });
         return (
-            <div className={row} key={i}>
-                    <div className="left">
-                        <div className="price"><em>&yen;</em>{coupon.money}</div>
-                        <div className="term">{'满'+coupon.songAccount+'使用'}</div>
-                    </div>
-                    <div className="right">
-                        <div className="kind">{coupon.flag}</div>
-                        <div className="date">{coupon.expiryDate}</div>
-                        <div className="explain">{coupon.description}</div>
-                    </div>
-                    <div className={status}></div>
+            <div className={row} key={key}>
+                <div className="left">
+                    <div className="price"><em>&yen;</em>{coupon.money}</div>
+                    <div className="term">{'满'+coupon.songAccount+'使用'}</div>
+                </div>
+                <div className="right">
+                    <div className="kind">{coupon.flag}</div>
+                    <div className="date">{coupon.expiryDate}</div>
+                    <div className="explain">{coupon.description}</div>
+                </div>
+                <div className={status}></div>
             </div>
         );
     }
     render(){
-        const {pagination,couponType,isFetching,isLoading} = this.props.index;
-        const index = this.state.activeIndex;
-        const type = couponType[index];
-        const {totalPage,pageIndex} = pagination[type];
+        const {coupons,isFetching} = this.props.index;
+        const items = coupons.map((item,i)=>{
+            return (
+                <SlideTabsItem navigator={()=>item.title} key={i}>
+                    <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
+                    {this.renderCoupons(item)}
+                    <Refresher active={isFetching}/>
+                    <Loading active={item.list.length===0&&isFetching}/>
+                    {item.pageIndex == item.totalPage?(<div className="no-more">已显示全部内容</div>):null} 
+                    </GoTop>
+                </SlideTabsItem>
+            );
+        });
         return (
             <div className="inner-scroll">
                 <Header>
                     <span className="title">优惠券</span>
                 </Header>
                 <SlideTabs axis="x" navbarSlidable={false} onSelect={this.handleClick.bind(this)}>
-                    <SlideTabsItem navigator={()=>'未使用优惠券'}>
-                       <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
-                        {this.renderYouaCoupons(pagination.youa.coupons)}
-                        <Refresher active={isFetching}/>
-                        {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
-                        </GoTop>
-                    </SlideTabsItem>
-                    <SlideTabsItem navigator={()=>'已失效优惠券'}>
-                        <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
-                        {this.renderInvalidCoupons(pagination.invalid.coupons)}
-                        <Refresher active={isFetching}/>
-                        {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
-                        </GoTop>
-                    </SlideTabsItem>
+                    {items}
                 </SlideTabs>
-                <Loading active={isLoading}/>
             </div>
         )
     }

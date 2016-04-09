@@ -3,30 +3,11 @@ var moment = require("moment");
 var _ = require("lodash");
 var util = require("../lib/util.js");
 var CouponApp = util.getSharedComponent("coupon");
-function flagOfCoupon(employCode) {
-    return {name:"海外购",value:"haitao",title:"海外购www.tepin.hk"};
-}
-function filterCoupon(obj){
-    var coupon = {};
-    if(obj){
-        var rule = obj.ruleObject || {};
-        coupon = {
-            qrCode:null,//二维码obj.qrCode
-            couponNo:obj.couponNo,//'优惠券号'
-            couponName:rule.couponName,//'优惠券名'
-            platform:flagOfCoupon(obj.employCode).name,//'使用平台'
-            issueDate:obj.issueStartTime,//,'发券日期'
-            useDate:obj.issueDate,//'生效日期'
-            expDate:obj.validityDate,//'使用期限'
-            remark:obj.remark//'使用说明'
-        };
-    }
-    return coupon;
-}
+
 
 function formatCoupons(originalCoupons) {
     var coupons = [];
-    _.each(originalCoupons,function(v){
+    _.forEach(originalCoupons,function(v){
         var validityDate = moment(new Date(v.validityDate)).format('YYYY.MM.DD');
         var issueDate = moment(new Date(v.issueDate)).format('YYYY.MM.DD');
         var ruleObject = v.ruleObject || {};
@@ -42,7 +23,7 @@ function formatCoupons(originalCoupons) {
             useRules:v.useRules,
             couponDesc:v.couponDesc,
             shortName:v.shortName,
-            flag:flagOfCoupon(v.employCode).title,
+            flag:"海外购www.tepin.hk",
             description:ruleObject.description
         });
     });
@@ -51,44 +32,39 @@ function formatCoupons(originalCoupons) {
  
 //优惠券状态:0未生效,1已使用,2已过期,3可使用.4已失效(已失效，包括已使用和已过期),5有效券(有效优惠券，包括可使用和未生效)
 //是否联盟 0：非联盟,1：联盟(如果查询全部传空) 
-var coupon = function(req, res, next) {
+var couponList = function(req, res, next) {
     var user = req.session.user;
     var pageSize = 10;
     var pageIndex = Number(req.query.pageIndex) || 1;
-    var type = req.query.type||'youa';
-    var options = {
-        youa:{status:0,isMerchants:0},
-        legue:{status:0,isMerchants:1},
-        invalid:{status:3}
-    };
-    var param = _.merge(options[type],{
+    var index = Number(req.query.index)||0;
+    var coupons = [
+        {title:'未使用优惠券',options:{status:0,isMerchants:0},list:[]},
+        {title:'已失效优惠券',options:{status:3},list:[]}
+    ];
+    var param = _.merge(coupons[index].options,{
         memberId:user.memberId,
         pageSize:pageSize,
         pageIndex:pageIndex
     });
  
     util.fetchAPI("couponByUser", param).then(function(resp) {
-        var pagination = {
-            youa:{},
-            legue:{},
-            invalid:{}
-        };
         if(resp.returnCode===0){
             var obj = resp.object;
-            pagination[type] = {
-                coupons:formatCoupons(obj.result),
-                pageIndex:pageIndex,
-                totalPage:Math.ceil(obj.totalCount / pageSize)
-            };
+            var list = formatCoupons(obj.result);
+            var totalPage=Math.ceil(obj.totalCount / pageSize);
             if (req.xhr === true) {
                 res.json({
-                    pagination:pagination[type],
+                    list:list,
+                    pageIndex:pageIndex,
+                    totalPage:totalPage,
                     isFetched:true
                 });
             }else{
+                coupons[index].list = list;
+                coupons[index].pageIndex=pageIndex;
+                coupons[index].totalPage=totalPage;
                 var initialState = {
-                    pagination: pagination,
-                    couponType:['youa','invalid'],
+                    coupons: coupons,
                     isFetched:true
                 };
                 var markup = util.getMarkupByComponent(CouponApp({
@@ -102,7 +78,7 @@ var coupon = function(req, res, next) {
         }else{
             if (req.xhr === true) {
                 res.json({
-                    pagination:{},
+                    list:null,
                     isFetched:false
                 });
             }else{
@@ -114,23 +90,6 @@ var coupon = function(req, res, next) {
     });
 }
 
-var couponDetail = function(req, res, next) {
-    var user = req.session.user;
-    var couponNo = req.params.id;
-
-    util.fetchAPI("couponDetail", {
-        memberId:user.memberId,
-        couponNo: couponNo
-    }).then(function(resp) {
-        if (resp.returnCode === 0) {
-            res.json(filterCoupon(resp.object));
-        }else{
-            next(new Error(resp.message));
-        }
-    })
-}
-
 module.exports = {
-    list:coupon,
-    detail:couponDetail
+    list:couponList
 };

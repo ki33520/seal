@@ -95,8 +95,7 @@ class ConfirmOrder extends Component{
             buyeds:order.buyeds,
             couponNo:checkedCoupon !== null?checkedCoupon.couponNo:"",
             receiverId:checkedReceiver !== null?checkedReceiver.id:"",
-            // totalFee:order.totalFee
-            totalFee:10.0
+            totalFee:order.totalFee
         })
 
     }

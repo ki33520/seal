@@ -25,7 +25,7 @@ router.get(urlPrefix + "/activitygood", require("./controller/index.js").activit
 router.get(urlPrefix + "/updategoods",require("./controller/index.js").updateGoods);
 router.get(urlPrefix + "/topic/:id.html", require("./controller/topic.js").topic);
 router.get(urlPrefix + "/flashbuy/:id.html", require("./controller/flashbuy.js"));
-router.get(urlPrefix + "/polymer.html",mainController.staticize,require("./controller/polymer").polymer);
+router.get(urlPrefix + "/polymer.html",require("./controller/polymer").polymer);
 router.get(urlPrefix + "/categorybrands", require("./controller/polymer").categoryBrands);
 router.get(urlPrefix + "/allbrands", require("./controller/polymer").allBrands);
 router.get(urlPrefix + "/allorigins", require("./controller/polymer").allOrigins);
@@ -90,7 +90,6 @@ router.post(urlPrefix + "/deletereceiver",mainController.requireAuthorize,requir
 router.post(urlPrefix + "/setdefaultreceiver",mainController.requireAuthorize,require("./controller/receiver").setDefaultReceiver);
 
 router.get(urlPrefix + "/coupon.html",mainController.requireAuthorize, require("./controller/coupon").list);
-router.get(urlPrefix + "/coupon/:id.html",mainController.requireAuthorize, require("./controller/coupon").detail);
 
 router.post("/api/v1/build/index",require("./controller/api").buildIndexPage);
 router.post("/api/v1/publish/index",require("./controller/api").publishIndexPage);
