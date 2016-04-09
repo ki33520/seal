@@ -41,7 +41,7 @@ if(runtime === "production"){
     config.appKey = "35c33163124346fa9dabb7d8435a811d";
     config.appId = "haiwaigou";
     config.sharedQRCodePath = "http://product.tepin.hk"
-    config.imgServer = "http://img.tepin.hk"
+    config.imgServer = "http://img.tepin.hk/"
 }
 config.loginUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/login.html?responseType=code";
