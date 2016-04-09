@@ -23,9 +23,9 @@ app.use(cookieParser("seal",{
 // var RedisStore = require('connect-redis')(session)
 var MemcachedStore = require("connect-memcached")(session)
 var cacheServer = require("./lib/config").cacheServer
-// var store = new MemcachedStore({
-//     hosts: cacheServer.hosts
-// })
+var store = new MemcachedStore({
+    hosts: cacheServer.hosts
+})
 
 app.use(session({
     name: "seal.sid",
