@@ -120,8 +120,8 @@ class Slider extends Component{
         if(this.props.touchEnabled === false){
             return
         }
-        // e && e.preventDefault();
-        // e && e.stopPropagation();
+        e && e.preventDefault();
+        e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
         }
@@ -135,7 +135,7 @@ class Slider extends Component{
         if(this.props.touchEnabled === false){
             return
         }
-        // e && e.preventDefault();
+        e && e.preventDefault();
         e && e.stopPropagation();
         if(this.animateSlide() === true){
             return;
@@ -200,8 +200,8 @@ class Slider extends Component{
         }
     }
     handleTouchMove(e){
-        // e && e.preventDefault();
-        // e && e.stopPropagation();
+        e && e.preventDefault();
+        e && e.stopPropagation();
         if(this.props.touchEnabled === false){
             return
         }

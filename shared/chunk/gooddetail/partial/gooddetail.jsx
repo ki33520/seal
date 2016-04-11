@@ -6,8 +6,9 @@ import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import {urlParam,base64Encode,formatPrice,disableHistoryForwardCacheThen} from "../../../lib/util.es6";
-import Slider from "../../../component/slider/slider.jsx";
-import Slide from "../../../component/slider/slide.jsx";
+// import Slider from "../../../component/slider/slider.jsx";
+// import Slide from "../../../component/slider/slide.jsx";
+import {Slides,Slide} from "../../../component/slides.jsx";
 import PullHook from "../../../component/pullhook.jsx";
 import Alert from "../../../component/alert.jsx";
 import Header from "../../common/header.jsx";
@@ -293,7 +294,7 @@ class GoodDetail extends Component{
             </Header>
             <div className={upperClasses}>
                 {good.slides.length > 0?(
-                <Slider effect="roll" autoPlay={false} loop={true} speed={200}>{slides}</Slider>
+                <Slides effect="roll" autoPlay={false} loop={true} speed={200}>{slides}</Slides>
                 ):null}
                 <div className="title clearfix">
                     <span>{good.title}</span>
