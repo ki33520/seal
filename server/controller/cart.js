@@ -109,7 +109,7 @@ var cart = function(req, res, next) {
     if (isLogined) {
         util.fetchAPI("cartByUser", {
             memberId: user.memberId
-        }).then(function(resp) {
+        },false,{method:'POST'}).then(function(resp) {
             if (resp.returnCode === 0) {
                 renderMarkup(resp.object);
             } else {
@@ -128,7 +128,7 @@ var cart = function(req, res, next) {
             util.fetchAPI('cartByAnonymous', {
                 singleCodes: singleCodes.join(','),
                 qtys: buyeds.join(',')
-            }).then(function(resp) {
+            },false,{method:'POST'}).then(function(resp) {
                 if (resp.returnCode === 0) {
                     renderMarkup(resp.object);
                 } else {
@@ -157,7 +157,7 @@ var updateCart = function(req, res, next) {
             singleCode: singleCode,
             qty: buyed,
             figureUpFlag: false
-        }).then(function(resp) {
+        },false,{method:'POST'}).then(function(resp) {
             var isUpdated = resp.returnCode === 0;
             respone(isUpdated);
         });
@@ -185,7 +185,7 @@ var deleteCart = function(req, res, next) {
         util.fetchAPI('deleteCart', {
             memberId: user.memberId,
             cartId: req.body.cartId
-        }).then(function(resp) {
+        },false,{method:'POST'}).then(function(resp) {
             var isDeleted = resp.returnCode === 0;
             respone(isDeleted);
         }, function() {
@@ -235,7 +235,7 @@ var fetchCart = function(req, res, next) {
     util.fetchAPI('cartByAnonymous', {
         singleCodes: singleCodes,
         qtys: buyeds
-    }).then(function(resp) {
+    },false,{method:'POST'}).then(function(resp) {
         if (resp.returnCode === 0) {
             var cart = formatCarts(resp.object);
             respone(cart, true);
@@ -253,7 +253,7 @@ var checkCart = function(req, res, next) {
         memberId: user.memberId,
         singleCodes: singleCodes,
         qtys: buyeds
-    }).then(function(resp) {
+    },false,{method:'POST'}).then(function(resp) {
         var returnCode = resp.returnCode;
         res.json({
             returnCode:returnCode
