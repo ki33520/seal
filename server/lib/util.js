@@ -13,20 +13,46 @@ var fs = require("fs");
 var path = require('path');
 var bluebird = require("bluebird");
 var memoryCache = require("memory-cache");
+var crypto = require("crypto");
 
 var urlPrefix = require("./config").urlPrefix
 
 var util = {
     jumpURL:sharedJumpURL.jumpURL,
+    cipher:function(data,algorithm,key){
+        algorithm = algorithm || "rc4"
+        key = key || "seal"
+        var encrypted = "";
+        var cip = crypto.createCipher(algorithm, key);
+        encrypted += cip.update(data, 'utf8', 'base64');
+        encrypted += cip.final('base64');
+        return encrypted
+    },
+    decipher:function(encrypted,algorithm,key){
+        algorithm = algorithm || "rc4"
+        key = key || "seal"
+        var decrypted = "";
+        var decipher = crypto.createDecipher(algorithm, key);
+        decrypted += decipher.update(encrypted, 'base64', 'utf8');
+        decrypted += decipher.final('utf8');
+        return decrypted
+    },
+    base64EncodeForURL(str){
+        var encodedStr = util.cipher(str)
+        return encodedStr.replace(/=/g, "_").replace(/\//g, ",").replace(/\+/g, "-")
+    },
+    base64DecodeForURL(encodedStr){
+        encodedStr = encodedStr.replace(/_/g, "=").replace(/,/g, "/").replace(/-/g, "+");
+        return util.decipher(encodedStr)
+    },
     getAuthGatewayUrl: function(req, authPath) {
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,
             pathname: req.url
         }
-        var encodeReturnUrl = sharedUtil
+        var encodeReturnUrl = util
             .base64EncodeForURL(encodeURIComponent(url.format(returnUrl)));
-
         returnUrl.pathname = urlPrefix + authPath
         var authRedirectUrl = url.format(returnUrl);
         authRedirectUrl = encodeURIComponent(authRedirectUrl + "?returnUrl=" + encodeReturnUrl);
