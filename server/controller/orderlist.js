@@ -69,6 +69,7 @@ var orderList = function(req, res,next) {
             if (req.xhr === true){
                 res.json({
                     isFetched: true,
+                    cashier: config["cashier"],
                     orders,
                     flag: status,
                     systemTime: systemTime
@@ -76,6 +77,7 @@ var orderList = function(req, res,next) {
             } else {
                 var initialState = {
                     isFetched: true,
+                    cashier: config["cashier"],
                     orders,
                     flag: status,
                     systemTime: systemTime

@@ -11,36 +11,36 @@ var loginGateway = function(req, res, next) {
         memberCode: code
     }).then(function(resp) {
         if (resp.returnCode === 0) {
-            if (returnUrl === null) {
-                location.replace(config.urlPrefix+"/membercenter.html");
-            } else {
+            var user = _.pick(resp.object, [
+                "nickName", "userName", "mobileNumber", "openId", "lastLoginTime", "wxOpenId"
+            ])
+            user.memberId = resp.object.id
+            req.session.user = user;
+            if(returnUrl === undefined){
+                returnUrl = config.urlPrefix+"/membercenter.html"
+            }else{
                 returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
-                var user = _.pick(resp.object, [
-                    "nickName", "userName", "mobileNumber", "openId", "lastLoginTime", "wxOpenId"
-                ])
-                user.memberId = resp.object.id
-                req.session.user = user;
-                // console.log('user',req.session["user"])
-                if (returnUrl.search(/:3000/g) && config.runtime === "hotfix") {
-                    returnUrl = returnUrl.replace(":3000",":5000")
-                }
-                if(req.session["localcart"] && req.session["localcart"].length > 0){
-                    util.syncLocalCart(user.memberId, req.session["localcart"]).then(function(ret) {
-                        if (ret.returnCode === 0) {
-                            req.session["localcart"] = []
-                            console.log('syncLocalCart success')
-                            res.redirect(returnUrl);
-                        } else {
-                            console.log('syncLocalCart fail')
-                            res.redirect(returnUrl);
-                        }
-                    }, function() {
+            }
+            // console.log('user',req.session["user"])
+            if (returnUrl.search(/:3000/g) && config.runtime === "hotfix") {
+                returnUrl = returnUrl.replace(":3000",":5000")
+            }
+            if(req.session["localcart"] && req.session["localcart"].length > 0){
+                util.syncLocalCart(user.memberId, req.session["localcart"]).then(function(ret) {
+                    if (ret.returnCode === 0) {
+                        req.session["localcart"] = []
+                        console.log('syncLocalCart success')
+                        res.redirect(returnUrl);
+                    } else {
                         console.log('syncLocalCart fail')
                         res.redirect(returnUrl);
-                    })
-                }else{
+                    }
+                }, function() {
+                    console.log('syncLocalCart fail')
                     res.redirect(returnUrl);
-                }
+                })
+            }else{
+                res.redirect(returnUrl);
             }
         } else {
             return next(new Error(resp.message));

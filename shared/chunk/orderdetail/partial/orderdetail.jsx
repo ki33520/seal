@@ -123,7 +123,7 @@ class OrderDetail extends Component{
     }
     renderFooter(){
         const {order} = this.props.orderByParam;
-        const {orderStatus,orderId,itemList} = order;
+        const {orderStatus,orderId,itemList,cashier} = order;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         switch(orderStatus){
             case "STATUS_NOT_PAY":
@@ -133,7 +133,7 @@ class OrderDetail extends Component{
                     <div className="confirmBtns">
                         <a href="javascript:void(null);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
                         <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this)} className="confirm_btn">立即支付</a>
-                        <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                        <form action={cashier+"/cashier/v1/cashier"} method="POST" ref="submitForm">
                             <input type="hidden" name="appId" value={cashierParam.appId} />
                             <input type="hidden" name="channel" value={cashierParam.channel} />
                             <input type="hidden" name="openId" value={cashierParam.openId} />

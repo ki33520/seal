@@ -103,7 +103,7 @@ class OrderList extends Component{
         }
     }
     render(){
-        var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam,flag} = this.props.ordersByParam;
+        var {orders,cashier,isFetching,systemTime,alertActive,alertContent,cashierParam,flag} = this.props.ordersByParam;
         cashierParam = cashierParam || {};
         const tab_nav_item = ["全部","待付款","待发货","待收货","待评价"];
         return (
@@ -112,7 +112,7 @@ class OrderList extends Component{
                     <a href={jumpURL("membercenter")} className="iconfont icon-back"></a>
                     <span className="title">我的订单</span>
                 </header>
-                <form action="http://cashier.e9448.com/cashier/v1/cashier" method="POST" ref="submitForm">
+                <form action={cashier+"/cashier/v1/cashier"} method="POST" ref="submitForm">
                     <input type="hidden" name="appId" value={cashierParam.appId} />
                     <input type="hidden" name="channel" value={cashierParam.channel} />
                     <input type="hidden" name="openId" value={cashierParam.openId} />
