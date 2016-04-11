@@ -11,9 +11,9 @@ export function apiRequest(url,param={}, options = {
 }){
     options = Object.assign({},options,{
         url,
-        data:param
+        data:param,
+        // contentType:'application/json'
     });
-    // console.log('url',url,param)
     return reqwest(options);
 }
 
