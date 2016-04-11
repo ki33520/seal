@@ -79,7 +79,7 @@ var search = function(req, res, next) {
     if(areaName !== undefined){
         options.sourceAreas = areaName;
     }
-    util.fetchAPI("fetchGoodsList", options).then(function(resp) {
+    util.fetchAPI("fetchGoodsList", options,false,{method:"POST"}).then(function(resp) {
         if (resp.returnCode === 0) {
             var goods = resp.object;
             var list = filterGoodsList(goods.cbls);
