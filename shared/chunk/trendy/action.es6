@@ -25,7 +25,7 @@ function requestGoods (param) {
 export function fetchGoods(param){
     return (dispath)=>{
         dispath(requestGoods(param));
-        return apiRequest(urlPrefix + "/trendyActivity",param,{method:"POST"}).then((res)=>{
+        return apiRequest(urlPrefix + "/trendyActivity",param,{method:"post"}).then((res)=>{
             dispath(receiveGoods(param,res))
         })
     }
