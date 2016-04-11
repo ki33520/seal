@@ -23,11 +23,12 @@ function configureStore(initialState){
 
 class OrderListApp extends Component{
     render(){
-        const {isFetched,orders,flag,systemTime} = this.props.initialState;
+        const {isFetched,orders,cashier,flag,systemTime} = this.props.initialState;
         const initialState = {
             ordersByParam:{
                 isFetching:false,
                 isFetched,
+                cashier,
                 flag,
                 orders,
                 systemTime

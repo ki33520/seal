@@ -193,6 +193,7 @@ var orderDetail = function(req, res, next) {
         if (resp.orderById.returnCode === 0 && resp.timestamp.returnCode === 0){
             var order = formatData(resp.orderById.object),
                 systemTime = resp.timestamp.systemTime;
+            order["cashier"] = config["cashier"];
             var initialState = {
                 isFetched: true,
                 order: order,
