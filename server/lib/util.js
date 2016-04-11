@@ -55,7 +55,7 @@ var util = {
             .base64EncodeForURL(encodeURIComponent(url.format(returnUrl)));
         returnUrl.pathname = urlPrefix + authPath
         var authRedirectUrl = url.format(returnUrl);
-        authRedirectUrl = encodeURIComponent(authRedirectUrl);
+        authRedirectUrl = encodeURIComponent(authRedirectUrl + "?returnUrl=" + encodeReturnUrl);
         return authRedirectUrl;
     },
     getSharedComponent: function(componentName, entryFile) {

@@ -28,7 +28,6 @@ class ConfirmOrderRouter extends Component{
     handleSceneChange(currentScene,param,prevScene){
         // switch(currentScene){
             // case "receiver":
-                // this.refs["receiver"].
         // }
     }
     render(){
