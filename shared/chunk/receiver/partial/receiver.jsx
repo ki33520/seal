@@ -100,8 +100,8 @@ class Receiver extends Component{
     }
     render(){
         const handleAddReceiver = ()=>{
-            if(this.props.receivers.length >= 6){
-                this.props.alert("收货地址不能超过6个!",2000)
+            if(this.props.receivers.length >= 10){
+                this.props.alert("收货地址不能超过10个!",2000)
             }else{
                 this.props.changeScene("addreceiver")
             }
