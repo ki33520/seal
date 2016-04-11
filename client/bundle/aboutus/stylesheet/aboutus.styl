@@ -24,14 +24,14 @@ body{
 		overflow: hidden;
 		display: flex;
 	}
-	.m-entry span {
+	.m-entry>span {
 		flex: 1;
 		font-size: .3rem;
 		text-align: center;
 		line-height: 100%;
+		display: block;
 	}
-	.m-entry span:before {
-		content: "";
+	.m-entry span i{
 		display: block;
 		width: 30px;
 		height: 30px;
@@ -40,15 +40,15 @@ body{
 		background-size: 100%;
 		margin-bottom:.3rem;
 	}
-	.m-entry span:nth-child(2):before {
+	.m-entry span:nth-child(2) i{
 		background-position:0 -36px;
 		background-size: 100%;
 	}
-	.m-entry span:nth-child(3):before {
+	.m-entry span:nth-child(3) i{
 		background-position:0 -72px;
 		background-size: 100%;
 	}
-	.m-entry span:nth-child(4):before {
+	.m-entry span:nth-child(4) i{
 		background-position:0 -107px;
 		background-size: 100%;
 	}
