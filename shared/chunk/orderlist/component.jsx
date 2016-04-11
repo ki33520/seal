@@ -103,7 +103,7 @@ class OrderList extends Component{
         }
     }
     render(){
-        var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam} = this.props.ordersByParam;
+        var {orders,isFetching,systemTime,alertActive,alertContent,cashierParam,flag} = this.props.ordersByParam;
         cashierParam = cashierParam || {};
         const tab_nav_item = ["全部","待付款","待发货","待收货","待评价"];
         return (
@@ -121,7 +121,7 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs ref="slideTabs" axis="x" activeIndex={0} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
+                <SlideTabs ref="slideTabs" axis="x" activeIndex={flag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     {
                         tab_nav_item.map((v,k)=>{
                             var refresherActive = orders[k] && orders[k].isFetching || false;

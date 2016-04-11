@@ -132,7 +132,7 @@ export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart(param));
         apiRequest(urlPrefix+'/updatecart',param,{method:"POST"}).then((res)=>{
-             dispatch(finishUpdateCart(param,res));
+            dispatch(finishUpdateCart(param,res));
         });
     }
 }
