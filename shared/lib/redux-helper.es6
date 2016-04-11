@@ -7,7 +7,7 @@ import React,{Component} from "react";
 import thunkMiddleware from "redux-thunk";
 // import createLogger from "redux-logger";
 
-const logger = createLogger();
+// const logger = createLogger();
 
 const createStoreWithMiddleware = compose(
     applyMiddleware(thunkMiddleware),

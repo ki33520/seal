@@ -49,7 +49,6 @@ var util = {
             t:moment().format("X")
         })
         var signature = this.getSignatureByParam(param,config.appKey)
-        // console.log('signature',signature)
         param = _.extend(param,{h:signature})
         console.log("param",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
