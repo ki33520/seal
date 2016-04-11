@@ -17,11 +17,12 @@ var config = {
     "cacheServer":{
         "hosts":["memcached.hwg.youayun.cn:11211"]
     },
-    "sharedQRCodePath":"http://product.hwg.youayun.cn"
+    "sharedQRCodePath":"http://product.hwg.youayun.cn",
+    "cashier":"http://cashier.e9448.com"
 };
 var runtime = process.env["NODE_ENV"];
 // runtime = "hotfix"
-//runtime = "test"
+runtime = "production"
 config["runtime"] = runtime;
 if (runtime === "develop") {
     // config.apiServer = "http://wsns.tepin.youayun.cn";
@@ -42,6 +43,7 @@ if(runtime === "production"){
     config.appId = "haiwaigou";
     config.sharedQRCodePath = "http://product.tepin.hk"
     config.imgServer = "http://img.tepin.hk/"
+    config.cashier = "http://cashier.tepin.com"
 }
 config.loginUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/login.html?responseType=code";

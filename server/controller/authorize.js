@@ -14,7 +14,7 @@ var loginGateway = function(req, res, next) {
             if (returnUrl === null) {
                 location.replace(config.urlPrefix+"/membercenter.html");
             } else {
-                returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
+                returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
                 var user = _.pick(resp.object, [
                     "nickName", "userName", "mobileNumber", "openId", "lastLoginTime", "wxOpenId"
                 ])
@@ -56,7 +56,7 @@ var logoutGateway = function(req, res, next) {
         location.replace(config.urlPrefix+"/membercenter.html");
     } else {
         req.session.user = undefined;
-        returnUrl = decodeURIComponent(sharedUtil.base64DecodeForURL(returnUrl));
+        returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
         if (returnUrl.search(/:3000/g) && config.runtime === "hotfix") {
             returnUrl = returnUrl.replace(":3000",":5000")
         }

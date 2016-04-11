@@ -107,6 +107,7 @@ var confirmOrder = function(req, res, next) {
                 itemIds: param.itemIds,
                 buyeds: param.buyeds
             })
+            order["cashier"] = config["cashier"]
             var initialState = {
                 isFetched: true,
                 order: order
