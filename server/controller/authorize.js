@@ -54,9 +54,6 @@ var logoutGateway = function(req, res, next) {
     } else {
         req.session.user = undefined;
         returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
-        if (returnUrl.search(/:3000/g) && config.runtime === "hotfix") {
-            returnUrl = returnUrl.replace(":3000",":5000")
-        }
         res.redirect(returnUrl);
     }
 }

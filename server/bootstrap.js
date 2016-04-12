@@ -8,7 +8,6 @@ var express = require("express"),
 
 var app = express();
 
-var router = require("./router.js");
 
 app.use('/client', express.static('client'));
 app.use(bodyParser.json());
@@ -42,15 +41,17 @@ app.use(session({
     //     port:"6379",
     //     prefix:"seal"
     // })
-    store: store
+    // store: store
 }))
 
 app.engine('html', cons.swig);
 app.set('view engine', 'html');
 app.set("views", __dirname + '/../view');
+
 if(process.env.NODE_ENV !== "production"){
     // app = require("../task/develop-middleware")(app)
 }
+var router = require("./router.js");
 app.use(router);
 app.use(require("./controller/main").errorHandler)
 
