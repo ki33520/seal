@@ -75,12 +75,14 @@ class OrderList extends Component{
         });
     }
     componentDidMount(){
-        ReactDOM.findDOMNode(this.refs["slideTabs"]).children[0].children[this.state.displayFlag].click();
+        setTimeout(()=>{
+            ReactDOM.findDOMNode(this.refs["slideTabs"]).children[0].children[this.state.displayFlag].click();
+        },10)
     }
     componentDidUpdate(prevProps,prevState){
         if(prevProps.ordersByParam.paygatewayFetched === false && this.props.ordersByParam.paygatewayFetched === true){
             setTimeout(()=>{
-                ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
+                document.getElementById("submitForm").submit();
             },10)
         }
     }
@@ -112,7 +114,7 @@ class OrderList extends Component{
                     <a href={jumpURL("membercenter")} className="iconfont icon-back"></a>
                     <span className="title">我的订单</span>
                 </header>
-                <form action={cashier+"/cashier/v1/cashier"} method="POST" ref="submitForm">
+                <form action={cashier+"/cashier/v1/cashier"} method="POST" id="submitForm" ref="submitForm">
                     <input type="hidden" name="appId" value={cashierParam.appId} />
                     <input type="hidden" name="channel" value={cashierParam.channel} />
                     <input type="hidden" name="openId" value={cashierParam.openId} />
@@ -121,7 +123,7 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs ref="slideTabs" axis="x" activeIndex={flag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
+                <SlideTabs id="slideTabs" ref="slideTabs" axis="x" activeIndex={flag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
                     {
                         tab_nav_item.map((v,k)=>{
                             var refresherActive = orders[k] && orders[k].isFetching || false;
