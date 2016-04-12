@@ -102,7 +102,7 @@ class Coupon extends React.Component{
                 <SlideTabsItem navigator={()=>item.title} key={i}>
                     <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
                     {this.renderCoupons(item)}
-                    <Refresher active={isFetching}/>
+                    <Refresher active={isFetching && item.pageIndex > 1}/>
                     <Loading active={isFetching&&item.list.length ===0}/>
                     {item.pageIndex == item.totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                     </GoTop>
