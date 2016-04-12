@@ -11,7 +11,7 @@ class ErrorContent extends Component{
             <div className="error-content">
                 <img src="/client/asset/images/empty_goodsUnshelf.png" />
                 <span>{msg}</span>
-                <a href="/" className="back-btn">返回首页</a>
+                <a href="javascript:void(null)" onClick={()=>window.history.back()} className="back-btn">返回</a>
             </div>
         )
     }

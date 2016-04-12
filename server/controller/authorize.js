@@ -22,9 +22,6 @@ var loginGateway = function(req, res, next) {
                 returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
             }
             // console.log('user',req.session["user"])
-            if (returnUrl.search(/:3000/g) && config.runtime === "hotfix") {
-                returnUrl = returnUrl.replace(":3000",":5000")
-            }
             if(req.session["localcart"] && req.session["localcart"].length > 0){
                 util.syncLocalCart(user.memberId, req.session["localcart"]).then(function(ret) {
                     if (ret.returnCode === 0) {
