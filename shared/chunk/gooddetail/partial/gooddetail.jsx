@@ -320,9 +320,10 @@ class GoodDetail extends Component{
                 {this.state.downVisble?null:<div className="teyla">上拉显示商品详情</div>}
             </div>
             <div className={downClasses}>
+                {this.state.downVisble?(
                 <Tabs>
                     <TabsItem title="图文详情">
-                    <div className="good-desc" dangerouslySetInnerHTML={{__html:good.detail}}></div>
+                    <div className="good-desc" dangerouslySetInnerHTML={{__html:_.unescape(good.detail)}}></div>
                     </TabsItem>
                     <TabsItem title="保税FAQ">
                     <div className="faq">
@@ -330,6 +331,7 @@ class GoodDetail extends Component{
                     </div>
                     </TabsItem>
                 </Tabs>
+                ):null}
             </div>
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             <MaskLayer visible={this.state.popupActive} />

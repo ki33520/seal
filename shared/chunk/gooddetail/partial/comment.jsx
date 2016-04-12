@@ -145,6 +145,9 @@ class GoodComment extends Component{
         })
     }
     render(){
+        if(!this.props.active){
+            return null
+        }
         const {commentsFetching,showupFetching,comments,showups} = this.props.goodById.good
         return (
             <div className="good-comment">
