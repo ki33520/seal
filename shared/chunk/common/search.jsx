@@ -37,7 +37,6 @@ class SearchBox extends Component{
         changeField('keyword',null)
     }
     renderHistory(){
-            console.log(this.props.search.history)
         if(this.props.search.history && this.props.search.history.length > 0){
             let history = this.props.search.history.map((record,i)=>{
                 return <a href={jumpURL("search",null,{k:record.keyword})} key={i}>{record.keyword}</a>

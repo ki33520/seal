@@ -21,8 +21,6 @@ var config = {
     "cashier":"http://cashier.e9448.com"
 };
 var runtime = process.env["NODE_ENV"];
-// runtime = "hotfix"
-// runtime = "production"
 config["runtime"] = runtime;
 if (runtime === "develop") {
     // config.apiServer = "http://wsns.tepin.youayun.cn";
@@ -36,6 +34,14 @@ if(runtime === "test"){
     config.oathServer = "https://ssl.e9448.com";
     config.appKey = "0236fe7659864b1b881cb6e94709de3f";
     config.appId = "hwg";
+}
+if(runtime === "hotfix"){
+    config.oathServer = "http://login.tepin.com";
+    config.appKey = "35c33163124346fa9dabb7d8435a811d";
+    config.appId = "haiwaigou";
+    config.sharedQRCodePath = "http://product.tepin.hk"
+    config.imgServer = "http://img.tepin.hk/"
+    config.cashier = "http://cashier.tepin.com"
 }
 if(runtime === "production"){
     config.oathServer = "http://login.tepin.com";
@@ -59,8 +65,8 @@ config.api = _.mapValues(api, function(v) {
         v.url = v.baseURL["test"]?v.baseURL["test"] + v.uri:config.apiServer
     }else if(runtime === "production"){
         v.url = v.baseURL["production"] + v.uri
-    }else{
-        v.url = v.baseURL["test"]?v.baseURL["test"] + v.uri:config.apiServer
+    }else if(runtime === "hotfix"){
+        v.url = v.baseURL["production"] + v.uri
     }
     // v.url = config.apiServer + v.uri;
     return v;
