@@ -8,7 +8,7 @@ import Header from "../common/header.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import fetchGoods from "./action.es6";
 
-class Activity extends React.Component{
+class Activity extends Component{
     constructor(props){
         super(props);
         this.state = {
