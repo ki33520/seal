@@ -92,13 +92,13 @@ var util = {
         options = _.omit(options,["isMock","maxAge"])
         var cacheKey = apiName + JSON.stringify(param)
         if(memoryCache.get(cacheKey) === null){
-            console.log(apiName,'need cached')
+            // console.log(apiName,'need cached')
             return this.fetchAPI(apiName,param,isMock,options).then(function(res){
                 memoryCache.put(cacheKey,res,maxAge) //15 minutes
                 return res
             })
         }else{
-            console.log(apiName,'return from cache')
+            // console.log(apiName,'return from cache')
             // return bluebird.delay(100).then(function(){
             //     return memoryCache.get(cacheKey)
             // })
