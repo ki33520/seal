@@ -17,11 +17,11 @@ class Coupon extends React.Component{
     }
     handleClick(index){
         const {coupons,isFetching} = this.props.index;
-        const {pageIndex} = coupons[index];
+        const {pageIndex,list} = coupons[index];
         this.setState({
             activeIndex:index
         });
-        if(isFetching||pageIndex>1){
+        if(isFetching||list.length>0){
             return false;
         }
         this.fetchCouponsByParam(index,pageIndex);
@@ -102,8 +102,8 @@ class Coupon extends React.Component{
                 <SlideTabsItem navigator={()=>item.title} key={i}>
                     <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
                     {this.renderCoupons(item)}
-                    <Refresher active={isFetching}/>
-                    <Loading active={item.list.length===0&&isFetching}/>
+                    <Refresher active={isFetching && item.pageIndex > 1}/>
+                    <Loading active={isFetching&&item.list.length ===0}/>
                     {item.pageIndex == item.totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                     </GoTop>
                 </SlideTabsItem>
