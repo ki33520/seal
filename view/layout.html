@@ -11,10 +11,18 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
     <meta http-equiv="pragma" content="no-cache"/>    <title>{% block title %}海外购{% endblock %}</title>
     {% block css %}{% endblock %}
+    <script>
+        window.onload = function(e){
+            document.getElementById("shadelayer").style.display = "none";
+        }
+    </script>
 </head>
 
 <body>
     <iframe style="height:0px;width:0px;visibility:hidden;position:absolute;top:-888em" src="about:blank">this frame prevents back forward cache</iframe>
+    <div id="shadelayer" class="shade-layer" style="position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:1999;background:#FFF;">
+        <div class="spinner"><i class="iconfont icon-loading"></i></div>
+    </div>
     {% block content %}{% endblock %} {% block js %}{% endblock %}
 </body>
 

@@ -134,6 +134,8 @@ class Receiver extends Component{
 Receiver.defaultProps = {
     checkable:false,
     checkedReceiver:null,
+    alertActive:false,
+    alertContent:"",
     onCheck:function(){}
 };
 
