@@ -2,7 +2,7 @@
 
 import React,{Component} from "react";
 import Dropdown from "../../../component/dropdown.jsx";
-import _ from "lodash";
+import _ from "../../../lib/lodash.es6";
 
 class Promotions extends Component{
     render(){

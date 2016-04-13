@@ -168,6 +168,7 @@ function goodFilter(good) {
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl
     })
+    _good["detail"] = _.escape(_good["detail"])
     _good["buyed"] = good.minAmount || 1
     _good["buyedMinimum"] = good.minAmount || 1
     _good["buyedStep"] = good.addCount || 1

@@ -1,8 +1,19 @@
 'use strict';
 
 import React,{Component} from "react";
-import moment from "moment";
-import _ from "lodash";
+// import moment from "moment";
+import _ from "../../lib/lodash.es6";
+
+function parseDate(date){
+    date = date.split(" ").join("T")
+    return Date.parse(date)
+}
+
+function formatDate(timestamp){
+    const date = new Date(timestamp)
+    let dateStr = date.toISOString()
+    return dateStr.replace(/\.\d{3}Z$/g,"").split("T").join(" ")
+}
 
 class Timer extends Component{
     constructor(props){
@@ -50,12 +61,15 @@ class Timer extends Component{
         const {endTime,referTime,format} = this.props;
         let diffTime = 0
         if(referTime){
-            diffTime = moment(referTime,format).diff(moment())
+            diffTime = parseDate(referTime) - Date.now()
+            // diffTime = moment(referTime,format).diff(moment())
         }
         let interval = ()=>{
-            const nowTime = moment()
+            // const nowTime = moment()
+            const nowTime = Date.now()
             if(endTime){
-                let duration = moment(endTime,format) - nowTime + diffTime
+                // let duration = moment(endTime,format) - nowTime + diffTime
+                let duration = parseDate(endTime) - nowTime + diffTime
                 this.setState({
                     duration
                 })
@@ -91,7 +105,7 @@ Timer.defaultProps = {
     endTime:null,
     dayEnable:false,
     onTimerExpire:()=>{},
-    format:"YYYY-MM-DD HH:mm:ss",
+    // format:"YYYY-MM-DD HH:mm:ss",
     template:`<%= hour %>:<%= minute %>:<%= second %>`
 }
 

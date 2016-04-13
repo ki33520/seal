@@ -9,7 +9,7 @@ import {
     START_PURGE_SEARCHHISTORY,FINISH_PURGE_SEARCHHISTORY,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
 } from "./constant.es6"
-import {apiRequest} from "../../lib/util.es6";
+import {apiRequest} from "../../lib/http.es6";
 import {urlPrefix} from "../../lib/jumpurl.es6";
 
 export function changeField(name,value){

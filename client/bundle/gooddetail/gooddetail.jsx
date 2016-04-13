@@ -3,7 +3,6 @@ import GoodDetail from "../../../shared/chunk/gooddetail/app.jsx";
 import ErrorContent from "../../../shared/chunk/gooddetail/error.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
-// import {disableHistoryForwardCacheThen} from "../../../shared/lib/util.es6";
 
 function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
@@ -14,7 +13,6 @@ function bootstrap(){
     }
 }
 Object.assign = Object.assign || require('object-assign')
-// disableHistoryForwardCacheThen()
 
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);

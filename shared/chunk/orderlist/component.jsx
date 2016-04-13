@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import classNames from "classnames";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
 import Floor from "./partial/floor.jsx";
@@ -74,13 +75,10 @@ class OrderList extends Component{
             pageIndex:nextPage
         });
     }
-    componentDidMount(){
-        ReactDOM.findDOMNode(this.refs["slideTabs"]).children[0].children[this.state.displayFlag].click();
-    }
     componentDidUpdate(prevProps,prevState){
         if(prevProps.ordersByParam.paygatewayFetched === false && this.props.ordersByParam.paygatewayFetched === true){
             setTimeout(()=>{
-                ReactDOM.findDOMNode(this.refs["submitForm"]).submit();
+                document.getElementById("submitForm").submit();
             },10)
         }
     }
@@ -112,7 +110,7 @@ class OrderList extends Component{
                     <a href={jumpURL("membercenter")} className="iconfont icon-back"></a>
                     <span className="title">我的订单</span>
                 </header>
-                <form action={cashier+"/cashier/v1/cashier"} method="POST" ref="submitForm">
+                <form action={cashier+"/cashier/v1/cashier"} method="POST" id="submitForm" ref="submitForm">
                     <input type="hidden" name="appId" value={cashierParam.appId} />
                     <input type="hidden" name="channel" value={cashierParam.channel} />
                     <input type="hidden" name="openId" value={cashierParam.openId} />
@@ -121,19 +119,43 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs ref="slideTabs" axis="x" activeIndex={flag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
-                    {
-                        tab_nav_item.map((v,k)=>{
-                            var refresherActive = orders[k] && orders[k].isFetching || false;
-                            return <SlideTabsItem key={k} navigator={()=><a onClick={this.handleLink.bind(this)} href={jumpURL("orderlist-id",[k])}>{v}</a>} className="listMain">
-                                <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
-                                <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
-                                <Refresher active={refresherActive} />
-                                </GoTop>
-                            </SlideTabsItem>
-                        })
-                    }
-                </SlideTabs>
+                <div className="slide-tabs slide-tabs-fixed static-item">
+                    <div className="slide-tabs-navbar">
+                        {
+                            tab_nav_item.map((v,k)=>{
+                                const itemClass = classNames({
+                                    "slide-tabs-navbar-item": true,
+                                    "active": k===flag
+                                });
+                                return (
+                                    <div key={k} className={itemClass}>
+                                        <a href={jumpURL("orderlist-id",[k])}>{v}</a>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className="slide-tabs-content slide-tabs-content-fixed">
+                        {
+                            tab_nav_item.map((v,k)=>{
+                                const refresherActive = orders[k] && orders[k].isFetching || false;
+                                const itemClass = classNames({
+                                    "slide-tabs-item": true,
+                                    "listMain": true,
+                                    "active": k===flag
+                                });
+                                return (
+                                    <div className={itemClass}>
+                                        <GoTop key={k} relative={true} onScroll={this.handleScroll.bind(this)}>
+                                        <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
+                                        <Refresher active={refresherActive} />
+                                        </GoTop>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
                 <Dialog active={this.state.dialogActive} 
                     onCancel={this.toggleDialog.bind(this)}
                     onConfrim={this.state.dialogOnConfirm}>{this.state.dialogContent}</Dialog>

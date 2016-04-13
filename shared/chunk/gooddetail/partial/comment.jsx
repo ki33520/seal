@@ -2,7 +2,6 @@
 
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Refresher from "../../../component/refresher.jsx";
@@ -145,6 +144,9 @@ class GoodComment extends Component{
         })
     }
     render(){
+        if(!this.props.active){
+            return null
+        }
         const {commentsFetching,showupFetching,comments,showups} = this.props.goodById.good
         return (
             <div className="good-comment">

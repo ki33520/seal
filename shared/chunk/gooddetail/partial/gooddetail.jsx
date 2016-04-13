@@ -2,24 +2,22 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
-import _ from "lodash";
+import _ from "../../../lib/lodash.es6";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
-import {urlParam,base64Encode,formatPrice,disableHistoryForwardCacheThen} from "../../../lib/util.es6";
+import {urlParam} from "../../../lib/http.es6";
+import {base64Encode,formatPrice} from "../../../lib/helper.es6"
 // import Slider from "../../../component/slider/slider.jsx";
 // import Slide from "../../../component/slider/slide.jsx";
 import {Slides,Slide} from "../../../component/slides.jsx";
-import PullHook from "../../../component/pullhook.jsx";
 import Alert from "../../../component/alert.jsx";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Share from "../../common/share.jsx";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
 import GoTop from "../../../component/gotop.jsx";
-import Sticky from "../../../component/sticky.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 import Promotions from "./promotions.jsx";
@@ -320,9 +318,10 @@ class GoodDetail extends Component{
                 {this.state.downVisble?null:<div className="teyla">上拉显示商品详情</div>}
             </div>
             <div className={downClasses}>
+                {this.state.downVisble?(
                 <Tabs>
                     <TabsItem title="图文详情">
-                    <div className="good-desc" dangerouslySetInnerHTML={{__html:good.detail}}></div>
+                    <div className="good-desc" dangerouslySetInnerHTML={{__html:_.unescape(good.detail)}}></div>
                     </TabsItem>
                     <TabsItem title="保税FAQ">
                     <div className="faq">
@@ -330,6 +329,7 @@ class GoodDetail extends Component{
                     </div>
                     </TabsItem>
                 </Tabs>
+                ):null}
             </div>
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             <MaskLayer visible={this.state.popupActive} />
