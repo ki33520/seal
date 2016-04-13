@@ -23,7 +23,6 @@ class Logistics extends Component{
     }
     renderTrace(routes){
         if(routes.length>0){
-            console.log(routes)
             return (
                 <div className="org-wuliuStatusList">
                     {
@@ -88,7 +87,6 @@ class Logistics extends Component{
     render(){
         const {currentRoute} = this.props;
         const {logistics,order,back_path} = this.props.orderByParam;
-        console.log(logistics)
         const back_url = back_path === null ? null : jumpURL("orderlist-id",[back_path]);
 
         var content,
