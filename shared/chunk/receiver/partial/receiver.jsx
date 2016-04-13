@@ -49,6 +49,7 @@ class Receiver extends Component{
                 this.props.selectReceiver(receivers.length > 0 ?receivers[0]:null)
             }
         }
+        console.log('nextProps',nextProps)
     }
     handleCheckableGoBack(){
         if(this.props.checkedReceiver){

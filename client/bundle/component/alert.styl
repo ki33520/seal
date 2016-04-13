@@ -12,6 +12,7 @@
     align-items: center;
     justify-content: center;
     visibility: hidden;
+    background:rgba(0,0,0,.7);
     .alert {
         padding:px2rem(10) px2rem(20);
         color: #F1F1F1;
@@ -20,8 +21,9 @@
         border-radius:px2rem(5);
         opacity: 0;
         visibility: hidden;
+        z-index:1000;
         transform: translateY(0) scale(0.85);
-        transition: opacity .3s linear, transform .3s linear,visibility .3s linear, height .5s linear;
+        transition: opacity .3s linear, transform .3s linear;
     }
     &.active {
         visibility: visible;
