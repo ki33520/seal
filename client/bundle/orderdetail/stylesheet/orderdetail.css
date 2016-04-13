@@ -307,6 +307,9 @@
     text-align: center;
     margin:0 2%;
 }
+.confirmBtns a.confirm_btn.fetching{
+    opacity: 0.5;
+}
 .confirmBtns a.confirmBorder_btn{
     background-color:#fff;
     color:#ed1a45;
