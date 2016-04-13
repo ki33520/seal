@@ -91,6 +91,7 @@ module.exports = {
     },
     devtool: "eval",
     debug: true,
+    watch:true,
     resolve: {
         extensions: ["", ".webpack-loader.js", ".web-loader.js", ".loader.js", ".js", ".json", ".coffee"]
     },

@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Popup from "../../../component/popup.jsx";
 import NumberPicker from "../../../component/numberpicker.jsx";
-import {formatPrice} from "../../../lib/util.es6";
+import {formatPrice} from "../../../lib/helper.es6";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 import dom from "../../../lib/dom.es6";

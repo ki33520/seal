@@ -1,20 +1,19 @@
 'use strict';
 import {base64} from "./crypto";
-
-const lang = require("lodash/lang");
+import _ from "./lodash.es6";
 
 export function formatPrice(price){
     if(price == 0){
         return "0.00"
     }
-    if(lang.isNumber(price) === false){
-        if(lang.isString(price)){
+    if(_.isNumber(price) === false){
+        if(_.isString(price)){
             if(/^(\d+)(\.)?(\d)*$/.test(price) === false){
                 return "0.00"
             }           
         }
         price = parseFloat(price)
-        if(lang.isNaN(price)){
+        if(_.isNaN(price)){
             return "0.00"
         }
     }

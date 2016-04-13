@@ -2,8 +2,8 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
-import ReactCSSTransitionGroup from "react/lib/ReactCSSTransitionGroup"
-import _ from "lodash"
+import ReactCSSTransitionGroup from "react/lib/ReactCSSTransitionGroup";
+import _ from "../../lib/lodash.es6";
 
 class Image extends Component{
     constructor(props){

@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Slidable from "./slidable.jsx";
 import dom from "../lib/dom.es6";
-import noBounceScroll from "../lib/dom/nobounce-scroll.es6";
+// import noBounceScroll from "../lib/dom/nobounce-scroll.es6";
 
 export class SlideTabs extends Component{
     constructor(props){

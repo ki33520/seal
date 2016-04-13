@@ -2,7 +2,6 @@
 
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Refresher from "../../../component/refresher.jsx";

@@ -1,5 +1,5 @@
 'use strict';
-import {apiRequest,saveLocalCart,getLocalCartCount} from "../../lib/util.es6";
+import {apiRequest} from "../../lib/http.es6";
 import {
     TOGGLE_ATTR,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
@@ -40,9 +40,9 @@ export function fetchCartCount(){
     return (dispatch)=>{
         dispatch(requestCartCount())
         return apiRequest(urlPrefix + "/cartcount").then((res)=>{
-            if(res.logined === false){
-                res.result = getLocalCartCount()
-            }
+            // if(res.logined === false){
+            //     res.result = getLocalCartCount()
+            // }
             dispatch(responseCartCount(res))
         })
     }
@@ -95,16 +95,16 @@ export function addCart(param){
     return (dispatch)=>{
         dispatch(startAddCart(param));
         apiRequest(urlPrefix + "/addcart",param).then((res)=>{
-            if(res.logined === false){
-                saveLocalCart(param.itemId,param.buyed,false)
-                res.cartAdded = true;
+            // if(res.logined === false){
+            //     saveLocalCart(param.itemId,param.buyed,false)
+            //     res.cartAdded = true;
+            // }else{
+            if(res.cartAdded){
+                dispatch(alert("添加购物车成功!",3000))
             }else{
-                if(res.cartAdded){
-                    dispatch(alert("添加购物车成功!",3000))
-                }else{
-                    dispatch(alert(res.errMsg,3000))
-                }
+                dispatch(alert(res.errMsg,3000))
             }
+            // }
             dispatch(finishAddCart(param,res));
         })
     }
