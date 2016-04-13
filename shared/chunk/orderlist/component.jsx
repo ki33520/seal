@@ -145,8 +145,8 @@ class OrderList extends Component{
                                     "active": k===flag
                                 });
                                 return (
-                                    <div className={itemClass}>
-                                        <GoTop key={k} relative={true} onScroll={this.handleScroll.bind(this)}>
+                                    <div key={k} className={itemClass}>
+                                        <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
                                         <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
                                         <Refresher active={refresherActive} />
                                         </GoTop>

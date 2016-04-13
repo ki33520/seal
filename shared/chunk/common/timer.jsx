@@ -1,18 +1,25 @@
 'use strict';
 
 import React,{Component} from "react";
-// import moment from "moment";
 import _ from "../../lib/lodash.es6";
 
 function parseDate(date){
     date = date.split(" ").join("T")
-    return Date.parse(date)
+    date = new Date(date)
+    const timezoneOffset = date.getTimezoneOffset() * 60000
+    const timestamp = date.getTime() + timezoneOffset
+    return timestamp
 }
 
 function formatDate(timestamp){
-    const date = new Date(timestamp)
-    let dateStr = date.toISOString()
-    return dateStr.replace(/\.\d{3}Z$/g,"").split("T").join(" ")
+    const dateObj = new Date(timestamp)
+    const year = dateObj.getFullYear()
+    const month = dateObj.getMonth()
+    const date = dateObj.getDate()
+    const hour = dateObj.getHours()
+    const minute = dateObj.getMinutes()
+    const second = dateObj.getSeconds()
+    return `${year}-${month}-${date} ${hour}:${minute}:${second}`
 }
 
 class Timer extends Component{
@@ -58,18 +65,20 @@ class Timer extends Component{
         clearTimeout(this.timeout)
     }
     tickTack(){
-        const {endTime,referTime,format} = this.props;
+        const {format,isTimestamp} = this.props;
+        let referTime = this.props.referTime
+        let endTime = isTimestamp?this.props.endTime:parseDate(this.props.endTime)
         let diffTime = 0
         if(referTime){
-            diffTime = parseDate(referTime) - Date.now()
+            referTime = isTimestamp?referTime:parseDate(referTime)
+            diffTime = referTime - Date.now()
             // diffTime = moment(referTime,format).diff(moment())
         }
         let interval = ()=>{
             // const nowTime = moment()
             const nowTime = Date.now()
             if(endTime){
-                // let duration = moment(endTime,format) - nowTime + diffTime
-                let duration = parseDate(endTime) - nowTime + diffTime
+                let duration = endTime - nowTime + diffTime
                 this.setState({
                     duration
                 })
@@ -103,6 +112,7 @@ class Timer extends Component{
 Timer.defaultProps = {
     referTime:null,
     endTime:null,
+    isTimestamp:false,
     dayEnable:false,
     onTimerExpire:()=>{},
     // format:"YYYY-MM-DD HH:mm:ss",

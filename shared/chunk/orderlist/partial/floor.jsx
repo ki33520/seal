@@ -45,6 +45,9 @@ class Floor extends Component{
     }
     handlePayGateway(child,e){
         e && e.preventDefault();
+        if(this.props.ordersByParam.paygatewayFetching){
+            return false;
+        }
         const {fetchPayGateway} = this.props;
         const {orderNo} = child;
         let message = {
@@ -58,9 +61,13 @@ class Floor extends Component{
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
         switch(orderStatus){
             case "STATUS_NOT_PAY":
+                const payButtonClass = classNames({
+                    "pop_c": true,
+                    "fetching": this.props.ordersByParam.paygatewayFetching
+                });
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this,child)} className="pop_c">去支付</a>
+                        <a href="javascript:;" onClick={this.handlePayGateway.bind(this,child)} className={payButtonClass}>去支付</a>
                     </div>
                 )
             case "STATUS_CONFIRMED":
@@ -71,14 +78,14 @@ class Floor extends Component{
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
+                        <a href="javascript:;" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
                         <a href={jumpURL("orderdetail",[orderId])+"?back="+orderIndex+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
             case "STATUS_SENDED":
                 return (
                     <div className="order-buttons">
-                        <a href="javascript:void(null)" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
+                        <a href="javascript:;" onClick={this.handleDeliveryOrder.bind(this,child,i)} className="pop_c">确认收货</a>
                         <a href={jumpURL("orderdetail",[orderId])+"?back="+orderIndex+"#/logistics"} className="view_c">查看物流</a>
                     </div>
                 )
