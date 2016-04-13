@@ -13,7 +13,7 @@ START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
-import _ from "lodash";
+import _ from "../../lib/lodash.es6";
 
 function goodById(state={},action){
     let good = {...state.good};

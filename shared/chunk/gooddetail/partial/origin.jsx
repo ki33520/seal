@@ -1,7 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import {formatPrice} from "../../../lib/util.es6";
+import {formatPrice} from "../../../lib/helper.es6";
 
 class Origin extends Component{
     constructor(props){

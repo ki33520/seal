@@ -1,6 +1,6 @@
 'use strict';
-import _ from "lodash";
-import {urlParam} from "./util.es6";
+import _ from "./lodash.es6";
+import {urlParam} from "./http.es6";
 
 export const urlPrefix = "/shop"
 

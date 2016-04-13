@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import dom from "../lib/dom.es6";
 import rAF from "../lib/dom/requestAnimationFrame";
-import _ from "lodash"
+import _ from "../lib/lodash.es6";
 
 class Slidable extends Component{
     constructor(props){
