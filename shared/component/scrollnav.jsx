@@ -29,7 +29,7 @@ const ScrollNav = React.createClass({
         }
     },
     checkVisible(e){
-        console.log('checkVisible')
+        // console.log('checkVisible')
         const {diffInViewport} = this.props;
         let activeIndex = [];
         let containerNode = ReactDOM.findDOMNode(this.refs["content"])

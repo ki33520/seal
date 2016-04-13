@@ -108,18 +108,21 @@ let dom = {
         }
         dom.bindEvent(element,"touchstart",cancelScroll);
 
-        rAF(function smoothScroll(){
+        // rAF(function smoothScroll(){
+        setTimeout(function smoothScroll(){
           let scrollTop = dom.scrollTop(container);
           let scrollLeft = dom.scrollLeft(container);
           if(axis === "y"){
             if(top > scrollTop && (scrollTop + container.offsetHeight) !== container.scrollHeight){
                 scrollTop = (scrollTop + step) >= top ? top: scrollTop + step;
                 dom.scrollTop(container,scrollTop)
-                rAF(smoothScroll)
+                setTimeout(smoothScroll,10)
+                // rAF(smoothScroll)
             }else if(top < scrollTop && scrollTop >= 0){
                 scrollTop  = (scrollTop - step) <= top ? top: scrollTop - step;
                 dom.scrollTop(container,scrollTop)
-                rAF(smoothScroll)
+                setTimeout(smoothScroll,10)
+                // rAF(smoothScroll)
             }else{
                 abort()
                 callback()
@@ -129,18 +132,20 @@ let dom = {
             //console.log("scroll right")
               scrollLeft = (scrollLeft + step) >= left ? left: scrollLeft + step;
               dom.scrollLeft(container,scrollLeft)
-              rAF(smoothScroll())
+              // rAF(smoothScroll())
+              setTimeout(smoothScroll,10)
             }else if(left < scrollLeft && scrollLeft >= 0){
             //console.log("scroll left")
               scrollLeft = (scrollLeft - step) <= left ? left: scrollLeft - step;
               dom.scrollLeft(container,scrollLeft)
-              rAF(smoothScroll())
+              // rAF(smoothScroll())
+              setTimeout(smoothScroll,10)
             }else{
               abort()
               callback()
             }
           }
-        })
+        },10)
       },
       scrollPosition(element){
         let isCSS1Compat = (document.compatMode === 'CSS1Compat');
