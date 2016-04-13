@@ -26,16 +26,24 @@ class Origin extends Component{
                   <dd>
                         <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"tariff")}
                          className="tariff">
-                            <span>税费=不含税商品单价*件数*商品税率</span>
-                            <span>（根据海关规定，若订单税费≤50，海关予以免征）</span>
+                            <span>税费=不含税商品单价*件数*跨境电商综合税率</span>
+                            <span>跨境电商综合税率=(消费税+增值税率)/(1-消费税率)*0.7</span>
                             <i className="iconfont icon-right"></i>
                         </a>
                     </dd>
                 </dl>
                 <div className="smallLine"></div> 
                 <dl>
-                  <dt>税率：</dt>
+                  <dt>行邮税率：</dt>
                   <dd>{good.showTaxRate}</dd>
+                </dl>
+                <dl>
+                  <dt>消费税率：</dt>
+                  <dd>{good.consumerTax}</dd>
+                </dl>
+                <dl>
+                  <dt>增值税率：</dt>
+                  <dd>{good.addedTax}</dd>
                 </dl>
                 <dl>
                   <dt>运费：</dt>
