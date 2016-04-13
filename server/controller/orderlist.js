@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require("lodash");
+var moment = require("moment");
 var bluebird = require("bluebird");
 var util = require("../lib/util");
 var config = require("../lib/config.js");
@@ -26,8 +27,8 @@ function formatOrder(object) {
             paymentFee: child.paymentFee,
             orderId: child.id,
             itemList: itemList,
-            createdAt: child.createdAt,
-            timeoutTime: child.timeoutTime
+            createdAt: child.timeoutTime ? moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:mm:ss") : null,
+            timeoutTime: child.timeoutTime ? moment(new Date(child.timeoutTime)).format("YYYY-MM-DD HH:mm:ss") : null
         };
     });
 }
@@ -56,7 +57,7 @@ var orderList = function(req, res,next) {
             var orders = new Array(5),
                 order = {},
                 object = resp.orderByUser.object,
-                systemTime = resp.timestamp.systemTime;
+                systemTime = moment(new Date(resp.timestamp.systemTime)).format("YYYY-MM-DD HH:mm:ss");
             order.pageIndex = pageIndex;
             order.pageSize = pageSize;
             order.totalCount = object.totalCount;

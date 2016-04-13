@@ -101,7 +101,7 @@ class OrderList extends Component{
         }
     }
     render(){
-        var {orders,cashier,isFetching,systemTime,alertActive,alertContent,cashierParam,flag} = this.props.ordersByParam;
+        var {orders,cashier,isFetching,alertActive,alertContent,cashierParam,flag} = this.props.ordersByParam;
         cashierParam = cashierParam || {};
         const tab_nav_item = ["全部","待付款","待发货","待收货","待评价"];
         return (
@@ -147,7 +147,7 @@ class OrderList extends Component{
                                 return (
                                     <div key={k} className={itemClass}>
                                         <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
-                                        <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
+                                        <Floor orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
                                         <Refresher active={refresherActive} />
                                         </GoTop>
                                     </div>

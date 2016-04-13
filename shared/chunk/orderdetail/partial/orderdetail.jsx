@@ -3,7 +3,6 @@
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
-import moment from "moment";
 import classNames from "classnames";
 import Timer from "../../common/timer.jsx";
 import Dialog from "../../../component/dialog.jsx";
@@ -184,13 +183,11 @@ class OrderDetail extends Component{
     renderOutTime(){
         const {order,systemTime} = this.props.orderByParam;
         const {orderCrtTime,timeoutTime,orderStatus} = order;
-        const currentTime = moment(new Date(systemTime));
-        const outTime = moment(new Date(timeoutTime));
 
         if(orderStatus === "STATUS_NOT_PAY" && timeoutTime){
             return (
                 <span>
-                    <Timer onTimerExpire={this.timeOut.bind(this)} endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>" />
+                    <Timer onTimerExpire={this.timeOut.bind(this)} endTime={timeoutTime} referTime={systemTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>" />
                     <i>后自动取消</i>
                 </span>
             )
