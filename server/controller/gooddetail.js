@@ -163,7 +163,8 @@ function goodFilter(good) {
     var _good = _.pick(good, [
         "code", "discount", "isMain", "title", "subTitle", "detail",
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
-        "useTaxRate", "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
+        "useTaxRate","consumerTax","addedTax",
+        "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
         "description","isMeiZhuang","version","canAddCart"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
@@ -174,6 +175,8 @@ function goodFilter(good) {
     _good["buyedMinimum"] = good.minAmount || 1
     _good["buyedStep"] = good.addCount || 1
     _good["showTaxRate"] = (good.showTaxRate * 100 + "%")
+    _good["consumerTax"] = (_good["consumerTax"] * 100 + "%")
+    _good["addedTax"] = (_good["addedTax"] * 100 + "%")
     _good["productCode"] = good.groupCode
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice
