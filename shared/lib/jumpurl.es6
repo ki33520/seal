@@ -1,5 +1,4 @@
 'use strict';
-import _ from "./lodash.es6";
 import {urlParam} from "./http.es6";
 
 export const urlPrefix = "/shop"
@@ -32,13 +31,13 @@ const urlMap = {
     "help":urlPrefix + "/help"
 }
 
-export function jumpURL(route,param=[],query={}){
+export function jumpURL(route,param=[],query=null){
     switch(route){
         case "index":
             return `${urlMap["index"]}`
             break
         case "search":
-            query = _.isEmpty(query)?"":`?${urlParam(query)}`
+            query = query === null?"":`?${urlParam(query)}`
             return `${urlMap["search"]}${query}`
             break
         case "activity":
