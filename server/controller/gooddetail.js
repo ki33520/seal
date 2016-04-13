@@ -48,6 +48,7 @@ var goodDetail = function(req, res, next) {
                     flashbuy["active"] = true
                     good["buyLimit"] = 1
                 }
+                // flashbuy["endTime"] = moment("2016-04-13 16:00:00").format("x")
             }
             good.flashbuy = flashbuy;
 
