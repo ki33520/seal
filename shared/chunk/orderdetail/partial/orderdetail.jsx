@@ -73,6 +73,9 @@ class OrderDetail extends Component{
     }
     handlePayGateway(e){
         e && e.preventDefault();
+        if(this.props.orderByParam.paygatewayFetching){
+            return false;
+        }
         const {fetchPayGateway} = this.props;
         const {order} = this.props.orderByParam;
         const {orderNo} = order;
@@ -129,10 +132,14 @@ class OrderDetail extends Component{
             case "STATUS_NOT_PAY":
                 let {cashierParam} = order;
                 cashierParam = cashierParam || {};
+                const payButtonClass = classNames({
+                    "confirm_btn": true,
+                    "fetching": this.props.orderByParam.paygatewayFetching
+                });
                 return (
                     <div className="confirmBtns">
-                        <a href="javascript:void(null);" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
-                        <a href="javascript:void(null)" onClick={this.handlePayGateway.bind(this)} className="confirm_btn">立即支付</a>
+                        <a href="javascript:;" onClick={this.handleCloseOrder.bind(this)} className="confirm_btn confirmBorder_btn">取消订单</a>
+                        <a href="javascript:;" onClick={this.handlePayGateway.bind(this)} className={payButtonClass}>立即支付</a>
                         <form action={cashier+"/cashier/v1/cashier"} method="POST" ref="submitForm">
                             <input type="hidden" name="appId" value={cashierParam.appId} />
                             <input type="hidden" name="channel" value={cashierParam.channel} />
@@ -148,7 +155,7 @@ class OrderDetail extends Component{
                 return (
                     <div className="confirmBtns">
                         <a href={jumpURL("orderdetail",[orderId])+"#/logistics"} className="confirm_btn confirmBorder_btn">查看物流</a>
-                        <a href="javascript:void(null);" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">确认收货</a>
+                        <a href="javascript:;" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">确认收货</a>
                     </div>
                 )
             case "STATUS_FINISHED":

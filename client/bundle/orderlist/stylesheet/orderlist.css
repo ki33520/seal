@@ -208,6 +208,9 @@ body{
     font-size: .34rem;
     margin-left: .18rem;
 }
+.order-down a.fetching{
+    opacity: 0.5;
+}
 .order-down a:last-child{
     margin-left: 0;
 }
