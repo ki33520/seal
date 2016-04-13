@@ -10,7 +10,8 @@ function bootstrap(){
 Object.assign = Object.assign || require('object-assign')
 
 if(typeof window.addEventListener){
-    window.addEventListener("DOMContentLoaded",bootstrap);
+    // window.addEventListener("DOMContentLoaded",bootstrap);
+    window.addEventListener("load",bootstrap)
 }else{
     window.attachEvent('onload',bootstrap);
 }

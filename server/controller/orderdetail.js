@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require("lodash");
+var moment = require("moment");
 var bluebird = require("bluebird");
 var util = require("../lib/util");
 var config = require("../lib/config.js");
@@ -141,7 +142,7 @@ function formatData(object) {
         sendWareHouseName: object.sendWarehouseName,
         completeAddress: object.completeAddress,
         payType: object.payType,
-        timeoutTime: object.timeoutTime,
+        timeoutTime: moment(new Date(object.timeoutTime)).format("YYYY-MM-DD HH:mm:ss"),
         salesTotalFee: filterPrice(object.salesTotalFee),
         promoFee: filterPrice(object.promoFee),
         abroadFee: filterPrice(object.abroadFee),
@@ -192,7 +193,7 @@ var orderDetail = function(req, res, next) {
     }).then(function(resp) {
         if (resp.orderById.returnCode === 0 && resp.timestamp.returnCode === 0){
             var order = formatData(resp.orderById.object),
-                systemTime = resp.timestamp.systemTime;
+                systemTime = moment(new Date(resp.timestamp.systemTime)).format("YYYY-MM-DD HH:mm:ss");
             order["cashier"] = config["cashier"];
             var initialState = {
                 isFetched: true,
@@ -294,6 +295,15 @@ var logistics = function(req, res, next) {
         orderNo: orderNo
     }).then(function(resp) {
         if (resp.returnCode === 0) {
+            resp.object.dispatchs.map((v,k)=>{
+                v.routes.map((v,k)=>{
+                    v.eventTime = v.eventTime ? moment(new Date(v.eventTime)).format("YYYY-MM-DD HH:mm:ss") : null;
+                });
+            });
+            // resp.object.result = resp.object.result.map((v,k)=>{
+            //     v.eventTime = v.eventTime ? moment(new Date(v.eventTime)).format("YYYY-MM-DD HH:mm:ss") : null;
+            //     return v;
+            // });
             res.json(resp.object)
         }else{
             res.json({});

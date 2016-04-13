@@ -6,7 +6,6 @@ import _ from "lodash";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import Icon from "../../../component/icon.jsx";
-import moment from "moment";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import Timer from "../../common/timer.jsx";
@@ -172,12 +171,10 @@ class Floor extends Component{
     renderOutTime(child){
         const {systemTime} = this.props.ordersByParam;
         const {createdAt,timeoutTime,orderStatus} = child;
-        const currentTime = moment(new Date(systemTime));
-        const outTime = moment(new Date(timeoutTime));
-        if(orderStatus === "STATUS_NOT_PAY" && outTime){
+        if(orderStatus === "STATUS_NOT_PAY" && timeoutTime){
             return (
                 <i>
-                    <Timer onTimerExpire={this.timeOut.bind(this,child)} endTime={outTime} referTime={currentTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>" />
+                    <Timer onTimerExpire={this.timeOut.bind(this,child)} endTime={timeoutTime} referTime={systemTime} template="<i><%= hour %></i>:<i><%= minute %></i>:<i><%= second %></i>" />
                     <span>后自动取消</span>
                 </i>
             )
@@ -189,14 +186,13 @@ class Floor extends Component{
             return list.map((child,i)=>{
                 const {createdAt,id,orderReceiveId,orderId,itemList,paymentFee,salesTotalFee,orderStatus,timeoutTime} = child;
                 const paymentFeeTotal = paymentFee !== undefined ? paymentFee : 0;
-                const crtTime = moment(new Date(createdAt)).format("YYYY-MM-DD HH:mm:ss");
                 const classes = classNames({
                     green: orderStatus === "STATUS_FINISHED"
                 });
                 return (
                     <div className="order-box" key={i}>
                         <div className="order-up">
-                            <span>{crtTime}</span>
+                            <span>{createdAt}</span>
                             <div className="right">
                                 {this.renderOutTime(child)}
                                 <em className={classes}>{orderStatusObj[orderStatus]}</em>

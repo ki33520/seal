@@ -2,7 +2,6 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import moment from "moment";
 import Header from "../../common/header.jsx";
 import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import GoTop from "../../../component/gotop.jsx";
@@ -24,6 +23,7 @@ class Logistics extends Component{
     }
     renderTrace(routes){
         if(routes.length>0){
+            console.log(routes)
             return (
                 <div className="org-wuliuStatusList">
                     {
@@ -41,7 +41,7 @@ class Logistics extends Component{
                                     </div>
                                     <p className="org-wuLiuFont org-wuLiuCur">
                                         <span>{v.context}</span>
-                                        <span className="org-wuLiuTime">{moment(new Date(v.eventTime)).format("YYYY-MM-DD HH:mm:ss")}</span>
+                                        <span className="org-wuLiuTime">{v.eventTime}</span>
                                     </p>
                                 </div>
                             )
@@ -88,6 +88,7 @@ class Logistics extends Component{
     render(){
         const {currentRoute} = this.props;
         const {logistics,order,back_path} = this.props.orderByParam;
+        console.log(logistics)
         const back_url = back_path === null ? null : jumpURL("orderlist-id",[back_path]);
 
         var content,
