@@ -2,6 +2,7 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
+import classNames from "classnames";
 import GoTop from "../../component/gotop.jsx";
 import Refresher from "../../component/refresher.jsx";
 import Floor from "./partial/floor.jsx";
@@ -74,11 +75,6 @@ class OrderList extends Component{
             pageIndex:nextPage
         });
     }
-    componentDidMount(){
-        setTimeout(()=>{
-            ReactDOM.findDOMNode(this.refs["slideTabs"]).children[0].children[this.state.displayFlag].click();
-        },10)
-    }
     componentDidUpdate(prevProps,prevState){
         if(prevProps.ordersByParam.paygatewayFetched === false && this.props.ordersByParam.paygatewayFetched === true){
             setTimeout(()=>{
@@ -123,19 +119,43 @@ class OrderList extends Component{
                     <input type="hidden" name="t" value={cashierParam.t} />
                     <input type="hidden" name="h" value={cashierParam.h} />
                 </form>
-                <SlideTabs id="slideTabs" ref="slideTabs" axis="x" activeIndex={flag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)}>
-                    {
-                        tab_nav_item.map((v,k)=>{
-                            var refresherActive = orders[k] && orders[k].isFetching || false;
-                            return <SlideTabsItem key={k} navigator={()=><a onClick={this.handleLink.bind(this)} href={jumpURL("orderlist-id",[k])}>{v}</a>} className="listMain">
-                                <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
-                                <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
-                                <Refresher active={refresherActive} />
-                                </GoTop>
-                            </SlideTabsItem>
-                        })
-                    }
-                </SlideTabs>
+                <div className="slide-tabs slide-tabs-fixed static-item">
+                    <div className="slide-tabs-navbar">
+                        {
+                            tab_nav_item.map((v,k)=>{
+                                const itemClass = classNames({
+                                    "slide-tabs-navbar-item": true,
+                                    "active": k===flag
+                                });
+                                return (
+                                    <div key={k} className={itemClass}>
+                                        <a href={jumpURL("orderlist-id",[k])}>{v}</a>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    <div className="slide-tabs-content slide-tabs-content-fixed">
+                        {
+                            tab_nav_item.map((v,k)=>{
+                                const refresherActive = orders[k] && orders[k].isFetching || false;
+                                const itemClass = classNames({
+                                    "slide-tabs-item": true,
+                                    "listMain": true,
+                                    "active": k===flag
+                                });
+                                return (
+                                    <div className={itemClass}>
+                                        <GoTop key={k} relative={true} onScroll={this.handleScroll.bind(this)}>
+                                        <Floor systemTime={systemTime} orderIndex={k} confirmDialog={this.confirmDialog.bind(this)} {...this.props} />
+                                        <Refresher active={refresherActive} />
+                                        </GoTop>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
                 <Dialog active={this.state.dialogActive} 
                     onCancel={this.toggleDialog.bind(this)}
                     onConfrim={this.state.dialogOnConfirm}>{this.state.dialogContent}</Dialog>
