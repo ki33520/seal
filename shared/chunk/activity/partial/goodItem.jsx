@@ -31,7 +31,7 @@ class GoodItem extends Component{
                     </div>
                     <p className="title">{goods.title}</p>
                     <div className="prices">
-                        <span className="now-price">{'¥'+salesPrice}</span>
+                        <span className="now-price"><b>¥</b>{salesPrice}</span>
                         <span className="old-price">{'¥'+originPrice}</span>
                     </div>
     	        </a>

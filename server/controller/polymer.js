@@ -7,25 +7,27 @@ var Polymer = util.getSharedComponent("polymer");
 var config = require("../lib/config");
 
 var polymer = function(req, res, next) {
+    function render(resp){
+        var categories = categoryFilter(resp.object)
+        var initialState = {
+            categories: categories
+        }; 
+        var markup = util.getMarkupByComponent(Polymer({
+            initialState:initialState
+        }));
+        res.render('polymer', {
+            markup: markup,
+            initialState: initialState
+        });
+    }
     util.fetchCachedAPI("allCategory",{}).then(function(resp) {
         if(resp.returnCode===0){
-            var categories = categoryFilter(resp.object)
-            var initialState = {
-                categories: categories
-            }; 
-            var markup = util.getMarkupByComponent(Polymer({
-                initialState:initialState
-            }));
-            res.render('polymer', {
-                markup: markup,
-                initialState: initialState
-            },function(err,html){
-                // util.writePage(md5(req.originalUrl),html)
-                res.send(html)
-            });
+            render(resp)
         }else{
             next(new Error("polymer error"))
         } 
+    }).fail(function(err){
+        render(util.recoveryFromStorage("allCategory",{}))
     });
 }
 
@@ -51,15 +53,18 @@ function categoryFilter(categories){
 
 var categoryActivity = function(req,res,next){
     var code = req.query.code
+    function respond(ret){
+        var categoryactivity = categoryActivityFilter(ret.object?ret.object[0]:{})
+        res.json({
+            result:categoryactivity,
+            isFetched:true
+        })
+    }
     util.fetchCachedAPI("categoryActivity",{
         categorysCode:code
     }).then(function(ret){
         if(ret.returnCode === 0){
-            var categoryactivity = categoryActivityFilter(ret.object?ret.object[0]:{})
-            res.json({
-                result:categoryactivity,
-                isFetched:true
-            })
+            respond(ret)
         }else{
             res.json({
                 isFetched:false,
@@ -67,10 +72,9 @@ var categoryActivity = function(req,res,next){
             });
         }
     },function(){
-        res.json({
-            isFetched:false,
-            errMsg:"api request failed"
-        })
+        respond(util.recoveryFromStorage("categoryActivity",{
+        categorysCode:code
+        }))
     })
 }
 

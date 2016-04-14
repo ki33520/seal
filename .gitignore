@@ -12,3 +12,4 @@ client/page/*.html
 /client/**/__coverage__/
 # /server/**/__tests__/
 /server/data/
+/server/recovery/

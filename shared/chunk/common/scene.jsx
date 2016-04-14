@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames"
 import {browserVersion} from "../../lib/dom/browserDetector.es6";
 import rAF from "../../lib/dom/rAF";
+import _ from "../../lib/lodash.es6";
 
 export class SceneGroup extends Component{
     constructor(props){
@@ -19,11 +20,15 @@ export class SceneGroup extends Component{
             currentScene:scene,
             prevScene
         },()=>{
-            // rAF(function(){
-            this.transitionWithGroup()
-            // })
-            // rAF(()=>{this.transitionWithGroup()})
+            const transitionWithGroup = this.transitionWithGroup.bind(this)
+            // function step(){
+            //     transitionWithGroup()
+            // }
+            rAF(function step(){
+                transitionWithGroup()
+            })
             setTimeout(()=>this.props.onChange(scene,param,prevScene),300)
+            // rAF(()=>{this.transitionWithGroup()})
         })
     }
     transitionWithGroup(){
