@@ -10,11 +10,12 @@ import {SceneGroup,Scene} from "../common/scene.jsx";
 import {changeReceiver,changeCoupon,fetchShipFee} from "./action.es6";
 
 class ConfirmOrderRouter extends Component{
-    handleChangeReceiver(receiver){
+    handleChangeReceiver(warehouseId,receiver){
         const {dispatch} = this.props;
         dispatch(changeReceiver(receiver));
         if(receiver){
             dispatch(fetchShipFee({
+                warehouseId,
                 provinceCode:receiver.provinceCode,
                 cityCode:receiver.cityCode,
                 districtCode:receiver.districtCode
@@ -31,7 +32,7 @@ class ConfirmOrderRouter extends Component{
         // }
     }
     render(){
-        let {receivers,checkedReceiver} = this.props.order
+        let {receivers,checkedReceiver,warehouseId} = this.props.order
         if(checkedReceiver){
             if(_.some(receivers,{id:checkedReceiver.id}) === false){
                 receivers.push(checkedReceiver)
@@ -42,7 +43,7 @@ class ConfirmOrderRouter extends Component{
             receivers,
             checkable:true,
             defaultScene:receivers.length === 0?"addreceiver":"index",
-            onCheck:this.handleChangeReceiver.bind(this),
+            onCheck:this.handleChangeReceiver.bind(this,warehouseId),
             checkedReceiver
         }
         return (

@@ -16,6 +16,7 @@ class Toolbar extends Component{
         super(props);
         this.state = {
             cartCount:props.cartCount,
+            scheme:""
         };
     }
     renderPrice(){
@@ -44,11 +45,17 @@ class Toolbar extends Component{
         let handleAddCartPopup = ()=>{
            if(canAddCart){
                 togglePopup("addToCart")
+                this.setState({
+                    scheme:"addToCart"
+                })
            }
         }
         let handleDirectBuyPopup = ()=>{
             if(good.stock !== 0){
-                togglePopup("directBuy")    
+                togglePopup("directBuy")
+                this.setState({
+                    scheme:"directBuy"
+                })  
             }
         }
         // console.log('canAddCart',canAddCart)
@@ -93,8 +100,9 @@ class Toolbar extends Component{
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
                     </div>
-                    <a href="javascript:void(0);" onClick={handleConfirm} className={confrimButtonClasses}>{canAddCart
-                        ?"确定":"立即购买"}</a>
+                    <a href="javascript:void(0);" onClick={handleConfirm} className={confrimButtonClasses}>{
+                        !canAddCart && this.state.scheme === "addToCart"
+                        ?"立即购买":"确定"}</a>
                 </div>
             </Popup>
             </div>

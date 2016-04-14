@@ -1,4 +1,5 @@
 @import "../../common/common.styl";
+@import "../../common/util.styl";
 @import "../../common/iconfont.styl";
 @import "../../common/header.styl";
 @import "../../common/error.styl";
@@ -108,12 +109,19 @@
             align-items: center;
             width: 100%;
             .now-price {
-                display: block;
+                display: flex;
                 font-size: .5rem;
-                line-height: .6rem;
                 color: #ed1946;
                 flex-shrink:0;
                 min-width: 50%;
+                align-items:flex-end;
+                &>b{
+                    line-height:rem4px(20);
+                    font-weight:400;
+                }
+                &>span{
+                    line-height:rem4px(22);
+                }
             }
             .old-price {
                 display: block;

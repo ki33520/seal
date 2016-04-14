@@ -12,7 +12,7 @@ var receiversFilter = require("./receiver").receiversFilter;
 
 function orderFilter(order) {
     var _order = _.pick(order, [
-        "qtys", "promoName","promoType"
+        "qtys", "promoName","promoType","warehouseId"
     ]);
     _order["warehouse"] = order.warehouseName
     _order["totalFee"] = order.totalFee < 0.07?0.07:order.totalFee
@@ -130,7 +130,9 @@ var shipFee = function(req,res,next){
     var provinceCode = req.query.provinceCode
     var cityCode = req.query.cityCode
     var districtCode = req.query.districtCode
+    var warehouseId = req.query.warehouseId
     util.fetchAPI("shipFeeByReceiver",{
+        warehouseId:warehouseId,
         provinceCode:provinceCode,
         cityCode:cityCode,
         countyCode:districtCode
@@ -343,7 +345,7 @@ function messageFilter(order) {
     var _order = _.pick(order, [
         "paymentFee", "orderNo","id"
     ])
-    _order["productList"] = JSON.stringify(productList) 
+    _order["productList"] = productList
 
     var receiver = order.receiverObject
     _order["totalFee"] = order.paymentFee

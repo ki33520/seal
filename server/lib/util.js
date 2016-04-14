@@ -15,6 +15,11 @@ var bluebird = require("bluebird");
 var memoryCache = require("memory-cache");
 var crypto = require("crypto");
 
+var FSStorage = require("./fs-storage");
+var fsStorage = new FSStorage({
+    path:"server/recovery/"
+})
+
 var urlPrefix = require("./config").urlPrefix
 
 var util = {
@@ -68,6 +73,7 @@ var util = {
     fetchAPI: function(apiName, param, isMock,options) {
         isMock = isMock || false;
         // console.log('runtime',config.runtime)
+        var cacheKey = md5(apiName + JSON.stringify(param))
         param = _.extend(param,{
             appId:config.appId,
             channel:"Mobile",
@@ -78,11 +84,20 @@ var util = {
         param = _.extend(param,{h:signature})
         console.log("apiRequest",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
-            return sharedUtil.apiRequest(config.api[apiName].url, param,options)
+            return sharedUtil.apiRequest(config.api[apiName].url, param,options).then(function(res){
+                if(res.returnCode === 0){
+                    fsStorage.set(cacheKey,res)
+                }
+                return res
+            })
         } else {
             var listenPort = process.env.LISTEN_PORT || 3000;
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
+    },
+    recoveryFromStorage(apiName,param){
+        var cacheKey = md5(apiName + JSON.stringify(param))
+        return fsStorage.get(cacheKey)
     },
     fetchCachedAPI:function(apiName,param,options){
         options = options || {}
@@ -94,14 +109,12 @@ var util = {
         if(memoryCache.get(cacheKey) === null){
             // console.log(apiName,'need cached')
             return this.fetchAPI(apiName,param,isMock,options).then(function(res){
-                memoryCache.put(cacheKey,res,maxAge) //15 minutes
+                if(res.returnCode === 0){
+                    memoryCache.put(cacheKey,res,maxAge) //15 minutes
+                }
                 return res
             })
         }else{
-            // console.log(apiName,'return from cache')
-            // return bluebird.delay(100).then(function(){
-            //     return memoryCache.get(cacheKey)
-            // })
             return bluebird.resolve(memoryCache.get(cacheKey))
         }
     },
