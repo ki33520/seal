@@ -172,13 +172,10 @@ header{
 .brandList a>div{
 	margin:.16rem;
 }
-.brandList a>div img,
-.brandList a>div .lazyload-image>div.lazyload-image-inner img{
+.brandList a>div img{
 	display:block;
-	width: 2.933333333333333rem;
-    height: 2.933333333333333rem;
+	width:100%;
 	border:1px solid #d7d7d7;
-	margin: auto;
 }
 
 /* 产地 */
