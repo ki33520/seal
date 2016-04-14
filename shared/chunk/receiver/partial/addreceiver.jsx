@@ -1,14 +1,14 @@
 'use strict';
 
 import React,{Component} from "react";
-import _ from "lodash";
+import _ from "../../../lib/lodash.es6";
 import Header from "../../common/header.jsx";
 import CascadeArea from "./cascadearea.jsx";
 
 import {alert} from "../../common/action.es6";
 import ActivityIndicator from "../../common/activityindicator.jsx";
 import Alert from "../../../component/alert.jsx";
-import noBounceScroll from "../../../lib/dom/nobounce-scroll.es6";
+// import noBounceScroll from "../../../lib/dom/nobounce-scroll.es6";
 
 
 class AddReceiver extends Component{
@@ -42,10 +42,6 @@ class AddReceiver extends Component{
     componentDidMount(nextProps){
         if(this.props.active === true && this.props.provinces.length === 1){
             this.loadProvinces()
-        }
-        noBounceScroll.enable()
-        window.onresize = (e)=>{
-            console.log('resize')
         }
     }
     componentDidUpdate(prevProps,prevState){

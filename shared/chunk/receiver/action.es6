@@ -1,5 +1,5 @@
 'use strict';
-import {apiRequest} from "../../lib/util.es6";
+import {apiRequest} from "../../lib/http.es6";
 
 import {
     CHANGE_FIELD,CHANGE_RECEIVER,SELECT_RECEIVER,PUSH_RECEIVER,

@@ -1,7 +1,7 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import _ from "lodash"
+import _ from "../../lib/lodash.es6"
 
 import {
     CHANGE_FIELD,CHANGE_RECEIVER,SELECT_RECEIVER,PUSH_RECEIVER,

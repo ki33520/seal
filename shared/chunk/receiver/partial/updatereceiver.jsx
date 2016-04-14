@@ -1,7 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
-import _ from "lodash";
+import _ from "../../../lib/lodash.es6";
 import Header from "../../common/header.jsx";
 import CascadeArea from "./cascadearea.jsx";
 
