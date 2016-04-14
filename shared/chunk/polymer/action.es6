@@ -1,5 +1,5 @@
 'use strict'
-import {apiRequest} from "../../lib/util.es6";
+import {apiRequest} from "../../lib/http.es6";
 import {
     REQUEST_CATEGORYBRANDS,RESPONSE_CATEGORYBRANDS,
     REQUEST_CATEGORYACTIVITY,RESPONSE_CATEGORYACTIVITY,

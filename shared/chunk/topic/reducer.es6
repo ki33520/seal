@@ -3,7 +3,7 @@ import {
     REQUEST_GOODS,RECEIVE_GOODS
 } from "./action.es6";
 import {combineReducers} from "redux";
-import _ from "lodash";
+import _ from "../../lib/lodash.es6";
 
 
 function goodsByParam(state={},action){

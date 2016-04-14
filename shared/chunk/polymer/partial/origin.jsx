@@ -2,7 +2,7 @@
 
 import React,{Component} from "react";
 import Loading from "../../common/loading.jsx";
-import _ from "lodash";
+import _ from "../../../lib/lodash.es6";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 import LazyLoad from "../../../component/lazyload/lazyload.jsx";
 import Image from "../../../component/lazyload/image.jsx";

@@ -3,9 +3,8 @@
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames";
-import _ from "lodash"
-import Slider from "../../../component/slider/slider.jsx";
-import Slide from "../../../component/slider/slide.jsx";
+import _ from "../../../lib/lodash.es6";
+import {Slides,Slide} from "../../../component/slides.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import LazyLoad from "../../../component/lazyload/lazyload.jsx";
@@ -15,7 +14,7 @@ import dom from "../../../lib/dom.es6";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 import Timer from "../../common/timer.jsx";
-import {validTimeRegion,formatPrice,destPriceForGoods} from "../../../lib/util.es6";
+import {formatPrice,destPriceForGoods} from "../../../lib/helper.es6";
 
 class Floor extends Component{
     constructor(props){
@@ -211,9 +210,9 @@ class Floor extends Component{
                 )
             })
             return (
-                <Slider ref="slider" autoPlay={true} touchEnabled={false} effect="fade">
+                <Slides ref="slider" autoPlay={true} touchEnabled={false} effect="fade">
                 {slides}
-                </Slider>
+                </Slides>
             )
         }
         return null
@@ -238,15 +237,14 @@ class Floor extends Component{
                         template="<%= day %>天<%= hour %>时<%= minute %>分<%= second %>秒"/>
                     </span>
                 )
-                let validTime = validTimeRegion(rushbuy.startTime,rushbuy.endTime)
-                if(validTime === -1){
+                if(rushbuy.status === -1){
                     timer = (
                     <span><i><img src="/client/asset/images/flashClock.png" />
                     </i>距本期活动开始：<Timer endTime={rushbuy.startTime} dayEnable={true} 
                         template="<%= day %>天<%= hour %>时<%= minute %>分<%= second %>秒"/>
                     </span>
                     )
-                }else if(validTime === 1){
+                }else if(rushbuy.status === 1){
                     timer = (
                     <span><i><img src="/client/asset/images/flashClock.png" />
                     </i>活动已结束</span>
@@ -271,8 +269,7 @@ class Floor extends Component{
         if(flashbuys){
             let goods = null;
             flashbuys = flashbuys.forEach((flashbuy,i)=>{
-                let validTime = validTimeRegion(flashbuy.startTime,flashbuy.endTime)
-                if(validTime === 0){
+                if(flashbuy.active){
                     goods = flashbuy.goods.map((good,i)=>{
                         let timer = (
                             <p>距本期闪购结束<em>
@@ -280,13 +277,12 @@ class Floor extends Component{
                             template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
                             </em></p>
                         )
-                        let validTime = validTimeRegion(good.startTime,good.endTime)
-                        if(validTime === -1){
+                        if(good.status === -1){
                             timer = <p>距本期闪购开始<em>
                             <Timer endTime={good.startTime} dayEnable={true} 
                             template="<i><%= day %></i>天<i><%= hour %></i>时<i><%= minute %></i>分<i><%= second %></i>秒"/>
                             </em></p>
-                        }else if(validTime === 1){
+                        }else if(good.status === 1){
                             timer = <p>本期闪购已结束</p>
                         }
                         let salePrice = good.salesPrice

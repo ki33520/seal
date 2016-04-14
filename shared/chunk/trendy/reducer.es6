@@ -1,6 +1,6 @@
 'use strict'
 import {combineReducers} from "redux";
-import _ from "lodash";
+import _ from "../../lib/lodash.es6";
 import {
     REQUEST_GOODS,RECEIVE_GOODS,
 } from "./constant.es6";

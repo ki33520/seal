@@ -26,7 +26,7 @@ var polymer = function(req, res, next) {
         }else{
             next(new Error("polymer error"))
         } 
-    }).fail(function(err){
+    },function(){
         render(util.recoveryFromStorage("allCategory",{}))
     });
 }
@@ -104,11 +104,14 @@ function getJumpUrl(activity) {
 }
 
 var categoryBrands = function(req,res,next){
+    function respond(ret){
+        var categorybrands = ret.object
+        categorybrands = categoryBrandsFilter(categorybrands)
+        res.json({result:categorybrands,categoryBrandsFetched:true})
+    }
     util.fetchCachedAPI("categoryBrands",{}).then(function(ret){
         if(ret.returnCode === 0){
-            var categorybrands = ret.object
-            categorybrands = categoryBrandsFilter(categorybrands)
-            res.json({result:categorybrands,categoryBrandsFetched:true})
+            respond(ret)
         }else{
             res.json({
                 categoryBrandsFetched:false,
@@ -116,10 +119,7 @@ var categoryBrands = function(req,res,next){
             })
         }
     },function(){
-        res.json({
-            categoryBrandsFetched:false,
-            errMsg:"api request failed"
-        })
+        respond(util.recoveryFromStorage("categoryBrands",{}))
     })
 }
 
@@ -153,17 +153,22 @@ function categoryBrandsFilter(categorybrands){
 }
 
 var allBrands = function(req,res,next){
+    function respond(ret){
+        var allbrands = ret.object
+        allbrands = allBrandsFilter(allbrands);
+        res.json({result:allbrands,brandsFetched:true})
+    }
     util.fetchCachedAPI("allBrands",{}).then(function(ret){
         if(ret.returnCode === 0){
-            var allbrands = ret.object
-            allbrands = allBrandsFilter(allbrands);
-            res.json({result:allbrands,brandsFetched:true})
+            respond(ret)
         }else{
             res.json({
                 brandsFetched:false,
                 errMsg:ret.msg
             })
         }
+    },function(){
+        respond(util.recoveryFromStorage("allBrands",{}))
     })
 }
 
@@ -185,17 +190,22 @@ function allBrandsFilter(allbrands){
 }
 
 var allOrigins = function(req,res,next){
+    function respond(ret){
+        var allorigins = ret.object
+        allorigins = allOriginsFilter(allorigins)
+        res.json({result:allorigins,originFetched:true})
+    }
     util.fetchCachedAPI("allOrigins",{}).then(function(ret){
         if(ret.returnCode === 0){
-            var allorigins = ret.object
-            allorigins = allOriginsFilter(allorigins)
-            res.json({result:allorigins,originFetched:true})
+            respond(ret)
         }else{
             res.json({
                 originFetched:false,
                 errMsg:ret.msg
             })
         }
+    },function(){
+        respond(util.recoveryFromStorage("allBrands",{}))
     })
 }
 

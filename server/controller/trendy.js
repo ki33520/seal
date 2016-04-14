@@ -47,28 +47,34 @@ function filterList(originalData,pageSize){
 
 var trendy = function(req, res, next) {
     var pageSize = 10;
+    function render(resp){
+        var categories = filterList(resp.object,pageSize);
+        var initialState = {
+            categories:categories,
+            isFetched:true
+        };
+        var markup = util.getMarkupByComponent(Trendy({
+            initialState: initialState
+        }));
+        res.render('trendy', {
+            markup: markup,
+            initialState: initialState
+        })
+    }
     util.fetchCachedAPI("fetchTendyGoods", {
         start: 1,
         Limit: pageSize
     }).then(function(resp) {
         if (resp.returnCode === 0) {
-            var categories = filterList(resp.object,pageSize);
-            var initialState = {
-                categories:categories,
-                isFetched:true
-            };
-            var markup = util.getMarkupByComponent(Trendy({
-                initialState: initialState
-            }));
-            res.render('trendy', {
-                markup: markup,
-                initialState: initialState
-            })
+            render(resp)
         } else {
             next(new Error(resp.message))
         }
     },function(){
-        next(new Error('api request failed'));
+        render(util.recoveryFromStorage("fetchTendyGoods",{
+            start: 1,
+            Limit: pageSize
+        }))
     });
 }
 
@@ -76,6 +82,18 @@ var activity = function(req, res, next) {
     var pageIndex = Number(req.body.pageIndex) || 1;
     var id = req.body.id;
     var pageSize = 10;
+    function respond(resp){
+        var goodList = filterItem(resp.object.result);
+        var totalPage = Math.ceil(resp.object.totalCount / pageSize);
+        res.json({
+            pagination:{
+                goodList:goodList,
+                totalPage:totalPage,
+                pageIndex:pageIndex
+            },
+            isFetched:true
+        });
+    }
     util.fetchCachedAPI("fetchActivityTendyGoods", {
         activityId:id,
         activityType:'ACTIVITY_BK',
@@ -83,16 +101,7 @@ var activity = function(req, res, next) {
         Limit: pageSize
     }).then(function(resp) {
         if (resp.returnCode === 0) {
-            var goodList = filterItem(resp.object.result);
-            var totalPage = Math.ceil(resp.object.totalCount / pageSize);
-            res.json({
-                pagination:{
-                    goodList:goodList,
-                    totalPage:totalPage,
-                    pageIndex:pageIndex
-                },
-                isFetched:true
-            });
+            respond(resp)
         } else {
             res.json({
                 isFetched:false,
@@ -100,7 +109,12 @@ var activity = function(req, res, next) {
             });
         }
     },function(){
-        next(new Error('api request failed'));
+        respond(util.recoveryFromStorage("fetchActivityTendyGoods",{
+            activityId:id,
+            activityType:'ACTIVITY_BK',
+            start: pageIndex,
+            Limit: pageSize
+        }))
     });
 
 }

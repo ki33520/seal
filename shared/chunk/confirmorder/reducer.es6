@@ -43,6 +43,9 @@ function orderByParam(state={},action){
             order = {...state.order}
             if(action.res.isFetched){
                 // order.totalFee += (action.res.result - order.shipFee)
+                if(order.isPostageFree){
+                    order.shipFee = 0
+                }
                 order.shipFee = action.res.result
                 order.totalFee = calculateTotalFee(order)
             }

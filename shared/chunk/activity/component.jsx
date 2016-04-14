@@ -1,7 +1,6 @@
 'use strict'
 import React,{Component} from "react";
 import classNames from "classnames";
-import util from "../../lib/util.es6";
 import Refresher from "../../component/refresher.jsx";
 import GoTop from "../../component/gotop.jsx";
 import Header from "../common/header.jsx";

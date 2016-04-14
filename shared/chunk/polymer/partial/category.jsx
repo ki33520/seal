@@ -1,7 +1,6 @@
 'use strict';
 
 import React,{Component} from "react";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 

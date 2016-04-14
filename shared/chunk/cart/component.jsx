@@ -10,7 +10,8 @@ import NumberPicker from "../../component/numberpicker.jsx";
 import Alert from "../../component/alert.jsx";
 import Dialog from "../../component/dialog.jsx";
 import ActivityIndicator from "../common/activityindicator.jsx";
-import {urlParam,base64Encode,formatPrice} from "../../lib/util.es6";
+import {base64Encode,formatPrice} from "../../lib/helper.es6";
+import {urlParam} from "../../lib/http.es6";
 import {jumpURL} from "../../lib/jumpurl.es6";
  
 class Cart extends Component {

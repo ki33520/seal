@@ -54,3 +54,10 @@ export function formateIDCard(idCard){
     })
     return idCard.join("")
 }
+
+export function destPriceForGoods(goods){
+    return {
+        destPrice:goods.mobilePrice,
+        discount:goods.discount
+    }  
+}

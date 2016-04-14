@@ -1,7 +1,7 @@
 'use strict';
 import React,{Component} from "react";
 import classNames from "classnames";
-import {formatPrice} from "../../../lib/util.es6";
+import {formatPrice} from "../../../lib/helper.es6";
 import LazyLoad from "../../../component/lazyload/lazyload.jsx";
 import Image from "../../../component/lazyload/image.jsx";
 import GoTop from "../../../component/gotop.jsx";
