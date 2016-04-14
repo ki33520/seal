@@ -1,5 +1,4 @@
 @import "../../common/common.styl";
-@import "../../common/util.styl";
 @import "../../common/iconfont.styl";
 @import "../../common/header.styl";
 @import "../../common/error.styl";
@@ -109,19 +108,13 @@
             align-items: center;
             width: 100%;
             .now-price {
-                display: flex;
+                display: block;
                 font-size: .5rem;
+                line-height: .6rem;
                 color: #ed1946;
                 flex-shrink:0;
                 min-width: 50%;
-                align-items:flex-end;
-                &>b{
-                    line-height:rem4px(20);
-                    font-weight:400;
-                }
-                &>span{
-                    line-height:rem4px(22);
-                }
+                font-family: arial,Tahoma,Verdana;
             }
             .old-price {
                 display: block;
@@ -135,6 +128,7 @@
                 flex-shrink:1;
                 max-width: 40%;
                 padding-left: .1rem;
+                font-family: arial,Tahoma,Verdana;
             }
         }
     }

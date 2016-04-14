@@ -221,7 +221,7 @@ class OrderDetail extends Component{
                         <div className="data"><i>&yen;</i><span>{formatPrice(order.abroadFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
-                        <div className="label">关税：</div>
+                        <div className="label">税费：</div>
                         <div className="data">{tariffFeeBox}<i>&yen;</i><span>{formatPrice(order.tariffFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix intro">
