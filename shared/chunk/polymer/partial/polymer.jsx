@@ -1,12 +1,11 @@
 'use strict';
 
 import React,{Component} from "react";
-import _ from "lodash";
+import _ from "../../../lib/lodash.es6";
 import Header from "../../common/header.jsx";
 import Footer from "../../common/footer.jsx";
 import Icon from "../../../component/icon.jsx";
 import classNames from "classnames";
-import {SlideTabs,SlideTabsItem} from "../../../component/slidetabs.jsx";
 import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import Category from "./category.jsx";
 import Brand from "./brand.jsx";

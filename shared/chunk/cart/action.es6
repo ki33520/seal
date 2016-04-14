@@ -1,5 +1,5 @@
 'use strict';
-import {apiRequest} from "../../lib/util.es6";
+import {apiRequest} from "../../lib/http.es6";
 import {
     START_DELETE_CART,FINISH_DELETE_CART,
     START_UPDATE_CART,FINISH_UPDATE_CART,

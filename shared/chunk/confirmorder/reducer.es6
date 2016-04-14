@@ -43,6 +43,9 @@ function orderByParam(state={},action){
             order = {...state.order}
             if(action.res.isFetched){
                 // order.totalFee += (action.res.result - order.shipFee)
+                if(order.isPostageFree){
+                    order.shipFee = 0
+                }
                 order.shipFee = action.res.result
                 order.totalFee = calculateTotalFee(order)
             }
@@ -130,7 +133,7 @@ function errMsgByCode(errCode){
             break
         case -402110:
             // errMsg = "购买商品总额超出每日购买限额"
-            errMsg = "超出限购数量，请重新提交!"
+            errMsg = "超出购买限制，请重新提交!"
             break
         case -402305:
             errMsg = "订单金额有变更，请重新提交!"

@@ -3,7 +3,6 @@ import reqwest from "reqwest";
 import {base64} from "./crypto";
 import _ from "lodash";
 import md5 from "md5";
-import moment from "moment";
 
 export function apiRequest(url,param={}, options = {
     method:"GET",
@@ -85,16 +84,6 @@ export function formateIDCard(idCard){
         return v
     })
     return idCard.join("")
-}
-
-export function validTimeRegion(startTime,endTime){
-    if(moment().isBefore(startTime) === true){
-        return -1
-    }else if(moment().isAfter(endTime) === true){
-        return 1
-    }else{
-        return 0
-    }
 }
 
 export function registerPullDownEvent(callback) {

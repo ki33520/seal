@@ -16,9 +16,10 @@ function checkVisble(component){
     if(component.props.relative){
         containerHeight = component.scrollNode.clientHeight
     }
-    // console.log(containerHeight,scrollTop,elementTop,elementHeight)
-    if ((elementTop < (scrollTop + containerHeight + component.props.offset)) &&
-          ((elementTop + elementHeight + component.props.offset) > scrollTop)) {
+    // console.log(containerHeight,scrollTop,elementTop)
+    if(elementTop < (scrollTop + containerHeight + component.props.offset)){
+    // if ((elementTop < (scrollTop + containerHeight + component.props.offset)) &&
+    //       ((elementTop + elementHeight + component.props.offset) > scrollTop)) {
         component.setState({
             visible:true
         });
@@ -63,7 +64,7 @@ class LazyLoad extends Component{
 }
 
 LazyLoad.defaultProps = {
-      offset: 0,
+      offset: 100,
       smooth:true,
       relative: true,
       relativeSelector:"",

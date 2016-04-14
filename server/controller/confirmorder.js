@@ -14,6 +14,7 @@ function orderFilter(order) {
     var _order = _.pick(order, [
         "qtys", "promoName","promoType","warehouseId"
     ]);
+    _order["isPostageFree"] = order["hasLogistics"]
     _order["warehouse"] = order.warehouseName
     _order["totalFee"] = order.totalFee < 0.07?0.07:order.totalFee
     _order["productFee"] = order.salesTotalFee

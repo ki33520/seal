@@ -6,8 +6,8 @@ import Icon from "../../../component/icon.jsx";
 import Dialog from "../../../component/dialog.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Radio from "../../../component/form/radio.jsx";
-import {formateIDCard} from "../../../lib/util.es6";
-import _ from "lodash";
+import {formateIDCard} from "../../../lib/helper.es6";
+import _ from "../../../lib/lodash.es6";
 
 import Alert from "../../../component/alert.jsx";
 

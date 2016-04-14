@@ -6,7 +6,8 @@
 @import "../../common/loading";
 @import "../../component/slidetabs";
 @import "../../component/swiper";
-@import "../../component/slider";
+// @import "../../component/slider";
+@import "../../common/swiper.css"
 @import "../../component/lazyload";
 @import "../../component/gotop";
 @import "../../component/dialog";
@@ -419,6 +420,37 @@ body{
             height:rem4px(110);
             background:url(/client/asset/images/load.png) no-repeat 50% 50%;
             background-size:50%;
+        }
+    }
+}
+
+.swiper-container{
+    height:rem4px(175);
+    width:rem4px(375);
+    .swiper-slide{
+        img{
+            height:rem4px(175);
+            width:rem4px(375);
+        }
+    }
+    .swiper-pagination{
+        position: absolute;
+        width: 100%;
+        bottom: .5rem;
+        left: 50%;
+        margin-left: -50%;
+        z-index: 10;
+        text-align: center;
+        &>span{
+            width: 8px;
+            height: 8px;
+            background: url(/client/asset/images/bannerDot2.png) 0 0 no-repeat;
+            background-size: 100%;
+            opacity:1;    
+            &.swiper-pagination-bullet-active{
+                background: url(/client/asset/images/bannerDot2.png) 0 -8px no-repeat;
+                background-size: 100%;    
+            }
         }
     }
 }

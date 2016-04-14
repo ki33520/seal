@@ -3,7 +3,7 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import ScrollNav from "../../../component/scrollnav.jsx";
-import _ from "lodash";
+import _ from "../../../lib/lodash.es6";
 import Loading from "../../common/loading.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 

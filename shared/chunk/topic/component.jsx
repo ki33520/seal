@@ -4,7 +4,7 @@ import React,{Component} from "react";
 import Header from "../common/header.jsx";
 import Icon from "../../component/icon.jsx";
 import classNames from "classnames";
-import {formatPrice,destPriceForGoods} from "../../lib/util.es6";
+import {formatPrice,destPriceForGoods} from "../../lib/helper.es6";
 import {jumpURL} from "../../lib/jumpurl.es6";
 import Refresher from "../../component/refresher.jsx";
 import GoTop from "../../component/gotop.jsx";

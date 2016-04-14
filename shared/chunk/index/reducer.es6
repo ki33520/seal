@@ -8,7 +8,7 @@ import {
 } from "./constant.es6";
 import {CHANGE_FIELD} from "../common/constant.es6";
 import {combineReducers} from "redux";
-import _ from "lodash";
+import _ from "../../lib/lodash.es6";
 
 import {search} from "../common/reducer.es6";
 

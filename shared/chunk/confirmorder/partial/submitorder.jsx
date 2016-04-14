@@ -2,8 +2,6 @@
 
 import React,{Component} from "react";
 import classNames from "classnames";
-import moment from "moment";
-import {getSignatureByParam} from "../../../lib/util.es6";
 
 class SubmitOrder extends Component{
     constructor(props){

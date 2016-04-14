@@ -7,27 +7,47 @@ var md5 = require("md5");
 var moment = require("moment");
 
 var index = function(req, res, next) {
+    function respondChannels(ret){
+        var channels = ret.object;
+        channels = _.map(channels, function(channel) {
+            return {
+                id: channel.id,
+                sort: channel.sort,
+                name: channel.manageName,
+                floors: {}
+            }
+        })
+        channels = _.sortBy(channels, function(channel) {
+            return channel.sort
+        })
+        return channels
+    }
+
+    function render(ret,channels){
+        channels[0].floors = floorFilter(ret.object)
+        var initialState = {
+            channels: channels
+        };
+        var markup = util.getMarkupByComponent(Index({
+            initialState: initialState
+        }));
+        res.render("index", {
+            markup: markup,
+            initialState: initialState
+        });
+    }
     util.fetchCachedAPI("indexChannels", {
         channel: "Mobile"
     }).then(function(ret) {
         if (ret.returnCode === 0) {
-            var channels = ret.object;
-            channels = _.map(channels, function(channel) {
-                return {
-                    id: channel.id,
-                    sort: channel.sort,
-                    name: channel.manageName,
-                    floors: {}
-                }
-            })
-            channels = _.sortBy(channels, function(channel) {
-                return channel.sort
-            })
+            var channels = respondChannels(ret)
             // console.log('channels',channels)
             return channels
         } else {
             return next(new Error(ret.message))
         }
+    },function(){
+        return respondChannels(util.recoveryFromStorage("indexChannels",{channel:"Mobile"}))
     }).then(function(channels) {
         if(channels && channels.length > 0){
             util.fetchCachedAPI("floorsByChannel", {
@@ -37,23 +57,17 @@ var index = function(req, res, next) {
                 limit: 3
             }).then(function(ret) {
                 if (ret.returnCode === 0) {
-                    channels[0].floors = floorFilter(ret.object)
-                    var initialState = {
-                        channels: channels
-                    };
-                    var markup = util.getMarkupByComponent(Index({
-                        initialState: initialState
-                    }));
-                    res.render("index", {
-                        markup: markup,
-                        initialState: initialState
-                    }, function(err, html) {
-                        util.writePage(md5(req.originalUrl), html)
-                        res.send(html)
-                    });
+                    render(ret,channels)
                 } else {
                     return next(new Error(ret.message))
                 }
+            },function(){
+                render(util.recoveryFromStorage("floorsByChannel", {
+                channel: "Mobile",
+                manageId: channels[0].id,
+                start: 0,
+                limit: 3
+                }),channels)
             })
         }
     })
@@ -61,6 +75,12 @@ var index = function(req, res, next) {
 
 var channel = function(req, res, next) {
     var id = req.query.id
+    function respond(ret){
+        res.json({
+            result: floorFilter(ret.object),
+            channelFetched: true
+        })
+    }
     util.fetchCachedAPI("floorsByChannel", {
         channel: "Mobile",
         manageId: id,
@@ -68,16 +88,20 @@ var channel = function(req, res, next) {
         limit: 3
     }).then(function(ret) {
         if (ret.returnCode === 0) {
-            res.json({
-                result: floorFilter(ret.object),
-                channelFetched: true
-            })
+            respond(ret)
         } else {
             res.json({
                 channelFetched: false,
                 errMsg: ret.msg
             })
         }
+    },function(){
+        respond(util.recoveryFromStorage("floorsByChannel", {
+            channel: "Mobile",
+            manageId: id,
+            start: 0,
+            limit: 3
+        }))
     })
 }
 
@@ -126,12 +150,20 @@ function floorFilter(floors) {
         manageCode: "ACTIVITY_ZC"
     }), "activityList")
     _floors["rushbuys"] = _.map(_floors["rushbuys"], function(rushbuy) {
+        var status = 0
+        var startTime = moment(new Date(rushbuy.startTime)),endTime = moment(new Date(rushbuy.endTime));
+        if(moment().isBefore(startTime) === true){
+            status = -1
+        }else if(moment().isAfter(endTime) === true){
+            status = 1
+        }
         return {
             id: rushbuy.id,
             jumpUrl: getJumpUrl(rushbuy),
             imageUrl: config.imgServer + rushbuy.imageUrl,
-            startTime:moment(new Date(rushbuy.startTime)).format("YYYY-MM-DD HH:mm:ss"),
-            endTime:moment(new Date(rushbuy.endTime)).format("YYYY-MM-DD HH:mm:ss")
+            status:status,
+            startTime:startTime.format("YYYY-MM-DD HH:mm:ss"),
+            endTime:endTime.format("YYYY-MM-DD HH:mm:ss")
         }
     })
     _floors["activityOne"] = _.result(_.findWhere(floors, {
@@ -178,28 +210,39 @@ function floorFilter(floors) {
             flashbuy["id"] = 
             flashbuy["goods"] = [];
             if(flashbuy["activityProductList"]){
-            flashbuy["startTime"] = moment(new Date(flashbuy.startTime)).format("YYYY-MM-DD HH:mm:ss")
-            flashbuy["endTime"] = moment(new Date(flashbuy.endTime)).format("YYYY-MM-DD HH:mm:ss")
-                _.each(flashbuy["activityProductList"],function(good){
-                    var startTime = moment(new Date(good.beginDate)).format("YYYY-MM-DD HH:mm:ss")
-                    var endTime = moment(new Date(good.endDate)).format("YYYY-MM-DD HH:mm:ss")
-                    var isFlashbuyActive = false
-                    if (moment().isBetween(startTime,endTime)) {
-                        isFlashbuyActive = true
-                    }
-                    flashbuy["goods"].push({
-                        startTime:startTime,
-                        endTime:endTime,
-                        isFlashbuyActive:isFlashbuyActive,
-                        singleCode: good.singleCode,
-                        imageUrl: config.imgServer + good.imageUrl,
-                        salesPrice: good.salesPrice,
-                        mobilePrice:good.mobilePrice,
-                        flashPrice:good.wapPrice,
-                        originPrice: good.originPrice,
-                        title: good.title
-                    })
+            flashbuy["startTime"] = moment(new Date(flashbuy.startTime))
+            flashbuy["endTime"] = moment(new Date(flashbuy.endTime))
+            flashbuy["active"] = false
+            if (moment().isBetween(flashbuy["startTime"],flashbuy["endTime"])) {
+                flashbuy["active"] = true
+            }
+            _.each(flashbuy["activityProductList"],function(good){
+                var startTime = moment(new Date(good.beginDate))
+                var endTime = moment(new Date(good.endDate))
+                var status = 0
+                if(moment().isBefore(startTime) === true){
+                    status = -1
+                }else if(moment().isAfter(endTime) === true){
+                    status = 1
+                }
+                var isFlashbuyActive = false
+                if (moment().isBetween(startTime,endTime)) {
+                    isFlashbuyActive = true
+                }
+                flashbuy["goods"].push({
+                    startTime:startTime.format("YYYY-MM-DD HH:mm:ss"),
+                    endTime:endTime.format("YYYY-MM-DD HH:mm:ss"),
+                    status:status,
+                    isFlashbuyActive:isFlashbuyActive,
+                    singleCode: good.singleCode,
+                    imageUrl: config.imgServer + good.imageUrl,
+                    salesPrice: good.salesPrice,
+                    mobilePrice:good.mobilePrice,
+                    flashPrice:good.wapPrice,
+                    originPrice: good.originPrice,
+                    title: good.title
                 })
+            })
             }
             return flashbuy
         })
@@ -230,21 +273,28 @@ function floorFilter(floors) {
 
 var updateGoods = function(req,res,next){
     var ids = req.query.ids
+    function respond(ret){
+        var result = updatedGoodsFilter(ret.object)
+        res.json({
+            goodsUpdated:true,
+            result
+        })
+    }
     util.fetchAPI("updateGoods",{
         codes:ids
     }).then(function(ret){
         if(ret.returnCode === 0){
-            var result = updatedGoodsFilter(ret.object)
-            res.json({
-                goodsUpdated:true,
-                result
-            })
+            respond(ret)
         }else{
             res.json({
                 goodsUpdated:false,
                 errMsg:ret.msg
             })
         }
+    },function(){
+        respond(util.recoveryFromStorage("updateGoods",{
+            codes:ids
+        }))
     })
 }
 
@@ -279,25 +329,30 @@ function updatedGoodsFilter(result){
 }
 
 var searchHotWords = function(req, res, next) {
+    function respond(ret){
+        var hotwords = ret.object
+        hotwords = _.map(hotwords, function(hotword) {
+            return {
+                id: hotword.id,
+                name: hotword.wordName
+            }
+        })
+        res.json({
+            result: hotwords,
+            hotwordFetched: true
+        })
+    }
     util.fetchAPI("fetchHotKeywords", {}).then(function(ret) {
         if (ret.returnCode === 0) {
-            var hotwords = ret.object
-            hotwords = _.map(hotwords, function(hotword) {
-                return {
-                    id: hotword.id,
-                    name: hotword.wordName
-                }
-            })
-            res.json({
-                result: hotwords,
-                hotwordFetched: true
-            })
+            respond(ret)
         } else {
             res.json({
                 hotwordFetched: false,
                 errMsg: ret.msg
             })
         }
+    },function(){
+        respond(util.recoveryFromStorage("fetchHotKeywords", {}))
     })
 }
 
@@ -327,27 +382,34 @@ var searchAssociate = function(req, res, next) {
 
     //var searchhistory = util.saveSearchHistory(req.session["searchhistory"],keyword)
     //req.session["searchhistory"] = searchhistory
+    function respond(ret){
+        var associateWords = ret.object
+        associateWords = _.map(associateWords, function(associateWord) {
+            return {
+                // id: associateWord.singleCode,
+                name: associateWord.name
+            }
+        })
+        res.json({
+            result: associateWords,
+            hotwordFetched: true
+        })
+    }
     util.fetchAPI("fetchAssociateKeywords", {
         searchKey: keyword
     }).then(function(ret) {
         if (ret.returnCode === 0) {
-            var associateWords = ret.object
-            associateWords = _.map(associateWords, function(associateWord) {
-                return {
-                    // id: associateWord.singleCode,
-                    name: associateWord.name
-                }
-            })
-            res.json({
-                result: associateWords,
-                hotwordFetched: true
-            })
+            respond(ret)
         } else {
             res.json({
                 hotwordFetched: false,
                 errMsg: ret.msg
             })
         }
+    },function(){
+        respond(util.recoveryFromStorage("fetchAssociateKeywords", {
+            searchKey: keyword
+        }))
     })
 }
 
@@ -357,6 +419,31 @@ var activityGood = function(req, res, next) {
 
     var activityId = req.query.activityId;
     var activityType = req.query.activityType;
+
+    function respondGood(ret){
+        var goods = activityGoodFilter(ret.object.result)
+        var totalPage = Math.ceil(ret.object.totalCount / pageSize);
+
+        var pagination = {
+            totalPage:totalPage,
+            pageIndex:pageIndex,
+            list:goods
+        }
+        return pagination
+    }
+    function respondUpdateGood(subRet,pagination){
+        var result = updatedGoodsFilter(subRet.object)
+        var _goods = _.map(pagination.list,function(good){
+            let updatedGood = result[good.singleCode]
+            good = Object.assign({},good,updatedGood)
+            return good
+        })
+        pagination["list"] = _goods
+        res.json({
+            result:pagination,
+            goodFetched: true
+        })
+    }
     util.fetchCachedAPI("activityGood", {
         channel: "Mobile",
         activityId: activityId,
@@ -365,47 +452,39 @@ var activityGood = function(req, res, next) {
         limit: pageSize
     }).then(function(ret) {
         if (ret.returnCode === 0) {
-            var goods = activityGoodFilter(ret.object.result)
-            var totalPage = Math.ceil(ret.object.totalCount / pageSize);
-
-            var ids = []
-            _.each(goods,function(good){
-                ids.push(good.singleCode)
-            })
-            util.fetchAPI("updateGoods",{
-                codes:ids.join(",")
-            }).then(function(subRet){
-                if(subRet.returnCode === 0){
-                    var result = updatedGoodsFilter(subRet.object)
-                    var _goods = _.map(goods,function(good){
-                        let updatedGood = result[good.singleCode]
-                        good = Object.assign({},good,updatedGood)
-                        return good
-                    })
-
-                    var pagination = {
-                        totalPage:totalPage,
-                        pageIndex:pageIndex,
-                        list:_goods
-                    }
-
-                    res.json({
-                        result:pagination,
-                        goodFetched: true
-                    })
-                }else{
-                    res.json({
-                        goodFetched:false,
-                        errMsg:res.msg
-                    })
-                }
-            })
+            return respondGood(ret)
         } else {
-            res.json({
-                goodFetched: false,
-                errMsg: ret.msg
-            })
+            return null
         }
+    },function(){
+        respondGood(util.recoveryFromStorage("activityGood", {
+            channel: "Mobile",
+            activityId: activityId,
+            activityType: activityType,
+            start: pageIndex,
+            limit: pageSize
+        }))
+    }).then(function(pagination){
+        var ids = []
+        _.each(pagination.goods,function(good){
+            ids.push(good.singleCode)
+        })
+        util.fetchAPI("updateGoods",{
+            codes:ids.join(",")
+        }).then(function(subRet){
+            if(subRet.returnCode === 0){
+                respondUpdateGood(subRet,pagination)
+            }else{
+                res.json({
+                    goodFetched:false,
+                    errMsg:res.msg
+                })
+            }
+        },function(){
+            respondUpdateGood(util.recoveryFromStorage("updateGoods",{
+                codes:ids.join(",")
+            }),pagination)
+        })
     })
 }
 

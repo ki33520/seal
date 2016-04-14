@@ -7,7 +7,8 @@ import GoTop from "../../../component/gotop.jsx";
 import Checkbox from "../../../component/form/checkbox.jsx";
 import Selected from "../../../component/selected/selected.jsx";
 import Header from "../../common/header.jsx";
-import {urlParam,base64EncodeForURL,formateIDCard} from "../../../lib/util.es6";
+import {base64EncodeForURL,formateIDCard} from "../../../lib/helper.es6";
+import {urlParam} from "../../../lib/http.es6";
 
 import OrderGoods from "./ordergoods.jsx";
 import Invoice from "./invoice.jsx";

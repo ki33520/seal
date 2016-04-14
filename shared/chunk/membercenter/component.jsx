@@ -1,7 +1,7 @@
 'use strict'
 
 import React,{Component} from "react";
-import _ from "lodash";
+import _ from "../../lib/lodash.es6";
 import classNames from "classnames";
 import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
