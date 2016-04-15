@@ -135,7 +135,7 @@ function errMsgByCode(errCode){
             break
         case -402110:
             // errMsg = "购买商品总额超出每日购买限额"
-            errMsg = "超出购买限制，请重新提交!"
+            errMsg = "海关规定购买多件的总价不能超过2000元，请调整订单"
             break
         case -402305:
             errMsg = "订单金额有变更，请重新提交!"
