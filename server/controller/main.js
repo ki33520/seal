@@ -29,7 +29,7 @@ var requireAuthorize = function(req, res, next) {
 var staticize = function(req,res,next){
     var pageContent = util.readFromStaticCache(req)
     var runtime = process.env.NODE_ENV
-    if(runtime === "test"){
+    if(runtime === "develop"){
        next() 
     }else{
         if(pageContent){
