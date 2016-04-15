@@ -296,7 +296,7 @@ class GoodDetail extends Component{
                 ):null}
                 <div className="title clearfix">
                     <span>{good.title}</span>
-                    <a className="goods_fav" onClick={this.toggleCollected.bind(this)}>
+                    <a className="goods_fav" href="javascript:void(null)" onClick={this.toggleCollected.bind(this)}>
                     <i className={isCollectedClasses}></i>收藏</a>
                 </div>
                  <div className="price clearfix">

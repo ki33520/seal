@@ -27,13 +27,17 @@ var requireAuthorize = function(req, res, next) {
 }
 
 var staticize = function(req,res,next){
-    // var pageContent = util.readPage(md5(req.originalUrl))
     var pageContent = util.readFromStaticCache(req)
-    if(pageContent){
-        console.log("return from static cache")
-        res.send(pageContent)
+    var runtime = process.env.NODE_ENV
+    if(runtime === "test"){
+       next() 
     }else{
-        next()
+        if(pageContent){
+            console.log("return from static cache")
+            res.send(pageContent)
+        }else{
+            next()
+        }
     }
 }
 

@@ -16,7 +16,9 @@ class Receiver extends Component{
         super(props);
         this.state = {
             dialogActive:false,
-            dialogOnConfirm:null
+            dialogOnConfirm:null,
+            alertActive:false,
+            alertContent:"alert"
         }
     }
     handleCheck(receiver){
@@ -48,6 +50,12 @@ class Receiver extends Component{
                 this.props.onCheck(receivers.length > 0 ?receivers[0]:null)
                 this.props.selectReceiver(receivers.length > 0 ?receivers[0]:null)
             }
+        }
+        if(nextProps.alertActive !== this.props.alertActive){
+            this.setState({
+                alertActive:nextProps.alertActive,
+                alertContent:nextProps.alertContent
+            })
         }
     }
     handleCheckableGoBack(){
@@ -98,14 +106,14 @@ class Receiver extends Component{
             </div>
         );
     }
-    render(){
-        const handleAddReceiver = ()=>{
+    handleAddReceiver(){
             if(this.props.receivers.length >= 10){
                 this.props.alert("收货地址不能超过10个!",2000)
             }else{
                 this.props.changeScene("addreceiver")
             }
-        }
+    }
+    render(){
         return (
             <div className="receiver-content">
             {this.props.checkable?(<Header onGoBack={this.handleCheckableGoBack.bind(this)}>选择收货地址</Header>):(
@@ -118,7 +126,7 @@ class Receiver extends Component{
             {this.props.receivers.length > 0?(
             <div className="addBtns">
                 <a href="javascript:void(null)" 
-                onClick={handleAddReceiver} className="addBtn">添加新地址</a>
+                onClick={this.handleAddReceiver.bind(this)} className="addBtn">添加新地址</a>
             </div>
             ):null}
             <Dialog active={this.state.dialogActive} 

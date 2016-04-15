@@ -5,12 +5,12 @@ import {
 from "redux";
 import React,{Component} from "react";
 import thunkMiddleware from "redux-thunk";
-// import createLogger from "redux-logger";
+import createLogger from "redux-logger";
 
-// const logger = createLogger();
+const logger = createLogger();
 
 const createStoreWithMiddleware = compose(
-    applyMiddleware(thunkMiddleware),
+    applyMiddleware(thunkMiddleware,logger),
     typeof window === 'object' && 
     typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
 )(createStore)

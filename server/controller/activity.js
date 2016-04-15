@@ -32,6 +32,38 @@ var activity = function(req, res, next) {
     var pageSize = 12;
     var pageIndex = req.query.pageIndex || 1;
     var activityId = req.params.id;
+
+    function respond(resp){
+        var obj = resp.object;
+        var activityList = filterResult(obj.activityProductList);
+        res.json({
+            activityList:activityList,
+            isFetched:true
+        });
+    }
+
+    function render(resp){
+        var obj = resp.object;
+        var activityList = filterResult(obj.activityProductList);
+        var totalPage = Math.ceil(obj.totalCount / pageSize);
+        var initialState = {
+            activityList:activityList,
+            totalPage:totalPage,
+            imageUrl:imgServer + obj.bannerImageUrl,
+            activityName:obj.activityName
+        };
+        var markup = util.getMarkupByComponent(ActivityApp({
+            initialState: initialState
+        }));
+
+        res.render('activity', {
+            markup: markup,
+            initialState: initialState
+        },function(err,html){
+            util.writeToStaticCache(req,html)
+            res.send(html)
+        });
+    }
  
     util.fetchCachedAPI("specialActivity", {
         activityId:activityId,
@@ -39,32 +71,10 @@ var activity = function(req, res, next) {
         limit: pageSize
     }).then(function(resp) {
         if (resp.returnCode === 0) {
-            var obj = resp.object;
-            var activityList = filterResult(obj.activityProductList);
             if (req.xhr === true) {
-                res.json({
-                    activityList:activityList,
-                    isFetched:true
-                });
+                respond(resp)
             }else{
-                var totalPage = Math.ceil(obj.totalCount / pageSize);
-                var initialState = {
-                    activityList:activityList,
-                    totalPage:totalPage,
-                    imageUrl:imgServer + obj.bannerImageUrl,
-                    activityName:obj.activityName
-                };
-                var markup = util.getMarkupByComponent(ActivityApp({
-                    initialState: initialState
-                }));
-
-                res.render('activity', {
-                    markup: markup,
-                    initialState: initialState
-                },function(err,html){
-                    util.writeToStaticCache(req,html)
-                    res.send(html)
-                });
+                render(resp)
             }
         } else {
             if (req.xhr === true) {
@@ -77,7 +87,19 @@ var activity = function(req, res, next) {
             }
         }
     },function(){
-        next(new Error('api request failed'));
+        if(req.xhr){
+            respond(util.recoveryFromStorage("specialActivity", {
+                activityId:activityId,
+                start: pageIndex,
+                limit: pageSize
+            }))
+        }else{
+            render(util.recoveryFromStorage("specialActivity", {
+                activityId:activityId,
+                start: pageIndex,
+                limit: pageSize
+            }))
+        }
     });
 }
 
