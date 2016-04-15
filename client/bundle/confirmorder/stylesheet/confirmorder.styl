@@ -165,15 +165,21 @@ $gray-color = #555
     }
 }
 
-.orderConfirm_title em{
-    background: #dd1847;
-    color: #fff;
-    font-size: .24rem;
-    padding: 0 .12rem;
-    display: inline-block;
-    margin: 0 .24rem 0 0
-    width:auto;
-    height:auto;
+.orderConfirm_title{
+    &>em{
+        background: #dd1847;
+        color: #fff;
+        font-size: .24rem;
+        padding: 0 .12rem;
+        display: inline-block;
+        margin: 0 .24rem 0 0;
+        width:auto;
+        height:auto;
+        line-height:rem4px(14);
+    }
+    &>span{
+        line-height:rem4px(14);
+    }
 }
 
 .order-info>span>em{

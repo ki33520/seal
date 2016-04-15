@@ -177,9 +177,9 @@ function goodFilter(good) {
     _good["buyed"] = good.minAmount || 1
     _good["buyedMinimum"] = good.minAmount || 1
     _good["buyedStep"] = good.addCount || 1
-    _good["showTaxRate"] = (good.showTaxRate * 100 + "%")
-    _good["consumerTax"] = (_good["consumerTax"] * 100 + "%")
-    _good["addedTax"] = (_good["addedTax"] * 100 + "%")
+    _good["showTaxRate"] = (good.showTaxRate * 100)
+    _good["consumerTax"] = (_good["consumerTax"] * 100)
+    _good["addedTax"] = (_good["addedTax"] * 100)
     _good["productCode"] = good.groupCode
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice
