@@ -38,7 +38,8 @@ class GoodComment extends Component{
                 return (
                     <div className="comList" key={i}>
                         <div className="comList_title">
-                            <img src={comment.avatar} />
+                            <img src={comment.avatar?comment.avatar:
+                                "/client/asset/images/headpic.png"} />
                             <span>{comment.isOpen===1?comment.nickName:"匿名用户"}</span>
                             <em>{comment.createdAt}</em>
                         </div>
@@ -71,7 +72,8 @@ class GoodComment extends Component{
                 return (
                     <div className="comList" key={i}>
                         <div className="comList_title">
-                            <img src={comment.avatar} />
+                            <img src={comment.avatar?comment.avatar:
+                                "/client/asset/images/headpic.png"} />
                             <span>{comment.nickName}</span>
                             <em>{comment.createdAt}</em>
                         </div>

@@ -24,10 +24,10 @@ class Origin extends Component{
                 <dl>
                   <dt>关税：</dt>
                   <dd>
-                        <a href="javascript:void(null)" onClick={this.props.changeScene.bind(this,"tariff")}
+                        <a href="http://a.tepin.hk/h/rule/valueTable_h.html"
                          className="tariff">
                             <span>税费=不含税商品单价*件数*跨境电商综合税率</span>
-                            <span>跨境电商综合税率=(消费税+增值税率)/(1-消费税率)*0.7</span>
+                            <span>跨境电商综合税率=(消费税率+增值税率)/(1-消费税率)*0.7</span>
                             <i className="iconfont icon-right"></i>
                         </a>
                     </dd>

@@ -60,6 +60,9 @@ var topic = function(req, res, next) {
                 res.render('topic', {
                     markup: markup,
                     initialState: initialState
+                },function(err,html){
+                    util.writeToStaticCache(req,html)
+                    res.send(html)
                 });
             }
         } else {

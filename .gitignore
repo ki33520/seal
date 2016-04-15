@@ -5,7 +5,7 @@ npm-debug.log
 .project
 # client/**/dist/
 client/**/build/
-client/page/*.html
+client/page/
 # vendor/
 # /client/**/stylesheet/
 # /client/**/*.jsx

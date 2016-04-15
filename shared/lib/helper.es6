@@ -1,6 +1,7 @@
 'use strict';
 import {base64} from "./crypto";
 import _ from "./lodash.es6";
+import rAF from "./dom/rAF";
 
 export function formatPrice(price){
     if(price == 0){
@@ -60,4 +61,19 @@ export function destPriceForGoods(goods){
         destPrice:goods.mobilePrice,
         discount:goods.discount
     }  
+}
+
+export function delayCall(callback,delay = 800){
+    const startTime = Date.now()
+    function step(){
+      let now = Date.now()
+      let duration = now - startTime
+      if(duration >= delay){
+        callback()
+        return
+      }
+      // var delta = (to - from) * (progress / time);
+      rAF(step)
+    }
+    step()
 }

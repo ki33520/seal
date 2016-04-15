@@ -7,17 +7,24 @@ body{
 	background-color: #fff;
 }
 .aboutus-content{
-	font-size: .4rem;
+	font-size: .373333rem;
 	color: $gray-color;
 	background-color: #fff;
-	> img{
-		width:100%;
-	}
+	color: #333;
 	> p{
-		padding:.28rem .5rem;
+		padding:.19rem .5rem;
+		line-height: .6rem;
+		text-indent: 2em;
 	}
 	> div{
 		padding:.28rem .5rem;
+		&.img-wrap{
+			line-height: 0;
+			padding: 0;
+			img{
+				width: 100%;
+			}
+		}
 	}
 	.m-entry {
 		padding:.3rem .5rem;
@@ -51,6 +58,21 @@ body{
 	.m-entry span:nth-child(4) i{
 		background-position:0 -107px;
 		background-size: 100%;
+	}
+	.copyright{
+		text-align:center;
+		color:#666;
+		font-size:.266667rem;
+		margin:.2rem 0;
+		line-height:.5rem;
+	}
+	.copyright em{
+		text-align:center;
+		display:block;
+	}
+	.copyright span{
+		text-align:center;
+		display:block;
 	}
 
 }

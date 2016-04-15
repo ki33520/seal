@@ -66,7 +66,7 @@ function goodsFilter(goodsList){
 var flashBuy = function(req,res,next) {
     var id = req.params.id;
     bluebird.props({
-        goods:util.fetchAPI("flashBuy",{
+        goods:util.fetchCachedAPI("flashBuy",{
             manageId:id,
             start:0,
             limit:100
@@ -85,6 +85,9 @@ var flashBuy = function(req,res,next) {
             res.render("flashbuy", {
                 markup: markup,
                 initialState:initialState
+            },function(err,html){
+                util.writeToStaticCache(req,html)
+                res.send(html)
             });
         }else{
             if(resp.goods.returnCode !== 0){

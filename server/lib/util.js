@@ -19,6 +19,12 @@ var FSStorage = require("./fs-storage");
 var fsStorage = new FSStorage({
     path:"server/recovery/"
 })
+var staticStorage = new FSStorage({
+    path:"client/page/",
+    serialize:false,
+    ext:".html",
+    expire:60000 * 10
+})
 
 var urlPrefix = require("./config").urlPrefix
 
@@ -73,7 +79,7 @@ var util = {
     fetchAPI: function(apiName, param, isMock,options) {
         isMock = isMock || false;
         // console.log('runtime',config.runtime)
-        var cacheKey = md5(apiName + JSON.stringify(param))
+        // var cacheKey = md5(apiName + JSON.stringify(param))
         param = _.extend(param,{
             appId:config.appId,
             channel:"Mobile",
@@ -86,7 +92,7 @@ var util = {
         if (isMock === false) {
             return sharedUtil.apiRequest(config.api[apiName].url, param,options).then(function(res){
                 if(res.returnCode === 0){
-                    fsStorage.set(cacheKey,res)
+                    // fsStorage.set(cacheKey,res)
                 }
                 return res
             })
@@ -105,12 +111,13 @@ var util = {
         var maxAge = (options.maxAge * 1000 * 60) || 1000 * 60 *15
         // console.log('maxAge',maxAge)
         options = _.omit(options,["isMock","maxAge"])
-        var cacheKey = apiName + JSON.stringify(param)
+        var cacheKey = md5(apiName + JSON.stringify(param))
         if(memoryCache.get(cacheKey) === null){
             // console.log(apiName,'need cached')
             return this.fetchAPI(apiName,param,isMock,options).then(function(res){
                 if(res.returnCode === 0){
                     memoryCache.put(cacheKey,res,maxAge) //15 minutes
+                    fsStorage.set(cacheKey,res)
                 }
                 return res
             })
@@ -222,6 +229,26 @@ var util = {
             singleCodes:singleCodes.join(","),
             qtys:buyeds.join(",")
         })
+    },
+    writeToStaticCache(req,html){
+        var urlObj = {
+            protocol: req.protocol,
+            host: req.headers.host,
+            pathname: req.url,
+            query:req.query
+        }
+        var key = md5(encodeURIComponent(url.format(urlObj)))
+        staticStorage.set(key,html)
+    },
+    readFromStaticCache(req){
+        var urlObj = {
+            protocol: req.protocol,
+            host: req.headers.host,
+            pathname: req.url,
+            query:req.query
+        }
+        var key = md5(encodeURIComponent(url.format(urlObj)))
+        return staticStorage.get(key)
     },
     writePage(pageName,html){
         var pagePath = path.resolve("client/page/"+pageName+".html")

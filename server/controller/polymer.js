@@ -18,6 +18,9 @@ var polymer = function(req, res, next) {
         res.render('polymer', {
             markup: markup,
             initialState: initialState
+        },function(err,html){
+            util.writeToStaticCache(req,html)
+            res.send(html)
         });
     }
     util.fetchCachedAPI("allCategory",{}).then(function(resp) {

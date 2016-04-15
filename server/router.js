@@ -15,7 +15,7 @@ var mainController = require("./controller/main");
 router.get(urlPrefix + "/logingateway",require("./controller/authorize").loginGateway);
 router.get(urlPrefix + "/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
-router.get(urlPrefix + "",require("./controller/index.js").index);
+router.get(urlPrefix + "",mainController.staticize,require("./controller/index.js").index);
 router.get(urlPrefix + "/channel", require("./controller/index.js").channel);
 router.get(urlPrefix + "/searchhotwords", require("./controller/index.js").searchHotWords);
 router.get(urlPrefix + "/searchhistory", require("./controller/index.js").searchHistory);
@@ -23,24 +23,24 @@ router.get(urlPrefix + "/purgesearchhistory", require("./controller/index.js").p
 router.post(urlPrefix + "/searchassociate", require("./controller/index.js").searchAssociate);
 router.get(urlPrefix + "/activitygood", require("./controller/index.js").activityGood);
 router.get(urlPrefix + "/updategoods",require("./controller/index.js").updateGoods);
-router.get(urlPrefix + "/topic/:id.html", require("./controller/topic.js").topic);
-router.get(urlPrefix + "/flashbuy/:id.html", require("./controller/flashbuy.js"));
-router.get(urlPrefix + "/polymer.html",require("./controller/polymer").polymer);
+router.get(urlPrefix + "/topic/:id.html",mainController.staticize, require("./controller/topic.js").topic);
+router.get(urlPrefix + "/flashbuy/:id.html",mainController.staticize, require("./controller/flashbuy.js"));
+router.get(urlPrefix + "/polymer.html",mainController.staticize,require("./controller/polymer").polymer);
 router.get(urlPrefix + "/categorybrands", require("./controller/polymer").categoryBrands);
 router.get(urlPrefix + "/allbrands", require("./controller/polymer").allBrands);
 router.get(urlPrefix + "/allorigins", require("./controller/polymer").allOrigins);
 router.get(urlPrefix + "/categoryactivity", require("./controller/polymer").categoryActivity);
 
-router.get(urlPrefix + "/sp-:id.html",mainController.authorizeLocals, require("./controller/gooddetail").goodDetail);
+router.get(urlPrefix + "/sp-:id.html",mainController.staticize,mainController.authorizeLocals, require("./controller/gooddetail").goodDetail);
 router.get(urlPrefix + "/addcart", require("./controller/gooddetail").addCart);
 router.get(urlPrefix + "/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get(urlPrefix + "/iscollected", require("./controller/gooddetail").isCollected);
-router.get(urlPrefix + "/search/s.html", require("./controller/goodlist"));
+router.get(urlPrefix + "/search/s.html",mainController.staticize, require("./controller/goodlist"));
 router.get(urlPrefix + "/goodcomment", require("./controller/gooddetail").goodComments);
 router.get(urlPrefix + "/cartcount", require("./controller/gooddetail").cartCount);
 
-router.get(urlPrefix + "/activity/:id.html", require("./controller/activity"));
-router.get(urlPrefix + "/trendy.html", require("./controller/trendy").trendy);
+router.get(urlPrefix + "/activity/:id.html",mainController.staticize, require("./controller/activity"));
+router.get(urlPrefix + "/trendy.html",mainController.staticize, require("./controller/trendy").trendy);
 router.post(urlPrefix + "/trendyActivity",require("./controller/trendy").activity);
 
 router.get(urlPrefix + "/cart.html",mainController.authorizeLocals,require("./controller/cart").cart);

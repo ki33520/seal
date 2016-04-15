@@ -116,6 +116,9 @@ var search = function(req, res, next) {
                 res.render('goodlist', {
                     markup: markup,
                     initialState: initialState
+                },function(err,html){
+                    util.writeToStaticCache(req,html)
+                    res.send(html)
                 });
             }
         } else {

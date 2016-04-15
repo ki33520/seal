@@ -43,10 +43,12 @@ function orderByParam(state={},action){
             order = {...state.order}
             if(action.res.isFetched){
                 // order.totalFee += (action.res.result - order.shipFee)
+                console.log("order",order.isPostageFree)
                 if(order.isPostageFree){
                     order.shipFee = 0
+                }else{
+                    order.shipFee = action.res.result
                 }
-                order.shipFee = action.res.result
                 order.totalFee = calculateTotalFee(order)
             }
             return Object.assign({},state,{

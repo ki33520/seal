@@ -5,6 +5,7 @@ import classNames from "classnames"
 import {browserVersion} from "../../lib/dom/browserDetector.es6";
 import rAF from "../../lib/dom/rAF";
 import _ from "../../lib/lodash.es6";
+import {delayCall} from "../../lib/helper.es6";
 
 export class SceneGroup extends Component{
     constructor(props){
@@ -27,8 +28,7 @@ export class SceneGroup extends Component{
             rAF(function step(){
                 transitionWithGroup()
             })
-            setTimeout(()=>this.props.onChange(scene,param,prevScene),300)
-            // rAF(()=>{this.transitionWithGroup()})
+            delayCall(()=>this.props.onChange(scene,param,prevScene),browserVersion().ios?470:520)
         })
     }
     transitionWithGroup(){
@@ -55,7 +55,7 @@ export class SceneGroup extends Component{
             transitionDuration = "0.35s"
             timerDelay = 450
         }
-        setTimeout(()=>{
+        delayCall(()=>{
             activeNode.style.WebkitTransform = "translate3D(0,0,0)"
             prevNode.style.WebkitTransform = "translate3D(-100%,0,0)"
             if(orientation === "backward"){
@@ -65,10 +65,10 @@ export class SceneGroup extends Component{
             activeNode.style.transitionTimingFunction = "cubic-bezier(0.42, 0, 0.58, 1.0)"
             prevNode.style.transitionDuration = transitionDuration
             prevNode.style.transitionTimingFunction = "cubic-bezier(0.42, 0, 0.58, 1.0)"
-        },10)
+        },20)
         let translateX = orientation === "forward"?"-100%":"100%"
 
-        const processTimer = setTimeout(()=>{
+        const processTimer = delayCall(()=>{
             prevNode.style.WebkitTransform = ""
             prevNode.style.transitionDuration = ""
             prevNode.style.transitionTimingFunction = ""
@@ -76,7 +76,7 @@ export class SceneGroup extends Component{
             activeNode.style.transitionDuration = ""
             activeNode.style.transitionTimingFunction = ""
             prevNode.style.display = ""
-            clearTimeout(processTimer)
+            // clearTimeout(processTimer)
         },timerDelay)
     }
     resetScene(){
