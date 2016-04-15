@@ -113,9 +113,13 @@ class UpdateBasic extends Component{
         const self = this;
         if(nextProps.basicByForm.basicChanging === false &&
            this.props.basicByForm.basicChanging === true){
-                this.props.alert(nextProps.basicByForm.msg,2000);
+            console.log(nextProps.basicByForm.basicChanged)
             if(nextProps.basicByForm.basicChanged === true){
                 setTimeout(()=>{changeScene.call(self,"index")},2500);
+                this.props.alert(nextProps.basicByForm.msg,2000);
+            }
+            if(nextProps.basicByForm.basicChanged === false){
+                this.props.alert(nextProps.basicByForm.msg,2000);
             }
         }
     }
@@ -137,7 +141,6 @@ class UpdateBasic extends Component{
     render(){
         const {basicByForm,changeScene} = this.props;
         const {fieldnickName,fieldgender,alertContent,alertActive} = basicByForm;
-
         var optionGender = [{label:"请选择",value:"-1"}];
         _.map(["保密","男","女"],function(a,b){
             optionGender.push({label:a,value:b.toString()});
