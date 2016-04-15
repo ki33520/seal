@@ -61,6 +61,9 @@ var activity = function(req, res, next) {
                 res.render('activity', {
                     markup: markup,
                     initialState: initialState
+                },function(err,html){
+                    util.writeToStaticCache(req,html)
+                    res.send(html)
                 });
             }
         } else {

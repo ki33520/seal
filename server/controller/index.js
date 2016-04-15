@@ -22,7 +22,6 @@ var index = function(req, res, next) {
         })
         return channels
     }
-
     function render(ret,channels){
         channels[0].floors = floorFilter(ret.object)
         var initialState = {
@@ -34,6 +33,9 @@ var index = function(req, res, next) {
         res.render("index", {
             markup: markup,
             initialState: initialState
+        },function(err,html){
+            util.writeToStaticCache(req,html)
+            res.send(html)
         });
     }
     util.fetchCachedAPI("indexChannels", {
@@ -466,7 +468,7 @@ var activityGood = function(req, res, next) {
         }))
     }).then(function(pagination){
         var ids = []
-        _.each(pagination.goods,function(good){
+        _.each(pagination.list,function(good){
             ids.push(good.singleCode)
         })
         util.fetchAPI("updateGoods",{

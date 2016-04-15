@@ -27,14 +27,14 @@ var requireAuthorize = function(req, res, next) {
 }
 
 var staticize = function(req,res,next){
-    var pageContent = util.readPage(md5(req.originalUrl))
-        // console.log('pageContent',pageContent)
+    // var pageContent = util.readPage(md5(req.originalUrl))
+    var pageContent = util.readFromStaticCache(req)
     if(pageContent){
+        console.log("return from static cache")
         res.send(pageContent)
     }else{
         next()
     }
-    // console.log(fs.statSync(path.resolve("client/page/index.html")))
 }
 
 var errorHandler = function(err,req,res,next){
