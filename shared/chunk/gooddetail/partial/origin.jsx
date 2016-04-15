@@ -35,15 +35,15 @@ class Origin extends Component{
                 <div className="smallLine"></div> 
                 <dl>
                   <dt>行邮税率：</dt>
-                  <dd>{good.showTaxRate}</dd>
+                  <dd>{good.showTaxRate.toFixed(2)}%</dd>
                 </dl>
                 <dl>
                   <dt>消费税率：</dt>
-                  <dd>{good.consumerTax}</dd>
+                  <dd>{good.consumerTax.toFixed(2)}%</dd>
                 </dl>
                 <dl>
                   <dt>增值税率：</dt>
-                  <dd>{good.addedTax}</dd>
+                  <dd>{good.addedTax.toFixed(2)}%</dd>
                 </dl>
                 <dl>
                   <dt>运费：</dt>
