@@ -1,3 +1,4 @@
+'use strict';
 var webpack = require('webpack'),
     path = require('path'),
     del = require("del"),
@@ -57,7 +58,7 @@ module.exports = {
             loader: ExtractTextPlugin.extract('style', 'css!autoprefixer!stylus')
         }, {
             test: /\.css/,
-            exclude: [node_modules_dir],
+            // exclude: [node_modules_dir],
             loader: ExtractTextPlugin.extract('style', 'css')
         }, {
             test: /\.(png|jpg)$/,
@@ -78,6 +79,9 @@ module.exports = {
             compress: {
                 warnings: false
             }
+        }),
+        new webpack.ProvidePlugin({
+            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         }),
         new webpack.NoErrorsPlugin(),
         new ExtractTextPlugin(moduleEntryPath + "[name]/" + env.distFolder + "[name]-[hash].css")

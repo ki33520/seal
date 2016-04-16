@@ -1,3 +1,4 @@
+'use strict';
 var webpack = require('webpack'),
     path = require('path'),
     _ = require("lodash");
@@ -30,8 +31,7 @@ _.each(env.vendors, function(vendor) {
 });
 
 _.extend(entry, moduleEntries)
-// console.log('modules',env.modules)
-// console.log("entry", entry, moduleEntryPath);
+    // console.log("entry", env.modules);
 module.exports = {
     entry: entry,
     module: {
@@ -70,6 +70,9 @@ module.exports = {
         chunkFilename: moduleEntryPath + "[name]/" + env.buildFolder + "[id].chunk.js",
     },
     plugins: _.union([
+        new webpack.ProvidePlugin({
+            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+        }),
         new ExtractTextPlugin(moduleEntryPath + "[name]/" + env.buildFolder + "[name].css")
     ], commonChunks)
 }

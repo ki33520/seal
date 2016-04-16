@@ -15,16 +15,14 @@ gulp.task("develop-webpack", function() {
             cssFiles = [],
             jsFiles = [],
             // vendorCSSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.css'),
-            moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
+            // moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
             vendorJSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.js'),
             moduleJSFile = path.join(moduleObj.path, env.buildFolder + '*.js');
-        // cssFiles.push(moduleCSSFile);
         jsFiles.push(vendorJSFile);
         jsFiles.push(moduleJSFile);
         var sources = gulp.src(_.union(cssFiles, jsFiles), {
             read: false
         });
-        // console.log('jsFiles',jsFiles)
         gulp.src(injectTarget).pipe(inject(sources, {
             relative: true,
             empty:true,
@@ -32,7 +30,6 @@ gulp.task("develop-webpack", function() {
                 var vendorPattern = new RegExp(".+" + moduleObj.vendor),
                     buildPattern = new RegExp(".+" + env.buildFolder);
                 // filepath = filepath.replace(prefixPattern, './');
-                // console.log('filepath',filepath)
                 if (vendorPattern.test(filepath) === true) {
                     if (path.extname(filepath) === ".js") {
                         filepath = filepath.replace(buildPattern, "{{hostname}}"+env.hmrPath);
@@ -54,12 +51,12 @@ gulp.task("deploy-webpack", function() {
             injectedPath = path.dirname(injectTarget),
             cssFiles = [],
             jsFiles = [],
-            // vendorCSSFile = path.join(env.vendorPath, env.distFolder + moduleObj.vendor + '-*.css'),
+            vendorCSSFile = path.join(env.vendorPath, env.distFolder + moduleObj.vendor + '-*.css'),
             // extensionCssFile = path.join(env.extensions.path, '/' + env.extensions.distFolder + '/' + moduleObj.name + '-*.css'),
             moduleCSSFile = path.join(moduleObj.path, env.distFolder + '*.css'),
             vendorJSFile = path.join(env.vendorPath, env.distFolder + moduleObj.vendor + '-*.js'),
             moduleJSFile = path.join(moduleObj.path, env.distFolder + '*.js');
-        // cssFiles.push(vendorCSSFile);
+        cssFiles.push(vendorCSSFile);
         cssFiles.push(moduleCSSFile);
         jsFiles.push(vendorJSFile);
         jsFiles.push(moduleJSFile);
