@@ -25,7 +25,6 @@ class Floor extends Component{
         if(this.props.active){
             this.handleActive(this.props.channel)
             if(this.props.nextChannel){
-                // console.log('fetch nextChannel')
                 // this.props.fetchChannel({
                 //     id:this.props.nextChannel.id
                 // })

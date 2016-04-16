@@ -12,6 +12,7 @@ gulp.task("start", function() {
             "js": "node"
         },
         env: {
+            "HMR_ENABLED":true
             // "NODE_ENV": "production"
         },
         verbose: true,

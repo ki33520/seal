@@ -15,7 +15,7 @@ _.each(env.modules, function(moduleObj) {
     moduleEntry[moduleObj.name] = [
         // 'webpack-dev-server/client?http://localhost:9527',
         "webpack-hot-middleware/client",
-        'webpack/hot/dev-server',
+        // 'webpack/hot/dev-server',
         moduleObj.entryJS,
         moduleObj.entryCSS
     ];
@@ -89,8 +89,7 @@ module.exports = {
             loader: 'url?limit=25000'
         }]
     },
-    devtool: "eval",
-    debug: true,
+    devtool: "#eval-source-map",
     watch:true,
     resolve: {
         extensions: ["", ".webpack-loader.js", ".web-loader.js", ".loader.js", ".js", ".json", ".coffee"]
