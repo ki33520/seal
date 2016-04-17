@@ -36,12 +36,7 @@ app.use(session({
         httpOnly: true,
         maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
     },
-    // store: new RedisStore({
-    //     host:"192.168.0.162",
-    //     port:"6379",
-    //     prefix:"seal"
-    // })
-    // store: store
+    store: store
 }))
 
 app.engine('html', cons.swig);

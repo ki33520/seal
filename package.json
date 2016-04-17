@@ -69,7 +69,6 @@
     "del": "^1.2.0",
     "depd": "^1.1.0",
     "destroy": "^1.0.4",
-    "director": "^1.2.8",
     "escape-html": "^1.0.3",
     "eslint": "^1.10.2",
     "eslint-watch": "^2.1.4",
@@ -105,9 +104,9 @@
     "stylus": "^0.53.0",
     "stylus-loader": "^1.4.2",
     "unpipe": "^1.0.0",
-    "webpack": "^1.12.2",
+    "webpack": "^1.12.15",
     "webpack-core": "^0.6.8",
-    "webpack-dev-middleware": "^1.2.0",
+    "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.5.0",
     "when": "^3.7.7"
   }

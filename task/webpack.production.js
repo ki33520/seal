@@ -1,4 +1,3 @@
-'use strict';
 var webpack = require('webpack'),
     path = require('path'),
     del = require("del"),
