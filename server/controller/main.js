@@ -29,8 +29,7 @@ var requireAuthorize = function(req, res, next) {
 
 var staticize = function(req,res,next){
     var pageContent = util.readFromStaticCache(req)
-    var runtime = process.env.NODE_ENV
-    if(runtime === "test"){
+    if(process.env.HMR_ENABLED){
        next() 
     }else{
         if(pageContent){

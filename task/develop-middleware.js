@@ -10,6 +10,10 @@ module.exports = function(app){
         stats: {
             colors: true
         },
+        watchOptions:{
+            pool:true,
+            aggregateTimeout:3000
+        },
         hot: true,
         publicPath: config.output.publicPath 
     }))

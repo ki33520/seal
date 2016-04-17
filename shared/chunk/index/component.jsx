@@ -10,7 +10,7 @@ class IndexRouter extends Component{
         const {fetchHotWord,fetchSearchHistory} = this.props
         switch(currentScene){
             case "search":
-                !this.props.search.hotwordFetched && fetchHotWord()
+                // !this.props.search.hotwordFetched && fetchHotWord()
                 !this.props.search.historyFetched && fetchSearchHistory()
         }
     }
