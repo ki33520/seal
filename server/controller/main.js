@@ -1,6 +1,7 @@
 'use strict'
 var util = require("../lib/util");
 var ErrorContent = util.getSharedComponent("common", "error.jsx");
+var TestContent = util.getSharedComponent("test");
 var config = require("../lib/config");
 var fs = require("fs");
 var path = require("path");
@@ -73,10 +74,24 @@ var notFoundHandler = function(req, res) {
     });
 }
 
+var test = function(req,res){
+    var initialState ={
+        msg:"test"
+    }
+    var markup = util.getMarkupByComponent(TestContent({
+        initialState:initialState
+    }))
+    res.render("test",{
+        markup:markup,
+        initialState:initialState
+    })
+}
+
 module.exports = {
     authorizeLocals: authorizeLocals,
     requireAuthorize: requireAuthorize,
     staticize:staticize,
     notFoundHandler: notFoundHandler,
-    errorHandler: errorHandler
+    errorHandler: errorHandler,
+    test:test
 };

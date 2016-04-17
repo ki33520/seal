@@ -89,8 +89,7 @@ module.exports = {
             loader: 'url?limit=25000'
         }]
     },
-    devtool: "eval",
-    debug: true,
+    devtool: "#eval-source-map",
     watch:true,
     resolve: {
         extensions: ["", ".webpack-loader.js", ".web-loader.js", ".loader.js", ".js", ".json", ".coffee"]
