@@ -171,7 +171,7 @@ class Floor extends Component{
                     <a href={jumpURL("gooddetail",[good.singleCode])} className="clearfix" key={i}>
                         <LazyLoad relative={true} relativeSelector="back-to-top-inner">
                         <Image src={good.imageUrl} 
-                        transitionName="fade" placeholder={()=><div className="new-recommend-placeholder"></div>}
+                        transitionName="fade" placeholder={()=><div className="flashbuy-placeholder"></div>}
                         >
                         <div className={saleState}></div>
                         </Image>
@@ -253,7 +253,7 @@ class Floor extends Component{
                 return <a href={rushbuy.jumpUrl} key={i}>
                     <LazyLoad relative={true} relativeSelector="back-to-top-inner">
                     <Image src={rushbuy.imageUrl} 
-                    transitionName="fade" placeholder={()=><div className="new-recommend-placeholder"></div>}
+                    transitionName="fade" placeholder={()=><div className="rushbuy-placeholder"></div>}
                     >
                     </Image>
                     </LazyLoad>
@@ -336,20 +336,35 @@ class Floor extends Component{
                 <ul className="clearfix">
                     <li>
                         <a href={activityOne[0].jumpUrl}>
-                            <img src={activityOne[0].imageUrl} alt="" />
+                            <LazyLoad relative={true} relativeSelector="back-to-top-inner">
+                            <Image src={activityOne[0].imageUrl} 
+                            transitionName="fade" placeholder={()=><div className="ActivityOne-1-placeholder"></div>}
+                            >
+                            </Image>
+                            </LazyLoad>
                             <span></span>
                         </a>
                     </li>
                     <li>
                         {activityOne[1]?(
                         <a href={activityOne[1].jumpUrl}>
-                            <img src={activityOne[1].imageUrl} alt="" />
+                            <LazyLoad relative={true} relativeSelector="back-to-top-inner">
+                            <Image src={activityOne[1].imageUrl} 
+                            transitionName="fade" placeholder={()=><div className="ActivityOne-2-placeholder"></div>}
+                            >
+                            </Image>
+                            </LazyLoad>
                             <span></span>
                         </a>
                         ):null}
                         {activityOne[2]?(
                         <a href={activityOne[2].jumpUrl}>
-                            <img src={activityOne[2].imageUrl} alt="" />
+                            <LazyLoad relative={true} relativeSelector="back-to-top-inner">
+                            <Image src={activityOne[2].imageUrl} 
+                            transitionName="fade" placeholder={()=><div className="ActivityOne-3-placeholder"></div>}
+                            >
+                            </Image>
+                            </LazyLoad>
                             <span></span>
                         </a>
                         ):null}
@@ -387,8 +402,12 @@ class Floor extends Component{
                 <ul className="clearfix">
                     <li>
                         <a href={activityThree[0].jumpUrl}>
-                            <img src={activityThree[0].imageUrl} alt="" />
-                            <span></span>
+                            <LazyLoad relative={true} relativeSelector="back-to-top-inner">
+                            <Image src={activityThree[0].imageUrl} 
+                            transitionName="fade" placeholder={()=><div className="activityThree-placeholder"></div>}
+                            >
+                            </Image>
+                            </LazyLoad>
                         </a>
                     </li>
                     <li>
