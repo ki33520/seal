@@ -8,6 +8,7 @@
 <div class="help-container">
     <div id="help-content">{{ markup|safe }}</div>
 </div>
+<script src="{{hostname}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}

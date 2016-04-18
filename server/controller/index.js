@@ -434,6 +434,9 @@ var activityGood = function(req, res, next) {
         return pagination
     }
     function respondUpdateGood(subRet,pagination){
+        if(subRet === null){
+            return null
+        }
         var result = updatedGoodsFilter(subRet.object)
         var _goods = _.map(pagination.list,function(good){
             let updatedGood = result[good.singleCode]

@@ -8,6 +8,7 @@
 <div class="membercomment-container">
     <div id="member-comment">{{ markup|safe }}</div>
 </div>
+<script src="{{hostname}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}

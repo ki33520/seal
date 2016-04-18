@@ -8,6 +8,7 @@
 <div class="order-list-container">
     <div id="order-list">{{ markup|safe }}</div>
 </div>
+<script src="{{hostname}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}

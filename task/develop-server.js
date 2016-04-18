@@ -11,7 +11,6 @@ var gulp = require("gulp"),
 var bundler = webpack(config);
 
 gulp.task("nodemon", function() {
-    // livereload.listen();
     nodemon({
         delay: "200ms",
         script: "app.js",
@@ -32,7 +31,6 @@ gulp.task("nodemon", function() {
     }).on("readable", function(data) {
         this.stdout.on('data', function(chunk) {
             if (/server listening at/.test(chunk)) {
-                // livereload.reload();
                 browserSync.reload({
                     stream: false
                 })
@@ -56,8 +54,17 @@ gulp.task("start", ["nodemon"], function() {
         files: "view/*.html",
         online: false,
         logLevel: "info",
-        notify: false,
-        open: false
+        notify: true,
+        open: false,
+        // reloadOnRestart:true,
+        browser: "google chrome",
+        socket:{
+            clientPath:"/bs",
+        },
+        scriptPath:function(path,port,options){
+            path = path.replace(/browser-sync-client(\.\d+)+/,"browser-sync-client")
+            return "http://localhost:" + hmrPort + path
+        }
     }, function() {
         console.log('🌎 hmr-server Listening at %d', hmrPort);
     })

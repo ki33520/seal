@@ -32,26 +32,6 @@ _.each(env.vendors, function(vendor) {
     entry[vendor.name] = vendor.entryJS;
 });
 
-// var babelrc = {
-//     "stage": 2,
-    // "env": {
-    //     "development": {
-    //         "plugins": [
-    //             "react-transform"
-    //         ],
-    //         "extra": {
-    //             "react-transform": {
-    //                 "transforms": [{
-    //                     "transform": "react-transform-hmr",
-    //                     "imports": ["react"],
-    //                     "locals": ["module"]
-    //                 }]
-    //             }
-    //         }
-    //     }
-    // }
-// };
-
 module.exports = {
     entry: entry,
     module: {
@@ -91,7 +71,7 @@ module.exports = {
         }]
     },
     devtool: "#eval-source-map",
-    // watch:true,
+    watch:true,
     resolve: {
         extensions: ["", ".webpack-loader.js", ".web-loader.js", ".loader.js", ".js", ".json", ".coffee"]
     },
