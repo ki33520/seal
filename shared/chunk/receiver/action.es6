@@ -214,7 +214,7 @@ export function saveReceiver(param){
     return (dispatch)=>{
         dispatch(startSaveReceiver(param));
         apiRequest(urlPrefix + "/savereceiver",param,{
-            method:"post"
+            method:"POST"
         }).then((res)=>{
             if(res.receiverSaved){
                 dispatch(changeReceiver(param))

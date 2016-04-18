@@ -223,7 +223,7 @@ var createReceiver = function(req, res, next) {
             errMsg:validResult.errMsg
         })
     }else{
-        util.fetchAPI("addReceiver", receiver, false,{method:"post"}).then(function(resp) {
+        util.fetchAPI("addReceiver", receiver, false,{method:"POST"}).then(function(resp) {
             if (resp.returnCode === 0) {
                 res.json({
                     receiverSaved: true,

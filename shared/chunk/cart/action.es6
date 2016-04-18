@@ -137,7 +137,7 @@ export {alert} from "../common/action.es6";
 export function updateCart(param){
     return (dispatch)=>{
         dispatch(startUpdateCart(param));
-        apiRequest(urlPrefix+'/updatecart',param,{method:"post"}).then((res)=>{
+        apiRequest(urlPrefix+'/updatecart',param,{method:"POST"}).then((res)=>{
             dispatch(finishUpdateCart(param,res));
         });
     }
@@ -146,7 +146,7 @@ export function updateCart(param){
 export function deleteCart(param){
     return (dispatch)=>{
         dispatch(startDeleteCart(param));
-        apiRequest(urlPrefix+'/deletecart',param,{method:"post"}).then((res)=>{
+        apiRequest(urlPrefix+'/deletecart',param,{method:"POST"}).then((res)=>{
             dispatch(finishDeleteCart(param,res));
         });
     }
@@ -173,7 +173,7 @@ export function toggleCartAll(param){
 export function checkCartInfo(param){
     return (dispatch)=>{
         dispatch(startCheckCart(param));
-        apiRequest(urlPrefix+'/checkCart',param,{method:"post"}).then((res)=>{
+        apiRequest(urlPrefix+'/checkCart',param,{method:"POST"}).then((res)=>{
              if(res.returnCode !==0){
                 if(res.returnCode !== -402111){
                     let content = errMsgByCode(res.returnCode);
@@ -188,7 +188,7 @@ export function checkCartInfo(param){
 export function fetchCart(param){
     return (dispatch)=>{
         dispatch(startFetchCart(param));
-        apiRequest(urlPrefix+'/fetchcart',param,{method:"post"}).then((res)=>{
+        apiRequest(urlPrefix+'/fetchcart',param,{method:"POST"}).then((res)=>{
             dispatch(finishFetchCart(param,res));
         });
     }
