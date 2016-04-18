@@ -3,6 +3,7 @@ var _ = require("lodash");
 var util = require("../lib/util.js");
 var GoodListApp = util.getSharedComponent("goodlist");
 var config = require("../lib/config");
+var ErrorContent = util.getSharedComponent("goodlist", "error.jsx");
 
 function filterGoodsList(result){
     var list = [];
@@ -128,7 +129,19 @@ var search = function(req, res, next) {
                     isFetched:false
                 });
             }else{
-                next(new Error(resp.message));
+                //next(new Error(resp.message));
+                var initialState = {
+                    code: "500",
+                    keyword:keyword||areaName||brandName||categoryName
+                };
+                var markup = util.getMarkupByComponent(ErrorContent({
+                    initialState: initialState
+                }));
+
+                res.render('goodlist', {
+                    markup: markup,
+                    initialState: initialState
+                });
             }
         }
     },function(){

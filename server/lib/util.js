@@ -90,12 +90,7 @@ var util = {
         param = _.extend(param,{h:signature})
         console.log("apiRequest",config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
-            return sharedUtil.apiRequest(config.api[apiName].url, param,options).then(function(res){
-                if(res.returnCode === 0){
-                    // fsStorage.set(cacheKey,res)
-                }
-                return res
-            })
+            return sharedUtil.apiRequest(config.api[apiName].url, param,options)
         } else {
             var listenPort = process.env.LISTEN_PORT || 3000;
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
