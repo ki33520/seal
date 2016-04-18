@@ -42,8 +42,8 @@ var updateBasic = function(req, res, next) {
         fetchObj.birthday = birthday;
     }
     bluebird.props({
-        updateBasicByUser: util.fetchAPI("updateBasicByUser",fetchObj,false)
-    },false,{ method: 'POST'}).then(function(ret) {
+        updateBasicByUser: util.fetchAPI("updateBasicByUser", fetchObj, false, { method: 'POST'})
+    }).then(function(ret) {
         if (ret.updateBasicByUser.returnCode === 0) {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
