@@ -36,21 +36,30 @@ app.use(session({
         httpOnly: true,
         maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
     },
-    // store: new RedisStore({
-    //     host:"192.168.0.162",
-    //     port:"6379",
-    //     prefix:"seal"
-    // })
-    // store: store
+    store: store
 }))
 
 app.engine('html', cons.swig);
 app.set('view engine', 'html');
 app.set("views", __dirname + '/../view');
 
+<<<<<<< HEAD
 if(process.env.NODE_ENV !== "production"){
     // app = require("../task/develop-middleware")(app)
+=======
+app.use(function(req,res,next){
+    if(process.env.HMR_ENABLED){
+        var hmrPort = process.env.HMR_PORT || 5000;
+        // res.locals.hostname = ""
+        res.locals.hostname = req.protocol+"://"+req.hostname+":"+hmrPort
+    }
+    next()
+})
+if(process.env.HMR_ENABLED){
+    app = require("../task/develop-middleware")(app)
+>>>>>>> develop
 }
+
 var router = require("./router.js");
 app.use(router);
 app.use(require("./controller/main").errorHandler)

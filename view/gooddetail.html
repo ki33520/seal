@@ -2,18 +2,20 @@
 {% block title %}商品详情－友阿海外购{% endblock %}
 {% block css %}
 <!-- inject:css -->
-<link rel="stylesheet" href="/client/bundle/gooddetail/dist/gooddetail-1e11e69eb70c0478c9ca.css">
+<meta name="bundledAt" content="20163181716">
+<link rel="stylesheet" href="/client/bundle/gooddetail/dist/gooddetail-d7304b03866cd96f91ef.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
 <div class="gooddetail-container">
     <div id="good-detail">{{ markup|safe }}</div>
 </div>
+<script src="{{hostname}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="/client/vendor/dist/react-1e11e69eb70c0478c9ca.js"></script>
-<script src="/client/bundle/gooddetail/dist/gooddetail-1e11e69eb70c0478c9ca.js"></script>
+<script src="/client/vendor/dist/react-d7304b03866cd96f91ef.js"></script>
+<script src="/client/bundle/gooddetail/dist/gooddetail-d7304b03866cd96f91ef.js"></script>
 <!-- endinject -->
 {% endblock %}

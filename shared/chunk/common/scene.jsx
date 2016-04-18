@@ -15,6 +15,14 @@ export class SceneGroup extends Component{
             prevScene:null
         }
     }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.defaultScene !== this.props.defaultScene){
+            this.setState({
+                currentScene:nextProps.defaultScene,
+                prevScene:this.state.currentScene
+            })
+        }
+    }
     handleChange(scene,param,e){
         let prevScene = this.state.currentScene
         this.setState({

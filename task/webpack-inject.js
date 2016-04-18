@@ -1,5 +1,6 @@
 var gulp = require("gulp"),
     inject = require("gulp-inject"),
+    injectString = require("gulp-inject-string"),
     // mapstream = require("map-stream"),
     path = require("path"),
     fs = require("fs"),
@@ -15,16 +16,14 @@ gulp.task("develop-webpack", function() {
             cssFiles = [],
             jsFiles = [],
             // vendorCSSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.css'),
-            moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
+            // moduleCSSFile = path.join(moduleObj.path, env.buildFolder + '/*.css'),
             vendorJSFile = path.join(env.vendorPath, env.buildFolder + moduleObj.vendor + '.js'),
             moduleJSFile = path.join(moduleObj.path, env.buildFolder + '*.js');
-        // cssFiles.push(moduleCSSFile);
         jsFiles.push(vendorJSFile);
         jsFiles.push(moduleJSFile);
         var sources = gulp.src(_.union(cssFiles, jsFiles), {
             read: false
         });
-        // console.log('jsFiles',jsFiles)
         gulp.src(injectTarget).pipe(inject(sources, {
             relative: true,
             empty:true,
@@ -32,34 +31,47 @@ gulp.task("develop-webpack", function() {
                 var vendorPattern = new RegExp(".+" + moduleObj.vendor),
                     buildPattern = new RegExp(".+" + env.buildFolder);
                 // filepath = filepath.replace(prefixPattern, './');
-                // console.log('filepath',filepath)
                 if (vendorPattern.test(filepath) === true) {
                     if (path.extname(filepath) === ".js") {
-                        filepath = filepath.replace(buildPattern, env.hmrPath);
+                        filepath = filepath.replace(buildPattern, "{{hostname}}"+env.hmrPath);
                     }
                 } else if (vendorPattern.test(filepath) === false) {
                     if (path.extname(filepath) === ".js") {
-                        filepath = filepath.replace(buildPattern, env.hmrPath);
+                        filepath = filepath.replace(buildPattern, "{{hostname}}"+env.hmrPath);
                     }
                 }
                 return inject.transform.apply(inject.transform, arguments);
             }
 
-        })).pipe(gulp.dest(injectedPath));
+        }))
+        .pipe(injectString.replace('<script src="{{hostname}}/bs/browser-sync-client.js"></script>\n',""))
+        .pipe(injectString.before("<script",'<script src="{{hostname}}/bs/browser-sync-client.js"></script>\n'))
+        .pipe(gulp.dest(injectedPath));
     });
 });
+
+function bundledTime(){
+    const dateObj = new Date()
+    const year = dateObj.getFullYear()
+    const month = dateObj.getMonth() + 1
+    const date = dateObj.getDate()
+    const hour = dateObj.getHours()
+    const minute = dateObj.getMinutes()
+    return ""+year+month+date+hour+minute
+}
+
 gulp.task("deploy-webpack", function() {
     _.each(env.modules, function(moduleObj) {
         var injectTarget = moduleObj.html,
             injectedPath = path.dirname(injectTarget),
             cssFiles = [],
             jsFiles = [],
-            // vendorCSSFile = path.join(env.vendorPath, env.distFolder + moduleObj.vendor + '-*.css'),
+            vendorCSSFile = path.join(env.vendorPath, env.distFolder + moduleObj.vendor + '-*.css'),
             // extensionCssFile = path.join(env.extensions.path, '/' + env.extensions.distFolder + '/' + moduleObj.name + '-*.css'),
             moduleCSSFile = path.join(moduleObj.path, env.distFolder + '*.css'),
             vendorJSFile = path.join(env.vendorPath, env.distFolder + moduleObj.vendor + '-*.js'),
             moduleJSFile = path.join(moduleObj.path, env.distFolder + '*.js');
-        // cssFiles.push(vendorCSSFile);
+        cssFiles.push(vendorCSSFile);
         cssFiles.push(moduleCSSFile);
         jsFiles.push(vendorJSFile);
         jsFiles.push(moduleJSFile);
@@ -74,6 +86,8 @@ gulp.task("deploy-webpack", function() {
                 filepath = filepath.replace(/^\.{2}\//g, '/');
                 return inject.transform.apply(inject.transform, arguments);
             }
-        })).pipe(gulp.dest(injectedPath));
+        }))
+        .pipe(injectString.replace('<meta name="bundledAt" content="\\d{12}">',""))
+        .pipe(injectString.before("<link",'<meta name="bundledAt" content="'+bundledTime()+'">\n')).pipe(gulp.dest(injectedPath));
     });
 });

@@ -11,7 +11,6 @@ var gulp = require("gulp"),
 var bundler = webpack(config);
 
 gulp.task("nodemon", function() {
-    // livereload.listen();
     nodemon({
         delay: "200ms",
         script: "app.js",
@@ -19,7 +18,7 @@ gulp.task("nodemon", function() {
             "js": "node"
         },
         env: {
-            // "NODE_ENV": "develop"
+            "HMR_ENABLED": true
         },
         verbose: true,
         stdout: false,
@@ -32,7 +31,6 @@ gulp.task("nodemon", function() {
     }).on("readable", function(data) {
         this.stdout.on('data', function(chunk) {
             if (/server listening at/.test(chunk)) {
-                // livereload.reload();
                 browserSync.reload({
                     stream: false
                 })
@@ -43,47 +41,31 @@ gulp.task("nodemon", function() {
     });
 });
 
-
+var bundler = webpack(config);
 
 gulp.task("start", ["nodemon"], function() {
     var listenPort = process.env.LISTEN_PORT || 3000;
-    var devPort = process.env.DEV_PORT || 5000;
-
-    var ipv4;
-    var iptable = {}
-    var ifaces=os.networkInterfaces();
-    for (var dev in ifaces) {
-      ifaces[dev].forEach(function(details,alias){
-        if (details.family=='IPv4') {
-            if(details.address !== "127.0.0.1"){
-                ipv4 = details.address
-            }
-          // iptable[dev+(alias?':'+alias:'')]=details.address;
-        }
-      });
-    }
+    var hmrPort = process.env.HMR_PORT || 5000;
     browserSync({
         proxy: {
-            target: "http://"+ipv4+":" + listenPort,
-            middleware: [
-                webpackDevMiddleware(bundler, {
-                    publicPath: config.output.publicPath,
-                    stats: {
-                        colors: true
-                    },
-                    hot: true,
-                    noInfo: true
-                }),
-                webpackHotMiddleware(bundler)
-            ],
+            target: "http://localhost:" + listenPort,
         },
-        port: devPort,
+        port: hmrPort,
         files: "view/*.html",
         online: false,
         logLevel: "info",
-        notify: false,
-        open: false
+        notify: true,
+        open: false,
+        // reloadOnRestart:true,
+        browser: "google chrome",
+        socket:{
+            clientPath:"/bs",
+        },
+        scriptPath:function(path,port,options){
+            path = path.replace(/browser-sync-client(\.\d+)+/,"browser-sync-client")
+            return "http://localhost:" + hmrPort + path
+        }
     }, function() {
-        console.log('🌎 dev-server Listening at %d', devPort);
+        console.log('🌎 hmr-server Listening at %d', hmrPort);
     })
 })

@@ -14,6 +14,9 @@ import {urlPrefix} from "../../lib/jumpurl.es6";
 function errMsgByCode(errCode) {
     let errMsg = ""
     switch (errCode) {
+        case -402104:
+            errMsg = "商品不存在";
+            break;
         case -402105:
             errMsg =  "商品已下架";
             break;
@@ -31,6 +34,9 @@ function errMsgByCode(errCode) {
             break;
         case -402111:
             errMsg =  "商品超出免税额度";
+            break;
+        case -402112:
+            errMsg = "商品已售完";
             break;
         default:
             errMsg="数据异常";

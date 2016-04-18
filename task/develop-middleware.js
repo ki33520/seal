@@ -1,6 +1,5 @@
 'use strict';
 var config = require('./webpack.hot-update.js');
-
 module.exports = function(app){
     var webpack = require("webpack"),
         webpackDevMiddleware = require("webpack-dev-middleware"),
@@ -10,6 +9,10 @@ module.exports = function(app){
         noInfo: true, 
         stats: {
             colors: true
+        },
+        watchOptions:{
+            pool:true,
+            aggregateTimeout:300
         },
         hot: true,
         publicPath: config.output.publicPath 
