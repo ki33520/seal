@@ -12,7 +12,7 @@ module.exports = function(app){
         },
         watchOptions:{
             pool:true,
-            aggregateTimeout:3000
+            aggregateTimeout:300
         },
         hot: true,
         publicPath: config.output.publicPath 

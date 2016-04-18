@@ -43,7 +43,7 @@ gulp.task("nodemon", function() {
     });
 });
 
-
+var bundler = webpack(config);
 
 gulp.task("start", ["nodemon"], function() {
     var listenPort = process.env.LISTEN_PORT || 3000;
@@ -59,6 +59,6 @@ gulp.task("start", ["nodemon"], function() {
         notify: false,
         open: false
     }, function() {
-        console.log('🌎 dev-server Listening at %d', hmrPort);
+        console.log('🌎 hmr-server Listening at %d', hmrPort);
     })
 })
