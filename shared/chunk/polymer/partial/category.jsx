@@ -29,7 +29,7 @@ class Category extends Component{
         })
         return (
             <div className="rightCon">
-                {category.activity?(
+                {category.activity&&category.activity.jumpUrl?(
                 <a href={category.activity.jumpUrl} className="ad">
                     <img src={category.activity.imageUrl}/>
                 </a>
