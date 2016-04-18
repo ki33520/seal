@@ -124,6 +124,7 @@ class OrderDetail extends Component{
         }
     }
     renderFooter(){
+        const {changeScene} = this.props;
         const {order} = this.props.orderByParam;
         const {orderStatus,orderId,itemList,cashier} = order;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
@@ -153,7 +154,7 @@ class OrderDetail extends Component{
             case "STATUS_OUT_HOUSE":
                 return (
                     <div className="confirmBtns">
-                        <a href={jumpURL("orderdetail",[orderId])+"#/logistics"} className="confirm_btn confirmBorder_btn">查看物流</a>
+                        <a href="javascript:;" onClick={changeScene.bind(this,"logistics")} className="confirm_btn confirmBorder_btn">查看物流</a>
                         <a href="javascript:;" onClick={this.handleDeliveryOrder.bind(this)} className="confirm_btn">确认收货</a>
                     </div>
                 )
@@ -161,7 +162,7 @@ class OrderDetail extends Component{
                 if(hasNotComment.length>0){
                     return (
                         <div className="confirmBtns">
-                            <a href={jumpURL("orderdetail",[orderId])+"#/comment"} className="confirm_btn confirmBorder_btn">评价晒单</a>
+                            <a href="javascript:;" onClick={changeScene.bind(this,"comment")} className="confirm_btn confirmBorder_btn">评价晒单</a>
                         </div>
                     );
                 }else{

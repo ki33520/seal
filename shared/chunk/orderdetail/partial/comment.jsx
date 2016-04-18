@@ -10,6 +10,20 @@ import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
 import Alert from "../../../component/alert.jsx";
 
 class Comment extends Component{
+    constructor(props){
+        super(props);
+        const {defaultScene} = props;
+        const {back_path,order} = props.orderByParam;
+        let back_url = "";
+        if(defaultScene){
+            back_url = jumpURL("orderlist-id",[back_path]);
+        }else{
+            back_url = jumpURL("orderdetail",[order.orderId])+"?back="+back_path;
+        }
+        this.state = {
+            back_url: back_url
+        }
+    }
     handleStar(name,pid,val,e){
         const {changeField} = this.props;
         var rate = val>3 ? val : 3;
@@ -55,9 +69,9 @@ class Comment extends Component{
         }
     }
     componentWillReceiveProps(nextProps){
-        const {alert} = this.props;
+        const {back_url} =  this.state;
+        const {alert,defaultScene} = this.props;
         const {order,alertContent,back_path} = this.props.orderByParam;
-        const back_url = back_path === null ? null : jumpURL("orderlist-id",[back_path]);
         if(nextProps.orderByParam.saveCommentChanging === false &&
            this.props.orderByParam.saveCommentChanging === true){
             if(nextProps.orderByParam.saveCommentChanged === true){
@@ -130,23 +144,23 @@ class Comment extends Component{
                         </div>
                         <label htmlFor="form-isOpen">匿名评论</label>
                     </div>
-                    <a href="javascript:void(0);" onClick={this.handleSave.bind(this)} className="confirm_btn">提交评论</a>
+                    <a href="javascript:;" onClick={this.handleSave.bind(this)} className="confirm_btn">提交评论</a>
                 </div>
             )
         }
     }
     render(){
-        const {currentRoute} = this.props;
+        const {currentScene,defaultScene,changeScene} = this.props;
         const {order,alertActive,alertContent,back_path} = this.props.orderByParam;
         const {itemList} = order;
-        const back_url = back_path === null ? null : jumpURL("orderlist-id",[back_path]);
+        const {back_url} = this.state;
         var hasNotComment = _.filter(itemList, function(o){ return !o.hasComment;});
-        if(currentRoute === "comment"){
+        if(currentScene === "comment"){
             return (
                 <div className="order-detail-content comment-content">
-                    <Header canBack={!back_url}>
+                    <Header canBack={false}>
                         {
-                            back_url ? <a href={back_url} className="iconfont icon-back"></a> : back_url
+                           defaultScene ? <a href={back_url} className="iconfont icon-back"></a> : <a href="javascript:;" onClick={changeScene.bind(this,"index")} className="iconfont icon-back"></a>
                         }
                         <span className="title">评论宝贝</span>
                     </Header>
