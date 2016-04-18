@@ -10,8 +10,17 @@ import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
 class Logistics extends Component{
     constructor(props){
         super(props);
+        const {defaultScene} = props;
+        const {back_path,order} = props.orderByParam;
+        let back_url = "";
+        if(defaultScene){
+            back_url = jumpURL("orderlist-id",[back_path]);
+        }else{
+            back_url = jumpURL("orderdetail",[order.orderId])+"?back="+back_path;
+        }
         this.state = {
-            activeIndex:0
+            activeIndex: 0,
+            back_url: back_url
         }
     }
     componentDidMount(){
@@ -85,9 +94,9 @@ class Logistics extends Component{
         )
     }
     render(){
-        const {currentRoute} = this.props;
+        const {currentScene,defaultScene,changeScene} = this.props;
         const {logistics,order,back_path} = this.props.orderByParam;
-        const back_url = back_path === null ? null : jumpURL("orderlist-id",[back_path]);
+        const {back_url} = this.state;
 
         var content,
             parcel = [];
@@ -114,12 +123,12 @@ class Logistics extends Component{
         if(parcel.length>0){
             content = slideTabs;
         }
-        if(currentRoute === "logistics"){
+        if(currentScene === "logistics" && logistics){
             return (
                 <div className="order-detail-content logistics-content">
-                    <Header canBack={!back_url}>
+                    <Header canBack={false}>
                         {
-                            back_url ? <a href={back_url} className="iconfont icon-back"></a> : back_url
+                           defaultScene ? <a href={back_url} className="iconfont icon-back"></a> : <a href="javascript:;" onClick={changeScene.bind(this,"index")} className="iconfont icon-back"></a>
                         }
                         <span className="title">物流信息</span>
                     </Header>
