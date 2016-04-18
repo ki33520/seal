@@ -43,10 +43,6 @@ app.engine('html', cons.swig);
 app.set('view engine', 'html');
 app.set("views", __dirname + '/../view');
 
-<<<<<<< HEAD
-if(process.env.NODE_ENV !== "production"){
-    // app = require("../task/develop-middleware")(app)
-=======
 app.use(function(req,res,next){
     if(process.env.HMR_ENABLED){
         var hmrPort = process.env.HMR_PORT || 5000;
@@ -57,7 +53,6 @@ app.use(function(req,res,next){
 })
 if(process.env.HMR_ENABLED){
     app = require("../task/develop-middleware")(app)
->>>>>>> develop
 }
 
 var router = require("./router.js");
