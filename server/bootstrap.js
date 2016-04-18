@@ -27,7 +27,7 @@ var store = new MemcachedStore({
 })
 
 app.use(session({
-    name: "seal.sid",
+    // name: "seal.sid",
     secret: "seal20151111",
     resave: false,
     saveUninitialized: false,
@@ -36,7 +36,8 @@ app.use(session({
         httpOnly: true,
         maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
     },
-    store: store
+    store: store,
+    // unset:"destroy"
 }))
 
 app.engine('html', cons.swig);

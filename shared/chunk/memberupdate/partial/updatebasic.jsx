@@ -113,7 +113,6 @@ class UpdateBasic extends Component{
         const self = this;
         if(nextProps.basicByForm.basicChanging === false &&
            this.props.basicByForm.basicChanging === true){
-            console.log(nextProps.basicByForm.basicChanged)
             if(nextProps.basicByForm.basicChanged === true){
                 setTimeout(()=>{changeScene.call(self,"index")},2500);
                 this.props.alert(nextProps.basicByForm.msg,2000);

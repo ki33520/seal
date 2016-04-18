@@ -21,7 +21,6 @@ var loginGateway = function(req, res, next) {
             }else{
                 returnUrl = decodeURIComponent(util.base64DecodeForURL(returnUrl));
             }
-            // console.log('user',req.session["user"])
             if(req.session["localcart"] && req.session["localcart"].length > 0){
                 util.syncLocalCart(user.memberId, req.session["localcart"]).then(function(ret) {
                     if (ret.returnCode === 0) {
