@@ -43,12 +43,13 @@ class Cart extends Component {
             singleCodes:singleCodes.join(','),
             buyeds:buyeds.join(',')
         }
-    }
+    } 
+    /**
     componentWillReceiveProps(nextProps){
         const {isChecked,isWarning,carts,cartIndex,groupIndex,goodsIndex,singleCode} = nextProps.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);       
         if(isChecked&&isWarning){
-            /**
+           
             this.setState({
                 dialogActive:true,
                 dialogMesg:'商品超出免税额度,是否调整订单?',
@@ -76,9 +77,9 @@ class Cart extends Component {
                     });
                 }
             });
-            */
         }
     }
+    */
     componentDidUpdate(){
         if(this.state.dialogActive){
             return false;
