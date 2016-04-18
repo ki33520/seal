@@ -45,9 +45,9 @@ class AllBrands extends Component{
             <div className="all-brands">
                 <Header onGoBack={this.props.changeScene.bind(this,"index")}>全部品牌</Header>
                 <div className="all-brands-inner">
-                <ScrollNav className="all-brands-list" navbarRenderer={navbarRenderer}>
+                <div className="all-brands-list">
                 {this.renderBrand()}
-                </ScrollNav>
+                </div>
                 </div>
                 <Loading active={this.props.allBrand.brandsFetching}/>
             </div>

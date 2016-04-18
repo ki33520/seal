@@ -83,7 +83,7 @@ var categoryActivity = function(req,res,next){
 
 function categoryActivityFilter(activity){
     var _activity = {}
-    _activity["imageUrl"] = config.imgServer + activity.imageUrl
+    _activity["imageUrl"] = activity.imageUrl?(config.imgServer + activity.imageUrl):""
     _activity["jumpUrl"] = getJumpUrl(activity)
     return _activity
 }
