@@ -344,16 +344,41 @@ body {
 	color:#27c241;
 }
 
-.empty span{
-  display: inline;
-}
-
 .tips {
 	text-align: center;
 }
+
 .placeholder{
     width:rem4px(162);
     height:rem4px(162);
     background:url(/client/asset/images/goodslist_placeholder.png) no-repeat 50% 50%;
     background-size:cover;
+}
+.error-content {
+	text-align: center;
+}
+
+.back-btn {
+  width: 3.92rem;
+  height: 0.9rem;
+  line-height: 0.9rem;
+  display: block;
+  margin: 0.52rem auto 0;
+  background-color: #801da1;
+  color: #fff;
+  border: 1px solid #801da1;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 0.38rem;
+}
+.back-btn:visited,
+.back-btn:hover {
+  color: #fff;
+}
+
+.empty .tips span {
+	display: inline;
+}
+.empty .error-content span {
+	display: inline;
 }
