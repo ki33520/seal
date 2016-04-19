@@ -51,13 +51,13 @@ var search = function(req, res, next) {
     var areaName = req.query.areaName;
     var categoryName = req.query.categoryName;
     if(keyword !== undefined){
-        var searchhistory = util.saveSearchHistory(req.searchhistory["searchhistory"],{
+        var searchhistory = util.saveSearchHistory(req.cookies["searchhistory"],{
             keyword:keyword,
             createAt:Date.now()
         });
         options.searchKey=keyword;
-        // res.cookie("searchhistory",searchhistory)
-        req.session["searchhistory"] = searchhistory;
+        res.cookie("searchhistory",searchhistory)
+        // req.session["searchhistory"] = searchhistory;
     }
     if(Number(req.query.pageIndex)){
         options.currentPage = req.query.pageIndex;
