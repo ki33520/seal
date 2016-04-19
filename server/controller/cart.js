@@ -92,8 +92,9 @@ var cart = function(req, res, next) {
     var isLogined = (user && user.memberId)? true:false;
     var loginUrl = res.locals.loginUrl;
     var renderMarkup = function(arr) {
+        var carts = formatCarts(arr);
         var initialState = {
-            carts: formatCarts(arr),
+            carts: carts,
             isLogined: isLogined,
             loginUrl: loginUrl,
             isFetched:true
@@ -261,10 +262,30 @@ var checkCart = function(req, res, next) {
     });
 }
 
+var reloadCart = function(req,res,next){
+    var user = req.session.user;
+    util.fetchAPI("cartByUser", {
+        memberId: user.memberId
+    },false,{method:'POST'}).then(function(resp) {
+        if (resp.returnCode === 0) {
+            res.json({
+                isFetched:true,
+                carts:formatCarts(resp.object)
+            })
+        } else {
+            res.json({
+                isFetched:false,
+                carts:[]
+            })
+        }
+    });
+}
+
 module.exports = {
     cart: cart,
     updateCart: updateCart,
     deleteCart: deleteCart,
     fetchCart: fetchCart,
-    checkCart: checkCart
+    checkCart: checkCart,
+    reloadCart:reloadCart
 };

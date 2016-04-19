@@ -47,7 +47,8 @@ router.get(urlPrefix + "/cart.html",mainController.authorizeLocals,require("./co
 router.post(urlPrefix + "/updatecart",require("./controller/cart").updateCart);
 router.post(urlPrefix + "/deletecart",require("./controller/cart").deleteCart);
 router.post(urlPrefix + "/fetchcart",require("./controller/cart").fetchCart);
-router.post(urlPrefix + "/checkCart",mainController.requireAuthorize,require("./controller/cart").checkCart);
+router.post(urlPrefix + "/checkcart",mainController.requireAuthorize,require("./controller/cart").checkCart);
+router.post(urlPrefix + "/reloadcart",mainController.requireAuthorize,require("./controller/cart").reloadCart);
 
 router.get(urlPrefix + "/shipfee",mainController.requireAuthorize,require("./controller/confirmorder").shipFee);
 router.get(urlPrefix + "/paygateway/:param",mainController.requireAuthorize,require("./controller/confirmorder").payGateway);
