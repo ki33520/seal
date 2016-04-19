@@ -12,7 +12,7 @@ var loginGateway = function(req, res, next) {
     }).then(function(resp) {
         if (resp.returnCode === 0) {
             var user = _.pick(resp.object, [
-                "nickName", "userName", "mobileNumber", "openId", "lastLoginTime", "wxOpenId"
+                "nickName", "userName", "mobileNumber", "openId", "lastLoginTime", "wxOpenId","medrauId"
             ])
             user.memberId = resp.object.id
             req.session.user = user;

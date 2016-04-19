@@ -134,9 +134,9 @@ export function toggleCollected(param){
             let alertMsg = "";
             if(res.isToggled){
                 alertMsg = param.status ? "添加收藏成功!":"取消收藏成功!"
-                dispatch(alert(alertMsg,3000))
+                dispatch(alert(alertMsg,1000))
             }else{
-                dispatch(alert(res.errMsg,3000))
+                dispatch(alert(res.errMsg,1000))
             }
             dispatch(finishToggleCollected(param,res));
         })
