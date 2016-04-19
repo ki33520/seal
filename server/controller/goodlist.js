@@ -145,6 +145,7 @@ var search = function(req, res, next) {
             }
         }
     },function(){
+        // next(new Error('api request failed'));
         var initialState = {
             code: "500",
             keyword:keyword||areaName||brandName||categoryName
