@@ -13,6 +13,7 @@ import ActivityIndicator from "../common/activityindicator.jsx";
 import {base64Encode,formatPrice} from "../../lib/helper.es6";
 import {urlParam} from "../../lib/http.es6";
 import {jumpURL} from "../../lib/jumpurl.es6";
+//import { disableHistoryForwardCacheThen } from "../../lib/util.es6";
  
 class Cart extends Component {
     constructor(props){
@@ -108,6 +109,11 @@ class Cart extends Component {
             }
         }
     }
+    componentDidMount(){
+        if(document.getElementById('persisted').value){
+            this.props.reloadCart()
+        }
+    }
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
         const cart = carts[cartIndex];
@@ -122,6 +128,7 @@ class Cart extends Component {
             location.href=loginUrl;
             return false;
         }
+        document.getElementById('persisted').value=Math.random();
         this.props.checkCartInfo({
             singleCodes,
             buyeds,
@@ -243,9 +250,9 @@ class Cart extends Component {
         const minBuy = goods.minStep;
         const buyed = goods.buyed;
         const isInvalid = goods.stockFlag===false||goods.onSale===false;
-        const limitStyle = classNames({
-            limitBuy:maxBuy
-        });
+        // const limitStyle = classNames({
+        //     limitBuy:maxBuy
+        // });
         const saleOut = classNames({
             "sale-out":goods.stockFlag===false&&goods.onSale,
             "put-off":!goods.onSale
@@ -270,7 +277,6 @@ class Cart extends Component {
                                 <img width="100%" src={goods.imageUrl} />
                                 <div className={saleOut}></div>
                             </a>
-                            <span className={limitStyle}>{'限购'+maxBuy+'件'}</span>
                         </div>
                         <div className="gd_info">
                             <a href={jumpURL("gooddetail",[goods.singleCode])}>

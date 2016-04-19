@@ -6,7 +6,8 @@ import {
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
     START_CHECK_CART,FINISH_CHECK_CART,
-    START_FETCH_CART,FINISH_FETCH_CART
+    START_FETCH_CART,FINISH_FETCH_CART,
+    START_RELOAD_CART,FINISH_RELOAD_CART
 } from "./constant.es6";
 import {alert} from "../common/action.es6";
 import {urlPrefix} from "../../lib/jumpurl.es6";
@@ -132,6 +133,19 @@ function finishCheckCart(param,res){
     }
 }
 
+function startReloadCart(){
+    return {
+        type:START_RELOAD_CART
+    }
+}
+
+function finishReloadCart(res){
+    return {
+        type:FINISH_RELOAD_CART,
+        res
+    }
+}
+
 export {alert} from "../common/action.es6";
  
 export function updateCart(param){
@@ -173,7 +187,7 @@ export function toggleCartAll(param){
 export function checkCartInfo(param){
     return (dispatch)=>{
         dispatch(startCheckCart(param));
-        apiRequest(urlPrefix+'/checkCart',param,{method:"POST"}).then((res)=>{
+        apiRequest(urlPrefix+'/checkcart',param,{method:"POST"}).then((res)=>{
              if(res.returnCode !==0){
                 if(res.returnCode !== -402111){
                     let content = errMsgByCode(res.returnCode);
@@ -191,5 +205,14 @@ export function fetchCart(param){
         apiRequest(urlPrefix+'/fetchcart',param,{method:"POST"}).then((res)=>{
             dispatch(finishFetchCart(param,res));
         });
+    }
+}
+
+export function reloadCart(){
+    return (dispatch)=>{
+        dispatch(startReloadCart());
+        apiRequest(urlPrefix+'/reloadcart',{},{method:"POST"}).then((res)=>{
+            dispatch(finishReloadCart(res));
+        })
     }
 }
