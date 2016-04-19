@@ -92,7 +92,7 @@ router.post(urlPrefix + "/setdefaultreceiver",mainController.requireAuthorize,re
 
 router.get(urlPrefix + "/coupon.html",mainController.requireAuthorize, require("./controller/coupon").list);
 
-router.get("/test",mainController.test);
+router.get(urlPrefix + "/test",mainController.test);
 router.post("/api/v1/build/index",require("./controller/api").buildIndexPage);
 router.post("/api/v1/publish/index",require("./controller/api").publishIndexPage);
 router.all("/mock/api/:api",require("./mock/api").all);

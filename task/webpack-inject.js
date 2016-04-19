@@ -53,11 +53,11 @@ gulp.task("develop-webpack", function() {
 function bundledTime(){
     const dateObj = new Date()
     const year = dateObj.getFullYear()
-    const month = dateObj.getMonth()
+    const month = dateObj.getMonth() + 1
     const date = dateObj.getDate()
     const hour = dateObj.getHours()
     const minute = dateObj.getMinutes()
-    return year+month+date+hour+minute
+    return ""+year+month+date+hour+minute
 }
 
 gulp.task("deploy-webpack", function() {
@@ -88,7 +88,7 @@ gulp.task("deploy-webpack", function() {
             }
         }))
         .pipe(injectString.replace('<script src="{{hostname}}/bs/browser-sync-client.js"></script>\n',""))
-        .pipe(injectString.replace(/<meta name="bundledAt" content="\d{12}">/,""))
+        .pipe(injectString.replace('<meta name="bundledAt" content="\d{12}">',""))
         .pipe(injectString.before("</head>",'<meta name="bundledAt" content="'+bundledTime()+'">\n')).pipe(gulp.dest(injectedPath));
     });
 });
