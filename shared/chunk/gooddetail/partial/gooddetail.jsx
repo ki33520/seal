@@ -321,7 +321,9 @@ class GoodDetail extends Component{
                 {this.state.downVisble?(
                 <Tabs>
                     <TabsItem title="图文详情">
+                    {good.detail?(
                     <div className="good-desc" dangerouslySetInnerHTML={{__html:_.unescape(good.detail)}}></div>
+                    ):<div className="good-desc">暂无详情</div>}
                     </TabsItem>
                     <TabsItem title="保税FAQ">
                     <div className="faq">

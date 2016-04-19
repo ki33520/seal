@@ -178,8 +178,8 @@ function goodFilter(good) {
     _good["buyedMinimum"] = good.minAmount || 1
     _good["buyedStep"] = good.addCount || 1
     _good["showTaxRate"] = (good.showTaxRate * 100)
-    _good["consumerTax"] = (_good["consumerTax"] * 100)
-    _good["addedTax"] = (_good["addedTax"] * 100)
+    _good["consumerTax"] = (good["showConsumerTax"] * 100)
+    _good["addedTax"] = (good["showAddedTax"] * 100)
     _good["productCode"] = good.groupCode
     _good["salePrice"] = good.salesPrice
     _good["originPrice"] = good.originPrice
@@ -312,11 +312,11 @@ var toggleCollected = function(req, res, next) {
             memberId: user.memberId,
             singleCode: singleCode,
             productCode: productCode,
-            inserter: user.nickName
+            inserter: user.mobileNumber
         }) : util.fetchAPI("removeCollected", {
             memberId: user.memberId,
             singleCode: singleCode,
-            operatorName: user.nickName
+            operatorName: user.mobileNumber
         })
         toggleCollectedRequest.then(function(ret) {
             if (ret.returnCode === 0) {

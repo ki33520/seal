@@ -87,6 +87,7 @@ gulp.task("deploy-webpack", function() {
                 return inject.transform.apply(inject.transform, arguments);
             }
         }))
+        .pipe(injectString.replace('<script src="{{hostname}}/bs/browser-sync-client.js"></script>\n',""))
         .pipe(injectString.replace(/<meta name="bundledAt" content="\d{12}">/,""))
         .pipe(injectString.before("</head>",'<meta name="bundledAt" content="'+bundledTime()+'">\n')).pipe(gulp.dest(injectedPath));
     });
