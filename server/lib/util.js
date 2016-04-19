@@ -205,7 +205,7 @@ var util = {
     saveSearchHistory(searchHistory,record){
         var _history = []
         if(searchHistory){
-            _history = _.clone(searchHistory)
+            _history = JSON.parse(searchHistory)
         }
         if(record.keyword == ""){
             return _history
@@ -216,7 +216,7 @@ var util = {
         }else if(index >=0){
             _history[index] = record
         }
-        return _history
+        return JSON.stringify(_history)
     },
     syncLocalCart(memberId,carts){
         carts = carts || []
