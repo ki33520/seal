@@ -204,6 +204,9 @@ var util = {
     },
     saveSearchHistory(history,record){
         history = history || [];
+        if(record === ""){
+            return history
+        }
         var index = _.findIndex(history,{"keyword":record.keyword})
         if(index === -1){
             history.push(record)

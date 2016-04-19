@@ -46,11 +46,11 @@ var search = function(req, res, next) {
         currentPage:1,
         pageSize:10
     };
-    var keyword = req.query.k;
+    var keyword = req.query.k || "";
     var brandName=req.query.brandName;
     var areaName = req.query.areaName;
     var categoryName = req.query.categoryName;
-    if(keyword !== undefined){
+    if(keyword !== ""){
         var searchhistory = util.saveSearchHistory(req.cookies["searchhistory"],{
             keyword:keyword,
             createAt:Date.now()
