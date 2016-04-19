@@ -250,9 +250,9 @@ class Cart extends Component {
         const minBuy = goods.minStep;
         const buyed = goods.buyed;
         const isInvalid = goods.stockFlag===false||goods.onSale===false;
-        const limitStyle = classNames({
-            limitBuy:maxBuy
-        });
+        // const limitStyle = classNames({
+        //     limitBuy:maxBuy
+        // });
         const saleOut = classNames({
             "sale-out":goods.stockFlag===false&&goods.onSale,
             "put-off":!goods.onSale
@@ -277,7 +277,6 @@ class Cart extends Component {
                                 <img width="100%" src={goods.imageUrl} />
                                 <div className={saleOut}></div>
                             </a>
-                            <span className={limitStyle}>{'限购'+maxBuy+'件'}</span>
                         </div>
                         <div className="gd_info">
                             <a href={jumpURL("gooddetail",[goods.singleCode])}>
