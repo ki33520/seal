@@ -145,7 +145,19 @@ var search = function(req, res, next) {
             }
         }
     },function(){
-        next(new Error('api request failed'));
+        // next(new Error('api request failed'));
+        var initialState = {
+            code: "500",
+            keyword:keyword||areaName||brandName||categoryName
+        };
+        var markup = util.getMarkupByComponent(ErrorContent({
+            initialState: initialState
+        }));
+
+        res.render('goodlist', {
+            markup: markup,
+            initialState: initialState
+        });
     });
 }
 
