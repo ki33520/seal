@@ -202,15 +202,18 @@ var util = {
         }
         return carts
     },
-    saveSearchHistory(history,record){
-        history = history || [];
-        var index = _.findIndex(history,{"keyword":record.keyword})
-        if(index === -1){
-            history.push(record)
-        }else if(index >=0){
-            // history[index] = record
+    saveSearchHistory(searchHistory,record){
+        searchHistory = searchHistory || [];
+        if(record.keyword == ""){
+            return searchHistory
         }
-        return history
+        var index = _.findIndex(searchHistory,{"keyword":record.keyword})
+        if(index === -1){
+            searchHistory.push(record)
+        }else if(index >=0){
+            searchHistory[index] = record
+        }
+        return searchHistory
     },
     syncLocalCart(memberId,carts){
         carts = carts || []
