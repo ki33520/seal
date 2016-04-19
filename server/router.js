@@ -35,7 +35,7 @@ router.get(urlPrefix + "/sp-:id.html",mainController.staticize,mainController.au
 router.get(urlPrefix + "/addcart", require("./controller/gooddetail").addCart);
 router.get(urlPrefix + "/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get(urlPrefix + "/iscollected", require("./controller/gooddetail").isCollected);
-router.get(urlPrefix + "/search/s.html",mainController.staticize, require("./controller/goodlist"));
+router.get(urlPrefix + "/search/s.html", require("./controller/goodlist"));
 router.get(urlPrefix + "/goodcomment", require("./controller/gooddetail").goodComments);
 router.get(urlPrefix + "/cartcount", require("./controller/gooddetail").cartCount);
 
