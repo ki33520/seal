@@ -77,6 +77,7 @@ var test = function(req,res){
     var initialState ={
         msg:"test"
     }
+    util.cleanStaticCache()
     var markup = util.getMarkupByComponent(TestContent({
         initialState:initialState
     }))
