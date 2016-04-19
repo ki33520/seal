@@ -54,7 +54,7 @@ if(runtime === "production"){
 config.loginUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/login.html?responseType=code";
 config.logoutUrl = config.oathServer +
-    "/score/member/"+config.appId+"/haiwaigou-wap/wap/logout.html?responseType=code";
+    "/score/member/"+config.appId+"/haiwaigou-wap/wap/logout?responseType=code";
 config.registerUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/register.html?responseType=code";
 

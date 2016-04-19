@@ -245,6 +245,9 @@ var util = {
         var key = md5(encodeURIComponent(url.format(urlObj)))
         return staticStorage.get(key)
     },
+    cleanStaticCache(){
+        staticStorage.clean()
+    },
     writePage(pageName,html){
         var pagePath = path.resolve("client/page/"+pageName+".html")
         try{

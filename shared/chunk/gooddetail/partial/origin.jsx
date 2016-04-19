@@ -22,11 +22,11 @@ class Origin extends Component{
                   <dd>{good.warehouseName}</dd>
                 </dl>
                 <dl>
-                  <dt>关税：</dt>
+                  <dt>税费：</dt>
                   <dd>
                         <a href="http://a.tepin.hk/h/rule/valueTable_h.html"
                          className="tariff">
-                            <span>税费=不含税商品单价*件数*跨境电商综合税率</span>
+                            <span>税费=不含税商品单价*件数*(跨境电商综合税率+行邮税率)</span>
                             <span>跨境电商综合税率=(消费税率+增值税率)/(1-消费税率)*0.7</span>
                             <i className="iconfont icon-right"></i>
                         </a>
