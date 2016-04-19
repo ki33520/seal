@@ -360,7 +360,7 @@ var searchHotWords = function(req, res, next) {
 
 var searchHistory = function(req,res,next){
     if(req.xhr === true){
-        var history = req.cookies["searchhistory"] || []
+        var history = JSON.parse(req.cookies["searchhistory"]) || []
         history = _.sortByOrder(history,"createAt","desc")
         res.json({
             isFetched:true,
