@@ -209,6 +209,9 @@ var submitOrder = function(req, res, next) {
     var couponFee = req.body.couponFee;
     var totalFee = req.body.totalFee;
     var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
+    if(guiderCode === ""){
+        guiderCode = user.medrauId ? user.medrauId:""
+    }
     // console.log(req.cookies,guiderCode)
     // console.log(util.getAPI("saveOrder",{
     //     memberId: user.memberId,
