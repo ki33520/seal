@@ -203,17 +203,20 @@ var util = {
         return carts
     },
     saveSearchHistory(searchHistory,record){
-        searchHistory = searchHistory || [];
+        var _history = []
+        if(searchHistory){
+            _history = _.clone(searchHistory)
+        }
         if(record.keyword == ""){
-            return searchHistory
+            return _history
         }
-        var index = _.findIndex(searchHistory,{"keyword":record.keyword})
+        var index = _.findIndex(_history,{"keyword":record.keyword})
         if(index === -1){
-            searchHistory.push(record)
+            _history.push(record)
         }else if(index >=0){
-            searchHistory[index] = record
+            _history[index] = record
         }
-        return searchHistory
+        return _history
     },
     syncLocalCart(memberId,carts){
         carts = carts || []
