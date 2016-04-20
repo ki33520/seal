@@ -13,7 +13,6 @@ import ActivityIndicator from "../common/activityindicator.jsx";
 import {base64Encode,formatPrice} from "../../lib/helper.es6";
 import {urlParam} from "../../lib/http.es6";
 import {jumpURL} from "../../lib/jumpurl.es6";
-//import { disableHistoryForwardCacheThen } from "../../lib/util.es6";
  
 class Cart extends Component {
     constructor(props){
@@ -86,26 +85,32 @@ class Cart extends Component {
             return false;
         }
         const {
-            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,isWarning,
+            isUpdated,isToggled,isAllToggled,isDeleted,isPassed,isChecked,
             carts,cartIndex,groupIndex,goodsIndex,singleCode
         } = this.props.cartByUser;
         const {singleCodes,buyeds} = this.filterParamItems(carts[cartIndex]);
-        if(isUpdated||isToggled||isAllToggled||isDeleted||isChecked){
-            if(isPassed||isWarning){
+
+        if(isUpdated||isToggled||isAllToggled||isDeleted){
+            this.props.fetchCart({
+                singleCodes,
+                buyeds,
+                cartIndex,
+                groupIndex,
+                goodsIndex,
+                singleCode
+            });
+            return;
+        }
+        
+        if(isChecked){
+            if(isPassed){
                 const queryParam = base64Encode(urlParam({
                     itemIds:singleCodes,
                     buyeds
                 }));
                 window.location.assign(jumpURL("confirmorder",[queryParam]));
             }else{
-                this.props.fetchCart({
-                    singleCodes,
-                    buyeds,
-                    cartIndex,
-                    groupIndex,
-                    goodsIndex,
-                    singleCode
-                });
+                this.props.reloadCart();
             }
         }
     }
@@ -221,18 +226,12 @@ class Cart extends Component {
         });
     }
     renderInfo(cart){
-        //const tips = "省钱贴士：单笔订单税金"+cart.dutyFree+"元以内，可以免税哦！";
         const warning = "啊哦，海关规定购买多件的总价（不含税）不能超过￥"+cart.buyLimit+"哦，请您分多次购买。";
         let message = null;
 
         if(cart.total > cart.buyLimit&&cart.buyeds>1 && cart.hasRate===true){
             message = warning;
         }
-        /* 
-            else if(cart.dutyFree > 0 && cart.totalTax > cart.dutyFree){
-                message = tips;
-            }
-        */
         if(message===null) return null;
 
         return(
@@ -250,9 +249,6 @@ class Cart extends Component {
         const minBuy = goods.minStep;
         const buyed = goods.buyed;
         const isInvalid = goods.stockFlag===false||goods.onSale===false;
-        // const limitStyle = classNames({
-        //     limitBuy:maxBuy
-        // });
         const saleOut = classNames({
             "sale-out":goods.stockFlag===false&&goods.onSale,
             "put-off":!goods.onSale

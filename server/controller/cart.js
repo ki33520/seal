@@ -257,6 +257,7 @@ var checkCart = function(req, res, next) {
     },false,{method:'POST'}).then(function(resp) {
         var returnCode = resp.returnCode;
         res.json({
+            isFetched:true,
             returnCode:returnCode
         })
     });
