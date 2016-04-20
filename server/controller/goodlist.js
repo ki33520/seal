@@ -71,13 +71,13 @@ var search = function(req, res, next) {
     if(req.query.isHaveGoods !== undefined){
         options.isHaveGoods = req.query.isHaveGoods;
     }
-    if(brandName !==undefined){
+    if(brandName){
         options.brandName = brandName;
     }
-    if(categoryName !==undefined){
+    if(categoryName){
         options.categoryName = categoryName;
     }
-    if(areaName !== undefined){
+    if(areaName){
         options.sourceAreas = areaName;
     }
     keyword = keyword||areaName||brandName||categoryName;

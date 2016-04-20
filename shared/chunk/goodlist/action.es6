@@ -35,20 +35,26 @@ function finishRequestGoods (param,res) {
         res
     }
 }
+function finishResetFilter(param){
+    return {
+        type:RESET_FILTER,
+        param
+    }
+}
 export function fetchGoods(param){
-    return (dispath)=>{
-        dispath(startFetchGoods(param));
+    return (dispatch)=>{
+        dispatch(startFetchGoods(param));
         return apiRequest(jumpURL('search'),param).then((res)=>{
-            dispath(finishFetchGoods(param,res))
+            dispatch(finishFetchGoods(param,res))
         });
     }
 }
 
 export function requestGoods(param){
-    return (dispath)=>{
-        dispath(startRequestGoods(param));
+    return (dispatch)=>{
+        dispatch(startRequestGoods(param));
         return apiRequest(jumpURL('search'),param).then((res)=>{
-            dispath(finishRequestGoods(param,res))
+            dispatch(finishRequestGoods(param,res))
         });
     }
 }
@@ -60,10 +66,11 @@ export function toggleChecked(params){
     }
 }
 
-export function resetFilter(params){
-    return {
-        type:RESET_FILTER,
-        params
+export function resetFilter(param){
+    return (dispatch)=>{
+        setTimeout(()=>{
+            dispatch(finishResetFilter(param));
+        },50)
     }
 }
 
