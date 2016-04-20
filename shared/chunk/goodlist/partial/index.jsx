@@ -5,6 +5,7 @@ import MaskLayer from "../../../component/masklayer.jsx";
 import Refresher from "../../../component/refresher.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Header from "../../common/header.jsx";
+import _ from "../../../lib/lodash.es6";
 import Sidebar from "./sidebar.jsx";
 import GoodItem from "./goodItem.jsx";
 import GoodSorter from "./goodStore.jsx";
@@ -40,36 +41,30 @@ class GoodListApp extends React.Component{
     handlerSave(isHaveGoods){
         const {params,filters} = this.props.index;
         const {categoryNames,brandNames,areaNames} = filters;
-        let _params = Object.assign({},params,{
+        let _params = _.assign({},params,{
             isHaveGoods
         });
         let categories = [];
         let brands = [];
         let areas = [];
-        categoryNames.forEach((item,i)=>{
+        _.forEach(categoryNames,(item,i)=>{
             item.isChecked && categories.push(item.name);
         });
-        brandNames.forEach((item,i)=>{
+        _.forEach(brandNames,(item,i)=>{
             item.isChecked && brands.push(item.name);
         });
-        areaNames.forEach((item,i)=>{
+        _.forEach(areaNames,(item,i)=>{
             item.isChecked && areas.push(item.name);
         });
-        if(categories.length){
-            _params.categoryName = categories.join(',');
-        }
-        if(areas.length){
-            _params.areaName=areas.join(',');
-        }
-        if(brands.length){
-            _params.brandName=brands.join(',');
-        }
+        _params.categoryName = categories.join(',');
+        _params.areaName=areas.join(',');
+        _params.brandName=brands.join(',');
         this.props.fetchGoods(_params);
         this.togglePopupActive();
     }
     toggleSort(order){
         const {params} = this.props.index;
-        const _params = Object.assign({},params,order,{pageIndex:1});
+        const _params = _.assign({},params,order,{pageIndex:1});
         this.props.fetchGoods(_params);
     }
     beginRefresh(){
@@ -78,7 +73,7 @@ class GoodListApp extends React.Component{
         if(isFetching || totalPage <= curentPage){
             return false;
         }
-        const _params = Object.assign({},params,{
+        const _params = _.assign({},params,{
             pageIndex : curentPage + 1
         });
         this.props.requestGoods(_params);
