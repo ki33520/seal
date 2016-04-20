@@ -59,7 +59,7 @@ if(process.env.HMR_ENABLED){
 
 app.use(function(req,res,next){
     var userAgent = req.headers['user-agent'].toLowerCase();
-    var mobileAgent = ["iphone", "ipod", "ipad", "android", "mobile", "blackberry", "nokia"];
+    var mobileAgent = ["iphone", "ipod", "ipad", "android", "mobile","windows phone","blackberry", "nokia"];
     var isMobile = false;
     var url = 'http://www.tepin.hk';
     for (var i=0,n=mobileAgent.length; i<n; i++){ 
