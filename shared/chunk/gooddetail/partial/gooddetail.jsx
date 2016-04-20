@@ -6,7 +6,7 @@ import _ from "../../../lib/lodash.es6";
 import classNames from "classnames";
 import dom from "../../../lib/dom.es6";
 import {urlParam} from "../../../lib/http.es6";
-import {base64Encode,formatPrice} from "../../../lib/helper.es6"
+import {base64Encode,formatPrice,destPriceForGoods} from "../../../lib/helper.es6"
 // import Slider from "../../../component/slider/slider.jsx";
 // import Slide from "../../../component/slider/slide.jsx";
 import {Slides,Slide} from "../../../component/slides.jsx";
@@ -230,12 +230,12 @@ class GoodDetail extends Component{
     }
     renderPrice(){
         const {good} = this.props.goodById;
-        let salePrice = good.salePrice
+        let salePrice = destPriceForGoods(good).destPrice
         if(good.flashbuy["active"]){
             salePrice = good.flashbuy["price"]
         }
         if(good["useMobilePrice"] && !good.flashbuy["active"]){
-            salePrice = good["mobilePrice"]
+            // salePrice = good["mobilePrice"]
             return (
                 <span className="mobilePrice">
                 <span className="nowPrice">&yen;{formatPrice(salePrice)}</span>
