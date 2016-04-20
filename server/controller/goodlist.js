@@ -80,6 +80,7 @@ var search = function(req, res, next) {
     if(areaName !== undefined){
         options.sourceAreas = areaName;
     }
+    keyword = keyword||areaName||brandName||categoryName;
     util.fetchAPI("fetchGoodsList", options,false,{method:"POST"}).then(function(resp) {
         if (resp.returnCode === 0) {
             var goods = resp.object;
@@ -107,7 +108,7 @@ var search = function(req, res, next) {
                         viewType:options.sortViewType,
                         isHaveGoods:options.isHaveGoods
                     },
-                    keyword:keyword||areaName||brandName||categoryName,
+                    keyword:keyword,
                     totalPage:Math.ceil(goods.totalsNum/options.pageSize),
                     isFetched:true
                 };
@@ -132,7 +133,7 @@ var search = function(req, res, next) {
                 //next(new Error(resp.message));
                 var initialState = {
                     code: "500",
-                    keyword:keyword||areaName||brandName||categoryName
+                    keyword:keyword
                 };
                 var markup = util.getMarkupByComponent(ErrorContent({
                     initialState: initialState
@@ -148,7 +149,7 @@ var search = function(req, res, next) {
         // next(new Error('api request failed'));
         var initialState = {
             code: "500",
-            keyword:keyword||areaName||brandName||categoryName
+            keyword:keyword
         };
         var markup = util.getMarkupByComponent(ErrorContent({
             initialState: initialState

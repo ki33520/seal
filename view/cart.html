@@ -2,17 +2,18 @@
 {% block title %}购物车－友阿海外购{% endblock %}
 {% block css %}
 <!-- inject:css -->
-<meta name="bundledAt" content="20164191749">
-<link rel="stylesheet" href="/client/bundle/cart/dist/cart-b9be1bd4d23a5543fbf0.css">
+<meta name="bundledAt" content="20164201353">
+<link rel="stylesheet" href="/client/bundle/cart/dist/cart-d3e6d515ee85d17c40c6.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
 <div id="cart" class="container">{{ markup|safe }}</div>
+<input type="hidden" id="persisted"/>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="/client/vendor/dist/react-b9be1bd4d23a5543fbf0.js"></script>
-<script src="/client/bundle/cart/dist/cart-b9be1bd4d23a5543fbf0.js"></script>
+<script src="/client/vendor/dist/react-d3e6d515ee85d17c40c6.js"></script>
+<script src="/client/bundle/cart/dist/cart-d3e6d515ee85d17c40c6.js"></script>
 <!-- endinject -->
 {% endblock %}

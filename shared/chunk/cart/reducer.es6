@@ -7,7 +7,8 @@ import {
     START_TOGGLE_ITEM,FINISH_TOGGLE_ITEM,
     START_TOGGLE_ALL,FINISH_TOGGLE_ALL,
     START_CHECK_CART,FINISH_CHECK_CART,
-    START_FETCH_CART,FINISH_FETCH_CART
+    START_FETCH_CART,FINISH_FETCH_CART,
+    START_RELOAD_CART,FINISH_RELOAD_CART
 } from "./constant.es6";
  
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -192,22 +193,41 @@ function cartByUser(state={},action){
                 isChecking:true,
                 isFetching:true,
                 isChecked:false,
-                isPassed:false,
-                isWarning:false
+                isPassed:false
             });
         case FINISH_CHECK_CART:
             var {cartIndex} = action.param;
             var {returnCode} = action.res;
             var carts = state.carts.slice();
             var cart = {...carts[cartIndex]};
+            var isPassed = false;
             carts[cartIndex] = cart;
+            if(returnCode===0||returnCode===-402111){
+                isPassed = true;
+            }
             return Object.assign({},state,{
                 isChecking:false,
                 isFetching:false,
                 isChecked:true,
-                isPassed:returnCode===0,
-                isWarning:returnCode===-402111,
+                isPassed,
                 cartIndex,
+                carts
+            });
+        case START_RELOAD_CART:
+            return Object.assign({},state,{
+                isFetching:true,
+                isFetched:false,
+                isChecked:false
+            }); 
+        case FINISH_RELOAD_CART:
+            var carts = state.carts.slice();
+            var isFetched = action.res.isFetched;
+            if(isFetched){
+                carts = action.res.carts;
+            }
+            return Object.assign({},state,{
+                isFetched,
+                isFetching:false,
                 carts
             });
         case SHOW_ALERT:
