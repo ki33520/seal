@@ -26,7 +26,7 @@ class Image extends Component{
         }
     }
     render(){
-        const {transitionName,src} = this.props
+        const {transitionName,src,visible} = this.props
         const {isReady} = this.state
         let placeholder = <img src={this.props.placeholder}/>
         if(_.isFunction(this.props.placeholder)){
