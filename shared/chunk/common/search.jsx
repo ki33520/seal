@@ -122,7 +122,7 @@ class SearchBox extends Component{
                 {keyword?this.renderAssociate():this.renderSearchList()}
                 <Dialog active={this.state.dialogActive} 
                 onCancel={this.toggleDialog.bind(this)} 
-                onConfrim={this.state.dialogOnConfirm}>确定清空历史记录?</Dialog>
+                onConfrim={this.state.dialogOnConfirm}>确定清空搜索记录吗?</Dialog>
             </div>
         )
     }
