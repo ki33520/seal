@@ -40,7 +40,7 @@ function errMsgByCode(errCode) {
             errMsg = "商品已售完";
             break;
         default:
-            errMsg="数据异常";
+            errMsg="超出购买限制";
             break;
     }
     return errMsg;
@@ -171,7 +171,7 @@ export function toggleCartItem(param){
         dispatch(toggleChecked(param));
          setTimeout(()=>{
             dispatch(finishChecked(param));
-         },50)
+        },50)
     }
 }
 
@@ -180,7 +180,7 @@ export function toggleCartAll(param){
         dispatch(toggleCheckedAll(param));
          setTimeout(()=>{
             dispatch(finishCheckedAll(param));
-         },50);
+        },50);
     }
 }
  
@@ -188,12 +188,12 @@ export function checkCartInfo(param){
     return (dispatch)=>{
         dispatch(startCheckCart(param));
         apiRequest(urlPrefix+'/checkcart',param,{method:"POST"}).then((res)=>{
-             if(res.returnCode !==0){
+            if(res.returnCode !==0){
                 if(res.returnCode !== -402111){
                     let content = errMsgByCode(res.returnCode);
                     dispatch(alert(content,3000));
                 }
-             }
+            }
             dispatch(finishCheckCart(param,res));
         })
     }
@@ -213,6 +213,6 @@ export function reloadCart(){
         dispatch(startReloadCart());
         apiRequest(urlPrefix+'/reloadcart',{},{method:"POST"}).then((res)=>{
             dispatch(finishReloadCart(res));
-        })
+        });
     }
 }
