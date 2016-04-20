@@ -30,6 +30,7 @@ _.each(env.vendors, function(vendor) {
 });
 
 _.extend(entry, moduleEntries)
+
 // console.log('modules',env.modules)
 // console.log("entry", entry, moduleEntryPath);
 module.exports = {
@@ -46,7 +47,7 @@ module.exports = {
         }, , {
             test: /\.html/,
             exclude: [node_modules_dir],
-            loader: 'html'
+            loader: 'swig'
         }, {
             test: /\.styl/,
             exclude: [node_modules_dir],

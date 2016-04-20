@@ -92,7 +92,6 @@ class Toolbar extends Component{
                     <div className="pro clearfix">
                         <div className="pro-name">
                             <span>购买数量</span>
-                            <em>（限购{buylimit}件）</em>
                         </div>
                         <div className="good-buyed">
                         <NumberPicker value={buyed} onChange={handleBuyedChanged} 

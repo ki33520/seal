@@ -47,7 +47,7 @@ module.exports = {
         }, , {
             test: /\.html/,
             exclude: [node_modules_dir],
-            loader: 'html'
+            loader: 'swig'
         }, {
             test: /\.styl/,
             exclude: [node_modules_dir],

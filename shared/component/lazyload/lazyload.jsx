@@ -44,9 +44,9 @@ class LazyLoad extends Component{
         if(this.props.relative){
             this.scrollNode = dom.closet(ReactDOM.findDOMNode(this),this.props.relativeSelector)
         }
-        dom.bindEvent(this.scrollNode,'scroll',lazyLoadHandler)
         listeners.push(this);
         checkVisble(this);
+        dom.bindEvent(this.scrollNode,'scroll',lazyLoadHandler)
     }
     componentWillUnmount(){
         const index = listeners.indexOf(this);
