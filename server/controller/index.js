@@ -399,7 +399,7 @@ var searchAssociate = function(req, res, next) {
     }
     util.fetchAPI("fetchAssociateKeywords", {
         searchKey: keyword
-    }).then(function(ret) {
+    },false,{method:"POST"}).then(function(ret) {
         if (ret.returnCode === 0) {
             respond(ret)
         } else {
