@@ -42,6 +42,12 @@ export function urlParam(param){
 }
 
 export function destPriceForGoods(goods){
+    if(goods.flashbuy && goods.flashbuy["active"]){
+        return {
+            destPrice:goods.flashbuy["price"],
+            discount:goods.discount
+        }
+    }
     return {
         destPrice:goods.mobilePrice,
         discount:goods.discount

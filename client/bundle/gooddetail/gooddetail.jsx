@@ -14,6 +14,7 @@ function bootstrap(){
 }
 Object.assign = Object.assign || require('object-assign')
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

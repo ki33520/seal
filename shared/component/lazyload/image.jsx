@@ -17,11 +17,11 @@ class Image extends Component{
             const isSrcValid = this.props.src.search(/.*\.(jpg|png|gif|bmp|jpeg)/g)
             // console.log(this.props.src,isSrcValid)
             if(isSrcValid > -1){
-                setTimeout(()=>{
-                    this.setState({
-                        isReady:true
-                    })
-                },500);
+                // setTimeout(()=>{
+                this.setState({
+                    isReady:true
+                })
+                // },500);
             }
         }
     }
