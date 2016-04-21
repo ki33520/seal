@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Popup from "../../../component/popup.jsx";
 import NumberPicker from "../../../component/numberpicker.jsx";
-import {formatPrice} from "../../../lib/helper.es6";
+import {formatPrice,destPriceForGoods} from "../../../lib/helper.es6";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 import dom from "../../../lib/dom.es6";
@@ -21,22 +21,20 @@ class Toolbar extends Component{
     }
     renderPrice(){
         const {good} = this.props
-        let salePrice = good.salePrice
-        if(good.flashbuy["active"]){
-            salePrice = good.flashbuy["price"]
-        }
-        if(good["useMobilePrice"] && !good.flashbuy["active"]){
-            salePrice = good["mobilePrice"]
-        }
+        let salePrice = destPriceForGoods(good).destPrice
         return <span>&yen;{formatPrice(salePrice)}</span>
     }
     render(){
-        const {addToCart,directBuy,handleBuyedChanged,handleAttrToggle,
+        const {addToCart,directBuy,handleBuyedChanged,handleBuyedOverflow,handleAttrToggle,
             popupActive,trigger,togglePopup,
             cartCount,selectedAttr,buyed,good} = this.props
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
+        let buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
 
-        const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
+        /*2000 price amount limit*/
+        const destPrice = destPriceForGoods(good).destPrice
+        buylimit = buylimit > Math.floor(2000 / destPrice) ?Math.floor(2000 / destPrice):buylimit
+
         let canAddCart = good["canAddCart"]
         if(good.flashbuy["active"]){
             canAddCart = false
@@ -95,6 +93,7 @@ class Toolbar extends Component{
                         </div>
                         <div className="good-buyed">
                         <NumberPicker value={buyed} onChange={handleBuyedChanged} 
+                        onOverflow={handleBuyedOverflow} 
                         step={good.buyedStep}
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
