@@ -139,6 +139,13 @@ class GoodDetail extends Component{
             buyed
         });
     }
+    handleBuyedOverflow(buyed){
+        const {good} = this.props.goodById
+        const salePrice = destPriceForGoods(good).destPrice
+        if(salePrice * buyed > 2000){
+            this.props.alert("您已超过海关限额￥2000，请分次购买",1000)
+        }
+    }
     addToCart(e){
         e && e.preventDefault();
         const {alert,addCart} = this.props;
@@ -231,9 +238,6 @@ class GoodDetail extends Component{
     renderPrice(){
         const {good} = this.props.goodById;
         let salePrice = destPriceForGoods(good).destPrice
-        if(good.flashbuy["active"]){
-            salePrice = good.flashbuy["price"]
-        }
         if(good["useMobilePrice"] && !good.flashbuy["active"]){
             // salePrice = good["mobilePrice"]
             return (
@@ -253,6 +257,7 @@ class GoodDetail extends Component{
             popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
             buyed={buyed}
             handleAttrToggle={this.handleAttrToggle.bind(this)}
+            handleBuyedOverflow={this.handleBuyedOverflow.bind(this)} 
             handleBuyedChanged={this.handleBuyedChanged.bind(this)}
             directBuy={this.directBuy.bind(this)} 
             addToCart={this.addToCart.bind(this)}>

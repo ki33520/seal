@@ -21,10 +21,10 @@ class NumberPicker extends Component{
     handleIncrease(e){
         e && e.preventDefault();
         var value = this.state.value;
-        // console.log(value)
-        const {maximum,step,onChange} = this.props;
+        const {maximum,step,onChange,onOverflow} = this.props;
         value += step;
         if(maximum !== null && value > maximum){
+            onOverflow(value)
             return;
         }
         this.setState({
@@ -36,10 +36,11 @@ class NumberPicker extends Component{
     handleDecrease(e){
         e && e.preventDefault();
         var value = this.state.value;
-        const {minimum,step,onChange} = this.props;
+        const {minimum,step,onChange,onUnderflow} = this.props;
         // console.log(value,minimum)
         value -= step;
         if(minimum !== null && value < minimum){
+            onUnderflow(value)
             return;
         }
         this.setState({
@@ -82,6 +83,8 @@ NumberPicker.defaultProps = {
     minimum:0,
     maximum:null,
     step:1,
+    onOverflow:()=>{},
+    onUnderflow:()=>{},
     onChange:function(){}
 };
 

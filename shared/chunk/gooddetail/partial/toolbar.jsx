@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import Popup from "../../../component/popup.jsx";
 import NumberPicker from "../../../component/numberpicker.jsx";
-import {formatPrice} from "../../../lib/helper.es6";
+import {formatPrice,destPriceForGoods} from "../../../lib/helper.es6";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 import dom from "../../../lib/dom.es6";
@@ -21,22 +21,20 @@ class Toolbar extends Component{
     }
     renderPrice(){
         const {good} = this.props
-        let salePrice = good.salePrice
-        if(good.flashbuy["active"]){
-            salePrice = good.flashbuy["price"]
-        }
-        if(good["useMobilePrice"] && !good.flashbuy["active"]){
-            salePrice = good["mobilePrice"]
-        }
+        let salePrice = destPriceForGoods(good).destPrice
         return <span>&yen;{formatPrice(salePrice)}</span>
     }
     render(){
-        const {addToCart,directBuy,handleBuyedChanged,handleAttrToggle,
+        const {addToCart,directBuy,handleBuyedChanged,handleBuyedOverflow,handleAttrToggle,
             popupActive,trigger,togglePopup,
             cartCount,selectedAttr,buyed,good} = this.props
         const handleConfirm = (trigger && trigger === "addToCart") ? addToCart:directBuy;
+        let buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
 
-        const buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
+        /*2000 price amount limit*/
+        const destPrice = destPriceForGoods(good).destPrice
+        buylimit = buylimit > Math.floor(2000 / destPrice) ?Math.floor(2000 / destPrice):buylimit
+
         let canAddCart = good["canAddCart"]
         if(good.flashbuy["active"]){
             canAddCart = false
@@ -51,7 +49,7 @@ class Toolbar extends Component{
            }
         }
         let handleDirectBuyPopup = ()=>{
-            if(good.stock !== 0){
+            if(good.stock > 0){
                 togglePopup("directBuy")
                 this.setState({
                     scheme:"directBuy"
@@ -60,13 +58,13 @@ class Toolbar extends Component{
         }
         // console.log('canAddCart',canAddCart)
         const addCartClasses = classNames("goods_add",{
-            "disabled":!canAddCart || good.stock === 0
+            "disabled":!canAddCart || good.stock <= 0
         })
         const directBuyClasses = classNames("goods_buy",{
-            "disabled":good.stock === 0
+            "disabled":good.stock <= 0
         })
         const confrimButtonClasses = classNames("goodsSureBtn",{
-            "disabled":good.stock === 0
+            "disabled":good.stock <= 0
         })
         return (
             <div className="good-detail-toolbar">
@@ -75,7 +73,7 @@ class Toolbar extends Component{
                     <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount}</em>:null}</i>
                 </a>
                 <a href="javascript:void(null)" onClick={handleAddCartPopup} className={addCartClasses}>加入购物车</a>
-                <a href="javascript:void(0);" onClick={handleDirectBuyPopup} className={directBuyClasses}>{good.stock===0?"已抢光":"立即购买"}</a>
+                <a href="javascript:void(0);" onClick={handleDirectBuyPopup} className={directBuyClasses}>{good.stock>0?"立即购买":"已抢光"}</a>
             </div>
             <Popup direction="bottom" active={popupActive}>
                 <div className="con">
@@ -92,10 +90,10 @@ class Toolbar extends Component{
                     <div className="pro clearfix">
                         <div className="pro-name">
                             <span>购买数量</span>
-                            <em>（限购{buylimit}件）</em>
                         </div>
                         <div className="good-buyed">
                         <NumberPicker value={buyed} onChange={handleBuyedChanged} 
+                        onOverflow={handleBuyedOverflow} 
                         step={good.buyedStep}
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>

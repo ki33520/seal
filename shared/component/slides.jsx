@@ -10,7 +10,9 @@ export class Slides extends Component{
     componentDidMount(){
         let Swiper = require("../lib/dom/swiper.js");
         let mySwiper = new Swiper(".swiper-container",{
-            pagination: '.swiper-pagination'
+            pagination: '.swiper-pagination',
+            lazyLoading:true,
+            preloadImages:false
         })
     }
     renderSlides(){
