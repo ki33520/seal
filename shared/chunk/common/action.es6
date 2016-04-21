@@ -8,6 +8,7 @@ import {
     REQUEST_SEARCHHISTORY,RESPONSE_SEARCHHISTORY,
     START_PURGE_SEARCHHISTORY,FINISH_PURGE_SEARCHHISTORY,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
+    REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT
 } from "./constant.es6"
 import {apiRequest} from "../../lib/http.es6";
 import {urlPrefix} from "../../lib/jumpurl.es6";
@@ -157,6 +158,31 @@ export function purgeSearchHistory(param){
         dispatch(startPurgeSearchHistory(param));
         apiRequest(urlPrefix + "/purgesearchhistory",param).then((res)=>{
             dispatch(finishPurgeSearchHistory(param,res));
+        })
+    }
+}
+
+function requestCartCount(){
+    return {
+        type:REQUEST_CARTCOUNT
+    }
+}
+
+function responseCartCount(res){
+    return {
+        type:RESPONSE_CARTCOUNT,
+        res
+    }
+}
+
+export function fetchCartCount(){
+    return (dispatch)=>{
+        dispatch(requestCartCount())
+        return apiRequest(urlPrefix + "/cartcount").then((res)=>{
+            // if(res.logined === false){
+            //     res.result = getLocalCartCount()
+            // }
+            dispatch(responseCartCount(res))
         })
     }
 }

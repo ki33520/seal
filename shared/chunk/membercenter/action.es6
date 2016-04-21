@@ -31,3 +31,5 @@ export default function fetchMember(url,param){
         });
     }
 }
+
+export {fetchCartCount} from "../common/action.es6";
