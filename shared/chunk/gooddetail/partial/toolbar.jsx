@@ -70,7 +70,7 @@ class Toolbar extends Component{
             <div className="good-detail-toolbar">
             <div className="good-detail-btn">
                 <a href={jumpURL("cart")} className="goods_cart">
-                    <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount}</em>:null}</i>
+                    <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount > 99?"99+":cartCount}</em>:null}</i>
                 </a>
                 <a href="javascript:void(null)" onClick={handleAddCartPopup} className={addCartClasses}>加入购物车</a>
                 <a href="javascript:void(0);" onClick={handleDirectBuyPopup} className={directBuyClasses}>{good.stock>0?"立即购买":"已抢光"}</a>
