@@ -8,7 +8,7 @@ import {
 } from "./constants.es6";
 import {CHANGE_FIELD} from "../common/constant.es6";
 
-import {search} from "../common/reducer.es6";
+import {search,cart} from "../common/reducer.es6";
 
 function allCategory(state={},action){
     switch(action.type){
@@ -102,7 +102,8 @@ const rootReducer = combineReducers({
     allCategory,
     categoryBrands,
     allBrand,
-    allOrigin
+    allOrigin,
+    cart
 });
 
 export default rootReducer;
