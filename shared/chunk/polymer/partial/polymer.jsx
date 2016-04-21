@@ -26,7 +26,6 @@ class Polymer extends Component{
         return (
             <div className="polymer-content">
                 <Header>
-                    <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
                     <div className="btn-right">
                         <a href="javascript:;" onClick={changeScene.bind(this,"search")}><Icon icon="search"/></a>
                     </div>
