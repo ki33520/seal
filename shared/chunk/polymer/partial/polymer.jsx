@@ -29,7 +29,8 @@ class Polymer extends Component{
         const cartCount = cart.cartCount||0;
         return (
             <div className="polymer-content">
-                <Header>
+                <Header canBack={false}>
+                    <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
                     <div className="btn-right">
                         <a href="javascript:;" onClick={changeScene.bind(this,"search")}><Icon icon="search"/></a>
                     </div>
