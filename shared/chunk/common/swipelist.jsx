@@ -7,6 +7,7 @@ import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
 class Swipelist extends Component{
     componentDidUpdate(){
         var {imgList,activeIndex} = this.props;
+        const self = this;
         if(imgList && imgList.length >0){
             ReactDOM.findDOMNode(this.refs["swipelist"]).children[0].children[activeIndex].click();
         }
