@@ -78,6 +78,7 @@ var test = function(req,res){
         msg:"test"
     }
     util.cleanStaticCache()
+    req.session["localcart"] = null
     var markup = util.getMarkupByComponent(TestContent({
         initialState:initialState
     }))
