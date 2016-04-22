@@ -2,6 +2,7 @@
 
 import {combineReducers} from "redux";
 import {RECEIVE_MEMBER,REQUEST_MEMBER} from "./action.es6";
+import {cart} from "../common/reducer.es6";
 
 function memberCenterByUser(state={},action){
     switch(action.type){
@@ -11,7 +12,8 @@ function memberCenterByUser(state={},action){
 }
 
 const rootReducer = combineReducers({
-    memberCenterByUser
+    memberCenterByUser,
+    cart
 });
 
 export default rootReducer;

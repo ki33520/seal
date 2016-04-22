@@ -388,7 +388,13 @@ class Cart extends Component {
         }
     }
     render() {
-        const {isUpdating,isFetching,alertContent,alertActive} = this.props.cartByUser;
+        const {isUpdating,isFetching,alertContent,alertActive,carts} = this.props.cartByUser;
+        let cartCount = 0;
+        if(carts&&carts.length>0){
+            carts.forEach((cart)=>{
+                cartCount += cart.buyeds;
+            });
+        }
         return (
             <div className="container">
                 <Header>
@@ -401,7 +407,7 @@ class Cart extends Component {
                     confirmText={this.state.confirmText}
                     onConfrim={this.state.dialogOnConfirm}>{this.state.dialogMesg}</Dialog>
                 <Alert active={alertActive} >{alertContent}</Alert>
-                <Footer activeIndex="3"/>
+                <Footer activeIndex="3" buyed={cartCount}/>
                 <ActivityIndicator active={isFetching}/>
             </div>
         )

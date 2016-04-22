@@ -162,7 +162,7 @@ var util = {
         return _param
     },
     getLocalCartCount(carts){
-        carts = carts || [];
+        carts = carts?carts:[];
         var cartCount = 0;
         _.each(carts,function(cart){
             cartCount += cart.buyed
@@ -171,7 +171,7 @@ var util = {
     },
     isLocalCartLimitExceed(carts,cart,replace){
         let buyed = parseInt(cart.buyed,10)
-        carts = carts || [];
+        carts = carts?carts:[];
         let isExceed = false
         if(_.some(carts,{singleCode:cart.singleCode})){
             _.each(carts,function(v){
@@ -185,7 +185,7 @@ var util = {
     },
     saveLocalCart(carts,cart,replace){
         let buyed = parseInt(cart.buyed,10)
-        carts = carts || [];
+        carts = carts?carts:[];
         if(_.some(carts,{singleCode:cart.singleCode})){
             carts = _.map(carts,function(v){
                 if(v.singleCode === cart.singleCode){

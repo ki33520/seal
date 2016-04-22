@@ -7,6 +7,7 @@ import {
     REQUEST_SEARCHHISTORY,RESPONSE_SEARCHHISTORY,
     START_PURGE_SEARCHHISTORY,FINISH_PURGE_SEARCHHISTORY,
     REQUEST_ASSOICATEWORD,RESPONSE_ASSOICATEWORD,
+    REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT
 } from "./constant.es6";
 
 export function alertReducer(state={},action){
@@ -116,6 +117,25 @@ export function search(state={},action){
                 associateWordFetched,
                 associateWordFetching:false
             })
+        default:
+            return state;
+    }
+}
+
+export function cart(state={},action){
+    switch(action.type){
+        case REQUEST_CARTCOUNT:
+            return Object.assign({},state,{
+                isFetching:true,
+                isFetched:false,
+            });
+        case RESPONSE_CARTCOUNT:
+            const cartCount = action.res.result
+            return Object.assign({},state,{
+                cartCount,
+                isFetching:false,
+                isFetched:action.res.isFetched
+            });
         default:
             return state;
     }

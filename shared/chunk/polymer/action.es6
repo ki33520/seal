@@ -106,5 +106,5 @@ export function fetchAllOrigins(param){
 }
 
 export {changeField,fetchAssociateKeywords,
-    fetchHotWord,fetchSearchHistory,purgeSearchHistory
+    fetchHotWord,fetchSearchHistory,purgeSearchHistory,fetchCartCount
 } from "../common/action.es6";

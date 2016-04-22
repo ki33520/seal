@@ -15,6 +15,9 @@ class MemberCenter extends Component{
             popupActive:false
         }
     }
+    componentDidMount(){
+        this.props.fetchCartCount();
+    }
     togglePopupActive(type){
         this.setState({
             maskActive: type,
@@ -236,7 +239,7 @@ class MemberCenter extends Component{
                     {this.renderOrderBanner()}
                 </header>
                 {this.renderHelpList()}
-                <Footer activeIndex="4" />
+                <Footer activeIndex="4" buyed={this.props.cart.cartCount}/>
                 <MaskLayer visible={this.state.maskActive} handleClick={this.togglePopupActive.bind(this,false)}/>
                 {this.renderPopQr()}
             </div>
