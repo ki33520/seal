@@ -163,7 +163,7 @@ class Slidable extends Component{
                 // activeIndex = (Math.abs(step) > thresholdOfChange && step < 0) ? Math.ceil(activeIndex):Math.floor(activeIndex)
                 // activeIndex = (Math.abs(step) > thresholdOfChange && step > 0) ? Math.floor(activeIndex):Math.ceil(activeIndex)
                 // console.log('step',step,activeIndex)
-                if(this.lastX !== this.startTouchX && activeIndex !== this.state.activeIndex){
+                if(this.lastX !== this.startTouchX && activeIndex !== this.state.activeIndex && activeIndex >= 0){
                     this.setState({
                         activeIndex:activeIndex
                     },()=>this.props.handleActiveChange(activeIndex))
