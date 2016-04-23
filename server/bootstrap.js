@@ -58,6 +58,9 @@ if(process.env.HMR_ENABLED){
 }
 
 app.use(function(req,res,next){
+    if(req.xhr===true){
+        next();
+    }
     var userAgent = req.headers['user-agent'].toLowerCase();
     var mobileAgent = ["iphone", "ipod", "ipad", "android", "mobile","windows phone","blackberry", "nokia"];
     var isMobile = false;
