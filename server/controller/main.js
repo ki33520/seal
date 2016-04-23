@@ -88,11 +88,39 @@ var test = function(req,res){
     })
 }
 
+var checkVisitor = function(req,res,next){
+    if(req.xhr===true){
+        next();
+    }
+    var userAgent = req.headers['user-agent'].toLowerCase();
+    var mobileAgent = ["iphone", "ipod", "ipad", "android", "mobile","windows phone","blackberry", "nokia"];
+    var isMobile = false;
+    var originalUrl = req.originalUrl;
+    var url = 'http://www.tepin.hk';
+    for (var i=0,n=mobileAgent.length; i<n; i++){ 
+        if (userAgent.indexOf(mobileAgent[i])!==-1){ 
+            isMobile = true;
+        }
+    }
+    if(false===isMobile){
+        if(process.env.NODE_ENV==='test'){
+            url = 'http://www.hwg.youayun.cn';
+        }
+        if(originalUrl.indexOf('/shop/sp-') !== -1){
+            url += originalUrl;
+        }
+        res.redirect(url);
+    }else{
+        next();
+    }
+}
+
 module.exports = {
     authorizeLocals: authorizeLocals,
     requireAuthorize: requireAuthorize,
     staticize:staticize,
     notFoundHandler: notFoundHandler,
     errorHandler: errorHandler,
-    test:test
+    test:test,
+    checkVisitor:checkVisitor
 };

@@ -57,26 +57,6 @@ if(process.env.HMR_ENABLED){
     app = require("../task/develop-middleware")(app)
 }
 
-app.use(function(req,res,next){
-    var userAgent = req.headers['user-agent'].toLowerCase();
-    var mobileAgent = ["iphone", "ipod", "ipad", "android", "mobile","windows phone","blackberry", "nokia"];
-    var isMobile = false;
-    var url = 'http://www.tepin.hk';
-    for (var i=0,n=mobileAgent.length; i<n; i++){ 
-        if (userAgent.indexOf(mobileAgent[i])!==-1){ 
-            isMobile = true;
-        }
-    }
-    if(false===isMobile){
-        if(process.env.NODE_ENV==='test'){
-            url = 'http://www.hwg.youayun.cn';
-        }
-        res.redirect(url);
-    }else{
-        next();
-    }
-});
-
 var router = require("./router.js");
 app.use(router);
 app.use(require("./controller/main").errorHandler)
