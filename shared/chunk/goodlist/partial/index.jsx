@@ -56,7 +56,7 @@ class GoodListApp extends React.Component{
         _.forEach(areaNames,(item,i)=>{
             item.isChecked && areas.push(item.name);
         });
-        _params.categoryName = categories.join(',');
+        _params.categoryName = categories.join(','); 
         _params.areaName=areas.join(',');
         _params.brandName=brands.join(',');
         this.props.fetchGoods(_params);

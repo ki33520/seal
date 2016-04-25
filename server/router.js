@@ -26,9 +26,9 @@ router.get(urlPrefix + "/updategoods",require("./controller/index.js").updateGoo
 router.get(urlPrefix + "/topic/:id.html",mainController.checkVisitor, mainController.staticize, require("./controller/topic.js").topic);
 router.get(urlPrefix + "/flashbuy/:id.html",mainController.checkVisitor, mainController.staticize, require("./controller/flashbuy.js"));
 router.get(urlPrefix + "/polymer.html",mainController.checkVisitor, mainController.staticize,require("./controller/polymer").polymer);
-router.get(urlPrefix + "/categorybrands",mainController.checkVisitor, require("./controller/polymer").categoryBrands);
-router.get(urlPrefix + "/allbrands", mainController.checkVisitor, require("./controller/polymer").allBrands);
-router.get(urlPrefix + "/allorigins", mainController.checkVisitor, require("./controller/polymer").allOrigins);
+router.get(urlPrefix + "/categorybrands", require("./controller/polymer").categoryBrands);
+router.get(urlPrefix + "/allbrands", require("./controller/polymer").allBrands);
+router.get(urlPrefix + "/allorigins", require("./controller/polymer").allOrigins);
 router.get(urlPrefix + "/categoryactivity", require("./controller/polymer").categoryActivity);
 
 router.get(urlPrefix + "/sp-:id.html",mainController.checkVisitor,mainController.staticize,mainController.authorizeLocals, require("./controller/gooddetail").goodDetail);
