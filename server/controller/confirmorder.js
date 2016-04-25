@@ -212,17 +212,6 @@ var submitOrder = function(req, res, next) {
     if(guiderCode === ""){
         guiderCode = user.medrauId ? user.medrauId:""
     }
-    // console.log(req.cookies,guiderCode)
-    // console.log(util.getAPI("saveOrder",{
-    //     memberId: user.memberId,
-    //     singleCodes: itemIds,
-    //     qtys: buyeds,
-    //     couponNo: couponNo,
-    //     memberDlvAddressId: receiverId,
-    //     couponFee: couponFee,
-    //     paymentFee: totalFee,
-    //     guiderCode:guiderCode
-    // }))
 
     util.fetchAPI("saveOrder", {
         memberId: user.memberId,

@@ -38,7 +38,7 @@ class GoodComment extends Component{
                 return (
                     <div className="comList" key={i}>
                         <div className="comList_title">
-                            <img src={comment.avatar?comment.avatar:
+                            <img src={comment.avatar && comment.isOpen===1?comment.avatar:
                                 "/client/asset/images/headpic.png"} />
                             <span>{comment.isOpen===1?comment.nickName:"匿名用户"}</span>
                             <em>{comment.createdAt}</em>
@@ -72,9 +72,9 @@ class GoodComment extends Component{
                 return (
                     <div className="comList" key={i}>
                         <div className="comList_title">
-                            <img src={comment.avatar?comment.avatar:
+                            <img src={comment.avatar && comment.isOpen===1?comment.avatar:
                                 "/client/asset/images/headpic.png"} />
-                            <span>{comment.nickName}</span>
+                            <span>{comment.isOpen===1?comment.nickName:"匿名用户"}</span>
                             <em>{comment.createdAt}</em>
                         </div>
                         {this.renderStars(comment.rate)}
