@@ -29,13 +29,13 @@ function filterGoodsList(result){
     return list;
 }
 
-function filterNames(result){
+function filterNames(result,tartget){
     var list = [];
     result && _.each(result,function(item){
         list.push({
             id:item.id,
             name:item.name,
-            isChecked:false
+            isChecked:tartget===item.name?true:false
         });
     });
     return list;
@@ -94,9 +94,9 @@ var search = function(req, res, next) {
                 var initialState = {
                     list:list,
                     filters:{
-                        categoryNames:filterNames(goods.categoryNames),
-                        brandNames:filterNames(goods.brandNames),
-                        areaNames:filterNames(goods.areaNames)
+                        categoryNames:filterNames(goods.categoryNames,categoryName),
+                        brandNames:filterNames(goods.brandNames,brandName),
+                        areaNames:filterNames(goods.areaNames,areaName)
                     },
                     params:{
                         pageIndex:options.currentPage,

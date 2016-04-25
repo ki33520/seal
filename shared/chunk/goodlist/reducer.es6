@@ -51,18 +51,18 @@ function index(state={},action){
                 filters
             });
         case RESET_FILTER:
-            var filters = state.filters;
+            var {filters,keyword} = state;
             var categoryNames = filters.categoryNames.slice();
             var brandNames = filters.brandNames.slice();
             var areaNames = filters.areaNames.slice();
             categoryNames.forEach((item,i)=>{
-                categoryNames[i]=Object.assign({},item,{isChecked:false});
+                categoryNames[i]=Object.assign({},item,{isChecked:item.name===keyword?true:false});
             });
             brandNames.forEach((item,i)=>{
-                brandNames[i]=Object.assign({},item,{isChecked:false});
+                brandNames[i]=Object.assign({},item,{isChecked:item.name===keyword?true:false});
             });
             areaNames.forEach((item,i)=>{
-                areaNames[i]=Object.assign({},item,{isChecked:false});
+                areaNames[i]=Object.assign({},item,{isChecked:item.name===keyword?true:false});
             });
             return Object.assign({},state,{
                 filters:{categoryNames,brandNames,areaNames}

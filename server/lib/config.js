@@ -10,7 +10,7 @@ api = _.extend(api,require("./api/cart.json"));
 var config = {
     "urlPrefix":"/shop",
     // "apiServer" : "http://wsns.tepin.youayun.cn",
-    "oathServer" : "https://ssl.e9448.com",
+    "oathServer" : "http://ssl.e9448.com",
     "appKey" : "0236fe7659864b1b881cb6e94709de3f",
     "appId": "hwg",
     "imgServer":"http://imgtest.tepin.com/",
@@ -24,14 +24,14 @@ var runtime = process.env["NODE_ENV"];
 config["runtime"] = runtime;
 if (runtime === "develop") {
     // config.apiServer = "http://wsns.tepin.youayun.cn";
-    config.oathServer = "https://ssl.e9448.com";
+    config.oathServer = "http://ssl.e9448.com";
     config.appKey = "b320de0549a24ff6995dc0e2c38ff491";
     config.appId = "haiwaigou";
     config.sharedQRCodePath = "http://product.hwg.youayun.cn:7989";
 }
 if(runtime === "test"){
     // config.apiServer = "http://wsns.tepin.youayun.cn";
-    config.oathServer = "https://ssl.e9448.com";
+    config.oathServer = "http://ssl.e9448.com";
     config.appKey = "0236fe7659864b1b881cb6e94709de3f";
     config.appId = "hwg";
 }
