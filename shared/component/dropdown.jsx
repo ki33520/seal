@@ -84,7 +84,7 @@ class Dropdown extends Component{
         });
         const {maxHeight} = this.props;
         const dropdownContentStyle = {
-            maxHeight
+            height:maxHeight
         };
         return (
             <div className={dropdownClasses}>
