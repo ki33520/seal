@@ -2,7 +2,7 @@
 
 var _ = require("lodash");
 var util = require("../lib/util");
-var md5 = require("md5");
+//var md5 = require("md5");
 var Polymer = util.getSharedComponent("polymer");
 var config = require("../lib/config");
 
