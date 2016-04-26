@@ -28,7 +28,6 @@ class MemberCenter extends Component{
         const {isLogined,member,api} = this.props.memberCenterByUser;
         if(isLogined === false){
             const {loginUrl,registerUrl} = api;
-            console.log(loginUrl)
             return (
                 <div className="userBtns">
                     <a href={registerUrl}>注&nbsp;册</a>

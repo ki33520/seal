@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(methodOverride());
-app.use(cookieParser("seal",{
+app.use(cookieParser("seal20151111",{
     maxAge:-1
 }));
 
@@ -34,7 +34,7 @@ app.use(session({
     cookie: {
         path: "/",
         httpOnly: true,
-        maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
+        // maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
     },
     store: store,
     // unset:"destroy"
