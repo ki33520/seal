@@ -239,7 +239,7 @@ class MemberCenter extends Component{
                     {this.renderOrderBanner()}
                 </header>
                 {this.renderHelpList()}
-                <Footer activeIndex="4" buyed={this.props.cart.cartCount}/>
+                <Footer activeIndex="4" buyed={this.props.cartByCount.amount}/>
                 <MaskLayer visible={this.state.maskActive} handleClick={this.togglePopupActive.bind(this,false)}/>
                 {this.renderPopQr()}
             </div>
