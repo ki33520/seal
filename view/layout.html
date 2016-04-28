@@ -21,8 +21,7 @@
 
 <body>
     <iframe style="height:0px;width:0px;visibility:hidden;position:absolute;top:-888em" src="about:blank">this frame prevents back forward cache</iframe>
-    <div id="shadelayer" class="shade-layer" style="position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:1999;background:#FFF;">
-        <div class="spinner"><i class="iconfont icon-loading"></i></div>
+    <div id="shadelayer" class="shade-layer" style="position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:1999;background:url(/client/asset/images/load2.gif) no-repeat 50% 50% #fff;background-size:15%">
     </div>
     {% block content %}{% endblock %} {% block js %}{% endblock %}
 </body>
