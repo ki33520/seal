@@ -63,8 +63,10 @@ class GoodListApp extends React.Component{
             _params.brandName=brands.join(',');
         }else{
             const path = window.location.href.split('?')[1];
-            const queryName = path.split('=')[0];
-            _params[queryName] = this.props.index.keyword;
+            if(path){
+                const queryName = path.split('=')[0];
+                _params[queryName] = this.props.index.keyword;
+            }
         }
         this.props.fetchGoods(_params);
         this.togglePopupActive();

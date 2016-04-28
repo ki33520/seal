@@ -22,22 +22,22 @@ function errMsgByCode(errCode) {
             errMsg =  "商品已下架";
             break;
         case -402106:
-            errMsg =  "商品库存不足";
+            errMsg =  "超出购买限制";
             break;
         case -402107:
-            errMsg =  "商品购买数量已超出商品限购数";
+            errMsg =  "超出购买限制";
             break;
         case -402109:
             errMsg =  "商品购买数量低于起购数";
             break;
         case -402110:
-            errMsg =  "购买商品总额超出每日购买限额";
+            errMsg =  "超出购买限制";
             break;
         case -402111:
             errMsg =  "商品超出免税额度";
             break;
         case -402112:
-            errMsg = "商品已售完";
+            errMsg = "超出购买限制";
             break;
         default:
             errMsg="超出购买限制";
