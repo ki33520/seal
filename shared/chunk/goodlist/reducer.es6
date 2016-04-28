@@ -5,7 +5,8 @@ import _ from "lodash";
 import {
     START_FETCH_GOODS,FINISH_FETCH_GOODS,
     START_REQUEST_GOODS,FINISH_REQUEST_GOODS,
-    TOGGLE_CHECKED,RESET_FILTER,
+    TOGGLE_CHECKED,
+    START_RESET_FILTER,FINISH_RESET_FILTER
 } from "./constant.es6";
 
 import {search} from "../common/reducer.es6";
@@ -50,22 +51,17 @@ function index(state={},action){
             return Object.assign({},state,{
                 filters
             });
-        case RESET_FILTER:
-            var {filters,keyword} = state;
-            var categoryNames = filters.categoryNames.slice();
-            var brandNames = filters.brandNames.slice();
-            var areaNames = filters.areaNames.slice();
-            categoryNames.forEach((item,i)=>{
-                categoryNames[i]=Object.assign({},item,{isChecked:item.name===keyword?true:false});
-            });
-            brandNames.forEach((item,i)=>{
-                brandNames[i]=Object.assign({},item,{isChecked:item.name===keyword?true:false});
-            });
-            areaNames.forEach((item,i)=>{
-                areaNames[i]=Object.assign({},item,{isChecked:item.name===keyword?true:false});
-            });
+        case START_RESET_FILTER:
             return Object.assign({},state,{
-                filters:{categoryNames,brandNames,areaNames}
+                isFetching:true,
+                isFetched:false
+            });
+        case FINISH_RESET_FILTER:
+            var {isFetched,filters} = action.res;
+             return Object.assign({},state,{
+                isFetching:false,
+                isFetched,
+                filters
             });
         default:
             return state;
