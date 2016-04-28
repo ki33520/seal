@@ -208,7 +208,7 @@ class Cart extends Component {
         }
         this.setState({
             dialogActive:true,
-            dialogMesg:'确定要删除吗?',
+            dialogMesg:'确定删除该宝贝吗?',
             confirmText:'确定',
             cancelText:'取消',
             dialogOnCancel:()=>{
