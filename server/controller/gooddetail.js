@@ -15,12 +15,10 @@ var goodDetail = function(req, res, next) {
     var tag = req.query.tag?req.query.tag:""
     // if(req.cookies["tag"] == undefined){
     res.cookie("tag",tag)
-    if(!process.env.HMR_ENABLED){
-        var pageContent = util.readFromStaticCache(req)
-        if(pageContent){
-            console.log("return from static cache")
-            res.send(pageContent)
-        }
+    var pageContent = util.readFromStaticCache(req)
+    if(!process.env.HMR_ENABLED && pageContent){
+        console.log("return from static cache")
+        res.send(pageContent)
     }else{
         bluebird.props({
             "goodById": util.fetchCachedAPI("goodById", {

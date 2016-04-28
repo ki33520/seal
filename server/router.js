@@ -31,7 +31,7 @@ router.get(urlPrefix + "/allbrands", require("./controller/polymer").allBrands);
 router.get(urlPrefix + "/allorigins", require("./controller/polymer").allOrigins);
 router.get(urlPrefix + "/categoryactivity", require("./controller/polymer").categoryActivity);
 
-router.get(urlPrefix + "/sp-:id.html",mainController.checkVisitor,mainController.staticize,mainController.authorizeLocals, require("./controller/gooddetail").goodDetail);
+router.get(urlPrefix + "/sp-:id.html",mainController.checkVisitor,mainController.authorizeLocals, require("./controller/gooddetail").goodDetail);
 router.get(urlPrefix + "/addcart", require("./controller/gooddetail").addCart);
 router.get(urlPrefix + "/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get(urlPrefix + "/iscollected", require("./controller/gooddetail").isCollected);
