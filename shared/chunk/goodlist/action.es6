@@ -4,7 +4,8 @@ import {jumpURL} from "../../lib/jumpurl.es6";
 import {
     START_FETCH_GOODS,FINISH_FETCH_GOODS,
     START_REQUEST_GOODS,FINISH_REQUEST_GOODS,
-    TOGGLE_CHECKED,RESET_FILTER,
+    TOGGLE_CHECKED,
+    START_RESET_FILTER,FINISH_RESET_FILTER
 } from "./constant.es6";
 
 function startFetchGoods(param){
@@ -35,10 +36,15 @@ function finishRequestGoods (param,res) {
         res
     }
 }
-function finishResetFilter(param){
+function startResetFilter(){
     return {
-        type:RESET_FILTER,
-        param
+        type:START_RESET_FILTER
+    }
+}
+function finishResetFilter(res){
+    return {
+        type:FINISH_RESET_FILTER,
+        res
     }
 }
 export function fetchGoods(param){
@@ -66,11 +72,12 @@ export function toggleChecked(params){
     }
 }
 
-export function resetFilter(param){
+export function resetFilter(url){
     return (dispatch)=>{
-        setTimeout(()=>{
-            dispatch(finishResetFilter(param));
-        },50)
+        dispatch(startResetFilter());
+        return apiRequest(url).then((res)=>{
+            dispatch(finishResetFilter(res))
+        });
     }
 }
 

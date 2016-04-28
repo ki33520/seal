@@ -29,13 +29,15 @@ function filterGoodsList(result){
     return list;
 }
 
-function filterNames(result,tartget){
+function filterNames(result,tartget,isSubItem){
     var list = [];
     result && _.each(result,function(item){
+        var isChecked = (tartget===item.name)?true:(isSubItem?true:false);
         list.push({
             id:item.id,
             name:item.name,
-            isChecked:tartget===item.name?true:false
+            isChecked:isChecked,
+            _checked:isChecked
         });
     });
     return list;
@@ -83,31 +85,34 @@ var search = function(req, res, next) {
     keyword = keyword||areaName||brandName||categoryName;
     util.fetchAPI("fetchGoodsList", options,false,{method:"POST"}).then(function(resp) {
         if (resp.returnCode === 0) {
-            var goods = resp.object;
-            var list = filterGoodsList(goods.cbls);
+            var goods = resp.object,
+                list = filterGoodsList(goods.cbls),
+                filters={
+                    categoryNames:filterNames(goods.categoryNames,categoryName,true),
+                    brandNames:filterNames(goods.brandNames,brandName),
+                    areaNames:filterNames(goods.areaNames,areaName)
+                },
+                params={
+                    pageIndex:options.currentPage,
+                    categoryName:options.categoryName,
+                    brandName:options.brandName,
+                    areaName:options.sourceAreas,
+                    k:options.searchKey,
+                    sortType:options.sortType,
+                    viewType:options.sortViewType,
+                    isHaveGoods:options.isHaveGoods
+                };
             if(req.xhr===true){
                 res.json({
                     list:list,
+                    filters,
                     isFetched:true
                 });
             }else{
                 var initialState = {
                     list:list,
-                    filters:{
-                        categoryNames:filterNames(goods.categoryNames,categoryName),
-                        brandNames:filterNames(goods.brandNames,brandName),
-                        areaNames:filterNames(goods.areaNames,areaName)
-                    },
-                    params:{
-                        pageIndex:options.currentPage,
-                        categoryName:options.categoryName,
-                        brandName:options.brandName,
-                        areaName:options.sourceAreas,
-                        k:options.searchKey,
-                        sortType:options.sortType,
-                        viewType:options.sortViewType,
-                        isHaveGoods:options.isHaveGoods
-                    },
+                    filters:filters,
+                    params:params,
                     keyword:keyword,
                     totalPage:Math.ceil(goods.totalsNum/options.pageSize),
                     isFetched:true

@@ -21,7 +21,7 @@ class GoodListApp extends React.Component{
         }
     }
     handleReset(){
-        this.props.resetFilter();
+        this.props.resetFilter(window.location.href);
     }
     togglePopupActive(){
         const popupActive = !this.state.popupActive;
@@ -56,9 +56,16 @@ class GoodListApp extends React.Component{
         _.forEach(areaNames,(item,i)=>{
             item.isChecked && areas.push(item.name);
         });
-        _params.categoryName = categories.join(','); 
-        _params.areaName=areas.join(',');
-        _params.brandName=brands.join(',');
+       
+        if(categories.length||brands.length||areas.length){
+            _params.categoryName = categories.join(','); 
+            _params.areaName=areas.join(',');
+            _params.brandName=brands.join(',');
+        }else{
+            const path = window.location.href.split('?')[1];
+            const queryName = path.split('=')[0];
+            _params[queryName] = this.props.index.keyword;
+        }
         this.props.fetchGoods(_params);
         this.togglePopupActive();
     }
@@ -158,7 +165,5 @@ class GoodListApp extends React.Component{
         )
     }
 }
-
- 
 
 export default GoodListApp;
