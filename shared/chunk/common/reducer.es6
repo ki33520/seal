@@ -122,7 +122,7 @@ export function search(state={},action){
     }
 }
 
-export function cart(state={},action){
+export function cartByCount(state={},action){
     switch(action.type){
         case REQUEST_CARTCOUNT:
             return Object.assign({},state,{
@@ -130,11 +130,11 @@ export function cart(state={},action){
                 isFetched:false,
             });
         case RESPONSE_CARTCOUNT:
-            const cartCount = action.res.result
+            const {isFetched,result} = action.res;
             return Object.assign({},state,{
-                cartCount,
                 isFetching:false,
-                isFetched:action.res.isFetched
+                isFetched:isFetched,
+                amount:result
             });
         default:
             return state;

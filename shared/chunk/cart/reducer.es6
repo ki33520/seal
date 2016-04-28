@@ -12,7 +12,7 @@ import {
 } from "./constant.es6";
  
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
-import {alertReducer} from "../common/reducer.es6";
+import {alertReducer,cartByCount} from "../common/reducer.es6";
 
 function cartByUser(state={},action){
     switch(action.type){
@@ -238,7 +238,8 @@ function cartByUser(state={},action){
     }
 }
 const rootReducer = combineReducers({
-    cartByUser
+    cartByUser,
+    cartByCount
 });
 
 export default rootReducer;

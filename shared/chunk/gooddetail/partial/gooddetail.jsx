@@ -14,6 +14,7 @@ import Alert from "../../../component/alert.jsx";
 import Header from "../../common/header.jsx";
 import Timer from "../../common/timer.jsx";
 import Share from "../../common/share.jsx";
+import ActivityIndicator from "../../common/activityindicator.jsx";
 import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
@@ -265,7 +266,7 @@ class GoodDetail extends Component{
     }
     render(){
         const {cartCount} = this.props.cartByUser;
-        const {good,isCollected} = this.props.goodById
+        const {good,isCollected,goodFetching} = this.props.goodById
         const {buyed} = this.state;
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
@@ -340,6 +341,7 @@ class GoodDetail extends Component{
             </div>
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             <MaskLayer visible={this.state.popupActive} />
+            <ActivityIndicator active={goodFetching}/>
             <Share active={this.state.shareActive} onClose={this.toggleShare.bind(this)}>
             <div className="center"><img src={good.sharedQRCode} /></div>
             <div className="bottom">邀请小伙伴扫一扫<br />分享给TA</div>

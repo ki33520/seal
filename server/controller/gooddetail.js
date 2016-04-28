@@ -15,120 +15,127 @@ var goodDetail = function(req, res, next) {
     var tag = req.query.tag?req.query.tag:""
     // if(req.cookies["tag"] == undefined){
     res.cookie("tag",tag)
-    // }
-    bluebird.props({
-        "goodById": util.fetchCachedAPI("goodById", {
-            code: singleCode,
-            channel: "Mobile"
-        },{maxAge:5}),
-        "flashbuyByGood": util.fetchAPI("flashbuyByGood", {
-            singleCode: singleCode,
-            channel: "Mobile"
-        }),
-        "promotionsByGood": util.fetchAPI("goodPromotions", {
-            singleCode: singleCode,
-            channel: "Mobile"
-        })
-    }).then(function(ret) {
-        if (ret["goodById"].returnCode === 0) {
-            var good = goodFilter(ret["goodById"].object);
-            var slides = good.imageUrl;
-            good.slides = slides;
-            good.mainImageUrl = good.imageUrl[0]
-            good.comments = {list:[]}
-            good.showups = {list:[]}
+    if(!process.env.HMR_ENABLED){
+        var pageContent = util.readFromStaticCache(req)
+        if(pageContent){
+            console.log("return from static cache")
+            res.send(pageContent)
+        }
+    }else{
+        bluebird.props({
+            "goodById": util.fetchCachedAPI("goodById", {
+                code: singleCode,
+                channel: "Mobile"
+            },{maxAge:5}),
+            "flashbuyByGood": util.fetchAPI("flashbuyByGood", {
+                singleCode: singleCode,
+                channel: "Mobile"
+            }),
+            "promotionsByGood": util.fetchAPI("goodPromotions", {
+                singleCode: singleCode,
+                channel: "Mobile"
+            })
+        }).then(function(ret) {
+            if (ret["goodById"].returnCode === 0) {
+                var good = goodFilter(ret["goodById"].object);
+                var slides = good.imageUrl;
+                good.slides = slides;
+                good.mainImageUrl = good.imageUrl[0]
+                good.comments = {list:[]}
+                good.showups = {list:[]}
 
-            var flashbuy = {
-                active: false
-            }
-            if (ret["flashbuyByGood"].returnCode === 0) {
-                flashbuy = flashbuyFilter(ret["flashbuyByGood"].object)
-                if (moment().isBetween(moment(flashbuy["startTime"]), moment(flashbuy["endTime"]))) {
-                    flashbuy["active"] = true
-                    good["buyLimit"] = 1
+                var flashbuy = {
+                    active: false
                 }
-                // flashbuy["endTime"] = moment("2016-04-13 16:00:00").format("x")
-            }
-            good.flashbuy = flashbuy;
-
-            var promotions = {}
-            if (ret["promotionsByGood"].returnCode === 0) {
-                promotions = promotionsFilter(ret["promotionsByGood"].object)
-            }
-            good.promotions = promotions
-
-            var destPrice = good.salePrice
-            if(good.flashbuy["active"]){
-                destPrice = good.flashbuy["price"]
-            }
-            if(good["useMobilePrice"] && !good.flashbuy["active"]){
-                destPrice = good["mobilePrice"]
-            }
-            good["destPrice"] = destPrice
-
-            var tag = ""
-            if(isAuthorized){
-                tag = req.session.user["mobileNumber"]
-            }
-            good["sharedQRCode"] = (config.sharedQRCodePath + "/resource/qr?code="
-             + good["code"] + "&tag=" + tag)
-            if (req.xhr) {
-                res.json({
-                    isFetched: true,
-                    result: good
-                })
-            }else{
-                if(good["version"] === 2){
-                    var initialState = {
-                        code: "500",
-                        msg:"啊噢~您查看的商品已下架咯..."
-                    };
-                    var markup = util.getMarkupByComponent(ErrorContent({
-                        initialState: initialState
-                    }));
-
-                    res.render('gooddetail', {
-                        markup: markup,
-                        initialState: initialState
-                    });
-                }else{
-                    var initialState = {
-                        good: good,
-                        isAuthorized:isAuthorized,
-                        loginUrl:loginUrl
+                if (ret["flashbuyByGood"].returnCode === 0) {
+                    flashbuy = flashbuyFilter(ret["flashbuyByGood"].object)
+                    if (moment().isBetween(moment(flashbuy["startTime"]), moment(flashbuy["endTime"]))) {
+                        flashbuy["active"] = true
+                        good["buyLimit"] = 1
                     }
-                    var markup = util.getMarkupByComponent(GoodDetailApp({
-                        initialState: initialState
-                    }));
-                    res.render('gooddetail', {
-                        markup: markup,
-                        initialState: initialState
-                    },function(err,html){
-                        util.writeToStaticCache(req,html)
-                        res.send(html)
+                    // flashbuy["endTime"] = moment("2016-04-13 16:00:00").format("x")
+                }
+                good.flashbuy = flashbuy;
+
+                var promotions = {}
+                if (ret["promotionsByGood"].returnCode === 0) {
+                    promotions = promotionsFilter(ret["promotionsByGood"].object)
+                }
+                good.promotions = promotions
+
+                var destPrice = good.salePrice
+                if(good.flashbuy["active"]){
+                    destPrice = good.flashbuy["price"]
+                }
+                if(good["useMobilePrice"] && !good.flashbuy["active"]){
+                    destPrice = good["mobilePrice"]
+                }
+                good["destPrice"] = destPrice
+
+                var tag = ""
+                if(isAuthorized){
+                    tag = req.session.user["mobileNumber"]
+                }
+                good["sharedQRCode"] = (config.sharedQRCodePath + "/resource/qr?code="
+                 + good["code"] + "&tag=" + tag)
+                if (req.xhr) {
+                    res.json({
+                        isFetched: true,
+                        result: good
                     })
+                }else{
+                    if(good["version"] === 2){
+                        var initialState = {
+                            code: "500",
+                            msg:"啊噢~您查看的商品已下架咯..."
+                        };
+                        var markup = util.getMarkupByComponent(ErrorContent({
+                            initialState: initialState
+                        }));
+
+                        res.render('gooddetail', {
+                            markup: markup,
+                            initialState: initialState
+                        });
+                    }else{
+                        var initialState = {
+                            good: good,
+                            isAuthorized:isAuthorized,
+                            loginUrl:loginUrl
+                        }
+                        var markup = util.getMarkupByComponent(GoodDetailApp({
+                            initialState: initialState
+                        }));
+                        res.render('gooddetail', {
+                            markup: markup,
+                            initialState: initialState
+                        },function(err,html){
+                            util.writeToStaticCache(req,html)
+                            res.send(html)
+                        })
+                    }
+                }
+            } else {
+                if (req.xhr) {
+                    res.json({
+                        isFetched: false,
+                        errMsg: ret["goodById"].message
+                    })
+                }else{
+                    next(new Error(ret["goodById"].message))
                 }
             }
-        } else {
+        }).error(function() {
             if (req.xhr) {
                 res.json({
                     isFetched: false,
-                    errMsg: ret["goodById"].message
+                    errMsg: "api request failed"
                 })
             }else{
-                next(new Error(ret["goodById"].message))
+                next(new Error('api request failed'))
             }
-        }
-    }).error(function() {
-        if (req.xhr) {
-            res.json({
-                isFetched: false,
-                errMsg: "api request failed"
-            })
-        }else{
-            next(new Error('api request failed'))
-        }
-    })
+        })
+    }
 }
 
 function flashbuyFilter(flashbuy) {

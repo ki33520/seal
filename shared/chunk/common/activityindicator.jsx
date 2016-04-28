@@ -12,13 +12,10 @@ class ActivityIndicator extends Component{
             active,opacity
         } = this.props
         const classes = classNames("activity-indicator",{active})
-        const maskLayerStyle = {
-            background:`rgba(0,0,0,${opacity})`
-        }
         return (
             <div className={classes}>
-            <div className="mask-layer" style={maskLayerStyle}>
-                <div className="spinner"><i className="iconfont icon-loading"/><p>{this.props.content}</p></div>
+            <div className="mask-layer">
+                <div className="spinner"><img src="/client/asset/images/load2.gif"/><p>{this.props.content}</p></div>
             </div>
             </div>
         )
@@ -28,7 +25,7 @@ class ActivityIndicator extends Component{
 ActivityIndicator.defaultProps = {
     active:false,
     opacity:0.5,
-    content:"加载中..."
+    content:""
 }
 
 export default ActivityIndicator

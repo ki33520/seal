@@ -4,7 +4,9 @@ var express = require("express"),
     cookieParser = require('cookie-parser'),
     methodOverride = require("method-override"),
     session = require("express-session"),
-    cons = require("consolidate");
+    cons = require("consolidate"),
+    compression = require("compression"),
+    morgan = require("morgan");
 
 var app = express();
 
@@ -15,7 +17,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(methodOverride());
-app.use(cookieParser("seal",{
+app.use(cookieParser("seal20151111",{
     maxAge:-1
 }));
 
@@ -34,11 +36,19 @@ app.use(session({
     cookie: {
         path: "/",
         httpOnly: true,
-        maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
+        // maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
     },
     store: store,
     // unset:"destroy"
 }))
+
+app.use(morgan('[:date[iso]] :remote-addr :method :url :status :res[content-length] - :response-time ms',{
+    skip:function(req,res){
+        var contentType = res.get("Content-Type")
+        return contentType === "application/javascript" || contentType === "text/css"
+    }
+}))
+app.use(compression())
 
 app.engine('html', cons.swig);
 app.set('view engine', 'html');

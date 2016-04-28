@@ -99,6 +99,7 @@ class Cart extends Component {
                 goodsIndex,
                 singleCode
             });
+            this.props.fetchCartCount();
             return;
         }
         
@@ -118,6 +119,7 @@ class Cart extends Component {
         if(document.getElementById('persisted').value){
             this.props.reloadCart()
         }
+        this.props.fetchCartCount();
     }
     checkout(cartIndex){
         const {isChecking,isLogined,loginUrl,carts} = this.props.cartByUser;
@@ -371,7 +373,7 @@ class Cart extends Component {
             let cartList = [];
             carts.forEach((cart,i)=>{
                 cartList.push(this.renderCart(cart,i));
-            })
+            });
             return  (
                 <div className="cart">
                     {cartList}
@@ -388,13 +390,7 @@ class Cart extends Component {
         }
     }
     render() {
-        const {isUpdating,isFetching,alertContent,alertActive,carts} = this.props.cartByUser;
-        let cartCount = 0;
-        if(carts&&carts.length>0){
-            carts.forEach((cart)=>{
-                cartCount += cart.buyeds;
-            });
-        }
+        const {isUpdating,isFetching,alertContent,alertActive} = this.props.cartByUser;
         return (
             <div className="container">
                 <Header>
@@ -407,7 +403,7 @@ class Cart extends Component {
                     confirmText={this.state.confirmText}
                     onConfrim={this.state.dialogOnConfirm}>{this.state.dialogMesg}</Dialog>
                 <Alert active={alertActive} >{alertContent}</Alert>
-                <Footer activeIndex="3" buyed={cartCount}/>
+                <Footer activeIndex="3" buyed={this.props.cartByCount.amount}/>
                 <ActivityIndicator active={isFetching}/>
             </div>
         )

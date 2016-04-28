@@ -4,18 +4,21 @@ import React,{Component} from "react";
 import Selected from "../../../component/selected/selected.jsx";
 
 class CascadeArea extends Component{
-    handleDistrictChange(districtCode){
+    handleDistrictChange(e){
+        const districtCode = e.target.value
         const {handleAreaChange} = this.props;
         handleAreaChange("districtCode",districtCode);
     }
-    handleProvinceChange(provinceCode){
+    handleProvinceChange(e){
+        const provinceCode = e.target.value
         const {loadCities,handleAreaChange} = this.props;
         handleAreaChange("provinceCode",provinceCode)
         handleAreaChange("cityCode","")
         handleAreaChange("districtCode","")
         loadCities(provinceCode)
     }
-    handleCityChange(cityCode){
+    handleCityChange(e){
+        const cityCode = e.target.value
         const {loadDistricts,handleAreaChange} = this.props;
         handleAreaChange("cityCode",cityCode)
         handleAreaChange("districtCode","")
@@ -30,9 +33,11 @@ class CascadeArea extends Component{
                 <i>*</i>
                 <div className="receiver-form-label">省份</div>
                 <div className="receiver-form-field">
-                <Selected options={provinces} closeOnSelect={true} 
-                    maxHeight="5rem" 
-                    value={province} onChange={this.handleProvinceChange.bind(this)}/>
+                <select value={province} onChange={this.handleProvinceChange.bind(this)}>
+                {provinces.map((option,i)=>{
+                    return <option value={option.value} key={i}>{option.label}</option>
+                })}
+                </select>
                 </div>
                 </div>
             )
@@ -47,9 +52,11 @@ class CascadeArea extends Component{
             <i>*</i>
             <div className="receiver-form-label">城市</div>
             <div className="receiver-form-field">
-            <Selected options={cities} closeOnSelect={true} 
-                maxHeight="5rem" 
-                value={city} onChange={this.handleCityChange.bind(this)}/>
+                <select value={city} onChange={this.handleCityChange.bind(this)}>
+                {cities.map((option,i)=>{
+                    return <option value={option.value} key={i}>{option.label}</option>
+                })}
+                </select>
             </div>
             </div>
         )
@@ -62,9 +69,11 @@ class CascadeArea extends Component{
             <i>*</i>
             <div className="receiver-form-label">区县</div>
             <div className="receiver-form-field">
-            <Selected options={districts} closeOnSelect={true} 
-                maxHeight="5rem" 
-                value={district} onChange={this.handleDistrictChange.bind(this)}/>
+                <select value={district} onChange={this.handleDistrictChange.bind(this)}>
+                {districts.map((option,i)=>{
+                    return <option value={option.value} key={i}>{option.label}</option>
+                })}
+                </select>
             </div>
             </div>
         )

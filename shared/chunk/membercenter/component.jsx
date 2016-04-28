@@ -28,7 +28,6 @@ class MemberCenter extends Component{
         const {isLogined,member,api} = this.props.memberCenterByUser;
         if(isLogined === false){
             const {loginUrl,registerUrl} = api;
-            console.log(loginUrl)
             return (
                 <div className="userBtns">
                     <a href={registerUrl}>注&nbsp;册</a>
@@ -240,7 +239,7 @@ class MemberCenter extends Component{
                     {this.renderOrderBanner()}
                 </header>
                 {this.renderHelpList()}
-                <Footer activeIndex="4" buyed={this.props.cart.cartCount}/>
+                <Footer activeIndex="4" buyed={this.props.cartByCount.amount}/>
                 <MaskLayer visible={this.state.maskActive} handleClick={this.togglePopupActive.bind(this,false)}/>
                 {this.renderPopQr()}
             </div>

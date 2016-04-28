@@ -4,6 +4,7 @@
 @import "../../common/scene.styl"
 @import "../../common/share.styl"
 @import "../../common/error.styl"
+@import "../../common/activityindicator.styl"
 @import "../../component/dropdown.styl"
 @import "../../component/popover.styl"
 @import "../../component/alert.styl"
@@ -534,5 +535,13 @@ $pink-color = #ED1946;
 .scene-group{
     .scene{
         // position:static;
+    }
+}
+
+.activity-indicator{
+    &.active{
+        .mask-layer{
+            background:rgba(0,0,0,0);
+        }
     }
 }
