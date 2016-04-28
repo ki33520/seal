@@ -133,7 +133,7 @@ export function toggleCollected(param){
         apiRequest(urlPrefix + "/togglecollected",param).then((res)=>{
             let alertMsg = "";
             if(res.isToggled){
-                alertMsg = param.status ? "添加收藏成功!":"取消收藏成功!"
+                alertMsg = param.status ? "已成功收藏":"已取消收藏"
                 dispatch(alert(alertMsg,1000))
             }else{
                 dispatch(alert(res.errMsg,1000))
