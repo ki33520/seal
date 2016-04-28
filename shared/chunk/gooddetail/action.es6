@@ -100,9 +100,9 @@ export function addCart(param){
             //     res.cartAdded = true;
             // }else{
             if(res.cartAdded){
-                dispatch(alert("添加购物车成功!",3000))
+                dispatch(alert("已成功加入购物车",1000))
             }else{
-                dispatch(alert(res.errMsg,3000))
+                dispatch(alert(res.errMsg,1000))
             }
             // }
             dispatch(finishAddCart(param,res));

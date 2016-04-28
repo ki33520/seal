@@ -4,7 +4,9 @@ var express = require("express"),
     cookieParser = require('cookie-parser'),
     methodOverride = require("method-override"),
     session = require("express-session"),
-    cons = require("consolidate");
+    cons = require("consolidate"),
+    compression = require("compression"),
+    morgan = require("morgan");
 
 var app = express();
 
@@ -39,6 +41,14 @@ app.use(session({
     store: store,
     // unset:"destroy"
 }))
+
+app.use(morgan('[:date[iso]] :remote-addr :method :url :status :res[content-length] - :response-time ms',{
+    skip:function(req,res){
+        var contentType = res.get("Content-Type")
+        return contentType === "application/javascript" || contentType === "text/css"
+    }
+}))
+app.use(compression())
 
 app.engine('html', cons.swig);
 app.set('view engine', 'html');
