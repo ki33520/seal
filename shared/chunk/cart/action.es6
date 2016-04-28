@@ -216,3 +216,5 @@ export function reloadCart(){
         });
     }
 }
+
+export {fetchCartCount} from "../common/action.es6";

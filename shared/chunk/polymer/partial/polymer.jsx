@@ -25,8 +25,7 @@ class Polymer extends Component{
         this.props.fetchCartCount()
     }
     render(){
-        const {changeScene,cart} = this.props;
-        const cartCount = cart.cartCount||0;
+        const {changeScene,cartByCount} = this.props;
         return (
             <div className="polymer-content">
                 <Header canBack={false}>
@@ -48,7 +47,7 @@ class Polymer extends Component{
                     </SwiperItem>
                     </Swiper>
                 </div>
-                <Footer activeIndex="1" buyed={cartCount}/>
+                <Footer activeIndex="1" buyed={cartByCount.amount}/>
             </div>
         )
     }
