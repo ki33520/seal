@@ -208,7 +208,7 @@ var util = {
             _history = JSON.parse(searchHistory)
         }
         if(record.keyword == ""){
-            return _history
+            return JSON.stringify(_history)
         }
         var index = _.findIndex(_history,{"keyword":record.keyword})
         if(index === -1){

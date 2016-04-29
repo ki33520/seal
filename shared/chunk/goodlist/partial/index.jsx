@@ -132,7 +132,7 @@ class GoodListApp extends React.Component{
                                 onClick={this.props.changeScene.bind(this,"search")}/>
                                 <span></span>
                             </div>
-                            <div className="btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</div>
+                            <div className="filter-btn btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</div>
                         </Header>
                         <GoodSorter toggleSort={this.toggleSort.bind(this)} />
                         <div className="special-activity-list clearfix">
