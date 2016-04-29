@@ -33,6 +33,9 @@ class SearchBox extends Component{
     }
     handleSubmit(e){
         const {keyword} = this.props.search
+        if(keyword === ""){
+            return
+        }
         location.assign(jumpURL("search",null,{k:keyword}))
     }
     handleReset(e){
@@ -110,6 +113,9 @@ class SearchBox extends Component{
         const resetClasses = classNames("reset",{
             active:!!keyword
         })
+        const btnClasses = classNames("search-btn",{
+            enabled:!!keyword
+        })
         return (
             <div className="search-wrap">
                 <div className="search-header">
@@ -121,8 +127,7 @@ class SearchBox extends Component{
                         <span></span>
                         <div className={resetClasses} onClick={this.handleReset.bind(this)}><i className="iconfont icon-close-fill"></i></div>
                     </div>
-                    <div className="search-btn"><a href="javascript:void(null)" 
-                    onClick={this.handleSubmit.bind(this)}>搜索</a></div>
+                    <div className={btnClasses} onClick={this.handleSubmit.bind(this)}>搜索</div>
                 </div>
                 {keyword?this.renderAssociate():this.renderSearchList()}
                 <Dialog active={this.state.dialogActive} 
