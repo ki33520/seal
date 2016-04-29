@@ -33,10 +33,7 @@ class SearchBox extends Component{
     }
     handleSubmit(e){
         const {keyword} = this.props.search
-        if(keyword === ""){
-            return
-        }
-        location.assign(jumpURL("search",null,{k:keyword}))
+        location.assign(jumpURL("search",null,{k:keyword || ""}))
     }
     handleReset(e){
         e && e.preventDefault();
@@ -114,7 +111,7 @@ class SearchBox extends Component{
             active:!!keyword
         })
         const btnClasses = classNames("search-btn",{
-            enabled:!!keyword
+            enabled:true
         })
         return (
             <div className="search-wrap">
