@@ -2,19 +2,18 @@
 {% block title %}我的评论－友阿海外购{% endblock %}
 {% block css %}
 <!-- inject:css -->
-<meta name="bundledAt" content="20164291719">
-<link rel="stylesheet" href="/client/bundle/membercomment/dist/membercomment-88173de9176231e1f37c.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
 <div class="membercomment-container">
     <div id="member-comment">{{ markup|safe }}</div>
 </div>
+<script src="{{hostname}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="/client/vendor/dist/react-88173de9176231e1f37c.js"></script>
-<script src="/client/bundle/membercomment/dist/membercomment-88173de9176231e1f37c.js"></script>
+<script src="{{hostname}}/hmr/react.js"></script>
+<script src="{{hostname}}/hmr/membercomment.js"></script>
 <!-- endinject -->
 {% endblock %}
