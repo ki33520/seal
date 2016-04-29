@@ -31,6 +31,10 @@ class SearchBox extends Component{
             keyword:e.target.value
         })
     }
+    handleSubmit(e){
+        const {keyword} = this.props.search
+        location.assign(jumpURL("search",null,{k:keyword}))
+    }
     handleReset(e){
         e && e.preventDefault();
         const {changeField} = this.props;
@@ -109,6 +113,7 @@ class SearchBox extends Component{
         return (
             <div className="search-wrap">
                 <div className="search-header">
+                    <a href="javascript:;" onClick={this.props.changeScene.bind(this,"index")} className="iconfont icon-back"></a>
                     <div className="search-box">
                         <input id="search-box" type="search" placeholder="寻找宝贝"
                         value={keyword} 
@@ -117,7 +122,7 @@ class SearchBox extends Component{
                         <div className={resetClasses} onClick={this.handleReset.bind(this)}><i className="iconfont icon-close-fill"></i></div>
                     </div>
                     <div className="search-btn"><a href="javascript:void(null)" 
-                    onClick={this.props.changeScene.bind(this,"index")}>取消</a></div>
+                    onClick={this.handleSubmit.bind(this)}>搜索</a></div>
                 </div>
                 {keyword?this.renderAssociate():this.renderSearchList()}
                 <Dialog active={this.state.dialogActive} 

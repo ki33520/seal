@@ -23,9 +23,23 @@ body {
  
 .header {
 	font-size: .38rem;
+	display:flex;
+	justify-content:flex-start;
+	align-items:center;
+	.iconfont{
+		display:block;
+		position:static;
+	}
+	.btn-right{
+		display:block;
+		position:static;
+	}
 	.search-box {
-		left:1.6rem;
+		display:block;
+		flex:1;
+		// left:1.6rem;
 		top:auto;
+		position:relative;
 		input {
 		    border: none;
 		    box-sizing: border-box;
@@ -34,7 +48,18 @@ body {
 		    top: .35rem;
 		}
 	}
+	span.title{
+		flex:1;
+		padding:0;
+	}
 }
+.empty header{
+	span.title{
+		padding-right:rem4px(44);
+		text-align:center;
+	}
+}
+
 .search-foucs span{
 	background:url(/client/asset/images/searchIcon.png) 0 -25px no-repeat;
 	background-size:100%;

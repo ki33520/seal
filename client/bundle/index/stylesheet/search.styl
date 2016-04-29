@@ -1,6 +1,24 @@
 .search-wrap{
     height:100%;
     background:#F7F7F7;
+    .search-header{
+        padding:0;
+        .icon-back{
+            width:rem4px(44);
+            height:rem4px(44);
+            font-size:0.58rem;
+            color:#A7A7A7;
+            &:before{
+                content: "";
+                width: 0.586667rem;
+                height: 0.586667rem;
+                display: block;
+                background: url("/client/asset/images/backArrow.png") no-repeat;
+                background-size: 100%;
+                margin: 0.26rem auto 0;
+            }
+        }
+    }
     .search-box{
         &>input{
             box-sizing:border-box;
@@ -65,6 +83,9 @@ body.grey{
     text-align: center;
     line-height:rem4px(1.16 * 37.5);
     color:#801da1;
+    &>a{
+      color:#801da1;
+    }
 }
 .search-box input{
     background-color: #E3E3E6;
