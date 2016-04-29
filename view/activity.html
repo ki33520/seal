@@ -2,16 +2,17 @@
 {% block title %}专场活动－友阿海外购{% endblock %}
 {% block css %}
 <!-- inject:css -->
+<meta name="bundledAt" content="20164291719">
+<link rel="stylesheet" href="/client/bundle/activity/dist/activity-88173de9176231e1f37c.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
 <div id="activity" class="container">{{ markup|safe }}</div>
-<script src="{{hostname}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="{{hostname}}/hmr/react.js"></script>
-<script src="{{hostname}}/hmr/activity.js"></script>
+<script src="/client/vendor/dist/react-88173de9176231e1f37c.js"></script>
+<script src="/client/bundle/activity/dist/activity-88173de9176231e1f37c.js"></script>
 <!-- endinject -->
 {% endblock %}

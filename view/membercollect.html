@@ -2,18 +2,19 @@
 {% block title %}我的收藏－友阿海外购{% endblock %}
 {% block css %}
 <!-- inject:css -->
+<meta name="bundledAt" content="20164291719">
+<link rel="stylesheet" href="/client/bundle/membercollect/dist/membercollect-88173de9176231e1f37c.css">
 <!-- endinject -->
 {% endblock %} 
 {% block content %}
 <div class="membercollect-container">
     <div id="member-collect">{{ markup|safe }}</div>
 </div>
-<script src="{{hostname}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="{{hostname}}/hmr/react.js"></script>
-<script src="{{hostname}}/hmr/membercollect.js"></script>
+<script src="/client/vendor/dist/react-88173de9176231e1f37c.js"></script>
+<script src="/client/bundle/membercollect/dist/membercollect-88173de9176231e1f37c.js"></script>
 <!-- endinject -->
 {% endblock %}
