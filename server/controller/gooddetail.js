@@ -14,7 +14,14 @@ var goodDetail = function(req, res, next) {
     var loginUrl = res.locals.loginUrl;
     var tag = req.query.tag?req.query.tag:""
     // if(req.cookies["tag"] == undefined){
-    res.cookie("tag",tag)
+    var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
+    if(guiderCode !== ""){
+        loginUrl += ("&tag=" + guiderCode)
+    }
+    if(tag !== ""){
+        loginUrl += ("&tag=" + tag)
+        res.cookie("tag",tag)
+    }
     var pageContent = util.readFromStaticCache(req)
     if(!process.env.HMR_ENABLED && pageContent){
         console.log("return from static cache")

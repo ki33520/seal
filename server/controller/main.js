@@ -12,14 +12,15 @@ var authorizeLocals = function(req, res, next) {
     var logoutRedirectUrl = util.getAuthGatewayUrl(req, "/logoutgateway", true);
 
     res.locals.loginUrl = config.loginUrl + "&redirectUrl=" + loginRedirectUrl;
-    res.locals.registerUrl = config.registerUrl + "&redirectUrl=" + loginRedirectUrl;
+    res.locals.registerUrl = config.registerUrl +"&redirectUrl=" + loginRedirectUrl;
     res.locals.logoutUrl = config.logoutUrl + "&redirectUrl=" + logoutRedirectUrl;
     next();
 }
 
 var requireAuthorize = function(req, res, next) {
     var loginRedirectUrl = util.getAuthGatewayUrl(req, "/logingateway", true);
-    var loginUrl = config.loginUrl + "&redirectUrl=" + loginRedirectUrl;
+    var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
+    var loginUrl = config.loginUrl + "&tag="+ guiderCode + "&redirectUrl=" + loginRedirectUrl;
     if (req.session.user !== undefined) {
         next();
     } else {
