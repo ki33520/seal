@@ -499,10 +499,11 @@ header .globa:before {
 .goodsSure > .left>span {
     display: block;
     color: #ed1946;
-    font-size:.48rem;
-    line-height:.8rem;
+    /*font-size:.48rem;*/
+    /*line-height:.8rem;*/
 }
 .goodsSure > .left em {
+    display: block;
     color: #222;
 }
 .size-select {

@@ -49,7 +49,7 @@ html,body{
     width:100%;
     height:auto;
     display:none;
-    z-index:101;
+    z-index:105;
     &.active{
         display:block;
         animation:bottom-to-top .3s ease-in;
@@ -195,10 +195,36 @@ $pink-color = #ED1946;
         &>div.left{
             float:none;
             flex:1;
+            &>em{
+                padding-top:rem4px(5);
+            }
         }
         &>i{
             width:px2rem(22);
             color:#999;
+        }
+    }
+    .mobilePrice{
+        display:block;
+        clear:both;
+        overflow:hidden;
+        .nowPrice{
+            color: #ed1946;
+            font-size: .6rem;
+            line-height: .6rem;
+            display: block;
+            float: left;
+            margin-right: .2rem;        
+        }
+        .exclusive{
+            color: #dd1847;
+            border: 1px solid #dd1847;
+            font-size: .2rem;
+            border-radius: 3px;
+            margin-right: .2rem;
+            padding: .1rem;
+            display:block;
+            float:left;
         }
     }
     .goodsSureBtn{
@@ -518,6 +544,38 @@ $pink-color = #ED1946;
             &.swiper-pagination-bullet-active{
                 background: url(/client/asset/images/bannerDot2.png) 0 -8px no-repeat;
                 background-size: 100%;    
+            }
+        }
+    }
+}
+
+.goods-panel{
+    padding:rem4px(13.5) rem4px(12);
+    border-bottom:rem4px(10) solid #F7F7F7;
+    &>dl{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:rem4px(12);
+        &>dt{
+            display:block;
+            flex:1;
+        }
+        &>dd{
+            display:block;
+            flex:4;
+            &>a{
+                display:block;
+                padding-right:rem4px(20);
+                position:relative;
+                &>i{
+                    position:absolute;
+                    right:0;
+                    top:0;
+                    color:#999;
+                    // font-size:rem4px(12);
+                    text-align:center;
+                }
             }
         }
     }

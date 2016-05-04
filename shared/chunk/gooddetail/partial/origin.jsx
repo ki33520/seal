@@ -22,6 +22,10 @@ class Origin extends Component{
                   <dd>{good.warehouseName}</dd>
                 </dl>
                 <dl>
+                  <dt>运费：</dt>
+                  <dd>{logistics}</dd>
+                </dl>   
+                <dl>
                   <dt>税费：</dt>
                   <dd>
                         <a href="http://a.tepin.hk/h/rule/valueTable_h.html"
@@ -45,10 +49,6 @@ class Origin extends Component{
                   <dt>增值税率：</dt>
                   <dd>{good.addedTax.toFixed(2)}%</dd>
                 </dl>
-                <dl>
-                  <dt>运费：</dt>
-                  <dd>{logistics}</dd>
-                </dl>   
             </div>
         )
     }

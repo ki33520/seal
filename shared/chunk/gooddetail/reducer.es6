@@ -31,7 +31,7 @@ function goodById(state={},action){
             })
         case RESPONSE_GOOD:
             good = Object.assign({},good,
-                _.omit(action.res.result,["slides","attrs"]))
+                _.omit(action.res.result,["slides","attrs","comments"]))
             return Object.assign({},state,{
                 goodFetching:false,
                 isFetched:action.res.isFetched,

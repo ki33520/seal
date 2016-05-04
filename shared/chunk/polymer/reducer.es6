@@ -9,6 +9,7 @@ import {
 import {CHANGE_FIELD} from "../common/constant.es6";
 
 import {search,cartByCount} from "../common/reducer.es6";
+import Immutable from "immutable";
 
 function allCategory(state={},action){
     switch(action.type){
@@ -18,7 +19,7 @@ function allCategory(state={},action){
                 categoryActivityFetching:true
             })
         case RESPONSE_CATEGORYACTIVITY:
-            let categories = state.categories;
+            let categories = [...state.categories];
             if(action.res.isFetched){
                 categories = categories.map((category)=>{
                     if(category.code === action.param.code){

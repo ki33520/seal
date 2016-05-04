@@ -19,12 +19,15 @@ import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import {Tabs,TabsItem} from "../../../component/tabs.jsx";
 import MaskLayer from "../../../component/masklayer.jsx";
 import GoTop from "../../../component/gotop.jsx";
+import Popup from "../../../component/popup.jsx";
+import NumberPicker from "../../../component/numberpicker.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 import Promotions from "./promotions.jsx";
 import Origin from "./origin.jsx";
 import Specification from "./specification.jsx";
 import Toolbar from "./toolbar.jsx";
+import Attributes from "./attributes.jsx";
 
 class GoodDetail extends Component{
     constructor(props){
@@ -67,7 +70,7 @@ class GoodDetail extends Component{
         fetchIsCollected({
             singleCode:code
         })
-        // fetchComments({productCode})
+        fetchComments({productCode})
     }
     handleScroll(scrollNode,scrollTop){
         if(this.smooth){
@@ -166,7 +169,7 @@ class GoodDetail extends Component{
             alert('购买数量必须大于0',3000);
             return;
         }else if(good.selectedItem !== null && buyed > 0){
-            this.togglePopup("addToCart")
+            // this.togglePopup("addToCart")
             if(good.flashbuy['active'] || !good["canAddCart"]){
                 let singleCode = good.selectedItem.code
                 let queryParam = base64Encode(urlParam({
@@ -255,14 +258,49 @@ class GoodDetail extends Component{
         const {good} = this.props.goodById
         const {buyed} = this.state;
         return <Toolbar cartCount={cartCount} good={good} 
-            popupActive={this.state.popupActive} trigger={this.state.trigger} togglePopup={this.togglePopup.bind(this)} 
-            buyed={buyed}
-            handleAttrToggle={this.handleAttrToggle.bind(this)}
-            handleBuyedOverflow={this.handleBuyedOverflow.bind(this)} 
-            handleBuyedChanged={this.handleBuyedChanged.bind(this)}
             directBuy={this.directBuy.bind(this)} 
             addToCart={this.addToCart.bind(this)}>
             </Toolbar>
+    }
+    renderAttrPopUp(){
+        const {good} = this.props.goodById
+        const {popupActive,buyed,trigger} = this.state
+        let buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
+
+        /*2000 price amount limit*/
+        const destPrice = destPriceForGoods(good).destPrice
+        buylimit = buylimit > Math.floor(2000 / destPrice) ?Math.floor(2000 / destPrice):buylimit
+        const confrimButtonClasses = classNames("goodsSureBtn",{
+            "disabled":good.stock <= 0
+        })
+        return (
+            <Popup direction="bottom" active={popupActive}>
+                <div className="con">
+                    <div className="goodsSure">
+                        <img src={good.mainImageUrl} alt="" />
+                        <div className="left">
+                            {this.renderPrice()}
+                            <em>库存<i>{good.stock}</i>件</em>
+                        </div>
+                        <i className="iconfont icon-close-circled" onClick={this.togglePopup.bind(this,null)}></i>
+                    </div>
+                    <Attributes attrs={good.attrs}
+                    onAttrChange={this.handleAttrToggle.bind(this)} />
+                    <div className="pro clearfix">
+                        <div className="pro-name">
+                            <span>购买数量</span>
+                        </div>
+                        <div className="good-buyed">
+                        <NumberPicker value={buyed} onChange={this.handleBuyedChanged.bind(this)} 
+                        onOverflow={this.handleBuyedOverflow.bind(this)} 
+                        step={good.buyedStep}
+                        minimum={good.buyedMinimum} maximum={buylimit}/>
+                        </div>
+                    </div>
+                    <a href="javascript:void(0);" onClick={this.togglePopup.bind(this,null)} className={confrimButtonClasses}>确定</a>
+                </div>
+            </Popup>
+        )
     }
     render(){
         const {cartCount} = this.props.cartByUser;
@@ -317,6 +355,15 @@ class GoodDetail extends Component{
                     <i className="iconfont icon-comment"></i>用户评论<em>({good.comments?good.comments.totalCount:0})</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
+                <div className="goods-panel"><dl>
+                    <dt>已选择</dt>
+                    <dd>
+                    <a href="javascript:void(null)" onClick={this.togglePopup.bind(this,null)}>
+                    <span>{good.selectedItem?_.values(good.selectedItem.attrs).join(","):null}</span>
+                    <i className="iconfont icon-right" />    
+                    </a>
+                    </dd>
+                </dl></div>
                 <Origin good={good} {...this.props}/>
                 <div className="assure">
                     <img src="/client/asset/images/assure.gif" />
@@ -339,6 +386,7 @@ class GoodDetail extends Component{
                 </Tabs>
                 ):null}
             </div>
+            {this.renderAttrPopUp()}
             <Alert active={this.props.cartByUser.alertActive}>{this.props.cartByUser.alertContent}</Alert>
             <MaskLayer visible={this.state.popupActive} />
             <ActivityIndicator active={goodFetching}/>
