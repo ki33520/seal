@@ -588,6 +588,27 @@ $pink-color = #ED1946;
     dd{
         width:80%;
     }
+    .tax-panel{
+        &>dd{
+            width:100%;
+            i{
+                top:50%;
+                margin-top:rem4px(-9);
+            }
+            b{
+                font-weight:400;
+                &:before{
+                    background: url("/client/asset/images/bannerDot2.png") 0 -8px no-repeat;
+                    background-size: 100%;
+                    width:rem4px(8);
+                    height:rem4px(8);
+                    content:" ";
+                    display:inline-block;
+                    margin-right:rem4px(3);
+                }
+            }
+        }
+    }
 }
 
 .scene-group{

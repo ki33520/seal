@@ -304,7 +304,7 @@ header .globa:before {
     position: relative;
     display: block;
 }
-.overView dd a span {
+.overView dd a>span {
     display: block;
 }
 .overView dd a i {
