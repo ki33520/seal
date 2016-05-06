@@ -74,7 +74,6 @@ class GoodDetail extends Component{
         fetchComments({productCode})
 
         const {weixinConfig,good} = this.props.goodById
-        console.log(weixinConfig)
         shareInWeixin({
             ...weixinConfig,
             title:`${good.title}—友阿海外购`,

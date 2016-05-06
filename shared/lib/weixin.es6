@@ -9,7 +9,7 @@ export function shareInWeixin(options = {}){
     const cancel = options.cancel || ()=>{}
 
     const debug = true
-    const {appId,timestamp,nonceStr,signature} = options
+    const {appId,timeStamp,nonceStr,signature} = options
     const jsApiList = ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','hideMenuItems','addCard']
 
     if(!navigator){
@@ -21,7 +21,7 @@ export function shareInWeixin(options = {}){
     }
 
     wx.config({
-        debug,appId,timestamp,nonceStr,signature,jsApiList
+        debug,appId,timestamp:timeStamp,nonceStr,signature,jsApiList
     });
 
     wx.error(function(res){
