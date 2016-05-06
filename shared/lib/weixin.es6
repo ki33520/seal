@@ -4,7 +4,7 @@ export function shareInWeixin(options = {}){
     const title = options.title || ""
     const link = options.link || ""
     const desc = options.desc || ""
-    const imgUrl = options.desc || ""
+    const imgUrl = options.imgUrl || ""
     const success = options.success || ()=>{}
     const cancel = options.cancel || ()=>{}
 
