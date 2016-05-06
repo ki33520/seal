@@ -73,12 +73,13 @@ class GoodDetail extends Component{
         })
         fetchComments({productCode})
 
-        const {weixinConfig,mainImageUrl,title} = this.props.goodById.good
+        const {weixinConfig,good} = this.props.goodById
+        console.log(weixinConfig)
         shareInWeixin({
             ...weixinConfig,
-            title:`${title}—友阿海外购`,
+            title:`${good.title}—友阿海外购`,
             desc:'我在友阿海外购发现了一个不错的商品，一起来看看吧。',
-            imgUrl:mainImageUrl,
+            imgUrl:good.mainImageUrl,
             link:location.href
         })
     }
