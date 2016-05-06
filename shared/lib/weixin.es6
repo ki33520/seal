@@ -24,7 +24,12 @@ export function shareInWeixin(options = {}){
         debug,appId,timestamp,nonceStr,signature,jsApiList
     });
 
+    wx.error(function(res){
+        console.log("wx error",res)
+    })
     wx.ready(()=>{
+        console.log("wx success")
+        wx.showOptionMenu()
         /*分享到朋友圈*/
         wx.onMenuShareTimeline({
             title,link,imgUrl,
