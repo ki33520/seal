@@ -12,6 +12,8 @@ var goodDetail = function(req, res, next) {
     var singleCode = req.params.id;
     var isAuthorized = req.session.user !== undefined;
     var loginUrl = res.locals.loginUrl;
+    var weixinConfig = res.locals.weixinConfig;
+    console.log('weixinConfig',weixinConfig)
     var tag = req.query.tag?req.query.tag:""
     // if(req.cookies["tag"] == undefined){
     var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
@@ -106,7 +108,8 @@ var goodDetail = function(req, res, next) {
                         var initialState = {
                             good: good,
                             isAuthorized:isAuthorized,
-                            loginUrl:loginUrl
+                            loginUrl:loginUrl,
+                            weixinConfig:weixinConfig
                         }
                         var markup = util.getMarkupByComponent(GoodDetailApp({
                             initialState: initialState

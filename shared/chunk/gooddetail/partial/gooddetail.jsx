@@ -22,6 +22,7 @@ import GoTop from "../../../component/gotop.jsx";
 import Popup from "../../../component/popup.jsx";
 import NumberPicker from "../../../component/numberpicker.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
+import {shareInWeixin} from "../../../lib/weixin.es6";
 
 import Promotions from "./promotions.jsx";
 import Origin from "./origin.jsx";
@@ -71,6 +72,15 @@ class GoodDetail extends Component{
             singleCode:code
         })
         fetchComments({productCode})
+
+        const {weixinConfig,mainImageUrl} = this.props.goodById.good
+        showInWeixin({
+            ...weixinConfig,
+            title:`${good.title}—友阿海外购`,
+            desc:'我在友阿海外购发现了一个不错的商品，一起来看看吧。',
+            imgUrl:mainImageUrl,
+            link:location.href
+        })
     }
     handleScroll(scrollNode,scrollTop){
         if(this.smooth){

@@ -6,6 +6,7 @@ var config = require("../lib/config");
 var fs = require("fs");
 var path = require("path");
 var md5 = require('md5');
+var reqwest = require("reqwest");
 
 var authorizeLocals = function(req, res, next) {
     var loginRedirectUrl = util.getAuthGatewayUrl(req, "/logingateway", true);
@@ -26,6 +27,21 @@ var requireAuthorize = function(req, res, next) {
     } else {
         res.redirect(loginUrl);
     }
+}
+
+var weixinConfig = function(req,res,next){
+    var url = config.weixinConfig + "&url=" + util.fullURLByReq(req)
+    reqwest({url:url,method:"GET",type:"json"}).then(function(ret){
+        var _wxConfig = null
+        if(ret.returnCode === 0){
+            _wxConfig = ret.data
+        }
+        res.locals.weixinConfig = _wxConfig
+        next()
+    },function(){
+        res.locals.weixinConfig = null
+        next()
+    })
 }
 
 var staticize = function(req,res,next){
@@ -124,5 +140,6 @@ module.exports = {
     notFoundHandler: notFoundHandler,
     errorHandler: errorHandler,
     test:test,
+    weixinConfig:weixinConfig,
     checkVisitor:checkVisitor
 };

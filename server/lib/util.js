@@ -56,6 +56,14 @@ var util = {
         encodedStr = encodedStr.replace(/_/g, "=").replace(/,/g, "/").replace(/-/g, "+");
         return util.decipher(encodedStr)
     },
+    fullURLByReq(req){
+        var returnUrl = {
+            protocol: req.protocol,
+            host: req.headers.host,
+            pathname: req.url
+        }
+        return encodeURIComponent(url.format(returnUrl))
+    },
     getAuthGatewayUrl: function(req, authPath) {
         var returnUrl = {
             protocol: req.protocol,

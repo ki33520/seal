@@ -11,6 +11,8 @@ import LazyLoad from "../../component/lazyload/lazyload.jsx";
 import Image from "../../component/lazyload/image.jsx";
 import {formatPrice} from "../../lib/util.es6";
 import {jumpURL} from "../../lib/jumpurl.es6";
+import {shareInWeixin} from "../../lib/weixin.es6";
+
 class FlashBuy extends Component{
      filterPrice(goods,status){
         if(goods.flashPrice && goods.flashPrice > 0 && status==='ing'){

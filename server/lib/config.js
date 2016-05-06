@@ -18,7 +18,8 @@ var config = {
         "hosts":["memcached.hwg.youayun.cn:11211"]
     },
     "sharedQRCodePath":"http://product.hwg.youayun.cn",
-    "cashier":"http://cashier.e9448.com"
+    "cashier":"http://cashier.e9448.com",
+    "wxAppId":"wxedb066756a3fe8dd"
 };
 var runtime = process.env["NODE_ENV"];
 config["runtime"] = runtime;
@@ -42,6 +43,7 @@ if(runtime === "hotfix"){
     config.sharedQRCodePath = "http://product.tepin.hk"
     config.imgServer = "http://img.tepin.hk/"
     config.cashier = "http://cashier.tepin.com"
+    config.wxAppId = "wxa0e9e4df789628ba"
 }
 if(runtime === "production"){
     config.oathServer = "http://login.tepin.com";
@@ -50,6 +52,7 @@ if(runtime === "production"){
     config.sharedQRCodePath = "http://product.tepin.hk"
     config.imgServer = "http://img.tepin.hk/"
     config.cashier = "http://cashier.tepin.com"
+    config.wxAppId = "wxa0e9e4df789628ba"
 }
 config.loginUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/login.html?responseType=code";
@@ -57,6 +60,10 @@ config.logoutUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/logout?responseType=code";
 config.registerUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/register.html?responseType=code";
+config.weixinAuthorize = config.oathServer + 
+    "/score/weixin/v1/iface/findWeixinInfo?weixinAppid=" + config.wxAppId
+config.weixinConfig = config.oathServer + 
+    "/score/weixin/v1/iface/weixinConfig?appId=" + config.wxAppId
 
 config.api = _.mapValues(api, function(v) {
     if(runtime === "develop"){
