@@ -15,7 +15,7 @@ export function shareInWeixin(options = {}){
     if(!navigator){
         return
     }
-    const isWeixin = (navigator.userAgent.match(/MicroMessenger/i) === "micromessenger")
+    const isWeixin = (navigator.userAgent.toLowerCase().indexOf("micromessenger") > 1)
     if(!isWeixin){
         return
     }
