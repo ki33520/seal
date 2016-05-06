@@ -10,7 +10,7 @@ export function shareInWeixin(options = {}){
 
     const debug = true
     const {appId,timeStamp,nonceStr,signature} = options
-    const jsApiList = ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo','hideMenuItems','addCard']
+    const jsApiList = ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone','onMenuShareWeibo','hideMenuItems','addCard']
 
     if(!navigator){
         return
