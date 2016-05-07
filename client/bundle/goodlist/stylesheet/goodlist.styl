@@ -186,6 +186,11 @@ body {
 				border-right:1px solid #d7d7d7;
 			}
 		}
+		&:nth-child(2n) {
+			> div {
+				border-right:1px solid #fff;
+			}
+		}
 		.country {
 		    display: block;
 		    margin: .4rem 0 .12rem;
@@ -344,7 +349,7 @@ body {
 	dl {
 		background-color:#fff;
 		padding:.3rem .28rem;
-		border-bottom:1px solid #d7d7d7;
+		border-bottom:1px solid #ECE9E9;
 		height:1rem;
 		line-height:.4rem;
 		dd {
@@ -358,7 +363,9 @@ body {
 			width:80%;
 		}
 	}
-
+	dl:last-child {
+		border-bottom: none;
+	}
 	a:last-child dl{
 		border-bottom:0;
 	}

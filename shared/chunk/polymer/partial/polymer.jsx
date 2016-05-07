@@ -30,8 +30,8 @@ class Polymer extends Component{
             <div className="polymer-content">
                 <Header canBack={false}>
                     <div className="logo"><img src="/client/asset/images/indexlogo.png" /></div>
-                    <div className="btn-right">
-                        <a href="javascript:;" onClick={changeScene.bind(this,"search")}><Icon icon="search"/></a>
+                    <div className="btn-right" onClick={changeScene.bind(this,"search")}>
+                        <a className="search" href="javascript:;"></a>
                     </div>
                 </Header>
                 <div className="polymer-list">
