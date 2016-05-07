@@ -7,13 +7,14 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Topic from "./component.jsx";
 
 function selector(state){
-    const {isFetching,list,imageUrl,title,totalPage} = state.goodsByParam
+    const {isFetching,list,imageUrl,title,totalPage,weixinConfig} = state.goodsByParam
     return {
         list,
         title,
         imageUrl,
         totalPage,
-        isFetching
+        isFetching,
+        weixinConfig
     };
 }
 

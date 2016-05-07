@@ -15,9 +15,9 @@ import {shareInWeixin} from "../../lib/weixin.es6";
 
 class FlashBuy extends Component{
     componentDidMount(){
-        const {weixinConfig} = this.props
+        const {weixinConfig} = this.props.flashBuy
         shareInWeixin({
-            ...this.props.weixinConfig,
+            ...weixinConfig,
             title:`闪购—友阿海外购`,
             desc:"我在友阿海外购闪购栏目挑选商品，一起来看看吧。",
             link:location.href,

@@ -24,7 +24,7 @@ class Topic extends Component{
     componentDidMount(){
         const {weixinConfig,title} = this.props
         shareInWeixin({
-            ...this.props.weixinConfig,
+            ...weixinConfig,
             title:`${title}—友阿海外购`,
             desc:`我在友阿海外购${title}栏目挑选商品，一起来看看吧。`,
             link:location.href,

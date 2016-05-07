@@ -8,14 +8,15 @@ import createStoreWithMiddleware from "../../lib/redux-helper.es6";
 import Activity from "./component.jsx";
 
 function selector(state){
-    const {isFetched,isFetching,activityList,imageUrl,activityName,totalPage} = state.goodsByParam
+    const {isFetched,isFetching,activityList,imageUrl,activityName,totalPage,weixinConfig} = state.goodsByParam
     return {
         isFetched,
         activityList,
         activityName,
         imageUrl,
         totalPage,
-        isFetching
+        isFetching,
+        weixinConfig
     };
 }
 
