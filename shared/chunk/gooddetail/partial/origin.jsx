@@ -30,9 +30,14 @@ class Origin extends Component{
                    <dd>
                     <a href="http://a.tepin.hk/h/rule/valueTable_h.html"
                          className="tariff">
-                      <span><b>税费说明:</b>税费=不含税商品单价*件数*(跨境电商综合税率+行邮税率)</span>
-                      <span><b>本品适合跨境综合税:</b></span>
-                      <span>跨境电商综合税率=(消费税率+增值税率)/(1-消费税率)*0.7</span>
+                      <div>
+                        <b></b>
+                        <span dangerouslySetInnerHTML={{__html:good.rateDescription}}></span>
+                      </div>
+                      <div>
+                        <b></b>
+                        <span dangerouslySetInnerHTML={{__html:good.tariffDesc}}></span>
+                      </div>
                       <i className="iconfont icon-right"></i>
                     </a>
                    </dd>

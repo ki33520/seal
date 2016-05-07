@@ -8,8 +8,7 @@ export function shareInWeixin(options = {}){
     const success = options.success || ()=>{}
     const cancel = options.cancel || ()=>{}
 
-    const debug = true
-    const {appId,timeStamp,nonceStr,signature} = options
+    const {appId,timeStamp,nonceStr,signature,debug} = options
     const jsApiList = ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone','onMenuShareWeibo','hideMenuItems','addCard']
 
     if(!navigator){
@@ -28,7 +27,7 @@ export function shareInWeixin(options = {}){
         console.log("wx error",res)
     })
     wx.ready(()=>{
-        console.log("wx success")
+        // console.log("wx success")
         wx.showOptionMenu()
         /*分享到朋友圈*/
         wx.onMenuShareTimeline({

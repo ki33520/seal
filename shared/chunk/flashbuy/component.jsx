@@ -14,6 +14,16 @@ import {jumpURL} from "../../lib/jumpurl.es6";
 import {shareInWeixin} from "../../lib/weixin.es6";
 
 class FlashBuy extends Component{
+    componentDidMount(){
+        const {weixinConfig} = this.props
+        shareInWeixin({
+            ...this.props.weixinConfig,
+            title:`闪购—友阿海外购`,
+            desc:"我在友阿海外购闪购栏目挑选商品，一起来看看吧。",
+            link:location.href,
+            imgUrl:`${location.origin}/client/asset/images/app.png`
+        })
+    }
      filterPrice(goods,status){
         if(goods.flashPrice && goods.flashPrice > 0 && status==='ing'){
             return formatPrice(goods.flashPrice);

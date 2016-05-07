@@ -77,7 +77,8 @@ var flashBuy = function(req,res,next) {
             var groupGoods = flashBuyFilter(resp.goods.object,resp.timestamp.systemTime);
             var initialState = {
                 groupGoods:groupGoods,
-                isFetched:true
+                isFetched:true,
+                weixinConfig:res.locals.weixinConfig
             };
             var markup = util.getMarkupByComponent(FlashBuy({
                 initialState:initialState

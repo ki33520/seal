@@ -35,6 +35,7 @@ var weixinConfig = function(req,res,next){
         var _wxConfig = null
         if(ret.returnCode === 0){
             _wxConfig = ret.data
+            _wxConfig["debug"] = (process.env.NODE_ENV === "develop")
         }
         res.locals.weixinConfig = _wxConfig
         next()

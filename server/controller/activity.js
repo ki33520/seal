@@ -50,7 +50,8 @@ var activity = function(req, res, next) {
             activityList:activityList,
             totalPage:totalPage,
             imageUrl:imgServer + obj.bannerImageUrl,
-            activityName:obj.activityName
+            activityName:obj.activityName,
+            weixinConfig:res.locals.weixinConfig
         };
         var markup = util.getMarkupByComponent(ActivityApp({
             initialState: initialState

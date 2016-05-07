@@ -7,6 +7,8 @@ import Header from "../common/header.jsx";
 import GoodItem from "./partial/goodItem.jsx";
 import fetchGoods from "./action.es6";
 
+import {shareInWeixin} from "../../lib/weixin.es6";
+
 class Activity extends Component{
     constructor(props){
         super(props);
@@ -15,6 +17,16 @@ class Activity extends Component{
             shareActive:false,
             pageIndex:1
         }
+    }
+    componentDidMount(){
+        const {weixinConfig,activityName} = this.props
+        shareInWeixin({
+            ...this.props.weixinConfig,
+            title:`${activityName}—友阿海外购`,
+            desc:"我在友阿海外购挑选商品，一起来看看吧。",
+            link:location.href,
+            imgUrl:`${location.origin}/client/asset/images/app.png`
+        })
     }
     beginRefresh(){
         const {dispatch,totalPage,isFetching} = this.props;

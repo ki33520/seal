@@ -13,7 +13,6 @@ var goodDetail = function(req, res, next) {
     var isAuthorized = req.session.user !== undefined;
     var loginUrl = res.locals.loginUrl;
     var weixinConfig = res.locals.weixinConfig;
-    console.log('weixinConfig',weixinConfig)
     var tag = req.query.tag?req.query.tag:""
     // if(req.cookies["tag"] == undefined){
     var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
@@ -182,7 +181,7 @@ function goodFilter(good) {
         "buyLimit", "sourceAreaId", "useMobilePrice", "mobilePrice",
         "useTaxRate","consumerTax","addedTax",
         "useInlandLogistics", "useOutlandLogistics", "outlandLogisticsFee",
-        "description","isMeiZhuang","version","canAddCart"
+        "description","isMeiZhuang","version","canAddCart","rateDescription","tariffDesc"
     ]);
     _good["imageUrl"] = _.map(good.picList, function(imageUrl) {
         return config.imgServer + imageUrl

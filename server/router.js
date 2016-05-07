@@ -23,8 +23,8 @@ router.get(urlPrefix + "/purgesearchhistory", require("./controller/index.js").p
 router.post(urlPrefix + "/searchassociate", require("./controller/index.js").searchAssociate);
 router.get(urlPrefix + "/activitygood", require("./controller/index.js").activityGood);
 router.get(urlPrefix + "/updategoods",require("./controller/index.js").updateGoods);
-router.get(urlPrefix + "/topic/:id.html",mainController.checkVisitor, mainController.staticize, require("./controller/topic.js").topic);
-router.get(urlPrefix + "/flashbuy/:id.html",mainController.checkVisitor, mainController.staticize, require("./controller/flashbuy.js"));
+router.get(urlPrefix + "/topic/:id.html",mainController.checkVisitor, mainController.staticize,mainController.weixinConfig, require("./controller/topic.js").topic);
+router.get(urlPrefix + "/flashbuy/:id.html",mainController.checkVisitor, mainController.staticize,mainController.weixinConfig, require("./controller/flashbuy.js"));
 router.get(urlPrefix + "/polymer.html",mainController.checkVisitor, mainController.staticize,require("./controller/polymer").polymer);
 router.get(urlPrefix + "/categorybrands", require("./controller/polymer").categoryBrands);
 router.get(urlPrefix + "/allbrands", require("./controller/polymer").allBrands);
@@ -39,7 +39,7 @@ router.get(urlPrefix + "/search/s.html", require("./controller/goodlist"));
 router.get(urlPrefix + "/goodcomment", require("./controller/gooddetail").goodComments);
 router.get(urlPrefix + "/cartcount", require("./controller/gooddetail").cartCount);
 
-router.get(urlPrefix + "/activity/:id.html",mainController.checkVisitor,mainController.staticize, require("./controller/activity"));
+router.get(urlPrefix + "/activity/:id.html",mainController.checkVisitor,mainController.staticize,mainController.weixinConfig, require("./controller/activity"));
 router.get(urlPrefix + "/trendy.html",mainController.checkVisitor,mainController.staticize, require("./controller/trendy").trendy);
 router.post(urlPrefix + "/trendyActivity",require("./controller/trendy").activity);
 

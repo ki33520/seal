@@ -179,7 +179,7 @@ class GoodDetail extends Component{
             alert('购买数量必须大于0',3000);
             return;
         }else if(good.selectedItem !== null && buyed > 0){
-            // this.togglePopup("addToCart")
+            this.togglePopup("addToCart")
             if(good.flashbuy['active'] || !good["canAddCart"]){
                 let singleCode = good.selectedItem.code
                 let queryParam = base64Encode(urlParam({
@@ -268,6 +268,7 @@ class GoodDetail extends Component{
         const {good} = this.props.goodById
         const {buyed} = this.state;
         return <Toolbar cartCount={cartCount} good={good} 
+            togglePopup={this.togglePopup.bind(this)} 
             directBuy={this.directBuy.bind(this)} 
             addToCart={this.addToCart.bind(this)}>
             </Toolbar>
@@ -280,6 +281,12 @@ class GoodDetail extends Component{
         /*2000 price amount limit*/
         const destPrice = destPriceForGoods(good).destPrice
         buylimit = buylimit > Math.floor(2000 / destPrice) ?Math.floor(2000 / destPrice):buylimit
+
+        const handleConfirm = (trigger && trigger === "addToCart") ? this.addToCart.bind(this):this.directBuy.bind(this);
+        let canAddCart = good["canAddCart"]
+        if(good.flashbuy["active"]){
+            canAddCart = false
+        }
         const confrimButtonClasses = classNames("goodsSureBtn",{
             "disabled":good.stock <= 0
         })
@@ -307,7 +314,9 @@ class GoodDetail extends Component{
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
                     </div>
-                    <a href="javascript:void(0);" onClick={this.togglePopup.bind(this,null)} className={confrimButtonClasses}>确定</a>
+                    <a href="javascript:void(0);" onClick={handleConfirm} className={confrimButtonClasses}>{
+                        !canAddCart && this.state.scheme === "addToCart"
+                        ?"立即购买":"确定"}</a>
                 </div>
             </Popup>
         )
@@ -365,15 +374,6 @@ class GoodDetail extends Component{
                     <i className="iconfont icon-comment"></i>用户评论<em>({good.comments?good.comments.totalCount:0})</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
-                <div className="goods-panel"><dl>
-                    <dt>已选择</dt>
-                    <dd>
-                    <a href="javascript:void(null)" onClick={this.togglePopup.bind(this,null)}>
-                    <span>{good.selectedItem?_.values(good.selectedItem.attrs).join(","):null}</span>
-                    <i className="iconfont icon-right" />    
-                    </a>
-                    </dd>
-                </dl></div>
                 <Origin good={good} {...this.props}/>
                 <div className="assure">
                     <img src="/client/asset/images/assure.gif" />

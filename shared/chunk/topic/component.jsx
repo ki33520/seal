@@ -10,6 +10,8 @@ import Refresher from "../../component/refresher.jsx";
 import GoTop from "../../component/gotop.jsx";
 import LazyLoad from "../../component/lazyload/lazyload.jsx";
 import Image from "../../component/lazyload/image.jsx";
+import {shareInWeixin} from "../../lib/weixin.es6";
+
 class Topic extends Component{
     constructor(props){
         super(props);    
@@ -18,6 +20,16 @@ class Topic extends Component{
             shareActive:false,
             pageIndex:1
         }
+    }
+    componentDidMount(){
+        const {weixinConfig,title} = this.props
+        shareInWeixin({
+            ...this.props.weixinConfig,
+            title:`${title}—友阿海外购`,
+            desc:`我在友阿海外购${title}栏目挑选商品，一起来看看吧。`,
+            link:location.href,
+            imgUrl:`${location.origin}/client/asset/images/app.png`
+        })
     }
     beginRefresh(){
         const {dispatch,totalPage,isFetching} = this.props;

@@ -22,11 +22,28 @@ class Toolbar extends Component{
         return <span>&yen;{formatPrice(salePrice)}</span>
     }
     render(){
-        const {addToCart,directBuy,good,cartCount} = this.props
+        const {addToCart,directBuy,good,cartCount,togglePopup} = this.props
 
         let canAddCart = good["canAddCart"]
         if(good.flashbuy["active"]){
             canAddCart = false
+        }
+
+        let handleAddCartPopup = ()=>{
+           if(canAddCart){
+                togglePopup("addToCart")
+                this.setState({
+                    scheme:"addToCart"
+                })
+           }
+        }
+        let handleDirectBuyPopup = ()=>{
+            if(good.stock > 0){
+                togglePopup("directBuy")
+                this.setState({
+                    scheme:"directBuy"
+                })  
+            }
         }
 
         // console.log('canAddCart',canAddCart)
@@ -42,8 +59,8 @@ class Toolbar extends Component{
                 <a href={jumpURL("cart")} className="goods_cart">
                     <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount > 99?"99+":cartCount}</em>:null}</i>
                 </a>
-                <a href="javascript:void(null)" onClick={addToCart} className={addCartClasses}>加入购物车</a>
-                <a href="javascript:void(0);" onClick={directBuy} className={directBuyClasses}>{good.stock>0?"立即购买":"已抢光"}</a>
+                <a href="javascript:void(null)" onClick={handleAddCartPopup} className={addCartClasses}>加入购物车</a>
+                <a href="javascript:void(0);" onClick={handleDirectBuyPopup} className={directBuyClasses}>{good.stock>0?"立即购买":"已抢光"}</a>
             </div>
             </div>
         )

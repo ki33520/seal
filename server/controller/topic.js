@@ -49,7 +49,8 @@ var topic = function(req, res, next) {
             list,
             totalPage,
             imageUrl:config.imgServer + obj.bannerImageUrl,
-            title:obj.activityName
+            title:obj.activityName,
+            weixinConfig:res.locals.weixinConfig
         };
         var markup = util.getMarkupByComponent(Topic({
             initialState: initialState
