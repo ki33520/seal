@@ -21,7 +21,7 @@ class Activity extends Component{
     componentDidMount(){
         const {weixinConfig,activityName} = this.props
         shareInWeixin({
-            ...this.props.weixinConfig,
+            ...weixinConfig,
             title:`${activityName}—友阿海外购`,
             desc:"我在友阿海外购挑选商品，一起来看看吧。",
             link:location.href,

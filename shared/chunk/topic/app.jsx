@@ -21,13 +21,14 @@ let TopicConnected = connect(selector)(Topic);
 
 class TopicApp extends React.Component{
     render(){
-        const {list,imageUrl,title,totalPage} = this.props.initialState;
+        const {list,imageUrl,title,totalPage,weixinConfig} = this.props.initialState;
         var store = createStoreWithMiddleware(rootReducer,{
             goodsByParam:{
                 list,
                 imageUrl,
                 title,
                 totalPage,
+                weixinConfig,
                 isFetching:false
             }
         });

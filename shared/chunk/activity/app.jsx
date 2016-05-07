@@ -28,7 +28,7 @@ function configureStore(initialState){
 
 class ActivityApp extends Component{
     render(){
-        const {activityList,imageUrl,activityName,totalPage,isFetched} = this.props.initialState;
+        const {activityList,imageUrl,activityName,totalPage,isFetched,weixinConfig} = this.props.initialState;
         const initialState = {
             goodsByParam:{
                 isFetched,
@@ -36,6 +36,7 @@ class ActivityApp extends Component{
                 imageUrl,
                 activityName,
                 totalPage,
+                weixinConfig,
                 isFetching:false
             }
         };

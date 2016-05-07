@@ -39,7 +39,7 @@ router.get(urlPrefix + "/search/s.html", require("./controller/goodlist"));
 router.get(urlPrefix + "/goodcomment", require("./controller/gooddetail").goodComments);
 router.get(urlPrefix + "/cartcount", require("./controller/gooddetail").cartCount);
 
-router.get(urlPrefix + "/activity/:id.html",mainController.checkVisitor,mainController.staticize,mainController.weixinConfig, require("./controller/activity"));
+router.get(urlPrefix + "/activity/:id.html",mainController.checkVisitor,mainController.staticize,mainController.weixinConfig,require("./controller/activity"));
 router.get(urlPrefix + "/trendy.html",mainController.checkVisitor,mainController.staticize, require("./controller/trendy").trendy);
 router.post(urlPrefix + "/trendyActivity",require("./controller/trendy").activity);
 
