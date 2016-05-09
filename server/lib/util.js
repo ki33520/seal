@@ -23,7 +23,7 @@ var staticStorage = new FSStorage({
     path:"client/page/",
     serialize:false,
     ext:".html",
-    expire:60000 * 10
+    expire:60000 * 3
 })
 
 var urlPrefix = require("./config").urlPrefix

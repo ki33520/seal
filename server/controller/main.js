@@ -70,6 +70,7 @@ var errorHandler = function(err,req,res,next){
         initialState: initialState
     }));
 
+    res.status(500)
     res.render('error', {
         markup: markup,
         initialState: initialState
@@ -84,7 +85,7 @@ var notFoundHandler = function(req, res) {
     var markup = util.getMarkupByComponent(ErrorContent({
         initialState: initialState
     }));
-
+    res.status(404)
     res.render('error', {
         markup: markup,
         initialState: initialState
