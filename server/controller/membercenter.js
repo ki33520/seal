@@ -66,7 +66,8 @@ var memberCenter = function(req, res, next) {
                     countOrder: countOrder,
                     api: {
                         logoutUrl: logoutUrl
-                    }
+                    },
+                    weixinConfig:res.locals.weixinConfig
                 };
                 
                 var markup = util.getMarkupByComponent(MembercenterApp({initialState:initialState}));
@@ -94,7 +95,8 @@ var memberCenter = function(req, res, next) {
             api: {
                 loginUrl: loginUrl,
                 registerUrl: registerUrl
-            }
+            },
+            weixinConfig:res.locals.weixinConfig
         };
         
         var markup = util.getMarkupByComponent(MembercenterApp({initialState:initialState}));

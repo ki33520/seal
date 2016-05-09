@@ -6,6 +6,7 @@ import classNames from "classnames";
 import Footer from "../common/footer.jsx";
 import MaskLayer from "../../component/masklayer.jsx";
 import {jumpURL,urlPrefix} from "../../lib/jumpurl.es6";
+import {shareInWeixin} from "../../lib/weixin.es6";
 
 class MemberCenter extends Component{
     constructor(props){
@@ -17,6 +18,14 @@ class MemberCenter extends Component{
     }
     componentDidMount(){
         this.props.fetchCartCount();
+        const {weixinConfig} = this.props.memberCenterByUser
+        shareInWeixin({
+            ...weixinConfig,
+            title:`个人中心—友阿海外购`,
+            desc:"我在友阿海外购挑选商品，一起来看看吧。",
+            link:location.href,
+            imgUrl:`${location.origin}/client/asset/images/app.png`
+        })
     }
     togglePopupActive(type){
         this.setState({
