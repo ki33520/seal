@@ -23,7 +23,7 @@ function configureStore(initialState){
 
 class MembercenterApp extends Component{
     render(){
-        const {isFetched,member,isLogined,api,countOrder,ua,weixinConfig} = this.props.initialState;
+        const {isFetched,member,isLogined,api,countOrder,ua} = this.props.initialState;
         const initialState = {
             memberCenterByUser:{
                 isFetching:false,
@@ -32,8 +32,7 @@ class MembercenterApp extends Component{
                 ua,
                 countOrder,
                 isLogined,
-                api,
-                weixinConfig
+                api
             }
         };
         
