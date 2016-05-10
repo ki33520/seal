@@ -2,6 +2,9 @@
 /* CSS Document */
 
 /* 商品评论 */
+.swiper-control-item{
+    font-size:.373333rem;
+}
 .commentTabs {
     height: 1.16rem;
     border-bottom: 1px solid #d7d7d7;
@@ -43,7 +46,7 @@
     background-color:#fff;
 }
 .comList p{
-    font-size:.32rem;
+    font-size:.373333rem;
 }
 .comList_title{
     border-bottom:1px solid #d7d7d7;
@@ -52,9 +55,12 @@
 .comList_title img{
     width:1.1rem;
     height:1.1rem;
+    border-radius: 100%;
+    margin-right: .2666666rem;
     display:inline;
 }
 .comList_title span{
+    font-size:.373333rem;
     line-height:1.1rem;
     display:inline-block;
     vertical-align:top;
@@ -63,6 +69,7 @@
     float:right;
     color:#999;
     line-height:1.1rem;
+    font-size: .32rem;
 }
 .star {
     position: relative;
@@ -83,10 +90,11 @@
 }
 .comPics{
     clear:both;
-    margin-top:.32rem;
+    margin-top: 0;
 }
 .comPics a{
     float:left;
+    margin-top: .32rem;
     margin-right:.24rem;
 }
 .comPics img{
@@ -326,4 +334,7 @@
 }
 .comment_area_pic a img{
     width:100%;
+}
+.comment-thumbnail{
+    height: 100%;
 }

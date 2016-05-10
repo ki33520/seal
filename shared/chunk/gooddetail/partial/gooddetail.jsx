@@ -54,7 +54,8 @@ class GoodDetail extends Component{
     }
     toggleShare(){
         this.setState({
-            shareActive:!this.state.shareActive
+            shareActive:!this.state.shareActive,
+            scrollable:this.state.shareActive
         })
     }
     componentDidMount(){

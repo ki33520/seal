@@ -19,6 +19,7 @@ class MemberCenter extends Component{
         this.props.fetchCartCount();
     }
     togglePopupActive(type){
+        document.getElementById("member-center").style.overflow = type ? "hidden" : "inherit";
         this.setState({
             maskActive: type,
             popupActive: type
@@ -122,6 +123,9 @@ class MemberCenter extends Component{
             )
         }
         
+    }
+    touchMaskLayer(){
+        return false;
     }
     renderHelpList(){
         return (

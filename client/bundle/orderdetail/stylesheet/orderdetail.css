@@ -71,12 +71,13 @@
 }
 .orderSpeed .orderNum i{
     margin-right: .3rem;
-    font-size: .3rem;
+    font-size:.373333rem;
+    color: #666;
 }
 .orderSpeed .orderNum span{
-    color:#2c2f38;
+    color:#222;
     font-weight:bold;
-    font-size:.38rem;
+    font-size:.373333rem;
 }
 .orderSpeed .rate{
     padding: 0 .32rem;
@@ -98,8 +99,8 @@
     -webkit-flex: 1;
     flex: 1;
     text-align:center;
-    font-size:.27rem;
-    color: #444;
+    font-size:.25rem;
+    color: #333;
 }
 .orderSpeed .rateText span.notTo{
     color:#999;
@@ -114,7 +115,8 @@
 }
 .order-time p {
     padding: 1% 0;
-    font-size:.38rem;
+    font-size:.373333rem;
+    color: #222;
 }
 .order-time p span.mobNum{
     font-weight:bold;
@@ -152,6 +154,7 @@
 .J_moveRight .title{
     font-size: .3rem;
     line-height: .5rem;
+    color: #222;
 }
 .J_moveRight .J_ytag{
     float: left;
@@ -191,7 +194,7 @@
 }
 .J_moveRight .gd_info .name span {
     font-size: .35rem;
-    color: #333;
+    color: #222;
     overflow:hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -235,13 +238,14 @@
     line-height: 1rem;
     border-bottom: 1px solid #f5f5f5;
     padding: 0 .32rem;
+    font-size: .32rem;
 }
 .count-box .bottom-line {
     height: .96rem;
     line-height: .96rem;
     position: relative;
     padding: 0 .32rem;
-    font-size: .38rem;
+    font-size:.373333rem;
 }
 .count-box .bottom-line .label {
     float: left;
@@ -254,7 +258,7 @@
 }
 .count-box .bottom-line .data span {
     margin-left: .04rem;
-    font-size: .38rem;
+    font-size:.373333rem;
 }
 .bottom-line.intro .data {
     color: #27c241;
@@ -333,7 +337,7 @@
     margin-bottom:.266667rem;
 }
 .logistics .info p{
-    font-size:.38rem;
+    font-size:.373333rem;
     line-height:.76rem;
 }
 .logistics .rate{
