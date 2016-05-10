@@ -71,7 +71,7 @@ class GoodDetail extends Component{
         fetchIsCollected({
             singleCode:code
         })
-        fetchComments({productCode})
+        // fetchComments({productCode})
 
         const {weixinConfig,good} = this.props.goodById
         shareInWeixin({
