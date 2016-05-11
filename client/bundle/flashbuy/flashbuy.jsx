@@ -8,6 +8,7 @@ function bootstrap(){
         ReactDOM.render(<FlashBuy initialState={initialState} />,document.getElementById('flashbuy'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

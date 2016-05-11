@@ -8,6 +8,7 @@ function bootstrap(){
         ReactDOM.render(<AboutUs initialState={initialState} />,document.getElementById('aboutus'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

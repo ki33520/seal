@@ -8,6 +8,7 @@ function bootstrap(){
         ReactDOM.render(<MembercommentApp initialState={initialState} />,document.getElementById('member-comment'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

@@ -9,6 +9,7 @@ function bootstrap(){
     ReactDOM.render(<GoodListApp initialState={initialState} />,document.getElementById('good-list'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

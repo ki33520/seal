@@ -9,6 +9,7 @@ function bootstrap(){
         ReactDOM.render(<OrderList initialState={initialState} />,document.getElementById('order-list'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

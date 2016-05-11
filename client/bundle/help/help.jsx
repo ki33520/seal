@@ -8,6 +8,7 @@ function bootstrap(){
         ReactDOM.render(<HelpApp initialState={initialState} />,document.getElementById('help-content'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{
