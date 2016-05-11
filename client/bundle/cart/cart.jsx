@@ -9,6 +9,7 @@ function bootstrap(){
     ReactDOM.render(<CartApp initialState={initialState} />,document.getElementById('cart'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

@@ -9,7 +9,7 @@ function bootstrap(){
         ReactDOM.render(<Receiver initialState={initialState} />,document.getElementById('receiver'));
 }
 
-
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

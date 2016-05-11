@@ -8,6 +8,7 @@ function bootstrap(){
     ReactDOM.render(<CouponApp initialState={initialState} />,document.getElementById('coupon'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{
