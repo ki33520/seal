@@ -8,6 +8,7 @@ function bootstrap(){
         ReactDOM.render(<OrderDetail initialState={initialState} />,document.getElementById('order-detail'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

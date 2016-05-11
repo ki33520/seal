@@ -7,6 +7,8 @@ function bootstrap(){
     var initialState = JSON.parse(document.getElementById("initial-state").textContent);
         ReactDOM.render(<MembercenterApp initialState={initialState} />,document.getElementById('member-center'));
 }
+
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

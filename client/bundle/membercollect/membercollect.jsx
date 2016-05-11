@@ -8,6 +8,7 @@ function bootstrap(){
         ReactDOM.render(<MembercollectApp initialState={initialState} />,document.getElementById('member-collect'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{

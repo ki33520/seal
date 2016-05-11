@@ -8,6 +8,7 @@ function bootstrap(){
         ReactDOM.render(<MemberupdateApp initialState={initialState} />,document.getElementById('member-update'));
 }
 
+require("../../../shared/lib/responsive");
 if(typeof window.addEventListener){
     window.addEventListener("DOMContentLoaded",bootstrap);
 }else{
