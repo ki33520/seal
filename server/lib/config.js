@@ -37,7 +37,7 @@ if(runtime === "test"){
     config.appId = "hwg";
 }
 if(runtime === "hotfix"){
-    config.oathServer = "http://login.tepin.com";
+    config.oathServer = "https://login.tepin.com";
     config.appKey = "35c33163124346fa9dabb7d8435a811d";
     config.appId = "haiwaigou";
     config.sharedQRCodePath = "http://product.tepin.hk"
@@ -46,7 +46,7 @@ if(runtime === "hotfix"){
     config.wxAppId = "wxa0e9e4df789628ba"
 }
 if(runtime === "production"){
-    config.oathServer = "http://login.tepin.com";
+    config.oathServer = "https://login.tepin.com";
     config.appKey = "35c33163124346fa9dabb7d8435a811d";
     config.appId = "haiwaigou";
     config.sharedQRCodePath = "http://product.tepin.hk"
