@@ -40,7 +40,7 @@ class Index extends Component{
         return (
             <div className={classes}>
             <Header {...this.props}/>
-            <Swiper controlSliding={true} contentSliding={false}  
+            <Swiper controlSliding={true} contentSliding={true}  
             onSelect={this.handleSelect.bind(this)}>
             {tabs}
             </Swiper>

@@ -35,7 +35,7 @@ class Polymer extends Component{
                     </div>
                 </Header>
                 <div className="polymer-list">
-                    <Swiper onSelect={this.handleSelect.bind(this)}>
+                    <Swiper onSelect={this.handleSelect.bind(this)} contentSliding={true}>
                     <SwiperItem control={()=><b>类别</b>}>
                         <Category {...this.props.allCategory} {...this.props}/>
                     </SwiperItem>

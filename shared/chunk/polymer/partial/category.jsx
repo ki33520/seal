@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import {Swiper,SwiperItem} from "../../../component/swiper.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
+import GoTop from "../../../component/gotop.jsx";
 
 class Category extends Component{
     constructor(props){
@@ -49,11 +50,13 @@ class Category extends Component{
             )
         })
         return (
+            <GoTop relative={true}>
             <div className="category-list">
                 <Swiper axis="y" onSelect={this.handleSelect.bind(this)}>
                 {tabs}
                 </Swiper>
             </div>
+            </GoTop>
         )
     }
 }
