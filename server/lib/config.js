@@ -43,7 +43,7 @@ if(runtime === "hotfix"){
     config.sharedQRCodePath = "http://product.tepin.hk"
     config.imgServer = "http://img.tepin.hk/"
     config.cashier = "http://cashier.tepin.com"
-    config.wxAppId = "wxc9d02d51a9768171"
+    config.wxAppId = "wxa0e9e4df789628ba"
 }
 if(runtime === "production"){
     config.oathServer = "https://login.tepin.com";
@@ -52,7 +52,7 @@ if(runtime === "production"){
     config.sharedQRCodePath = "http://product.tepin.hk"
     config.imgServer = "http://img.tepin.hk/"
     config.cashier = "http://cashier.tepin.com"
-    config.wxAppId = "wxc9d02d51a9768171"
+    config.wxAppId = "wxa0e9e4df789628ba"
 }
 config.loginUrl = config.oathServer +
     "/score/member/"+config.appId+"/haiwaigou-wap/wap/login.html?responseType=code";
