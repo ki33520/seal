@@ -61,7 +61,7 @@ class ConfirmOrder extends Component{
                 </div>
                 <div className="count-box-line">
                     <div className="label">税费：</div>
-                    {order.tariffFee>0?null:<div className="red-box">免税</div>}
+                    {order.tariffFee>0?null:<div className="red-box">包税</div>}
                     <div className="data">&yen;<span>{order.tariffFee.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line intro">
