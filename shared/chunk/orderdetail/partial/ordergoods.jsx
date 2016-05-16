@@ -1,7 +1,6 @@
 'use strict';
 
 import React,{Component} from "react";
-import {formatPrice} from "../../../lib/util.es6";
 import {jumpURL} from "../../../lib/jumpurl.es6";
 
 class OrderGoods extends Component{
@@ -22,7 +21,7 @@ class OrderGoods extends Component{
                                     <span>{v.singleTitle}</span>
                                 </a>
                             </p>
-                            <p className="value"><i>&yen;</i>{formatPrice(v.salesPrice)}<i className="x">&times;</i><b>{v.qty}</b></p>
+                            <p className="value"><i>&yen;</i>{v.salesPrice.toFixed(2)}<i className="x">&times;</i><b>{v.qty}</b></p>
                         </div>
                     </div>
                 )

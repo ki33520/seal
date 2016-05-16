@@ -5,7 +5,6 @@ import _ from "lodash";
 import classNames from "classnames";
 import Header from "../../common/header.jsx";
 import GoTop from "../../../component/gotop.jsx";
-import {formatPrice} from "../../../lib/util.es6";
 import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
 import Alert from "../../../component/alert.jsx";
 
@@ -113,7 +112,7 @@ class Comment extends Component{
                                 </a>
                                 <div className="gd_info">
                                     <p className="name">{v.singleTitle}</p>
-                                    <p className="value"><i>&yen;</i>{formatPrice(v.salesPrice)}</p>
+                                    <p className="value"><i>&yen;</i>{v.salesPrice.toFixed(2)}</p>
                                 </div>
                             </div>
                         </div>
