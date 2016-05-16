@@ -55,13 +55,9 @@ class ConfirmOrder extends Component{
                     <div className="data">&yen;<span>{order.productFee.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line">
-                    <div className="label">国内运费：</div>
-                    {order.shipFee>0?null:<div className="red-box">包邮</div>}
-                    <div className="data">&yen;<span>{order.shipFee.toFixed(2)}</span></div>
-                </div>
-                <div className="count-box-line">
-                    <div className="label">国际运费：</div>
-                    <div className="data">&yen;<span>{order.abroadFee.toFixed(2)}</span></div>
+                    <div className="label">运费：</div>
+                    {order.shipFeeAmount>0?null:<div className="red-box">包邮</div>}
+                    <div className="data">&yen;<span>{order.shipFeeAmount.toFixed(2)}</span></div>
                 </div>
                 <div className="count-box-line">
                     <div className="label">税费：</div>

@@ -21,6 +21,7 @@ function orderFilter(order) {
     _order["tariffFee"] = order.tariffFee
     _order["abroadFee"] = order.abroadFee ? order.abroadFee : 0
     _order["shipFee"] = order.logisticsFee ? order.logisticsFee : 0
+    _order["shipFeeAmount"] = _.add(_order["abroadFee"],_order["shipFee"])
     _order["couponFee"] = 0
     _order["promoFee"] = order.promoFee
     _order["reduceFee"]= Math.round((_order["productFee"] - _order["promoFee"]) * 100) / 100

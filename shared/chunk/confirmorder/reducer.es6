@@ -11,6 +11,7 @@ import {
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
+import _ from "../../lib/lodash"
 
 function orderByParam(state={},action){
     switch(action.type){
@@ -151,20 +152,9 @@ function errMsgByCode(errCode){
 }
 
 function calculateTotalFee(order){
-    // let totalFee = order.productFee + order.shipFee + order.abroadFee + order.tariffFee
-    //     - order.promoFee - order.couponFee
-    let productFee = (order.reduceFee - order.couponFee) < 0? 0 : (order.reduceFee - order.couponFee)
+    let productFee = _.subtract(order.reduceFee,order.couponFee) < 0? 0 : _.subtract(order.reduceFee,order.couponFee)
     // console.log('productFee',productFee)
-    let totalFee = productFee + order.shipFee + order.abroadFee + order.tariffFee
-
-    totalFee = Math.round(totalFee * 100) / 100
-    // console.log('productFee',order.productFee)
-    // console.log('shipFee',order.shipFee)
-    // console.log('abroadFee',order.abroadFee)
-    // console.log('tariffFee',order.tariffFee)
-    // console.log('promoFee',order.promoFee)
-    // console.log('couponFee',order.couponFee)
-    // console.log('totalFee',totalFee)
+    let totalFee = _.sum([productFee,order.shipFee,order.abroadFee,order.tariffFee])
     totalFee = totalFee < 0.3 ? 0.3:totalFee
     return totalFee
 }

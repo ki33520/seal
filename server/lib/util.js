@@ -60,7 +60,8 @@ var util = {
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,
-            pathname: req.url
+            pathname: req.url,
+            query:req.query
         }
         return encodeURIComponent(url.format(returnUrl))
     },

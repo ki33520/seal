@@ -21,10 +21,6 @@ class Origin extends Component{
                   <dt>发货仓：</dt>
                   <dd>{good.warehouseName}</dd>
                 </dl>
-                <dl>
-                  <dt>运费：</dt>
-                  <dd>{logistics}</dd>
-                </dl>   
                 <div className="smallLine"></div>
                 <dl className="tax-panel">
                    <dd>
