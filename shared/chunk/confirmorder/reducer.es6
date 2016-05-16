@@ -11,7 +11,6 @@ import {
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
-import _ from "../../lib/lodash.es6"
 
 function orderByParam(state={},action){
     switch(action.type){
@@ -44,12 +43,12 @@ function orderByParam(state={},action){
             order = {...state.order}
             if(action.res.isFetched){
                 // order.totalFee += (action.res.result - order.shipFee)
-                console.log("order",order.isPostageFree)
                 if(order.isPostageFree){
                     order.shipFee = 0
                 }else{
                     order.shipFee = action.res.result
                 }
+                order.shipFeeAmount = Math.round((order.shipFee + order.abroadFee) * 100) / 100
                 order.totalFee = calculateTotalFee(order)
             }
             return Object.assign({},state,{
@@ -152,9 +151,20 @@ function errMsgByCode(errCode){
 }
 
 function calculateTotalFee(order){
-    let productFee = order.reduceFee - order.couponFee < 0? 0 : order.reduceFee - order.couponFee
+    // let totalFee = order.productFee + order.shipFee + order.abroadFee + order.tariffFee
+    //     - order.promoFee - order.couponFee
+    let productFee = (order.reduceFee - order.couponFee) < 0? 0 : (order.reduceFee - order.couponFee)
     // console.log('productFee',productFee)
-    let totalFee = _.sum([productFee,order.shipFee,order.abroadFee,order.tariffFee])
+    let totalFee = productFee + order.shipFee + order.abroadFee + order.tariffFee
+
+    totalFee = Math.round(totalFee * 100) / 100
+    // console.log('productFee',order.productFee)
+    // console.log('shipFee',order.shipFee)
+    // console.log('abroadFee',order.abroadFee)
+    // console.log('tariffFee',order.tariffFee)
+    // console.log('promoFee',order.promoFee)
+    // console.log('couponFee',order.couponFee)
+    // console.log('totalFee',totalFee)
     totalFee = totalFee < 0.3 ? 0.3:totalFee
     return totalFee
 }
