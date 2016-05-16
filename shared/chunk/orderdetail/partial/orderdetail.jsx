@@ -198,6 +198,7 @@ class OrderDetail extends Component{
         const {order} = this.props.orderByParam;
         const {orderStatus} = order;
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
+        var shipmentFeeBox = order.shipmentFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
         var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
         var paymentTitle = !order.canFlow ? "应付金额：" : "实付金额：";
@@ -214,12 +215,8 @@ class OrderDetail extends Component{
                         <div className="data"><i>&yen;</i><span>{formatPrice(order.salesTotalFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
-                        <div className="label">国内运费：</div>
-                        <div className="data">{logisticsFeeBox}<i>&yen;</i><span>{formatPrice(order.logisticsFee)}</span></div>
-                    </div>
-                    <div className="bottom-line clearfix">
-                        <div className="label">国际运费：</div>
-                        <div className="data"><i>&yen;</i><span>{formatPrice(order.abroadFee)}</span></div>
+                        <div className="label">运费：</div>
+                        <div className="data">{shipmentFeeBox}<i>&yen;</i><span>{formatPrice(order.shipmentFee)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">税费：</div>
