@@ -8,7 +8,7 @@ import Timer from "../../common/timer.jsx";
 import Dialog from "../../../component/dialog.jsx";
 import GoTop from "../../../component/gotop.jsx";
 import Alert from "../../../component/alert.jsx";
-import {urlParam,base64EncodeForURL,formatPrice} from "../../../lib/util.es6";
+import {urlParam,base64EncodeForURL} from "../../../lib/util.es6";
 import StatusProgress from "./statusprogress.jsx";
 import OrderGoods from "./ordergoods.jsx";
 import {jumpURL,urlPrefix} from "../../../lib/jumpurl.es6";
@@ -212,27 +212,27 @@ class OrderDetail extends Component{
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">商品总价：</div>
-                        <div className="data"><i>&yen;</i><span>{formatPrice(order.salesTotalFee)}</span></div>
+                        <div className="data"><i>&yen;</i><span>{order.salesTotalFee.toFixed(2)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">运费：</div>
-                        <div className="data">{shipmentFeeBox}<i>&yen;</i><span>{formatPrice(order.shipmentFee)}</span></div>
+                        <div className="data">{shipmentFeeBox}<i>&yen;</i><span>{order.shipmentFee.toFixed(2)}</span></div>
                     </div>
                     <div className="bottom-line clearfix">
                         <div className="label">税费：</div>
-                        <div className="data">{tariffFeeBox}<i>&yen;</i><span>{formatPrice(order.tariffFee)}</span></div>
+                        <div className="data">{tariffFeeBox}<i>&yen;</i><span>{order.tariffFee.toFixed(2)}</span></div>
                     </div>
                     <div className="bottom-line clearfix intro">
                         <div className="label">优惠活动：</div>
-                        <div className="data">-<i>&yen;</i><span>{formatPrice(order.promoFee)}</span></div>
+                        <div className="data">-<i>&yen;</i><span>{order.promoFee.toFixed(2)}</span></div>
                     </div>
                     <div className="bottom-line clearfix intro">
                         <div className="label">优惠券：</div>
-                        <div className="data">-<i>&yen;</i><span id="coupon_money">{formatPrice(order.couponFee)}</span></div>
+                        <div className="data">-<i>&yen;</i><span id="coupon_money">{order.couponFee.toFixed(2)}</span></div>
                     </div>
                     <div className="bottom-line clearfix no-border">
                         <div className="label">{paymentTitle}</div>
-                        <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{formatPrice(order.paymentFee)}</span></div>
+                        <div className="data red-w"><i>&yen;</i><span id="total_amount_money">{order.paymentFee.toFixed(2)}</span></div>
                     </div>
                 </div>
             );
