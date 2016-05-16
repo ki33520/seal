@@ -147,6 +147,7 @@ function formatData(object) {
         promoFee: filterPrice(object.promoFee),
         abroadFee: filterPrice(object.abroadFee),
         logisticsFee: filterPrice(object.logisticsFee),
+        shipmentFee: _.add(filterPrice(object.abroadFee), filterPrice(object.logisticsFee)),
         tariffFee: filterPrice(object.tariffFee),
         couponFee: filterPrice(object.couponFee),
         paymentFee: filterPrice(object.paymentFee),
