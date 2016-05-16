@@ -200,7 +200,7 @@ class OrderDetail extends Component{
         var logisticsFeeBox = order.logisticsFee === 0 ? <div className="red-box">包邮</div> : null;
         var shipmentFeeBox = order.shipmentFee === 0 ? <div className="red-box">包邮</div> : null;
         var abroadFeeBox = order.abroadFee === 0 ? <div className="red-box">包邮</div> : null;
-        var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">免税</div> : null;
+        var tariffFeeBox = order.tariffFee === 0 ? <div className="red-box">包税</div> : null;
         var paymentTitle = !order.canFlow ? "应付金额：" : "实付金额：";
         if(orderStatus === "STATUS_CANCELED"){
             return null;
