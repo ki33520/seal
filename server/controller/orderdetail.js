@@ -6,6 +6,7 @@ var bluebird = require("bluebird");
 var util = require("../lib/util");
 var config = require("../lib/config.js");
 var OrderDetail = util.getSharedComponent("orderdetail");
+var ErrorContent = util.getSharedComponent("common", "error.jsx");
 
 var orderStatus = [
     {
@@ -184,6 +185,7 @@ function queryString(a,b){
 }
 
 var orderDetail = function(req, res, next) {
+    var user = req.session.user;
     var id = req.params.id.replace(/\?[\s|\S]{1,}/g,"");
     var back_path = queryString(decodeURIComponent(req.url),"back");
     var scene = queryString(decodeURIComponent(req.url),"scene");
@@ -197,23 +199,38 @@ var orderDetail = function(req, res, next) {
             var order = formatData(resp.orderById.object),
                 systemTime = moment(new Date(resp.timestamp.systemTime)).format("YYYY-MM-DD HH:mm:ss");
             order["cashier"] = config["cashier"];
-            var initialState = {
-                isFetched: true,
-                order: order,
-                back_path: back_path,
-                scene: scene,
-                systemTime: systemTime
-            };
-            if (req.xhr === true){
-                res.json(initialState);
-            } else {
-                var markup = util.getMarkupByComponent(OrderDetail({
+            if(resp.orderById.object.memberId != user.memberId){
+                var initialState = {
+                    code: "404",
+                    msg: "啊噢~您访问的页面不在地球上..."
+                };
+                var markup = util.getMarkupByComponent(ErrorContent({
                     initialState: initialState
                 }));
-                res.render('orderdetail', {
+                res.status(404)
+                res.render('error', {
                     markup: markup,
                     initialState: initialState
-                })
+                });
+            }else{
+                var initialState = {
+                    isFetched: true,
+                    order: order,
+                    back_path: back_path,
+                    scene: scene,
+                    systemTime: systemTime
+                };
+                if (req.xhr === true){
+                    res.json(initialState);
+                } else {
+                    var markup = util.getMarkupByComponent(OrderDetail({
+                        initialState: initialState
+                    }));
+                    res.render('orderdetail', {
+                        markup: markup,
+                        initialState: initialState
+                    })
+                }
             }
             
         }else{
