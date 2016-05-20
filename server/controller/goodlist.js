@@ -32,7 +32,7 @@ function filterGoodsList(result){
 function filterNames(result,tartget,isSubItem){
     var list = [];
     result && _.each(result,function(item){
-        var isChecked = (tartget===item.name)?true:(isSubItem?true:false);
+        var isChecked = false;
         list.push({
             id:item.id,
             name:item.name,
