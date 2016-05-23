@@ -49,6 +49,7 @@ app.use(morgan('[:date[iso]] :remote-addr :method :url :status :res[content-leng
     }
 }))
 app.use(compression())
+app.set('trust proxy', 'loopback')
 
 app.engine('html', cons.swig);
 app.set('view engine', 'html');
