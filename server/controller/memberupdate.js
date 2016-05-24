@@ -48,7 +48,7 @@ var updateBasic = function(req, res, next) {
             var basicInfo = ret.updateBasicByUser.object;
             res.json({
                 isChanged: true,
-                msg:ret.updateBasicByUser.message
+                msg:"个人信息保存成功"
             })
         }else{
             res.json({
@@ -77,7 +77,7 @@ var updatePassword = function(req, res, next) {
             msg = "旧密码错误，请重新输入！";
         }
         if(msg === "成功"){
-            msg = "修改成功";
+            msg = "密码修改成功";
         }
         if (ret.updatePasswordByUser.returnCode === 0) {
             res.json({
