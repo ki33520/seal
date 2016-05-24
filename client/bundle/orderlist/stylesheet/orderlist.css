@@ -143,7 +143,7 @@ body{
 .J_moveRight .gd_info .name {
     width: 100%;
     margin:0 0 .4rem;
-    font-size:.34rem;
+    font-size:.36rem;
     height: 1.06rem;
     line-height:.54rem;
     overflow:hidden;
@@ -164,7 +164,7 @@ body{
     padding-right:.04rem;
 }
 .J_moveRight .gd_info .value span {
-    font-size: .38rem;
+    font-size: .34rem;
     z-index: 98;
 }
 .J_moveRight .gd_info .value span .price_b{
@@ -180,7 +180,7 @@ body{
 }
 .order-down span em {
     color: #ed1a47;
-    font-size: .45rem;
+    font-size: .42rem;
     font-weight:bold;
     line-height: .8rem;
     display:inline-block;
