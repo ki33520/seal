@@ -69,24 +69,25 @@
     overflow: hidden;
 }
 
-.tepin,.haitao,.hnmall,.general,.shop,.youa-invalid {
+.haitao,.youa-invalid {
+	color: #666;
 	.left {
 	    padding: 30px 6px 30px 16px;
 	    float: left;
 	    width: 32%;
+	    overflow: hidden;
 	    .price {
-		    font-size: .8rem;
+		    font-size: .7rem;
 		    letter-spacing: -2px;
 		    font-weight: bold;
 		    text-align: center;
 		    &>em{
 		    	font-size: .64rem;
-			padding-right: .12rem;
-			font-weight: normal;
+				padding-right: .12rem;
+				font-weight: normal;
 		    }
 		}
 		.term {
-		    color: #666;
 		    font-size: .32rem;
 		    text-align: center;
 		}
@@ -101,16 +102,14 @@
 	    	padding: .12rem 0;
 	    }
 	    .date {
-		color: #666;
-		font-size: .266667rem;
-		padding: .12rem 0;
+			font-size: .266667rem;
+			padding: .12rem 0;
 		}
 		.explain {
 		    color: #999;
 		    background: url(/client/asset/images/rightLine.png) left top no-repeat;
 		    background-size: 80% 3px;
 		    padding: .12rem 0;
-
 		    height: 1rem;
 		    line-height: .5rem;
 		    width: 100%;
@@ -121,17 +120,6 @@
 		    -webkit-box-orient: vertical;
 		    white-space:normal;
 		}
-	}
-}
-
-.tepin {
-	background-image: url(/client/asset/images/youa_pink.png);
-	.price {
-	    color: #e30182;
-	}
-	.kind {
-	    color: #e30182;
-	    padding: .12rem 0;
 	}
 }
 
@@ -146,50 +134,10 @@
 	}
 }
 
-.hnmall{
-	background-image: url(/client/asset/images/youa_red.png);
-	.price {
-	    color: #e50303;
-	}
-	.kind {
-	    color: #e50303;
-	    padding: .12rem 0;
-	}
-}
-
-.general {
-	background-image: url(/client/asset/images/youa_currency.png);
-	.price {
-	    color: #ff8a00;
-	}
-	.kind {
-	    color: #ff8a00;
-	    padding: .12rem 0;
-	}
-}
-
-.shop {
-	background-image: url(/client/asset/images/youa_line.png);
-	.price {
-	    color: #00802a;
-	}
-	.kind {
-	    color: #00802a;
-	    padding: .12rem 0;
-	}
-}
-
 .youa-invalid {
     background-image: url(/client/asset/images/youa_invalid.png);
 }
 
-.union-invalid {
-    background-image: url(/client/asset/images/union_invalid.png);
-}
-
-.union {
-	background-image: url(/client/asset/images/union_normal.png);
-}
 .used,.expiried {
 	position:absolute;
 	right:20px;
@@ -206,108 +154,4 @@
 .expiried{
 	background:url(/client/asset/images/expired.png) 0 0 no-repeat;
 	background-size: 100% 100%;
-}
-.union-invalid,.union {
-	.content {
-	    height: 92px;
-	    .left {
-		    padding: 36px 0 0 20px;
-		    float: left;
-		    width: 33%;
-		    .price {
-		    	font-size: .8rem;
-			    letter-spacing: -2px;
-			    font-weight: bold;
-			    color: #0091f6;
-			    &>em {
-				    font-size: .64rem;
-				    padding-right: .12rem;
-				    font-weight: normal;
-			    }
-		    }
-		}
-		.right {
-		    padding: .54rem 0 .14rem 0;
-		    float: left;
-		    width: 58%;
-		    .company {
-			    font-size: .4rem;
-			    color: #0091f6;
-			}
-			.explain {
-			    color: #333;
-			    background: url(/client/asset/images/rightLine.png) left top no-repeat;
-			    background-size: 80% 2px;
-			    width: 100%;
-			    overflow: hidden;
-			    height: 1.04rem;
-			    line-height: .4rem;
-			    font-size: .27rem;
-			    padding-top: .24rem;
-			    margin-top: .12rem;
-			}
-		}
-	}
-
-	.bottom {
-	    clear: both;
-	    margin: 0 25px 0 20px;
-	    line-height: 28px;
-	    .term {
-		    float: left;
-		    color: #333;
-		    font-size: .32rem;
-		}
-		.date {
-		    float: right;
-		    color: #666;
-		    font-size: .266667rem;
-		}
-	}
-}
-
-.coupon-detail{
-	padding:.6rem .4rem;
-	background-color:#fff;
-	border-bottom:1px solid #d5d5d5;
-	background-color:#fff;
-	margin-top:.27rem;
-	.qr>img{
-		width:70%;
-		height:70%;
-		display:block;
-		margin:0 auto;
-	}
-	.arrow{
-		width:100%;
-		height:.72rem;
-		background:url(/client/asset/images/detailArrow.png) center no-repeat;
-		background-size:100%;
-		margin:.56rem auto;
-	}
-	dl{
-		font-size:.36rem;
-		line-height:.84rem;
-		dt{
-			float:left;
-			width:60px;
-			color:#999999;
-		}
-		dd{
-			width:70%;
-			float:left;
-			margin-left:10px;
-		}
-	}
-	dl:after {
-		content: " ";
-		display: block;
-		visibility: hidden;
-		height: 0;
-		clear: both;
-	}
-	dl:last-child dd{
-		line-height:.56rem;
-		padding-top:.14rem;
-	}
 }
