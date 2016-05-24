@@ -296,7 +296,7 @@ var comments = function(req, res, next) {
         if (resp.returnCode === 0) {
             res.json({
                 isChanged: true,
-                msg: resp.message
+                msg: "提交评论成功"
             })
         }else{
             res.json({
