@@ -57,11 +57,12 @@ function index(state={},action){
                 isFetched:false
             });
         case FINISH_RESET_FILTER:
-            var {isFetched,filters} = action.res;
+            var {isFetched,filters,params} = action.res;
              return Object.assign({},state,{
                 isFetching:false,
                 isFetched,
-                filters
+                filters,
+                params
             });
         default:
             return state;

@@ -42,11 +42,13 @@ class GoodListApp extends React.Component{
         const {params,filters} = this.props.index;
         const {categoryNames,brandNames,areaNames} = filters;
         let _params = _.assign({},params,{
-            isHaveGoods
+            isHaveGoods,
+            pageIndex:1
         });
         let categories = [];
         let brands = [];
         let areas = [];
+
         _.forEach(categoryNames,(item,i)=>{
             item.isChecked && categories.push(item.name);
         });
@@ -65,6 +67,9 @@ class GoodListApp extends React.Component{
             const path = window.location.href.split('?')[1];
             if(path){
                 const queryName = path.split('=')[0];
+                _params.categoryName=null;
+                _params.areaName=null;
+                _params.brandName=null;
                 _params[queryName] = this.props.index.keyword;
             }
         }

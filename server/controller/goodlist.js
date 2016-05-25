@@ -29,15 +29,13 @@ function filterGoodsList(result){
     return list;
 }
 
-function filterNames(result,tartget,isSubItem){
+function filterNames(result){
     var list = [];
     result && _.each(result,function(item){
-        var isChecked = false;
         list.push({
             id:item.id,
             name:item.name,
-            isChecked:isChecked,
-            _checked:isChecked
+            isChecked:false
         });
     });
     return list;
@@ -61,7 +59,6 @@ var search = function(req, res, next) {
             });
             res.cookie("searchhistory",searchhistory)
         }
-        // req.session["searchhistory"] = searchhistory;
     }
     if(Number(req.query.pageIndex)){
         options.currentPage = req.query.pageIndex;
@@ -89,10 +86,11 @@ var search = function(req, res, next) {
         if (resp.returnCode === 0) {
             var goods = resp.object,
                 list = filterGoodsList(goods.cbls),
+                totalPage=Math.ceil(goods.totalsNum/options.pageSize),
                 filters={
-                    categoryNames:filterNames(goods.categoryNames,categoryName,true),
-                    brandNames:filterNames(goods.brandNames,brandName),
-                    areaNames:filterNames(goods.areaNames,areaName)
+                    categoryNames:filterNames(goods.categoryNames),
+                    brandNames:filterNames(goods.brandNames),
+                    areaNames:filterNames(goods.areaNames)
                 },
                 params={
                     pageIndex:options.currentPage,
@@ -108,7 +106,10 @@ var search = function(req, res, next) {
                 res.json({
                     list:list,
                     filters,
-                    isFetched:true
+                    isFetched:true,
+                    totalPage:totalPage,
+                    keyword:keyword,
+                    params:params
                 });
             }else{
                 var initialState = {
@@ -116,7 +117,7 @@ var search = function(req, res, next) {
                     filters:filters,
                     params:params,
                     keyword:keyword,
-                    totalPage:Math.ceil(goods.totalsNum/options.pageSize),
+                    totalPage:totalPage,
                     isFetched:true
                 };
                 var markup = util.getMarkupByComponent(GoodListApp({
@@ -137,7 +138,6 @@ var search = function(req, res, next) {
                     isFetched:false
                 });
             }else{
-                //next(new Error(resp.message));
                 var initialState = {
                     code: "500",
                     keyword:keyword
