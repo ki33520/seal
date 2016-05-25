@@ -47,7 +47,7 @@ class Comment extends Component{
         hasNotComment.map((v,k)=>{
             const {rate,id,content} = v;
             let len = content ? content.length : 0;
-            if(len>0 && len<501){
+            if(len>0 && len<201){
                 obj.push({
                     rate: rate ? rate : 5,
                     content: content,
@@ -64,7 +64,7 @@ class Comment extends Component{
                 });
             }
         }else{
-            alert("请填写评论内容，字数在1-500个字之间",2000);
+            alert("请填写评论内容，字数在1-200个字之间",2000);
         }
     }
     componentWillReceiveProps(nextProps){

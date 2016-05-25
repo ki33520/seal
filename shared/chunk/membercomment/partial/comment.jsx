@@ -69,14 +69,14 @@ class Comment extends Component{
                     </Header>
                 </div>
                 <div className="tab-content">
-                    <SlideTabs axis="x" activeIndex={this.state.displayFlag} navbarSlidable={false} onSelect={this.toggleFlag.bind(this)} >
-                        <SlideTabsItem navigator={()=><span><b>全部评论</b></span>}>
+                    <SlideTabs axis="x" activeIndex={this.state.displayFlag} transitionDuration="0" navbarSlidable={false} onSelect={this.toggleFlag.bind(this)} >
+                        <SlideTabsItem navigator={()=><span>全部评论</span>}>
                             <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
                             <Floor comments={allComment} {...this.props} floorIndex={0} ref="floor"/>
                             <Refresher active={isFetching} />
                             </GoTop>
                         </SlideTabsItem>
-                        <SlideTabsItem navigator={()=><span><b>晒单</b></span>}>
+                        <SlideTabsItem navigator={()=><span>晒单</span>}>
                             <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
                             <Floor comments={showComment} {...this.props} floorIndex={1} ref="floor"/>
                             <Refresher active={showComment && isFetching} />
