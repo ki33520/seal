@@ -13,10 +13,8 @@ class CommentList extends Component{
         }
     }
     handleSceneChange(currentScene,param){
-        const {changePhotos} =  this.props;
         switch(currentScene){
             case "photo":
-                changePhotos(param);
         }
     }
     render(){

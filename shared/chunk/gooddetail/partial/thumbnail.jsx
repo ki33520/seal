@@ -11,7 +11,7 @@ class Thumbnail extends Component{
         const {selectedCommentImageIndex,selectedCommentImages} = this.props.goodById;
         return (
             <div className="comment-thumbnail">
-            <Swipelist onGoBack={this.props.changeScene.bind(this,"comment")} imgList={selectedCommentImages} activeIndex={selectedCommentImageIndex}/>
+            <Swipelist slidesIndex={1} swiperPagination="swiper-pagination-1" onGoBack={this.props.changeScene.bind(this,"comment")} imgList={selectedCommentImages} activeIndex={selectedCommentImageIndex}/>
             </div>
         )
     }

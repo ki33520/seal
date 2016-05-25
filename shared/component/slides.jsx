@@ -9,11 +9,27 @@ export class Slides extends Component{
     }
     componentDidMount(){
         let Swiper = require("../lib/dom/swiper.js");
-        let mySwiper = new Swiper(".swiper-container",{
-            pagination: '.swiper-pagination',
+        this.mySwiper = new Swiper(".swiper-container",{
+            pagination: "."+this.props.swiperPagination,
+            initialSlide: this.props.initialSlide,
             lazyLoading:true,
             preloadImages:false
         })
+    }
+    componentDidUpdate(prevProps){
+        const {slidesIndex} = this.props;
+        if(prevProps.initialSlide === this.props.initialSlide && prevProps.children.length === this.props.children.length){
+            
+        }else{
+            if(this.mySwiper.updateSlidesSize){
+                this.mySwiper.updateSlidesSize();
+                this.mySwiper.slideTo(this.props.initialSlide, 0, false);
+            }else{
+                this.mySwiper[slidesIndex].updateSlidesSize();
+                this.mySwiper[slidesIndex].slideTo(this.props.initialSlide, 0, false);
+            }
+        }
+        
     }
     renderSlides(){
         let slides = React.Children.map(this.props.children,this.renderSlide.bind(this))
@@ -28,12 +44,16 @@ export class Slides extends Component{
         return (
             <div className="swiper-container">
             {this.renderSlides()}
-            <div className="swiper-pagination"></div>
+            <div className={this.props.swiperPagination}></div>
             </div>
         )
     }
 }
-
+Slides.defaultProps = {
+    slidesIndex:0,
+    initialSlide:0,
+    swiperPagination:"swiper-pagination"
+}
 
 export class Slide extends Component{
     constructor(props){

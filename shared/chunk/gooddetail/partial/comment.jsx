@@ -31,7 +31,8 @@ class GoodComment extends Component{
                 const commentImages = comment["commentImages"].map((img,i)=>{
                     return <a href="javascript:void(null)" 
                     onClick={()=>{
-                        this.props.changeScene("thumbnail",{index:i,list:comment["commentImages"]})}
+                        this.props.selectCommentImage(i,comment["commentImages"])
+                        this.props.changeScene("thumbnail")}
                     } 
                     key={i}><img src={img}/></a>
                 })
@@ -65,7 +66,8 @@ class GoodComment extends Component{
                 const commentImages = comment["commentImages"].map((img,i)=>{
                     return <a href="javascript:void(null)" 
                     onClick={()=>{
-                        this.props.changeScene("thumbnail",{index:i,list:comment["commentImages"]})}
+                        this.props.selectCommentImage(i,comment["commentImages"])
+                        this.props.changeScene("thumbnail")}
                     } 
                     key={i}><img src={img}/></a>
                 })
