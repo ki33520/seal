@@ -7,46 +7,37 @@ import classNames from "classnames";
 class Sidebar extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            isHaveGoods:false
-        };
-    }
-    handleSave(){
-        const {isHaveGoods} =  this.state;
-        this.props.handlerSave(isHaveGoods);
     }
     toggleCanBuy(){
-        this.setState({
-            isHaveGoods:!this.state.isHaveGoods
+        const {isHaveGoods} = this.props;
+        this.props.toggleHaveGoods({
+            isHaveGoods:!isHaveGoods
         });
     }
     handleReset(){
-        this.setState({
-            isHaveGoods:false
-        });
-        this.props.handleReset();
+        const isHaveGoods = Sidebar.defaultProps.isHaveGoods;
+        this.props.handleReset({isHaveGoods});
     }
-
     render(){
-        const {popupActive} = this.props;
-        const classes=classNames({
+        const {popupActive,isHaveGoods,handlerSave} = this.props;
+        const menuStyle=classNames({
             "menu-slider":true,
             "rollIn-animate":true,
             "rollIn-slideLeft":popupActive
         });
-        const exist = classNames({
-            onShow:this.state.isHaveGoods
+        const filterSwitch = classNames({
+            onShow:isHaveGoods
         });
         return (
-            <div className={classes}>
+            <div className={menuStyle}>
             	<Header canBack={false}>
                     <span className="btn-left" onClick={this.handleReset.bind(this)}>重置</span>
-                    <span className="btn-right" onClick={this.handleSave.bind(this)}>确定</span>
+                    <span className="btn-right" onClick={handlerSave.bind(this)}>确定</span>
                 </Header>
                 <div className="showHave">
                 	<dl>
                         <dt>只显示有货</dt>
-                        <dd className={exist} onClick={this.toggleCanBuy.bind(this)}><i></i></dd>
+                        <dd className={filterSwitch} onClick={this.toggleCanBuy.bind(this)}><i></i></dd>
                     </dl>
                 </div>
                 <div className="helpList">
@@ -67,4 +58,10 @@ class Sidebar extends Component{
         );
     }
 }
+
+Sidebar.defaultProps = {
+    isHaveGoods:false
+}
+
 export default Sidebar;
+

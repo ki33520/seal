@@ -8,7 +8,7 @@ var ErrorContent = util.getSharedComponent("goodlist", "error.jsx");
 function filterGoodsList(result){
     var list = [];
     var imgServer = config.imgServer;
-    result && _.each(result,function(v){
+    result && _.forEach(result,function(v){
         list.push({
             singleCode:v.singleCode,
             flashPrice:v.flashPrice,
@@ -47,77 +47,77 @@ var search = function(req, res, next) {
         pageSize:10
     };
     var keyword = req.query.k;
-    var brandName=req.query.brandName;
-    var areaName = req.query.areaName;
-    var categoryName = req.query.categoryName;
-    if(keyword !== undefined){
+    if(keyword){
         options.searchKey=keyword;
-        if(keyword){
-            var searchhistory = util.saveSearchHistory(req.cookies["searchhistory"],{
-                keyword:keyword,
-                createAt:Date.now()
-            });
-            res.cookie("searchhistory",searchhistory)
-        }
+        var searchhistory = util.saveSearchHistory(req.cookies["searchhistory"],{
+            keyword:keyword,
+            createAt:Date.now()
+        });
+        res.cookie("searchhistory",searchhistory);
     }
-    if(Number(req.query.pageIndex)){
-        options.currentPage = req.query.pageIndex;
+    if(req.query.pageIndex>1){
+        options.currentPage = parseInt(req.query.pageIndex,10);
     }
-    if(Number(req.query.sortType)){
-        options.sortType = req.query.sortType;
+    if(req.query.sortType){
+        options.sortType = parseInt(req.query.sortType,10);
     }
     if(req.query.viewType !== undefined){
         options.sortViewType = req.query.viewType;
     }
     if(req.query.isHaveGoods !== undefined){
-        options.isHaveGoods = req.query.isHaveGoods;
+        options.isHaveGoods = !!req.query.isHaveGoods;
     }
-    if(brandName){
+    if(req.query.brandName){
+        var brandName = req.query.brandName;
+        if(_.isArray(brandName)){
+            brandName = _.uniq(brandName).join(',');
+        }
         options.brandName = brandName;
+        if(!keyword) {keyword= options.brandName;}
     }
-    if(categoryName){
+    if(req.query.categoryName){
+        var categoryName = req.query.categoryName;
+        if(_.isArray(categoryName)){
+            categoryName = _.uniq(categoryName).join(',');
+        }
         options.categoryName = categoryName;
+        if(!keyword) {keyword= options.categoryName;}
     }
-    if(areaName){
+    if(req.query.areaName){
+        var areaName = req.query.areaName;
+        if(_.isArray(areaName)){
+            areaName = _.uniq(areaName).join(',');
+        }
         options.sourceAreas = areaName;
+        if(!keyword) {keyword= options.sourceAreas;}
     }
-    keyword = keyword||areaName||brandName||categoryName;
+  
     util.fetchAPI("fetchGoodsList", options,false,{method:"POST"}).then(function(resp) {
         if (resp.returnCode === 0) {
             var goods = resp.object,
-                list = filterGoodsList(goods.cbls),
-                totalPage=Math.ceil(goods.totalsNum/options.pageSize),
-                filters={
-                    categoryNames:filterNames(goods.categoryNames),
-                    brandNames:filterNames(goods.brandNames),
-                    areaNames:filterNames(goods.areaNames)
-                },
-                params={
-                    pageIndex:options.currentPage,
-                    categoryName:options.categoryName,
-                    brandName:options.brandName,
-                    areaName:options.sourceAreas,
-                    k:options.searchKey,
-                    sortType:options.sortType,
-                    viewType:options.sortViewType,
-                    isHaveGoods:options.isHaveGoods
-                };
+                goodsList = filterGoodsList(goods.cbls),
+                totalPage=Math.ceil(goods.totalsNum/options.pageSize);
+
             if(req.xhr===true){
                 res.json({
-                    list:list,
-                    filters,
-                    isFetched:true,
+                    goodsList:goodsList,
                     totalPage:totalPage,
-                    keyword:keyword,
-                    params:params
+                    pageIndex:options.currentPage,
+                    isFetched:true
                 });
             }else{
                 var initialState = {
-                    list:list,
-                    filters:filters,
-                    params:params,
+                    goodsList:goodsList,
+                    categoryNames:filterNames(goods.categoryNames),
+                    brandNames:filterNames(goods.brandNames),
+                    areaNames:filterNames(goods.areaNames),
+                    viewType:options.viewType,
+                    sortType:options.sortType,
+                    isHaveGoods:options.isHaveGoods,
                     keyword:keyword,
                     totalPage:totalPage,
+                    pageIndex:options.currentPage,
+                    pageSize:options.pageSize,
                     isFetched:true
                 };
                 var markup = util.getMarkupByComponent(GoodListApp({
@@ -134,7 +134,7 @@ var search = function(req, res, next) {
         } else {
             if(req.xhr===true){
                 res.json({
-                    list:[],
+                    goodsList:[],
                     isFetched:false
                 });
             }else{
