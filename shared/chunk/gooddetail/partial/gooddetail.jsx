@@ -291,13 +291,14 @@ class GoodDetail extends Component{
         const confrimButtonClasses = classNames("goodsSureBtn",{
             "disabled":good.stock <= 0
         })
+
         return (
             <Popup direction="bottom" active={popupActive}>
                 <div className="con">
                     <div className="goodsSure">
                         <img src={good.mainImageUrl} alt="" />
                         <div className="left">
-                            {this.renderPrice()}
+                            <span className="nowPrice">&yen;{formatPrice(destPrice)}</span>
                             <em>库存<i>{good.stock}</i>件</em>
                         </div>
                         <i className="iconfont icon-close-circled" onClick={this.togglePopup.bind(this,null)}></i>

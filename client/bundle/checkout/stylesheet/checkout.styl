@@ -1,0 +1,197 @@
+@import "../../common/common";
+@import "../../common/iconfont"
+@import "../../common/scene";
+@import "../../common/header";
+@import "../../component/alert";
+@import "./confirmorder.css";
+@import "./coupon.css";
+@import "../../receiver/stylesheet/receiver.styl";
+
+html,body{
+    -webkit-overflow-scrolling: touch;
+}
+.text-overflow{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.confirm-order-container{
+    height:100%;
+    &>#confirm-order{
+        height:100%;
+    }
+}
+
+$gray-color = #555
+
+.confirm-order-content{
+    padding-bottom:1.32rem;
+}
+
+.orderConfirm_title{
+    &>em{
+        background-position:50% 50%;
+        width:px2rem(58);
+        height:px2rem(20);
+        line-height:px2rem(20);
+        font-size:px2rem(11);
+    }
+    &>span{
+        line-height:px2rem(20);
+    }
+    &>i{
+        line-height:px2rem(20);
+    }
+}
+
+.ckTo-box .intro{
+    span{
+        float:none;
+    }
+    &>span{
+        float:left;
+    }
+    &>span:last-child{
+        float:right;
+    }
+}
+
+.count-box{
+    .count-box-line{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        height:.96rem;
+        line-height:.96rem;
+        padding:0 .32rem;
+        .label{
+            flex:1;
+            color:#999;
+        }
+        &.intro .data{
+            color:#27c241;
+        }
+        .data{
+            color:#333;
+            font-size:.266667rem;
+            span{
+                margin-left:.12rem;
+                font-size:.373333rem;
+            }
+            &.red-w{
+                color: #D32449;
+                font-size:.32rem;
+            }
+        }
+        .red-box{
+            width:.986667rem;
+            height: .5333333rem;
+            line-height:.54rem;
+            background: url(/client/asset/images/ico5.gif) right no-repeat;
+            background-size:auto 100%;
+            color: #D32449;
+            font-size:.27rem;
+            text-align:center;
+            padding-right:.13rem;
+            margin-right:px2rem(12);
+        }
+    }
+}
+
+.coupon-content{
+    height:100%;
+}
+
+.noReceive{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    &>div{
+        padding:px2rem(5) px2rem(10);
+        color:#999;
+        text-align:center;
+        vertical-align:middle;
+    }
+}
+
+.count-box .count-box-line:last-child .label{
+    color:rgb(51,51,51);
+}
+
+.confirmBtns{
+    position:absolute;
+    // z-index:0;
+    .confirm_btn{
+        &.submiting{
+            background-color:lighten(#dd1847,50%);
+            border-color:lighten(#dd1847,50%);
+        }
+    }
+}
+
+.listMain .list_youa .coupon .explain{
+    color: #999;
+    background: url(/client/asset/images/rightLine.png) left top no-repeat;
+    background-size: 80% 3px;
+    padding: .12rem 0;
+
+    height: 1rem;
+    line-height: .5rem;
+    width: 100%;
+    font-size: .266667rem;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space:normal;
+}
+
+.back-to-top-container .back-to-top{
+    &.active{
+        display:none;
+    }
+}
+
+.J_moveRight > div{
+    display:flex;
+    align-items:flex-start;
+    flex-wrap:nowrap;
+    &>a.img_wrap{
+        float:none;
+    }
+    .gd_info{
+        float:none;
+    }
+}
+
+.orderConfirm_title{
+    &>em{
+        background: #dd1847;
+        color: #fff;
+        font-size: .24rem;
+        padding: 0 .12rem;
+        display: inline-block;
+        margin: 0 .24rem 0 0;
+        width:auto;
+        height:auto;
+        line-height:rem4px(14);
+    }
+    &>span{
+        line-height:rem4px(14);
+    }
+}
+
+.order-info>span>em{
+    background:#801da1;
+}
+
+.hidden{
+    transform:scale(0);
+    line-height:0;
+    font-size:0;
+}
+
+.order-list{
+    border-bottom:.266667rem solid #f5f5f5;
+}
