@@ -44,7 +44,7 @@ export class SlideTabs extends Component{
                 }
                 let contentNode = ReactDOM.findDOMNode(this.refs["contentNode"])
                 contentNode.style.WebkitTransform = transform
-                contentNode.style.transitionDuration = "0.15s"
+                contentNode.style.transitionDuration = this.props.transitionDuration;
             }
         })
     }
@@ -116,6 +116,7 @@ SlideTabs.defaultProps = {
     axis:"x",
     navbarSlidable:true,
     contentSlidable:false,
+    transitionDuration: "0.15s",
     onSelect:()=>{}
 }
 
