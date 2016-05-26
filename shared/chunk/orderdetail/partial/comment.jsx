@@ -125,7 +125,7 @@ class Comment extends Component{
                             </div>
                         </div>   
                         <div className="comment_area_con clearfix">
-                            <div className="textArea"><textarea name="form-content" onChange={this.handleContent.bind(this,"content",id)} placeholder="亲~留下此次购物的宝贵意见吧！字数在1-500个字之间" value={v.content || ""}></textarea></div>
+                            <div className="textArea"><textarea name="form-content" onChange={this.handleContent.bind(this,"content",id)} placeholder="亲~留下此次购物的宝贵意见吧！字数在1-200个字之间" value={v.content || ""}></textarea></div>
                         </div>
                     </div>
                 )
