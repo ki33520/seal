@@ -114,6 +114,7 @@ var goodDetail = function(req, res, next) {
                             initialState: initialState
                         }));
                         res.render('gooddetail', {
+                            title:good.title,
                             markup: markup,
                             initialState: initialState
                         },function(err,html){
