@@ -2,10 +2,20 @@
 
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
+import {urlPrefix} from "../../../lib/jumpurl.es6";
 
 class HelpMain extends Component{
+    handleChangeScene(value){
+        const {fetchQuestion,changeScene} = this.props;
+        fetchQuestion(urlPrefix+"/question",{
+            catalogName: value.catalogName,
+            catalogId: value.id,
+            start: 1
+        });
+        changeScene.call(this,"question");
+    }
     renderQuestion(){
-        const {questionCategory,changeScene} = this.props;
+        const {questionCategory} = this.props;
         const {result} = questionCategory;
         return (
             <div>
@@ -13,7 +23,7 @@ class HelpMain extends Component{
                     {
                         result.map((v,k)=>{
                             return (
-                                <li key={k}><a href="javascript:void(null)" onClick={changeScene.bind(this,"question",v)}>{(k+1)+"."}{v.catalogName}</a></li>
+                                <li key={k}><a href="javascript:void(null)" onClick={this.handleChangeScene.bind(this,v)}>{(k+1)+"."}{v.catalogName}</a></li>
                             )
                         })
                     }

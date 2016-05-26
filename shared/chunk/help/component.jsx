@@ -14,14 +14,8 @@ class HelpList extends Component{
         const {questionCategory} = props;
     }
     handleSceneChange(currentScene,value){
-        const {fetchQuestion} = this.props;
         switch(currentScene){
             case "question":
-                fetchQuestion(urlPrefix+"/question",{
-                    catalogName: value.catalogName,
-                    catalogId: value.id,
-                    start: 1
-                });
         }
     }
     render(){
