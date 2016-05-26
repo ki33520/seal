@@ -22,7 +22,7 @@ class GoodSorter extends Component{
             case SORT_PRICE:
                 toggleSort({
                     sortType:type,
-                    viewType:viewType
+                    viewType:!viewType
                 });
                 break;
             case SORT_SALES:
@@ -57,7 +57,7 @@ class GoodSorter extends Component{
 
 GoodSorter.defaultProps = {
     sortType:SORT_NORMAL,
-    viewType:SORT_ASC
+    viewType:SORT_DESC
 }
 
 export default GoodSorter;

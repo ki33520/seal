@@ -1,6 +1,6 @@
 'use strict'
 import {apiRequest} from "../../lib/util.es6";
-import {jumpURL} from "../../lib/jumpurl.es6";
+//import {jumpURL} from "../../lib/jumpurl.es6";
 import {
     START_FETCH_GOODS,FINISH_FETCH_GOODS,
     TOGGLE_CHECKED,TOGGLE_SORTED,TOGGLE_HAVE_GOODS,
@@ -17,20 +17,6 @@ function startFetchGoods(param){
 function finishFetchGoods (param,res) {
     return {
         type:FINISH_FETCH_GOODS,
-        param,
-        res
-    }
-}
-function startRequestGoods(param){
-    return {
-        type:START_REQUEST_GOODS,
-        param
-    }
-}
-
-function finishRequestGoods (param,res) {
-    return {
-        type:FINISH_REQUEST_GOODS,
         param,
         res
     }

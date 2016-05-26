@@ -33,7 +33,7 @@ function index(state={},action){
         case TOGGLE_SORTED:
             return Object.assign({},state,{
                 sortType:action.param.sortType,
-                viewType:!action.param.viewType
+                viewType:action.param.viewType
             });
         case TOGGLE_HAVE_GOODS:
             return Object.assign({},state,{
