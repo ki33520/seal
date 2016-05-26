@@ -2,40 +2,28 @@
 
 import React,{Component} from "react";
 import ReactDOM from "react-dom";
-import {SlideTabs,SlideTabsItem} from "../../component/slidetabs.jsx";
+import {Slides,Slide} from "../../component/slides.jsx";
 
 class Swipelist extends Component{
-    componentDidUpdate(){
-        var {imgList,activeIndex} = this.props;
-        const self = this;
-        if(imgList && imgList.length >0){
-            ReactDOM.findDOMNode(this.refs["swipelist"]).children[0].children[activeIndex].click();
-        }
-    }
     render(){
-        var {imgList,activeIndex,canBack,onGoBack} = this.props;
-        if(imgList){
+        var {imgList,activeIndex,canBack,onGoBack,slidesIndex,swiperPagination} = this.props;
+        if(imgList && imgList.length>0){
+            var slides = imgList.map((v,k)=>{
+                var t = k+1+" / "+imgList.length;
+                const key = "slide-" + k;
+                return (
+                    <Slide key={k}>
+                        <div className="slide-header">
+                            <b>{t}</b>
+                        </div>
+                        <div className="img-wrap"><img key={Math.random()} src={v} /></div>
+                    </Slide>
+                );
+            })
             return (
                 <div className="swipe-list">
                     <a href="javascript:void(null)" onClick={onGoBack} className="iconfont icon-back"></a>
-                    <SlideTabs ref="swipelist" axis="x" activeIndex={activeIndex} contentSlidable={imgList.length > 1} navbarSlidable={false} >
-                        {
-                            imgList.map((v,k)=>{
-                                var t = k+1+" / "+imgList.length;
-                                return (
-                                    <SlideTabsItem key={k} navigator={()=>{ 
-                                        return (
-                                            <span className="header">
-                                                <b>{t}</b>
-                                            </span>
-                                        )
-                                    }}>
-                                        <img key={Math.random()} src={v} />
-                                    </SlideTabsItem>
-                                )
-                            })
-                        }
-                    </SlideTabs>
+                    <Slides effect="roll" slidesIndex={slidesIndex} swiperPagination={swiperPagination} initialSlide={activeIndex} autoPlay={false} loop={true} speed={200}>{slides}</Slides>
                 </div>
             )
         }
@@ -44,6 +32,7 @@ class Swipelist extends Component{
 }
 
 Swipelist.defaultProps = {
+    slidesIndex: 0,
     activeIndex: 0,
     canBack:true,
     onGoBack:function(e){

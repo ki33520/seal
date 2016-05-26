@@ -14,7 +14,7 @@ class GoodDetailRouter extends Component{
             // case "comment":
                 // !this.props.commentsFetched && fetchComments(param)
             case "thumbnail":
-                this.props.selectCommentImage(param.index,param.list)
+                //this.props.selectCommentImage(param.index,param.list)
         }
     }
     render(){

@@ -11,6 +11,11 @@ class Floor extends Component{
         var _price = Number(price).toFixed(2).split('.');
         return <span><i className="price_a">{_price[0]}</i><i className="price_dot">.</i><i className="price_b">{_price[1]}</i></span>
     }
+    imgClick(object){
+        const {changePhotos} =  this.props;
+        changePhotos(object);
+        this.props.changeScene.call(this,"photo");
+    }
     renderNode(list){
         if(list.length>0){
             return (
@@ -30,7 +35,7 @@ class Floor extends Component{
                                                 var object = {data:child.imageUrlList, activeIndex:k}
                                                 return (
                                                     <div key={k} className="pic-item">
-                                                        <div className="img-wrap" onClick={this.props.changeScene.bind(this,"photo",object)}><img src={v} /></div>
+                                                        <div className="img-wrap" onClick={this.imgClick.bind(this,object)}><img src={v} /></div>
                                                     </div>
                                                 )
                                             })

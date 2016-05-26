@@ -17,11 +17,25 @@ class GoodListApp extends React.Component{
         this.state = {
             maskActive:false,
             popupActive:false,
-            filterType:null
+            filterActive:null
         }
     }
+    filterValue(target){
+        var values = [];
+        _.forEach(target,(item)=>{
+            if(item.isChecked){
+                values.push(item.name);
+            }
+        });
+        return values.length ? values.join(','):undefined;
+    }
     handleReset(){
-        this.props.resetFilter(window.location.href);
+        const {filter} = this.props.index;
+        this.props.resetFilter({
+            filter,
+            isHaveGoods:false,
+            pageIndex:1
+        });
     }
     togglePopupActive(){
         const popupActive = !this.state.popupActive;
@@ -32,141 +46,128 @@ class GoodListApp extends React.Component{
     }
     toggleFilterPopup(type){
         this.setState({
-            filterType:type
+            filterActive:type
         });
     }
-    toggleChecked(name,values){
-        this.props.toggleChecked({name,values});
+    toggleChecked(filterIndex,itemIndex){
+        const {filter} = this.props.index;
+        this.props.toggleChecked({filter,filterIndex,itemIndex});
     }
-    handlerSave(isHaveGoods){
-        const {params,filters} = this.props.index;
-        const {categoryNames,brandNames,areaNames} = filters;
-        let _params = _.assign({},params,{
-            isHaveGoods,
-            pageIndex:1
-        });
-        let categories = [];
-        let brands = [];
-        let areas = [];
-
-        _.forEach(categoryNames,(item,i)=>{
-            item.isChecked && categories.push(item.name);
-        });
-        _.forEach(brandNames,(item,i)=>{
-            item.isChecked && brands.push(item.name);
-        });
-        _.forEach(areaNames,(item,i)=>{
-            item.isChecked && areas.push(item.name);
-        });
-       
-        if(categories.length||brands.length||areas.length){
-            _params.categoryName = categories.join(','); 
-            _params.areaName=areas.join(',');
-            _params.brandName=brands.join(',');
-        }else{
-            const path = window.location.href.split('?')[1];
-            if(path){
-                const queryName = path.split('=')[0];
-                _params.categoryName=null;
-                _params.areaName=null;
-                _params.brandName=null;
-                _params[queryName] = this.props.index.keyword;
+    fetchParams(param){
+        const {viewType,sortType,isHaveGoods,filter} = this.props.index;
+        _.forEach(filter,(item)=>{
+            let type = item.type;
+            let values = this.filterValue(item.list);
+            if(values){
+                param[type] = values;
             }
+        });
+        if(viewType !== undefined){
+            param.viewType = viewType;
         }
-        this.props.fetchGoods(_params);
+        if(isHaveGoods !== undefined){
+            param.isHaveGoods = isHaveGoods;
+        }
+        if(sortType !== undefined){
+            param.sortType = sortType;
+        }
+        return param;
+    }
+    handlerSave(){
+        const url = window.location.href;
+        const param = this.fetchParams({pageIndex:1});
+        this.props.fetchGoods(url,param);
         this.togglePopupActive();
     }
-    toggleSort(order){
-        const {params} = this.props.index;
-        const _params = _.assign({},params,order,{pageIndex:1});
-        this.props.fetchGoods(_params);
+    toggleSort(param){
+        if(this.props.index.isFetching){
+            return;
+        }
+        const url = window.location.href;
+        this.props.toggleSort(param);
+        this.props.fetchGoods(url,param);
     }
     beginRefresh(){
-        const {params,totalPage,isFetching} = this.props.index;
-        const curentPage = params.pageIndex;
-        if(isFetching || totalPage <= curentPage){
+        const {pageIndex,totalPage,isFetching} = this.props.index;
+        const url = window.location.href;
+        if(isFetching || totalPage <= pageIndex){
             return false;
         }
-        const _params = _.assign({},params,{
-            pageIndex : curentPage + 1
+        const param = this.fetchParams({
+            pageIndex:pageIndex+1
         });
-        this.props.requestGoods(_params);
+        this.props.fetchGoods(url,param);
     }
     handleScroll(scrollNode,scrollTop){
         if((scrollNode.offsetHeight + scrollTop + 30) >= scrollNode.scrollHeight){
             this.beginRefresh()
         }
     }
-    render(){
-        const {keyword,totalPage,filters,list,params,isFetching} = this.props.index;
-        const pageIndex = params.pageIndex;
-        const goodList = [];
-        if(list.length===0){
+    notFound(keyword){
+        return (
+            <div className="empty noPadTop">
+                <Header>
+                    <span className="title">{keyword}</span>
+                </Header>
+                <img src="/client/asset/images/empty_search.png" />
+                <div className="tips">抱歉，没有找到与“{keyword}”相关的商品，<br/>您可以换个词再试试~！</div>
+            </div>
+        );
+    }
+    renderFilter(){
+        const {filter} = this.props.index;
+        const active = this.state.filterActive;
+        var filterList = [];
+        return _.map(filter,(obj,i)=>{
             return (
-                <div className="empty noPadTop">
-                    <Header>
-                        <span className="title">{keyword}</span>
-                    </Header>
-                    <img src="/client/asset/images/empty_search.png" />
-                    <div className="tips">抱歉，没有找到与“{keyword}”相关的商品，<br/>您可以换个词再试试~！</div>
-                </div>
+                <Filter list={obj.list} active={active===i} key={i}
+                toggleChecked={this.toggleChecked.bind(this,i)}
+                handleGoBack ={this.toggleFilterPopup.bind(this)} />
             );
+        });
+    }
+    render(){
+        const {
+            totalPage,goodsList,keyword,pageIndex,sortType,viewType,isHaveGoods,filter,isFetching
+        } = this.props.index;
+ 
+        if(goodsList.length===0){
+            return this.notFound(keyword);
         }
-        list.forEach(function(item,i){
-            goodList.push(<GoodItem goods={item} key={'good-'+i} />)
+        const goodsItems = _.map(goodsList,(item,i)=>{
+            return (<GoodItem goods={item} key={'good-'+i} />);
         });
         const popup=classNames({
             "rollOut-animate":true,
             "good-list-content":true,
             "rollOut-slideLeft":this.state.popupActive
         });
-        const closebtn = classNames({
-            "iconfont":true,
-            "icon-close":this.state.needClear
-        });
-        const searchBox = classNames("search-box",{
-            "search-foucs" : this.state.isFocused
-        });
         return (
             <div className="list-container">
                 <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>
                     <div className={popup}>
                         <Header>
-                            <div className={searchBox}>
+                            <div className="search-box">
                                 <input type="search" defaultValue={keyword} 
                                 onClick={this.props.changeScene.bind(this,"search")}/>
                                 <span></span>
                             </div>
                             <div className="filter-btn btn-right" onClick={this.togglePopupActive.bind(this)}>筛选</div>
                         </Header>
-                        <GoodSorter toggleSort={this.toggleSort.bind(this)} />
+                        <GoodSorter sortType={sortType} viewType={viewType} toggleSort={this.toggleSort.bind(this)} />
                         <div className="special-activity-list clearfix">
-                            {goodList}
+                            {goodsItems}
                         </div>
                     </div>
                     <Sidebar
-                        popupActive={this.state.popupActive}
+                        popupActive={this.state.popupActive} isHaveGoods={isHaveGoods} filter={filter}
                         toggleFilter={this.toggleFilterPopup.bind(this)}
-                        handleReset={this.handleReset.bind(this)}
-                        handlerSave={this.handlerSave.bind(this)} />
-                    <Filter 
-                        list={filters.categoryNames}
-                        active={this.state.filterType==='category'}
-                        toggleChecked={this.toggleChecked.bind(this,'categoryNames')}
-                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
-                    <Filter 
-                        list={filters.brandNames}
-                        active={this.state.filterType==='brand'}
-                        toggleChecked={this.toggleChecked.bind(this,'brandNames')}
-                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
-                    <Filter 
-                        list={filters.areaNames}
-                        active={this.state.filterType==='area'}
-                        toggleChecked={this.toggleChecked.bind(this,'areaNames')}
-                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
+                        handleReset={this.handleReset.bind(this)} handlerSave={this.handlerSave.bind(this)}
+                        {...this.props} />
+                    {this.renderFilter()}
                     <MaskLayer visible={this.state.maskActive} />
                     <Refresher active={isFetching}/>
-                     {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
+                    {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                  </GoTop>
             </div>
         )

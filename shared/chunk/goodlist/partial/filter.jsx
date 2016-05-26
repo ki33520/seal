@@ -5,22 +5,16 @@ import Header from "../../common/header.jsx";
 import classNames from "classnames";
 
 class Filter extends Component{
-
-
-    handleCheck(index){
-        let list = this.props.list.slice();
-        let item = {...list[index]};
-        item.isChecked = !item.isChecked;
-        list[index] = item;
-        this.props.toggleChecked(list);
+    constructor(props){
+        super(props);
     }
-
+    handleCheck(index){
+        this.props.toggleChecked(index);
+    }
     renderNav(items){
-
         if(!items || items.length<1){
             return '暂无分类';
         }
-
         let menu = items.map((item,i)=>{
             const key="nav-"+i;
             const checked = classNames("iconfont",{
@@ -33,15 +27,12 @@ class Filter extends Component{
                 </dl>
             )
         });
-        
- 
         return (
             <div className="helpList">
                 {menu}
             </div>
         )
     }
-
     render(){
         const {list,active,handleGoBack} = this.props;
         const classess = classNames({
@@ -60,6 +51,5 @@ class Filter extends Component{
         );
     }
 }
- 
 
 export default Filter;
