@@ -26,16 +26,14 @@ function configureStore(initialState){
 class GoodListApp extends Component{
     render(){
         const {
-            categoryNames,brandNames,areaNames,goodsList,keyword,
+            goodsList,keyword,filter,
             sortType,viewType,isHaveGoods,totalPage,pageIndex
         } = this.props.initialState;
         const initialState = {
             index:{
                 totalPage,
                 goodsList,
-                categoryNames,
-                brandNames,
-                areaNames,
+                filter,
                 keyword,
                 pageIndex,
                 sortType,

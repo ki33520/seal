@@ -9,11 +9,7 @@ class Filter extends Component{
         super(props);
     }
     handleCheck(index){
-        let list = [...this.props.list];
-        let item = {...list[index]};
-        item.isChecked = !item.isChecked;
-        list[index] = item;
-        this.props.toggleChecked(list);
+        this.props.toggleChecked(index);
     }
     renderNav(items){
         if(!items || items.length<1){

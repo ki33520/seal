@@ -108,9 +108,11 @@ var search = function(req, res, next) {
             }else{
                 var initialState = {
                     goodsList:goodsList,
-                    categoryNames:filterNames(goods.categoryNames),
-                    brandNames:filterNames(goods.brandNames),
-                    areaNames:filterNames(goods.areaNames),
+                    filter:[
+                        {name:'类别',list:filterNames(goods.categoryNames),type:'categoryName'},
+                        {name:'品牌',list:filterNames(goods.brandNames),type:'brandName'},
+                        {name:'国家',list:filterNames(goods.areaNames),type:'areaName'}
+                    ],
                     viewType:options.viewType,
                     sortType:options.sortType,
                     isHaveGoods:options.isHaveGoods,

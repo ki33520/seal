@@ -15,8 +15,20 @@ class Sidebar extends Component{
         });
     }
     handleReset(){
-        const isHaveGoods = Sidebar.defaultProps.isHaveGoods;
-        this.props.handleReset({isHaveGoods});
+        this.props.handleReset();
+    }
+    renderList(){
+        var list = [];
+        const filter = this.props.filter;
+        filter.forEach((obj,i)=>{
+            list.push(
+                <dl onClick={this.props.toggleFilter.bind(this,i)} key={i}>
+                    <dt>{obj.name}</dt>
+                    <dd className="iconfont icon-right"></dd>
+                </dl>
+            );
+        });
+        return list;
     }
     render(){
         const {popupActive,isHaveGoods,handlerSave} = this.props;
@@ -41,18 +53,7 @@ class Sidebar extends Component{
                     </dl>
                 </div>
                 <div className="helpList">
-                    <dl onClick={this.props.toggleFilter.bind(this,'category')}>
-                        <dt>类别</dt>
-                        <dd className="iconfont icon-right"></dd>
-                    </dl>
-                    <dl onClick={this.props.toggleFilter.bind(this,'brand')}>
-                        <dt>品牌</dt>
-                        <dd className="iconfont icon-right"></dd>
-                    </dl>
-                    <dl onClick={this.props.toggleFilter.bind(this,'area')}>
-                        <dt>国家</dt>
-                        <dd className="iconfont icon-right"></dd>
-                    </dl>
+                    {this.renderList()}
                 </div>
             </div>
         );

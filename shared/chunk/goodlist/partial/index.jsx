@@ -17,7 +17,7 @@ class GoodListApp extends React.Component{
         this.state = {
             maskActive:false,
             popupActive:false,
-            filterType:null
+            filterActive:null
         }
     }
     filterValue(target){
@@ -29,23 +29,13 @@ class GoodListApp extends React.Component{
         });
         return values.length ? values.join(','):undefined;
     }
-    resetValue(target){
-        var values = [];
-        _.forEach(target,(item)=>{
-            let _item = _.assign({},item,{
-                isChecked:false
-            })
-            values.push(_item);
+    handleReset(){
+        const {filter} = this.props.index;
+        this.props.resetFilter({
+            filter,
+            isHaveGoods:false,
+            pageIndex:1
         });
-        return values;
-    }
-    handleReset(param){
-        const {categoryNames,brandNames,areaNames} = this.props.index;
-        param.categoryNames = this.resetValue(categoryNames);
-        param.brandNames = this.resetValue(brandNames);
-        param.areaNames = this.resetValue(areaNames);
-        param.pageIndex = 1;
-        this.props.resetFilter(param);
     }
     togglePopupActive(){
         const popupActive = !this.state.popupActive;
@@ -56,18 +46,22 @@ class GoodListApp extends React.Component{
     }
     toggleFilterPopup(type){
         this.setState({
-            filterType:type
+            filterActive:type
         });
     }
-    toggleChecked(name,values){
-        this.props.toggleChecked({name,values});
+    toggleChecked(filterIndex,itemIndex){
+        const {filter} = this.props.index;
+        this.props.toggleChecked({filter,filterIndex,itemIndex});
     }
     fetchParams(param){
-        const {viewType,sortType,isHaveGoods,categoryNames,brandNames,areaNames} = this.props.index;
-        const categoryName = this.filterValue(categoryNames);
-        const brandName = this.filterValue(brandNames);
-        const areaName = this.filterValue(areaNames);
-
+        const {viewType,sortType,isHaveGoods,filter} = this.props.index;
+        _.forEach(filter,(item)=>{
+            let type = item.type;
+            let values = this.filterValue(item.list);
+            if(values){
+                param[type] = values;
+            }
+        });
         if(viewType !== undefined){
             param.viewType = viewType;
         }
@@ -77,20 +71,11 @@ class GoodListApp extends React.Component{
         if(sortType !== undefined){
             param.sortType = sortType;
         }
-        if(brandName !== undefined){
-            param.brandName = brandName;
-        }
-        if(categoryName !== undefined){
-            param.categoryName = categoryName;
-        }
-        if(areaName !== undefined){
-            param.areaName = areaName;
-        }
         return param;
     }
     handlerSave(){
         const url = window.location.href;
-        var param = this.fetchParams({pageIndex:1});
+        const param = this.fetchParams({pageIndex:1});
         this.props.fetchGoods(url,param);
         this.togglePopupActive();
     }
@@ -108,7 +93,9 @@ class GoodListApp extends React.Component{
         if(isFetching || totalPage <= pageIndex){
             return false;
         }
-        var param = this.fetchParams({pageIndex:pageIndex+1});
+        const param = this.fetchParams({
+            pageIndex:pageIndex+1
+        });
         this.props.fetchGoods(url,param);
     }
     handleScroll(scrollNode,scrollTop){
@@ -127,10 +114,21 @@ class GoodListApp extends React.Component{
             </div>
         );
     }
+    renderFilter(){
+        const {filter} = this.props.index;
+        const active = this.state.filterActive;
+        var filterList = [];
+        return _.map(filter,(obj,i)=>{
+            return (
+                <Filter list={obj.list} active={active===i} key={i}
+                toggleChecked={this.toggleChecked.bind(this,i)}
+                handleGoBack ={this.toggleFilterPopup.bind(this)} />
+            );
+        });
+    }
     render(){
         const {
-            totalPage,categoryNames,brandNames,areaNames,goodsList,
-            keyword,pageIndex,sortType,viewType,isHaveGoods,isFetching
+            totalPage,goodsList,keyword,pageIndex,sortType,viewType,isHaveGoods,filter,isFetching
         } = this.props.index;
  
         if(goodsList.length===0){
@@ -162,30 +160,14 @@ class GoodListApp extends React.Component{
                         </div>
                     </div>
                     <Sidebar
-                        popupActive={this.state.popupActive}
+                        popupActive={this.state.popupActive} isHaveGoods={isHaveGoods} filter={filter}
                         toggleFilter={this.toggleFilterPopup.bind(this)}
-                        handleReset={this.handleReset.bind(this)}
-                        handlerSave={this.handlerSave.bind(this)}
-                        isHaveGoods={isHaveGoods}
+                        handleReset={this.handleReset.bind(this)} handlerSave={this.handlerSave.bind(this)}
                         {...this.props} />
-                    <Filter 
-                        list={categoryNames}
-                        active={this.state.filterType==='category'}
-                        toggleChecked={this.toggleChecked.bind(this,'categoryNames')}
-                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
-                    <Filter 
-                        list={brandNames}
-                        active={this.state.filterType==='brand'}
-                        toggleChecked={this.toggleChecked.bind(this,'brandNames')}
-                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
-                    <Filter 
-                        list={areaNames}
-                        active={this.state.filterType==='area'}
-                        toggleChecked={this.toggleChecked.bind(this,'areaNames')}
-                        handleGoBack ={this.toggleFilterPopup.bind(this)} />
+                    {this.renderFilter()}
                     <MaskLayer visible={this.state.maskActive} />
                     <Refresher active={isFetching}/>
-                     {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
+                    {pageIndex == totalPage?(<div className="no-more">已显示全部内容</div>):null} 
                  </GoTop>
             </div>
         )
