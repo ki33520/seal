@@ -1,0 +1,26 @@
+{
+    "returnCode":0,
+    "message":"成功",
+    "object": {
+        "result": [
+             {
+                "openId":"5e0eeb1e05e6423880b5932f5f16a240",
+                "mobileNumber":null,
+                "remark":null,
+                "backImgUrl":"http://imgjf.tepin.com/1b71/bff139fa05ac383fa85a523ab3d110a0c37dbdf68c354f47be0b19de39ccc454?Expires=1464254400&response-content-disposition=attachment%3B%20filename%3A1.png&OSSAccessKeyId=lmCcWB9EZD2YncQm&Signature=hnqVxB1L5GU%2BTQLevcEQXg1tZDM%3D",
+                "number":"430181199901010012",
+                "backImg":"storage-aliyun:/1b71?bff139fa05ac383fa85a523ab3d110a0c37dbdf68c354f47be0b19de39ccc454#1.png",
+                "name":"lianle111",
+                "nickname":null,
+                "statusName":"未审核",
+                "id":"2",
+                "fontImg":"storage-aliyun:/1b71?bff139fa05ac383fa85a523ab3d110a0c37dbdf68c354f47be0b19de39ccc454#1.png",
+                "email":null,
+                "fontImgUrl":"http://imgjf.tepin.com/1b71/bff139fa05ac383fa85a523ab3d110a0c37dbdf68c354f47be0b19de39ccc454?Expires=1464254400&response-content-disposition=attachment%3B%20filename%3A1.png&OSSAccessKeyId=lmCcWB9EZD2YncQm&Signature=hnqVxB1L5GU%2BTQLevcEQXg1tZDM%3D",
+                "username":null,
+                "status":"1"
+            }
+        ],
+        "totalCount":2
+    }
+}

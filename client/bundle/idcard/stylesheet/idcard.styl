@@ -1,0 +1,158 @@
+@import "../../common/common.styl";
+@import "../../common/iconfont.styl";
+@import "../../common/header.styl";
+@import "../../common/footer.styl";
+@import "../../component/refresher.styl";
+@import "../../component/masklayer.styl";
+@import "../../component/gotop.styl";
+@import "../../component/slidetabs.styl";
+@import "../../component/refresher.styl";
+@import "../../common/loading.styl";
+@import "../../common/scene.styl";
+
+.container {
+	height: 100%;
+	&>div{
+		height:100%;
+		overflow:hidden;
+	}
+}
+.scene-group>.scene {
+	background-color: #f3f3f3;
+}
+.slide-tabs {
+	background-color: #f3f3f3;
+	.slide-tabs-navbar {
+		height: 1.16rem;
+		width: 100%;
+		background-color:white;
+	    border-bottom: 1px solid #d7d7d7;
+	    .slide-tabs-navbar-item {
+			line-height: 1.16rem;
+			border: none;
+			&.active {
+				background-color: transparent;
+				border-bottom:.053333rem solid #801da1;
+				color: #801da1;
+			}
+		}
+	}
+	.slide-tabs-content{
+		height: 100%;
+		overflow:hidden;
+        		padding-bottom:px2rem(30);
+        		.slide-tabs-item{
+        			height: 100%;
+        			transform:translate3d(0px, 0px, 0px);
+        		}
+	}
+}
+
+.back-to-top {
+	bottom:2.25rem;
+}
+.back-to-top-container{
+	padding-bottom: 1.65rem;
+}
+
+.inner-scroll {
+	height: 100%;
+	overflow: hidden;
+}
+.coupon {
+    height: 120px;
+    margin-bottom: 15px;
+    box-shadow: 3px 3px 3px #ebebeb;
+    margin: .32rem;
+    position: relative;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+.haitao,.youa-invalid {
+	.left {
+	    padding: 30px 6px 30px 16px;
+	    float: left;
+	    width: 32%;
+	    overflow: hidden;
+	    .price {
+		    font-size: .7rem;
+		    letter-spacing: -2px;
+		    font-weight: bold;
+		    text-align: center;
+		    &>em{
+		    	font-size: .64rem;
+				padding-right: .12rem;
+				font-weight: normal;
+		    }
+		}
+		.term {
+		    font-size: .32rem;
+		    text-align: center;
+		}
+	}
+	.right {
+	    padding: .325rem 0 0 0;
+	    float: right;
+	    width: 56%;
+	    margin-right: 3%;
+	    .kind {
+	    	font-size: .32rem;
+	    	padding: .12rem 0;
+	    }
+	    .date {
+			font-size: .266667rem;
+			padding: .12rem 0;
+		}
+		.explain {
+			color: #999;
+		    background: url(/client/asset/images/rightLine.png) left top no-repeat;
+		    background-size: 80% 3px;
+		    padding: .12rem 0;
+		    height: 1rem;
+		    line-height: .5rem;
+		    width: 100%;
+		    font-size: .266667rem;
+		    text-overflow: ellipsis;
+		    display: -webkit-box;
+		    -webkit-line-clamp: 2;
+		    -webkit-box-orient: vertical;
+		    white-space:normal;
+		}
+	}
+}
+
+.haitao {
+	color: #666;
+	background-image: url(/client/asset/images/youa_purple.png);
+	.price {
+	    color: #733c93;
+	}
+	.kind {
+	    color: #733c93;
+	    padding: .12rem 0;
+	}
+}
+
+.youa-invalid {
+	color: #999;
+    background-image: url(/client/asset/images/youa_invalid.png);
+}
+
+.used,.expiried {
+	position:absolute;
+	right:20px;
+	bottom:20px;
+	width:50%;
+	height:100%;
+	width: 70px;
+	height: 70px;
+}
+.used{
+	background:url(/client/asset/images/beUsed.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+}
+.expiried{
+	background:url(/client/asset/images/expired.png) 0 0 no-repeat;
+	background-size: 100% 100%;
+}

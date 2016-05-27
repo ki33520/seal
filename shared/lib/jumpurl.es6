@@ -28,7 +28,8 @@ const urlMap = {
     "showcomment":urlPrefix + "/showcomment",
     "update":urlPrefix + "/update",
     "aboutus":urlPrefix + "/aboutus",
-    "help":urlPrefix + "/help"
+    "help":urlPrefix + "/help",
+    "idcard":urlPrefix+"/idcard"
 }
 
 export function jumpURL(route,param=[],query=null){
@@ -102,6 +103,8 @@ export function jumpURL(route,param=[],query=null){
             param = param.join("/")
             return `${urlMap["help"]}.html`
             break
+        case "idcard":
+            return `${urlMap["idcard"]}.html`
         default:
             return `${urlMap[route]}.html`
     }

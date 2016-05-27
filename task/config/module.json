@@ -197,6 +197,15 @@
         },
         "vendor": "react"
     },
+    "idcard":{
+        "html": ["idcard.html"],
+        "path": "./client/bundle/idcard/",
+        "compiler": {
+            "js": "babel",
+            "css": "stylus"
+        },
+        "vendor": "react"
+    },
     "test":{
         "html": ["test.html"],
         "path": "./client/bundle/test/",
