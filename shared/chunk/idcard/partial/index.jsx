@@ -19,7 +19,7 @@ class IDcard extends React.Component{
         return (
             <div className="idcard-content">
                 <Header>
-                    <span className="title">身份证</span>
+                    <span className="title">身份证管理</span>
                 </Header>
                  
             </div>
