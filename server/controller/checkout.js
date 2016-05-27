@@ -96,12 +96,11 @@ function formatCoupons(coupons) {
 }
 
 var confirmOrder = function(req, res, next) {
-    var param = util.decodeURLParam(req.params["param"])
+    var id = req.params["id"]
     var user = req.session.user;
-    util.fetchAPI("confirmOrder", {
+    util.fetchAPI("checkout", {
         memberId: user.memberId,
-        singleCodes: param.itemIds,
-        qtys: param.buyeds
+        activityOrderId:id
     }).then(function(ret) {
         if (ret.returnCode === 0) {
             var order = orderFilter(ret.object);

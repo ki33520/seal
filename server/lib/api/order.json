@@ -54,5 +54,21 @@
             "test": "http://product.hwg.youayun.cn",
             "production": "http://product.tepin.hk"
         }
+    },
+    "checkout": {
+        "uri": "/activityOrder/v1/confirmOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://order.tepin.hk"
+        }
+    },
+    "createOrder": {
+        "uri": "/activityOrder/v1/createOrder",
+        "baseURL": {
+            "develop": "http://order.hwg.youayun.cn:7986",
+            "test": "http://order.hwg.youayun.cn",
+            "production": "http://order.tepin.hk"
+        }
     }
 }
