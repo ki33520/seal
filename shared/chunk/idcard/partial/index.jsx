@@ -19,37 +19,44 @@ class Index extends Component{
                 <Header onGoBack={this.props.changeScene.bind(this,"index")}>
                     <span className="title">身份证管理</span>
                 </Header>
-                <div className="identityUpload">
-                    <div>
-                        <em>身份证姓名</em>
-                        <input type="text" placeholder="请输入身份证姓名" />
+                <div className="blub">
+                    <p>根据海关政策规定，海外直邮的包裹需提供身份证照片进行入境申报，友阿海外购用户请如实提供身份证信息并确保所提供身份证与收货人完全一致。</p>
+                </div>
+                <div className="list">
+                    <div className="listTitle">
+                        <span className="name">郭靖</span>
+                        <span className="identity">430951196212041234</span>
+                        <span className="attestation"><em></em>已认证</span>
                     </div>
-                    <div>
-                        <em>身份证号码</em>
-                        <input type="text" placeholder="请输入身份证号码" />
+                    <div className="pic_id">
+                        <span><img src="images/pic_id.jpg" /></span>
+                        <span><img src="images/pic_id2.jpg" /></span>
                     </div>
-                    <div className="uploadArea">
-                        <em>身份证照片</em>
-                        <div className="pic_id">
-                            <span id="id_front">
-                                <img src="/client/asset/images/pic_id.jpg" />
-                                <a href="javascript:;">上传正面</a>
-                                <input accept="image/*" type="file" />
-                            </span>
-                            <span id="id_back">
-                                <img src="/client/asset/images/pic_id2.jpg" />
-                                <a href="javascript:;">上传反面</a>
-                                <input accept="image/*" type="file" />
-                            </span>
-                        </div>
+                    <div className="feedbackInfo">
+                        <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
                     </div>
-                    
-                    <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
-                    
-                    <footer>
-                        <a href="javascript:;" className="btn">保&nbsp;存</a>
-                    </footer>
-                    
+                    <div className="toolsArea">
+                        <a href="javascript:;" className="pen"><em></em>编辑</a>
+                        <a href="javascript:;" className="del"><em></em>删除</a>
+                    </div>
+                </div>
+                <div className="list">
+                    <div className="listTitle">
+                        <span className="name">郭靖</span>
+                        <span className="identity">430951196212041234</span>
+                        <span className="attestation"><em></em>已认证</span>
+                    </div>
+                    <div className="pic_id">
+                        <span><img src="images/pic_id.jpg" /></span>
+                        <span><img src="images/pic_id2.jpg" /></span>
+                    </div>
+                    <div className="feedbackInfo">
+                        <p>身份信息审核内容反馈：反馈信息反馈信息......</p>
+                    </div>
+                    <div className="toolsArea">
+                        <a href="#" className="pen"><em></em>编辑</a>
+                        <a href="javascript:;" className="del"><em></em>删除</a>
+                    </div>
                 </div>
             </div>
         )
