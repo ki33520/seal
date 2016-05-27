@@ -53,6 +53,110 @@ var idcardList = function(req, res, next) {
     });
 }
 
+var uploadIdcardPhoto = function(req,res,next){
+    //var user = req.session.user;
+    var file = req.body.file;
+    var param = {
+        file:file
+    };
+    util.fetchAPI("uploadIdcardImage", param).then(function(resp) {
+        if(resp.returnCode===0){
+            var result = resp.object.result;
+            res.json({
+                isFetched:true,
+                result:result
+            });
+        }else{
+            next(new Error(resp.message)); 
+        }
+    },function(){
+        next(new Error('api request failed'));
+    });
+}
+
+var addIdcard = function(req,res,next){
+    var user = req.session.user;
+    var name = req.body.name;
+    var number = req.body.idcard;
+    var fontImg = req.body.fontImg;
+    var backImg = req.body.backImg;
+    var param = {
+        memberId: user.memberId,
+        name:name,
+        number:number,
+        fontImg:fontImg,
+        backImg:backImg
+    };
+    util.fetchAPI("addIdcard", param).then(function(resp) {
+        if(resp.returnCode===0){
+            var result = resp.object.result;
+            res.json({
+                isFetched:true,
+                result:result
+            });
+        }else{
+            next(new Error(resp.message)); 
+        }
+    },function(){
+        next(new Error('api request failed'));
+    });
+}
+
+var updateIdcard = function(req,res,next){
+    var user = req.session.user;
+    var name = req.body.name;
+    var number = req.body.idcard;
+    var fontImg = req.body.fontImg;
+    var backImg = req.body.backImg;
+    var id = req.body.id;
+    var param = {
+        id:id,
+        memberId: user.memberId,
+        name:name,
+        number:number,
+        fontImg:fontImg,
+        backImg:backImg
+    };
+    util.fetchAPI("updateIdcard", param).then(function(resp) {
+        if(resp.returnCode===0){
+            var result = resp.object.result;
+            res.json({
+                isFetched:true,
+                result:result
+            });
+        }else{
+            next(new Error(resp.message)); 
+        }
+    },function(){
+        next(new Error('api request failed'));
+    });
+}
+
+var deleteIdcard = function(req,res,next){
+    var user = req.session.user;
+    var id = req.body.id;
+    var param = {
+        id:id
+    };
+    util.fetchAPI("deleteIdcard", param).then(function(resp) {
+        if(resp.returnCode===0){
+            var result = resp.object.result;
+            res.json({
+                isFetched:true,
+                result:result
+            });
+        }else{
+            next(new Error(resp.message)); 
+        }
+    },function(){
+        next(new Error('api request failed'));
+    });
+}
+
 module.exports = {
-    list:idcardList
+    idcardList:idcardList,
+    uploadIdcardPhoto:uploadIdcardPhoto,
+    addIdcard:addIdcard,
+    updateIdcard:updateIdcard,
+    deleteIdcard:deleteIdcard
 };
