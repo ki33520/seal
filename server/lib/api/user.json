@@ -30,5 +30,37 @@
             "test": "http://member.hwg.youayun.cn",
             "production": "http://member.tepin.hk"
         }
+    },
+    "addIdcard":{
+        "uri": "/identity/v1/add",
+        "baseURL": {
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "updateIdcard":{
+        "uri": "/identity/v1/update",
+        "baseURL": {
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "deleteIdcard":{
+        "uri": "/identity/v1/delete",
+        "baseURL": {
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
+    },
+    "uploadIdcardImage":{
+        "uri": "/identity/v1/saveImage",
+        "baseURL": {
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
     }
 }
