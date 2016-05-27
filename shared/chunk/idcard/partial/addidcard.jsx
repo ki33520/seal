@@ -38,13 +38,10 @@ class AddIDcard extends Component{
                             </span>
                         </div>
                     </div>
-                    
                     <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
-                    
                     <div className="footer">
                         <a href="javascript:;" className="btn">保&nbsp;存</a>
                     </div>
-                    
                 </div>
             </div>
         )

@@ -1,0 +1,88 @@
+'use strict'
+import React,{Component} from "react";
+import classNames from "classnames";
+import util from "../../../lib/util.es6";
+import Header from "../../common/header.jsx";
+import Dialog from "../../../component/dialog.jsx";
+
+class IDcard extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            dialogActive:false,
+            dialogOnConfirm:null,
+            alertActive:false
+        }
+    }
+    toggleDialog(){
+        this.setState({
+            dialogActive:!this.state.dialogActive
+        })
+    }
+    handleDelete(id){
+        this.setState({
+            dialogActive:true,
+            dialogOnConfirm:()=>{
+                this.toggleDialog()
+                this.props.deleteIDcard({id})
+            }
+        })
+    }
+    renderIDcardList(){
+        const {idcardLIst,isFetched} = this.props.index;
+        //console.log(idcardLIst)
+        if(!isFetched||idcardLIst.length==0) return null;
+        
+        return idcardLIst.map((item,i)=>{
+            let key = 'idcard-'+i;
+            let id = item.id;
+            return(
+                <div className="list" key={key}>
+                    <div className="listTitle">
+                        <span className="name">{item.name}</span>
+                        <span className="identity">{item.cardID}</span>
+                        <span className="attestation"><em></em>{item.statusName}</span>
+                    </div>
+                    <div className="pic_id">
+                        <span><img src={item.fontImgUrl} /></span>
+                        <span><img src={item.backImgUrl} /></span>
+                    </div>
+                    <div className="feedbackInfo">
+                        <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
+                    </div>
+                    <div className="toolsArea">
+                        <a href="javascript:;" onClick={this.props.changeScene.bind(this,"update",{id})} className="pen"><em></em>编辑</a>
+                        <a href="javascript:;" onClick={this.props.handleDelete.bind(this,id)}className="del"><em></em>删除</a>
+                    </div>
+                </div>
+            )
+        });
+    }
+    render(){
+        return (
+            <div className="idcard-content">
+                <Header>
+                    <span className="title">身份证管理</span>
+                </Header>
+                <div className="blub">
+                    <p>根据海关政策规定，海外直邮的包裹需提供身份证照片进行入境申报，友阿海外购用户请如实提供身份证信息并确保所提供身份证与收货人完全一致。</p>
+                </div>
+                {this.renderIDcardList()}
+                <div className="footer">
+                    <a href="javascript:;" className="btn">新&nbsp;增</a>
+                </div>
+                <Dialog active={this.state.dialogActive} 
+                onCancel={this.toggleDialog.bind(this)}
+                onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
+            </div>
+        )
+    }
+}
+
+IDcard.defaultProps = {
+    dialogActive:false,
+    onCheck:function(){}
+};
+
+export default IDcard;
+

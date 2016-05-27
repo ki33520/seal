@@ -1,19 +1,19 @@
 'use strict';
 
 import React,{Component} from "react";
-import Index from "./partial/index.jsx";
+import IDcard from "./partial/idcard.jsx";
 import AddIDcard from "./partial/addidcard.jsx";
 import UpdateIdcard from "./partial/updateidcard.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
-class IDcard extends Component{
+class IDcardRouter extends Component{
     handleSceneChange(currentScene,prevScene){
 
     }
     render(){
         return (
             <SceneGroup>
-                <Scene name="index"><Index {...this.props}/></Scene>
+                <Scene name="IDcard"><Index {...this.props}/></Scene>
                 <Scene name="addcard"><AddIDcard {...this.props}/></Scene>
                 <Scene name="update"><UpdateIdcard {...this.props}/></Scene>
             </SceneGroup>
@@ -21,4 +21,4 @@ class IDcard extends Component{
     }
 }
 
-export default IDcard;
+export default IDcardRouter;
