@@ -7,7 +7,7 @@ import UpdateIdcard from "./partial/updateidcard.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
 class IDcard extends Component{
-    handleSceneChange(currentScene,param,prevScene){
+    handleSceneChange(currentScene,prevScene){
 
     }
     render(){

@@ -8,7 +8,7 @@ import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redu
 import IDcard from "./component.jsx";
 import * as actions from "./action.es6";
 
-let CouponConnected = connect((state)=>{
+let IdcardConnected = connect((state)=>{
     return state;
 })(wrapComponentWithActions(IDcard,actions));
 
@@ -42,7 +42,7 @@ class IDcardApp extends Component{
         let store = configureStore(initialState);
         return (
             <Provider store={store}>
-                <CouponConnected />
+                <IdcardConnected />
             </Provider>
         )
     }

@@ -7,17 +7,6 @@ class AddIDcard extends Component{
     handleBack(){
         this.props.changeScene("index");
     }
-    renderQRcode(coupon){
-        if(coupon&&coupon.qrCode){
-            return (
-                <div className="qr">
-                    <img src="/client/asset/images/qr.png"/>
-                    <div className="arrow"></div>
-                </div>
-            )  
-        }
-        return null;
-    }
     render(){
         return (
             <div className="idcard-content">
