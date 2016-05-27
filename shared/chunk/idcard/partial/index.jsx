@@ -29,8 +29,8 @@ class Index extends Component{
                         <span className="attestation"><em></em>已认证</span>
                     </div>
                     <div className="pic_id">
-                        <span><img src="images/pic_id.jpg" /></span>
-                        <span><img src="images/pic_id2.jpg" /></span>
+                        <span><img src="/client/asset/images/pic_id.jpg" /></span>
+                        <span><img src="/client/asset/images/pic_id2.jpg" /></span>
                     </div>
                     <div className="feedbackInfo">
                         <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
@@ -47,8 +47,8 @@ class Index extends Component{
                         <span className="attestation"><em></em>已认证</span>
                     </div>
                     <div className="pic_id">
-                        <span><img src="images/pic_id.jpg" /></span>
-                        <span><img src="images/pic_id2.jpg" /></span>
+                        <span><img src="/client/asset/images/pic_id.jpg" /></span>
+                        <span><img src="/client/asset/images/pic_id2.jpg" /></span>
                     </div>
                     <div className="feedbackInfo">
                         <p>身份信息审核内容反馈：反馈信息反馈信息......</p>
