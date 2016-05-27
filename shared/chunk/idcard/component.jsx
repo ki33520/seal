@@ -12,7 +12,7 @@ class IDcard extends Component{
     }
     render(){
         return (
-            <SceneGroup onChange={this.handleSceneChange.bind(this)}>
+            <SceneGroup>
                 <Scene name="index"><Index {...this.props}/></Scene>
                 <Scene name="addcard"><AddIDcard {...this.props}/></Scene>
                 <Scene name="update"><UpdateIdcard {...this.props}/></Scene>

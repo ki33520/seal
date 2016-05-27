@@ -16,7 +16,7 @@ class Index extends Component{
         //console.log(idcardLIst)
         return (
             <div className="idcard-content">
-                <Header onGoBack={this.props.changeScene.bind(this,"index")}>
+                <Header>
                     <span className="title">身份证管理</span>
                 </Header>
                  
