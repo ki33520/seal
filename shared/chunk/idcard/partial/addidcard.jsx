@@ -11,7 +11,8 @@ class AddIDcard extends Component{
         return (
             <div className="idcard-content">
                 <Header onGoBack={this.handleBack.bind(this)}>
-                    <span className="title">上传身份证</span>
+                    <span className="title">身份证上传</span>
+                    <span className="btn-right"><a>保存</a></span>
                 </Header>
                 <div className="identityUpload">
                     <div>
