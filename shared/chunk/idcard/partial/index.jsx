@@ -58,6 +58,9 @@ class Index extends Component{
                         <a href="javascript:;" className="del"><em></em>删除</a>
                     </div>
                 </div>
+                <div className="footer">
+                    <a href="javascript:;" className="btn">新&nbsp;增</a>
+                </div>
             </div>
         )
     }

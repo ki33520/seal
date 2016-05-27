@@ -40,9 +40,9 @@ class AddIDcard extends Component{
                     
                     <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
                     
-                    <footer>
+                    <div className="footer">
                         <a href="javascript:;" className="btn">保&nbsp;存</a>
-                    </footer>
+                    </div>
                     
                 </div>
             </div>
