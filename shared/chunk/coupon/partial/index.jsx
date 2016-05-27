@@ -97,7 +97,7 @@ class Coupon extends React.Component{
     }
     render(){
         const {coupons,isFetching} = this.props.index;
-        const items = coupons.map((item,i)=>{
+        const items = coupons&&coupons.map((item,i)=>{
             return (
                 <SlideTabsItem navigator={()=>item.title} key={i}>
                     <GoTop relative={true} onScroll={this.handleScroll.bind(this)}>

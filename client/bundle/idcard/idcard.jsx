@@ -1,5 +1,5 @@
 'use strict';
-import IDcardApp from "../../../shared/chunk/coupon/app.jsx";
+import IDcardApp from "../../../shared/chunk/idcard/app.jsx";
 import React from "react";
 import ReactDOM from "react-dom";
 Object.assign = Object.assign || require('object-assign');
