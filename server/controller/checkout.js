@@ -7,6 +7,8 @@ var url = require("url");
 var util = require("../lib/util");
 var sharedUtil = require("../../shared/lib/util.es6");
 var Checkout = util.getSharedComponent("checkout");
+var ErrorContent = util.getSharedComponent("checkout", "error.jsx");
+
 var config = require("../lib/config");
 var receiversFilter = require("./receiver").receiversFilter;
 
@@ -96,18 +98,16 @@ function formatCoupons(coupons) {
 }
 
 var confirmOrder = function(req, res, next) {
-    var param = util.decodeURLParam(req.params["param"])
+    var id = req.params["id"]
     var user = req.session.user;
-    util.fetchAPI("confirmOrder", {
+    util.fetchAPI("checkout", {
         memberId: user.memberId,
-        singleCodes: param.itemIds,
-        qtys: param.buyeds
+        activityOrderId:id
     }).then(function(ret) {
         if (ret.returnCode === 0) {
             var order = orderFilter(ret.object);
-            _.extend(order, {
-                itemIds: param.itemIds,
-                buyeds: param.buyeds
+            _.extend(order,{
+                activityOrderId:id
             })
             order["cashier"] = config["cashier"]
             var initialState = {
@@ -117,13 +117,25 @@ var confirmOrder = function(req, res, next) {
             var markup = util.getMarkupByComponent(Checkout({
                 initialState: initialState
             }));
-
+            console.log("render checkout")
             res.render('checkout', {
                 markup: markup,
                 initialState: initialState
             })
         } else {
-            next(new Error(ret.msg))
+            var initialState = {
+                code: "500",
+                msg:"啊噢~您查看的商品已下架咯..."
+            };
+            var markup = util.getMarkupByComponent(ErrorContent({
+                initialState: initialState
+            }));
+
+            res.render('checkout', {
+                markup: markup,
+                initialState: initialState
+            });
+            // next(new Error(ret.msg))
         }
     })
 }
@@ -135,15 +147,6 @@ var verifyOrder = function(req,res,next){
     var couponNo = req.body.couponNo
     var totalFee = req.body.totalFee
     var receiverId = req.body.receiverId
-
-    console.log(util.getAPI("verifyOrder",{
-        memberId: user.memberId,
-        singleCodes: itemIds,
-        qtys: buyeds,
-        couponNo: couponNo,
-        memberDlvAddressId: receiverId,
-        paymentFee:totalFee
-    }))
 
     util.fetchAPI("verifyOrder",{
         memberId: user.memberId,
@@ -173,26 +176,13 @@ var verifyOrder = function(req,res,next){
 
 var submitOrder = function(req, res, next) {
     var user = req.session.user;
-    var itemIds = req.body.itemIds;
-    var buyeds = req.body.buyeds;
-    var couponNo = req.body.couponNo;
     var receiverId = req.body.receiverId;
-    var couponFee = req.body.couponFee;
-    var totalFee = req.body.totalFee;
-    var guiderCode = req.cookies["tag"] ? req.cookies["tag"]:""
-    if(guiderCode === ""){
-        guiderCode = user.medrauId ? user.medrauId:""
-    }
+    var activityOrderId = req.body.activityOrderId;
 
-    util.fetchAPI("saveOrder", {
+    util.fetchAPI("createOrder", {
+        activityOrderId:activityOrderId,
         memberId: user.memberId,
-        singleCodes: itemIds,
-        qtys: buyeds,
-        couponNo: couponNo,
-        memberDlvAddressId: receiverId,
-        couponFee: couponFee,
-        paymentFee: totalFee,
-        guiderCode:guiderCode
+        memberDlvAddressId: receiverId
     }).then(function(resp) {
         if (resp.returnCode === 0) {
             var orderNo = resp.object;
