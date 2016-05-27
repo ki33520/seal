@@ -4,22 +4,19 @@ import classNames from "classnames";
 import util from "../../../lib/util.es6";
 import Header from "../../common/header.jsx";
 
-class IDcard extends React.Component{
+class Index extends Component{
     constructor(props){
         super(props);
         this.state = {
             activeIndex:0
         }
     }
-    handleClick(index){
-         
-    }
     render(){
-        const {idcardLIst} = this.props.index;
-        console.log(idcardLIst)
+        //const {idcardLIst} = this.props.index;
+        //console.log(idcardLIst)
         return (
             <div className="idcard-content">
-                <Header>
+                <Header onGoBack={this.props.changeScene.bind(this,"index")}>
                     <span className="title">身份证管理</span>
                 </Header>
                  
@@ -28,4 +25,4 @@ class IDcard extends React.Component{
     }
 }
 
-export default IDcard;
+export default Index;

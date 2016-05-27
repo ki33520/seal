@@ -5,12 +5,12 @@ import {Provider,connect} from "react-redux";
 import rootReducer from "./reducer.es6";
 import {createStore} from "redux";
 import createStoreWithMiddleware,{wrapComponentWithActions} from "../../lib/redux-helper.es6";
-import Coupon from "./component.jsx";
+import IDcard from "./component.jsx";
 import * as actions from "./action.es6";
 
 let CouponConnected = connect((state)=>{
     return state;
-})(wrapComponentWithActions(Coupon,actions));
+})(wrapComponentWithActions(IDcard,actions));
 
 function configureStore(initialState){
     const store = createStoreWithMiddleware(rootReducer, initialState)
@@ -32,7 +32,10 @@ class IDcardApp extends Component{
                 isFetched,
                 isFetching:false
             },
-            add:{
+            addcard:{
+                idcard:null
+            },
+            update:{
                 idcard:null
             }
         };

@@ -33,7 +33,6 @@ var idcardList = function(req, res, next) {
  
     util.fetchAPI("fetchIdcardList", param,true).then(function(resp) {
         if(resp.returnCode===0){
-            console.log(resp)
             var result = resp.object.result;
             var initialState = {
                 idcardLIst: filter(result),
@@ -47,14 +46,7 @@ var idcardList = function(req, res, next) {
                 initialState: initialState
             });
         }else{
-            if (req.xhr === true) {
-                res.json({
-                    idcardLIst:null,
-                    isFetched:false
-                });
-            }else{
-                next(new Error(resp.message)); 
-            }
+            next(new Error(resp.message)); 
         }
     },function(){
         next(new Error('api request failed'));
