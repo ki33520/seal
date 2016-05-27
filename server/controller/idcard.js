@@ -3,7 +3,7 @@ var _ = require("lodash");
 var util = require("../lib/util.js");
 var IDcardApp = util.getSharedComponent("idcard");
 
-var function filter(data){
+var filter = function (data){
     var list = [];
     if(data && data.length){
         _.forEach(data,function(item){

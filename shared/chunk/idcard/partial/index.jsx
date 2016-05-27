@@ -15,7 +15,8 @@ class IDcard extends React.Component{
          
     }
     render(){
-         
+        const {idcardLIst} = this.props.index;
+        console.log(idcardLIst)
         return (
             <div className="idcard-content">
                 <Header>
