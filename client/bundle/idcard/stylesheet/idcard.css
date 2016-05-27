@@ -1,0 +1,264 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/*footer{
+	height:1.2rem;
+	position:fixed;
+	left:0;
+	bottom:0;
+	background-color:#fff;
+	width:100%;
+	border-top:1px solid #dcdddd;
+	text-align:center;
+}
+footer .btn{
+	width:4rem;
+	height:0.92rem;
+	line-height:0.92rem;
+	color:#fff;
+	font-weight:bold;
+	font-size:.4rem;
+	background-color:#801da1;
+	display:inline-block;
+	margin-top:.14rem;
+	border-radius:20px;
+}
+*/
+.blub{
+	padding:0.32rem;
+	color:#666;
+	font-size:0.32rem;
+}
+.blub p{
+	line-height:.48rem;
+	padding-left:.5rem;
+	position:relative;
+}
+.blub p:before{
+	content:"";
+	width:.4rem;
+	height:.4rem;
+	background:url(/client/asset/images/identity_bulb.png) no-repeat;
+	background-size:100%;
+	display:block;
+	position:absolute;
+	left:0;
+	top:0;
+}
+
+.list{
+	background-color:#fff;
+	padding:.32rem 0;
+	margin-bottom:0.32rem;
+}
+.listTitle{
+	padding:0 0.32rem;
+}
+.listTitle .name{
+	padding-right:0.36rem;
+	font-weight:bold;
+}
+.listTitle .attestation{
+	color:#dd1847;
+	font-size:.27rem;
+	float:right;
+	position:relative;
+	padding-left:.54rem;
+}
+.listTitle .attestation:before{
+	content:"";
+	width:0.44rem;
+	height:0.44rem;
+	background:url(/client/asset/images/id_attestation.png) no-repeat;
+	background-size:100%;
+	display:block;
+	position:absolute;
+	left:0;
+	top:0;
+}
+
+.pic_id{
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+	padding:0.36rem 0.32rem;
+	border-bottom:1px solid #e0e0e0;
+}
+.pic_id span{
+	-webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+	display:block;
+}
+.pic_id span:nth-child(1){
+	margin-right:0.16rem;
+}
+.pic_id span:nth-child(2){
+	margin-left:0.16rem;
+}
+.pic_id span img{
+	width:100%;
+	max-height:3rem;
+}
+
+.feedbackInfo{
+	padding:.32rem;
+	background-color:#fdebeb;
+}
+.feedbackInfo p{
+	color:#dd1847;
+	font-size:.32rem;
+	line-height:.48rem;
+	position:relative;
+	padding-left:.5rem;
+}
+.feedbackInfo p:before{
+	content:"";
+	display:block;
+	width:.32rem;
+	height:.32rem;
+	background:url(/client/asset/images/id_icon.png) no-repeat;
+	background-size:100%;
+	position:absolute;
+	left:0;
+	top:.04rem;
+}
+
+.toolsArea{
+	clear:both;
+	text-align:right;
+	padding:.32rem .32rem 0 .32rem;
+}
+.toolsArea > a{
+	width:auto;
+	height:auto;
+	line-height:.42rem;
+	font-size:.32rem;
+	margin-left:.48rem;
+	padding:.2rem;
+}
+.toolsArea > a em{
+	vertical-align: middle;
+	padding-right:.16rem;
+}
+.toolsArea > a.pen em{
+	width: .44rem;
+    height: .44rem;
+    background: url(/client/asset/images/cart_pen.png) no-repeat;
+    background-size: 80%;
+	display:inline-block;
+}
+.toolsArea > a.del em{
+	width: .44rem;
+    height: .44rem;
+    background: url(/client/asset/images/cart_del.png) no-repeat;
+    background-size: 80%;
+	display:inline-block;
+}
+
+.identityUpload{
+	
+}
+.identityUpload > div{
+	border-bottom:1px solid #e0e0e0;
+	padding:.4rem .32rem .3rem;
+	background-color:#fff;
+}
+.identityUpload > .uploadArea{
+	border-bottom:0;
+}
+.identityUpload > div em{
+	height:.5rem;
+	line-height:.5rem;
+	
+	
+	vertical-align: middle;
+    display: inline-block;
+    margin-right:1%;
+    width:22%;
+	font-size:0.373333rem;
+	color:#666;
+}
+.identityUpload > div input{
+	height:.5rem;
+	line-height:.5rem;
+    color: #222;
+    width:75%;
+	font-size:0.373333rem;
+}
+.identityUpload > div input:disabled{
+	color:#999;
+	background:none;
+}
+
+.pic_id {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    padding: 0.36rem 0 0;
+}
+.pic_id span {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    display: block;
+	position:relative;
+	height:4.45rem;
+}
+.pic_id span:nth-child(1) {
+    margin-right: 0.16rem;
+}
+.pic_id span:nth-child(2) {
+    margin-left: 0.16rem;
+}
+.pic_id span img {
+    width: 100%;
+	height:3rem;
+	position:absolute;
+	left:0;
+	top:0;
+}
+.pic_id span a{
+	display:block;
+	text-align:center;
+	color:#dd1847;
+	text-decoration:underline;
+	font-size:.32rem;
+	height:1.25rem;
+	line-height:1.25rem;
+	position:absolute;
+	top:3.2rem;
+	left:0;
+	width:100%;
+}
+
+.pic_id span input[type=file]{
+	opacity:0;
+	width:100%;
+	height:100%;
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:2;
+}
+
+.identityUpload .info{
+	line-height: .48rem;
+    padding-left: .5rem;
+    position: relative;
+	margin:.48rem;
+	color:#666;
+	font-size:.32rem;
+}
+.identityUpload .info:before {
+    content: "";
+    width: .4rem;
+    height: .4rem;
+    background: url(/client/asset/images/identity_bulb.png) no-repeat;
+    background-size: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
