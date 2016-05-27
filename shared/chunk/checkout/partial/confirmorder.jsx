@@ -87,14 +87,6 @@ class ConfirmOrder extends Component{
             this.props.alert("请输入收货地址")
             return
         }
-        verifyOrder({
-            itemIds:order.itemIds,
-            buyeds:order.buyeds,
-            couponNo:checkedCoupon !== null?checkedCoupon.couponNo:"",
-            receiverId:checkedReceiver !== null?checkedReceiver.id:"",
-            totalFee:order.totalFee
-        })
-
     }
     submitOrder(){
         const {order,submitOrder} = this.props;
@@ -104,27 +96,12 @@ class ConfirmOrder extends Component{
             return
         }
         submitOrder({
-            itemIds:order.itemIds,
-            buyeds:order.buyeds,
-            couponNo:checkedCoupon !== null?checkedCoupon.couponNo:"",
+            activityOrderId:order.activityOrderId,
             receiverId:checkedReceiver !== null?checkedReceiver.id:"",
-            couponFee:order.couponFee,
-            totalFee:order.totalFee
         })
     }
     componentDidUpdate(prevProps,prevState){
         const {dispatch,paygatewayFetched,fetchPayGateway} = this.props;
-        if(prevProps.orderVerifying && !this.props.orderVerifying){
-            if(this.props.orderVerified){
-                this.submitOrder()
-            }else{
-                this.setState({
-                    scrollable:false,
-                    dialogActive:true,
-                    dialogContent:this.props.orderVerifiedErrMsg
-                })
-            }
-        }
         if(prevProps.orderSubmiting === true && 
             this.props.orderSubmiting === false){
             if(this.props.orderSubmited === true){
@@ -185,7 +162,7 @@ class ConfirmOrder extends Component{
             <GoTop relative={true} scrollable={this.state.scrollable} renderFixed={()=>(
                 <SubmitOrder order={order} orderSubmited={this.props.orderSubmited}
             submiting={this.props.orderVerifying || this.props.orderSubmiting || this.props.paygatewayFetching}
-            onSubmit={this.verifyOrder.bind(this)}/>
+            onSubmit={this.submitOrder.bind(this)}/>
             )} ref="gotop">
             <div className="confirm-order-content">
             <Header>确认订单</Header>

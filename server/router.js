@@ -65,7 +65,6 @@ router.get(urlPrefix + "/logistics",mainController.requireAuthorize,require("./c
 
 router.get(urlPrefix + "/activity/checkout/:id.html",mainController.requireAuthorize,require("./controller/checkout").confirmOrder);
 router.post(urlPrefix + "/activity/submitorder",mainController.requireAuthorize,require("./controller/checkout").submitOrder);
-router.post(urlPrefix + "/activity/verifyorder",mainController.requireAuthorize,require("./controller/checkout").verifyOrder);
 
 router.get(urlPrefix + "/aboutus.html", require("./controller/aboutus"));
 router.get(urlPrefix + "/help.html", require("./controller/help").index);

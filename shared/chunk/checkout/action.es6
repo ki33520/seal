@@ -54,7 +54,7 @@ export {alert} from "../common/action.es6";
 export function submitOrder(param){
     return (dispatch)=>{
         dispatch(startSubmitOrder(param));
-        apiRequest(urlPrefix + "/submitorder",param,{
+        apiRequest(urlPrefix + "/activity/submitorder",param,{
             method:"POST"
         }).then((res)=>{
             if(res.orderSubmited){
