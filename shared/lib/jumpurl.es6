@@ -29,7 +29,8 @@ const urlMap = {
     "update":urlPrefix + "/update",
     "aboutus":urlPrefix + "/aboutus",
     "help":urlPrefix + "/help",
-    "idcard":urlPrefix+"/idcard"
+    "idcard":urlPrefix+"/idcard",
+    "uploadidcardImage":urlPrefix+"/uploadidcardImage"
 }
 
 export function jumpURL(route,param=[],query=null){
@@ -105,6 +106,14 @@ export function jumpURL(route,param=[],query=null){
             break
         case "idcard":
             return `${urlMap["idcard"]}.html`
+        case "uploadidcardImage":
+            return `${urlMap['uploadidcardImage']}`;
+        case "addidcard":
+            return `${urlMap['addidcard']}`;
+        case "updateidcard":
+            return `${urlMap['updateidcard']}`;
+        case "deleteidcard":
+            return `${urlMap['deleteidcard']}`;
         default:
             return `${urlMap[route]}.html`
     }

@@ -57,25 +57,29 @@ var uploadIdcardImage = function(req,res,next){
     //var user = req.session.user;
     var multiparty = require('multiparty');
     var form = new multiparty.Form();
-
+    form.encoding = 'utf-8';
+    form.uploadDir = "../uploads/images/";
     form.parse(req, function(err, fields, files) {
-        console.log(files)
+        console.log(files);
+        res.json({
+            'ok':files
+        })
         var param = {
             file:files
         };
-        util.fetchAPI("uploadIdcardImage", param).then(function(resp) {
-            if(resp.returnCode===0){
-                var result = resp.object.result;
-                res.json({
-                    isFetched:true,
-                    result:result
-                });
-            }else{
-                next(new Error(resp.message)); 
-            }
-        },function(){
-            next(new Error('api request failed'));
-        });
+        // util.fetchAPI("uploadIdcardImage", param).then(function(resp) {
+        //     if(resp.returnCode===0){
+        //         var result = resp.object.result;
+        //         res.json({
+        //             isFetched:true,
+        //             result:result
+        //         });
+        //     }else{
+        //         next(new Error(resp.message)); 
+        //     }
+        // },function(){
+        //     next(new Error('api request failed'));
+        // });
     });
 
  

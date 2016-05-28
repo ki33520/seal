@@ -17,12 +17,12 @@ class AddIDcard extends Component{
     handleChangeImg(type,event){
       
         var fileList = document.getElementById(type);
-        var form = new FormData();
+        var oMyForm = new FormData();
         var files = event.target.files,
             width = fileList.querySelector('img').width,
             img = new Image();
-        form.append('file',files[0]);
-        console.log(form)
+        oMyForm.append(type,files[0]);
+        console.log(oMyForm)
         if(window.URL){
             //File API
               img.src = window.URL.createObjectURL(files[0]); //创建一个object URL，并不是你的本地路径
@@ -53,7 +53,7 @@ class AddIDcard extends Component{
               alert(nfile+","+img.fileSize + " bytes");
             }
         }
-        this.props.uploadIDcardImage(form);
+        this.props.uploadIDcardImage({data:oMyForm});
     }
     render(){
         return (
@@ -77,12 +77,12 @@ class AddIDcard extends Component{
                             <span id="id_front">
                                 <img src="/client/asset/images/pic_id.jpg" />
                                 <a href="javascript:;">上传正面</a>
-                                <input accept="image/*" type="file" onChange={this.handleChangeImg.bind(this,'id_front')}/>
+                                <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
                             </span>
                             <span id="id_back">
                                 <img src="/client/asset/images/pic_id2.jpg" />
                                 <a href="javascript:;">上传反面</a>
-                                <input accept="image/*" type="file" onChange={this.handleChangeImg.bind(this,'id_back')}/>
+                                <input accept="image/*" type="file" name="back" onChange={this.handleChangeImg.bind(this,'id_back')}/>
                             </span>
                         </div>
                         <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
