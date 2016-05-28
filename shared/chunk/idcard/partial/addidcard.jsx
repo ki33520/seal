@@ -4,13 +4,13 @@ import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 
 class AddIDcard extends Component{
-    handleBack(){
-        this.props.changeScene("index");
+    constructor(props){
+        super(props);
     }
     render(){
         return (
             <div className="idcard-content">
-                <Header onGoBack={this.handleBack.bind(this)}>
+                <Header onGoBack={this.props.changeScene.bind(this,'index')}>
                     <span className="title">身份证上传</span>
                     <span className="btn-right"><a>保存</a></span>
                 </Header>

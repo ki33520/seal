@@ -30,12 +30,11 @@ class IDcard extends Component{
     }
     renderIDcardList(){
         const {idcardLIst,isFetched} = this.props.index;
-        //console.log(idcardLIst)
+        //console.log(idcardLIst,isFetched)
         if(!isFetched||idcardLIst.length==0) return null;
         
         return idcardLIst.map((item,i)=>{
             let key = 'idcard-'+i;
-            let id = item.id;
             return(
                 <div className="list" key={key}>
                     <div className="listTitle">
@@ -51,8 +50,8 @@ class IDcard extends Component{
                         <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
                     </div>
                     <div className="toolsArea">
-                        <a href="javascript:;" onClick={this.props.changeScene.bind(this,"update",{id})} className="pen"><em></em>编辑</a>
-                        <a href="javascript:;" onClick={this.props.handleDelete.bind(this,id)}className="del"><em></em>删除</a>
+                        <a href="javascript:;" onClick={this.props.changeScene.bind(this,"updatecard",{id:item.id})} className="pen"><em></em>编辑</a>
+                        <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id)}className="del"><em></em>删除</a>
                     </div>
                 </div>
             )
@@ -69,7 +68,7 @@ class IDcard extends Component{
                 </div>
                 {this.renderIDcardList()}
                 <div className="footer">
-                    <a href="javascript:;" className="btn">新&nbsp;增</a>
+                    <a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className="btn">新&nbsp;增</a>
                 </div>
                 <Dialog active={this.state.dialogActive} 
                 onCancel={this.toggleDialog.bind(this)}

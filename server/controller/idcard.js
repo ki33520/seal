@@ -54,7 +54,7 @@ var idcardList = function(req, res, next) {
 }
 
 var uploadIdcardPhoto = function(req,res,next){
-    //var user = req.session.user;
+    var user = req.session.user;
     var file = req.body.file;
     var param = {
         file:file
