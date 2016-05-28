@@ -24,9 +24,9 @@ var filter = function (data){
 }
 
 var idcardList = function(req, res, next) {
-    var user = req.session.user;
+    //var user = req.session.user;
     var param = {
-        memberId: user.memberId,
+        //memberId: user.memberId,
         pageIndex:1,
         pageSize:10
     };
@@ -53,7 +53,7 @@ var idcardList = function(req, res, next) {
     });
 }
 
-var uploadIdcardPhoto = function(req,res,next){
+var uploadIdcardImage = function(req,res,next){
     var user = req.session.user;
     var file = req.body.file;
     var param = {
@@ -155,7 +155,7 @@ var deleteIdcard = function(req,res,next){
 
 module.exports = {
     idcardList:idcardList,
-    uploadIdcardPhoto:uploadIdcardPhoto,
+    uploadIdcardImage:uploadIdcardImage,
     addIdcard:addIdcard,
     updateIdcard:updateIdcard,
     deleteIdcard:deleteIdcard
