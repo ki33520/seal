@@ -5,16 +5,41 @@
 @import "../../component/masklayer.styl";
 @import "../../common/scene.styl";
 @import "../../component/dialog.styl";
+@import "../../component/gotop.styl";
+@import "../../component/alert.styl";
 @import "./idcard.css";
 
-html,body{
-    height:100%;
-    // -webkit-overflow-scrolling: touch;
-    padding:0;
+body{
+    background: #F1F1F1;
 }
 .idcard-container {
 	height: 100%;
+    &>div{
+        height:100%;
+    }
+    .scene-group>.scene.active{
+        background:#f7f7f7;
+        height:100%;
+    }
 }
-#idcard-detail {
-	height: 100%;
+.idcard-content{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    .idcard-inner{
+        flex:1;
+        overflow-x:hidden;
+        overflow-y:auto;
+    }
+}
+
+.idcard-form-content {
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    .idcard-form-inner{
+        flex:1;
+        overflow-x:hidden;
+        overflow-y:auto;
+    }
 }
