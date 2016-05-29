@@ -56,18 +56,16 @@ var idcardList = function(req, res, next) {
 var uploadIdcardImage = function(req,res,next){
     //var user = req.session.user;
     var multiparty = require('multiparty');
-    var form = new multiparty.Form();
-    form.encoding = 'utf-8';
-    form.uploadDir = "../uploads/images/";
+    var request = require('request');
+    var url = 'http://member.hwg.youayun.cn';
+    var form = new multiparty.Form(); 
     form.parse(req, function(err, fields, files) {
-        console.log(files);
-        res.json({
-            'ok':files
-        })
-        var param = {
-            file:files
-        };
-        // util.fetchAPI("uploadIdcardImage", param).then(function(resp) {
+    //console.log(files)
+         req.pipe(request.post(url, files)).pipe(res);
+    });
+        // util.fetchAPI("uploadIdcardImage", {
+        //     file:'xx'
+        // }).then(function(resp) {
         //     if(resp.returnCode===0){
         //         var result = resp.object.result;
         //         res.json({
@@ -80,10 +78,6 @@ var uploadIdcardImage = function(req,res,next){
         // },function(){
         //     next(new Error('api request failed'));
         // });
-    });
-
- 
-    
 }
 
 var addIdcard = function(req,res,next){

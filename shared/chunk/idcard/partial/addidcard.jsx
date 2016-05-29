@@ -15,45 +15,16 @@ class AddIDcard extends Component{
         console.log(event.target)
     }
     handleChangeImg(type,event){
-      
-        var fileList = document.getElementById(type);
-        var oMyForm = new FormData();
-        var files = event.target.files,
-            width = fileList.querySelector('img').width,
-            img = new Image();
-        oMyForm.append(type,files[0]);
-        console.log(oMyForm)
+        var target = event.target;
+        var files = target.files;
+        var formData = new FormData();
+        formData.append('file',files[0]);
+        //console.log(formData)
         if(window.URL){
-            //File API
-              img.src = window.URL.createObjectURL(files[0]); //创建一个object URL，并不是你的本地路径
-              img.width = width;
-              img.onload = function(e) {
-                window.URL.revokeObjectURL(this.src); //图片加载后，释放object URL
-              }
-              fileList.appendChild(img);
-        }else if(window.FileReader){
-            //opera不支持createObjectURL/revokeObjectURL方法。我们用FileReader对象来处理
-            var reader = new FileReader();
-            reader.readAsDataURL(files[0]);
-            reader.onload = function(e){
-                alert(files[0].name + "," +e.total + " bytes");
-                img.src = this.result;
-                img.width = 100;
-                //fileList.appendChild(img);
-            }
-        }else{
-            //ie
-            obj.select();
-            obj.blur();
-            var nfile = document.selection.createRange().text;
-            document.selection.empty();
-            img.src = nfile;
-            img.width = 100;
-            img.onload=function(){
-              alert(nfile+","+img.fileSize + " bytes");
-            }
+            var src = window.URL.createObjectURL(files[0]);
+            target.parentNode.children[0].src=src;
         }
-        this.props.uploadIDcardImage({data:oMyForm});
+        this.props.uploadIDcardImage({data:formData});
     }
     render(){
         return (
@@ -71,6 +42,7 @@ class AddIDcard extends Component{
                         <em>身份证号码</em>
                         <input type="text" placeholder="请输入身份证号码" onChange={this.handleChange.bind(this,'number')}/>
                     </div>
+                        
                     <div className="uploadArea">
                         <em>身份证照片</em>
                         <div className="pic_id">
@@ -90,7 +62,7 @@ class AddIDcard extends Component{
                             <a href="javascript:;" onClick={this.handleSubmit.bind(this)} className="btn">保&nbsp;存</a>
                         </div>
                     </div>
-                </div>
+                  </div>
             </div>
         )
     }
