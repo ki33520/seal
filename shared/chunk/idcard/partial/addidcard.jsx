@@ -17,52 +17,56 @@ class AddIDcard extends Component{
     handleChangeImg(type,event){
         var target = event.target;
         var files = target.files;
-        var formData = new FormData();
+        var formData = new FormData(document.getElementById("formFirst"));
         formData.append('file',files[0]);
         //console.log(formData)
-        if(window.URL){
-            var src = window.URL.createObjectURL(files[0]);
-            target.parentNode.children[0].src=src;
-        }
+        // if(window.URL){
+        //     var src = window.URL.createObjectURL(files[0]);
+        //     target.parentNode.children[0].src=src;
+        // }
         this.props.uploadIDcardImage({data:formData});
     }
     render(){
         return (
-            <div className="idcard-content">
+            <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,'index')}>
                     <span className="title">身份证上传</span>
-                    <span className="btn-right"><a>保存</a></span>
+                    <a href="javascript:;" onClick={this.handleSubmit.bind(this)} className="screening">保存</a>
                 </Header>
-                <div className="identityUpload">
-                    <div>
-                        <em>身份证姓名</em>
-                        <input type="text" placeholder="请输入身份证姓名" onChange={this.handleChange.bind(this,'name')}/>
-                    </div>
-                    <div>
-                        <em>身份证号码</em>
-                        <input type="text" placeholder="请输入身份证号码" onChange={this.handleChange.bind(this,'number')}/>
-                    </div>
-                        
-                    <div className="uploadArea">
-                        <em>身份证照片</em>
-                        <div className="pic_id">
-                            <span id="id_front">
-                                <img src="/client/asset/images/pic_id.jpg" />
-                                <a href="javascript:;">上传正面</a>
-                                <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
-                            </span>
-                            <span id="id_back">
-                                <img src="/client/asset/images/pic_id2.jpg" />
-                                <a href="javascript:;">上传反面</a>
-                                <input accept="image/*" type="file" name="back" onChange={this.handleChangeImg.bind(this,'id_back')}/>
-                            </span>
+                <div className="idcard-form-inner">
+                    <div className="identityUpload">
+                        <div>
+                            <em>身份证姓名</em>
+                            <form encType="multipart/form-data" method="post" name="formFirst" id="formFirst">
+                                <input type="text" placeholder="请输入身份证姓名" onChange={this.handleChange.bind(this,'name')}/>
+                            </form>
                         </div>
-                        <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
-                        <div className="footer">
-                            <a href="javascript:;" onClick={this.handleSubmit.bind(this)} className="btn">保&nbsp;存</a>
+                        <div>
+                            <em>身份证号码</em>
+                            <input type="text" placeholder="请输入身份证号码" onChange={this.handleChange.bind(this,'number')}/>
+                        </div>
+                            
+                        <div className="uploadArea">
+                            <em>身份证照片</em>
+                            <div className="pic_id">
+                                <span id="id_front">
+                                    <img src="/client/asset/images/pic_id.jpg" />
+                                    <a href="javascript:;">上传正面</a>
+                                    <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
+                                </span>
+                                <span id="id_back">
+                                    <img src="/client/asset/images/pic_id2.jpg" />
+                                    <a href="javascript:;">上传反面</a>
+                                    <input accept="image/*" type="file" name="back" onChange={this.handleChangeImg.bind(this,'id_back')}/>
+                                </span>
+                            </div>
+                            <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
+                            <div className="addBtns">
+                                <a href="javascript:;" onClick={this.handleSubmit.bind(this)} className="addBtn">保&nbsp;存</a>
+                            </div>
                         </div>
                     </div>
-                  </div>
+                </div>
             </div>
         )
     }

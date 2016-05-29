@@ -54,30 +54,36 @@ var idcardList = function(req, res, next) {
 }
 
 var uploadIdcardImage = function(req,res,next){
-    //var user = req.session.user;
-    var multiparty = require('multiparty');
-    var request = require('request');
-    var url = 'http://member.hwg.youayun.cn';
-    var form = new multiparty.Form(); 
-    form.parse(req, function(err, fields, files) {
-    //console.log(files)
-         req.pipe(request.post(url, files)).pipe(res);
-    });
-        // util.fetchAPI("uploadIdcardImage", {
-        //     file:'xx'
-        // }).then(function(resp) {
-        //     if(resp.returnCode===0){
-        //         var result = resp.object.result;
-        //         res.json({
-        //             isFetched:true,
-        //             result:result
-        //         });
-        //     }else{
-        //         next(new Error(resp.message)); 
-        //     }
-        // },function(){
-        //     next(new Error('api request failed'));
-        // });
+    var user = req.session.user;
+    // var multiparty = require('multiparty');
+    // var request = require('request');
+    // var url = 'http://member.hwg.youayun.cn';
+    // var form = new multiparty.Form(); 
+    // form.parse(req, function(err, fields, files) {
+    // //console.log(files)
+    //      req.pipe(request.post(url, files)).pipe(res);
+    // });
+
+    var form = req.body.data;
+    var param = {
+        memberId: "123123123123123123",
+        file: form.file
+    };
+        util.fetchAPI("uploadIdcardImage", param).then(
+            function(resp) {
+                console.log(resp)
+                if(resp.returnCode===0){
+                    var result = resp.object.result;
+                    res.json({
+                        isFetched:true,
+                        result:result
+                    });
+                }else{
+                    next(new Error(resp.message)); 
+                }
+            },function(){
+                next(new Error('api request failed'));
+        });
 }
 
 var addIdcard = function(req,res,next){
