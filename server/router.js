@@ -1,6 +1,6 @@
 'use strict'
 var express = require('express');
-
+var multer  = require('multer');
 var router = express.Router();
 
 require("babel-core/register")({
@@ -94,11 +94,11 @@ router.post(urlPrefix + "/setdefaultreceiver",mainController.requireAuthorize,re
 
 router.get(urlPrefix + "/coupon.html",mainController.requireAuthorize, require("./controller/coupon").list);
 
-router.get(urlPrefix + "/idcard.html",require("./controller/idcard").idcardList);
+router.get(urlPrefix + "/idcard.html",mainController.requireAuthorize,require("./controller/idcard").idcardList);
 router.post(urlPrefix + "/deleteidcard",mainController.requireAuthorize, require("./controller/idcard").deleteIdcard);
 router.post(urlPrefix + "/updateidcard",mainController.requireAuthorize, require("./controller/idcard").updateIdcard);
 router.post(urlPrefix + "/addidcard",mainController.requireAuthorize, require("./controller/idcard").addIdcard);
-router.post(urlPrefix + "/uploadidcardimage",require("./controller/idcard").uploadIdcardImage);
+router.post(urlPrefix + "/uploadidcardimage",multer().any(),require("./controller/idcard").uploadIdcardImage);
 
 router.get(urlPrefix + "/test",mainController.test);
 router.post("/api/v1/build/index",require("./controller/api").buildIndexPage);

@@ -55,21 +55,14 @@ var idcardList = function(req, res, next) {
 
 var uploadIdcardImage = function(req,res,next){
     var user = req.session.user;
-    // var multiparty = require('multiparty');
-    // var request = require('request');
-    // var url = 'http://member.hwg.youayun.cn';
-    // var form = new multiparty.Form(); 
-    // form.parse(req, function(err, fields, files) {
-    // //console.log(files)
-    //      req.pipe(request.post(url, files)).pipe(res);
-    // });
-
-    var form = req.body.data;
-    
+    console.log('reqfile:',req.files)
+    var file = req.files;
     var param = {
         memberId: user.memberId,
-        file: form
+        file: file[0]
     };
+    console.log(param)
+    //res.json(param)
         util.fetchAPI("uploadIdcardImage", param,false,{ method: 'POST'}).then(
             function(resp) {
                 console.log(resp)

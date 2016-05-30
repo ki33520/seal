@@ -17,7 +17,7 @@ class AddIDcard extends Component{
     handleChangeImg(type,event){
         var target = event.target;
         var files = target.files;
-        var formData = new FormData(document.getElementById(type));
+        var formData = new FormData();
         formData.append('file',files[0]);
         //console.log(formData)
         // if(window.URL){
@@ -50,9 +50,7 @@ class AddIDcard extends Component{
                                 <span id="id_front">
                                     <img src="/client/asset/images/pic_id.jpg" />
                                     <a href="javascript:;">上传正面</a>
-                                    <form encType="multipart/form-data" method="post" name="formFirst" id="id_front">
-                                        <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
-                                    </form>
+                                    <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
                                 </span>
                                 <span id="id_back">
                                     <img src="/client/asset/images/pic_id2.jpg" />
