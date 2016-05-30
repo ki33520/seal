@@ -65,11 +65,12 @@ var uploadIdcardImage = function(req,res,next){
     // });
 
     var form = req.body.data;
+    
     var param = {
-        memberId: "123123123123123123",
-        file: form.file
+        memberId: user.memberId,
+        file: form
     };
-        util.fetchAPI("uploadIdcardImage", param).then(
+        util.fetchAPI("uploadIdcardImage", param,false,{ method: 'POST'}).then(
             function(resp) {
                 console.log(resp)
                 if(resp.returnCode===0){

@@ -17,7 +17,7 @@ class AddIDcard extends Component{
     handleChangeImg(type,event){
         var target = event.target;
         var files = target.files;
-        var formData = new FormData(document.getElementById("formFirst"));
+        var formData = new FormData(document.getElementById(type));
         formData.append('file',files[0]);
         //console.log(formData)
         // if(window.URL){
@@ -37,9 +37,7 @@ class AddIDcard extends Component{
                     <div className="identityUpload">
                         <div>
                             <em>身份证姓名</em>
-                            <form encType="multipart/form-data" method="post" name="formFirst" id="formFirst">
-                                <input type="text" placeholder="请输入身份证姓名" onChange={this.handleChange.bind(this,'name')}/>
-                            </form>
+                            <input type="text" placeholder="请输入身份证姓名" onChange={this.handleChange.bind(this,'name')}/>
                         </div>
                         <div>
                             <em>身份证号码</em>
@@ -52,7 +50,9 @@ class AddIDcard extends Component{
                                 <span id="id_front">
                                     <img src="/client/asset/images/pic_id.jpg" />
                                     <a href="javascript:;">上传正面</a>
-                                    <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
+                                    <form encType="multipart/form-data" method="post" name="formFirst" id="id_front">
+                                        <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
+                                    </form>
                                 </span>
                                 <span id="id_back">
                                     <img src="/client/asset/images/pic_id2.jpg" />
