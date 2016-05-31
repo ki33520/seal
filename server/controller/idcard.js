@@ -55,28 +55,34 @@ var idcardList = function(req, res, next) {
 
 var uploadIdcardImage = function(req,res,next){
     var user = req.session.user;
-    console.log('reqfile:',req.files)
-    var file = req.files;
+    var file = req.files[0];
     var param = {
         memberId: user.memberId,
-        file: file[0]
+        file: {
+            value:file.buffer,
+            options: {
+              filename:file.originalname,
+              contentType:file.mimetype
+            }
+        }
     };
-    console.log(param)
-    //res.json(param)
-        util.fetchAPI("uploadIdcardImage", param,false,{ method: 'POST'}).then(
+        util.sendForm("uploadIdcardImage", param,{ method: 'POST'},["file"]).then(
             function(resp) {
-                console.log(resp)
                 if(resp.returnCode===0){
-                    var result = resp.object.result;
+                    var result = resp.object;
                     res.json({
                         isFetched:true,
                         result:result
                     });
                 }else{
-                    next(new Error(resp.message)); 
+                    res.json({
+                        errMsg:resp.message
+                    })
                 }
             },function(){
-                next(new Error('api request failed'));
+                res.json({
+                    errMsg:"api request failed"
+                })
         });
 }
 

@@ -14,6 +14,7 @@ var path = require('path');
 var bluebird = require("bluebird");
 var memoryCache = require("memory-cache");
 var crypto = require("crypto");
+var request = require("request")
 
 var FSStorage = require("./fs-storage");
 var fsStorage = new FSStorage({
@@ -104,6 +105,47 @@ var util = {
             var listenPort = process.env.LISTEN_PORT || 3000;
             return sharedUtil.apiRequest("http://:"+ listenPort +"/mock/api/" + apiName)
         }
+    },
+    requestAPI(apiName,param,options,excludeFields){
+        var excludeParams = _.pick(param,excludeFields)
+        param = _.omit(param,excludeFields)
+        param = _.extend(param,{
+            appId:config.appId,
+            channel:"Mobile",
+            terminalType:"H5",
+            t:moment().format("X")
+        })
+        var signature = this.getSignatureByParam(param,config.appKey)
+        param = _.extend(param,{h:signature},excludeParams)
+        _.extend(options,{
+            url:config.api[apiName].url,
+            body:param
+        })
+        var p = bluebird.promisify(request,{multiArgs: true})
+        return p(options).then(function(ret){
+            return ret[1]
+        })
+    },
+    sendForm(apiName,param,options,excludeFields){
+        var excludeParams = _.pick(param,excludeFields)
+        param = _.omit(param,excludeFields)
+        param = _.extend(param,{
+            appId:config.appId,
+            channel:"Mobile",
+            terminalType:"H5",
+            t:moment().format("X")
+        })
+        var signature = this.getSignatureByParam(param,config.appKey)
+        param = _.extend(param,{h:signature},excludeParams)
+        _.extend(options,{
+            url:config.api[apiName].url,
+            formData:param,
+            json:true
+        })
+        var p = bluebird.promisify(request,{multiArgs: true})
+        return p(options).then(function(ret){
+            return ret[1]
+        })
     },
     recoveryFromStorage(apiName,param){
         var cacheKey = md5(apiName + JSON.stringify(param))
