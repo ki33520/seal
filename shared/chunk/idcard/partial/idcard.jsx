@@ -34,7 +34,6 @@ class IDcard extends Component{
     }
     renderIDcardList(){
         const {idcardLIst,isFetched} = this.props.index;
-        console.log(idcardLIst,isFetched)
         if(!isFetched||idcardLIst.length==0) return null;
         return (
             <div className="list">

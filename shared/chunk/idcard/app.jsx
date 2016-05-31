@@ -39,6 +39,8 @@ class IDcardApp extends Component{
                 isUploading:false
             },
             update:{
+                isUploaded,
+                isUploading:false,
                 idcard:null
             }
         };

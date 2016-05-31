@@ -24,7 +24,36 @@ function update(state={},action){
             return Object.assign({},state,{
                 idcard: param
             });
-         
+        case START_UPLOAD_FRONTIMG:
+            return Object.assign({},state,{
+                isUploading:true,
+                isUploaded:false
+            });
+        case FINISH_UPLOAD_FRONTIMG:
+            let {fontImgUrl} = state.idcard;
+            if(action.res.isUploaded){
+                state.idcard.fontImgUrl = action.res.imgUrl;
+                state.idcard.fontImg = action.res.imgUri
+            }
+            return Object.assign({},state,{
+                isUploaded:action.res.isUploaded,
+                isUploading:false
+            });
+        case START_UPLOAD_BACKIMG:
+            return Object.assign({},state,{
+                isUploading:true,
+                isUploaded:false
+            });
+        case FINISH_UPLOAD_BACKIMG:
+            let {backImgUrl} = state.idcard;
+            if(action.res.isUploaded){
+                state.idcard.backImgUrl = action.res.imgUrl;
+                state.idcard.backImg = action.res.imgUri
+            }
+            return Object.assign({},state,{
+                isUploaded:action.res.isUploaded,
+                isUploading:false
+            });
         default:
             return state;
     }

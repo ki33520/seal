@@ -15,6 +15,8 @@ var filterResult = function (data){
                 statusName:item.statusName,
                 mobile:item.mobileNumber,
                 status:item.status,
+                fontImg:item.fontImg,
+                backImg:item.backImg,
                 fontImgUrl:item.fontImgUrl,
                 backImgUrl:item.backImgUrl
             });
@@ -118,31 +120,31 @@ var addIdcard = function(req,res,next){
 
 var updateIdcard = function(req,res,next){
     var user = req.session.user;
-    var name = req.body.name;
-    var number = req.body.idcard;
-    var fontImg = req.body.fontImg;
-    var backImg = req.body.backImg;
-    var id = req.body.id;
     var param = {
-        id:id,
         memberId: user.memberId,
-        name:name,
-        number:number,
-        fontImg:fontImg,
-        backImg:backImg
+        id:req.body.id,
+        name:req.body.name,
+        number:req.body.idcard,
+        fontImg:req.body.fontImg,
+        backImg:req.body.backImg
     };
-    util.fetchAPI("updateIdcard", param).then(function(resp) {
+    util.fetchAPI("updateIdcard", param,false,{method:"POST"}).then(function(resp) {
         if(resp.returnCode===0){
-            var result = resp.object.result;
             res.json({
-                isFetched:true,
-                result:result
+                isUpdateCarded:true,
+                msg:"身份证信息保存成功"
             });
         }else{
-            next(new Error(resp.message)); 
+            res.json({
+                isUpdateCarded:false,
+                errMsg:resp.message
+            });
         }
     },function(){
-        next(new Error('api request failed'));
+        res.json({
+            isUpdateCarded:false,
+            errMsg:'api request failed'
+        });
     });
 }
 
