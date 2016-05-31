@@ -3,7 +3,8 @@ import {apiRequest} from "../../lib/util.es6";
 import {urlPrefix} from "../../lib/jumpurl.es6";
 import {
     START_DELETE_IDCARD,FINISH_DELETE_IDCARD,
-    START_UPLOAD_IDCARD,FINISH_UPLOAD_IDCARD,
+    START_UPLOAD_FRONTIMG,FINISH_UPLOAD_FRONTIMG,
+    START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
     START_UPDATE_IDCARD,FINISH_UPDATE_IDCARD,
     START_ADD_IDCARD,FINISH_ADD_IDCARD
 } from "./constant.es6";
@@ -32,30 +33,56 @@ export function deleteIDcard(param){
         })
     }
 }
-function startUploadIDcardImage(param){
+function startUploadFromtImage(param){
 	return {
-        type:START_UPLOAD_IDCARD,
+        type:START_UPLOAD_FRONTIMG,
         param
     }
 }
-function finishUploadIDcardImage(param,res){
+function finishUploadFrontImage(param,res){
 	return {
-        type:FINISH_UPLOAD_IDCARD,
+        type:FINISH_UPLOAD_FRONTIMG,
         param,
         res
     }
 }
-export function uploadIDcardImage(param){
+export function uploadFrontImage(param){
     return (dispatch)=>{
-        dispatch(startUploadIDcardImage(param))
+        dispatch(startUploadFromtImage(param))
         apiRequest(urlPrefix + "/uploadidcardimage",param.data,{
         	method:"POST",
         	processData:false
         }).then((res)=>{
-            dispatch(finishUploadIDcardImage(param,res))
+            dispatch(finishUploadFrontImage(param,res))
         })
     }
 }
+
+function startUploadBackImage(param){
+    return {
+        type:START_UPLOAD_BACKIMG,
+        param
+    }
+}
+function finishUploadBackImage(param,res){
+    return {
+        type:FINISH_UPLOAD_BACKIMG,
+        param,
+        res
+    }
+}
+export function uploadBackImage(param){
+    return (dispatch)=>{
+        dispatch(startUploadBackImage(param))
+        apiRequest(urlPrefix + "/uploadidcardimage",param.data,{
+            method:"POST",
+            processData:false
+        }).then((res)=>{
+            dispatch(finishUploadBackImage(param,res))
+        })
+    }
+}
+
 function startUpdateIDcard(param){
 	return {
         type:START_UPDATE_IDCARD,

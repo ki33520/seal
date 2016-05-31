@@ -3,7 +3,7 @@ var _ = require("lodash");
 var util = require("../lib/util.js");
 var IDcardApp = util.getSharedComponent("idcard");
 
-var filter = function (data){
+var filterResult = function (data){
     var list = [];
     if(data && data.length){
         _.forEach(data,function(item){
@@ -35,7 +35,7 @@ var idcardList = function(req, res, next) {
         if(resp.returnCode===0){
             var result = resp.object.result;
             var initialState = {
-                idcardLIst: filter(result),
+                idcardLIst: filterResult(result),
                 isFetched:true
             };
             var markup = util.getMarkupByComponent(IDcardApp({
@@ -70,16 +70,19 @@ var uploadIdcardImage = function(req,res,next){
         if(resp.returnCode===0){
             var result = resp.object;
             res.json({
-                isFetched:true,
-                result:result
+                isUploaded:true,
+                imgUrl:result.imgUrl,
+                imgUri:result.imgUri
             });
         }else{
             res.json({
+                isUploaded:false,
                 errMsg:resp.message
             })
         }
     },function(){
         res.json({
+            isUploaded:false,
             errMsg:"api request failed"
         })
     });
@@ -87,29 +90,29 @@ var uploadIdcardImage = function(req,res,next){
 
 var addIdcard = function(req,res,next){
     var user = req.session.user;
-    var name = req.body.name;
-    var number = req.body.idcard;
-    var fontImg = req.body.fontImg;
-    var backImg = req.body.backImg;
     var param = {
         memberId: user.memberId,
-        name:name,
-        number:number,
-        fontImg:fontImg,
-        backImg:backImg
+        name:req.body.name,
+        number:req.body.idcard,
+        fontImg:req.body.fontImg,
+        backImg:req.body.backImg
     };
-    util.fetchAPI("addIdcard", param).then(function(resp) {
+    util.fetchAPI("addIdcard", param,false,{method:"POST"}).then(function(resp) {
         if(resp.returnCode===0){
-            var result = resp.object.result;
             res.json({
-                isFetched:true,
-                result:result
+                isAddCarded:true
             });
         }else{
-            next(new Error(resp.message)); 
+            res.json({
+                isAddCarded:false,
+                errMsg:resp.message
+            });
         }
     },function(){
-        next(new Error('api request failed'));
+        res.json({
+            isAddCarded:false,
+            errMsg:'api request failed'
+        });
     });
 }
 

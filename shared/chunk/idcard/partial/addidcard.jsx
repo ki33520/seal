@@ -7,26 +7,51 @@ import {jumpURL} from "../../../lib/jumpurl.es6";
 class AddIDcard extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            cardName:'',
+            cardID:''
+        }
     }
     handleSubmit(){
-
+        const {cardName,cardID} = this.state;
+        const {frontImgUri,backImgUri} = this.props.addcard;
+        const param = {
+            name:cardName,
+            idcard:cardID,
+            fontImg:frontImgUri,
+            backImg:backImgUri
+        }
+        this.props.addIDcard(param);
+        //console.log(param)
     }
-    handleChange(type,event){
-        console.log(event.target)
+    handleChangeCardID(event){
+        const value =event.target.value;
+        this.setState({
+            cardID:value
+        });
     }
-    handleChangeImg(type,event){
+    handleChangeCardName(event){
+        const value =event.target.value;
+        this.setState({
+            cardName:value
+        });
+    }
+    handleChangeBackImg(event){
         var target = event.target;
         var files = target.files;
         var formData = new FormData();
-        formData.append('file',files[0]);
-        //console.log(formData)
-        // if(window.URL){
-        //     var src = window.URL.createObjectURL(files[0]);
-        //     target.parentNode.children[0].src=src;
-        // }
-        this.props.uploadIDcardImage({data:formData});
+        formData.append('backImg',files[0]);
+        this.props.uploadBackImage({data:formData});
+    }
+    handleChangeFrontImg(event){
+        var target = event.target;
+        var files = target.files;
+        var formData = new FormData();
+        formData.append('frontImg',files[0]);
+        this.props.uploadFrontImage({data:formData});
     }
     render(){
+        const {frontImg,backImg}=this.props.addcard;
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,'index')}>
@@ -37,25 +62,25 @@ class AddIDcard extends Component{
                     <div className="identityUpload">
                         <div>
                             <em>身份证姓名</em>
-                            <input type="text" placeholder="请输入身份证姓名" onChange={this.handleChange.bind(this,'name')}/>
+                            <input type="text" placeholder="请输入身份证姓名" onChange={this.handleChangeCardName.bind(this)}/>
                         </div>
                         <div>
                             <em>身份证号码</em>
-                            <input type="text" placeholder="请输入身份证号码" onChange={this.handleChange.bind(this,'number')}/>
+                            <input type="text" placeholder="请输入身份证号码" onChange={this.handleChangeCardID.bind(this)}/>
                         </div>
                             
                         <div className="uploadArea">
                             <em>身份证照片</em>
                             <div className="pic_id">
-                                <span id="id_front">
-                                    <img src="/client/asset/images/pic_id.jpg" />
+                                <span>
+                                    <img src={frontImg} />
                                     <a href="javascript:;">上传正面</a>
-                                    <input accept="image/*" type="file" name="front" onChange={this.handleChangeImg.bind(this,'id_front')}/>
+                                    <input accept="image/*" type="file" name="front" onChange={this.handleChangeFrontImg.bind(this)}/>
                                 </span>
-                                <span id="id_back">
-                                    <img src="/client/asset/images/pic_id2.jpg" />
+                                <span>
+                                    <img src={backImg} />
                                     <a href="javascript:;">上传反面</a>
-                                    <input accept="image/*" type="file" name="back" onChange={this.handleChangeImg.bind(this,'id_back')}/>
+                                    <input accept="image/*" type="file" name="back" onChange={this.handleChangeBackImg.bind(this)}/>
                                 </span>
                             </div>
                             <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
