@@ -38,13 +38,14 @@ class UpdateIdcard extends Component{
                                     <input accept="image/*" type="file" />
                                 </span>
                             </div>
+                            
+                            <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
+                            
+                            <div className="addBtns">
+                                <a href="javascript:;" className="addBtn">保&nbsp;存</a>
+                            </div>
                         </div>
                         
-                        <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
-                        
-                        <div className="addBtns">
-                            <a href="javascript:;" className="addBtn">保&nbsp;存</a>
-                        </div>
                     </div>
                 </div>
             </div>
