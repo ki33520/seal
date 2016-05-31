@@ -32,7 +32,6 @@ var idcardList = function(req, res, next) {
         pageIndex:1,
         pageSize:10
     };
- 
     util.fetchAPI("fetchIdcardList", param).then(function(resp) {
         if(resp.returnCode===0){
             var result = resp.object.result;
@@ -159,7 +158,7 @@ var deleteIdcard = function(req,res,next){
     var param = {
         id:id
     };
-    util.fetchAPI("deleteIdcard", param).then(function(resp) {
+    util.fetchAPI("deleteIdcard", param,false,{method:"POST"}).then(function(resp) {
         if(resp.returnCode===0){
             var result = resp.object.result;
             res.json({
@@ -167,10 +166,16 @@ var deleteIdcard = function(req,res,next){
                 result:result
             });
         }else{
-            next(new Error(resp.message)); 
+            res.json({
+                isFetched:false,
+                errMsg:resp.message
+            });
         }
     },function(){
-        next(new Error('api request failed'));
+        res.json({
+            isFetched:false,
+            errMsg:'api request failed'
+        });
     });
 }
 

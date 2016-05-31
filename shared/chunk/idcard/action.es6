@@ -127,7 +127,7 @@ export function addIDcard(param){
     }
 }
 
-<<<<<<< HEAD
+
 function startFetchIDcard(param){
     return {
         type:START_FETCH_IDCARD,
@@ -137,16 +137,10 @@ function startFetchIDcard(param){
 function finishFetchIDcard(param,res){
     return {
         type:FINISH_FETCH_IDCARD,
-=======
-export function changeUpdate(param,res){
-    return {
-        type:FINISH_CHANGE_UPDATE,
->>>>>>> 43ab7863cefecbb6918692695b0d7310d6615f80
         param,
         res
     }
 }
-<<<<<<< HEAD
 export function fetchCardList(param){
     return (dispatch)=>{
         dispatch(startFetchIDcard(param));
@@ -156,7 +150,10 @@ export function fetchCardList(param){
     }
 }
 
-
-=======
->>>>>>> 43ab7863cefecbb6918692695b0d7310d6615f80
-
+export function changeUpdate(param,res){
+    return {
+        type:FINISH_CHANGE_UPDATE,
+        param,
+        res
+    }
+}
