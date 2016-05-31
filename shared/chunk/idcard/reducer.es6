@@ -5,11 +5,28 @@ import {
     START_UPLOAD_FRONTIMG,FINISH_UPLOAD_FRONTIMG,
     START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
     START_UPDATE_IDCARD,FINISH_UPDATE_IDCARD,
-    START_ADD_IDCARD,FINISH_ADD_IDCARD
+    START_ADD_IDCARD,FINISH_ADD_IDCARD,
+    START_FETCH_IDCARD,FINISH_FETCH_IDCARD
 } from "./constant.es6";
 function index(state={},action){
     switch(action.type){
-    	 
+    	case START_FETCH_IDCARD:
+            return Object.assign({},state,{
+                isFetching:true,
+                isFetched:false
+            });
+        case FINISH_FETCH_IDCARD:
+            var idcardLIst = {...state.idcardLIst};
+            var isFetched = false;
+            if(action.res.isFetched){
+                idcardLIst = action.res.idcardLIst;
+                isFetched = true;
+            }
+            return Object.assign({},state,{
+                idcardLIst,
+                isFetched,
+                isFetching:true
+            });
         default:
             return state;
     }
@@ -33,7 +50,7 @@ function addcard(state={},action){
         case FINISH_UPLOAD_FRONTIMG:
             var frontImg = state.frontImg;
             if(action.res.isUploaded){
-                frontImg = action.res.imgUrl
+                frontImg = action.res.imgUrl;
             }
             return Object.assign({},state,{
                 isUploaded:action.res.isUploaded,

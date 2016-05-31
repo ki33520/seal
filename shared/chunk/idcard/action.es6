@@ -6,7 +6,8 @@ import {
     START_UPLOAD_FRONTIMG,FINISH_UPLOAD_FRONTIMG,
     START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
     START_UPDATE_IDCARD,FINISH_UPDATE_IDCARD,
-    START_ADD_IDCARD,FINISH_ADD_IDCARD
+    START_ADD_IDCARD,FINISH_ADD_IDCARD,
+    START_FETCH_IDCARD,FINISH_FETCH_IDCARD
 } from "./constant.es6";
 
  
@@ -125,4 +126,28 @@ export function addIDcard(param){
         })
     }
 }
+
+function startFetchIDcard(param){
+    return {
+        type:START_FETCH_IDCARD,
+        param
+    }
+}
+function finishFetchIDcard(param,res){
+    return {
+        type:FINISH_FETCH_IDCARD,
+        param,
+        res
+    }
+}
+export function fetchCardList(param){
+    return (dispatch)=>{
+        dispatch(startFetchIDcard(param));
+        apiRequest(urlPrefix + "/idcard.html",param).then((res)=>{
+            dispatch(finishFetchIDcard(param,res))
+        })
+    }
+}
+
+
 

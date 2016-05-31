@@ -13,8 +13,9 @@ class IDcardRouter extends Component{
                 console.log(param)
                 //!this.props.updateReceiver.receiverFetching && fetchReceiver("/receiver/"+param.id)
             case "index":
+                console.log(param,prevScene)
                 // prevScene === null && fetchReceivers()
-                // param.needUpdated && fetchReceivers()
+                this.props.fetchCardList()
         }
     }
     render(){

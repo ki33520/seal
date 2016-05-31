@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
+import ActivityIndicator from "../../common/activityindicator.jsx";
 
 class AddIDcard extends Component{
     constructor(props){
@@ -10,6 +11,13 @@ class AddIDcard extends Component{
         this.state = {
             cardName:'',
             cardID:''
+        }
+    }
+    componentDidUpdate(prevProps){
+        const prevAddCarded = prevProps.addcard.isAddCarded;
+        const {isAddCarded} = this.props.addcard;
+        if(prevAddCarded===false && isAddCarded===true){
+            this.props.changeScene('index',{needUpdated:true});
         }
     }
     handleSubmit(){
@@ -37,6 +45,7 @@ class AddIDcard extends Component{
         });
     }
     handleChangeBackImg(event){
+        event.preventDefault();
         var target = event.target;
         var files = target.files;
         var formData = new FormData();
@@ -44,6 +53,7 @@ class AddIDcard extends Component{
         this.props.uploadBackImage({data:formData});
     }
     handleChangeFrontImg(event){
+        event.preventDefault();
         var target = event.target;
         var files = target.files;
         var formData = new FormData();
@@ -51,7 +61,7 @@ class AddIDcard extends Component{
         this.props.uploadFrontImage({data:formData});
     }
     render(){
-        const {frontImg,backImg}=this.props.addcard;
+        const {frontImg,backImg,isUploading}=this.props.addcard;
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,'index')}>
@@ -75,12 +85,12 @@ class AddIDcard extends Component{
                                 <span>
                                     <img src={frontImg} />
                                     <a href="javascript:;">上传正面</a>
-                                    <input accept="image/*" type="file" name="front" onChange={this.handleChangeFrontImg.bind(this)}/>
+                                    <input accept="image/*" type="file" onChange={this.handleChangeFrontImg.bind(this)}/>
                                 </span>
                                 <span>
                                     <img src={backImg} />
                                     <a href="javascript:;">上传反面</a>
-                                    <input accept="image/*" type="file" name="back" onChange={this.handleChangeBackImg.bind(this)}/>
+                                    <input accept="image/*" type="file" onChange={this.handleChangeBackImg.bind(this)}/>
                                 </span>
                             </div>
                             <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
@@ -90,6 +100,7 @@ class AddIDcard extends Component{
                         </div>
                     </div>
                 </div>
+                <ActivityIndicator active={isUploading}/>
             </div>
         )
     }

@@ -34,17 +34,22 @@ var idcardList = function(req, res, next) {
     util.fetchAPI("fetchIdcardList", param).then(function(resp) {
         if(resp.returnCode===0){
             var result = resp.object.result;
+            var idcardLIst = filterResult(result);
             var initialState = {
-                idcardLIst: filterResult(result),
+                idcardLIst: idcardLIst,
                 isFetched:true
             };
-            var markup = util.getMarkupByComponent(IDcardApp({
-                initialState: initialState
-            }));
-            res.render('idcard', {
-                markup: markup,
-                initialState: initialState
-            });
+            if (req.xhr === true) {
+                res.json(initialState);
+            }else{
+                var markup = util.getMarkupByComponent(IDcardApp({
+                    initialState: initialState
+                }));
+                res.render('idcard', {
+                    markup: markup,
+                    initialState: initialState
+                });
+            }
         }else{
             next(new Error(resp.message)); 
         }
