@@ -25,7 +25,7 @@ function configureStore(initialState){
  
 class IDcardApp extends Component{
     render(){
-        const {idcardLIst,isFetched} = this.props.initialState;
+        const {idcardLIst,isFetched,isUploaded} = this.props.initialState;
         const initialState = {
             index:{
                 idcardLIst,
@@ -33,7 +33,10 @@ class IDcardApp extends Component{
                 isFetching:false
             },
             addcard:{
-                idcard:null
+                isUploaded,
+                frontImg:'/client/asset/images/pic_id.jpg',
+                backImg:'/client/asset/images/pic_id2.jpg',
+                isUploading:false
             },
             update:{
                 idcard:null
