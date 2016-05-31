@@ -7,9 +7,9 @@ import {
     START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
     START_UPDATE_IDCARD,FINISH_UPDATE_IDCARD,
     START_ADD_IDCARD,FINISH_ADD_IDCARD,
-    START_FETCH_IDCARD,FINISH_FETCH_IDCARD
+    START_FETCH_IDCARD,FINISH_FETCH_IDCARD,
+    START_CHANGE_UPDATE,FINISH_CHANGE_UPDATE
 } from "./constant.es6";
-
  
 export {alert} from "../common/action.es6";
 
@@ -106,13 +106,13 @@ export function updateIDcard(param){
     }
 }
 function startAddIDcard(param){
-	return {
+    return {
         type:START_ADD_IDCARD,
         param
     }
 }
 function finishAddIDcard(param,res){
-	return {
+    return {
         type:FINISH_ADD_IDCARD,
         param,
         res
@@ -127,6 +127,7 @@ export function addIDcard(param){
     }
 }
 
+<<<<<<< HEAD
 function startFetchIDcard(param){
     return {
         type:START_FETCH_IDCARD,
@@ -136,10 +137,16 @@ function startFetchIDcard(param){
 function finishFetchIDcard(param,res){
     return {
         type:FINISH_FETCH_IDCARD,
+=======
+export function changeUpdate(param,res){
+    return {
+        type:FINISH_CHANGE_UPDATE,
+>>>>>>> 43ab7863cefecbb6918692695b0d7310d6615f80
         param,
         res
     }
 }
+<<<<<<< HEAD
 export function fetchCardList(param){
     return (dispatch)=>{
         dispatch(startFetchIDcard(param));
@@ -150,4 +157,6 @@ export function fetchCardList(param){
 }
 
 
+=======
+>>>>>>> 43ab7863cefecbb6918692695b0d7310d6615f80
 

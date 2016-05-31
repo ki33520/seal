@@ -6,8 +6,10 @@ import {
     START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
     START_UPDATE_IDCARD,FINISH_UPDATE_IDCARD,
     START_ADD_IDCARD,FINISH_ADD_IDCARD,
-    START_FETCH_IDCARD,FINISH_FETCH_IDCARD
+    START_FETCH_IDCARD,FINISH_FETCH_IDCARD,
+    START_CHANGE_UPDATE,FINISH_CHANGE_UPDATE
 } from "./constant.es6";
+
 function index(state={},action){
     switch(action.type){
     	case START_FETCH_IDCARD:
@@ -34,7 +36,41 @@ function index(state={},action){
 
 function update(state={},action){
     switch(action.type){
-         
+        case FINISH_CHANGE_UPDATE:
+            const {param} = action;
+            return Object.assign({},state,{
+                idcard: param
+            });
+        case START_UPLOAD_FRONTIMG:
+            return Object.assign({},state,{
+                isUploading:true,
+                isUploaded:false
+            });
+        case FINISH_UPLOAD_FRONTIMG:
+            let {fontImgUrl} = state.idcard;
+            if(action.res.isUploaded){
+                state.idcard.fontImgUrl = action.res.imgUrl;
+                state.idcard.fontImg = action.res.imgUri
+            }
+            return Object.assign({},state,{
+                isUploaded:action.res.isUploaded,
+                isUploading:false
+            });
+        case START_UPLOAD_BACKIMG:
+            return Object.assign({},state,{
+                isUploading:true,
+                isUploaded:false
+            });
+        case FINISH_UPLOAD_BACKIMG:
+            let {backImgUrl} = state.idcard;
+            if(action.res.isUploaded){
+                state.idcard.backImgUrl = action.res.imgUrl;
+                state.idcard.backImg = action.res.imgUri
+            }
+            return Object.assign({},state,{
+                isUploaded:action.res.isUploaded,
+                isUploading:false
+            });
         default:
             return state;
     }

@@ -19,6 +19,10 @@ class IDcard extends Component{
             dialogActive:!this.state.dialogActive
         })
     }
+    handleUpdate(id){
+        this.props.changeUpdate(id);
+        this.props.changeScene.call(this,"updatecard");
+    }
     handleDelete(id){
         this.setState({
             dialogActive:true,
@@ -51,8 +55,8 @@ class IDcard extends Component{
                                     <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
                                 </div>
                                 <div className="toolsArea">
-                                    <a href="javascript:;" onClick={this.props.changeScene.bind(this,"updatecard",{id:item.id})} className="pen"><em></em>编辑</a>
-                                    <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id)}className="del"><em></em>删除</a>
+                                    <a href="javascript:;" onClick={this.handleUpdate.bind(this,item)} className="pen"><em></em>编辑</a>
+                                    <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id)} className="del"><em></em>删除</a>
                                 </div>
                             </div>
                         )
