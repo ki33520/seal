@@ -8,6 +8,8 @@ class UpdateIdcard extends Component{
         super(props);
     }
     render(){
+        const {idcard} =  this.props.update;
+        const {name,cardID,fontImgUrl,backImgUrl} = idcard ? idcard : {};
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,"index")}>
@@ -18,27 +20,27 @@ class UpdateIdcard extends Component{
                     <div className="identityUpload">
                         <div>
                             <em>身份证姓名</em>
-                            <input type="text" placeholder="请输入身份证姓名" />
+                            <input type="text" value={name} disabled="disabled" />
                         </div>
                         <div>
                             <em>身份证号码</em>
-                            <input type="text" placeholder="请输入身份证号码" />
+                            <input type="text" value={cardID} placeholder="请输入身份证号码" />
                         </div>
                         <div className="uploadArea">
                             <em>身份证照片</em>
                             <div className="pic_id">
                                 <span id="id_front">
-                                    <img src="/client/asset/images/pic_id.jpg" />
+                                    <img src={fontImgUrl} />
                                     <a href="javascript:;">上传正面</a>
                                     <input accept="image/*" type="file" />
                                 </span>
                                 <span id="id_back">
-                                    <img src="/client/asset/images/pic_id2.jpg" />
+                                    <img src={backImgUrl} />
                                     <a href="javascript:;">上传反面</a>
                                     <input accept="image/*" type="file" />
                                 </span>
                             </div>
-                            
+
                             <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
                             
                             <div className="addBtns">

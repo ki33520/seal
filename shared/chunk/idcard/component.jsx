@@ -10,7 +10,7 @@ class IDcardRouter extends Component{
     handleSceneChange(currentScene,param,prevScene){
         switch(currentScene){
             case "updatecard":
-                console.log(param)
+                //console.log(param)
                 //!this.props.updateReceiver.receiverFetching && fetchReceiver("/receiver/"+param.id)
             case "index":
                 // prevScene === null && fetchReceivers()

@@ -5,9 +5,9 @@ import {
     START_DELETE_IDCARD,FINISH_DELETE_IDCARD,
     START_UPLOAD_IDCARD,FINISH_UPLOAD_IDCARD,
     START_UPDATE_IDCARD,FINISH_UPDATE_IDCARD,
-    START_ADD_IDCARD,FINISH_ADD_IDCARD
+    START_ADD_IDCARD,FINISH_ADD_IDCARD,
+    START_CHANGE_UPDATE,FINISH_CHANGE_UPDATE
 } from "./constant.es6";
-
  
 export {alert} from "../common/action.es6";
 
@@ -79,13 +79,13 @@ export function updateIDcard(param){
     }
 }
 function startAddIDcard(param){
-	return {
+    return {
         type:START_ADD_IDCARD,
         param
     }
 }
 function finishAddIDcard(param,res){
-	return {
+    return {
         type:FINISH_ADD_IDCARD,
         param,
         res
@@ -97,6 +97,14 @@ export function addIDcard(param){
         apiRequest(urlPrefix + "/addidcard",param,{method:"POST"}).then((res)=>{
             dispatch(finishAddIDcard(param,res))
         })
+    }
+}
+
+export function changeUpdate(param,res){
+    return {
+        type:FINISH_CHANGE_UPDATE,
+        param,
+        res
     }
 }
 
