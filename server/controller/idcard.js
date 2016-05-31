@@ -156,14 +156,14 @@ var deleteIdcard = function(req,res,next){
     var user = req.session.user;
     var id = req.body.id;
     var param = {
+        memberId: user.memberId,
         id:id
     };
     util.fetchAPI("deleteIdcard", param,false,{method:"POST"}).then(function(resp) {
         if(resp.returnCode===0){
-            var result = resp.object.result;
             res.json({
                 isFetched:true,
-                result:result
+                mesg:'删除成功'
             });
         }else{
             res.json({
