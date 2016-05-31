@@ -50,8 +50,7 @@ export function uploadIDcardImage(param){
         dispatch(startUploadIDcardImage(param))
         apiRequest(urlPrefix + "/uploadidcardimage",param.data,{
         	method:"POST",
-        	processData:false,
-        	contentType:"multipart/form-data"
+        	processData:false
         }).then((res)=>{
             dispatch(finishUploadIDcardImage(param,res))
         })

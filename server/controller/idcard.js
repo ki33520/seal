@@ -24,14 +24,14 @@ var filter = function (data){
 }
 
 var idcardList = function(req, res, next) {
-    //var user = req.session.user;
+    var user = req.session.user;
     var param = {
-        //memberId: user.memberId,
+        memberId: user.memberId,
         pageIndex:1,
         pageSize:10
     };
  
-    util.fetchAPI("fetchIdcardList", param,true).then(function(resp) {
+    util.fetchAPI("fetchIdcardList", param).then(function(resp) {
         if(resp.returnCode===0){
             var result = resp.object.result;
             var initialState = {
@@ -66,24 +66,23 @@ var uploadIdcardImage = function(req,res,next){
             }
         }
     };
-        util.sendForm("uploadIdcardImage", param,{ method: 'POST'},["file"]).then(
-            function(resp) {
-                if(resp.returnCode===0){
-                    var result = resp.object;
-                    res.json({
-                        isFetched:true,
-                        result:result
-                    });
-                }else{
-                    res.json({
-                        errMsg:resp.message
-                    })
-                }
-            },function(){
-                res.json({
-                    errMsg:"api request failed"
-                })
-        });
+    util.sendForm("uploadIdcardImage", param,{ method: 'POST'},["file"]).then(function(resp) {
+        if(resp.returnCode===0){
+            var result = resp.object;
+            res.json({
+                isFetched:true,
+                result:result
+            });
+        }else{
+            res.json({
+                errMsg:resp.message
+            })
+        }
+    },function(){
+        res.json({
+            errMsg:"api request failed"
+        })
+    });
 }
 
 var addIdcard = function(req,res,next){
