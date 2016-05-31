@@ -11,7 +11,7 @@ export function apiRequest(url,param={}, options = {
     options = Object.assign({},options,{
         url,
         data:param,
-        // contentType:'application/json'
+        contentType:'application/json'
     });
     if(!options.contentType&&options.method.toLowerCase()==="post"){
         options.contentType = "application/x-www-form-urlencoded;charset=utf-8"
