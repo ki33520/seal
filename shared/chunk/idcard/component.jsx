@@ -21,9 +21,9 @@ class IDcardRouter extends Component{
     render(){
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
-                <Scene name="index"><IDcard {...this.props}/></Scene>
-                <Scene name="addcard"><AddIDcard {...this.props}/></Scene>
-                <Scene name="updatecard"><UpdateIdcard {...this.props}/></Scene>
+                <Scene name="index"><IDcard {...this.props.cardID} {...this.props}/></Scene>
+                <Scene name="addcard"><AddIDcard {...this.props.addCardID} {...this.props}/></Scene>
+                <Scene name="updatecard"><UpdateIdcard {...this.props.updateCardID} {...this.props}/></Scene>
             </SceneGroup>
         );
     }

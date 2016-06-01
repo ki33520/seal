@@ -14,15 +14,15 @@ class AddIDcard extends Component{
         }
     }
     componentDidUpdate(prevProps){
-        const prevAddCarded = prevProps.addcard.isAddCarded;
-        const {isAddCarded} = this.props.addcard;
+        const prevAddCarded = prevProps.isAddCarded;
+        const {isAddCarded} = this.props;
         if(prevAddCarded===false && isAddCarded===true){
             this.props.changeScene('index',{needUpdated:true});
         }
     }
     handleSubmit(){
         const {cardName,cardID} = this.state;
-        const {frontImgUri,backImgUri} = this.props.addcard;
+        const {frontImgUri,backImgUri} = this.props;
         const param = {
             name:cardName,
             idcard:cardID,
@@ -61,7 +61,7 @@ class AddIDcard extends Component{
         this.props.uploadFrontImage({data:formData});
     }
     render(){
-        const {frontImg,backImg,isUploading}=this.props.addcard;
+        const {frontImg,backImg,isUploading}=this.props;
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,'index')}>
@@ -83,12 +83,12 @@ class AddIDcard extends Component{
                             <em>身份证照片</em>
                             <div className="pic_id">
                                 <span>
-                                    <img src={frontImg} />
+                                    <img src={frontImg||'/client/asset/images/pic_id.jpg'} />
                                     <a href="javascript:;">上传正面</a>
                                     <input accept="image/*" type="file" onChange={this.handleChangeFrontImg.bind(this)}/>
                                 </span>
                                 <span>
-                                    <img src={backImg} />
+                                    <img src={backImg||'/client/asset/images/pic_id2.jpg'} />
                                     <a href="javascript:;">上传反面</a>
                                     <input accept="image/*" type="file" onChange={this.handleChangeBackImg.bind(this)}/>
                                 </span>
