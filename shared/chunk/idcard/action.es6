@@ -116,7 +116,7 @@ export function addIDcard(param){
 
 function startFetchIDcardList(param){
     return {
-        type:FINISH_FETCH_IDCARDLIST,
+        type:START_FETCH_IDCARDLIST,
         param
     }
 }
