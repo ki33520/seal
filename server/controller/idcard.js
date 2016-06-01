@@ -141,13 +141,13 @@ var updateIdcard = function(req,res,next){
         }else{
             res.json({
                 isUpdateCarded:false,
-                errMsg:resp.message
+                msg:resp.message
             });
         }
     },function(){
         res.json({
             isUpdateCarded:false,
-            errMsg:'api request failed'
+            msg:'api request failed'
         });
     });
 }
