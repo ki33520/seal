@@ -11,12 +11,13 @@ class IDcardRouter extends Component{
         switch(currentScene){
             case "updatecard":
                 //console.log(param)
-                //!this.props.updateReceiver.receiverFetching && fetchReceiver("/receiver/"+param.id)
+                !this.props.isFetching && this.props.fetchCardById(param.id)
                 break;
             case "index":
                 //console.log(param,prevScene)
                 // prevScene === null && fetchReceivers()
-                this.props.fetchCardList()
+                this.props.addCardID.isAddCarded&&this.props.fetchCardList();
+                this.props.updateCardID.isUpdateCarded&&this.props.fetchCardList();
                 break;
             default:
 

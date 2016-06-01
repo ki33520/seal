@@ -25,22 +25,17 @@ function configureStore(initialState){
  
 class IDcardApp extends Component{
     render(){
-        const {idcardLIst,isFetched,isUploaded} = this.props.initialState;
-        let store = configureStore({
+        const {idcardLIst,isFetched} = this.props.initialState;
+        const store = configureStore({
             cardID:{
                 idcardLIst,
-                isFetched,
-                isFetching:false
+                isFetched
             },
             addCardID:{
-                isUploaded,
-                isUploading:false,
-                idcard:null
+                card:{}
             },
             updateCardID:{
-                isUploaded,
-                isUploading:false,
-                idcard:null
+                card:{}
             }
         });
         return (

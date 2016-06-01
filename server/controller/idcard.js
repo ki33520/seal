@@ -9,15 +9,15 @@ var filterResult = function (data){
         _.forEach(data,function(item){
             list.push({
                 id:item.id,
-                cardID:item.number,
+                number:item.number,
                 openId:item.openId,
                 name:item.name,
                 statusName:item.statusName,
                 mobile:item.mobileNumber,
                 status:item.status,
-                fontImg:item.fontImg,
-                backImg:item.backImg,
-                fontImgUrl:item.fontImgUrl,
+                frontImgUri:item.fontImg,
+                backImgUri:item.backImg,
+                frontImgUrl:item.fontImgUrl,
                 backImgUrl:item.backImgUrl
             });
         });
@@ -52,10 +52,24 @@ var idcardList = function(req, res, next) {
                 });
             }
         }else{
-            next(new Error(resp.message)); 
+            if (req.xhr === true) {
+                res.json({
+                    isFetched:false,
+                    errMsg:resp.message
+                });
+            }else{
+                next(new Error(resp.message)); 
+            }
         }
     },function(){
-        next(new Error('api request failed'));
+        if (req.xhr === true) {
+            res.json({
+                isFetched:false,
+                errMsg:'api request failed'
+            });
+        }else{
+            next(new Error('api request failed'));
+        }
     });
 }
 
@@ -64,6 +78,7 @@ var uploadIdcardImage = function(req,res,next){
     var file = req.files[0];
     var param = {
         memberId: user.memberId,
+        fieldname:file.fieldname,
         file: {
             value:file.buffer,
             options: {
@@ -78,7 +93,8 @@ var uploadIdcardImage = function(req,res,next){
             res.json({
                 isUploaded:true,
                 imgUrl:result.imgUrl,
-                imgUri:result.imgUri
+                imgUri:result.imgUri,
+                fieldname:param.fieldname
             });
         }else{
             res.json({
@@ -99,9 +115,9 @@ var addIdcard = function(req,res,next){
     var param = {
         memberId: user.memberId,
         name:req.body.name,
-        number:req.body.idcard,
-        fontImg:req.body.fontImg,
-        backImg:req.body.backImg
+        number:req.body.number,
+        fontImg:req.body.frontImgUri,
+        backImg:req.body.backImgUri
     };
     util.fetchAPI("addIdcard", param,false,{method:"POST"}).then(function(resp) {
         if(resp.returnCode===0){
@@ -128,26 +144,25 @@ var updateIdcard = function(req,res,next){
         memberId: user.memberId,
         id:req.body.id,
         name:req.body.name,
-        number:req.body.cardID,
-        fontImg:req.body.fontImg,
-        backImg:req.body.backImg
+        number:req.body.number,
+        fontImg:req.body.frontImgUri,
+        backImg:req.body.backImgUri
     };
     util.fetchAPI("updateIdcard", param,false,{method:"POST"}).then(function(resp) {
         if(resp.returnCode===0){
             res.json({
-                isUpdateCarded:true,
-                msg:"身份证信息保存成功"
+                isUpdateCarded:true
             });
         }else{
             res.json({
                 isUpdateCarded:false,
-                msg:resp.message
+                errMsg:resp.message
             });
         }
     },function(){
         res.json({
             isUpdateCarded:false,
-            msg:'api request failed'
+            errMsg:'api request failed'
         });
     });
 }
@@ -179,10 +194,39 @@ var deleteIdcard = function(req,res,next){
     });
 }
 
+var fetchCard = function(req,res,next){
+    var user = req.session.user;
+    var id = req.body.id;
+    var param = {
+        memberId:user.memberId,
+        id:id
+    }
+    util.fetchAPI("fetchIDCard", param,false,{method:"POST"}).then(function(resp) {
+        if(resp.returnCode===0){
+            var card = filterResult([resp.object])[0];
+            res.json({
+                card:card,
+                isFetched:true
+            });
+        }else{
+            res.json({
+                isFetched:false,
+                errMsg:resp.message
+            });
+        }
+    },function(){
+        res.json({
+            isFetched:false,
+            errMsg:'api request failed'
+        });
+    });
+}
+
 module.exports = {
     idcardList:idcardList,
     uploadIdcardImage:uploadIdcardImage,
     addIdcard:addIdcard,
     updateIdcard:updateIdcard,
-    deleteIdcard:deleteIdcard
+    deleteIdcard:deleteIdcard,
+    fetchCard:fetchCard
 };

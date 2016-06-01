@@ -10,8 +10,7 @@ class IDcard extends Component{
         super(props);
         this.state = {
             dialogActive:false,
-            dialogOnConfirm:null,
-            alertActive:false
+            dialogOnConfirm:null
         }
     }
     toggleDialog(){
@@ -20,12 +19,11 @@ class IDcard extends Component{
         })
     }
     handleUpdate(id){
-        const {isDeleting} = this.props;
-        if(isDeleting){
+        const {isFetching} = this.props;
+        if(isFetching){
             return false;
         }
-        this.props.changeUpdate(id);
-        this.props.changeScene.call(this,"updatecard");
+        this.props.changeScene("updatecard",{id:id});
     }
     handleDelete(id,index){
         this.setState({
@@ -48,18 +46,18 @@ class IDcard extends Component{
                             <div className="list-item" key={key}>
                                 <div className="listTitle">
                                     <span className="name">{item.name}</span>
-                                    <span className="identity">{item.cardID}</span>
+                                    <span className="identity">{item.number}</span>
                                     <span className="attestation"><em></em>{item.statusName}</span>
                                 </div>
                                 <div className="pic_id">
-                                    <span><img src={item.fontImgUrl} /></span>
+                                    <span><img src={item.frontImgUrl} /></span>
                                     <span><img src={item.backImgUrl} /></span>
                                 </div>
                                 <div className="feedbackInfo">
                                     <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
                                 </div>
                                 <div className="toolsArea">
-                                    <a href="javascript:;" onClick={this.handleUpdate.bind(this,item)} className="pen"><em></em>编辑</a>
+                                    <a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>
                                     <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>
                                 </div>
                             </div>
@@ -70,8 +68,8 @@ class IDcard extends Component{
         )
     }
     render(){
-        const {idcardLIst} = this.props;
-        if(idcardLIst.length>0){
+        const {idcardLIst,isFetched} = this.props;
+        if(isFetched&&idcardLIst.length>0){
             return (
                 <div className="idcard-content">
                     <Header>

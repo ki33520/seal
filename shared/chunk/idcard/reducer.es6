@@ -3,24 +3,23 @@ import {combineReducers} from "redux";
 import {
     CHANGE_FIELD,
     START_DELETE_IDCARD,FINISH_DELETE_IDCARD,
-    START_UPLOAD_FRONTIMG,FINISH_UPLOAD_FRONTIMG,
-    START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
+    START_UPLOAD_CARDIMG,FINISH_UPLOAD_CARDIMG,
     START_UPDATE_IDCARD,FINISH_UPDATE_IDCARD,
     START_ADD_IDCARD,FINISH_ADD_IDCARD,
     START_FETCH_IDCARD,FINISH_FETCH_IDCARD,
-    START_CHANGE_UPDATE,FINISH_CHANGE_UPDATE
+    START_FETCH_IDCARDLIST,FINISH_FETCH_IDCARDLIST
 } from "./constant.es6";
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
 function cardID(state={},action){
     switch(action.type){
-    	case START_FETCH_IDCARD:
+    	case START_FETCH_IDCARDLIST:
             return Object.assign({},state,{
                 isFetching:true,
                 isFetched:false
             });
-        case FINISH_FETCH_IDCARD:
+        case FINISH_FETCH_IDCARDLIST:
             var idcardLIst = [...state.idcardLIst];
             var isFetched = false;
             if(action.res.isFetched){
@@ -50,58 +49,54 @@ function cardID(state={},action){
                 idcardLIst,
                 isDeleting:false
             });
-        case FINISH_UPDATE_IDCARD:
-            if(action.res.isUpdateCarded){
-                state.idcardLIst.map((v,k)=>{
-                    if(v.id === action.param.id){
-                        state.idcardLIst[k] = Object.assign({},v,action.param,{state:"1",statusName:"未审核"});
-                    }
-                })
-            }
-            return Object.assign({},state);
         default:
             return state;
     }
 }
 
 function updateCardID(state={},action){
+    var card = {...state.card};
     switch(action.type){
+        case START_FETCH_IDCARD:
+            return Object.assign({},state,{
+                isFetching:true,
+                isFetched:false
+            });
+        case FINISH_FETCH_IDCARD:
+            var isFetched = false;
+            if(action.res.isFetched){
+                card = action.res.card;
+                isFetched = true;
+            }
+            return Object.assign({},state,{
+                isFetching:false,
+                isFetched,
+                card
+            });
         case CHANGE_FIELD:
-            const {name,value} = action;
-            state.idcard[name] = value;
-            return Object.assign({},state);
-        case FINISH_CHANGE_UPDATE:
-            const {param} = action;
-            return Object.assign({},state,{
-                idcard: param
-            });
-        case START_UPLOAD_FRONTIMG:
+            var {name,value,scene} = action;
+            if(scene === "updatecard"){
+                card[name] = value;
+                return Object.assign({},state,{
+                    card
+                });
+            }
+            return state
+        case START_UPLOAD_CARDIMG:
             return Object.assign({},state,{
                 isUploading:true,
                 isUploaded:false
             });
-        case FINISH_UPLOAD_FRONTIMG:
-            if(action.res.isUploaded && action.param.type==="update"){
-                state.idcard.fontImgUrl = action.res.imgUrl;
-                state.idcard.fontImg = action.res.imgUri
+        case FINISH_UPLOAD_CARDIMG:
+            if(action.res.isUploaded && action.scene==="updatecard"){
+                var name = action.res.fieldname;
+                card[name+'Url']=action.res.imgUrl;
+                card[name+'Uri'] = action.res.imgUri;
             }
             return Object.assign({},state,{
                 isUploaded:action.res.isUploaded,
-                isUploading:false
-            });
-        case START_UPLOAD_BACKIMG:
-            return Object.assign({},state,{
-                isUploading:true,
-                isUploaded:false
-            });
-        case FINISH_UPLOAD_BACKIMG:
-            if(action.res.isUploaded && action.param.type==="update"){
-                state.idcard.backImgUrl = action.res.imgUrl;
-                state.idcard.backImg = action.res.imgUri
-            }
-            return Object.assign({},state,{
-                isUploaded:action.res.isUploaded,
-                isUploading:false
+                isUploading:false,
+                card
             });
         case START_UPDATE_IDCARD:
             return Object.assign({},state,{
@@ -109,14 +104,13 @@ function updateCardID(state={},action){
                 isUpdateCarded:false
             });
         case FINISH_UPDATE_IDCARD:
+            var isUpdateCarded = false;
             if(action.res.isUpdateCarded){
-                state.idcard.status = "1";
-                state.idcard.statusName = "未审核";
+                isUpdateCarded = true;
             }
             return Object.assign({},state,{
-                isUpdateCarded: action.res.isUpdateCarded,
                 isUpdateCarding:false,
-                msg: action.res.msg
+                isUpdateCarded
             });
         case SHOW_ALERT:
         case HIDE_ALERT:
@@ -127,38 +121,32 @@ function updateCardID(state={},action){
 }
 
 function addCardID(state={},action){
+    var card = {...state.card};
     switch(action.type){
-        case START_UPLOAD_FRONTIMG:
+        case CHANGE_FIELD:
+            var {name,value,scene} = action;
+            if(scene === "add"){
+                card[name] = value;
+                return Object.assign({},state,{
+                    card
+                });
+            }
+            return state
+        case START_UPLOAD_CARDIMG:
             return Object.assign({},state,{
                 isUploading:true,
                 isUploaded:false
             });
-        case FINISH_UPLOAD_FRONTIMG:
-            var frontImg = state.frontImg;
-            if(action.res.isUploaded && action.param.type==="add"){
-                frontImg = action.res.imgUrl;
+        case FINISH_UPLOAD_CARDIMG:
+            if(action.res.isUploaded && action.scene==="add"){
+                var name = action.res.fieldname;
+                card[name+"Url"]=action.res.imgUrl;
+                card[name+'Uri'] = action.res.imgUri;
             }
             return Object.assign({},state,{
                 isUploaded:action.res.isUploaded,
                 isUploading:false,
-                frontImgUri:action.res.imgUri,
-                frontImg
-            });
-        case START_UPLOAD_BACKIMG:
-            return Object.assign({},state,{
-                isUploading:true,
-                isUploaded:false
-            });
-        case FINISH_UPLOAD_BACKIMG:
-            var backImg = state.backImg;
-            if(action.res.isUploaded && action.param.type==="add"){
-                backImg = action.res.imgUrl;
-            }
-            return Object.assign({},state,{
-                isUploaded:action.res.isUploaded,
-                isUploading:false,
-                backImgUri:action.res.imgUri,
-                backImg
+                card
             });
         case START_ADD_IDCARD:
             return Object.assign({},state,{
