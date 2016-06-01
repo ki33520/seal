@@ -27,9 +27,9 @@ function cardID(state={},action){
                 isFetched = true;
             }
             return Object.assign({},state,{
+                isFetching:false,
                 idcardLIst,
-                isFetched,
-                isFetching:true
+                isFetched
             });
         case START_DELETE_IDCARD:
             return Object.assign({},state,{
