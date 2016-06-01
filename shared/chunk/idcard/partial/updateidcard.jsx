@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import Alert from "../../../component/alert.jsx";
+import ActivityIndicator from "../../common/activityindicator.jsx";
 
 class UpdateIdcard extends Component{
     constructor(props){
@@ -55,7 +56,7 @@ class UpdateIdcard extends Component{
         this.props.uploadFrontImage({data:formData,type:"update"});
     }
     render(){
-        const {idcard,alertActive,alertContent} = this.props.update;
+        const {idcard,alertActive,alertContent,isUploading} = this.props.update;
         const {name,fontImgUrl,backImgUrl,cardID} = idcard ? idcard : {};
         return (
             <div className="idcard-form-content">
@@ -98,6 +99,7 @@ class UpdateIdcard extends Component{
                     </div>
                 </div>
                 <Alert active={alertActive}>{alertContent}</Alert>
+                <ActivityIndicator active={isUploading}/>
             </div>
         )
     }
