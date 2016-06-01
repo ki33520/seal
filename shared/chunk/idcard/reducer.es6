@@ -18,7 +18,7 @@ function index(state={},action){
                 isFetched:false
             });
         case FINISH_FETCH_IDCARD:
-            var idcardLIst = {...state.idcardLIst};
+            var idcardLIst = [...state.idcardLIst];
             var isFetched = false;
             if(action.res.isFetched){
                 idcardLIst = action.res.idcardLIst;
@@ -28,6 +28,24 @@ function index(state={},action){
                 idcardLIst,
                 isFetched,
                 isFetching:true
+            });
+        case START_DELETE_IDCARD:
+            return Object.assign({},state,{
+                isDeleted: false,
+                isDeleting:true
+            });
+        case FINISH_DELETE_IDCARD:
+            var isDeleted = false;
+            var idcardLIst = [...state.idcardLIst];
+            var index = action.param.index;
+            if(action.res.isDeleted){
+                isDeleted = true;
+                idcardLIst.splice(index,1);
+            }
+            return Object.assign({},state,{
+                isDeleted,
+                idcardLIst,
+                isDeleting:false
             });
         default:
             return state;

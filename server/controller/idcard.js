@@ -162,18 +162,18 @@ var deleteIdcard = function(req,res,next){
     util.fetchAPI("deleteIdcard", param,false,{method:"POST"}).then(function(resp) {
         if(resp.returnCode===0){
             res.json({
-                isFetched:true,
+                isDeleted:true,
                 mesg:'删除成功'
             });
         }else{
             res.json({
-                isFetched:false,
+                isDeleted:false,
                 errMsg:resp.message
             });
         }
     },function(){
         res.json({
-            isFetched:false,
+            isDeleted:false,
             errMsg:'api request failed'
         });
     });

@@ -20,15 +20,19 @@ class IDcard extends Component{
         })
     }
     handleUpdate(id){
+        const {isDeleting} = this.props.index;
+        if(isDeleting){
+            return false;
+        }
         this.props.changeUpdate(id);
         this.props.changeScene.call(this,"updatecard");
     }
-    handleDelete(id){
+    handleDelete(id,index){
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
-                this.toggleDialog()
-                this.props.deleteIDcard({id})
+                this.toggleDialog();
+                this.props.deleteIDcard({id,index});
             }
         })
     }
@@ -56,7 +60,7 @@ class IDcard extends Component{
                                 </div>
                                 <div className="toolsArea">
                                     <a href="javascript:;" onClick={this.handleUpdate.bind(this,item)} className="pen"><em></em>编辑</a>
-                                    <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id)} className="del"><em></em>删除</a>
+                                    <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>
                                 </div>
                             </div>
                         )
