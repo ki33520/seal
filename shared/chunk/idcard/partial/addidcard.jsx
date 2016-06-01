@@ -50,7 +50,7 @@ class AddIDcard extends Component{
         var files = target.files;
         var formData = new FormData();
         formData.append('backImg',files[0]);
-        this.props.uploadBackImage({data:formData});
+        this.props.uploadBackImage({data:formData,type:"add"});
     }
     handleChangeFrontImg(event){
         event.preventDefault();
@@ -58,7 +58,7 @@ class AddIDcard extends Component{
         var files = target.files;
         var formData = new FormData();
         formData.append('frontImg',files[0]);
-        this.props.uploadFrontImage({data:formData});
+        this.props.uploadFrontImage({data:formData,type:"add"});
     }
     render(){
         const {frontImg,backImg,isUploading}=this.props.addcard;

@@ -81,7 +81,7 @@ function update(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_FRONTIMG:
-            if(action.res.isUploaded && state.idcard){
+            if(action.res.isUploaded && action.param.type==="update"){
                 state.idcard.fontImgUrl = action.res.imgUrl;
                 state.idcard.fontImg = action.res.imgUri
             }
@@ -95,7 +95,7 @@ function update(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_BACKIMG:
-            if(action.res.isUploaded && state.idcard){
+            if(action.res.isUploaded && action.param.type==="update"){
                 state.idcard.backImgUrl = action.res.imgUrl;
                 state.idcard.backImg = action.res.imgUri
             }
@@ -135,7 +135,7 @@ function addcard(state={},action){
             });
         case FINISH_UPLOAD_FRONTIMG:
             var frontImg = state.frontImg;
-            if(action.res.isUploaded){
+            if(action.res.isUploaded && action.param.type==="add"){
                 frontImg = action.res.imgUrl;
             }
             return Object.assign({},state,{
@@ -151,7 +151,7 @@ function addcard(state={},action){
             });
         case FINISH_UPLOAD_BACKIMG:
             var backImg = state.backImg;
-            if(action.res.isUploaded){
+            if(action.res.isUploaded && action.param.type==="add"){
                 backImg = action.res.imgUrl;
             }
             return Object.assign({},state,{
