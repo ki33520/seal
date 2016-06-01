@@ -49,6 +49,18 @@ function cardID(state={},action){
                 idcardLIst,
                 isDeleting:false
             });
+        case FINISH_UPDATE_IDCARD:
+            if(action.res.isUpdateCarded){
+                state.idcardLIst.map((v,k)=>{
+                    if(v.id === action.param.id){
+                        state.idcardLIst[k] = Object.assign({},v,action.param,{state:"1",statusName:"未审核"});
+                    }
+                })
+            }
+            return Object.assign({},state);
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
         default:
             return state;
     }
@@ -162,6 +174,9 @@ function addCardID(state={},action){
                 isAddCarding:false,
                 isAddCarded
             });
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
         default:
             return state;
     }

@@ -23,7 +23,8 @@ class IDcard extends Component{
         if(isFetching){
             return false;
         }
-        this.props.changeScene("updatecard",{id:id});
+        this.props.fetchCardById(id);
+        this.props.changeScene("updatecard");
     }
     handleDelete(id,index){
         this.setState({

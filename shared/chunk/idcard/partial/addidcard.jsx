@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import {jumpURL} from "../../../lib/jumpurl.es6";
+import Alert from "../../../component/alert.jsx";
 import ActivityIndicator from "../../common/activityindicator.jsx";
 
 class AddIDcard extends Component{
@@ -17,6 +18,14 @@ class AddIDcard extends Component{
     handleSubmit(){
         const {frontImgUri,backImgUri,name,number} = this.props.card;
         if(!frontImgUri||!backImgUri||!name||!number){
+            return false;
+        }
+        if(!this.props.verifyName(name)){
+            this.props.alert("请输入正确的姓名",2000);
+            return false;
+        }
+        if(!this.props.verifyIdCard(number)){
+            this.props.alert("请输入正确的身份证号码",2000);
             return false;
         }
         const param = {
@@ -40,7 +49,7 @@ class AddIDcard extends Component{
         this.props.uploadCardImage({data:formData},'add');
     }
     render(){
-        const {card,isUploading}=this.props;
+        const {card,isUploading,alertActive,alertContent}=this.props;
 
         return (
             <div className="idcard-form-content">
@@ -80,6 +89,7 @@ class AddIDcard extends Component{
                         </div>
                     </div>
                 </div>
+                <Alert active={alertActive}>{alertContent}</Alert>
                 <ActivityIndicator active={isUploading}/>
             </div>
         )
