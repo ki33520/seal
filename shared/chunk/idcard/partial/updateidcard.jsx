@@ -45,14 +45,14 @@ class UpdateIdcard extends Component{
         var files = target.files;
         var formData = new FormData();
         formData.append('backImg',files[0]);
-        this.props.uploadBackImage({data:formData});
+        this.props.uploadBackImage({data:formData,type:"update"});
     }
     handleChangeFrontImg(event){
         var target = event.target;
         var files = target.files;
         var formData = new FormData();
         formData.append('frontImg',files[0]);
-        this.props.uploadFrontImage({data:formData});
+        this.props.uploadFrontImage({data:formData,type:"update"});
     }
     render(){
         const {idcard,alertActive,alertContent} = this.props;
