@@ -17,6 +17,9 @@ class AddIDcard extends Component{
     }
     handleSubmit(){
         const {frontImgUri,backImgUri,name,number} = this.props.card;
+        if(this.props.isAddCarding){
+            return false;
+        }
         if(!frontImgUri||!backImgUri||!name||!number){
             return false;
         }

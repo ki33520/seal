@@ -65,9 +65,6 @@ class IDcardRouter extends Component{
                 //!this.props.isFetching && this.props.fetchCardById(param.id)
                 break;
             case "index":
-                //console.log(param,prevScene)
-                // prevScene === null && fetchReceivers()
-                this.props.addCardID.isAddCarded&&this.props.fetchCardList();
                 //this.props.updateCardID.isUpdateCarded&&this.props.fetchCardList();
                 break;
             default:

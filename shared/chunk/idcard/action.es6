@@ -65,6 +65,9 @@ export function uploadCardImage(param,scene){
         	method:"POST",
         	processData:false
         }).then((res)=>{
+            if(!res.isUploaded){
+                dispatch(alert(res.errMsg,3000))
+            }   
             dispatch(finishUploadCardImage(param,res,scene))
         })
     }
@@ -108,7 +111,10 @@ export function addIDcard(param){
     return (dispatch)=>{
         dispatch(startAddIDcard(param))
         apiRequest(urlPrefix + "/addidcard",param,{method:"POST"}).then((res)=>{
-            dispatch(finishAddIDcard(param,res))
+            dispatch(finishAddIDcard(param,res));
+            if(res.isAddCarded){
+                dispatch(fetchCardList());
+            }
         })
     }
 }

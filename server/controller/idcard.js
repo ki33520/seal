@@ -3,6 +3,14 @@ var _ = require("lodash");
 var util = require("../lib/util.js");
 var IDcardApp = util.getSharedComponent("idcard");
 
+var checkMineType = function(filename){
+    var arr=filename.split('/');
+    if(arr[0]==='image'){
+        return true;
+    }
+    return false;
+}
+
 var filterResult = function (data){
     var list = [];
     if(data && data.length){
@@ -82,14 +90,31 @@ var uploadIdcardImage = function(req,res,next){
         file: {
             value:file.buffer,
             options: {
-              filename:file.originalname,
-              contentType:file.mimetype
+                filename:file.originalname,
+                contentType:file.mimetype
             }
         }
     };
+    //console.log(file)
+    if(!checkMineType(file.mimetype)){
+        res.json({
+            isUploaded:false,
+            errMsg:'图片格式不正确'
+        })
+        return false;
+    }
+    if(file.size>1000000){
+        res.json({
+            isUploaded:false,
+            errMsg:'图片体积太大'
+        })
+        return false;
+    }
     util.sendForm("uploadIdcardImage", param,{ method: 'POST'},["file"]).then(function(resp) {
         if(resp.returnCode===0){
+            req.files=[];
             var result = resp.object;
+            console.log(resp)
             res.json({
                 isUploaded:true,
                 imgUrl:result.imgUrl,

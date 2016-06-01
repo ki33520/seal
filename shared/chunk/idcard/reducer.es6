@@ -150,6 +150,7 @@ function addCardID(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_CARDIMG:
+            
             if(action.res.isUploaded && action.scene==="add"){
                 var name = action.res.fieldname;
                 card[name+"Url"]=action.res.imgUrl;
