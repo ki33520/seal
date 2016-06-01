@@ -1,6 +1,7 @@
 'use strict';
 import {combineReducers} from "redux";
 import {
+    CHANGE_FIELD,
     START_DELETE_IDCARD,FINISH_DELETE_IDCARD,
     START_UPLOAD_FRONTIMG,FINISH_UPLOAD_FRONTIMG,
     START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
@@ -9,6 +10,8 @@ import {
     START_FETCH_IDCARD,FINISH_FETCH_IDCARD,
     START_CHANGE_UPDATE,FINISH_CHANGE_UPDATE
 } from "./constant.es6";
+import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
+import {alertReducer} from "../common/reducer.es6";
 
 function index(state={},action){
     switch(action.type){
@@ -47,6 +50,15 @@ function index(state={},action){
                 idcardLIst,
                 isDeleting:false
             });
+        case FINISH_UPDATE_IDCARD:
+            if(action.res.isUpdateCarded){
+                state.idcardLIst.map((v,k)=>{
+                    if(v.id === action.param.id){
+                        state.idcardLIst[k] = Object.assign({},v,action.param,{state:"1",statusName:"未审核"});
+                    }
+                })
+            }
+            return Object.assign({},state);
         default:
             return state;
     }
@@ -54,6 +66,10 @@ function index(state={},action){
 
 function update(state={},action){
     switch(action.type){
+        case CHANGE_FIELD:
+            const {name,value} = action;
+            state.idcard[name] = value;
+            return Object.assign({},state);
         case FINISH_CHANGE_UPDATE:
             const {param} = action;
             return Object.assign({},state,{
@@ -65,7 +81,6 @@ function update(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_FRONTIMG:
-            let {fontImgUrl} = state.idcard;
             if(action.res.isUploaded){
                 state.idcard.fontImgUrl = action.res.imgUrl;
                 state.idcard.fontImg = action.res.imgUri
@@ -80,7 +95,6 @@ function update(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_BACKIMG:
-            let {backImgUrl} = state.idcard;
             if(action.res.isUploaded){
                 state.idcard.backImgUrl = action.res.imgUrl;
                 state.idcard.backImg = action.res.imgUri
@@ -89,6 +103,24 @@ function update(state={},action){
                 isUploaded:action.res.isUploaded,
                 isUploading:false
             });
+        case START_UPDATE_IDCARD:
+            return Object.assign({},state,{
+                isUpdateCarding:true,
+                isUpdateCarded:false
+            });
+        case FINISH_UPDATE_IDCARD:
+            if(action.res.isUpdateCarded){
+                state.idcard.status = "1";
+                state.idcard.statusName = "未审核";
+            }
+            return Object.assign({},state,{
+                isUpdateCarded: action.res.isUpdateCarded,
+                isUpdateCarding:false,
+                msg: action.res.msg
+            });
+        case SHOW_ALERT:
+        case HIDE_ALERT:
+            return alertReducer(state,action)
         default:
             return state;
     }

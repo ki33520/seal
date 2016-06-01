@@ -2,34 +2,43 @@
 
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
+import Alert from "../../../component/alert.jsx";
 
 class UpdateIdcard extends Component{
     constructor(props){
         super(props);
-        const {idcard} = props.update;
-        const {cardID} = idcard ? idcard : {};
-        this.state = {
-            cardID: cardID
+    }
+    componentWillReceiveProps(nextProps){
+        const {alert,changeScene} = this.props;
+        if(nextProps.update.isUpdateCarding === false &&
+           this.props.update.isUpdateCarding === true){
+            if(nextProps.update.isUpdateCarded === true){
+                alert(nextProps.update.msg,1000);
+                setTimeout(function(){
+                    changeScene.call(this,"index");
+                },1000)
+            }else{
+                alert(nextProps.update.msg,1000);
+            }
         }
     }
     handleSubmit(){
         const {idcard} = this.props.update;
-        const {name,fontImg,backImg,id} = idcard ? idcard : {};
-        const {cardID} = this.state;
+        const {name,fontImg,backImg,backImgUrl,fontImgUrl,id,cardID} = idcard ? idcard : {};
         const param = {
             id:id,
             name:name,
-            idcard:cardID,
+            cardID:cardID,
             fontImg:fontImg,
-            backImg:backImg
+            backImg:backImg,
+            fontImgUrl:fontImgUrl,
+            backImgUrl:backImgUrl
         }
         this.props.updateIDcard(param);
     }
-    handleChangeCardID(event){
-        const value =event.target.value;
-        this.setState({
-            cardID:value
-        });
+    handleFieldChange(fieldName,e){
+        e && e.preventDefault();
+        this.props.changeField(fieldName,e.target.value);
     }
     handleChangeBackImg(event){
         var target = event.target;
@@ -46,9 +55,8 @@ class UpdateIdcard extends Component{
         this.props.uploadFrontImage({data:formData});
     }
     render(){
-        const {idcard} = this.props.update;
-        const {name,fontImgUrl,backImgUrl} = idcard ? idcard : {};
-        const {cardID} = this.state;
+        const {idcard,alertActive,alertContent} = this.props.update;
+        const {name,fontImgUrl,backImgUrl,cardID} = idcard ? idcard : {};
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,"index")}>
@@ -63,7 +71,7 @@ class UpdateIdcard extends Component{
                         </div>
                         <div>
                             <em>身份证号码</em>
-                            <input type="text" value={cardID} placeholder="请输入身份证号码" onChange={this.handleChangeCardID.bind(this)}/>
+                            <input type="text" value={cardID} placeholder="请输入身份证号码" onChange={this.handleFieldChange.bind(this,"cardID")} />
                         </div>
                         <div className="uploadArea">
                             <em>身份证照片</em>
@@ -89,6 +97,7 @@ class UpdateIdcard extends Component{
                         
                     </div>
                 </div>
+                <Alert active={alertActive}>{alertContent}</Alert>
             </div>
         )
     }

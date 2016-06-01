@@ -128,7 +128,7 @@ var updateIdcard = function(req,res,next){
         memberId: user.memberId,
         id:req.body.id,
         name:req.body.name,
-        number:req.body.idcard,
+        number:req.body.cardID,
         fontImg:req.body.fontImg,
         backImg:req.body.backImg
     };

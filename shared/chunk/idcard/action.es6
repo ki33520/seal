@@ -2,6 +2,7 @@
 import {apiRequest} from "../../lib/util.es6";
 import {urlPrefix} from "../../lib/jumpurl.es6";
 import {
+    CHANGE_FIELD,
     START_DELETE_IDCARD,FINISH_DELETE_IDCARD,
     START_UPLOAD_FRONTIMG,FINISH_UPLOAD_FRONTIMG,
     START_UPLOAD_BACKIMG,FINISH_UPLOAD_BACKIMG,
@@ -11,8 +12,16 @@ import {
     START_CHANGE_UPDATE,FINISH_CHANGE_UPDATE
 } from "./constant.es6";
  
+import {alert} from "../common/action.es6";
 export {alert} from "../common/action.es6";
 
+export function changeField(name,value){
+    return {
+        type:CHANGE_FIELD,
+        name,
+        value
+    }
+}
 function startDeleteIDcard(param){
 	return {
         type:START_DELETE_IDCARD,
