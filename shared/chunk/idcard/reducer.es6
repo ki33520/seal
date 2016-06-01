@@ -81,7 +81,7 @@ function update(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_FRONTIMG:
-            if(action.res.isUploaded){
+            if(action.res.isUploaded && state.idcard){
                 state.idcard.fontImgUrl = action.res.imgUrl;
                 state.idcard.fontImg = action.res.imgUri
             }
@@ -95,7 +95,7 @@ function update(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_BACKIMG:
-            if(action.res.isUploaded){
+            if(action.res.isUploaded && state.idcard){
                 state.idcard.backImgUrl = action.res.imgUrl;
                 state.idcard.backImg = action.res.imgUri
             }
