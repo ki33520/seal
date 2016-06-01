@@ -20,7 +20,7 @@ class IDcard extends Component{
         })
     }
     handleUpdate(id){
-        const {isDeleting} = this.props.index;
+        const {isDeleting} = this.props;
         if(isDeleting){
             return false;
         }
@@ -37,7 +37,7 @@ class IDcard extends Component{
         })
     }
     renderIDcardList(){
-        const {idcardLIst,isFetched} = this.props.index;
+        const {idcardLIst,isFetched} = this.props;
         if(!isFetched||idcardLIst.length==0) return null;
         return (
             <div className="list">
@@ -70,7 +70,7 @@ class IDcard extends Component{
         )
     }
     render(){
-        const {idcardLIst} = this.props.index;
+        const {idcardLIst} = this.props;
         if(idcardLIst.length>0){
             return (
                 <div className="idcard-content">

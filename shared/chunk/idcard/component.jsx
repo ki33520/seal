@@ -12,18 +12,22 @@ class IDcardRouter extends Component{
             case "updatecard":
                 //console.log(param)
                 //!this.props.updateReceiver.receiverFetching && fetchReceiver("/receiver/"+param.id)
+                break;
             case "index":
-                console.log(param,prevScene)
+                //console.log(param,prevScene)
                 // prevScene === null && fetchReceivers()
                 this.props.fetchCardList()
+                break;
+            default:
+
         }
     }
     render(){
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
-                <Scene name="index"><IDcard {...this.props}/></Scene>
-                <Scene name="addcard"><AddIDcard {...this.props}/></Scene>
-                <Scene name="updatecard"><UpdateIdcard {...this.props}/></Scene>
+                <Scene name="index"><IDcard {...this.props.cardID} {...this.props}/></Scene>
+                <Scene name="addcard"><AddIDcard {...this.props.addCardID} {...this.props}/></Scene>
+                <Scene name="updatecard"><UpdateIdcard {...this.props.updateCardID} {...this.props}/></Scene>
             </SceneGroup>
         );
     }

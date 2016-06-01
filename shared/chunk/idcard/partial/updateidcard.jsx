@@ -11,20 +11,20 @@ class UpdateIdcard extends Component{
     }
     componentWillReceiveProps(nextProps){
         const {alert,changeScene} = this.props;
-        if(nextProps.update.isUpdateCarding === false &&
-           this.props.update.isUpdateCarding === true){
-            if(nextProps.update.isUpdateCarded === true){
-                alert(nextProps.update.msg,1000);
+        if(nextProps.isUpdateCarding === false &&
+           this.props.isUpdateCarding === true){
+            if(nextProps.isUpdateCarded === true){
+                alert(nextProps.msg,1000);
                 setTimeout(function(){
                     changeScene.call(this,"index");
                 },1000)
             }else{
-                alert(nextProps.update.msg,1000);
+                alert(nextProps.msg,1000);
             }
         }
     }
     handleSubmit(){
-        const {idcard} = this.props.update;
+        const {idcard} = this.props;
         const {name,fontImg,backImg,backImgUrl,fontImgUrl,id,cardID} = idcard ? idcard : {};
         const param = {
             id:id,
@@ -56,7 +56,8 @@ class UpdateIdcard extends Component{
         this.props.uploadFrontImage({data:formData,type:"update"});
     }
     render(){
-        const {idcard,alertActive,alertContent,isUploading} = this.props.update;
+        const {idcard,alertActive,alertContent,isUploading} = this.props;
+        console.log(this.props)
         const {name,fontImgUrl,backImgUrl,cardID} = idcard ? idcard : {};
         return (
             <div className="idcard-form-content">

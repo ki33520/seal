@@ -13,7 +13,7 @@ import {
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
 import {alertReducer} from "../common/reducer.es6";
 
-function index(state={},action){
+function cardID(state={},action){
     switch(action.type){
     	case START_FETCH_IDCARD:
             return Object.assign({},state,{
@@ -64,7 +64,7 @@ function index(state={},action){
     }
 }
 
-function update(state={},action){
+function updateCardID(state={},action){
     switch(action.type){
         case CHANGE_FIELD:
             const {name,value} = action;
@@ -126,7 +126,7 @@ function update(state={},action){
     }
 }
 
-function addcard(state={},action){
+function addCardID(state={},action){
     switch(action.type){
         case START_UPLOAD_FRONTIMG:
             return Object.assign({},state,{
@@ -180,7 +180,7 @@ function addcard(state={},action){
 }
 
 const rootReducer = combineReducers({
-    index,update,addcard
+    cardID,updateCardID,addCardID
 });
 
 export default rootReducer;
