@@ -118,7 +118,7 @@ class UpdateIdcard extends Component{
                     <div className="identityUpload">
                         <div>
                             <em>身份证姓名</em>
-                            <input type="text" value={name} placeholder="请输入真实的姓名" onChange={this.handleFieldChange.bind(this,'name')} onBlur={this.handleBlur.bind(this,'name')} />
+                            <input type="text" maxLength="10" value={name} placeholder="请输入真实的姓名" onChange={this.handleFieldChange.bind(this,'name')} onBlur={this.handleBlur.bind(this,'name')} />
                         </div>
                         <div>
                             <em>身份证号码</em>

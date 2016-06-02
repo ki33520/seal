@@ -62,6 +62,9 @@ header .screening {
 .idcard-content .empty a.empty_btn{
 	margin-top: .6rem;
 }
+.addBtns a.addBtn.disabled{
+	background-color: #888;
+}
 .blub{
 	padding:0.32rem;
 	color:#666;

@@ -88,6 +88,11 @@ class IDcard extends Component{
     }
     render(){
         const {idcardLIst,isFetched} = this.props;
+        const disabled = idcardLIst.length>=10;
+        const classes = classNames({
+            "addBtn":true,
+            "disabled": disabled
+        });
         if(isFetched&&idcardLIst.length>0){
             return (
                 <div className="idcard-content">
@@ -101,7 +106,10 @@ class IDcard extends Component{
                         {this.renderIDcardList()}
                     </div>
                     <div className="addBtns">
-                        <a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className="addBtn">新&nbsp;增</a>
+                        {
+                            disabled ? (<a href="javascript:;" className={classes}>新&nbsp;增</a>) : (<a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className={classes}>新&nbsp;增</a>)
+                        }
+                        
                     </div>
                     {this.renderImgView()}
                     <Dialog active={this.state.dialogActive} 
