@@ -14,10 +14,13 @@ module.exports = function(app){
             pool:true,
             aggregateTimeout:300
         },
+        // lazy:true,
         hot: true,
         publicPath: config.output.publicPath 
     }))
-    app.use(webpackHotMiddleware(bundler))
+    app.use(webpackHotMiddleware(bundler,{
+        log:console.log
+    }))
     return app
 }
 

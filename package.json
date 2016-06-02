@@ -10,6 +10,7 @@
     "frontend-test": "FRONTEND_TEST_PORT=8000 karma start ./task/karma.config.js",
     "backend-test": "mocha --reporter list --bail --check-leaks --compilers es6:babel-core/register server/__tests__/",
     "develop": "NODE_ENV=test gulp start",
+    "hmr": "node task/hmr-server.js",
     "debug": "node-inspector --config ./task/inspector.config.js",
     "start-static": "node task/static-server.js",
     "develop-static": "npm run static-build && gulp develop-webpack",
@@ -116,6 +117,7 @@
     "webpack": "^1.12.15",
     "webpack-core": "^0.6.8",
     "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
     "webpack-hot-middleware": "^2.5.0",
     "when": "^3.7.7"
   }
