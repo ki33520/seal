@@ -98,7 +98,8 @@ router.get(urlPrefix + "/idcard.html",mainController.requireAuthorize,require(".
 router.post(urlPrefix + "/deleteidcard",mainController.requireAuthorize, require("./controller/idcard").deleteIdcard);
 router.post(urlPrefix + "/updateidcard",mainController.requireAuthorize, require("./controller/idcard").updateIdcard);
 router.post(urlPrefix + "/addidcard",mainController.requireAuthorize, require("./controller/idcard").addIdcard);
-router.post(urlPrefix + "/uploadidcardimage",multer().any(),require("./controller/idcard").uploadIdcardImage);
+router.post(urlPrefix + "/uploadidcardimage",mainController.requireAuthorize,multer().any(),require("./controller/idcard").uploadIdcardImage);
+router.post(urlPrefix + "/fetchcard",mainController.requireAuthorize, require("./controller/idcard").fetchCard);
 
 router.get(urlPrefix + "/test",mainController.test);
 router.post("/api/v1/build/index",require("./controller/api").buildIndexPage);

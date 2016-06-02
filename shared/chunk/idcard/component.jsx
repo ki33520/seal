@@ -7,22 +7,25 @@ import UpdateIdcard from "./partial/updateidcard.jsx";
 import {SceneGroup,Scene} from "../common/scene.jsx";
 
 class IDcardRouter extends Component{
+
     handleSceneChange(currentScene,param,prevScene){
         switch(currentScene){
             case "updatecard":
-                console.log(param)
-                //!this.props.updateReceiver.receiverFetching && fetchReceiver("/receiver/"+param.id)
+                //!this.props.isFetching && this.props.fetchCardById(param.id)
+                break;
             case "index":
-                // prevScene === null && fetchReceivers()
-                // param.needUpdated && fetchReceivers()
+                //this.props.updateCardID.isUpdateCarded&&this.props.fetchCardList();
+                break;
+            default:
+
         }
     }
     render(){
         return (
             <SceneGroup onChange={this.handleSceneChange.bind(this)}>
-                <Scene name="index"><IDcard {...this.props}/></Scene>
-                <Scene name="addcard"><AddIDcard {...this.props}/></Scene>
-                <Scene name="updatecard"><UpdateIdcard {...this.props}/></Scene>
+                <Scene name="index"><IDcard {...this.props.cardID} {...this.props}/></Scene>
+                <Scene name="addcard"><AddIDcard {...this.props.addCardID} {...this.props}/></Scene>
+                <Scene name="updatecard"><UpdateIdcard {...this.props.updateCardID} {...this.props}/></Scene>
             </SceneGroup>
         );
     }

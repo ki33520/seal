@@ -26,20 +26,18 @@ function configureStore(initialState){
 class IDcardApp extends Component{
     render(){
         const {idcardLIst,isFetched} = this.props.initialState;
-        const initialState = {
-            index:{
+        const store = configureStore({
+            cardID:{
                 idcardLIst,
-                isFetched,
-                isFetching:false
+                isFetched
             },
-            addcard:{
-                idcard:null
+            addCardID:{
+                card:{}
             },
-            update:{
-                idcard:null
+            updateCardID:{
+                card:{}
             }
-        };
-        let store = configureStore(initialState);
+        });
         return (
             <Provider store={store}>
                 <IdcardConnected />

@@ -3,6 +3,7 @@
 @import "../../common/header.styl";
 @import "../../common/footer.styl";
 @import "../../component/masklayer.styl";
+@import "../../common/activityindicator.styl";
 @import "../../common/scene.styl";
 @import "../../component/dialog.styl";
 @import "../../component/gotop.styl";
@@ -17,7 +18,7 @@ body{
     &>div{
         height:100%;
     }
-    .scene-group>.scene.active{
+    .scene-group>.scene{
         background:#f7f7f7;
         height:100%;
     }
@@ -30,6 +31,9 @@ body{
         flex:1;
         overflow-x:hidden;
         overflow-y:auto;
+        .list{
+        	padding-bottom: 1.2rem;
+        }
     }
 }
 
