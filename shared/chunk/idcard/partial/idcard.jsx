@@ -54,9 +54,9 @@ class IDcard extends Component{
                                     <span><img src={item.frontImgUrl} /></span>
                                     <span><img src={item.backImgUrl} /></span>
                                 </div>
-                                <div className="feedbackInfo">
-                                    <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
-                                </div>
+                                {
+                                    item.remark ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) :  null
+                                }
                                 <div className="toolsArea">
                                     <a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>
                                     <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>

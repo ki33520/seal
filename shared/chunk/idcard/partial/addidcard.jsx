@@ -36,6 +36,13 @@ class AddIDcard extends Component{
             this.props.alert("请上传身份证反面照片",2000);
             return false;
         }
+        let list = this.props.cardID.idcardLIst;
+        list.map((v,k)=>{
+            if(v.name === name || v.number === number){
+                this.props.alert("不能添加重复的用户",2000);
+            }
+            return false;
+        });
         const param = {
             name:name,
             number:number,
@@ -47,6 +54,25 @@ class AddIDcard extends Component{
     handleChange(fieldName,event){
         const value =event.target.value;
         this.props.changeField(fieldName,value,'add')
+    }
+    handleBlur(fieldName,event){
+        const value =event.target.value;
+        if(fieldName === "name"){
+            if(!verifyName(value)){
+                this.props.alert("请输入正确的姓名",2000);
+            }else{
+                let list = this.props.cardID.idcardLIst;
+                list.map((v,k)=>{
+                    console.log(v.name , value)
+                    if(v.name === value){
+                        this.props.alert("不能添加重复的用户",2000);
+                    }
+                });
+            }
+        }
+        if(fieldName === "number" && !verifyIdCard(value)){
+            this.props.alert("请输入正确的身份证号码",2000);
+        }
     }
     handleChangeImg(type,event){
         var target = event.target;
@@ -75,11 +101,11 @@ class AddIDcard extends Component{
                     <div className="identityUpload">
                         <div>
                             <em>身份证姓名</em>
-                            <input type="text" placeholder="请输入身份证姓名" value={card.name} onChange={this.handleChange.bind(this,'name')}/>
+                            <input type="text" placeholder="请输入身份证姓名" value={card.name} onChange={this.handleChange.bind(this,'name')} onBlur={this.handleBlur.bind(this,'name')} />
                         </div>
                         <div>
                             <em>身份证号码</em>
-                            <input type="text" placeholder="请输入身份证号码" value={card.number} onChange={this.handleChange.bind(this,'number')}/>
+                            <input type="text" placeholder="请输入身份证号码" value={card.number} onChange={this.handleChange.bind(this,'number')}  onBlur={this.handleBlur.bind(this,'number')} />
                         </div>
                             
                         <div className="uploadArea">
@@ -96,7 +122,7 @@ class AddIDcard extends Component{
                                     <input accept="image/*" type="file" onChange={this.handleChangeImg.bind(this,'backImg')}/>
                                 </span>
                             </div>
-                            <p className="info">说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容;说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明内容说明。</p>
+                            <p className="info">请确保您上传的身份证图片足够清晰并且与收货人信息完全一致。</p>
                             <div className="addBtns">
                                 <a href="javascript:;" onClick={this.handleSubmit.bind(this)} className="addBtn">保&nbsp;存</a>
                             </div>
