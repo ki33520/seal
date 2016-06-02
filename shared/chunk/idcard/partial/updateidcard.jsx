@@ -3,6 +3,7 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import Alert from "../../../component/alert.jsx";
+import {checkMineType} from "../../../lib/util.es6";
 import ActivityIndicator from "../../common/activityindicator.jsx";
 
 class UpdateIdcard extends Component{
@@ -62,6 +63,13 @@ class UpdateIdcard extends Component{
         event.preventDefault();
         var target = event.target;
         var files = target.files;
+        if(!files.length){
+            return false;
+        }
+        if(!checkMineType(files[0].type)){
+            this.props.alert('上传的图片格式不正确!',3000);
+            return false;
+        }
         var formData = new FormData();
         console.log(files[0])
         formData.append(type,files[0]);

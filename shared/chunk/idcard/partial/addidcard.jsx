@@ -2,8 +2,8 @@
 
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
-import {jumpURL} from "../../../lib/jumpurl.es6";
 import Alert from "../../../component/alert.jsx";
+import {checkMineType} from "../../../lib/util.es6";
 import ActivityIndicator from "../../common/activityindicator.jsx";
 
 class AddIDcard extends Component{
@@ -49,16 +49,21 @@ class AddIDcard extends Component{
         this.props.changeField(fieldName,value,'add')
     }
     handleChangeImg(type,event){
-        event.preventDefault();
         var target = event.target;
         var files = target.files;
+        if(!files.length){
+            return false;
+        }
+        if(!checkMineType(files[0].type)){
+            this.props.alert('上传的图片格式不正确!',3000);
+            return false;
+        }
         var formData = new FormData();
         formData.append(type,files[0]);
         this.props.uploadCardImage({data:formData},'add');
     }
     render(){
         const {card,isUploading,alertActive,alertContent}=this.props;
-
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,'index')}>
