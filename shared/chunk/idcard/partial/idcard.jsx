@@ -48,7 +48,7 @@ class IDcard extends Component{
                                 <div className="listTitle">
                                     <span className="name">{item.name}</span>
                                     <span className="identity">{item.number}</span>
-                                    <span className="attestation"><em></em>{item.statusName}</span>
+                                    {item.status?null:(<span className="attestation"><em></em>{item.statusName}</span>)}
                                 </div>
                                 <div className="pic_id">
                                     <span><img src={item.frontImgUrl} /></span>

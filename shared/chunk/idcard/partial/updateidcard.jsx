@@ -14,10 +14,10 @@ class UpdateIdcard extends Component{
         if(nextProps.isUpdateCarding === false &&
            this.props.isUpdateCarding === true){
             if(nextProps.isUpdateCarded === true){
-                this.props.alert('更新成功',1000);
+                this.props.alert('您已填写身份证信息，如有误，请修改！',1000);
                 setTimeout(()=>{
                     this.props.changeScene("index");
-                },1000)
+                },1500)
             }else{
                 this.props.alert('更新失败',1000);
             }
