@@ -71,16 +71,19 @@ var util = {
         return url.format(returnUrl)
     },
     getAuthGatewayUrl: function(req, authPath) {
+        var _query = _.clone(req.query)
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,
-            pathname: req.url
+            pathname: req.path,
+            query:_query
         }
         var encodeReturnUrl = util
             .base64EncodeForURL(encodeURIComponent(url.format(returnUrl)));
         returnUrl.pathname = urlPrefix + authPath
+        returnUrl.query = {returnUrl:encodeReturnUrl}
         var authRedirectUrl = url.format(returnUrl);
-        authRedirectUrl = encodeURIComponent(authRedirectUrl + "?returnUrl=" + encodeReturnUrl);
+        authRedirectUrl = encodeURIComponent(authRedirectUrl);
         return authRedirectUrl;
     },
     getSharedComponent: function(componentName, entryFile) {
