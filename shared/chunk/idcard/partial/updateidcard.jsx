@@ -3,8 +3,8 @@
 import React,{Component} from "react";
 import Header from "../../common/header.jsx";
 import Alert from "../../../component/alert.jsx";
-import {checkMineType} from "../../../lib/util.es6";
 import ActivityIndicator from "../../common/activityindicator.jsx";
+import {verifyName,verifyIdCard} from "../../../lib/idcard.es6";
 
 class UpdateIdcard extends Component{
     constructor(props){
@@ -25,11 +25,11 @@ class UpdateIdcard extends Component{
     }
     handleSubmit(){
         const {name,frontImgUrl,frontImgUri,backImg,backImgUrl,backImgUri,id,number} = this.props.card;
-        if(!this.props.verifyName(name)){
+        if(!verifyName(name)){
             this.props.alert("请输入正确的姓名",2000);
             return false;
         }
-        if(!this.props.verifyIdCard(number)){
+        if(!verifyIdCard(number)){
             this.props.alert("请输入正确的身份证号码",2000);
             return false;
         }
@@ -49,17 +49,17 @@ class UpdateIdcard extends Component{
         this.props.changeField(fieldName,e.target.value,'updatecard');
     }
     handleChangeImg(type,event){
-        event.preventDefault();
+        var formData = new FormData();
         var target = event.target;
         var files = target.files;
+        var regExp = /^image\/(jpg|jpeg|png)$/;
         if(!files.length){
             return false;
         }
-        if(!checkMineType(files[0].type)){
+        if(!regExp.test(files[0].type)){
             this.props.alert('上传的图片格式不正确!',3000);
             return false;
         }
-        var formData = new FormData();
         formData.append(type,files[0]);
         this.props.uploadCardImage({data:formData},'updatecard');
     }

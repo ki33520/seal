@@ -120,12 +120,3 @@ export function disableHistoryForwardCacheThen(callback=false){
     }
 }
 
-export function checkMineType(filename){
-    var arr=filename.split('/');
-    if(arr[0]==='image'){
-        return true;
-    }
-    return false;
-}
-
-    
