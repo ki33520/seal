@@ -10,7 +10,10 @@ class IDcard extends Component{
         super(props);
         this.state = {
             dialogActive:false,
-            dialogOnConfirm:null
+            dialogContent:null,
+            dialogOnConfirm:null,
+            popupActive:false,
+            popupImg:null
         }
     }
     toggleDialog(){
@@ -18,17 +21,27 @@ class IDcard extends Component{
             dialogActive:!this.state.dialogActive
         })
     }
+    togglePopupActive(type,event){
+        this.setState({
+            popupActive: type,
+            popupImg: event.target.src || null
+        });
+    }
     handleUpdate(id){
-        const {isFetching} = this.props;
-        if(isFetching){
-            return false;
-        }
-        this.props.fetchCardById(id);
-        this.props.changeScene("updatecard");
+        this.setState({
+            dialogActive:true,
+            dialogContent: "您已填写身份证信息,如果有误,请修改",
+            dialogOnConfirm:()=>{
+                this.toggleDialog();
+                this.props.fetchCardById(id);
+                this.props.changeScene("updatecard");
+            }
+        })
     }
     handleDelete(id,index){
         this.setState({
             dialogActive:true,
+            dialogContent: "删除身份证可能导致无法清关,是否删除?",
             dialogOnConfirm:()=>{
                 this.toggleDialog();
                 this.props.deleteIDcard({id,index});
@@ -48,16 +61,16 @@ class IDcard extends Component{
                                 <div className="listTitle">
                                     <span className="name">{item.name}</span>
                                     <span className="identity">{item.number}</span>
-                                    <span className="attestation"><em></em>{item.statusName}</span>
                                 </div>
                                 <div className="pic_id">
-                                    <span><img src={item.frontImgUrl} /></span>
-                                    <span><img src={item.backImgUrl} /></span>
+                                    <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.frontImgUrl} /></span>
+                                    <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.backImgUrl} /></span>
                                 </div>
-                                <div className="feedbackInfo">
-                                    <p>身份信息审核内容反馈：反馈信息反馈信息反馈信息反馈信息反馈信息反馈信息......</p>
-                                </div>
+                                {
+                                    item.remark ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) :  null
+                                }
                                 <div className="toolsArea">
+                                    {item.status?null:(<a className="attestation"><em></em>{item.statusName}</a>)}
                                     <a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>
                                     <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>
                                 </div>
@@ -68,8 +81,26 @@ class IDcard extends Component{
             </div>
         )
     }
+    renderImgView(){
+        const classes = classNames({
+            "img-view":true,
+            "active":this.state.popupActive
+        });
+        return (
+            <div onClick={this.togglePopupActive.bind(this,false)} className={classes}>
+                <div className="img-view-inner">
+                    <img src={this.state.popupImg} />
+                </div>
+            </div>
+        )
+    }
     render(){
         const {idcardLIst,isFetched} = this.props;
+        const disabled = idcardLIst.length>=10;
+        const classes = classNames({
+            "addBtn":true,
+            "disabled": disabled
+        });
         if(isFetched&&idcardLIst.length>0){
             return (
                 <div className="idcard-content">
@@ -83,11 +114,16 @@ class IDcard extends Component{
                         {this.renderIDcardList()}
                     </div>
                     <div className="addBtns">
-                        <a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className="addBtn">新&nbsp;增</a>
+                        {
+                            disabled ? (<a href="javascript:;" className={classes}>新&nbsp;增</a>) : (<a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className={classes}>新&nbsp;增</a>)
+                        }
+                        
                     </div>
+                    {this.renderImgView()}
                     <Dialog active={this.state.dialogActive} 
+                    cancelText={'取消'} confirmText={'确定'}
                     onCancel={this.toggleDialog.bind(this)}
-                    onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
+                    onConfrim={this.state.dialogOnConfirm}>{this.state.dialogContent}</Dialog>
                 </div>
             )
         }

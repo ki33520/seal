@@ -91,6 +91,9 @@ export function updateIDcard(param){
         dispatch(startUpdateIDcard(param))
         apiRequest(urlPrefix + "/updateidcard",param,{method:"POST"}).then((res)=>{
             dispatch(finishUpdateIDcard(param,res))
+            if(res.isUpdateCarded){
+                dispatch(fetchCardList());
+            }
         })
     }
 }

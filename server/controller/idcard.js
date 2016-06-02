@@ -18,7 +18,8 @@ var filterResult = function (data){
                 frontImgUri:item.fontImg,
                 backImgUri:item.backImg,
                 frontImgUrl:item.fontImgUrl,
-                backImgUrl:item.backImgUrl
+                backImgUrl:item.backImgUrl,
+                remark:item.remark
             });
         });
     }
