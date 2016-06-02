@@ -28,7 +28,6 @@ header .screening {
 	line-height:0.92rem;
 	color:#fff;
 	font-weight:bold;
-	font-size:.4rem;
 	background-color:#801da1;
 	display:inline-block;
 	margin-top:.14rem;
@@ -99,10 +98,18 @@ header .screening {
 	padding-right:0.36rem;
 	font-weight:bold;
 }
+.listTitle .identity{
+	font-size: .4rem;
+}
 .listTitle .attestation{
 	color:#dd1847;
 	font-size:.27rem;
 	float:right;
+	position:relative;
+	padding-left:.54rem;
+}
+.toolsArea .attestation{
+	color:#dd1847;
 	position:relative;
 	padding-left:.54rem;
 }
@@ -116,6 +123,13 @@ header .screening {
 	position:absolute;
 	left:0;
 	top:0;
+}
+.toolsArea .attestation em{
+	width:0.44rem;
+	height:0.44rem;
+	background:url(/client/asset/images/id_attestation.png) no-repeat;
+	background-size: 80%;
+	display: inline-block;
 }
 
 .pic_id{

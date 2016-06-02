@@ -57,7 +57,6 @@ class IDcard extends Component{
                                 <div className="listTitle">
                                     <span className="name">{item.name}</span>
                                     <span className="identity">{item.number}</span>
-                                    {item.status?null:(<span className="attestation"><em></em>{item.statusName}</span>)}
                                 </div>
                                 <div className="pic_id">
                                     <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.frontImgUrl} /></span>
@@ -67,6 +66,7 @@ class IDcard extends Component{
                                     item.remark ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) :  null
                                 }
                                 <div className="toolsArea">
+                                    {item.status?null:(<a className="attestation"><em></em>{item.statusName}</a>)}
                                     <a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>
                                     <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>
                                 </div>
