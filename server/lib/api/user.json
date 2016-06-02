@@ -62,5 +62,13 @@
             "test": "http://member.hwg.youayun.cn",
             "production": "http://member.tepin.hk"
         }
+    },
+    "fetchIDCard":{
+        "uri": "/identity/v1/find",
+        "baseURL": {
+            "develop":"http://member.hwg.youayun.cn:7987",
+            "test": "http://member.hwg.youayun.cn",
+            "production": "http://member.tepin.hk"
+        }
     }
 }
