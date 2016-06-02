@@ -373,7 +373,7 @@ class GoodDetail extends Component{
                  <a onClick={this.props.changeScene.bind(this,"comment",{productCode:good.productCode})} 
                  href="javascript:void(null)" className="goComment clearfix">
                     <div className="left">
-                    <i className="iconfont icon-comment"></i>用户评论<em>({good.comments?good.comments.totalCount:0})</em></div>
+                    <i className="iconfont icon-comment"></i>用户评论<em>（{good.comments?good.comments.totalCount:0}）</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
                 <Origin good={good} {...this.props}/>

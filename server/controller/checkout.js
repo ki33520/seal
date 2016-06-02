@@ -98,7 +98,7 @@ function formatCoupons(coupons) {
 }
 
 var confirmOrder = function(req, res, next) {
-    var id = req.params["id"]
+    var id = req.pquery["acode"]
     var user = req.session.user;
     util.fetchAPI("checkout", {
         memberId: user.memberId,

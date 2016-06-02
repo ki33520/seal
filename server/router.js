@@ -63,7 +63,7 @@ router.post(urlPrefix + "/deliveryorder",mainController.requireAuthorize,require
 router.post(urlPrefix + "/savecomment",mainController.requireAuthorize,require("./controller/orderdetail").comments);
 router.get(urlPrefix + "/logistics",mainController.requireAuthorize,require("./controller/orderdetail").logistics);
 
-router.get(urlPrefix + "/activity/checkout/:id.html",mainController.requireAuthorize,require("./controller/checkout").confirmOrder);
+router.get(urlPrefix + "/aorder/confirmOrder.html",mainController.requireAuthorize,require("./controller/checkout").confirmOrder);
 router.post(urlPrefix + "/activity/submitorder",mainController.requireAuthorize,require("./controller/checkout").submitOrder);
 
 router.get(urlPrefix + "/aboutus.html", require("./controller/aboutus"));
