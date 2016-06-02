@@ -10,13 +10,22 @@ class IDcard extends Component{
         super(props);
         this.state = {
             dialogActive:false,
-            dialogOnConfirm:null
+            dialogOnConfirm:null,
+            popupActive:false,
+            popupImg:null
         }
     }
     toggleDialog(){
         this.setState({
             dialogActive:!this.state.dialogActive
         })
+    }
+    togglePopupActive(type,event){
+        //document.getElementById("member-center").style.overflow = type ? "hidden" : "inherit";
+        this.setState({
+            popupActive: type,
+            popupImg: event.target.src || null
+        });
     }
     handleUpdate(id){
         const {isFetching} = this.props;
@@ -51,8 +60,8 @@ class IDcard extends Component{
                                     <span className="attestation"><em></em>{item.statusName}</span>
                                 </div>
                                 <div className="pic_id">
-                                    <span><img src={item.frontImgUrl} /></span>
-                                    <span><img src={item.backImgUrl} /></span>
+                                    <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.frontImgUrl} /></span>
+                                    <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.backImgUrl} /></span>
                                 </div>
                                 {
                                     item.remark ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) :  null
@@ -66,6 +75,15 @@ class IDcard extends Component{
                     })
                 }
             </div>
+        )
+    }
+    renderImgView(){
+        const classes = classNames({
+            "img-view":true,
+            "active":this.state.popupActive
+        });
+        return (
+            <div onClick={this.togglePopupActive.bind(this,false)} className={classes}><img src={this.state.popupImg} /></div>
         )
     }
     render(){
@@ -88,6 +106,7 @@ class IDcard extends Component{
                     <Dialog active={this.state.dialogActive} 
                     onCancel={this.toggleDialog.bind(this)}
                     onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
+                    {this.renderImgView()}
                 </div>
             )
         }

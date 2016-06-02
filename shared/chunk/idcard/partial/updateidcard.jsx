@@ -45,12 +45,16 @@ class UpdateIdcard extends Component{
             return false;
         }
         let list = this.props.cardID.idcardLIst;
+        let pass = true;
         list.map((v,k)=>{
-            if(v.name === name || v.number === number){
-                this.props.alert("不能添加重复的用户",2000);
+            if(v.name === name && v.id !== id){
+                pass = false;
             }
-            return false;
         });
+        if(!pass){
+            this.props.alert("不能添加重复的用户",2000);
+            return false;
+        }
         const param = {
             id:id,
             name:name,
@@ -68,21 +72,21 @@ class UpdateIdcard extends Component{
     }
     handleBlur(fieldName,event){
         const value =event.target.value;
+        let list = this.props.cardID.idcardLIst;
         if(fieldName === "name"){
             if(!verifyName(value)){
-                this.props.alert("请输入正确的姓名",2000);
             }else{
-                let list = this.props.cardID.idcardLIst;
                 list.map((v,k)=>{
-                    console.log(v.name , value)
                     if(v.name === value){
                         this.props.alert("不能添加重复的用户",2000);
                     }
                 });
             }
         }
-        if(fieldName === "number" && !verifyIdCard(value)){
-            this.props.alert("请输入正确的身份证号码",2000);
+        if(fieldName === "number"){
+            if(!verifyIdCard(value)){
+                this.props.alert("请输入正确的身份证号码",2000);
+            }
         }
     }
     handleChangeImg(type,event){
@@ -117,7 +121,7 @@ class UpdateIdcard extends Component{
                         </div>
                         <div>
                             <em>身份证号码</em>
-                            <input type="text" value={number} placeholder="请输入真实的身份证号码" onChange={this.handleFieldChange.bind(this,"number")} onBlur={this.handleBlur.bind(this,'number')}/>
+                            <input type="text" value={number} placeholder="请输入真实的身份证信息" onChange={this.handleFieldChange.bind(this,"number")} onBlur={this.handleBlur.bind(this,'number')}/>
                         </div>
                         <div className="uploadArea">
                             <em>身份证照片</em>
