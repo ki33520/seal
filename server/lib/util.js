@@ -107,6 +107,7 @@ var util = {
         param = _.extend(param,{h:signature})
         console.log(moment().format("YYYY-MM-DD HH:mm:ss"),config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
+            // return this.requestAPI(config.api[apiName].url,param,options)
             return sharedUtil.apiRequest(config.api[apiName].url, param,options)
         } else {
             var listenPort = process.env.LISTEN_PORT || 3000;

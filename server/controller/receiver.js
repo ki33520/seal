@@ -147,7 +147,7 @@ var saveReceiver = function(req, res, next) {
         })
     }else{
         util.fetchAPI("updateReceiver", receiver,false,{
-            method:"post"
+            method:"POST"
         }).then(function(resp) {
             if (resp.returnCode === 0) {
                 res.json({
