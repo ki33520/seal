@@ -20,8 +20,8 @@ class AddReceiver extends Component{
     handleAddressChange(e){
         e && e.preventDefault()
         const {changeField} = this.props
-        if(e.target.value.length > 10){
-            this.props.alert("详细地址格式错误!",1500)
+        if(e.target.value.length > 60){
+            this.props.alert("详细地址过长!",1500)
             return false
         }
         changeField("address",e.target.value,"addReceiver")
