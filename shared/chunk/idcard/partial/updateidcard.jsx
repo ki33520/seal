@@ -24,12 +24,23 @@ class UpdateIdcard extends Component{
     }
     handleSubmit(){
         const {name,frontImgUrl,frontImgUri,backImg,backImgUrl,backImgUri,id,number} = this.props.card;
+        if(this.props.isUpdateCarding){
+            return false;
+        }
         if(!this.props.verifyName(name)){
             this.props.alert("请输入正确的姓名",2000);
             return false;
         }
         if(!this.props.verifyIdCard(number)){
             this.props.alert("请输入正确的身份证号码",2000);
+            return false;
+        }
+        if(!frontImgUri){
+            this.props.alert("请上传身份证正面照片",2000);
+            return false;
+        }
+        if(!backImgUri){
+            this.props.alert("请上传身份证反面照片",2000);
             return false;
         }
         const param = {
@@ -52,6 +63,7 @@ class UpdateIdcard extends Component{
         var target = event.target;
         var files = target.files;
         var formData = new FormData();
+        console.log(files[0])
         formData.append(type,files[0]);
         this.props.uploadCardImage({data:formData},'updatecard');
     }

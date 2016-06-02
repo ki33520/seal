@@ -20,15 +20,20 @@ class AddIDcard extends Component{
         if(this.props.isAddCarding){
             return false;
         }
-        if(!frontImgUri||!backImgUri||!name||!number){
-            return false;
-        }
         if(!this.props.verifyName(name)){
             this.props.alert("请输入正确的姓名",2000);
             return false;
         }
         if(!this.props.verifyIdCard(number)){
             this.props.alert("请输入正确的身份证号码",2000);
+            return false;
+        }
+        if(!frontImgUri){
+            this.props.alert("请上传身份证正面照片",2000);
+            return false;
+        }
+        if(!backImgUri){
+            this.props.alert("请上传身份证反面照片",2000);
             return false;
         }
         const param = {
