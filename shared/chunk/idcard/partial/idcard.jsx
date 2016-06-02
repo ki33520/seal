@@ -57,7 +57,7 @@ class IDcard extends Component{
                                 <div className="listTitle">
                                     <span className="name">{item.name}</span>
                                     <span className="identity">{item.number}</span>
-                                    <span className="attestation"><em></em>{item.statusName}</span>
+                                    {item.status?null:(<span className="attestation"><em></em>{item.statusName}</span>)}
                                 </div>
                                 <div className="pic_id">
                                     <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.frontImgUrl} /></span>
@@ -103,10 +103,11 @@ class IDcard extends Component{
                     <div className="addBtns">
                         <a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className="addBtn">新&nbsp;增</a>
                     </div>
-                    <Dialog active={this.state.dialogActive} 
-                    onCancel={this.toggleDialog.bind(this)}
-                    onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
                     {this.renderImgView()}
+                    <Dialog active={this.state.dialogActive} 
+                    cancelText={'否'} confirmText={'是'}
+                    onCancel={this.toggleDialog.bind(this)}
+                    onConfrim={this.state.dialogOnConfirm}>删除身份证可能导致无法清关,是否删除?</Dialog>
                 </div>
             )
         }

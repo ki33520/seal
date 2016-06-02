@@ -65,7 +65,7 @@ class AddIDcard extends Component{
         if(fieldName === "name"){
             if(!verifyName(value)){
             }else{
-                list.map((v,k)=>{
+                list.forEach((v,k)=>{
                     if(v.name === value){
                         this.props.alert("不能添加重复的用户",2000);
                     }
@@ -82,11 +82,12 @@ class AddIDcard extends Component{
         var target = event.target;
         var files = target.files;
         var regExp = /^image\/(jpg|jpeg|png)$/;
+        var info = type === 'backImg' ? '反':'正';
         if(!files.length){
             return false;
         }
         if(!regExp.test(files[0].type)){
-            this.props.alert('上传的图片格式不正确!',3000);
+            this.props.alert('请上传身份证'+info+'面照片!',3000);
             return false;
         }
         var formData = new FormData();

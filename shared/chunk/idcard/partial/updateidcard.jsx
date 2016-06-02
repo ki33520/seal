@@ -14,10 +14,10 @@ class UpdateIdcard extends Component{
         if(nextProps.isUpdateCarding === false &&
            this.props.isUpdateCarding === true){
             if(nextProps.isUpdateCarded === true){
-                this.props.alert('更新成功',1000);
+                this.props.alert('您已填写身份证信息，如有误，请修改！',1000);
                 setTimeout(()=>{
                     this.props.changeScene("index");
-                },1000)
+                },1500)
             }else{
                 this.props.alert('更新失败',1000);
             }
@@ -76,7 +76,7 @@ class UpdateIdcard extends Component{
         if(fieldName === "name"){
             if(!verifyName(value)){
             }else{
-                list.map((v,k)=>{
+                list.forEach((v,k)=>{
                     if(v.name === value){
                         this.props.alert("不能添加重复的用户",2000);
                     }
@@ -94,11 +94,12 @@ class UpdateIdcard extends Component{
         var target = event.target;
         var files = target.files;
         var regExp = /^image\/(jpg|jpeg|png)$/;
+        var info = type === 'backImg' ? '反':'正';
         if(!files.length){
             return false;
         }
         if(!regExp.test(files[0].type)){
-            this.props.alert('上传的图片格式不正确!',3000);
+            this.props.alert('请上传身份证'+info+'面照片!',3000);
             return false;
         }
         formData.append(type,files[0]);
