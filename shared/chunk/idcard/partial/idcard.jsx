@@ -86,8 +86,9 @@ class IDcard extends Component{
                         <a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className="addBtn">新&nbsp;增</a>
                     </div>
                     <Dialog active={this.state.dialogActive} 
+                    cancelText={'否'} confirmText={'是'}
                     onCancel={this.toggleDialog.bind(this)}
-                    onConfrim={this.state.dialogOnConfirm}>确定要删除吗?</Dialog>
+                    onConfrim={this.state.dialogOnConfirm}>删除身份证可能导致无法清关,是否删除?</Dialog>
                 </div>
             )
         }
