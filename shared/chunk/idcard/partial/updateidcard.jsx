@@ -28,11 +28,11 @@ class UpdateIdcard extends Component{
         if(this.props.isUpdateCarding){
             return false;
         }
-        if(!this.props.verifyName(name)){
+        if(!verifyName(name)){
             this.props.alert("请输入正确的姓名",2000);
             return false;
         }
-        if(!this.props.verifyIdCard(number)){
+        if(!verifyIdCard(number)){
             this.props.alert("请输入正确的身份证号码",2000);
             return false;
         }

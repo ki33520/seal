@@ -53,7 +53,7 @@ function cardID(state={},action){
             if(action.res.isUpdateCarded){
                 state.idcardLIst.map((v,k)=>{
                     if(v.id === action.param.id){
-                        state.idcardLIst[k] = Object.assign({},v,action.param,{state:"1",statusName:"未审核"});
+                        state.idcardLIst[k] = Object.assign({},v,action.param);
                     }
                 })
             }
