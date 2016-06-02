@@ -10,7 +10,8 @@ import {
     REQUEST_COMMENTS,RESPONSE_COMMENTS,SELECT_COMMENTIMAGE,
     REQUEST_SHOWUPS,RESPONSE_SHOWUPS,
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
-    REQUEST_FLASHBUY,RESPONSE_FLASHBUY
+    REQUEST_FLASHBUY,RESPONSE_FLASHBUY,
+    REQUEST_SHAREDWEIXIN,RESPONSE_SHAREDWEIXIN
 } from "./constant.es6";
 
 import {jumpURL,urlPrefix} from "../../lib/jumpurl.es6";
@@ -224,5 +225,29 @@ export function selectCommentImage(index,list){
         type:SELECT_COMMENTIMAGE,
         index,
         list
+    }
+}
+
+function requestSharedWeixin(param){
+    return {
+        type:REQUEST_SHAREDWEIXIN,
+        param
+    }
+}
+
+function responseSharedWeixin(param,res){
+    return {
+        type:RESPONSE_SHAREDWEIXIN,
+        param,
+        res
+    }
+}
+
+export function fetchSharedWeixin(param){
+    return (dispatch)=>{
+        dispatch(requestSharedWeixin(param))
+        return apiRequest(urlPrefix + "/sharedweixin",param).then((res)=>{
+            dispatch(responseSharedWeixin(param,res))
+        })
     }
 }

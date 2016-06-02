@@ -59,7 +59,7 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
-        const {fetchCartCount,fetchIsCollected,fetchComments,fetchShowups} = this.props;
+        const {fetchCartCount,fetchIsCollected,fetchComments,fetchShowups,fetchSharedWeixin} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             // let selectedAttr = _.findWhere(attrs,{attrName:k})
@@ -73,15 +73,7 @@ class GoodDetail extends Component{
             singleCode:code
         })
         // fetchComments({productCode})
-
-        const {weixinConfig,good} = this.props.goodById
-        shareInWeixin({
-            ...weixinConfig,
-            title:`${good.title}—友阿海外购`,
-            desc:'我在友阿海外购发现了一个不错的商品，一起来看看吧。',
-            imgUrl:good.mainImageUrl,
-            link:good.sharedLink
-        })
+        fetchSharedWeixin({url:location.href,code:code})
     }
     handleScroll(scrollNode,scrollTop){
         if(this.smooth){
@@ -136,6 +128,16 @@ class GoodDetail extends Component{
                         })
                     }
             }
+        }
+        if(this.props.goodById.sharedWeixinFetched && !prevProps.goodById.sharedWeixinFetched){
+            const {weixinConfig,good} = this.props.goodById
+            shareInWeixin({
+                ...weixinConfig,
+                title:`${good.title}—友阿海外购`,
+                desc:'我在友阿海外购发现了一个不错的商品，一起来看看吧。',
+                imgUrl:good.mainImageUrl,
+                link:good.sharedLink
+            })
         }
     }
     handleAttrToggle(selectedAttrName,selectedAttrValue,e){
