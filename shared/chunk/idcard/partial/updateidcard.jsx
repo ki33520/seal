@@ -133,8 +133,7 @@ class UpdateIdcard extends Component{
                                     <input accept="image/*" type="file" name="back" onChange={this.handleChangeImg.bind(this,'backImg')}/>
                                 </span>
                             </div>
-
-                            <p className="info">系统检测到你已填写身份证信息，如果有误，请修改！</p>
+                            <p className="info">身份证信息用于商品入境申报，海外直邮，请填写收货人的真实身份证信息。请确保您上传的身份证图片足够清晰并且与收货人信息完全一致。</p>
                             
                             <div className="addBtns">
                                 <a href="javascript:;" onClick={this.handleSubmit.bind(this)} className="addBtn">保&nbsp;存</a>

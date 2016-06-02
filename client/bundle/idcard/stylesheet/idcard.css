@@ -155,6 +155,8 @@ header .screening {
 	line-height:.48rem;
 	position:relative;
 	padding-left:.5rem;
+	min-height: .48rem;
+	word-break: normal;
 }
 .feedbackInfo p:before{
 	content:"";
