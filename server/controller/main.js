@@ -30,7 +30,7 @@ var requireAuthorize = function(req, res, next) {
 }
 
 var weixinConfig = function(req,res,next){
-    var url = config.weixinConfig + "&url=" + util.fullURLByReq(req)
+    var url = config.weixinConfig + "&url=" + encodeURIComponent(util.fullURLByReq(req))
     reqwest({url:url,method:"GET",type:"json"}).then(function(ret){
         var _wxConfig = null
         if(ret.returnCode === 0){
