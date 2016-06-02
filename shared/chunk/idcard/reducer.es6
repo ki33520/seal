@@ -14,7 +14,7 @@ import {alertReducer} from "../common/reducer.es6";
 
 function cardID(state={},action){
     switch(action.type){
-    	case START_FETCH_IDCARDLIST:
+        case START_FETCH_IDCARDLIST:
             return Object.assign({},state,{
                 isFetching:true,
                 isFetched:false
@@ -37,8 +37,8 @@ function cardID(state={},action){
                 isDeleting:true
             });
         case FINISH_DELETE_IDCARD:
-            var isDeleted = false;
             var idcardLIst = [...state.idcardLIst];
+            var isDeleted = false;
             var index = action.param.index;
             if(action.res.isDeleted){
                 isDeleted = true;
@@ -67,7 +67,6 @@ function cardID(state={},action){
 }
 
 function updateCardID(state={},action){
-    var card = {...state.card};
     switch(action.type){
         case START_FETCH_IDCARD:
             return Object.assign({},state,{
@@ -75,6 +74,7 @@ function updateCardID(state={},action){
                 isFetched:false
             });
         case FINISH_FETCH_IDCARD:
+            var card = {...state.card};
             var isFetched = false;
             if(action.res.isFetched){
                 card = action.res.card;
@@ -86,6 +86,7 @@ function updateCardID(state={},action){
                 card
             });
         case CHANGE_FIELD:
+            var card = {...state.card};
             var {name,value,scene} = action;
             if(scene === "updatecard"){
                 card[name] = value;
@@ -100,14 +101,16 @@ function updateCardID(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_CARDIMG:
-            if(action.res.isUploaded && action.scene==="updatecard"){
-                var name = action.res.fieldname;
-                card[name+'Url']=action.res.imgUrl;
-                card[name+'Uri'] = action.res.imgUri;
+            var card = {...state.card};
+            var {fieldname,isUploaded,imgUrl,imgUri} = action.res;
+            if(isUploaded && action.scene==="updatecard"){
+                card[fieldname+"Url"] = imgUrl;
+                card[fieldname+'Uri'] = imgUri;
+                isUploaded = true;
             }
             return Object.assign({},state,{
-                isUploaded:action.res.isUploaded,
                 isUploading:false,
+                isUploaded,
                 card
             });
         case START_UPDATE_IDCARD:
@@ -133,9 +136,9 @@ function updateCardID(state={},action){
 }
 
 function addCardID(state={},action){
-    var card = {...state.card};
     switch(action.type){
         case CHANGE_FIELD:
+            var card = {...state.card};
             var {name,value,scene} = action;
             if(scene === "add"){
                 card[name] = value;
@@ -150,15 +153,16 @@ function addCardID(state={},action){
                 isUploaded:false
             });
         case FINISH_UPLOAD_CARDIMG:
-            
-            if(action.res.isUploaded && action.scene==="add"){
-                var name = action.res.fieldname;
-                card[name+"Url"]=action.res.imgUrl;
-                card[name+'Uri'] = action.res.imgUri;
+            var card = {...state.card};
+            var {fieldname,isUploaded,imgUrl,imgUri} = action.res;
+            if(isUploaded && action.scene==="add"){
+                card[fieldname+"Url"] = imgUrl;
+                card[fieldname+'Uri'] = imgUri;
+                isUploaded = true;
             }
             return Object.assign({},state,{
-                isUploaded:action.res.isUploaded,
                 isUploading:false,
+                isUploaded,
                 card
             });
         case START_ADD_IDCARD:

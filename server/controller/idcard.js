@@ -103,7 +103,7 @@ var uploadIdcardImage = function(req,res,next){
         })
         return false;
     }
-    if(file.size>1000000){
+    if(file.size>10000000){
         res.json({
             isUploaded:false,
             errMsg:'图片体积太大'
@@ -112,9 +112,7 @@ var uploadIdcardImage = function(req,res,next){
     }
     util.sendForm("uploadIdcardImage", param,{ method: 'POST'},["file"]).then(function(resp) {
         if(resp.returnCode===0){
-            req.files=[];
             var result = resp.object;
-            console.log(resp)
             res.json({
                 isUploaded:true,
                 imgUrl:result.imgUrl,

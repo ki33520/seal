@@ -47,13 +47,16 @@ class AddIDcard extends Component{
         event.preventDefault();
         var target = event.target;
         var files = target.files;
+        //console.log(files)
+        if(!files.length){
+            return false;
+        }
         var formData = new FormData();
         formData.append(type,files[0]);
         this.props.uploadCardImage({data:formData},'add');
     }
     render(){
         const {card,isUploading,alertActive,alertContent}=this.props;
-
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,'index')}>

@@ -51,6 +51,9 @@ class UpdateIdcard extends Component{
         event.preventDefault();
         var target = event.target;
         var files = target.files;
+        if(!files.length){
+            return false;
+        }
         var formData = new FormData();
         formData.append(type,files[0]);
         this.props.uploadCardImage({data:formData},'updatecard');
