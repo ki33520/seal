@@ -80,7 +80,7 @@ class GoodDetail extends Component{
             title:`${good.title}—友阿海外购`,
             desc:'我在友阿海外购发现了一个不错的商品，一起来看看吧。',
             imgUrl:good.mainImageUrl,
-            link:location.href
+            link:good.sharedLink
         })
     }
     handleScroll(scrollNode,scrollTop){

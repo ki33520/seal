@@ -57,12 +57,16 @@ var util = {
         encodedStr = encodedStr.replace(/_/g, "=").replace(/,/g, "/").replace(/-/g, "+");
         return util.decipher(encodedStr)
     },
-    fullURLByReq(req){
+    fullURLByReq(req,query){
+        var _query = _.clone(req.query)
+        if(query){
+            _.extend(_query,query)
+        }
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,
             pathname: req.path,
-            query:req.query
+            query:_query
         }
         return url.format(returnUrl)
     },

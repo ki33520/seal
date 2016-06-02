@@ -84,6 +84,7 @@ var goodDetail = function(req, res, next) {
                 }
                 good["sharedQRCode"] = (config.sharedQRCodePath + "/resource/qr?code="
                  + good["code"] + "&tag=" + tag)
+                good["sharedLink"] = util.fullURLByReq(req,tag?tag:null)
                 if (req.xhr) {
                     res.json({
                         isFetched: true,
