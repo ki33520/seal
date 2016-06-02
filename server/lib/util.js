@@ -61,10 +61,9 @@ var util = {
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,
-            pathname: req.originalUrl
-            // query:req.query
+            pathname: req.path,
+            query:req.query
         }
-        console.log(url.format(returnUrl))
         return url.format(returnUrl)
     },
     getAuthGatewayUrl: function(req, authPath) {
