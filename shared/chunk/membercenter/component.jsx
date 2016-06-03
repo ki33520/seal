@@ -155,6 +155,17 @@ class MemberCenter extends Component{
                             </dd>
                         </dl>
                     </a>
+                    <a href={jumpURL("idcard")}>
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_9.png" />
+                                <span>身份证</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
                     <a href={jumpURL("collect")}>
                         <dl>
                             <dt>
