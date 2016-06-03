@@ -88,7 +88,7 @@ header .screening {
 
 .list-item{
 	background-color:#fff;
-	padding:.32rem 0;
+	padding:.32rem 0 .36rem 0;
 	margin-bottom:0.32rem;
 }
 .listTitle{
@@ -136,7 +136,7 @@ header .screening {
 	display: -webkit-box;
     display: -webkit-flex;
     display: flex;
-	padding:0.36rem 0.32rem;
+	padding:0.32rem 0.32rem .36rem .32rem;
 	border-bottom:1px solid #e0e0e0;
 }
 .pic_id span{
@@ -146,8 +146,8 @@ header .screening {
 	display:block;
 }
 .list .pic_id span{
-	border: 1px solid #efedee;
-	border-radius: 5px;
+	border: 2px solid #f0eeef;
+	border-radius: .1333333rem;
 	overflow: hidden;
 }
 .pic_id span:nth-child(1){
@@ -163,7 +163,7 @@ header .screening {
 }
 
 .feedbackInfo{
-	padding:.32rem;
+	padding: .18rem .32rem;
 	background-color:#fdebeb;
 }
 .feedbackInfo p{
@@ -179,26 +179,28 @@ header .screening {
 	content:"";
 	display:block;
 	width:.32rem;
-	height:.32rem;
+	height:.48rem;
 	background:url(/client/asset/images/id_icon.png) no-repeat;
+	background-position: left center;
 	background-size:100%;
 	position:absolute;
 	left:0;
-	top:.04rem;
+	top:0;
 }
 
 .toolsArea{
 	clear:both;
 	text-align:right;
-	padding:.32rem .32rem 0 .32rem;
+	padding:.36rem .32rem 0 .32rem;
+	line-height:.48rem;
 }
 .toolsArea > a{
+	display: inline-block;
 	width:auto;
 	height:auto;
-	line-height:.42rem;
 	font-size:.32rem;
 	margin-left:.48rem;
-	padding:.2rem;
+	padding:0 .2rem;
 }
 .toolsArea > a em{
 	vertical-align: middle;
@@ -279,6 +281,7 @@ header .screening {
     width: 100%;
 	height:3rem;
 	position:absolute;
+	border-radius: .1333333rem;
 	left:0;
 	top:0;
 }
