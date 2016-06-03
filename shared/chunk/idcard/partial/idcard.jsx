@@ -61,6 +61,7 @@ class IDcard extends Component{
                                 <div className="listTitle">
                                     <span className="name">{item.name}</span>
                                     <span className="identity">{item.number}</span>
+                                    {item.status!=="2"?null:(<a className="attestation"><em></em>已认证</a>)}
                                 </div>
                                 <div className="pic_id">
                                     <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.frontImgUrl} /></span>
@@ -70,8 +71,7 @@ class IDcard extends Component{
                                     item.remark ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) :  null
                                 }
                                 <div className="toolsArea">
-                                    {item.status!=="2"?null:(<a className="attestation"><em></em>已认证</a>)}
-                                    <a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>
+                                    {item.status==="2"?null:(<a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>)}
                                     <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>
                                 </div>
                             </div>
@@ -117,7 +117,6 @@ class IDcard extends Component{
                         {
                             disabled ? (<a href="javascript:;" className={classes}>新&nbsp;增</a>) : (<a href="javascript:;" onClick={this.props.changeScene.bind(this,"addcard")} className={classes}>新&nbsp;增</a>)
                         }
-                        
                     </div>
                     {this.renderImgView()}
                     <Dialog active={this.state.dialogActive} 

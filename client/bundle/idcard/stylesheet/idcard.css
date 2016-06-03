@@ -93,10 +93,20 @@ header .screening {
 }
 .listTitle{
 	padding:0 0.32rem;
+	height: .48rem;
+	line-height: .48rem;
 }
 .listTitle .name{
 	padding-right:0.36rem;
-	font-weight:bold;
+	width: 2.16rem;
+	height: .48rem;
+	float: left;
+	overflow:hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    white-space:normal;
 }
 .listTitle .identity{
 	

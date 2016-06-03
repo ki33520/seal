@@ -72,16 +72,23 @@ class UpdateIdcard extends Component{
     }
     handleBlur(fieldName,event){
         const value =event.target.value;
+        const {name,id} = this.props.card;
         let list = this.props.cardID.idcardLIst;
         if(fieldName === "name"){
             if(!verifyName(value)){
                 this.props.alert("请输入正确的姓名",2000);
             }else{
-                list.forEach((v,k)=>{
-                    if(v.name === value){
-                        this.props.alert("不能添加重复的用户",2000);
+                let pass = true;
+                list.map((v,k)=>{
+                    if(v.name === name && v.id !== id){
+                    console.log(v.id,id)
+                        pass = false;
                     }
                 });
+                if(!pass){
+                    this.props.alert("不能添加重复的用户",2000);
+                    return false;
+                }
             }
         }
         if(fieldName === "number"){

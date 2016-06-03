@@ -10,9 +10,14 @@ class AddIDcard extends Component{
     constructor(props){
         super(props);
     }
-    componentDidUpdate(prevProps){
-        if(!prevProps.isAddCarded && this.props.isAddCarded){
-            this.props.changeScene('index');
+    componentWillReceiveProps(nextProps){
+        if(nextProps.isAddCarding === false &&
+           this.props.isAddCarding === true){
+            if(nextProps.isAddCarded === true){
+                this.props.changeScene('index');
+            }else{
+                this.props.alert(nextProps.errMsg ,1000);
+            }
         }
     }
     handleSubmit(){
