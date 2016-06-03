@@ -58,8 +58,9 @@ app.set("views", __dirname + '/../view');
 app.use(function(req,res,next){
     if(process.env.HMR_ENABLED){
         var hmrPort = process.env.HMR_PORT || 5000;
-        // res.locals.hostname = ""
-        res.locals.hostname = req.protocol+"://"+req.hostname+":"+hmrPort
+        var reloaderPort = process.env.RELOADER_PORT || 7000
+        res.locals.reloaderURL = req.protocol+"://"+req.hostname+":"+reloaderPort
+        res.locals.hmrURL = req.protocol+"://"+req.hostname+":"+hmrPort
     }
     next()
 });

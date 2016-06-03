@@ -8,12 +8,12 @@
 <div class="memberupdate-container">
     <div id="member-update">{{ markup|safe }}</div>
 </div>
-<script src="{{hostname}}/bs/browser-sync-client.js"></script>
+<script src="{{reloaderURL}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="{{hostname}}/hmr/react.js"></script>
-<script src="{{hostname}}/hmr/memberupdate.js"></script>
+<script src="{{hmrURL}}/hmr/react.js"></script>
+<script src="{{hmrURL}}/hmr/memberupdate.js"></script>
 <!-- endinject -->
 {% endblock %}

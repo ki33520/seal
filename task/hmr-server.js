@@ -11,8 +11,9 @@ new WebpackDevServer(webpack(config), {
   noInfo:true,
   inline:true,
   //contentBase:"http://localhost:3000/",
-  watchOptions:{
-      aggregateTimeout:800
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
   },
   historyApiFallback: true
 }).listen(hmrPort, 'localhost', function (err, result) {

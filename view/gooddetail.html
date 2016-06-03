@@ -9,13 +9,13 @@
 <div class="gooddetail-container">
     <div id="good-detail">{{ markup|safe }}</div>
 </div>
-<script src="{{hostname}}/bs/browser-sync-client.js"></script>
+<script src="{{reloaderURL}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <!-- inject:js -->
-<script src="{{hostname}}/hmr/react.js"></script>
-<script src="{{hostname}}/hmr/gooddetail.js"></script>
+<script src="{{hmrURL}}/hmr/react.js"></script>
+<script src="{{hmrURL}}/hmr/gooddetail.js"></script>
 <!-- endinject -->
 {% endblock %}
