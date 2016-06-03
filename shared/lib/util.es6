@@ -11,10 +11,10 @@ export function apiRequest(url,param={}, options = {
     options = Object.assign({},options,{
         url,
         data:param,
-        // contentType:'application/json'
+        contentType:'application/json'
     });
-    if(options.method==="POST"){
-        options.contentType = "application/x-www-form-urlencoded;charset=utf-8"
+    if(options.method==="POST" || options.method === "post"){
+        options.contentType = "application/x-www-form-urlencoded;charset=utf-"
     }
     return reqwest(options);
 }

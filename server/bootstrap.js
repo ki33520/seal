@@ -65,7 +65,7 @@ app.use(function(req,res,next){
 });
 
 if(process.env.HMR_ENABLED){
-    app = require("../task/develop-middleware")(app)
+    // app = require("../task/develop-middleware")(app)
 }
 
 var router = require("./router.js");

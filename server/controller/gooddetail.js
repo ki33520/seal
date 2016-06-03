@@ -2,6 +2,7 @@
 
 var _ = require("lodash");
 var util = require("../lib/util");
+var url = require("url");
 var bluebird = require("bluebird");
 var moment = require("moment");
 var GoodDetailApp = util.getSharedComponent("gooddetail");
@@ -82,8 +83,9 @@ var goodDetail = function(req, res, next) {
                 if(isAuthorized){
                     tag = req.session.user["mobileNumber"]
                 }
-                good["sharedQRCode"] = (config.sharedQRCodePath + "/resource/qr?code="
-                 + good["code"] + "&tag=" + tag)
+                // good["sharedQRCode"] = (config.sharedQRCodePath + "/resource/qr?code="
+                //  + good["code"] + "&tag=" + tag)
+                // good["sharedLink"] = util.fullURLByReq(req,tag?tag:null)
                 if (req.xhr) {
                     res.json({
                         isFetched: true,
@@ -144,6 +146,31 @@ var goodDetail = function(req, res, next) {
             }
         })
     }
+}
+
+var sharedWeixin = function(req,res,next){
+    var baseURL = req.query["url"]
+    var code = req.query["code"]
+    var isAuthorized = req.session.user !== undefined;
+    var tag = ""
+    if(isAuthorized){
+        tag = req.session.user["mobileNumber"]
+    }
+    baseURL = url.parse(baseURL)
+    var sharedQRCode = (config.sharedQRCodePath + "/resource/qr?code="
+     + code + "&tag=" + tag)
+    var sharedLink = baseURL
+    if(isAuthorized){
+        sharedLink["query"] = {tag:tag}
+    }
+    sharedLink = url.format(sharedLink)
+    res.json({
+        isFetched:true,
+        result:{
+            sharedQRCode:sharedQRCode,
+            sharedLink:sharedLink
+        }
+    })
 }
 
 function flashbuyFilter(flashbuy) {
@@ -442,6 +469,7 @@ function commentsFilter(comments) {
 
 module.exports = {
     goodDetail: goodDetail,
+    sharedWeixin:sharedWeixin,
     addCart: addCart,
     toggleCollected: toggleCollected,
     isCollected: isCollected,

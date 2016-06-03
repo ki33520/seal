@@ -98,7 +98,7 @@ function formatCoupons(coupons) {
 }
 
 var confirmOrder = function(req, res, next) {
-    var id = req.params["id"]
+    var id = req.query["acode"]
     var user = req.session.user;
     util.fetchAPI("checkout", {
         memberId: user.memberId,
@@ -125,7 +125,7 @@ var confirmOrder = function(req, res, next) {
         } else {
             var initialState = {
                 code: "500",
-                msg:"啊噢~您查看的商品已下架咯..."
+                msg:ret.message
             };
             var markup = util.getMarkupByComponent(ErrorContent({
                 initialState: initialState

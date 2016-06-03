@@ -9,6 +9,7 @@ import {RESPONSE_GOOD,REQUEST_GOOD,TOGGLE_ATTR,
     REQUEST_SHOWUPS,RESPONSE_SHOWUPS,
     REQUEST_PROMOTIONS,RESPONSE_PROMOTIONS,
     REQUEST_FLASHBUY,RESPONSE_FLASHBUY,
+    REQUEST_SHAREDWEIXIN,RESPONSE_SHAREDWEIXIN,
 START_TOGGLE_COLLECTED,FINISH_TOGGLE_COLLECTED} from "./constant.es6";
 
 import {SHOW_ALERT,HIDE_ALERT} from "../common/constant.es6";
@@ -99,6 +100,21 @@ function goodById(state={},action){
             return Object.assign({},state,{
                 selectedCommentImageIndex:action.index,
                 selectedCommentImages:action.list
+            })
+        case REQUEST_SHAREDWEIXIN:
+            return Object.assign({},state,{
+                sharedWeixinFetching:true,
+                sharedWeixinFetched:false
+            })
+        case RESPONSE_SHAREDWEIXIN:
+            if(action.res.isFetched){
+                good["sharedQRCode"] = action.res.result.sharedQRCode
+                good["sharedLink"] = action.res.result.sharedLink
+            }
+            return Object.assign({},state,{
+                good,
+                sharedWeixinFetched:true,
+                sharedWeixinFetching:false
             })
         default:
             return state;

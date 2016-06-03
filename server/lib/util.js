@@ -57,26 +57,33 @@ var util = {
         encodedStr = encodedStr.replace(/_/g, "=").replace(/,/g, "/").replace(/-/g, "+");
         return util.decipher(encodedStr)
     },
-    fullURLByReq(req){
+    fullURLByReq(req,query){
+        var _query = _.clone(req.query)
+        if(query){
+            _.extend(_query,query)
+        }
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,
-            pathname: req.url,
-            query:req.query
+            pathname: req.path,
+            query:_query
         }
-        return encodeURIComponent(url.format(returnUrl))
+        return url.format(returnUrl)
     },
     getAuthGatewayUrl: function(req, authPath) {
+        var _query = _.clone(req.query)
         var returnUrl = {
             protocol: req.protocol,
             host: req.headers.host,
-            pathname: req.url
+            pathname: req.path,
+            query:_query
         }
         var encodeReturnUrl = util
             .base64EncodeForURL(encodeURIComponent(url.format(returnUrl)));
         returnUrl.pathname = urlPrefix + authPath
+        returnUrl.query = {returnUrl:encodeReturnUrl}
         var authRedirectUrl = url.format(returnUrl);
-        authRedirectUrl = encodeURIComponent(authRedirectUrl + "?returnUrl=" + encodeReturnUrl);
+        authRedirectUrl = encodeURIComponent(authRedirectUrl);
         return authRedirectUrl;
     },
     getSharedComponent: function(componentName, entryFile) {
@@ -100,6 +107,7 @@ var util = {
         param = _.extend(param,{h:signature})
         console.log(moment().format("YYYY-MM-DD HH:mm:ss"),config.api[apiName].url +"?"+sharedUtil.urlParam(param))
         if (isMock === false) {
+            // return this.requestAPI(config.api[apiName].url,param,options)
             return sharedUtil.apiRequest(config.api[apiName].url, param,options)
         } else {
             var listenPort = process.env.LISTEN_PORT || 3000;

@@ -38,6 +38,7 @@ router.get(urlPrefix + "/iscollected", require("./controller/gooddetail").isColl
 router.get(urlPrefix + "/search/s.html", require("./controller/goodlist"));
 router.get(urlPrefix + "/goodcomment", require("./controller/gooddetail").goodComments);
 router.get(urlPrefix + "/cartcount", require("./controller/gooddetail").cartCount);
+router.get(urlPrefix + "/sharedweixin", require("./controller/gooddetail").sharedWeixin);
 
 router.get(urlPrefix + "/activity/:id.html",mainController.checkVisitor,mainController.staticize,mainController.weixinConfig,require("./controller/activity"));
 router.get(urlPrefix + "/trendy.html",mainController.checkVisitor,mainController.staticize, require("./controller/trendy").trendy);
@@ -63,7 +64,7 @@ router.post(urlPrefix + "/deliveryorder",mainController.requireAuthorize,require
 router.post(urlPrefix + "/savecomment",mainController.requireAuthorize,require("./controller/orderdetail").comments);
 router.get(urlPrefix + "/logistics",mainController.requireAuthorize,require("./controller/orderdetail").logistics);
 
-router.get(urlPrefix + "/activity/checkout/:id.html",mainController.requireAuthorize,require("./controller/checkout").confirmOrder);
+router.get(urlPrefix + "/aorder/confirmOrder.html",mainController.requireAuthorize,require("./controller/checkout").confirmOrder);
 router.post(urlPrefix + "/activity/submitorder",mainController.requireAuthorize,require("./controller/checkout").submitOrder);
 
 router.get(urlPrefix + "/aboutus.html", require("./controller/aboutus"));

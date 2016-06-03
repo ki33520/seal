@@ -59,7 +59,7 @@ class GoodDetail extends Component{
         })
     }
     componentDidMount(){
-        const {fetchCartCount,fetchIsCollected,fetchComments,fetchShowups} = this.props;
+        const {fetchCartCount,fetchIsCollected,fetchComments,fetchShowups,fetchSharedWeixin} = this.props;
         const {selectedItem,attrs,code,productCode} = this.props.goodById.good
         _.each(selectedItem.attrs,(v,k)=>{
             // let selectedAttr = _.findWhere(attrs,{attrName:k})
@@ -73,15 +73,7 @@ class GoodDetail extends Component{
             singleCode:code
         })
         // fetchComments({productCode})
-
-        const {weixinConfig,good} = this.props.goodById
-        shareInWeixin({
-            ...weixinConfig,
-            title:`${good.title}—友阿海外购`,
-            desc:'我在友阿海外购发现了一个不错的商品，一起来看看吧。',
-            imgUrl:good.mainImageUrl,
-            link:location.href
-        })
+        fetchSharedWeixin({url:location.href,code:code})
     }
     handleScroll(scrollNode,scrollTop){
         if(this.smooth){
@@ -136,6 +128,16 @@ class GoodDetail extends Component{
                         })
                     }
             }
+        }
+        if(this.props.goodById.sharedWeixinFetched && !prevProps.goodById.sharedWeixinFetched){
+            const {weixinConfig,good} = this.props.goodById
+            shareInWeixin({
+                ...weixinConfig,
+                title:`${good.title}—友阿海外购`,
+                desc:'我在友阿海外购发现了一个不错的商品，一起来看看吧。',
+                imgUrl:good.mainImageUrl,
+                link:good.sharedLink
+            })
         }
     }
     handleAttrToggle(selectedAttrName,selectedAttrValue,e){
@@ -373,7 +375,7 @@ class GoodDetail extends Component{
                  <a onClick={this.props.changeScene.bind(this,"comment",{productCode:good.productCode})} 
                  href="javascript:void(null)" className="goComment clearfix">
                     <div className="left">
-                    <i className="iconfont icon-comment"></i>用户评论<em>({good.comments?good.comments.totalCount:0})</em></div>
+                    <i className="iconfont icon-comment"></i>用户评论<em>（{good.comments?good.comments.totalCount:0}）</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
                 <Origin good={good} {...this.props}/>

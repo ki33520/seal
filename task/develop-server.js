@@ -45,7 +45,7 @@ var bundler = webpack(config);
 
 gulp.task("start", ["nodemon"], function() {
     var listenPort = process.env.LISTEN_PORT || 3000;
-    var hmrPort = process.env.HMR_PORT || 5000;
+    var hmrPort = process.env.HMR_PORT || 6000;
     browserSync({
         proxy: {
             target: "http://localhost:" + listenPort,
@@ -66,6 +66,6 @@ gulp.task("start", ["nodemon"], function() {
             return "http://localhost:" + hmrPort + path
         }
     }, function() {
-        console.log('🌎 hmr-server Listening at %d', hmrPort);
+        console.log('🌎 browserSync Listening at %d', hmrPort);
     })
 })

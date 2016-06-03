@@ -17,6 +17,15 @@ class AddReceiver extends Component{
         const {changeField} = this.props;
         changeField(fieldName,e.target.value,"addReceiver");
     }
+    handleAddressChange(e){
+        e && e.preventDefault()
+        const {changeField} = this.props
+        if(e.target.value.length > 60){
+            this.props.alert("详细地址过长!",1500)
+            return false
+        }
+        changeField("address",e.target.value,"addReceiver")
+    }
     handleAreaChange(fieldName,fieldValue){
         const {changeField} = this.props;
         changeField(fieldName,fieldValue,"addReceiver");
@@ -142,7 +151,7 @@ class AddReceiver extends Component{
                 <i>*</i>
                 <div className="receiver-form-label">详细地址</div>
                 <div className="receiver-form-field"><textarea value={address}
-                onChange={this.handleFieldChange.bind(this,"address")} 
+                onChange={this.handleAddressChange.bind(this)} 
                 placeholder="请输入详细地址"/></div>
                 </div>
                 <div className="receiver-form-discription"></div>
