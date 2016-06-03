@@ -125,6 +125,7 @@ function updateCardID(state={},action){
             }
             return Object.assign({},state,{
                 isUpdateCarding:false,
+                errMsg: action.res.errMsg,
                 isUpdateCarded
             });
         case SHOW_ALERT:
@@ -177,6 +178,7 @@ function addCardID(state={},action){
             }
             return Object.assign({},state,{
                 isAddCarding:false,
+                errMsg: action.res.errMsg,
                 isAddCarded
             });
         case SHOW_ALERT:
