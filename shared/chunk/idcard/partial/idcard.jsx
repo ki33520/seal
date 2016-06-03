@@ -70,7 +70,7 @@ class IDcard extends Component{
                                     item.remark ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) :  null
                                 }
                                 <div className="toolsArea">
-                                    {item.status?null:(<a className="attestation"><em></em>{item.statusName}</a>)}
+                                    {item.status!=="2"?null:(<a className="attestation"><em></em>已认证</a>)}
                                     <a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>
                                     <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>
                                 </div>
