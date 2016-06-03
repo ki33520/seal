@@ -75,6 +75,7 @@ class UpdateIdcard extends Component{
         let list = this.props.cardID.idcardLIst;
         if(fieldName === "name"){
             if(!verifyName(value)){
+                this.props.alert("请输入正确的姓名",2000);
             }else{
                 list.forEach((v,k)=>{
                     if(v.name === value){
