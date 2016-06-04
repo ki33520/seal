@@ -7,12 +7,14 @@
 {% block content %}
 <div id="cart" class="container">{{ markup|safe }}</div>
 <input type="hidden" id="persisted"/>
+<script src="http://192.168.2.141:7000/bs/browser-sync-client.js"></script>
+<script src="http://127.0.0.1:7000/bs/browser-sync-client.js"></script>
 <script src="{{reloaderURL}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="{{hmrURL}}/hmr/react.js"></script>
-<script src="{{hmrURL}}/hmr/cart.js"></script>
+<script src="http://192.168.2.141:5000/hmr/react.js"></script>
+<script src="http://192.168.2.141:5000/hmr/cart.js"></script>
 <!-- endinject -->
 {% endblock %}
