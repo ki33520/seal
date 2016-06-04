@@ -126,20 +126,22 @@ header .screening {
 .listTitle .attestation em{
 	width:0.44rem;
 	height:0.44rem;
-	background:url(/client/asset/images/id_attestation.png) no-repeat;
+	background-image:url(/client/asset/images/id_attestation.png);
+	background-repeat: no-repeat;
 	background-size:100%;
 	display:block;
 	position:absolute;
 	left:0;
 	top:0;
 }
-.toolsArea .attestation em{
+/*.toolsArea .attestation em{
 	width:0.44rem;
 	height:0.44rem;
-	background:url(/client/asset/images/id_attestation.png) no-repeat;
+	background-image:url(/client/asset/images/id_attestation.png);
+	background-repeat: no-repeat;
 	background-size: 80%;
 	display: inline-block;
-}
+}*/
 
 .pic_id{
 	display: -webkit-box;
