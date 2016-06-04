@@ -29,24 +29,30 @@ class IDcard extends Component{
     }
     handleUpdate(id){
         this.setState({
-            dialogActive:true,
             dialogContent: "您已填写身份证信息,如果有误,请修改",
-            dialogOnConfirm:()=>{
-                this.toggleDialog();
-                this.props.fetchCardById(id);
-                this.props.changeScene("updatecard");
-            }
-        })
+        },function(){
+            this.setState({
+                dialogActive:true,
+                dialogOnConfirm:()=>{
+                    this.toggleDialog();
+                    this.props.fetchCardById(id);
+                    this.props.changeScene("updatecard");
+                }
+            });
+        });
     }
     handleDelete(id,index){
         this.setState({
-            dialogActive:true,
             dialogContent: "删除身份证可能导致无法清关,是否删除?",
-            dialogOnConfirm:()=>{
-                this.toggleDialog();
-                this.props.deleteIDcard({id,index});
-            }
-        })
+        },function(){
+            this.setState({
+                dialogActive:true,
+                dialogOnConfirm:()=>{
+                    this.toggleDialog();
+                    this.props.deleteIDcard({id,index});
+                }
+            });
+        });
     }
     renderIDcardList(){
         const {idcardLIst,isFetched} = this.props;
@@ -101,7 +107,7 @@ class IDcard extends Component{
             "addBtn":true,
             "disabled": disabled
         });
-        if(isFetched&&idcardLIst.length>0){
+        if(idcardLIst&&idcardLIst.length>0){
             return (
                 <div className="idcard-content">
                     <Header>
