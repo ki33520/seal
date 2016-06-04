@@ -12,6 +12,9 @@ class IDcard extends Component{
             dialogActive:false,
             dialogContent:null,
             dialogOnConfirm:null,
+            editDialogActive:false,
+            editDialogContent:null,
+            editDialogOnConfirm:null,
             popupActive:false,
             popupImg:null
         }
@@ -19,6 +22,11 @@ class IDcard extends Component{
     toggleDialog(){
         this.setState({
             dialogActive:!this.state.dialogActive
+        })
+    }
+    toggleEditDialog(){
+        this.setState({
+            editDialogActive:!this.state.editDialogActive
         })
     }
     togglePopupActive(type,event){
@@ -29,29 +37,21 @@ class IDcard extends Component{
     }
     handleUpdate(id){
         this.setState({
-            dialogContent: "您已填写身份证信息,如果有误,请修改",
-        },function(){
-            this.setState({
-                dialogActive:true,
-                dialogOnConfirm:()=>{
-                    this.toggleDialog();
-                    this.props.fetchCardById(id);
-                    this.props.changeScene("updatecard");
-                }
-            });
+            editDialogActive:true,
+            editDialogOnConfirm:()=>{
+                this.toggleEditDialog();
+                this.props.fetchCardById(id);
+                this.props.changeScene("updatecard");
+            }
         });
     }
     handleDelete(id,index){
         this.setState({
-            dialogContent: "删除身份证可能导致无法清关,是否删除?",
-        },function(){
-            this.setState({
-                dialogActive:true,
-                dialogOnConfirm:()=>{
-                    this.toggleDialog();
-                    this.props.deleteIDcard({id,index});
-                }
-            });
+            dialogActive:true,
+            dialogOnConfirm:()=>{
+                this.toggleDialog();
+                this.props.deleteIDcard({id,index});
+            }
         });
     }
     renderIDcardList(){
@@ -128,7 +128,12 @@ class IDcard extends Component{
                     <Dialog active={this.state.dialogActive} 
                     cancelText={'取消'} confirmText={'确定'}
                     onCancel={this.toggleDialog.bind(this)}
-                    onConfrim={this.state.dialogOnConfirm}>{this.state.dialogContent}</Dialog>
+                    onConfrim={this.state.dialogOnConfirm}>删除身份证可能导致无法清关,是否删除?</Dialog>
+                    {this.renderImgView()}
+                    <Dialog active={this.state.editDialogActive} 
+                    cancelText={'取消'} confirmText={'确定'}
+                    onCancel={this.toggleEditDialog.bind(this)}
+                    onConfrim={this.state.editDialogOnConfirm}>您已填写身份证信息,如果有误,请修改</Dialog>
                 </div>
             )
         }
