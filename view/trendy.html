@@ -6,12 +6,14 @@
 {% endblock %} 
 {% block content %}
 <div id="trendy" class="container">{{ markup|safe }}</div>
-<script src="{{hostname}}/bs/browser-sync-client.js"></script>
+<script src="http://192.168.2.141:7000/bs/browser-sync-client.js"></script>
+<script src="http://127.0.0.1:7000/bs/browser-sync-client.js"></script>
+<script src="{{reloaderURL}}/bs/browser-sync-client.js"></script>
 <script type="application/json" id="initial-state">{{ initialState|json|safe }}</script>
 {% endblock %}
 {% block js %}
 <!-- inject:js -->
-<script src="{{hostname}}/hmr/react.js"></script>
-<script src="{{hostname}}/hmr/trendy.js"></script>
+<script src="http://192.168.2.141:5000/hmr/react.js"></script>
+<script src="http://192.168.2.141:5000/hmr/trendy.js"></script>
 <!-- endinject -->
 {% endblock %}

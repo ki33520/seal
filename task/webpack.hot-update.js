@@ -9,14 +9,14 @@ var env = require('./environment');
 /*build const*/
 var entry = {};
 var commonChunks = [];
+var hmrURL = env.hmrBasePath
 
 _.each(env.modules, function(moduleObj) {
     var moduleEntry = {};
     moduleEntry[moduleObj.name] = [
-        // 'webpack-dev-server/client?http://localhost:5000',
-        "webpack-hot-middleware/client?reload=true",
-        // 'webpack/hot/dev-server',
-        // "webpack/hot/only-dev-server",
+        'webpack-dev-server/client?'+hmrURL,
+        // "webpack-hot-middleware/client?reload=true",
+        "webpack/hot/only-dev-server",
         moduleObj.entryJS,
         moduleObj.entryCSS
     ];
@@ -79,7 +79,7 @@ module.exports = {
         path: path.join(__dirname, "../client"),
         filename: "[name].js",
         chunkFilename: "[id].chunk.js",
-        publicPath: env.hmrPath
+        publicPath: hmrURL + env.hmrPath
     },
     plugins: _.union([
         new webpack.optimize.OccurenceOrderPlugin(true),
