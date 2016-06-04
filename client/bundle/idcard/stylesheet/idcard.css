@@ -123,8 +123,7 @@ header .screening {
 	position:relative;
 	padding-left:.54rem;
 }
-.listTitle .attestation:before{
-	content:"";
+.listTitle .attestation em{
 	width:0.44rem;
 	height:0.44rem;
 	background:url(/client/asset/images/id_attestation.png) no-repeat;
