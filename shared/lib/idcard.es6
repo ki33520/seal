@@ -45,9 +45,9 @@ export function verifyName(gets){
 }
 
 export function verifyIdCard(gets){
-    if (gets.length == 15) {   
+    if (gets && gets.length == 15) {   
         return isValidityBrithBy15IdCard(gets);   
-    }else if (gets.length == 18){   
+    }else if (gets && gets.length == 18){   
         var a_idCard = gets.split("");
         if (isValidityBrithBy18IdCard(gets)&&isTrueValidateCodeBy18IdCard(a_idCard)) {   
             return true;   

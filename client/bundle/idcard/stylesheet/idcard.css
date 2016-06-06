@@ -264,7 +264,7 @@ header .screening {
 	border: none;
 }
 .identityUpload > div input:disabled{
-	color:#999;
+	color:#888;
 	background:none;
 }
 

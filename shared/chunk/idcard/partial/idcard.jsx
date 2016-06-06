@@ -36,14 +36,8 @@ class IDcard extends Component{
         });
     }
     handleUpdate(id){
-        this.setState({
-            editDialogActive:true,
-            editDialogOnConfirm:()=>{
-                this.toggleEditDialog();
-                this.props.fetchCardById(id);
-                this.props.changeScene("updatecard");
-            }
-        });
+        this.props.fetchCardById(id);
+        this.props.changeScene("updatecard");
     }
     handleDelete(id,index){
         this.setState({
@@ -73,9 +67,7 @@ class IDcard extends Component{
                                     <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.frontImgUrl} /></span>
                                     <span><img onClick={this.togglePopupActive.bind(this,true)} src={item.backImgUrl} /></span>
                                 </div>
-                                {
-                                    item.remark ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) :  null
-                                }
+                                {item.remark && item.status === "3" ? (<div className="feedbackInfo"><p>{item.remark}</p></div>) : null}
                                 <div className="toolsArea">
                                     {item.status==="2"?null:(<a href="javascript:;" onClick={this.handleUpdate.bind(this,item.id)} className="pen"><em></em>编辑</a>)}
                                     <a href="javascript:;" onClick={this.handleDelete.bind(this,item.id,i)} className="del"><em></em>删除</a>
@@ -128,7 +120,7 @@ class IDcard extends Component{
                     <Dialog active={this.state.dialogActive} 
                     cancelText={'取消'} confirmText={'确定'}
                     onCancel={this.toggleDialog.bind(this)}
-                    onConfrim={this.state.dialogOnConfirm}>删除身份证可能导致无法清关,是否删除?</Dialog>
+                    onConfrim={this.state.dialogOnConfirm}>删除身份证可能导致无法清关，是否删除？</Dialog>
                     {this.renderImgView()}
                     <Dialog active={this.state.editDialogActive} 
                     cancelText={'取消'} confirmText={'确定'}

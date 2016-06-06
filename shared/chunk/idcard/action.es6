@@ -40,6 +40,9 @@ export function deleteIDcard(param){
         dispatch(startDeleteIDcard(param))
         apiRequest(urlPrefix + "/deleteidcard",param,{method:"POST"}).then((res)=>{
             dispatch(finishDeleteIDcard(param,res))
+            if(res.isDeleted){
+                dispatch(alert("删除成功",1500));
+            }
         })
     }
 }
@@ -66,8 +69,10 @@ export function uploadCardImage(param,scene){
         	processData:false
         }).then((res)=>{
             if(!res.isUploaded){
-                dispatch(alert(res.errMsg,3000))
-            }   
+                dispatch(alert(res.errMsg,2000));
+            }else{
+                dispatch(alert("图片上传成功",1000));
+            }
             dispatch(finishUploadCardImage(param,res,scene))
         })
     }

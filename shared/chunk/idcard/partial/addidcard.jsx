@@ -1,6 +1,7 @@
 'use strict';
 
 import React,{Component} from "react";
+import classNames from "classnames";
 import Header from "../../common/header.jsx";
 import Alert from "../../../component/alert.jsx";
 import ActivityIndicator from "../../common/activityindicator.jsx";
@@ -14,9 +15,12 @@ class AddIDcard extends Component{
         if(nextProps.isAddCarding === false &&
            this.props.isAddCarding === true){
             if(nextProps.isAddCarded === true){
-                this.props.changeScene('index');
+                this.props.alert('保存成功',2000);
+                setTimeout(()=>{
+                    this.props.changeScene("index");
+                },2000);
             }else{
-                this.props.alert(nextProps.errMsg ,1000);
+                this.props.alert(nextProps.errMsg ,2000);
             }
         }
     }
@@ -26,11 +30,19 @@ class AddIDcard extends Component{
             return false;
         }
         if(!verifyName(name)){
-            this.props.alert("请输入正确的姓名",2000);
+            if(name){
+                this.props.alert("请输入正确的姓名",2000);
+            }else{
+                this.props.alert("请输入姓名",2000);
+            }
             return false;
         }
         if(!verifyIdCard(number)){
-            this.props.alert("请输入正确的身份证号码",2000);
+            if(number){
+                this.props.alert("请输入正确的身份证号码",2000);
+            }else{
+                this.props.alert("请输入身份证号码",2000);
+            }
             return false;
         }
         if(!frontImgUri){
@@ -64,23 +76,41 @@ class AddIDcard extends Component{
         const value =event.target.value;
         this.props.changeField(fieldName,value,'add')
     }
+    handleReset(fieldName,e){
+        e && e.preventDefault();
+        clearTimeout(this.blurEvent);
+        this.props.changeField(fieldName,"",'add');
+    }
     handleBlur(fieldName,event){
         const value =event.target.value;
         let list = this.props.cardID.idcardLIst;
+        const self = this;
         if(fieldName === "name"){
             if(!verifyName(value)){
-                this.props.alert("请输入正确的姓名",2000);
+                this.blurEvent = setTimeout(function(){
+                    if(self.props.card.name){
+                        self.props.alert("请输入正确的姓名",1500);
+                    }else{
+                        self.props.alert("请输入姓名",1500);
+                    }
+                },100);
             }else{
                 list.forEach((v,k)=>{
                     if(v.name === value){
-                        this.props.alert("不能添加重复的用户",2000);
+                        this.props.alert("不能添加重复的用户",1500);
                     }
                 });
             }
         }
         if(fieldName === "number"){
             if(!verifyIdCard(value)){
-                this.props.alert("请输入正确的身份证号码",2000);
+                this.blurEvent = setTimeout(function(){
+                    if(self.props.card.number){
+                        self.props.alert("请输入正确的身份证号码",1500);
+                    }else{
+                        self.props.alert("请输入身份证号码",1500);
+                    }
+                },100);
             }
         }
     }
@@ -93,7 +123,7 @@ class AddIDcard extends Component{
             return false;
         }
         if(!regExp.test(files[0].type)){
-            this.props.alert('请上传身份证'+info+'面照片!',3000);
+            this.props.alert('请上传身份证'+info+'面照片!',2000);
             return false;
         }
         var formData = new FormData();
@@ -102,6 +132,13 @@ class AddIDcard extends Component{
     }
     render(){
         const {card,isUploading,alertActive,alertContent}=this.props;
+        const {number,name} = card;
+        const nameClasses = classNames("reset-btn",{
+            active:!!name
+        })
+        const numberClasses = classNames("reset-btn",{
+            active:!!number
+        })
         return (
             <div className="idcard-form-content">
                 <Header onGoBack={this.props.changeScene.bind(this,'index')}>
@@ -110,15 +147,16 @@ class AddIDcard extends Component{
                 </Header>
                 <div className="idcard-form-inner">
                     <div className="identityUpload">
-                        <div>
+                        <div className="reset-box">
                             <em>身份证姓名</em>
                             <input type="text" maxLength="10" placeholder="请输入真实的姓名" value={card.name} onChange={this.handleChange.bind(this,'name')} onBlur={this.handleBlur.bind(this,'name')} />
+                            <div className={nameClasses} onClick={this.handleReset.bind(this,"name")}><i className="iconfont icon-close-fill"></i></div>
                         </div>
-                        <div>
+                        <div className="reset-box">
                             <em>身份证号码</em>
                             <input type="text" placeholder="请输入真实的身份证信息" value={card.number} onChange={this.handleChange.bind(this,'number')}  onBlur={this.handleBlur.bind(this,'number')} />
+                            <div className={numberClasses} onClick={this.handleReset.bind(this,"number")}><i className="iconfont icon-close-fill"></i></div>
                         </div>
-                            
                         <div className="uploadArea">
                             <em>身份证照片</em>
                             <div className="pic_id">
