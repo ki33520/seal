@@ -20,9 +20,9 @@ class IDcard extends Component{
             popupImg:null
         }
     }
-    toggleDialog(){
+    toggleDialog(active){
         this.setState({
-            dialogActive:!this.state.dialogActive
+            dialogActive: active ? active : !this.state.dialogActive
         })
     }
     toggleEditDialog(){
@@ -44,7 +44,7 @@ class IDcard extends Component{
         this.setState({
             dialogActive:true,
             dialogOnConfirm:()=>{
-                this.toggleDialog();
+                this.toggleDialog(false);
                 this.props.deleteIDcard({id,index});
             }
         });
@@ -120,7 +120,7 @@ class IDcard extends Component{
                     {this.renderImgView()}
                     <Dialog active={this.state.dialogActive} 
                     cancelText={'取消'} confirmText={'确定'}
-                    onCancel={this.toggleDialog.bind(this)}
+                    onCancel={this.toggleDialog.bind(this,false)}
                     onConfrim={this.state.dialogOnConfirm}>删除身份证可能导致无法清关，是否删除？</Dialog>
                     {this.renderImgView()}
                     <Dialog active={this.state.editDialogActive} 
