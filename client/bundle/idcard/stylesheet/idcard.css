@@ -250,8 +250,6 @@ header .screening:visited{
 .identityUpload > div em{
 	height:.5rem;
 	line-height:.5rem;
-	
-	
 	vertical-align: middle;
     display: inline-block;
     margin-right:1%;
@@ -268,8 +266,9 @@ header .screening:visited{
 	border: none;
 }
 .identityUpload > div input:disabled{
-	color:#888;
+	color: #888;
 	-webkit-text-fill-color: #888;
+	opacity: .8;
 	background:none;
 }
 
