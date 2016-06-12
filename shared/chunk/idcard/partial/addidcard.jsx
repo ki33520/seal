@@ -61,7 +61,7 @@ class AddIDcard extends Component{
             }
         });
         if(!pass){
-            this.props.alert("不能添加重复的用户",2000);
+            this.props.alert("身份证姓名已存在",2000);
             return false;
         }
         const param = {
@@ -97,7 +97,7 @@ class AddIDcard extends Component{
             }else{
                 list.forEach((v,k)=>{
                     if(v.name === value){
-                        this.props.alert("不能添加重复的用户",1500);
+                        this.props.alert("身份证姓名已存在",1500);
                     }
                 });
             }

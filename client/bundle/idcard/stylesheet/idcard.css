@@ -12,6 +12,10 @@ header .screening {
     text-align: center;
     color: #801da1;
 }
+header .screening:hover,
+header .screening:visited{
+	color: #801da1;
+}
 .footer{
 	height:1.2rem;
 	position:fixed;
