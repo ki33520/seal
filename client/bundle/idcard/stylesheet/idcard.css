@@ -269,6 +269,7 @@ header .screening:visited{
 }
 .identityUpload > div input:disabled{
 	color:#888;
+	-webkit-text-fill-color: #888;
 	background:none;
 }
 
