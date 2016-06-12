@@ -4,6 +4,7 @@ import classNames from "classnames";
 import util from "../../../lib/util.es6";
 import Header from "../../common/header.jsx";
 import Dialog from "../../../component/dialog.jsx";
+import Alert from "../../../component/alert.jsx";
 
 class IDcard extends Component{
     constructor(props){
@@ -93,7 +94,7 @@ class IDcard extends Component{
         )
     }
     render(){
-        const {idcardLIst,isFetched} = this.props;
+        const {idcardLIst,isFetched,alertActive,alertContent} = this.props;
         const disabled = idcardLIst.length>=10;
         const classes = classNames({
             "addBtn":true,
@@ -126,6 +127,7 @@ class IDcard extends Component{
                     cancelText={'取消'} confirmText={'确定'}
                     onCancel={this.toggleEditDialog.bind(this)}
                     onConfrim={this.state.editDialogOnConfirm}>您已填写身份证信息,如果有误,请修改</Dialog>
+                    <Alert active={alertActive}>{alertContent}</Alert>
                 </div>
             )
         }

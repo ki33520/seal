@@ -39,10 +39,10 @@ export function deleteIDcard(param){
     return (dispatch)=>{
         dispatch(startDeleteIDcard(param))
         apiRequest(urlPrefix + "/deleteidcard",param,{method:"POST"}).then((res)=>{
-            dispatch(finishDeleteIDcard(param,res))
             if(res.isDeleted){
                 dispatch(alert("删除成功",1500));
             }
+            dispatch(finishDeleteIDcard(param,res));
         })
     }
 }
