@@ -38,7 +38,7 @@ app.use(session({
         httpOnly: true,
         // maxAge: 1 * 24 * 60 * 60 * 1000 //1 day
     },
-    store: store,
+    store: process.env.HMR_ENABLED?null:store,
     // unset:"destroy"
 }))
 
