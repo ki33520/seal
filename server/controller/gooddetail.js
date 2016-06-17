@@ -25,7 +25,7 @@ var goodDetail = function(req, res, next) {
         res.cookie("tag",tag)
     }
     var pageContent = util.readFromStaticCache(req)
-    if(!process.env.HMR_ENABLED && pageContent){
+    if(!process.env.HMR_ENABLED && pageContent && !req.xhr){
         console.log("return from static cache")
         res.send(pageContent)
     }else{

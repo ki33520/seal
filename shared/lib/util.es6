@@ -14,7 +14,7 @@ export function apiRequest(url,param={}, options = {
         contentType:'application/json'
     });
     if(options.method==="POST" || options.method === "post"){
-        options.contentType = "application/x-www-form-urlencoded;charset=utf-"
+        options.contentType = "application/x-www-form-urlencoded;charset=UTF-8"
     }
     return reqwest(options);
 }

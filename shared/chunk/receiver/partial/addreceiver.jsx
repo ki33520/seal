@@ -80,7 +80,7 @@ class AddReceiver extends Component{
         })
     }
     componentWillReceiveProps(nextProps){
-        const {alert,hideActivityIndicator} = this.props;
+        const {alert,hideActivityIndicator,changeField} = this.props;
         if(nextProps.receiverSaving === false && 
             this.props.receiverSaving === true){
             hideActivityIndicator()
@@ -88,6 +88,13 @@ class AddReceiver extends Component{
                 alert("提交成功!",1500);
                 setTimeout(()=>{
                     const {onCheck,receiver,checkable} = this.props
+                    changeField("consignee","","addReceiver")
+                    changeField("idCard","","addReceiver")
+                    changeField("mobileNumber","","addReceiver")
+                    changeField("address","","addReceiver")
+                    changeField("provinceCode","","addReceiver")
+                    changeField("cityCode","","addReceiver")
+                    changeField("districtCode","","addReceiver")
                     if(checkable){
                         this.props.selectReceiver(receiver)
                         onCheck(receiver)
