@@ -12,6 +12,7 @@ var config = require("../lib/config");
 var goodDetail = function(req, res, next) {
     var singleCode = req.params.id;
     var isAuthorized = req.session.user !== undefined;
+    var user = req.session.user || ""
     var loginUrl = res.locals.loginUrl;
     var weixinConfig = res.locals.weixinConfig;
     var tag = req.query.tag?req.query.tag:""
@@ -108,6 +109,7 @@ var goodDetail = function(req, res, next) {
                     }else{
                         var initialState = {
                             good: good,
+                            user:user,
                             isAuthorized:isAuthorized,
                             loginUrl:loginUrl,
                             weixinConfig:weixinConfig

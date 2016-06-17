@@ -29,6 +29,13 @@ var requireAuthorize = function(req, res, next) {
     }
 }
 
+var popularize = function(req,res,next){
+    var code = ""
+    code = req.query["source"] || req["hmsr"]
+    res.cookie("popularizeCode",code)
+    next()
+}
+
 var weixinConfig = function(req,res,next){
     var url = config.weixinConfig + "&url=" + encodeURIComponent(util.fullURLByReq(req))
     reqwest({url:url,method:"GET",type:"json"}).then(function(ret){
@@ -141,6 +148,7 @@ module.exports = {
     staticize:staticize,
     notFoundHandler: notFoundHandler,
     errorHandler: errorHandler,
+    popularize:popularize,
     test:test,
     weixinConfig:weixinConfig,
     checkVisitor:checkVisitor

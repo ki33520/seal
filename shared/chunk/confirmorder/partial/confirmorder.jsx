@@ -139,8 +139,8 @@ class ConfirmOrder extends Component{
         }
         if(prevProps.paygatewayFetched === false && this.props.paygatewayFetched === true){
             setTimeout(()=>{
-                // console.log('submitOrder')
-                document.getElementById("submitForm").submit()
+                console.log('submitOrder')
+                // document.getElementById("submitForm").submit()
                 // ReactDOM.findDOMNode(this.refs["SubmitOrder"].refs["submitForm"]).submit();
             },10)
         }

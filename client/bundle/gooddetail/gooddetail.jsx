@@ -11,6 +11,13 @@ function bootstrap(){
     }else{
         ReactDOM.render(<GoodDetail initialState={initialState} />,document.getElementById('good-detail'));
     }
+
+    const {user,good} = initialState
+    /*统计代码*/
+    _adwq.push([ '_setDataType', 'view' ])
+    _adwq.push(['_setCustomer',user?user.userName:""])
+    _adwq.push(['_setItem',good.code,good.title,good.salePrice,"1","A123","分类",good.originPrice,good.imageUrl[0],"Y",location.href])
+    _adwq.push([ '_trackTrans'])
 }
 Object.assign = Object.assign || require('object-assign')
 

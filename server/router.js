@@ -15,7 +15,7 @@ var mainController = require("./controller/main");
 router.get(urlPrefix + "/logingateway",require("./controller/authorize").loginGateway);
 router.get(urlPrefix + "/logoutgateway",mainController.requireAuthorize,require("./controller/authorize").logoutGateway);
 
-router.get(urlPrefix + "",mainController.checkVisitor,mainController.staticize,require("./controller/index.js").index);
+router.get(urlPrefix + "",mainController.checkVisitor,mainController.popularize,mainController.staticize,require("./controller/index.js").index);
 router.get(urlPrefix + "/channel", require("./controller/index.js").channel);
 router.get(urlPrefix + "/searchhotwords", require("./controller/index.js").searchHotWords);
 router.get(urlPrefix + "/searchhistory", require("./controller/index.js").searchHistory);
@@ -25,17 +25,17 @@ router.get(urlPrefix + "/activitygood", require("./controller/index.js").activit
 router.get(urlPrefix + "/updategoods",require("./controller/index.js").updateGoods);
 router.get(urlPrefix + "/topic/:id.html",mainController.checkVisitor, mainController.staticize,mainController.weixinConfig, require("./controller/topic.js").topic);
 router.get(urlPrefix + "/flashbuy/:id.html",mainController.checkVisitor, mainController.staticize,mainController.weixinConfig, require("./controller/flashbuy.js"));
-router.get(urlPrefix + "/polymer.html",mainController.checkVisitor, mainController.staticize,require("./controller/polymer").polymer);
+router.get(urlPrefix + "/polymer.html",mainController.checkVisitor,mainController.popularize,mainController.staticize,require("./controller/polymer").polymer);
 router.get(urlPrefix + "/categorybrands", require("./controller/polymer").categoryBrands);
 router.get(urlPrefix + "/allbrands", require("./controller/polymer").allBrands);
 router.get(urlPrefix + "/allorigins", require("./controller/polymer").allOrigins);
 router.get(urlPrefix + "/categoryactivity", require("./controller/polymer").categoryActivity);
 
-router.get(urlPrefix + "/sp-:id.html",mainController.checkVisitor,mainController.authorizeLocals,mainController.weixinConfig, require("./controller/gooddetail").goodDetail);
+router.get(urlPrefix + "/sp-:id.html",mainController.checkVisitor,mainController.popularize,mainController.authorizeLocals,mainController.weixinConfig, require("./controller/gooddetail").goodDetail);
 router.get(urlPrefix + "/addcart", require("./controller/gooddetail").addCart);
 router.get(urlPrefix + "/togglecollected", require("./controller/gooddetail").toggleCollected);
 router.get(urlPrefix + "/iscollected", require("./controller/gooddetail").isCollected);
-router.get(urlPrefix + "/search/s.html", require("./controller/goodlist"));
+router.get(urlPrefix + "/search/s.html",mainController.popularize,require("./controller/goodlist"));
 router.get(urlPrefix + "/goodcomment", require("./controller/gooddetail").goodComments);
 router.get(urlPrefix + "/cartcount", require("./controller/gooddetail").cartCount);
 router.get(urlPrefix + "/sharedweixin", require("./controller/gooddetail").sharedWeixin);
@@ -44,7 +44,7 @@ router.get(urlPrefix + "/activity/:id.html",mainController.checkVisitor,mainCont
 router.get(urlPrefix + "/trendy.html",mainController.checkVisitor,mainController.staticize, require("./controller/trendy").trendy);
 router.post(urlPrefix + "/trendyActivity",require("./controller/trendy").activity);
 
-router.get(urlPrefix + "/cart.html",mainController.checkVisitor,mainController.authorizeLocals,require("./controller/cart").cart);
+router.get(urlPrefix + "/cart.html",mainController.checkVisitor,mainController.popularize,mainController.authorizeLocals,require("./controller/cart").cart);
 router.post(urlPrefix + "/updatecart",require("./controller/cart").updateCart);
 router.post(urlPrefix + "/deletecart",require("./controller/cart").deleteCart);
 router.post(urlPrefix + "/fetchcart",require("./controller/cart").fetchCart);
@@ -53,7 +53,7 @@ router.post(urlPrefix + "/reloadcart",mainController.requireAuthorize,require(".
 
 router.get(urlPrefix + "/shipfee",mainController.requireAuthorize,require("./controller/confirmorder").shipFee);
 router.get(urlPrefix + "/paygateway/:param",mainController.requireAuthorize,require("./controller/confirmorder").payGateway);
-router.get(urlPrefix + "/confirmorder/:param.html",mainController.requireAuthorize,require("./controller/confirmorder").confirmOrder);
+router.get(urlPrefix + "/confirmorder/:param.html",mainController.requireAuthorize,mainController.popularize,require("./controller/confirmorder").confirmOrder);
 router.post(urlPrefix + "/submitorder",mainController.requireAuthorize,require("./controller/confirmorder").submitOrder);
 router.post(urlPrefix + "/verifyorder",mainController.requireAuthorize,require("./controller/confirmorder").verifyOrder);
 router.get(urlPrefix + "/orderlist.html",mainController.requireAuthorize,require("./controller/orderlist"));
@@ -64,7 +64,7 @@ router.post(urlPrefix + "/deliveryorder",mainController.requireAuthorize,require
 router.post(urlPrefix + "/savecomment",mainController.requireAuthorize,require("./controller/orderdetail").comments);
 router.get(urlPrefix + "/logistics",mainController.requireAuthorize,require("./controller/orderdetail").logistics);
 
-router.get(urlPrefix + "/aorder/confirmOrder.html",mainController.requireAuthorize,require("./controller/checkout").confirmOrder);
+router.get(urlPrefix + "/aorder/confirmOrder.html",mainController.requireAuthorize,mainController.popularize,require("./controller/checkout").confirmOrder);
 router.post(urlPrefix + "/activity/submitorder",mainController.requireAuthorize,require("./controller/checkout").submitOrder);
 
 router.get(urlPrefix + "/aboutus.html", require("./controller/aboutus"));
