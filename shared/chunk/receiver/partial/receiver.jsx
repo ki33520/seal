@@ -117,7 +117,7 @@ class Receiver extends Component{
         return (
             <div className="receiver-content">
             {this.props.checkable?(<Header onGoBack={this.handleCheckableGoBack.bind(this)}>选择收货地址</Header>):(
-            <Header>收货地址</Header>)}
+            <Header>我的地址</Header>)}
             <div className="receiver-inner">
                 <div className="selectArea">
                 {this.renderReceivers()}

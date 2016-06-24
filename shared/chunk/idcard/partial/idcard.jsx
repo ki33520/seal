@@ -104,7 +104,7 @@ class IDcard extends Component{
             return (
                 <div className="idcard-content">
                     <Header>
-                        <span className="title">身份证管理</span>
+                        <span className="title">身份证认证</span>
                     </Header>
                     <div className="idcard-inner">
                         <div className="blub">
