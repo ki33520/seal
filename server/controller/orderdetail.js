@@ -20,6 +20,11 @@ var orderStatus = [
         active: false
     },
     {
+        value: "STATUS_PICKING",
+        text: "配货中",
+        active: false
+    },
+    {
         value: "STATUS_OUT_HOUSE",
         text: "待收货",
         active: false

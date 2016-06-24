@@ -17,12 +17,12 @@ const orderStatusObj = {
     "STATUS_NOT_PAY":"待付款",
     "STATUS_WAIT_CONFIRM":"待审核",
     "STATUS_CONFIRMED":"待发货",
+    "STATUS_PICKING":"配货中",
     "STATUS_OUT_HOUSE":"待收货",
     "STATUS_SENDED":"已签收",
     "STATUS_FINISHED":"已完成",
     "STATUS_CANCELED":"已取消"
 };
-
 class Floor extends Component{
     constructor(props){
         super(props);

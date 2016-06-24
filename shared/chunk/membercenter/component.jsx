@@ -135,7 +135,7 @@ class MemberCenter extends Component{
                         <dl>
                             <dt>
                                 <img src="/client/asset/images/user_icon_1.png" />
-                                <span>全部订单</span>
+                                <span>我的订单</span>
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>
@@ -144,11 +144,22 @@ class MemberCenter extends Component{
                     </a>
                 </div>
                 <div className="helpList">
+                    <a href={jumpURL("couponlist")}>
+                        <dl>
+                            <dt>
+                                <img src="/client/asset/images/user_icon_5.png" />
+                                <span>优惠券</span>
+                            </dt>
+                            <dd>
+                                <i className="iconfont icon-right"></i>
+                            </dd>
+                        </dl>
+                    </a>
                     <a href={jumpURL("receiver")}>
                         <dl>
                             <dt>
                                 <img src="/client/asset/images/user_icon_2.png" />
-                                <span>收货地址</span>
+                                <span>我的地址</span>
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>
@@ -159,13 +170,15 @@ class MemberCenter extends Component{
                         <dl>
                             <dt>
                                 <img src="/client/asset/images/user_icon_9.png" />
-                                <span>身份证</span>
+                                <span>身份证认证</span>
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>
                             </dd>
                         </dl>
                     </a>
+                </div>
+                <div className="helpList">
                     <a href={jumpURL("collect")}>
                         <dl>
                             <dt>
@@ -188,22 +201,13 @@ class MemberCenter extends Component{
                             </dd>
                         </dl>
                     </a>
-                    <a href={jumpURL("couponlist")}>
-                        <dl>
-                            <dt>
-                                <img src="/client/asset/images/user_icon_5.png" />
-                                <span>优惠券</span>
-                            </dt>
-                            <dd>
-                                <i className="iconfont icon-right"></i>
-                            </dd>
-                        </dl>
-                    </a>
+                </div>
+                <div className="helpList">
                     <a href={jumpURL("update")}>
                         <dl>
                             <dt>
                                 <img src="/client/asset/images/user_icon_6.png" />
-                                <span>账户设置</span>
+                                <span>我的账户</span>
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>

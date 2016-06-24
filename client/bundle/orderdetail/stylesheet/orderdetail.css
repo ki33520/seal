@@ -80,12 +80,12 @@
     font-size:.373333rem;
 }
 .orderSpeed .rate{
-    padding: 0 .32rem;
+    padding: 0 .12rem;
     margin-bottom: .32rem;
 }
 .orderSpeed .rate img{
     width:100%;
-    padding:0 .68rem;
+    padding:0 .56rem;
 }
 .orderSpeed .rateText{
     display: -webkit-box;

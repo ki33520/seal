@@ -10,7 +10,7 @@ class Update extends Component{
             <div className="update-content">
                 <header className="header">
                     <a href={jumpURL("membercenter")} className="iconfont icon-back"></a>
-                    <span className="title">账户设置</span>
+                    <span className="title">我的账户</span>
                 </header>
                 <ul className="list">
                     <li>

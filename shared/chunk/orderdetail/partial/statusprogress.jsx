@@ -38,7 +38,7 @@ class StatusProgress extends Component{
             }
         });
         if(orderStatus === "STATUS_CANCELED"){
-            imgUrl = "/client/asset/images/orderRate_05.gif";
+            imgUrl = "/client/asset/images/orderRate_cancel.gif";
         }
         return (
             <div className="orderSpeed">
