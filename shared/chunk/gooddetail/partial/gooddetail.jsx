@@ -103,7 +103,7 @@ class GoodDetail extends Component{
             if(nextProps.goodById.good.selectedItem === null){
                 return
             }
-            if(this.props.goodById.good.selectedItem === null || 
+            if(nextProps.goodById.good.selectedItem !== null || 
                 nextProps.goodById.good.selectedItem.code !== this.props.goodById.good.selectedItem.code){
                 this.setState({
                     buyed:nextProps.goodById.good.buyed

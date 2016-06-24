@@ -112,6 +112,7 @@ var confirmOrder = function(req, res, next) {
             order["cashier"] = config["cashier"]
             var initialState = {
                 isFetched: true,
+                user:user || "",
                 order: order
             };
             var markup = util.getMarkupByComponent(ConfirmOrder({
@@ -165,15 +166,6 @@ var verifyOrder = function(req,res,next){
     var couponNo = req.body.couponNo
     var totalFee = req.body.totalFee
     var receiverId = req.body.receiverId
-
-    console.log(util.getAPI("verifyOrder",{
-        memberId: user.memberId,
-        singleCodes: itemIds,
-        qtys: buyeds,
-        couponNo: couponNo,
-        memberDlvAddressId: receiverId,
-        paymentFee:totalFee
-    }))
 
     util.fetchAPI("verifyOrder",{
         memberId: user.memberId,
@@ -276,6 +268,9 @@ var payGateway = function(req, res, next) {
                     message["customsCode"] = customsCode
                     message["goodsOriginType"] = countryType
                     message["tradeType"] = serviceType === "2"?"08":"01"
+
+                    var popularizeCode = req.cookies["popularizeCode"] ? req.cookies["popularizeCode"]:""
+                    message["dsp"] = popularizeCode
                     _.extend(message, {
                         wxOpenId: user.wxOpenId,
                         subject: "haiwaigouH5",
@@ -333,6 +328,9 @@ function messageFilter(order) {
     if (order["itemList"]) {
         _.each(order["itemList"], function(good) {
             productList.push({
+                salesPrice:good.salesPrice,
+                singleCode:good.singleCode,
+                qty:good.qty,
                 goodsName: good.singleTitle,
                 goodsColorAndSize: good.singleProps
             })
