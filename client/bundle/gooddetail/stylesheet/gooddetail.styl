@@ -112,19 +112,31 @@ $pink-color = #ED1946;
     color: #FFF;
     font-size: 12px;
 }
-.promotion dt{
-    line-height:px2rem(22);
+.promotion{
+    dl{
+        display:flex;
+        justify-content:center;
+        // align-items:center;
+        dt{
+            line-height:px2rem(22);
+            width:19%;
+        }
+        dd{
+            width:80%;
+        }            
+    }
 }
 
 .good-promotions {
-    padding: 0 px2rem(8) 0;
+    // padding: 0 px2rem(8) 0;
     .fixed-caret {
         width: px2rem(22);
         height: px2rem(22);
+        text-align:center;
         &>.iconfont {
             line-height:px2rem(18);
             display: inline-block;
-            font-size: 12px;
+            font-size:rem4px(13);
             padding:0;
         }
     }
@@ -639,6 +651,39 @@ $pink-color = #ED1946;
     &.active{
         .mask-layer{
             background:rgba(0,0,0,0);
+        }
+    }
+}
+
+.attr-selected{
+    display:block;
+    border-bottom:.2666rem solid #f7f7f7;
+    padding:rem4px(10) rem4px(13);
+    dl{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+    dt{
+        width:19%;
+    }
+    dd{
+        width:80%;
+        position:relative;
+        &>em{
+            color:#666;
+            font-size:rem4px(14);
+            line-height:rem4px(20);
+            padding:0 rem4px(8);
+            &:first-child{
+                padding-left:0;
+            }
+        }
+        &>i{
+            position:absolute;
+            top:50%;
+            right:0;
+            margin-top:rem4px(-10);
         }
     }
 }

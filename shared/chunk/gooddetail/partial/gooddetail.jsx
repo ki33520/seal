@@ -44,10 +44,10 @@ class GoodDetail extends Component{
         }
         this.smooth = false
     }
-    togglePopup(trigger,e){
+    togglePopup(e){
         e && e.preventDefault();
         this.setState({
-            trigger,
+            // trigger,
             popupActive:!this.state.popupActive,
             scrollable:this.state.popupActive
         })
@@ -182,7 +182,7 @@ class GoodDetail extends Component{
             alert('购买数量必须大于0',3000);
             return;
         }else if(good.selectedItem !== null && buyed > 0){
-            this.togglePopup("addToCart")
+            // this.togglePopup("addToCart")
             if(good.flashbuy['active'] || !good["canAddCart"]){
                 let singleCode = good.selectedItem.code
                 let queryParam = base64Encode(urlParam({
@@ -285,15 +285,17 @@ class GoodDetail extends Component{
         const destPrice = destPriceForGoods(good).destPrice
         buylimit = buylimit > Math.floor(2000 / destPrice) ?Math.floor(2000 / destPrice):buylimit
 
-        const handleConfirm = (trigger && trigger === "addToCart") ? this.addToCart.bind(this):this.directBuy.bind(this);
+        // const handleConfirm = (trigger && trigger === "addToCart") ? this.addToCart.bind(this):this.directBuy.bind(this);
         let canAddCart = good["canAddCart"]
         if(good.flashbuy["active"]){
             canAddCart = false
         }
-        const confrimButtonClasses = classNames("goodsSureBtn",{
-            "disabled":good.stock <= 0
+        const addCartClasses = classNames("goods_add",{
+            "disabled":!canAddCart || good.stock < good.buyedMinimum
         })
-
+        const directBuyClasses = classNames("goods_buy",{
+            "disabled":good.stock < good.buyedMinimum
+        })
         return (
             <Popup direction="bottom" active={popupActive}>
                 <div className="con">
@@ -318,9 +320,10 @@ class GoodDetail extends Component{
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
                     </div>
-                    <a href="javascript:void(0);" onClick={handleConfirm} className={confrimButtonClasses}>{
-                        !canAddCart && this.state.scheme === "addToCart"
-                        ?"立即购买":"确定"}</a>
+                    <div className="good-detail-btn">
+                    <a href="javascript:void(null)" onClick={this.addToCart.bind(this)} className={addCartClasses}>加入购物车</a>
+                    <a href="javascript:void(0);" onClick={this.directBuy.bind(this)} className={directBuyClasses}>{good.stock>=good.buyedMinimum?"立即购买":"已抢光"}</a>
+                    </div>
                 </div>
             </Popup>
         )
@@ -372,13 +375,22 @@ class GoodDetail extends Component{
                     {this.renderCountdown()}
                 </div>
                 <Promotions promotions={good.promotions}/>
+                <a className="attr-selected" onClick={this.togglePopup.bind(this)} href="javascript:void(null)">
+                    <dl>
+                        <dt>规格</dt>
+                        <dd>
+                            <em>已选择</em>{_.values(good.selectedItem.attrs).map(attrValue=><em>{attrValue}</em>)}<em>{this.state.buyed}个</em>
+                            <i className="iconfont icon-right"></i>
+                        </dd>
+                    </dl>
+                </a>
+                <Origin good={good} {...this.props}/>
                  <a onClick={this.props.changeScene.bind(this,"comment",{productCode:good.productCode})} 
                  href="javascript:void(null)" className="goComment clearfix">
                     <div className="left">
                     <i className="iconfont icon-comment"></i>用户评论<em>（{good.comments?good.comments.totalCount:0}）</em></div>
                     <div className="right">查看更多评价<i className="iconfont icon-right"></i></div>
                 </a>
-                <Origin good={good} {...this.props}/>
                 <div className="assure">
                     <img src="/client/asset/images/assure.gif" />
                 </div>
