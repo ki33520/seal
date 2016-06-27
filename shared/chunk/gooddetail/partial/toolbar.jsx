@@ -31,7 +31,7 @@ class Toolbar extends Component{
 
         let handleAddCartPopup = ()=>{
            if(canAddCart){
-                togglePopup("addToCart")
+                // togglePopup("addToCart")
                 this.setState({
                     scheme:"addToCart"
                 })
@@ -39,7 +39,7 @@ class Toolbar extends Component{
         }
         let handleDirectBuyPopup = ()=>{
             if(good.stock >= good.buyedMinimum){
-                togglePopup("directBuy")
+                // togglePopup("directBuy")
                 this.setState({
                     scheme:"directBuy"
                 })  
@@ -59,8 +59,8 @@ class Toolbar extends Component{
                 <a href={jumpURL("cart")} className="goods_cart">
                     <i className="iconfont icon-cart">{cartCount > 0?<em>{cartCount > 99?"99+":cartCount}</em>:null}</i>
                 </a>
-                <a href="javascript:void(null)" onClick={handleAddCartPopup} className={addCartClasses}>加入购物车</a>
-                <a href="javascript:void(0);" onClick={handleDirectBuyPopup} className={directBuyClasses}>{good.stock>=good.buyedMinimum?"立即购买":"已抢光"}</a>
+                <a href="javascript:void(null)" onClick={addToCart} className={addCartClasses}>加入购物车</a>
+                <a href="javascript:void(0);" onClick={directBuy} className={directBuyClasses}>{good.stock>=good.buyedMinimum?"立即购买":"已抢光"}</a>
             </div>
             </div>
         )
