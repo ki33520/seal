@@ -227,13 +227,11 @@ class MemberCenter extends Component{
                             </dd>
                         </dl>
                     </a>
-                </div>
-                <div className="helpList">
                     <a href={jumpURL("help")}>
                         <dl>
                             <dt>
                                 <img src="/client/asset/images/user_icon_8.png" />
-                                <span>帮助与反馈</span>
+                                <span>帮助反馈</span>
                             </dt>
                             <dd>
                                 <i className="iconfont icon-right"></i>
