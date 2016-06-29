@@ -34,7 +34,7 @@ class GoodDetail extends Component{
     constructor(props){
         super(props);
         this.state = {
-            buyed:props.goodById.good.buyed,
+            // buyed:props.goodById.good.buyed,
             scrollable:true,
             popupActive:false,
             shareActive:false,
@@ -105,9 +105,9 @@ class GoodDetail extends Component{
             }
             if(nextProps.goodById.good.selectedItem !== null || 
                 nextProps.goodById.good.selectedItem.code !== this.props.goodById.good.selectedItem.code){
-                this.setState({
-                    buyed:nextProps.goodById.good.buyed
-                })
+                // this.setState({
+                //     buyed:nextProps.goodById.good.buyed
+                // })
             }
         }
     }
@@ -126,6 +126,7 @@ class GoodDetail extends Component{
                         this.props.fetchIsCollected({
                             singleCode:selectedItem.code
                         })
+                        this.props.fetchSharedWeixin({url:location.href,code:selectedItem.code})
                     }
             }
         }
@@ -152,9 +153,7 @@ class GoodDetail extends Component{
         if(good.stock === null){
             return false;
         }
-        this.setState({
-            buyed
-        });
+        this.props.changeBuyed(buyed);
     }
     handleBuyedOverflow(buyed){
         const {good} = this.props.goodById
@@ -170,7 +169,7 @@ class GoodDetail extends Component{
         if(good.stock === 0){
             return
         }
-        const {buyed} = this.state;
+        // const {buyed} = this.state;
         if(good.selectedItem === null){
             const attrName = _.findKey(good.attrs,(attr)=>{
                 return _.some(attr,{selected:true}) === false
@@ -178,21 +177,21 @@ class GoodDetail extends Component{
             })
             alert(`请选择${attrName}`,3000);
             return;
-        }else if(buyed === 0){
+        }else if(good.buyed === 0){
             alert('购买数量必须大于0',3000);
             return;
-        }else if(good.selectedItem !== null && buyed > 0){
+        }else if(good.selectedItem !== null && good.buyed > 0){
             // this.togglePopup("addToCart")
             if(good.flashbuy['active'] || !good["canAddCart"]){
                 let singleCode = good.selectedItem.code
                 let queryParam = base64Encode(urlParam({
                     itemIds:singleCode,
-                    buyeds:buyed
+                    buyeds:good.buyed
                 }))
                 window.location.assign(jumpURL("confirmorder",[queryParam]))
             }else{
                 addCart({
-                    buyed:buyed,
+                    buyed:good.buyed,
                     buylimit:good.buyLimit,
                     singlecode:good.selectedItem.code
                 });
@@ -220,7 +219,7 @@ class GoodDetail extends Component{
         if(good.stock === 0){
             return
         }
-        const {buyed} = this.state;
+        // const {buyed} = this.state;
         if(good.selectedItem === null){
             const attrName = _.findKey(good.attrs,(attr)=>{
                 return _.some(attr,{selected:true}) === false
@@ -228,14 +227,14 @@ class GoodDetail extends Component{
             })
             alert(`请选择${attrName}`,3000);
             return;
-        }else if(buyed === 0){
+        }else if(good.buyed === 0){
             alert('购买数量必须大于0',3000);
             return;
-        }else if(good.selectedItem !== null && buyed > 0){
+        }else if(good.selectedItem !== null && good.buyed > 0){
             let singleCode = good.selectedItem.code
             let queryParam = base64Encode(urlParam({
                 itemIds:singleCode,
-                buyeds:buyed
+                buyeds:good.buyed
             }))
             window.location.assign(jumpURL("confirmorder",[queryParam]))
         }
@@ -269,7 +268,7 @@ class GoodDetail extends Component{
     renderToolbar(){
         const {cartCount} = this.props.cartByUser;
         const {good} = this.props.goodById
-        const {buyed} = this.state;
+        // const {buyed} = this.state;
         return <Toolbar cartCount={cartCount} good={good} 
             togglePopup={this.togglePopup.bind(this)} 
             directBuy={this.directBuy.bind(this)} 
@@ -278,7 +277,7 @@ class GoodDetail extends Component{
     }
     renderAttrPopUp(){
         const {good} = this.props.goodById
-        const {popupActive,buyed,trigger} = this.state
+        const {popupActive,trigger} = this.state
         let buylimit = good.buyLimit > good.stock ? good.stock:good.buyLimit
 
         /*2000 price amount limit*/
@@ -314,13 +313,13 @@ class GoodDetail extends Component{
                             <span>购买数量</span>
                         </div>
                         <div className="good-buyed">
-                        <NumberPicker value={buyed} onChange={this.handleBuyedChanged.bind(this)} 
+                        <NumberPicker value={good.buyed} onChange={this.handleBuyedChanged.bind(this)} 
                         onOverflow={this.handleBuyedOverflow.bind(this)} 
                         step={good.buyedStep}
                         minimum={good.buyedMinimum} maximum={buylimit}/>
                         </div>
                     </div>
-                    <div className="good-detail-btn">
+                    <div className="good-detail-btn attr-popup-btn">
                     <a href="javascript:void(null)" onClick={this.addToCart.bind(this)} className={addCartClasses}>加入购物车</a>
                     <a href="javascript:void(0);" onClick={this.directBuy.bind(this)} className={directBuyClasses}>{good.stock>=good.buyedMinimum?"立即购买":"已抢光"}</a>
                     </div>
@@ -331,7 +330,7 @@ class GoodDetail extends Component{
     render(){
         const {cartCount} = this.props.cartByUser;
         const {good,isCollected,goodFetching} = this.props.goodById
-        const {buyed} = this.state;
+        // const {buyed} = this.state;
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
         var slides = good.slides.map((slide,i)=>{
             const key = "slide-" + i;
@@ -379,7 +378,7 @@ class GoodDetail extends Component{
                     <dl>
                         <dt>规格</dt>
                         <dd>
-                            <em>已选择</em>{_.values(good.selectedItem.attrs).map(attrValue=><em>{attrValue}</em>)}<em>{this.state.buyed}个</em>
+                            <em>已选择</em><em>{_.values(good.selectedItem.attrs).join("， ")}</em><em>{good.buyed}个</em>
                             <i className="iconfont icon-right"></i>
                         </dd>
                     </dl>

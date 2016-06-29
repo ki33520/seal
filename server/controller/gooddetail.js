@@ -159,6 +159,7 @@ var sharedWeixin = function(req,res,next){
         tag = req.session.user["mobileNumber"]
     }
     baseURL = url.parse(baseURL)
+    baseURL.pathname = baseURL.pathname.replace(/sp-(\w)+\.html/,"sp-"+code+".html")
     var sharedQRCode = (config.sharedQRCodePath + "/resource/qr?code="
      + code + "&tag=" + tag)
     var sharedLink = baseURL

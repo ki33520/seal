@@ -1,7 +1,7 @@
 'use strict';
 import {apiRequest} from "../../lib/http.es6";
 import {
-    TOGGLE_ATTR,
+    TOGGLE_ATTR,CHANGE_BUYED,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
     REQUEST_GOOD,RESPONSE_GOOD,
@@ -15,6 +15,13 @@ import {
 } from "./constant.es6";
 
 import {jumpURL,urlPrefix} from "../../lib/jumpurl.es6";
+
+export function changeBuyed(buyed){
+    return {
+        type:CHANGE_BUYED,
+        buyed
+    }
+}
 
 export function toggleAttr(attrName,attrValue){
     return {

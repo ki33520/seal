@@ -1,7 +1,7 @@
 'use strict';
 
 import {combineReducers} from "redux";
-import {RESPONSE_GOOD,REQUEST_GOOD,TOGGLE_ATTR,
+import {RESPONSE_GOOD,REQUEST_GOOD,TOGGLE_ATTR,CHANGE_BUYED,
     START_ADD_CART,FINISH_ADD_CART,
     REQUEST_CARTCOUNT,RESPONSE_CARTCOUNT,
     REQUEST_ISCOLLECTED,RESPONSE_ISCOLLECTED,
@@ -19,6 +19,12 @@ import _ from "../../lib/lodash.es6";
 function goodById(state={},action){
     let good = {...state.good};
     switch(action.type){
+        case CHANGE_BUYED:
+            good = {...good,buyed:action.buyed}
+            return Object.assign({},state,{
+                good,
+                buyedChanged:true
+            })
         case TOGGLE_ATTR:
             good = toggleAttr(good,action.attrName,action.attrValue)
             return Object.assign({},state,{
