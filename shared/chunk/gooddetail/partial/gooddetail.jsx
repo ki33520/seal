@@ -340,7 +340,6 @@ class GoodDetail extends Component{
                 </Slide>
             );
         });
-        console.log(slides)
 
         const upperClasses = classNames("good-detail-upper","goods_top",{
             visible:this.state.upperVisble
@@ -377,9 +376,9 @@ class GoodDetail extends Component{
                 <Promotions promotions={good.promotions}/>
                 <a className="attr-selected" onClick={this.togglePopup.bind(this)} href="javascript:void(null)">
                     <dl>
-                        <dt>规格</dt>
+                        <dt>规格：</dt>
                         <dd>
-                            <em>已选择</em><em>{_.values(good.selectedItem.attrs).join("，")}</em><em>{good.buyed}个</em>
+                            <em>已选</em><em>{_.values(good.selectedItem.attrs).join("，")}，{good.buyed}个</em>
                             <i className="iconfont icon-right"></i>
                         </dd>
                     </dl>
