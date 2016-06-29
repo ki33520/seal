@@ -332,7 +332,7 @@ class GoodDetail extends Component{
         const {good,isCollected,goodFetching} = this.props.goodById
         // const {buyed} = this.state;
         const detail = good.detail.replace(/jpg_.webp/g,'jpg')
-        var slides = good.slides.map((slide,i)=>{
+        var slides = good.imageUrl.map((slide,i)=>{
             const key = "slide-" + i;
             return (
                 <Slide key={key}>
@@ -340,6 +340,7 @@ class GoodDetail extends Component{
                 </Slide>
             );
         });
+        console.log(slides)
 
         const upperClasses = classNames("good-detail-upper","goods_top",{
             visible:this.state.upperVisble
@@ -360,7 +361,7 @@ class GoodDetail extends Component{
             <a className="goods_share" onClick={this.toggleShare.bind(this)}></a>
             </Header>
             <div className={upperClasses}>
-                {good.slides.length > 0?(
+                {good.imageUrl.length > 0?(
                 <Slides effect="roll" autoPlay={false} loop={true} speed={200}>{slides}</Slides>
                 ):null}
                 <div className="title clearfix">
@@ -378,7 +379,7 @@ class GoodDetail extends Component{
                     <dl>
                         <dt>规格</dt>
                         <dd>
-                            <em>已选择</em><em>{_.values(good.selectedItem.attrs).join("， ")}</em><em>{good.buyed}个</em>
+                            <em>已选择</em><em>{_.values(good.selectedItem.attrs).join("，")}</em><em>{good.buyed}个</em>
                             <i className="iconfont icon-right"></i>
                         </dd>
                     </dl>

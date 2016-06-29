@@ -21,6 +21,7 @@ export class Slides extends Component{
         if(prevProps.initialSlide === this.props.initialSlide && prevProps.children.length === this.props.children.length){
             
         }else{
+            this.mySwiper.update()
             if(this.mySwiper.updateSlidesSize){
                 this.mySwiper.updateSlidesSize();
                 this.mySwiper.slideTo(this.props.initialSlide, 0, false);

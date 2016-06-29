@@ -46,8 +46,9 @@ var goodDetail = function(req, res, next) {
         }).then(function(ret) {
             if (ret["goodById"].returnCode === 0) {
                 var good = goodFilter(ret["goodById"].object);
-                var slides = good.imageUrl;
-                good.slides = slides;
+                // console.log("imageUrl",good.imageUrl)
+                // var slides = good.imageUrl;
+                // good.slides = slides;
                 good.mainImageUrl = good.imageUrl[0]
                 good.comments = {list:[]}
                 good.showups = {list:[]}

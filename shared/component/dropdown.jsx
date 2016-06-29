@@ -14,9 +14,11 @@ class Dropdown extends Component{
         }
     }
     componentDidMount(){
+        this._isMounted = true
         this.bindOuterEvent();
     }
     componentWillUnmount(){
+        this._isMounted = false
         this.unbindOuterEvent();
     }
     setDropdownState(state){
@@ -44,6 +46,9 @@ class Dropdown extends Component{
         e && e.keyCode === 27 && this.setDropdownState(false);
     }
     handleOuterClick(e){
+        if(!this._isMounted){
+            return false
+        }
         if(dom.hasNode(e.target,ReactDOM.findDOMNode(this)) === true){
             return false;
         }
