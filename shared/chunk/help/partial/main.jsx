@@ -46,7 +46,7 @@ class HelpMain extends Component{
         return (
             <div className="help-content">
                 <Header>
-                    <span className="title">帮助与反馈</span>
+                    <span className="title">帮助反馈</span>
                 </Header>
                 <h2>常见问题</h2>
                 {this.renderQuestion()}
