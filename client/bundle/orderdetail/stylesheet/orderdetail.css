@@ -85,6 +85,9 @@
 }
 .orderSpeed .rate img{
     width:100%;
+    padding:0 .72rem;
+}
+.orderSpeed .rate-l img{
     padding:0 .56rem;
 }
 .orderSpeed .rateText{
