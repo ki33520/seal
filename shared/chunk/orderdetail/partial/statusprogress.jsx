@@ -20,6 +20,9 @@ class StatusProgress extends Component{
         let imgUrl;
         let rateText = [];
         rateText = orderStatusArr.map((v,k)=>{
+            if(orderStatus !== "STATUS_PICKING" && v.text === "配货中"){
+                return null;
+            }
             if(v.active === true){
                 imgUrl = "/client/asset/images/orderRate_0"+(k+1)+".gif";
                 return <span key={k}>{v.text}</span>;
@@ -40,10 +43,14 @@ class StatusProgress extends Component{
         if(orderStatus === "STATUS_CANCELED"){
             imgUrl = "/client/asset/images/orderRate_cancel.gif";
         }
+        let rateClass = classNames({
+            "rate": true,
+            "rate-l": orderStatus === "STATUS_PICKING"
+        })
         return (
             <div className="orderSpeed">
                 <div className="orderNum"><i>订单编号:</i><span>{orderNo}</span></div>
-                <div className="rate">
+                <div className={rateClass}>
                     <img src={imgUrl} />
                     <div className="rateText">
                         {rateText}
