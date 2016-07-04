@@ -27,7 +27,7 @@ function formatOrder(object) {
             paymentFee: child.paymentFee,
             orderId: child.id,
             itemList: itemList,
-            createdAt: child.timeoutTime ? moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:mm:ss") : null,
+            createdAt: child.createdAt ? moment(new Date(child.createdAt)).format("YYYY-MM-DD HH:mm:ss") : null,
             timeoutTime: child.timeoutTime ? moment(new Date(child.timeoutTime)).format("YYYY-MM-DD HH:mm:ss") : null
         };
     });
