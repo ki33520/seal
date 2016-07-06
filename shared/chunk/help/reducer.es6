@@ -12,6 +12,9 @@ function questionCategory(state={},action){
             return state;
     }
 }
+function userReducer(state={},action){
+    return state
+}
 function questionByForm(state={},action){
 	switch(action.type){
 	    case REQUEST_QUESTION:
@@ -72,6 +75,7 @@ function feedbackByForm(state={},action){
 }
 
 const rootReducer = combineReducers({
+    user:userReducer,
     questionCategory,
     questionByForm,
     feedbackByForm

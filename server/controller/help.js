@@ -21,6 +21,7 @@ var index = function(req, res, next) {
             questionCategory = ret.questionCategory.object;
         }
         var initialState = {
+            user:user,
             questionCategory : questionCategory
         };
         var markup = util.getMarkupByComponent(HelpApp({

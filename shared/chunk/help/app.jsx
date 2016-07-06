@@ -23,9 +23,10 @@ function configureStore(initialState){
 
 class HelpApp extends Component{
     render(){
-        const {questionCategory} = this.props.initialState;
+        const {questionCategory,user} = this.props.initialState;
         const initialState = {
-            questionCategory
+            questionCategory,
+            user
         };
         var store = configureStore(initialState);
         return (
