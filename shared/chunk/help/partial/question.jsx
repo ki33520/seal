@@ -28,7 +28,7 @@ class Question extends Component{
     }
     renderList(){
         const {questionList,isFetching} = this.props.questionByForm;
-        if(questionList && questionList.list.length > 0){
+        if(questionList && questionList.list && questionList.list.length > 0){
             const {list} = questionList;
             return   (
                 <div className="question-list">
